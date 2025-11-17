@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -57,24 +58,26 @@ const USAGuide = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {states?.map((state) => (
-                <Card key={state.id} className="p-6 hover:border-accent/50 transition-all cursor-pointer">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-semibold">{state.name}</h3>
-                    <Badge className={getStatusColor(state.status)}>
-                      {state.status}
-                    </Badge>
-                  </div>
-                  {state.possession_limits && (
-                    <p className="text-sm text-muted-foreground mb-2">
-                      <span className="font-medium text-foreground">Possession:</span> {state.possession_limits}
-                    </p>
-                  )}
-                  {state.tourist_notes && (
-                    <p className="text-sm text-muted-foreground">
-                      {state.tourist_notes.slice(0, 120)}...
-                    </p>
-                  )}
-                </Card>
+                <Link key={state.id} to={`/usa/${state.slug}`}>
+                  <Card className="p-6 hover:border-accent/50 hover:shadow-lg transition-all cursor-pointer h-full">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-xl font-semibold">{state.name}</h3>
+                      <Badge className={getStatusColor(state.status)}>
+                        {state.status}
+                      </Badge>
+                    </div>
+                    {state.possession_limits && (
+                      <p className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium text-foreground">Possession:</span> {state.possession_limits}
+                      </p>
+                    )}
+                    {state.tourist_notes && (
+                      <p className="text-sm text-muted-foreground">
+                        {state.tourist_notes.slice(0, 120)}...
+                      </p>
+                    )}
+                  </Card>
+                </Link>
               ))}
             </div>
           )}
