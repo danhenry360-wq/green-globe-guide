@@ -39,7 +39,7 @@ const Home = () => {
       {/* Hero Section (Task 1) */}
       <section 
         className="relative pt-40 pb-32 px-4 text-white overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: "url('/public/hero-bg.jpg')" }} // Placeholder for premium background image
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }} // Placeholder for premium background image
       >
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
@@ -147,7 +147,7 @@ const Home = () => {
                   <Link to={dest.country === "USA" ? `/usa` : `/world`}>
                     <Card className="relative h-72 overflow-hidden rounded-xl cursor-pointer group bg-gray-900 border border-gray-800">
                       {/* Hero Image Placeholder */}
-                      <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{ backgroundImage: `url('/public/dest-${i + 1}.jpg')` }}>
+                      <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{ backgroundImage: `url('/dest-${i + 1}.jpg')` }}>
                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-300" />
                       </div>
                       
@@ -228,19 +228,19 @@ const Home = () => {
                 { 
                   title: "The Ultimate Guide to Amsterdam's Coffee Shops", 
                   summary: "Discover the best coffee shops, local etiquette, and legal tips for a perfect trip to the Netherlands.", 
-                  image: "/public/blog-amsterdam.jpg",
+                  image: "/blog-amsterdam.jpg",
                   link: "#"
                 },
                 { 
                   title: "Navigating Legal Cannabis in California", 
                   summary: "Everything you need to know about dispensaries, consumption laws, and 420-friendly spots in the Golden State.", 
-                  image: "/public/blog-california.jpg",
+                  image: "/blog-california.jpg",
                   link: "#"
                 },
                 { 
                   title: "Uruguay: South America's Cannabis Pioneer", 
                   summary: "A deep dive into the world's first country to fully legalize cannabis and what it means for travelers.", 
-                  image: "/public/blog-uruguay.jpg",
+                  image: "/blog-uruguay.jpg",
                   link: "#"
                 },
               ].map((article, i) => (
@@ -281,13 +281,13 @@ const Home = () => {
             <motion.div variants={fadeIn} className="relative max-w-4xl mx-auto rounded-xl overflow-hidden border-4 border-green-500/50 shadow-2xl shadow-green-500/20">
               {/* Placeholder for the map image */}
               <img 
-                src="/public/world-map-preview.png" 
+                src="/world-map-preview.png" 
                 alt="Interactive World Map Preview" 
                 className="w-full h-auto object-cover opacity-80"
               />
               {/* Hover simulation - a simple overlay with a CTA */}
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 hover:bg-black/20 transition-all duration-500">
-                <h3 className="text-3xl font-bold text-white mb-4">Hover to See Status</h3>
+                <h3 className="text-3xl font-bold text-white mb-4">Global Legality Map</h3>
                 <p className="text-lg text-gray-300 mb-8">Click below to explore the full interactive experience.</p>
                 <Link to="/world">
                   <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white font-semibold px-10 shadow-lg shadow-green-500/50">
