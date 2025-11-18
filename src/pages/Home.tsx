@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, MapPin, Shield, Clock, Globe2, Plane, Building2, Map, Newspaper, Compass } from "lucide-react";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 const Home = () => {
   const fadeIn = {
@@ -101,8 +102,8 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Trust Stats */}
-      <section className="py-12 px-4 border-y border-border/50 bg-card/30 backdrop-blur-sm">
+      {/* Trust Stats with Animated Counter */}
+      <section className="py-12 px-4 border-y border-gray-800 bg-black/50 backdrop-blur-sm">
         <motion.div 
           className="container mx-auto"
           initial="initial"
@@ -112,15 +113,20 @@ const Home = () => {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Globe2, label: "Countries", value: "120+" },
-              { icon: MapPin, label: "Destinations", value: "500+" },
-              { icon: Building2, label: "420 Hotels", value: "300+" },
-              { icon: Clock, label: "Updated", value: "Daily" },
+              { icon: Globe2, label: "Countries", from: 0, to: 120, suffix: "+" },
+              { icon: MapPin, label: "Destinations", from: 0, to: 500, suffix: "+" },
+              { icon: Building2, label: "420 Hotels", from: 0, to: 300, suffix: "+" },
+              { icon: Clock, label: "Updated", from: 0, to: 0, suffix: "Daily" },
             ].map((stat, i) => (
               <motion.div key={i} variants={fadeIn} className="text-center">
-                <stat.icon className="w-8 h-8 mx-auto mb-2 text-accent" />
-                <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <stat.icon className="w-8 h-8 mx-auto mb-2 text-green-500" />
+                <AnimatedCounter 
+                  from={stat.from} 
+                  to={stat.to} 
+                  duration={2} 
+                  suffix={stat.suffix} 
+                  label={stat.label} 
+                />
               </motion.div>
             ))}
           </div>
