@@ -12,7 +12,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import ContinentSelector from "@/components/ContinentSelector";
 import MapLegend from "@/components/MapLegend";
-import heroImage from "@/assets/hero-cannabis-travel.jpg";
+import heroImage from "@/assets/hero-cannabis-travel.jpg"; // Your original hero image
 
 // --- Types & Interfaces ---
 interface Destination {
@@ -59,14 +59,14 @@ const STAGGER_VARIANTS: Variants = {
   }
 };
 
-// UPDATED: Added distinct color classes for Legality Status
+// UPDATED: Medical changed to 'gold-500/90' for consistency with Image 1
 const FEATURED_DESTINATIONS: Destination[] = [
   { name: "California", status: "Recreational", country: "USA", image: "🌴", color: "bg-green-500/90" },
   { name: "Colorado", status: "Recreational", country: "USA", image: "🏔️", color: "bg-green-500/90" },
   { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "🌷", color: "bg-amber-500/90" }, // Amber for Decriminalized
   { name: "Canada", status: "Recreational", country: "North America", image: "🍁", color: "bg-green-500/90" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "🌊", color: "bg-green-500/90" },
-  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-cyan-500/90" }, // Cyan for Medical
+  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-gold-500/90" }, // GOLD for Medical
 ];
 
 const STATS_DATA: StatItem[] = [
@@ -122,6 +122,14 @@ const Home = () => {
     }
   };
 
+  // Function to smoothly scroll to the next section
+  const scrollToNextSection = () => {
+    const nextSection = document.getElementById('stats-section'); // Assuming stats is the next section
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <Navigation />
@@ -131,12 +139,12 @@ const Home = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
+          // REMOVED: background-blend-mode to restore original image look
         />
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         
-        {/* Professional Data Grid Background - Adds Tech/Pro Feel */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+        {/* REMOVED: Professional Data Grid Background */}
         
         {/* Background Blobs */}
         <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-accent/15 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
@@ -196,7 +204,7 @@ const Home = () => {
           <motion.div variants={FADE_IN_VARIANTS} className="flex flex-wrap justify-center gap-3 mb-12 md:mb-20 px-2">
             {[
               { label: "🚀 Popular: California", term: "California", icon: Flame, color: "text-orange-400" },
-              { label: "Medical Only", term: "Medical", icon: Stethoscope, color: "text-blue-400" },
+              { label: "Medical Only", term: "Medical", icon: Stethoscope, color: "text-gold-400" }, // Medical tag color updated
               { label: "Europe Guide", term: "Europe", icon: Globe2, color: "text-purple-400" },
               { label: "420 Hotels", term: "Hotels", icon: Building2, color: "text-green-400" }
             ].map((tag, i) => (
@@ -210,24 +218,24 @@ const Home = () => {
                </button>
             ))}
           </motion.div>
-
-          {/* REMOVED: Redundant Quick Link Cards (USA, World, Hotels, Tours) */}
           
-          {/* Scroll Indicator */}
-          <motion.div 
+          {/* Scroll Indicator - NOW WITH FUNCTIONALITY */}
+          <motion.button 
+            onClick={scrollToNextSection} // Added onClick handler
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1, y: [0, 10, 0] }} 
             transition={{ delay: 2, duration: 2, repeat: Infinity }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block cursor-pointer hover:text-white transition-colors"
+            aria-label="Scroll down to next section"
           >
             <ChevronDown className="w-8 h-8" />
-          </motion.div>
+          </motion.button>
 
         </motion.div>
       </section>
 
-      {/* Stats - Luxury Spacing */}
-      <section className="py-20 md:py-32 px-4 md:px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative">
+      {/* Stats - Luxury Spacing. Added ID for scroll target */}
+      <section id="stats-section" className="py-20 md:py-32 px-4 md:px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative">
         <motion.div className="container mx-auto relative z-10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-4 md:gap-12 lg:gap-16">
             {STATS_DATA.map((stat, i) => (
