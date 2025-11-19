@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, MapPin, Shield, Clock, Globe2, Plane, Building2, Map, Newspaper, Compass } from "lucide-react";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 const Home = () => {
   const fadeIn = {
@@ -34,67 +35,80 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Hero Section (Task 1) */}
-      <section 
-        className="relative pt-40 pb-32 px-4 text-white overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: "url('/hero-bg.jpg')" }} // Placeholder for premium background image
-      >
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
+      {/* Premium Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center px-4 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/85 to-background/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse" />
         
         <motion.div 
-          className="container mx-auto text-center relative z-10"
+          className="container mx-auto text-center relative z-10 py-32"
           initial="initial"
           animate="animate"
           variants={stagger}
         >
-          <motion.h1 
-            variants={fadeIn}
-            className="text-6xl md:text-8xl font-extrabold mb-4 tracking-tight"
-          >
-            THE GREEN GLOBE GUIDE
-          </motion.h1>
+          <motion.div variants={fadeIn} className="mb-8">
+            <Badge className="mb-6 px-6 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 hover:bg-accent/20 transition-all duration-300">
+              Global Cannabis Travel Intelligence
+            </Badge>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                The Green Globe
+              </span>
+              <br />
+              <span className="text-foreground/90 font-light">Guide</span>
+            </h1>
+          </motion.div>
           
           <motion.p 
             variants={fadeIn}
-            className="text-xl md:text-3xl text-green-300 font-medium mb-12 max-w-4xl mx-auto"
+            className="text-xl md:text-2xl lg:text-3xl text-muted-foreground font-light mb-16 max-w-4xl mx-auto leading-relaxed"
           >
-            Find cannabis laws, hotels, and rules worldwide.
+            Navigate cannabis laws, discover 420-friendly accommodations,
+            <br className="hidden md:block" />
+            and explore travel regulations worldwide with confidence.
           </motion.p>
 
-          {/* Redesigned Search Bar */}
           <motion.div variants={fadeIn} className="max-w-3xl mx-auto mb-20">
             <div className="relative group">
-              <div className="absolute inset-0 bg-green-500/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-green-400 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-accent/30 via-gold/30 to-accent/30 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-gold/20 blur-xl opacity-50 rounded-2xl" />
+              <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10" />
               <Input 
-                placeholder="Search country, state, city, hotel, or airport..."
-                className="pl-14 h-16 text-xl bg-black/70 border border-green-500/30 focus:border-green-500 focus:ring-green-500 backdrop-blur-md rounded-xl relative z-10 transition-all duration-300 group-hover:scale-[1.02]"
+                placeholder="Search destinations, accommodations, or regulations..."
+                className="pl-16 pr-6 h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
               />
             </div>
           </motion.div>
 
-          {/* Guide Buttons (Task 2) */}
           <motion.div variants={fadeIn} className="flex flex-wrap gap-6 justify-center">
             <Link to="/usa">
-              <Card className="w-64 p-6 bg-white/5 border border-white/10 backdrop-blur-lg rounded-xl transition-all duration-300 hover:scale-[1.05] hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer">
+              <Card className="group w-72 p-8 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-accent hover:shadow-2xl hover:shadow-accent/20 cursor-pointer hover:bg-card/60">
                 <div className="flex flex-col items-center">
-                  <Globe2 className="w-10 h-10 text-green-400 mb-3" />
-                  <h3 className="text-xl font-semibold mb-1">USA Guide</h3>
-                  <p className="text-sm text-gray-400">State-by-state laws</p>
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+                    <Globe2 className="w-8 h-8 text-accent" />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-2 text-foreground">USA Guide</h3>
+                  <p className="text-sm text-muted-foreground font-light">State-by-state regulations</p>
                 </div>
               </Card>
             </Link>
             <Link to="/world">
-              <Card className="w-64 p-6 bg-white/5 border border-white/10 backdrop-blur-lg rounded-xl transition-all duration-300 hover:scale-[1.05] hover:shadow-2xl hover:shadow-green-500/20 cursor-pointer">
+              <Card className="group w-72 p-8 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-gold hover:shadow-2xl hover:shadow-gold/20 cursor-pointer hover:bg-card/60">
                 <div className="flex flex-col items-center">
-                  <MapPin className="w-10 h-10 text-green-400 mb-3" />
-                  <h3 className="text-xl font-semibold mb-1">World Guide</h3>
-                  <p className="text-sm text-gray-400">Global legality map</p>
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+                    <Map className="w-8 h-8 text-gold" />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-2 text-foreground">World Guide</h3>
+                  <p className="text-sm text-muted-foreground font-light">Global legality map</p>
                 </div>
               </Card>
             </Link>
@@ -102,31 +116,24 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Trust Stats with Animated Counter */}
-      <section className="py-12 px-4 border-y border-gray-800 bg-black/50 backdrop-blur-sm">
-        <motion.div 
-          className="container mx-auto"
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={stagger}
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* Premium Trust & Stats */}
+      <section className="py-32 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative overflow-hidden">
+        <motion.div className="container mx-auto relative z-10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
             {[
-              { icon: Globe2, label: "Countries", from: 0, to: 120, suffix: "+" },
-              { icon: MapPin, label: "Destinations", from: 0, to: 500, suffix: "+" },
-              { icon: Building2, label: "420 Hotels", from: 0, to: 300, suffix: "+" },
-              { icon: Clock, label: "Updated", from: 0, to: 0, suffix: "Daily" },
+              { icon: Globe2, label: "Countries Covered", count: 120, suffix: "+" },
+              { icon: MapPin, label: "Travel Destinations", count: 500, suffix: "+" },
+              { icon: Building2, label: "420-Friendly Hotels", count: 300, suffix: "+" },
+              { icon: Shield, label: "Data Accuracy", count: 100, suffix: "%" }
             ].map((stat, i) => (
-              <motion.div key={i} variants={fadeIn} className="text-center">
-                <stat.icon className="w-8 h-8 mx-auto mb-2 text-green-500" />
-                <AnimatedCounter 
-                  from={stat.from} 
-                  to={stat.to} 
-                  duration={2} 
-                  suffix={stat.suffix} 
-                  label={stat.label} 
-                />
+              <motion.div key={i} className="text-center group" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15, duration: 0.6 }} viewport={{ once: true }}>
+                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 border border-accent/20">
+                  <stat.icon className="w-10 h-10 text-accent" />
+                </div>
+                <div className="text-5xl md:text-6xl font-bold mb-3 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+                  <AnimatedCounter end={stat.count} />{stat.suffix}
+                </div>
+                <div className="text-muted-foreground text-base font-light tracking-wide">{stat.label}</div>
               </motion.div>
             ))}
           </div>
