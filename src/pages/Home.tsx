@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, MapPin, Shield, Clock, Globe2, Plane, Building2, Map, Newspaper, Compass } from "lucide-react";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import InteractiveWorldMap from "@/components/InteractiveWorldMap";
+import ContinentSelector from "@/components/ContinentSelector";
+import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 const Home = () => {
@@ -277,37 +280,93 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Mini Interactive World Map Preview (Task 6) */}
-      <section className="py-20 px-4 bg-black">
-        <div className="container mx-auto">
+      {/* Ultra-Professional Interactive World Map Section */}
+      <section className="py-32 px-4 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
+        {/* Ambient glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[150px] animate-pulse" />
+        
+        <div className="container mx-auto relative z-10">
           <motion.div
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={stagger}
           >
-            <motion.div variants={fadeIn} className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-white">Global Legality at a Glance</h2>
-              <p className="text-xl text-gray-400">See the cannabis legal status of every country on our interactive map</p>
+            {/* Hero-style header */}
+            <motion.div variants={fadeIn} className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="inline-block mb-6"
+              >
+                <Badge className="px-6 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 hover:bg-accent/20 transition-all duration-300">
+                  <Globe2 className="w-4 h-4 mr-2 inline" />
+                  Interactive Global Map
+                </Badge>
+              </motion.div>
+              
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+                <span className="bg-gradient-to-r from-white via-accent to-gold bg-clip-text text-transparent">
+                  Explore Cannabis Legality
+                </span>
+                <br />
+                <span className="text-white/90 font-light text-4xl md:text-5xl">Worldwide</span>
+              </h2>
+              
+              <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">
+                Tap any country to check cannabis laws, restrictions, and traveler guidance.
+              </p>
             </motion.div>
 
-            <motion.div variants={fadeIn} className="relative max-w-4xl mx-auto rounded-xl overflow-hidden border-4 border-green-500/50 shadow-2xl shadow-green-500/20">
-              {/* Placeholder for the map image */}
-              <img 
-                src="/world-map-preview.png" 
-                alt="Interactive World Map Preview" 
-                className="w-full h-auto object-cover opacity-80"
-              />
-              {/* Hover simulation - a simple overlay with a CTA */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 hover:bg-black/20 transition-all duration-500">
-                <h3 className="text-3xl font-bold text-white mb-4">Global Legality Map</h3>
-                <p className="text-lg text-gray-300 mb-8">Click below to explore the full interactive experience.</p>
-                <Link to="/world">
-                  <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white font-semibold px-10 shadow-lg shadow-green-500/50">
-                    View Full Interactive Map
-                  </Button>
-                </Link>
+            {/* Desktop: Full Interactive Map */}
+            <motion.div 
+              variants={fadeIn} 
+              className="hidden md:block max-w-6xl mx-auto mb-12"
+            >
+              <div className="relative">
+                {/* Outer glow container */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 via-gold/20 to-accent/20 rounded-3xl blur-2xl opacity-50" />
+                <div className="relative">
+                  <InteractiveWorldMap className="transform transition-all duration-500 hover:scale-[1.01]" />
+                </div>
               </div>
+            </motion.div>
+
+            {/* Mobile: Continent Selector */}
+            <motion.div 
+              variants={fadeIn} 
+              className="md:hidden max-w-2xl mx-auto mb-12"
+            >
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 via-gold/20 to-accent/20 rounded-3xl blur-2xl opacity-50" />
+                <div className="relative bg-gray-950/50 backdrop-blur-xl border-2 border-accent/30 rounded-2xl p-6 shadow-2xl shadow-accent/20">
+                  <ContinentSelector />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Legend */}
+            <motion.div variants={fadeIn}>
+              <MapLegend />
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.div 
+              variants={fadeIn}
+              className="text-center mt-16"
+            >
+              <Link to="/world">
+                <Button 
+                  size="lg" 
+                  className="group bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-white font-semibold px-12 py-6 text-lg rounded-xl shadow-2xl shadow-accent/30 transition-all duration-500 hover:scale-105 hover:shadow-accent/50 border border-accent/50"
+                >
+                  <Map className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                  Open Full Interactive Map
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
