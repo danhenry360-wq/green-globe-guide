@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Filter, Search } from "lucide-react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-// Import your existing FilterStates component (Screenshot 2025-11-19 225217.png)
+import { Filter, Search, ChevronDown, ChevronUp } from "lucide-react";
+// Import your existing FilterStates component
 import FilterStates from "@/components/FilterStates"; // Assuming this exists
 import MapLegend from "@/components/MapLegend"; // Assuming this exists
+import StateCard from "@/components/StateCard"; // Assuming this exists
+import { Input } from "@/components/ui/input"; // Assuming this is your Input component
+import { Button } from "@/components/ui/button"; // Assuming this is your Button component
 
 const USAStatesPage = ({ states, onFilterChange }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -22,20 +24,20 @@ const USAStatesPage = ({ states, onFilterChange }) => {
         {/* --- MOBILE: Search & Filter Toggle --- */}
         <div className="md:hidden sticky top-16 z-30 bg-black py-4 border-b border-gray-800">
           <div className="flex space-x-2 mb-4">
-            <input
+            <Input
               placeholder="Search state name..."
-              className="flex-grow h-12 bg-gray-900 border-gray-700 text-white px-4 rounded"
+              className="flex-grow h-12 bg-gray-900 border-gray-700 text-white"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="h-12 w-12 flex-shrink-0 bg-accent hover:bg-accent/80 rounded flex items-center justify-center"
+              className="h-12 w-12 flex-shrink-0 bg-accent hover:bg-accent/80"
               aria-expanded={isFilterOpen}
               aria-controls="mobile-filter-panel"
             >
               <Filter className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
 
           {/* Mobile Filter Panel - Collapsible */}
@@ -76,29 +78,16 @@ const USAStatesPage = ({ states, onFilterChange }) => {
 
           {/* Desktop State List (3/4 width) */}
           <div className="md:w-3/4">
-            <input
+            <Input
               placeholder="Search state name..."
-              className="h-12 bg-gray-900 border-gray-700 text-white px-4 rounded w-full mb-6"
+              className="h-12 bg-gray-900 border-gray-700 text-white mb-6"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <h1 className="text-3xl font-bold mb-6 text-white">USA Cannabis Guide ({filteredStates.length} States)</h1>
             <div className="grid gap-6">
               {filteredStates.map(state => (
-                <div key={state.name} className="bg-gray-950 rounded-lg border border-gray-800 p-4">
-                  <h3 className="text-lg font-bold text-white">{state.name}</h3>
-                  <p className="text-sm text-gray-400">{state.region}</p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium mt-2 inline-block ${
-                    state.legalStatus === "Recreational" ? "bg-green-900 text-green-100" :
-                    state.legalStatus === "Medical Only" ? "bg-yellow-900 text-yellow-100" :
-                    state.legalStatus === "Decriminalized" ? "bg-blue-900 text-blue-100" :
-                    "bg-red-900 text-red-100"
-                  }`}>
-                    {state.legalStatus}
-                  </span>
-                  <p className="text-sm text-gray-300 mt-2">{state.possession}</p>
-                  <a href="#" className="text-green-400 text-sm mt-2 inline-block">View full guide</a>
-                </div>
+                <StateCard key={state.name} state={state} />
               ))}
             </div>
           </div>
