@@ -185,33 +185,68 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* Quick Link Cards */}
+          {/* Quick Link Cards - FIX: REVERTED TO STATIC JSX TO FIX TAILWIND BUILD ERRORS */}
           <motion.div variants={FADE_IN_VARIANTS} className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap gap-4 md:gap-6 justify-center px-1">
-            {[
-              { to: "/usa", icon: Globe2, title: "USA", sub: "States Guide", color: "accent" },
-              { to: "/world", icon: Map, title: "World", sub: "Legal Map", color: "gold" },
-              { to: "/hotels", icon: Building2, title: "Hotels", sub: "420 Stays", color: "accent" },
-              { to: "/tours", icon: Compass, title: "Tours", sub: "Experiences", color: "gold" },
-            ].map((item, i) => (
-              <Link key={i} to={item.to} className="w-full sm:w-64">
-                <Card className={`group h-full p-5 md:p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all hover:border-${item.color} hover:bg-card/60 hover:shadow-lg`}>
-                  <div className="flex flex-col items-center justify-center">
-                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-${item.color}/20 to-${item.color}/5 flex items-center justify-center mb-3 md:mb-4 flex-shrink-0`}>
-                      <item.icon className={`w-6 h-6 md:w-8 md:h-8 text-${item.color}`} />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-xl md:text-2xl font-semibold text-foreground">{item.title}</h3>
-                      <p className="text-sm md:text-base text-muted-foreground font-light">{item.sub}</p>
-                    </div>
+            <Link to="/usa" className="w-full sm:w-64">
+              <Card className="group h-full p-5 md:p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all hover:border-accent hover:bg-card/60 hover:shadow-lg">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-3 md:mb-4 flex-shrink-0">
+                    <Globe2 className="w-6 h-6 md:w-8 md:h-8 text-accent" />
                   </div>
-                </Card>
-              </Link>
-            ))}
+                  <div className="text-center">
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">USA</h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-light">States Guide</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/world" className="w-full sm:w-64">
+              <Card className="group h-full p-5 md:p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all hover:border-gold hover:bg-card/60 hover:shadow-lg">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-3 md:mb-4 flex-shrink-0">
+                    <Map className="w-6 h-6 md:w-8 md:h-8 text-gold" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">World</h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-light">Legal Map</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/hotels" className="w-full sm:w-64">
+              <Card className="group h-full p-5 md:p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all hover:border-accent hover:bg-card/60 hover:shadow-lg">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-3 md:mb-4 flex-shrink-0">
+                    <Building2 className="w-6 h-6 md:w-8 md:h-8 text-accent" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">Hotels</h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-light">420 Stays</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/tours" className="w-full sm:w-64">
+              <Card className="group h-full p-5 md:p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all hover:border-gold hover:bg-card/60 hover:shadow-lg">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-3 md:mb-4 flex-shrink-0">
+                    <Compass className="w-6 h-6 md:w-8 md:h-8 text-gold" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">Tours</h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-light">Experiences</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Stats - Increased Spacing to comfortable levels */}
+      {/* Stats - Increased Spacing */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative">
         <motion.div className="container mx-auto relative z-10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-4 md:gap-12 lg:gap-16">
@@ -305,7 +340,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- RESTORED: Featured Blog / Travel Guides Section --- */}
+      {/* Blog / Travel Guides Section */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-black">
         <div className="container mx-auto">
           <motion.div
@@ -324,6 +359,7 @@ const Home = () => {
                 <motion.div key={i} variants={FADE_IN_VARIANTS} className="transition-all duration-300 hover:scale-[1.02]">
                   <Card className="h-full overflow-hidden rounded-xl bg-gray-900 border border-gray-800 flex flex-col">
                     <div className="h-48 overflow-hidden">
+                         {/* Ensure images are in your public folder, or replace with placeholder */}
                          <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
@@ -395,4 +431,71 @@ const Home = () => {
             </motion.div>
 
             {/* Mobile Continent Selector */}
-            <motion.div
+            <motion.div 
+              variants={FADE_IN_VARIANTS} 
+              className="md:hidden w-full mb-12"
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-gold/20 to-accent/20 rounded-3xl blur-xl opacity-40" />
+                <div className="relative bg-gray-950/80 backdrop-blur-xl border border-accent/20 rounded-2xl p-3 sm:p-6 shadow-2xl w-full overflow-hidden">
+                  <div className="w-full">
+                    <ContinentSelector />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={FADE_IN_VARIANTS} className="px-2 mb-12">
+              <MapLegend />
+            </motion.div>
+
+            {/* Updated Map Button */}
+            <motion.div 
+              variants={FADE_IN_VARIANTS}
+              className="text-center px-4"
+            >
+              <Link to="/world">
+                <Button 
+                  size="lg" 
+                  className="w-full sm:w-auto h-auto py-5 px-8 text-lg font-semibold bg-gradient-to-r from-accent to-accent/80 whitespace-normal leading-tight border border-white/10 shadow-xl shadow-accent/20"
+                >
+                  <Maximize2 className="w-6 h-6 mr-3 flex-shrink-0" />
+                  <div className="flex flex-col items-start text-left">
+                     <span>Advanced Map & Filters</span>
+                     <span className="text-xs font-normal opacity-80">View full data, lists, and search tools</span>
+                  </div>
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl" />
+        <motion.div 
+          className="container mx-auto text-center relative z-10"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={FADE_IN_VARIANTS}
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 px-2">Ready to Travel?</h2>
+          <p className="text-lg md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto px-4">
+            Get instant access to verified cannabis laws and 420-friendly hotels.
+          </p>
+          <Link to="/usa">
+            <Button size="lg" className="h-16 px-12 text-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-xl">
+              Start Exploring
+            </Button>
+          </Link>
+        </motion.div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
