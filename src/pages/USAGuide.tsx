@@ -217,8 +217,7 @@ const USAGuide = () => {
                   </motion.div>
                 ))}
               </motion.div>
-            </>
-          )}
+
 
           {/* Disclaimer */}
           <motion.div 
