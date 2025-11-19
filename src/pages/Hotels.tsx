@@ -2,9 +2,10 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, Star, ExternalLink } from "lucide-react";
+import { MapPin, Star, ExternalLink, Globe, Building } from "lucide-react";
 
 const Hotels = () => {
   const { data: hotels, isLoading } = useQuery({
@@ -32,11 +33,11 @@ const Hotels = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <div className="pt-20 pb-14 px-4 md:px-6">
+      <div className="pt-16 pb-10 px-4 md:px-6">
         <div className="container mx-auto">
 
-          {/* HEADER */}
-          <div className="max-w-3xl mx-auto mb-10 text-center">
+          {/* HEADER - Reduced spacing */}
+          <div className="max-w-3xl mx-auto mb-8 text-center">
             <h1 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">
               420-Friendly Stays & Accommodations
             </h1>
@@ -45,11 +46,54 @@ const Hotels = () => {
             </p>
           </div>
 
-          {/* LOADING STATE */}
+          {/* USA & WORLD GUIDE SECTION - Added */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {/* USA Guide Card */}
+            <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-2 hover:border-accent/40">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-50 p-3 rounded-lg">
+                  <Building className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1">USA Guide</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    State-by-state regulations & 420-friendly hotels
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>120+ Cities</span>
+                    <span>•</span>
+                    <span>50 States</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* World Guide Card */}
+            <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-2 hover:border-accent/40">
+              <div className="flex items-center gap-4">
+                <div className="bg-green-50 p-3 rounded-lg">
+                  <Globe className="h-6 w-6 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1">World Guide</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Global cannabis-friendly travel destinations
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>300+ Destinations</span>
+                    <span>•</span>
+                    <span>94% Coverage</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* HOTELS GRID - Reduced spacing */}
           {isLoading ? (
-            <div className="text-center text-muted-foreground">Loading stays...</div>
+            <div className="text-center text-muted-foreground py-8">Loading stays...</div>
           ) : hotels && hotels.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
               {hotels.map((hotel) => (
                 <Card
                   key={hotel.id}
@@ -112,7 +156,7 @@ const Hotels = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
+            <div className="text-center py-10">
               <p className="text-muted-foreground">
                 No stays found. Check again soon.
               </p>
