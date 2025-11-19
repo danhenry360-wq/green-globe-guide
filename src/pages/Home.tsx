@@ -7,7 +7,7 @@ import { useState, KeyboardEvent } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
-import { Search, MapPin, Shield, Globe2, Plane, Building2, Map, Compass, LucideIcon, Maximize2 } from "lucide-react";
+import { Search, MapPin, Shield, Globe2, Plane, Building2, Map, Compass, LucideIcon, Maximize2, ArrowRight } from "lucide-react";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import ContinentSelector from "@/components/ContinentSelector";
@@ -36,17 +36,24 @@ interface FeatureItem {
   link: string;
 }
 
+interface BlogItem {
+  title: string;
+  summary: string;
+  image: string;
+  link: string;
+}
+
 // --- Static Data ---
 const FADE_IN_VARIANTS: Variants = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
+  transition: { duration: 0.6 }
 };
 
 const STAGGER_VARIANTS: Variants = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.15
     }
   }
 };
@@ -74,6 +81,27 @@ const FEATURES_DATA: FeatureItem[] = [
   { icon: Map, title: "Interactive Maps", desc: "A visual, global guide to cannabis laws and regulations at a glance.", link: "/world" },
 ];
 
+const BLOG_DATA: BlogItem[] = [
+  { 
+    title: "Amsterdam Coffee Shops Guide", 
+    summary: "Discover the best spots, local etiquette, and legal tips for a perfect trip.", 
+    image: "/blog-amsterdam.jpg",
+    link: "#"
+  },
+  { 
+    title: "Legal Cannabis in California", 
+    summary: "Everything you need to know about dispensaries and 420-friendly spots.", 
+    image: "/blog-california.jpg",
+    link: "#"
+  },
+  { 
+    title: "Uruguay: The Pioneer", 
+    summary: "A deep dive into the world's first fully legalized country.", 
+    image: "/blog-uruguay.jpg",
+    link: "#"
+  },
+];
+
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -96,7 +124,7 @@ const Home = () => {
       <Navigation />
       
       {/* Premium Hero Section */}
-      <section className="relative min-h-[92vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20 pb-10 md:pb-0">
+      <section className="relative min-h-[92vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20 pb-16 md:pb-0">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -109,7 +137,7 @@ const Home = () => {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-gold/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
         
         <motion.div 
-          className="container mx-auto text-center relative z-10 py-4 md:py-20 px-2 md:px-0"
+          className="container mx-auto text-center relative z-10 py-8 md:py-24 px-2 md:px-0"
           initial="initial"
           animate="animate"
           variants={STAGGER_VARIANTS}
@@ -127,21 +155,19 @@ const Home = () => {
             </h1>
           </motion.div>
           
-          {/* INCREASED FONT SIZE */}
           <motion.p 
             variants={FADE_IN_VARIANTS}
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed px-2"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light mb-10 md:mb-16 max-w-4xl mx-auto leading-relaxed px-2"
           >
             Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations worldwide.
           </motion.p>
 
-          <motion.div variants={FADE_IN_VARIANTS} className="max-w-3xl mx-auto mb-10 md:mb-16 px-1">
+          <motion.div variants={FADE_IN_VARIANTS} className="max-w-3xl mx-auto mb-12 md:mb-20 px-1">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent/30 via-gold/30 to-accent/30 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-2xl" />
               
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10" />
               
-              {/* TALLER INPUT FOR MOBILE */}
               <Input 
                 placeholder="Search destinations..."
                 className="pl-14 pr-28 md:pr-36 h-16 md:h-20 text-lg bg-card/90 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all font-light placeholder:text-muted-foreground/60 shadow-lg"
@@ -159,7 +185,7 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* Quick Link Cards - TALLER CARDS */}
+          {/* Quick Link Cards */}
           <motion.div variants={FADE_IN_VARIANTS} className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap gap-4 md:gap-6 justify-center px-1">
             {[
               { to: "/usa", icon: Globe2, title: "USA", sub: "States Guide", color: "accent" },
@@ -185,10 +211,10 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Stats - REDUCED SPACING (py-12 instead of 32) */}
-      <section className="py-12 md:py-20 px-4 md:px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative">
+      {/* Stats - Increased Spacing to comfortable levels */}
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative">
         <motion.div className="container mx-auto relative z-10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-4 md:gap-12 lg:gap-16">
             {STATS_DATA.map((stat, i) => (
               <motion.div key={i} className="text-center group" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.5 }} viewport={{ once: true }}>
                 <div className="w-14 h-14 md:w-20 md:h-20 mx-auto mb-3 md:mb-6 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center border border-accent/20">
@@ -204,8 +230,8 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Popular Destinations - REDUCED SPACING */}
-      <section className="py-10 md:py-16 px-4 md:px-6 bg-black">
+      {/* Popular Destinations - Spacious */}
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-black">
         <div className="container mx-auto">
           <motion.div
             initial="initial"
@@ -213,7 +239,7 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-8 md:mb-12">
+            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Popular Destinations</h2>
               <p className="text-lg md:text-xl text-gray-400 px-4">Explore cannabis-friendly travel hotspots</p>
             </motion.div>
@@ -243,8 +269,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Resources - REDUCED SPACING */}
-      <section className="py-10 md:py-16 px-4 md:px-6 bg-black">
+      {/* Resources Section */}
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-black">
         <div className="container mx-auto">
           <motion.div
             initial="initial"
@@ -252,7 +278,7 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-8 md:mb-12">
+            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Resources</h2>
               <p className="text-lg md:text-xl text-gray-400 px-4">Comprehensive cannabis travel tools</p>
             </motion.div>
@@ -279,8 +305,46 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Interactive Map Section - IMPROVED WEB VIEW CONTAINER */}
-      <section className="py-12 md:py-20 px-2 md:px-6 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
+      {/* --- RESTORED: Featured Blog / Travel Guides Section --- */}
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-black">
+        <div className="container mx-auto">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={STAGGER_VARIANTS}
+          >
+            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Travel Guides</h2>
+              <p className="text-lg md:text-xl text-gray-400 px-4">In-depth articles for your next adventure</p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {BLOG_DATA.map((article, i) => (
+                <motion.div key={i} variants={FADE_IN_VARIANTS} className="transition-all duration-300 hover:scale-[1.02]">
+                  <Card className="h-full overflow-hidden rounded-xl bg-gray-900 border border-gray-800 flex flex-col">
+                    <div className="h-48 overflow-hidden">
+                         <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+                    </div>
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="text-2xl font-semibold mb-3 text-white">{article.title}</h3>
+                      <p className="text-base text-gray-400 mb-6 flex-grow leading-relaxed">{article.summary}</p>
+                      <Link to={article.link} className="mt-auto">
+                        <Button variant="outline" className="w-full h-12 border-green-500 text-green-500 hover:bg-green-500/10 text-base">
+                          Read Article <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Interactive Map Section */}
+      <section className="py-16 md:py-24 px-2 md:px-6 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
         <div className="container mx-auto relative z-10">
           <motion.div
             initial="initial"
@@ -288,7 +352,7 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-10">
+            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12">
                <Badge className="px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 mb-6">
                  <Globe2 className="w-4 h-4 mr-2 inline" />
                  Interactive Global Map
@@ -305,13 +369,13 @@ const Home = () => {
               </p>
             </motion.div>
 
-            {/* Desktop Map - WRAPPED IN "DASHBOARD" CONTAINER FOR BETTER LOOKS */}
+            {/* Desktop Map - Dashboard Container */}
             <motion.div 
               variants={FADE_IN_VARIANTS} 
-              className="hidden md:block max-w-6xl mx-auto mb-10"
+              className="hidden md:block max-w-6xl mx-auto mb-12"
             >
               <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-accent/10 bg-black/40 backdrop-blur-sm">
-                 {/* Dashboard Header to make it look purposeful */}
+                 {/* Dashboard Header */}
                  <div className="absolute top-0 left-0 right-0 h-12 bg-white/5 border-b border-white/5 flex items-center justify-between px-6 z-20">
                     <div className="text-xs text-muted-foreground font-mono tracking-widest uppercase flex items-center">
                       <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
@@ -325,77 +389,10 @@ const Home = () => {
                     <InteractiveWorldMap className="transform transition-all hover:scale-[1.01]" />
                  </div>
 
-                 {/* Decorative Background Glow for the Map */}
+                 {/* Decorative Glow */}
                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-accent/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
               </div>
             </motion.div>
 
-            {/* Mobile Continent Selector - KEPT EXACTLY AS REQUESTED */}
-            <motion.div 
-              variants={FADE_IN_VARIANTS} 
-              className="md:hidden w-full mb-8"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-gold/20 to-accent/20 rounded-3xl blur-xl opacity-40" />
-                <div className="relative bg-gray-950/80 backdrop-blur-xl border border-accent/20 rounded-2xl p-3 sm:p-6 shadow-2xl w-full overflow-hidden">
-                  <div className="w-full">
-                    <ContinentSelector />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div variants={FADE_IN_VARIANTS} className="px-2 mb-10">
-              <MapLegend />
-            </motion.div>
-
-            {/* UPDATED BUTTON - MORE DESCRIPTIVE */}
-            <motion.div 
-              variants={FADE_IN_VARIANTS}
-              className="text-center px-4"
-            >
-              <Link to="/world">
-                <Button 
-                  size="lg" 
-                  className="w-full sm:w-auto h-auto py-5 px-8 text-lg font-semibold bg-gradient-to-r from-accent to-accent/80 whitespace-normal leading-tight border border-white/10 shadow-xl shadow-accent/20"
-                >
-                  <Maximize2 className="w-6 h-6 mr-3 flex-shrink-0" />
-                  <div className="flex flex-col items-start text-left">
-                     <span>Advanced Map & Filters</span>
-                     <span className="text-xs font-normal opacity-80">View full data, lists, and search tools</span>
-                  </div>
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section - REDUCED SPACING */}
-      <section className="py-12 md:py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl" />
-        <motion.div 
-          className="container mx-auto text-center relative z-10"
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={FADE_IN_VARIANTS}
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 px-2">Ready to Travel?</h2>
-          <p className="text-lg md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto px-4">
-            Get instant access to verified cannabis laws and 420-friendly hotels.
-          </p>
-          <Link to="/usa">
-            <Button size="lg" className="h-16 px-12 text-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-xl">
-              Start Exploring
-            </Button>
-          </Link>
-        </motion.div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-};
-
-export default Home;
+            {/* Mobile Continent Selector */}
+            <motion.div
