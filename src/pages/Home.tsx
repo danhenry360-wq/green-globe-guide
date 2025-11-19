@@ -12,7 +12,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import ContinentSelector from "@/components/ContinentSelector";
 import MapLegend from "@/components/MapLegend";
-import heroImage from "@/assets/hero-cannabis-travel.jpg"; // Your original hero image
+import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 // --- Types & Interfaces ---
 interface Destination {
@@ -59,14 +59,14 @@ const STAGGER_VARIANTS: Variants = {
   }
 };
 
-// UPDATED: Medical changed to 'gold-500/90' for consistency with Image 1
+// UPDATED: Medical changed to 'bg-amber-700/90' for golden-brown consistency
 const FEATURED_DESTINATIONS: Destination[] = [
   { name: "California", status: "Recreational", country: "USA", image: "🌴", color: "bg-green-500/90" },
   { name: "Colorado", status: "Recreational", country: "USA", image: "🏔️", color: "bg-green-500/90" },
   { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "🌷", color: "bg-amber-500/90" }, // Amber for Decriminalized
   { name: "Canada", status: "Recreational", country: "North America", image: "🍁", color: "bg-green-500/90" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "🌊", color: "bg-green-500/90" },
-  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-gold-500/90" }, // GOLD for Medical
+  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-amber-700/90" }, // GOLDEN BROWN for Medical
 ];
 
 const STATS_DATA: StatItem[] = [
@@ -135,16 +135,13 @@ const Home = () => {
       <Navigation />
       
       {/* Premium Hero Section */}
-      <section className="relative min-h-[95vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20 pb-20 md:pb-0">
+      <section className="relative min-h-[100vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20 pb-20 md:pb-0"> {/* Adjusted min-h to 100vh */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
-          // REMOVED: background-blend-mode to restore original image look
         />
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-        
-        {/* REMOVED: Professional Data Grid Background */}
         
         {/* Background Blobs */}
         <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-accent/15 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
@@ -204,7 +201,7 @@ const Home = () => {
           <motion.div variants={FADE_IN_VARIANTS} className="flex flex-wrap justify-center gap-3 mb-12 md:mb-20 px-2">
             {[
               { label: "🚀 Popular: California", term: "California", icon: Flame, color: "text-orange-400" },
-              { label: "Medical Only", term: "Medical", icon: Stethoscope, color: "text-gold-400" }, // Medical tag color updated
+              { label: "Medical Only", term: "Medical", icon: Stethoscope, color: "text-amber-700" }, // Medical tag color updated
               { label: "Europe Guide", term: "Europe", icon: Globe2, color: "text-purple-400" },
               { label: "420 Hotels", term: "Hotels", icon: Building2, color: "text-green-400" }
             ].map((tag, i) => (
@@ -407,17 +404,10 @@ const Home = () => {
               className="hidden md:block max-w-6xl mx-auto mb-16"
             >
               <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-accent/10 bg-black/40 backdrop-blur-sm">
-                 {/* Dashboard Header */}
-                 <div className="absolute top-0 left-0 right-0 h-12 bg-white/5 border-b border-white/5 flex items-center justify-between px-6 z-20">
-                    <div className="text-xs text-muted-foreground font-mono tracking-widest uppercase flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-                      Live System Data
-                    </div>
-                    <div className="text-xs text-muted-foreground font-mono">G-M-2024-X</div>
-                 </div>
+                 {/* REMOVED: Dashboard Header (Live System Data) */}
                  
                  {/* The Map Component */}
-                 <div className="pt-12 pb-4 px-4">
+                 <div className="pt-4 pb-4 px-4"> {/* Adjusted padding after removing header */}
                     <InteractiveWorldMap className="transform transition-all hover:scale-[1.01]" />
                  </div>
 
