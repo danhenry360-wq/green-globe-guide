@@ -19,8 +19,6 @@ const Home = () => {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      // For now, we'll just navigate to the USA guide page with the search term as a query parameter.
-      // A more robust solution would involve a dedicated search results page or filtering the world map/guides.
       window.location.href = `/usa?search=${encodeURIComponent(searchTerm)}`;
     }
   };
@@ -95,46 +93,68 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-accent/30 via-gold/30 to-accent/30 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-2xl" />
               <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-gold/20 blur-xl opacity-50 rounded-2xl" />
               <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10" />
-<Input 
-	                placeholder="Search destinations, accommodations, or regulations..."
-	                className="pl-16 pr-6 h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
-	                value={searchTerm}
-	                onChange={(e) => setSearchTerm(e.target.value)}
-	                onKeyDown={(e) => {
-	                  if (e.key === 'Enter') {
-	                    handleSearch();
-	                  }
-	                }}
-	              />
-	              <Button 
-	                onClick={handleSearch}
-	                className="absolute right-3 top-1/2 -translate-y-1/2 h-14 px-8 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all duration-300 z-20"
-	              >
-	                Search
-	              </Button>
+              <Input 
+                placeholder="Search destinations, accommodations, or regulations..."
+                className="pl-16 pr-6 h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
+              />
+              <Button 
+                onClick={handleSearch}
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-14 px-8 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all duration-300 z-20"
+              >
+                Search
+              </Button>
             </div>
           </motion.div>
 
-          <motion.div variants={fadeIn} className="flex flex-wrap gap-6 justify-center">
+          <motion.div variants={fadeIn} className="flex flex-wrap gap-4 justify-center">
             <Link to="/usa">
-              <Card className="group w-72 p-8 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-accent hover:shadow-2xl hover:shadow-accent/20 cursor-pointer hover:bg-card/60">
+              <Card className="group w-64 p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-accent hover:shadow-2xl hover:shadow-accent/20 cursor-pointer hover:bg-card/60">
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
                     <Globe2 className="w-8 h-8 text-accent" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2 text-foreground">USA Guide</h3>
+                  <h3 className="text-xl font-semibold mb-1 text-foreground">USA Guide</h3>
                   <p className="text-sm text-muted-foreground font-light">State-by-state regulations</p>
                 </div>
               </Card>
             </Link>
             <Link to="/world">
-              <Card className="group w-72 p-8 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-gold hover:shadow-2xl hover:shadow-gold/20 cursor-pointer hover:bg-card/60">
+              <Card className="group w-64 p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-gold hover:shadow-2xl hover:shadow-gold/20 cursor-pointer hover:bg-card/60">
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
                     <Map className="w-8 h-8 text-gold" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2 text-foreground">World Guide</h3>
+                  <h3 className="text-xl font-semibold mb-1 text-foreground">World Guide</h3>
                   <p className="text-sm text-muted-foreground font-light">Global legality map</p>
+                </div>
+              </Card>
+            </Link>
+            <Link to="/hotels">
+              <Card className="group w-64 p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-accent hover:shadow-2xl hover:shadow-accent/20 cursor-pointer hover:bg-card/60">
+                <div className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                    <Building2 className="w-8 h-8 text-accent" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-1 text-foreground">420 Hotels</h3>
+                  <p className="text-sm text-muted-foreground font-light">Cannabis-friendly stays</p>
+                </div>
+              </Card>
+            </Link>
+            <Link to="/tours">
+              <Card className="group w-64 p-6 bg-card/40 border-2 border-border/50 backdrop-blur-xl rounded-2xl transition-all duration-500 hover:scale-105 hover:border-gold hover:shadow-2xl hover:shadow-gold/20 cursor-pointer hover:bg-card/60">
+                <div className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                    <Compass className="w-8 h-8 text-gold" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-1 text-foreground">Tours</h3>
+                  <p className="text-sm text-muted-foreground font-light">Guided 420-friendly tours</p>
                 </div>
               </Card>
             </Link>
@@ -143,7 +163,7 @@ const Home = () => {
       </section>
 
       {/* Premium Trust & Stats */}
-      <section className="py-32 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative overflow-hidden">
+      <section className="py-24 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent relative overflow-hidden">
         <motion.div className="container mx-auto relative z-10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
             {[
@@ -166,8 +186,8 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Popular Destinations (Task 3) */}
-      <section className="py-20 px-4 bg-black">
+      {/* Popular Destinations */}
+      <section className="py-16 px-4 bg-black">
         <div className="container mx-auto">
           <motion.div
             initial="initial"
@@ -185,12 +205,10 @@ const Home = () => {
                 <motion.div key={i} variants={fadeIn} whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0, 255, 0, 0.2)" }} transition={{ duration: 0.3 }}>
                   <Link to={dest.country === "USA" ? `/usa` : `/world`}>
                     <Card className="relative h-72 overflow-hidden rounded-xl cursor-pointer group bg-gray-900 border border-gray-800">
-                      {/* Hero Image Placeholder */}
                       <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{ backgroundImage: `url('/dest-${i + 1}.jpg')` }}>
                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-300" />
                       </div>
                       
-                      {/* Content */}
                       <div className="absolute inset-0 flex flex-col justify-end p-6 text-white z-10">
                         <Badge className="absolute top-4 right-4 bg-green-500/80 text-white border-none text-xs">
                           {dest.status}
@@ -207,8 +225,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Everything You Need to Know (Task 4) */}
-      <section className="py-20 px-4 bg-black">
+      {/* Everything You Need to Know */}
+      <section className="py-16 px-4 bg-black">
         <div className="container mx-auto">
           <motion.div
             initial="initial"
@@ -248,8 +266,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Blog / Travel Guides Section (Task 5) */}
-      <section className="py-20 px-4 bg-black">
+      {/* Featured Blog / Travel Guides Section */}
+      <section className="py-16 px-4 bg-black">
         <div className="container mx-auto">
           <motion.div
             initial="initial"
@@ -304,7 +322,7 @@ const Home = () => {
       </section>
 
       {/* Ultra-Professional Interactive World Map Section */}
-      <section className="py-32 px-4 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
+      <section className="py-28 px-4 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
         {/* Ambient glow effects */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[150px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[150px] animate-pulse" />
@@ -350,7 +368,6 @@ const Home = () => {
               className="hidden md:block max-w-6xl mx-auto mb-12"
             >
               <div className="relative">
-                {/* Outer glow container */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 via-gold/20 to-accent/20 rounded-3xl blur-2xl opacity-50" />
                 <div className="relative">
                   <InteractiveWorldMap className="transform transition-all duration-500 hover:scale-[1.01]" />
@@ -396,7 +413,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 relative overflow-hidden">
+      <section className="py-16 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl" />
         <motion.div 
           className="container mx-auto text-center relative z-10"
