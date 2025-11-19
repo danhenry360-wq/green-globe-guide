@@ -9,6 +9,7 @@ import StateDetail from "./pages/StateDetail";
 import WorldGuide from "./pages/WorldGuide";
 import Hotels from "./pages/Hotels";
 import Tours from "./pages/Tours";
+import CityDetail from "./pages/CityDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,7 +23,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/usa" element={<USAGuide />} />
-          <Route path="/usa/:slug" element={<StateDetail />} />
+          <Route path="/usa/:stateSlug" element={<StateDetail />} />
+          <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
           <Route path="/world" element={<WorldGuide />} />
           <Route path="/hotels" element={<Hotels />} />
           <Route path="/tours" element={<Tours />} />

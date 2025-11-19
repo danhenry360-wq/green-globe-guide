@@ -4,8 +4,9 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import CityList from "@/components/CityList";
 
-import { USA_STATE_DATA } from "@/lib/usa_state_data";
+import { USA_STATE_DATA, CityData } from "@/lib/usa_state_data";
 import { ArrowLeft, Info, MapPin, Car, Plane, ShoppingBag, Home, Landmark, AlertTriangle, CheckCircle, Clock, Scale } from "lucide-react";
 
 // Helper component for the main detail items
@@ -35,18 +36,12 @@ const QuickFactItem = ({ title, value, badgeClass }) => (
   </div>
 );
 
-// Helper component for City Guides
-const CityGuideItem = ({ title, cities, isMajor }) => (
-  <div className="p-4 border border-border/50 rounded-lg bg-background/50">
-    <h4 className={`text-xl font-semibold mb-2 ${isMajor ? 'text-accent' : 'text-foreground'}`}>{title}</h4>
-    <p className="text-base text-muted-foreground">{cities}</p>
-  </div>
-);
+
 
 const StateDetail = () => {
-  const { slug } = useParams();
+  const { stateSlug } = useParams();
 
-  const state = USA_STATE_DATA.find(s => s.slug === slug);
+  const state = USA_STATE_DATA.find(s => s.slug === stateSlug);
   const isLoading = false;
 
   const getStatusColor = (status: string) => {
@@ -261,7 +256,7 @@ const StateDetail = () => {
                 </motion.section>
               )}
 
-              {/* City-Specific Guides Section (Placeholder for future data) */}
+              {// City-Specific Guides Section */}
               <motion.section 
                 className="p-8 bg-card rounded-xl shadow-2xl border border-border/50"
                 initial={{ opacity: 0, y: 20 }}
@@ -269,20 +264,15 @@ const StateDetail = () => {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3 text-gold">
-                  <Landmark className="w-7 h-7" />
-                  City-Specific Guides
-                </h2>
-                <p className="text-lg text-muted-foreground mb-4">
-                  Explore detailed guides for major cannabis-friendly cities in {state.name}.
-                </p>
-                
-                {/* Placeholder for City Data */}
-                <div className="space-y-4">
-                  <CityGuideItem title="Major Cities (Full Guides)" cities={state.major_cities || 'Los Angeles, San Francisco, San Diego'} isMajor />
-                  <CityGuideItem title="Medium Cities (Short Guides)" cities={state.medium_cities || 'Sacramento, Oakland, San Jose'} />
-                  <CityGuideItem title="Notable Areas (One-line notes)" cities={state.notable_areas || 'Palm Springs, Humboldt County'} />
-                </div>
+                  <h2 className="text-3xl font-bold mb-6 flex items-center gap-3 text-gold">
+                    <Landmark className="w-7 h-7" />
+                    Cities & Destinations
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-4">
+                    Explore detailed guides for cannabis-friendly cities and notable areas in {state.name}.
+                  </p>
+                  
+                  <CityList stateSlug={state.slug} cities={state.cities} />
               </motion.section>
 
               {/* Travel Rules Section */}
