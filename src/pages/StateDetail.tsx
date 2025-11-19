@@ -4,8 +4,8 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+
+import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { ArrowLeft, Info, MapPin, Car, Plane, ShoppingBag, Home, Landmark, AlertTriangle, CheckCircle, Clock, Scale } from "lucide-react";
 
 // Helper component for the main detail items
@@ -46,19 +46,8 @@ const CityGuideItem = ({ title, cities, isMajor }) => (
 const StateDetail = () => {
   const { slug } = useParams();
 
-  const { data: state, isLoading } = useQuery({
-    queryKey: ['state', slug],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('states')
-        .select('*')
-        .eq('slug', slug)
-        .maybeSingle();
-      
-      if (error) throw error;
-      return data;
-    }
-  });
+  const state = USA_STATE_DATA.find(s => s.slug === slug);
+  const isLoading = false;
 
   const getStatusColor = (status: string) => {
     switch (status) {

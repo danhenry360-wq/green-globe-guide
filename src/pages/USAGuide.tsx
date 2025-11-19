@@ -6,8 +6,8 @@ import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+
+import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { motion } from "framer-motion";
 import { Map, MapPin, Scale, Filter } from "lucide-react";
 import { useState } from "react";
@@ -21,18 +21,8 @@ const USAGuide = () => {
   const [regionFilter, setRegionFilter] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
 
-  const { data: states, isLoading } = useQuery({
-    queryKey: ['states'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('states')
-        .select('*')
-        .order('name');
-      
-      if (error) throw error;
-      return data;
-    }
-  });
+  const states = USA_STATE_DATA.sort((a, b) => a.name.localeCompare(b.name));
+  const isLoading = false;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -56,7 +46,7 @@ const USAGuide = () => {
     return 'Other';
   };
 
-  const filteredStates = states?.filter(state => {
+  const filteredStates = states.filter(state => {
     const matchesStatus = statusFilter === 'all' || state.status === statusFilter;
     const matchesRegion = regionFilter === 'all' || getRegion(state.name) === regionFilter;
     const matchesSearch = state.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -178,13 +168,9 @@ const USAGuide = () => {
             <Badge className="bg-destructive/20 text-destructive border-destructive/30">Illegal</Badge>
           </div>
 
-          {/* States Grid */}
-          {isLoading ? (
-            <div className="text-center text-muted-foreground">Loading states...</div>
-          ) : (
-            <>
+              {/* States Grid */}
               <div className="text-sm text-muted-foreground mb-4 text-center">
-                Showing {filteredStates?.length || 0} of {states?.length || 0} states
+                Showing {filteredStates.length} of {states.length} states
               </div>
               <motion.div 
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -198,7 +184,7 @@ const USAGuide = () => {
                   }
                 }}
               >
-                {filteredStates?.map((state) => (
+                {filteredStates.map((state) => (
                   <motion.div key={state.id} variants={fadeIn}>
                     <Link to={`/usa/${state.slug}`}>
                       <Card className="p-6 hover:border-accent/50 hover:shadow-glow-subtle transition-all cursor-pointer h-full group bg-gradient-card">
