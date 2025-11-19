@@ -256,7 +256,8 @@ const StateDetail = () => {
                 </motion.section>
               )}
 
-              {// City-Specific Guides Section */}
+              {/* City-Specific Guides Section */}
+              {state.cities.length > 0 && (
               <motion.section 
                 className="p-8 bg-card rounded-xl shadow-2xl border border-border/50"
                 initial={{ opacity: 0, y: 20 }}
@@ -271,12 +272,10 @@ const StateDetail = () => {
                   <p className="text-lg text-muted-foreground mb-4">
                     Explore detailed guides for cannabis-friendly cities and notable areas in {state.name}.
                   </p>
-                  
-                  <CityList stateSlug={state.slug} cities={state.cities} />
+                                    <CityList stateSlug={state.stateSlug} cities={state.cities} />
               </motion.section>
-
-              {/* Travel Rules Section */}
-              {state.travel_rules && (
+              )}
+              {/* Travel Rules Section */}            {state.travel_rules && (
                 <motion.section 
                   className="p-8 bg-card rounded-xl shadow-2xl border border-border/50"
                   initial={{ opacity: 0, y: 20 }}
