@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,6 +15,15 @@ import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      // For now, we'll just navigate to the USA guide page with the search term as a query parameter.
+      // A more robust solution would involve a dedicated search results page or filtering the world map/guides.
+      window.location.href = `/usa?search=${encodeURIComponent(searchTerm)}`;
+    }
+  };
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -85,10 +95,23 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-accent/30 via-gold/30 to-accent/30 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-2xl" />
               <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-gold/20 blur-xl opacity-50 rounded-2xl" />
               <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10" />
-              <Input 
-                placeholder="Search destinations, accommodations, or regulations..."
-                className="pl-16 pr-6 h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
-              />
+<Input 
+	                placeholder="Search destinations, accommodations, or regulations..."
+	                className="pl-16 pr-6 h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
+	                value={searchTerm}
+	                onChange={(e) => setSearchTerm(e.target.value)}
+	                onKeyDown={(e) => {
+	                  if (e.key === 'Enter') {
+	                    handleSearch();
+	                  }
+	                }}
+	              />
+	              <Button 
+	                onClick={handleSearch}
+	                className="absolute right-3 top-1/2 -translate-y-1/2 h-14 px-8 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all duration-300 z-20"
+	              >
+	                Search
+	              </Button>
             </div>
           </motion.div>
 
@@ -127,7 +150,7 @@ const Home = () => {
               { icon: Globe2, label: "Countries Covered", count: 120, suffix: "+" },
               { icon: MapPin, label: "Travel Destinations", count: 500, suffix: "+" },
               { icon: Building2, label: "420-Friendly Hotels", count: 300, suffix: "+" },
-              { icon: Shield, label: "Data Accuracy", count: 100, suffix: "%" }
+              { icon: Shield, label: "Data Accuracy", count: 94, suffix: "%" }
             ].map((stat, i) => (
               <motion.div key={i} className="text-center group" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15, duration: 0.6 }} viewport={{ once: true }}>
                 <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 border border-accent/20">

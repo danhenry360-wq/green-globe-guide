@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,13 @@ import { Map, MapPin, Scale, Filter } from "lucide-react";
 import { useState } from "react";
 
 const USAGuide = () => {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const initialSearchTerm = query.get('search') || "";
+
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [regionFilter, setRegionFilter] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
 
   const { data: states, isLoading } = useQuery({
     queryKey: ['states'],
@@ -52,7 +59,8 @@ const USAGuide = () => {
   const filteredStates = states?.filter(state => {
     const matchesStatus = statusFilter === 'all' || state.status === statusFilter;
     const matchesRegion = regionFilter === 'all' || getRegion(state.name) === regionFilter;
-    return matchesStatus && matchesRegion;
+    const matchesSearch = state.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesStatus && matchesRegion && matchesSearch;
   });
 
   const fadeIn = {
@@ -86,6 +94,16 @@ const USAGuide = () => {
             </p>
             
             <div className="flex flex-wrap gap-4 justify-center">
+              {/* Search Bar */}
+              <div className="relative w-full max-w-lg mx-auto mb-8">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  placeholder="Search for a state..."
+                  className="pl-12 h-12 text-base bg-card border-border focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
               <Button variant="outline" className="gap-2">
                 <Map className="w-4 h-4" />
                 View Interactive Map
