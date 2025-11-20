@@ -1,3 +1,4 @@
+// src/pages/Contact.tsx
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -101,7 +102,6 @@ const Contact = () => {
               Contact Us
             </Badge>
 
-            {/* Fluid type: phone → desktop */}
             <h1 className="text-[clamp(2.5rem,8vw,5rem)] font-extrabold leading-[1.1] tracking-tight drop-shadow-2xl">
               Get In Touch
             </h1>
@@ -127,6 +127,50 @@ const Contact = () => {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* ----------  HOW WE KEEP INFORMATION FRESH  ---------- */}
+        <section className="py-10 bg-gradient-to-r from-accent/10 to-transparent">
+          <div className="container mx-auto max-w-5xl px-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+              How we keep information fresh
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-6 text-sm">
+              {/* Step 1 – left */}
+              <div className="md:col-start-1 bg-card/50 border border-border/30 rounded-xl p-5">
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground grid place-items-center font-bold">1</div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Continuous Legal Monitoring</h3>
+                    <p className="text-muted-foreground">Our team tracks legislation daily and updates country pages within 24 h of official changes.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 2 – right */}
+              <div className="md:col-start-2 bg-card/50 border border-border/30 rounded-xl p-5">
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground grid place-items-center font-bold">2</div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Community Reports</h3>
+                    <p className="text-muted-foreground">Travelers submit first-hand experiences; each report is verified by editors before publication.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3 – left */}
+              <div className="md:col-start-1 bg-card/50 border border-border/30 rounded-xl p-5">
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground grid place-items-center font-bold">3</div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Monthly Expert Review</h3>
+                    <p className="text-muted-foreground">Cannabis lawyers audit every country page monthly; outdated sections are rewritten immediately.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
