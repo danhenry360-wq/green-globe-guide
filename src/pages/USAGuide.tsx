@@ -10,7 +10,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Link from "next/link";
+import Link from "next/link"; // ✅ FIXED - lowercase 'link'
 
 // Region mapping for US states
 const STATE_REGIONS: Record<string, string> = {
