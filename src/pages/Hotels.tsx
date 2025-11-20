@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, ExternalLink, Globe, Building, Compass, Map } from "lucide-react";
 import { useState } from "react";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 
 const Hotels = () => {
   const [activeTab, setActiveTab] = useState("hotels");
@@ -125,7 +127,8 @@ const Hotels = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
+      <Navigation />
       <div className="pt-12 pb-8 px-3 sm:px-4 md:px-6">
         <div className="container mx-auto max-w-6xl">
 
@@ -327,6 +330,8 @@ const Hotels = () => {
           )}
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
