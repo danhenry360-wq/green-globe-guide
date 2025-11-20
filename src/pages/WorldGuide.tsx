@@ -3,9 +3,25 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { SearchBar } from "@/components/SearchBar";
-import { WorldMap } from "@/components/WorldMap";
 import { Link } from "react-router-dom";
+
+/* ----------  single-file helpers  ---------- */
+const SearchBar = ({ placeholder = "Search…" }) => (
+  <div className="w-full max-w-xl mx-auto">
+    <input
+      type="text"
+      placeholder={placeholder}
+      className="input input-bordered w-full"
+    />
+  </div>
+);
+
+const WorldMap = () => (
+  <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg flex items-center justify-center">
+    <p className="text-muted-foreground">World map coming soon</p>
+  </div>
+);
+/* ------------------------------------------- */
 
 const WorldGuide = () => {
   const regions = [
@@ -16,7 +32,6 @@ const WorldGuide = () => {
       legalStatus: "Mixed",
       description:
         "Canada leads with full legalization, Mexico decriminalized, US varies by state",
-      image: "/images/regions/north-america.jpg",
     },
     {
       slug: "south-america",
@@ -25,7 +40,6 @@ const WorldGuide = () => {
       legalStatus: "Progressive",
       description:
         "Uruguay pioneered legalization, several countries decriminalized",
-      image: "/images/regions/south-america.jpg",
     },
     {
       slug: "europe",
@@ -34,7 +48,6 @@ const WorldGuide = () => {
       legalStatus: "Reforming",
       description:
         "Germany recently legalized, Netherlands famous for coffee shops",
-      image: "/images/regions/europe.jpg",
     },
     {
       slug: "africa",
@@ -42,7 +55,6 @@ const WorldGuide = () => {
       countries: 1,
       legalStatus: "Private Use",
       description: "South Africa allows private cultivation and use",
-      image: "/images/regions/africa.jpg",
     },
     {
       slug: "asia",
@@ -51,7 +63,6 @@ const WorldGuide = () => {
       legalStatus: "Medical Only",
       description:
         "Thailand leads medical cannabis, strict elsewhere",
-      image: "/images/regions/asia.jpg",
     },
     {
       slug: "oceania",
@@ -60,7 +71,6 @@ const WorldGuide = () => {
       legalStatus: "Medical Only",
       description:
         "Australia has medical program, New Zealand decriminalized",
-      image: "/images/regions/oceania.jpg",
     },
   ];
 
