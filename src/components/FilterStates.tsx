@@ -17,7 +17,7 @@ const FilterStates = ({ onFilterChange, currentFilters }: FilterStatesProps) => 
   };
 
   const handleReset = () => {
-    onFilterChange({ status: '', region: '' });
+    onFilterChange({ status: 'all', region: 'all' }); // Also update reset to use 'all'
   };
 
   return (
@@ -29,7 +29,7 @@ const FilterStates = ({ onFilterChange, currentFilters }: FilterStatesProps) => 
             <SelectValue placeholder="All statuses" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All statuses</SelectItem>
+            <SelectItem value="all">All statuses</SelectItem> {/* ✅ FIXED */}
             <SelectItem value="recreational">Recreational</SelectItem>
             <SelectItem value="medical">Medical</SelectItem>
             <SelectItem value="decriminalized">Decriminalized</SelectItem>
@@ -45,7 +45,7 @@ const FilterStates = ({ onFilterChange, currentFilters }: FilterStatesProps) => 
             <SelectValue placeholder="All regions" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All regions</SelectItem>
+            <SelectItem value="all">All regions</SelectItem> {/* ✅ FIXED */}
             <SelectItem value="West">West</SelectItem>
             <SelectItem value="Midwest">Midwest</SelectItem>
             <SelectItem value="South">South</SelectItem>
