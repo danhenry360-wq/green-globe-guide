@@ -200,4 +200,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; on this code on the how we keep information fresh section , put step 1 on left, step 2 on right and step 3 on left while still keeping it mobile friendly
+export default Contact;
