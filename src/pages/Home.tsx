@@ -20,7 +20,8 @@ interface Destination {
   status: string;
   country: string;
   image: string;
-  color: string; // Added color field
+  color: string;
+  link: string;
 }
 
 interface StatItem {
@@ -47,9 +48,10 @@ interface BlogItem {
 // --- Static Data ---
 const FADE_IN_VARIANTS: Variants = {
   initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  animate: { opacity: 1, y: 0 }
 };
+
+const FADE_IN_TRANSITION = { duration: 0.6 };
 
 const STAGGER_VARIANTS: Variants = {
   animate: {
@@ -61,12 +63,12 @@ const STAGGER_VARIANTS: Variants = {
 
 // UPDATED: Medical changed to 'bg-amber-700/90' for golden-brown consistency
 const FEATURED_DESTINATIONS: Destination[] = [
-  { name: "California", status: "Recreational", country: "USA", image: "🌴", color: "bg-green-500/90" },
-  { name: "Colorado", status: "Recreational", country: "USA", image: "🏔️", color: "bg-green-500/90" },
-  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "🌷", color: "bg-amber-500/90" }, // Amber for Decriminalized
-  { name: "Canada", status: "Recreational", country: "North America", image: "🍁", color: "bg-green-500/90" },
-  { name: "Uruguay", status: "Recreational", country: "South America", image: "🌊", color: "bg-green-500/90" },
-  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-amber-700/90" }, // GOLDEN BROWN for Medical
+  { name: "California", status: "Recreational", country: "USA", image: "🌴", color: "bg-green-500/90", link: "/usa/california" },
+  { name: "Colorado", status: "Recreational", country: "USA", image: "🏔️", color: "bg-green-500/90", link: "/usa/colorado" },
+  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "🌷", color: "bg-amber-500/90", link: "/world" },
+  { name: "Canada", status: "Recreational", country: "North America", image: "🍁", color: "bg-green-500/90", link: "/world" },
+  { name: "Uruguay", status: "Recreational", country: "South America", image: "🌊", color: "bg-green-500/90", link: "/world" },
+  { name: "Thailand", status: "Medical", country: "Asia", image: "🏝️", color: "bg-amber-700/90", link: "/world" },
 ];
 
 const STATS_DATA: StatItem[] = [
@@ -153,7 +155,7 @@ const Home = () => {
           animate="animate"
           variants={STAGGER_VARIANTS}
         >
-          <motion.div variants={FADE_IN_VARIANTS} className="mb-6 md:mb-10">
+          <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="mb-6 md:mb-10">
             <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 hover:bg-accent/20 shadow-[0_0_30px_-10px_rgba(34,197,94,0.6)] transition-shadow duration-500">
               Global Cannabis Travel Intelligence
             </Badge>
@@ -173,7 +175,7 @@ const Home = () => {
             Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations worldwide.
           </motion.p>
 
-          <motion.div variants={FADE_IN_VARIANTS} className="max-w-3xl mx-auto mb-8 md:mb-12 px-1">
+          <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="max-w-3xl mx-auto mb-8 md:mb-12 px-1">
             <div className="relative group">
               {/* Enhanced Glow Effect on Search */}
               <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" />
@@ -198,7 +200,7 @@ const Home = () => {
           </motion.div>
 
           {/* Quick Access Tags - Functional Shortcuts */}
-          <motion.div variants={FADE_IN_VARIANTS} className="flex flex-wrap justify-center gap-3 mb-12 md:mb-20 px-2">
+          <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="flex flex-wrap justify-center gap-3 mb-12 md:mb-20 px-2">
             {[
               { label: "🚀 Popular: California", term: "California", icon: Flame, color: "text-orange-400" },
               { label: "Medical Only", term: "Medical", icon: Stethoscope, color: "text-amber-700" }, // Medical tag color updated
@@ -259,15 +261,15 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-20">
+            <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="text-center mb-12 md:mb-20">
               <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">Popular Destinations</h2>
               <p className="text-lg md:text-xl text-gray-400 px-4">Explore curated cannabis-friendly travel hotspots</p>
             </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
               {FEATURED_DESTINATIONS.map((dest, i) => (
-                <motion.div key={i} variants={FADE_IN_VARIANTS} whileHover={{ y: -8 }} transition={{ type: "spring", stiffness: 300 }}>
-                  <Link to={dest.country === "USA" ? `/usa` : `/world`}>
+                <motion.div key={i} variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} whileHover={{ y: -8 }} className="hover-transition">
+                  <Link to={dest.link}>
                     <Card className="relative h-72 md:h-96 overflow-hidden rounded-2xl cursor-pointer group bg-gray-900 border border-white/5 shadow-2xl">
                       <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('/dest-${i + 1}.jpg')` }}>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:from-black/95 transition-all duration-500" />
@@ -301,14 +303,14 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-20">
+            <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="text-center mb-12 md:mb-20">
               <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">Resources</h2>
               <p className="text-lg md:text-xl text-gray-400 px-4">Essential tools for the modern cannabis traveler</p>
             </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
               {FEATURES_DATA.map((feature, i) => (
-                <motion.div key={i} variants={FADE_IN_VARIANTS}>
+                <motion.div key={i} variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION}>
                   <Link to={feature.link}>
                     <Card className="p-8 h-full bg-gray-900/50 border border-white/5 transition-all group hover:border-green-500/30 hover:bg-gray-900 hover:shadow-2xl hover:shadow-green-500/5 backdrop-blur-sm">
                       <div className="flex flex-col h-full">
@@ -339,14 +341,14 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-12 md:mb-20">
+            <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="text-center mb-12 md:mb-20">
               <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">Travel Guides</h2>
               <p className="text-lg md:text-xl text-gray-400 px-4">In-depth articles for your next adventure</p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {BLOG_DATA.map((article, i) => (
-                <motion.div key={i} variants={FADE_IN_VARIANTS} className="transition-all duration-300 hover:scale-[1.01]">
+                <motion.div key={i} variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="transition-all duration-300 hover:scale-[1.01]">
                   <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border border-white/10 flex flex-col shadow-xl">
                     <div className="h-56 overflow-hidden relative">
                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60 z-10" />
@@ -381,7 +383,7 @@ const Home = () => {
             viewport={{ once: true }}
             variants={STAGGER_VARIANTS}
           >
-            <motion.div variants={FADE_IN_VARIANTS} className="text-center mb-16">
+            <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="text-center mb-16">
                <Badge className="px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 mb-8 backdrop-blur-md">
                  <Globe2 className="w-4 h-4 mr-2 inline" />
                  Interactive Global Map
@@ -431,7 +433,7 @@ const Home = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={FADE_IN_VARIANTS} className="px-2 mb-16">
+            <motion.div variants={FADE_IN_VARIANTS} transition={FADE_IN_TRANSITION} className="px-2 mb-16">
               <MapLegend />
             </motion.div>
 
