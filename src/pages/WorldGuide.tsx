@@ -3,9 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { SearchBar } from "@/components/SearchBar";
-import { WorldMap } from "@/components/WorldMap";
-import { Link } from "react-router-dom"; // ✅ Vite-safe
+import { Link } from "react-router-dom"; // Vite-safe
 
 const WorldGuide = () => {
   const regions = [
@@ -78,12 +76,21 @@ const WorldGuide = () => {
             <p className="text-xl text-muted-foreground mb-8">
               Explore cannabis legality across countries worldwide
             </p>
-            <SearchBar placeholder="Search countries, cities, or regions..." />
+            {/* Search-bar placeholder – swap in your real component when ready */}
+            <div className="w-full max-w-xl mx-auto">
+              <input
+                type="text"
+                placeholder="Search countries, cities, or regions..."
+                className="input input-bordered w-full"
+              />
+            </div>
           </div>
 
-          {/* World Map Placeholder */}
+          {/* World-map placeholder – drop your real <WorldMap /> here later */}
           <div className="mb-16">
-            <WorldMap />
+            <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg flex items-center justify-center">
+              <p className="text-muted-foreground">World map coming soon</p>
+            </div>
           </div>
 
           {/* Region Cards */}
