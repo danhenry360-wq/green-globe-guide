@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, MapPin, Plane, Users, Info, Search, ChevronRight } from "lucide-react";
+import { ChevronDown, MapPin, Plane, Users, Info, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
@@ -188,112 +188,11 @@ const getStatusColor = (status: string) => {
   }
 };
 
-/* --------------  NEW: TREE & SEARCH  -------------- */
-type Node = {
-  type: "continent" | "country" | "city";
-  slug?: string; // only for country/city
-  name: string;
-  children?: Node[];
-  parent?: Node;
-  countrySlug?: string; // for city
-};
-
-// build hierarchical tree
-const useTree = () => {
-  return useMemo(() => {
-    const map = new Map<string, Node>();
-    const continents = new Set<string>();
-    COUNTRIES.forEach((c) => continents.add(c.region));
-    const root: Node = { type: "continent", name: "ROOT", children: [] };
-    continents.forEach((con) => {
-      const conNode: Node = { type: "continent", name: con, children: [], parent: root };
-      root.children!.push(conNode);
-      map.set(con, conNode);
-    });
-    COUNTRIES.forEach((c) => {
-      const conNode = map.get(c.region)!;
-      const couNode: Node = {
-        type: "country",
-        slug: c.slug,
-        name: c.name,
-        parent: conNode,
-        children: [],
-      };
-      conNode.children!.push(couNode);
-      c.cities.forEach((city) => {
-        const cityNode: Node = {
-          type: "city",
-          slug: city.slug,
-          name: city.name,
-          parent: couNode,
-          countrySlug: c.slug,
-        };
-        couNode.children!.push(cityNode);
-      });
-    });
-    return root;
-  }, []);
-};
-
-// fuzzy search
-const useSearch = (query: string) => {
-  const tree = useTree();
-  return useMemo(() => {
-    const q = query.toLowerCase().trim();
-    if (!q) return [];
-    const res: Node[] = [];
-    const walk = (n: Node) => {
-      if (n.type !== "root") {
-        if (n.name.toLowerCase().includes(q)) res.push(n);
-      }
-      n.children?.forEach(walk);
-    };
-    walk(tree);
-    return res;
-  }, [query, tree]);
-};
-
-// mobile friendly accordion
-const Accordion = ({ node }: { node: Node }) => {
-  const [open, setOpen] = useState(false);
-  const hasChildren = node.children && node.children.length > 0;
-  return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger asChild>
-        <Button
-          variant="ghost"
-          className="w-full justify-between px-3 py-2 h-auto"
-        >
-          <span className="font-medium text-sm">{node.name}</span>
-          {hasChildren && (
-            <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
-          )}
-        </Button>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <div className="pl-4 pt-2 space-y-2">
-          {node.children?.map((c) =>
-            c.type === "city" ? (
-              <Link
-                key={c.slug}
-                to={`/world/${c.countrySlug}/${c.slug}`}
-                className="block text-sm text-accent hover:underline"
-              >
-                {c.name}
-              </Link>
-            ) : (
-              <Accordion key={c.name} node={c} />
-            )
-          )}
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
-
 /* --------------  COMPONENT  -------------- */
 const WorldGuide = () => {
   const [query, setQuery] = useState("");
+
+  // live filter (name, region, city)
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return COUNTRIES;
@@ -304,9 +203,6 @@ const WorldGuide = () => {
         c.cities.some((city) => city.name.toLowerCase().includes(q))
     );
   }, [query]);
-
-  const searchResults = useSearch(query);
-  const tree = useTree();
 
   return (
     <div className="min-h-screen bg-background">
@@ -336,40 +232,6 @@ const WorldGuide = () => {
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent"
                 />
               </div>
-
-              {/* scalable dropdown */}
-              {query && (
-                <Card className="mt-2 max-h-72 overflow-y-auto p-3 text-left">
-                  {searchResults.length === 0 && (
-                    <p className="text-sm text-muted-foreground">No results</p>
-                  )}
-                  {searchResults.map((n) =>
-                    n.type === "city" ? (
-                      <Link
-                        key={n.slug}
-                        to={`/world/${n.countrySlug}/${n.slug}`}
-                        className="block px-2 py-1.5 text-sm hover:bg-accent/10 rounded"
-                        onClick={() => setQuery("")}
-                      >
-                        {n.parent!.parent!.name} → {n.parent!.name} → <span className="text-accent">{n.name}</span>
-                      </Link>
-                    ) : n.type === "country" ? (
-                      <Link
-                        key={n.slug}
-                        to={`/world/${n.slug}`}
-                        className="block px-2 py-1.5 text-sm hover:bg-accent/10 rounded"
-                        onClick={() => setQuery("")}
-                      >
-                        {n.parent!.name} → <span className="text-accent font-medium">{n.name}</span>
-                      </Link>
-                    ) : (
-                      <div key={n.name} className="px-2 py-1.5 text-sm font-medium">
-                        {n.name}
-                      </div>
-                    )
-                  )}
-                </Card>
-              )}
             </div>
           </motion.div>
 
@@ -385,53 +247,12 @@ const WorldGuide = () => {
             </div>
           </motion.div>
 
-          {/* MOBILE FIRST: accordion by continent */}
-          <div className="md:hidden">
-            {tree.children?.map((con) => (
-              <Card key={con.name} className="mb-3 p-3">
-                <Accordion node={con} />
-              </Card>
-            ))}
-          </div>
-
-          {/* DESKTOP: 3 column mega menu */}
-          <div className="hidden md:grid md:grid-cols-3 gap-6">
-            {tree.children?.map((con) => (
-              <Card key={con.name} className="p-4">
-                <h3 className="font-bold mb-3">{con.name}</h3>
-                <div className="space-y-3">
-                  {con.children?.map((cou) => (
-                    <div key={cou.slug}>
-                      <Link
-                        to={`/world/${cou.slug}`}
-                        className="font-medium text-sm hover:text-accent"
-                      >
-                        {cou.name}
-                      </Link>
-                      <div className="ml-3 mt-1 space-y-1">
-                        {cou.children?.map((city) => (
-                          <Link
-                            key={city.slug}
-                            to={`/world/${city.countrySlug}/${city.slug}`}
-                            className="block text-xs text-muted-foreground hover:text-accent"
-                          >
-                            {city.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          {/* RESULTS (kept intact) */}
+          {/* RESULTS */}
           {filtered.length === 0 && (
-            <div className="text-center text-muted-foreground mt-10">No countries match your search.</div>
+            <div className="text-center text-muted-foreground">No countries match your search.</div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((c, i) => (
               <motion.div
                 key={c.slug}
@@ -524,11 +345,11 @@ const WorldGuide = () => {
                                     </ul>
                                   </div>
                                   <Link
-                                    to={`/world/${c.slug}/${city.slug}`}
-                                    className="text-xs text-accent hover:underline shrink-0 ml-3"
-                                  >
-                                    Guide →
-                                  </Link>
+                                        to={`/world/${c.slug}/${city.slug}`}
+                                        className="text-xs text-accent hover:underline shrink-0 ml-3"
+                                      >
+                                        Guide →
+                                      </Link>
                                 </div>
                               </Card>
                             ))}
