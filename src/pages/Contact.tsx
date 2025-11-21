@@ -1,5 +1,23 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+
+const CONTACT_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Contact Green Globe",
+  url: "https://greenglobe.com/contact",
+  mainEntity: {
+    "@type": "Organization",
+    name: "Green Globe Guide",
+    url: "https://greenglobe.com",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+1-800-555-0199",
+      contactType: "customer service",
+      email: "support@greenglobe.com",
+    },
+  },
+};
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -70,26 +88,7 @@ const Contact = () => {
         <meta name="description" content="Reach Green Globe for questions, suggestions, or to report outdated cannabis travel info. We usually reply within 24 hours." />
         <meta name="keywords" content="Green Globe contact, cannabis travel support, 420 travel help, report outdated law, marijuana tourism question" />
         <link rel="canonical" href="https://greenglobe.com/contact " />
-        {(() => {
-          const structuredData = {
-            "@context": "https://schema.org",
-            "@type": "ContactPage",
-            name: "Contact Green Globe",
-            url: "https://greenglobe.com/contact",
-            mainEntity: {
-              "@type": "Organization",
-              name: "Green Globe Guide",
-              url: "https://greenglobe.com",
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+1-800-555-0199",
-                contactType: "customer service",
-                email: "support@greenglobe.com",
-              },
-            },
-          };
-          return <script type="application/ld+json">{JSON.stringify(structuredData)}</script>;
-        })()}
+        <script type="application/ld+json">{JSON.stringify(CONTACT_STRUCTURED_DATA)}</script>
       </head>
 
       <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">

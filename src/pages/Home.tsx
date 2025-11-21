@@ -172,32 +172,32 @@ const BLOG_DATA: BlogItem[] = [
 ];
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
-  const SEOHead = () => {
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "BudQuest",
-      description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-      url: "https://budquest.com",
-      applicationCategory: "TravelApplication",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD"
-      }
-    };
+const HOME_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "BudQuest",
+  description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
+  url: "https://budquest.com",
+  applicationCategory: "TravelApplication",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD"
+  }
+};
 
-    useEffect(() => {
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(structuredData);
-      document.head.appendChild(script);
+const SEOHead = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(HOME_STRUCTURED_DATA);
+    document.head.appendChild(script);
 
-      return () => document.head.removeChild(script);
-    }, []);
+    return () => document.head.removeChild(script);
+  }, []);
 
-    return null;
-  };
+  return null;
+};
 
 /* ----------  COMPONENT  ---------- */
 /**

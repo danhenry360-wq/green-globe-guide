@@ -164,8 +164,8 @@ const DATA: CountryData[] = [
         ],
       },
     ],
-    // OTHER COUNTRIES – same pattern, just drop hotels directly
-    {
+  },
+  {
       country: "Canada",
       slug: "canada",
       flag: "https://flagcdn.com/w40/ca.png",
@@ -246,6 +246,22 @@ const StarRating = ({ value }: { value: number }) => (
 );
 
 /* --------------------  COMPONENT  -------------------- */
+const HOTELS_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "BudQuest Verified 420-Friendly Hotels",
+  description: "A collection of verified 420-friendly hotels worldwide.",
+  mainEntity: DATA.map(country => ({
+    "@type": "Place",
+    name: country.country,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: country.country,
+    },
+    hasMap: `https://greenglobe.com/hotels/${country.slug}`,
+  }))
+};
+
 const Hotels = () => {
   const [query, setQuery] = useState("");
   const [openCountry, setOpenCountry] = useState<string | null>(null);
@@ -288,25 +304,7 @@ const Hotels = () => {
         <meta property="og:description" content="Book verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://greenglobe.com/hotels" />
-        {/* JSON-LD structured data (SEO) */}
-        {(() => {
-          const structuredData = {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: "BudQuest Verified 420-Friendly Hotels",
-            description: "A collection of verified 420-friendly hotels worldwide.",
-            mainEntity: DATA.map(country => ({
-              "@type": "Place",
-              name: country.country,
-              address: {
-                "@type": "PostalAddress",
-                addressCountry: country.country,
-              },
-              hasMap: `https://greenglobe.com/hotels/${country.slug}`,
-            }))
-          };
-          return <script type="application/ld+json">{JSON.stringify(structuredData)}</script>;
-        })()}
+        <script type="application/ld+json">{JSON.stringify(HOTELS_STRUCTURED_DATA)}</script>
         <meta property="og:image" content="https://greenglobe.com/og-hotels.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="BudQuest Verified 420-Friendly Hotels | Green Globe" />
