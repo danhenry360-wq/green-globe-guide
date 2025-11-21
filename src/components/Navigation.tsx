@@ -14,7 +14,7 @@ export const Navigation = () => {
           <Link to="/" className="flex items-center gap-3 group">
             <img src={logo} alt="Global Canna Pass" className="h-10 w-10 group-hover:scale-110 transition-transform" />
             <span className="text-xl font-bold bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">
-              Global Canna Pass
+              BudQuest
             </span>
           </Link>
 
