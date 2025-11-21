@@ -3,7 +3,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Leaf, ExternalLink, Building } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -20,21 +19,17 @@ interface Hotel {
 }
 
 const HOTELS: Hotel[] = [
-  {
-    id: 1,
-    name: "Green Valley Resort",
-    city: "Denver",
-    state: "CO",
-    rating: 4.8,
-    policies: "Cannabis consumption allowed in designated areas. Pet-friendly rooms available.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
-  // ... other hotels
+  { id: 1, name: "Green Valley Resort", city: "Denver", state: "CO", rating: 4.8, policies: "Cannabis consumption allowed in designated areas. Pet-friendly rooms available.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  { id: 2, name: "Leaf & Rest Boutique", city: "Los Angeles", state: "CA", rating: 4.7, policies: "Complimentary smoking lounge. 24-hour room service.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  { id: 3, name: "Mountain High Lodge", city: "Portland", state: "OR", rating: 4.9, policies: "Private balconies perfect for consumption. Eco-friendly amenities.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  { id: 4, name: "Urban Chill Hotel", city: "Seattle", state: "WA", rating: 4.6, policies: "420-friendly suites with premium ventilation systems.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  { id: 5, name: "Pacific Retreat", city: "San Francisco", state: "CA", rating: 4.8, policies: "Rooftop lounge for guests. Wellness packages available.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  { id: 6, name: "Desert Oasis Inn", city: "Phoenix", state: "AZ", rating: 4.5, policies: "Poolside relaxation zones. Cannabis concierge service.", website: "https://example.com", flag: "https://flagcdn.com/w40/us.png" },
+  // add more hotels here...
 ];
 
 /* -------------------------
-   SEO & Structured Data
+   Structured Data for SEO
 --------------------------*/
 const structuredData = {
   "@context": "https://schema.org",
@@ -52,21 +47,27 @@ const structuredData = {
       addressRegion: h.state,
       addressCountry: "US",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: h.rating,
-      reviewCount: 1,
-    },
+    aggregateRating: { "@type": "AggregateRating", ratingValue: h.rating, reviewCount: 1 },
     position: i + 1,
     amenityFeature: [
       { "@type": "LocationFeatureSpecification", name: "420-friendly", value: true },
       { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: h.policies.includes("Pet") },
     ],
   })),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://greenglobe.com/hotels",
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://greenglobe.com/hotels?search={query}",
+    "query-input": "required name=query",
+  },
+  about: "BudQuest Verified 420-Friendly Hotels in the US",
 };
 
 /* -------------------------
-   COMPONENTS
+   Star Rating Component
 --------------------------*/
 const Star = ({ filled }: { filled: boolean }) => (
   <svg
@@ -87,6 +88,9 @@ const StarRating = ({ value }: { value: number }) => (
   </div>
 );
 
+/* -------------------------
+   Hotels Page Component
+--------------------------*/
 const Hotels = () => {
   const [query, setQuery] = useState("");
 
@@ -100,6 +104,8 @@ const Hotels = () => {
         h.state.toLowerCase().includes(q)
     );
   }, [query]);
+
+  const states = Array.from(new Set(HOTELS.map((h) => h.state))).sort();
 
   return (
     <>
@@ -134,6 +140,19 @@ const Hotels = () => {
               </p>
             </header>
 
+            {/* STATE LINKS FOR SEO INTERNAL LINKING */}
+            <nav className="flex flex-wrap gap-2 justify-center mb-8">
+              {states.map((state) => (
+                <a
+                  key={state}
+                  href={`#state-${state}`}
+                  className="text-accent hover:text-accent-foreground text-sm font-medium"
+                >
+                  {state}
+                </a>
+              ))}
+            </nav>
+
             {/* SEARCH */}
             <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-lg border border-border p-3 mb-8">
               <div className="relative">
@@ -149,57 +168,58 @@ const Hotels = () => {
               </div>
             </div>
 
-            {/* RESULTS */}
-            {filtered.length === 0 && (
-              <p className="text-center text-muted-foreground">No hotels match your search.</p>
-            )}
+            {/* HOTELS BY STATE */}
+            {states.map((state) => {
+              const hotelsInState = filtered.filter((h) => h.state === state);
+              if (!hotelsInState.length) return null;
+              return (
+                <section key={state} id={`state-${state}`} className="mb-10">
+                  <h2 className="text-2xl font-semibold mb-4">{state} Hotels</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {hotelsInState.map((hotel) => (
+                      <article
+                        key={hotel.id}
+                        className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl flex flex-col border border-border bg-card/50"
+                      >
+                        <div className="aspect-video relative bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
+                          <img
+                            src={hotel.flag}
+                            alt={`Flag of ${hotel.state}`}
+                            loading="lazy"
+                            className="h-6 w-8 rounded border border-border absolute top-3 left-3"
+                          />
+                          <Building className="w-10 h-10 text-accent" />
+                        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((hotel) => (
-                <article
-                  key={hotel.id}
-                  className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl flex flex-col border border-border bg-card/50"
-                >
-                  <div className="aspect-video relative bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                    <img
-                      src={hotel.flag}
-                      alt={`Flag of ${hotel.state}`}
-                      loading="lazy"
-                      className="h-6 w-8 rounded border border-border absolute top-3 left-3"
-                    />
-                    <Building className="w-10 h-10 text-accent" />
+                        <div className="p-5 flex flex-col gap-3 flex-1">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="text-lg font-semibold text-white line-clamp-1">{hotel.name}</h3>
+                            <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
+                              <Leaf className="w-3 h-3" /> Verified
+                            </Badge>
+                          </div>
+
+                          <p className="text-sm text-muted-foreground">{hotel.city}, {hotel.state}</p>
+                          <StarRating value={hotel.rating} />
+                          {hotel.policies && (
+                            <p className="text-sm text-muted-foreground line-clamp-3 flex-1">{hotel.policies}</p>
+                          )}
+
+                          <a
+                            href={hotel.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-foreground mt-auto"
+                          >
+                            Visit Website <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </article>
+                    ))}
                   </div>
-
-                  <div className="p-5 flex flex-col gap-3 flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-lg font-semibold text-white line-clamp-1">{hotel.name}</h2>
-                      <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
-                        <Leaf className="w-3 h-3" /> Verified
-                      </Badge>
-                    </div>
-
-                    <p className="text-sm text-muted-foreground">
-                      {hotel.city}, {hotel.state}
-                    </p>
-
-                    <StarRating value={hotel.rating} />
-
-                    {hotel.policies && (
-                      <p className="text-sm text-muted-foreground line-clamp-3 flex-1">{hotel.policies}</p>
-                    )}
-
-                    <a
-                      href={hotel.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-foreground mt-auto"
-                    >
-                      Visit Website <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
+                </section>
+              );
+            })}
 
             {/* DISCLAIMER */}
             <section className="mt-12 p-4 bg-card/50 rounded-lg text-xs text-muted-foreground">
@@ -215,10 +235,7 @@ const Hotels = () => {
                 { label: "Verified Hotels", value: filtered.length },
                 { label: "Cities Covered", value: new Set(filtered.map((h) => h.city)).size },
                 { label: "States", value: new Set(filtered.map((h) => h.state)).size },
-                {
-                  label: "Avg Rating",
-                  value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1),
-                },
+                { label: "Avg Rating", value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1) },
               ].map((stat) => (
                 <Card key={stat.label} className="p-4 border-border bg-card/50">
                   <p className="text-2xl font-bold text-white">{stat.value}</p>
