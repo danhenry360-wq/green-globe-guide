@@ -4,11 +4,13 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { MapPin, ExternalLink, Search, Building, Globe, Leaf, Info, ChevronDown } from "lucide-react";
+import { ChevronDown, MapPin, ExternalLink, Search, Building, Globe, Leaf, Info } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-/* --------------------  DATA  -------------------- */
+/* ----------------------------------------------------
+   DATA – scalable by country / state / city
+----------------------------------------------------- */
 interface Hotel {
   id: number;
   name: string;
@@ -21,160 +23,223 @@ interface Hotel {
   priceRange?: string;
 }
 
-const HOTELS: Hotel[] = [
-  {
-    id: 1,
-    name: "Green Valley Resort",
-    city: "Denver",
-    state: "CO",
-    rating: 4.8,
-    policies: "Cannabis consumption allowed in designated areas. Pet-friendly rooms available.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$",
-  },
-  {
-    id: 2,
-    name: "Leaf & Rest Boutique",
-    city: "Los Angeles",
-    state: "CA",
-    rating: 4.7,
-    policies: "Complimentary smoking lounge. 24-hour room service.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$$",
-  },
-  {
-    id: 3,
-    name: "Mountain High Lodge",
-    city: "Portland",
-    state: "OR",
-    rating: 4.9,
-    policies: "Private balconies perfect for consumption. Eco-friendly amenities.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$",
-  },
-  {
-    id: 4,
-    name: "Urban Chill Hotel",
-    city: "Seattle",
-    state: "WA",
-    rating: 4.6,
-    policies: "420-friendly suites with premium ventilation systems.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$$",
-  },
-  {
-    id: 5,
-    name: "Pacific Retreat",
-    city: "San Francisco",
-    state: "CA",
-    rating: 4.8,
-    policies: "Rooftop lounge for guests. Wellness packages available.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$$",
-  },
-  {
-    id: 6,
-    name: "Desert Oasis Inn",
-    city: "Phoenix",
-    state: "AZ",
-    rating: 4.5,
-    policies: "Poolside relaxation zones. Cannabis concierge service.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-    priceRange: "$$",
-  },
-];
+interface StateHotels {
+  state: string;
+  slug: string;
+  flag: string;
+  hotels: Hotel[];
+}
 
-/* --------------------  SEO  -------------------- */
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "BudQuest Verified 420-Friendly Hotels | Green Globe",
-  description:
-    "Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, star-rated, premium stays, no surprises.",
-  url: "https://greenglobe.com/hotels",
-  mainEntity: [
+interface CountryData {
+  country: string;
+  slug: string;
+  flag: string;
+  states: StateHotels[]; // for USA we list states; for others we can drop hotels directly
+}
+
+const DATA: CountryData[] = [
+  // USA – notable cannabis states
+  {
+    country: "USA",
+    slug: "usa",
+    flag: "https://flagcdn.com/w40/us.png",
+    states: [
+      {
+        state: "California",
+        slug: "california",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 11,
+            name: "Leaf & Rest Boutique",
+            city: "Los Angeles",
+            state: "CA",
+            rating: 4.7,
+            policies: "Complimentary smoking lounge. 24-hour room service.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$$",
+          },
+          {
+            id: 12,
+            name: "Pacific Retreat",
+            city: "San Francisco",
+            state: "CA",
+            rating: 4.8,
+            policies: "Rooftop lounge for guests. Wellness packages available.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$$",
+          },
+        ],
+      },
+      {
+        state: "Colorado",
+        slug: "colorado",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 13,
+            name: "Green Valley Resort",
+            city: "Denver",
+            state: "CO",
+            rating: 4.8,
+            policies: "Cannabis consumption allowed in designated areas. Pet-friendly rooms available.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$",
+          },
+        ],
+      },
+      {
+        state: "Oregon",
+        slug: "oregon",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 14,
+            name: "Mountain High Lodge",
+            city: "Portland",
+            state: "OR",
+            rating: 4.9,
+            policies: "Private balconies perfect for consumption. Eco-friendly amenities.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$",
+          },
+        ],
+      },
+      {
+        state: "Washington",
+        slug: "washington",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 15,
+            name: "Urban Chill Hotel",
+            city: "Seattle",
+            state: "WA",
+            rating: 4.6,
+            policies: "420-friendly suites with premium ventilation systems.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$$",
+          },
+        ],
+      },
+      {
+        state: "Arizona",
+        slug: "arizona",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 16,
+            name: "Desert Oasis Inn",
+            city: "Phoenix",
+            state: "AZ",
+            rating: 4.5,
+            policies: "Poolside relaxation zones. Cannabis concierge service.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$",
+          },
+        ],
+      },
+      {
+        state: "Nevada",
+        slug: "nevada",
+        flag: "https://flagcdn.com/w40/us.png",
+        hotels: [
+          {
+            id: 17,
+            name: "Sin City Suites",
+            city: "Las Vegas",
+            state: "NV",
+            rating: 4.7,
+            policies: "Private balconies, 24-hour concierge, cannabis welcome kit.",
+            website: "https://example.com",
+            flag: "https://flagcdn.com/w40/us.png",
+            priceRange: "$$$",
+          },
+        ],
+      },
+    ],
+    // OTHER COUNTRIES – same pattern, just drop hotels directly
     {
-      "@type": "ItemList",
-      itemListElement: HOTELS.map((h, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item: {
-          "@type": ["Hotel", "LodgingBusiness"],
-          name: h.name,
-          image: h.flag,
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: h.city,
-            addressRegion: h.state,
-            addressCountry: "US",
-          },
-          url: h.website,
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: h.rating,
-            reviewCount: 1,
-          },
-          priceRange: h.priceRange || "$$",
-          amenityFeature: {
-            "@type": "LocationFeatureSpecification",
-            name: "Cannabis Consumption Allowed",
-            value: true,
-          },
-        },
-      })),
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: [
+      country: "Canada",
+      slug: "canada",
+      flag: "https://flagcdn.com/w40/ca.png",
+      states: [
         {
-          "@type": "Question",
-          name: "Are these hotels really 420-friendly?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Every hotel is manually verified by our BudQuest team and displays a ‘BudQuest Verified’ badge.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Can I smoke in my room?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Policies vary by property. Each card lists the exact consumption rules for that hotel.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Do you cover countries outside the USA?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Absolutely—use our World Guide for verified stays in Canada, Netherlands, Germany, Thailand and more.",
-          },
+          state: "Canada",
+          slug: "canada",
+          flag: "https://flagcdn.com/w40/ca.png",
+          hotels: [
+            {
+              id: 21,
+              name: "Maple Leaf Lodge",
+              city: "Toronto",
+              state: "ON",
+              rating: 4.8,
+              policies: "Designated consumption lounges. Government-licensed retailer on-site.",
+              website: "https://example.com",
+              flag: "https://flagcdn.com/w40/ca.png",
+              priceRange: "$$",
+            },
+            {
+              id: 22,
+              name: "Rocky Mountain Retreat",
+              city: "Vancouver",
+              state: "BC",
+              rating: 4.9,
+              policies: "Balcony-friendly, pet-friendly, edible welcome kit.",
+              website: "https://example.com",
+              flag: "https://flagcdn.com/w40/ca.png",
+              priceRange: "$$$",
+            },
+          ],
         },
       ],
     },
-  ],
-};
+    {
+      country: "Netherlands",
+      slug: "netherlands",
+      flag: "https://flagcdn.com/w40/nl.png",
+      states: [
+        {
+          state: "Netherlands",
+          slug: "netherlands",
+          flag: "https://flagcdn.com/w40/nl.png",
+          hotels: [
+            {
+              id: 31,
+              name: "Canal View Cannabis Hotel",
+              city: "Amsterdam",
+              state: "NH",
+              rating: 4.7,
+              policies: "Coffee-shop partners, no tobacco inside, canal-view rooms.",
+              website: "https://example.com",
+              flag: "https://flagcdn.com/w40/nl.png",
+              priceRange: "$$$",
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-const Star = ({ filled }: { filled: boolean }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    className={`w-4 h-4 ${filled ? "fill-yellow-400 text-yellow-400" : "text-gray-600"}`}
-  >
-    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-  </svg>
-);
-
+/* --------------------  HELPERS  -------------------- */
 const StarRating = ({ value }: { value: number }) => (
   <div className="flex items-center gap-1">
     {[1, 2, 3, 4, 5].map((i) => (
-      <Star key={i} filled={i <= Math.round(value)} />
+      <svg
+        key={i}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        className={`w-4 h-4 ${i <= Math.round(value) ? "fill-yellow-400 text-yellow-400" : "text-gray-600"}`}
+      >
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+      </svg>
     ))}
     <span className="text-xs text-muted-foreground ml-1">{value.toFixed(1)}</span>
   </div>
@@ -183,24 +248,40 @@ const StarRating = ({ value }: { value: number }) => (
 /* --------------------  COMPONENT  -------------------- */
 const Hotels = () => {
   const [query, setQuery] = useState("");
+  const [openCountry, setOpenCountry] = useState<string | null>(null);
+  const [openState, setOpenState] = useState<string | null>(null);
 
+  // live filter (country, state, city, hotel name)
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
-    if (!q) return HOTELS;
-    return HOTELS.filter(
-      (h) =>
-        h.name.toLowerCase().includes(q) ||
-        h.city.toLowerCase().includes(q) ||
-        h.state.toLowerCase().includes(q)
-    );
+    if (!q) return DATA;
+    return DATA.map((c) => ({
+      ...c,
+      states: c.states
+        .map((s) => ({
+          ...s,
+          hotels: s.hotels.filter(
+            (h) =>
+              h.name.toLowerCase().includes(q) ||
+              h.city.toLowerCase().includes(q) ||
+              h.state.toLowerCase().includes(q) ||
+              c.country.toLowerCase().includes(q) ||
+              s.state.toLowerCase().includes(q)
+          ),
+        }))
+        .filter((s) => s.hotels.length > 0),
+    })).filter((c) => c.states.length > 0);
   }, [query]);
+
+  // mobile helpers
+  const isMobile = typeof window !== "undefined" ? window.innerWidth < 768 : false;
 
   return (
     <>
       <head>
         <title>BudQuest Verified 420-Friendly Hotels | Green Globe</title>
-        <meta name="description" content="Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, star-rated, premium stays, no surprises." />
-        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, Green Globe, marijuana accommodation, weed friendly stays" />
+        <meta name="description" content="Book BudQuest-verified 420-friendly hotels by country and state. Cannabis policies checked, star-rated, premium stays." />
+        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, Green Globe, USA, Canada, Netherlands, marijuana accommodation" />
         <link rel="canonical" href="https://greenglobe.com/hotels" />
 
         <meta property="og:title" content="BudQuest Verified 420-Friendly Hotels | Green Globe" />
@@ -221,19 +302,19 @@ const Hotels = () => {
 
         <main className="pt-24 pb-20 px-4">
           <div className="container mx-auto max-w-7xl">
-            {/* HERO – semantic h1 */}
+            {/* HERO */}
             <section className="max-w-3xl mx-auto mb-8 text-center">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
-              <p className="text-sm sm:text-base text-muted-foreground">420-friendly stays worldwide. Policies checked, premium experience.</p>
+              <p className="text-sm sm:text-base text-muted-foreground">Browse by country or state. Policies checked, premium experience.</p>
             </section>
 
-            {/* STATIC SEARCH – no sticky, sits right under hero */}
+            {/* STATIC SEARCH */}
             <div className="mb-8">
               <div className="relative max-w-xl mx-auto">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search hotels, cities, states..."
+                  placeholder="Search hotels, cities, states, countries..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent"
@@ -247,85 +328,85 @@ const Hotels = () => {
               <div className="text-center text-muted-foreground">No hotels match your search.</div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((hotel) => (
-                <article
-                  key={hotel.id}
-                  className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl flex flex-col border border-border bg-card/50 hover:bg-card/80"
-                  itemScope
-                  itemType="https://schema.org/Hotel"
-                >
-                  <div className="aspect-video relative bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                    <img
-                      src={hotel.flag}
-                      alt={`Flag of ${hotel.state}`}
-                      loading="lazy"
-                      className="h-6 w-8 rounded border border-border absolute top-3 left-3"
-                      itemProp="image"
-                    />
-                    <Building className="w-10 h-10 text-accent" />
-                  </div>
+            {/* COUNTRY ACCORDION – mobile first */}
+            <div className="space-y-6">
+              {filtered.map((country) => (
+                <Card key={country.slug} className="border border-border bg-card/50">
+                  <Collapsible
+                    open={openCountry === country.slug}
+                    onOpenChange={() => setOpenCountry(openCountry === country.slug ? null : country.slug)}
+                  >
+                    <CollapsibleTrigger asChild>
+                      <button className="flex items-center justify-between w-full px-4 py-3 text-left">
+                        <div className="flex items-center gap-3">
+                          <img src={country.flag} alt={country.country} className="h-6 w-8 rounded border border-border" />
+                          <span className="font-semibold text-white">{country.country}</span>
+                          <Badge variant="secondary">{country.states.reduce((sum, s) => sum + s.hotels.length, 0)} hotels</Badge>
+                        </div>
+                        <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${openCountry === country.slug ? "rotate-180" : ""}`} />
+                      </button>
+                    </CollapsibleTrigger>
 
-                  <div className="p-5 flex flex-col gap-3 flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="text-lg font-semibold text-white line-clamp-1" itemProp="name">
-                        {hotel.name}
-                      </h3>
-                      <Badge className="bg-green-600 text-white text-xs flex items-center gap-1" itemProp="award">
-                        <Leaf className="w-3 h-3" />
-                        BudQuest Verified
-                      </Badge>
-                    </div>
+                    <CollapsibleContent>
+                      <div className="px-4 pb-4 space-y-4 border-t border-border">
+                        {country.states.map((state) => (
+                          <Collapsible
+                            key={state.slug}
+                            open={openState === state.slug}
+                            onOpenChange={() => setOpenState(openState === state.slug ? null : state.slug)}
+                          >
+                            <CollapsibleTrigger asChild>
+                              <button className="flex items-center justify-between w-full py-2 text-left">
+                                <span className="text-sm text-white">{state.state}</span>
+                                <Badge variant="outline">{state.hotels.length}</Badge>
+                                <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${openState === state.slug ? "rotate-180" : ""}`} />
+                              </button>
+                            </CollapsibleTrigger>
 
-                    <p className="text-sm text-muted-foreground" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                      <span itemProp="addressLocality">{hotel.city}</span>, <span itemProp="addressRegion">{hotel.state}</span>
-                    </p>
-
-                    <StarRating value={hotel.rating} />
-
-                    {hotel.policies && (
-                      <p className="text-sm text-muted-foreground line-clamp-3 flex-1" itemProp="description">
-                        {hotel.policies}
-                      </p>
-                    )}
-
-                    <a
-                      href={hotel.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-foreground mt-auto"
-                      itemProp="url"
-                    >
-                      Visit Website <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-                </article>
+                            <CollapsibleContent>
+                              <div className="grid grid-cols-1 gap-3 pt-2">
+                                {state.hotels.map((hotel) => (
+                                  <Card key={hotel.id} className="p-3 bg-card/70 border-border/50">
+                                    <div className="flex items-start justify-between gap-2">
+                                      <div className="flex-1">
+                                        <h4 className="font-semibold text-white text-sm">{hotel.name}</h4>
+                                        <p className="text-xs text-muted-foreground">
+                                          {hotel.city}, {hotel.state}
+                                        </p>
+                                        <StarRating value={hotel.rating} />
+                                        <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{hotel.policies}</p>
+                                      </div>
+                                      <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
+                                        <Leaf className="w-3 h-3" />
+                                        Verified
+                                      </Badge>
+                                    </div>
+                                    <a
+                                      href={hotel.website}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 text-xs text-accent hover:text-accent-foreground mt-2"
+                                    >
+                                      Visit <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  </Card>
+                                ))}
+                              </div>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        ))}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </Card>
               ))}
             </div>
 
-            {/* FOOTER STATS */}
-            <section className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              {[
-                { label: "Verified Hotels", value: filtered.length },
-                { label: "Cities Covered", value: new Set(filtered.map((h) => h.city)).size },
-                { label: "States", value: new Set(filtered.map((h) => h.state)).size },
-                { label: "Avg Rating", value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1) },
-              ].map((stat) => (
-                <Card key={stat.label} className="p-4 border-border bg-card/50">
-                  <p className="text-2xl font-bold text-white">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
-                </Card>
-              ))}
-            </section>
-
-            {/* DISCLAIMER – collapsible, mobile-friendly */}
+            {/* RED DISCLAIMER – visible on dark */}
             <section className="mt-12">
               <Collapsible defaultOpen>
                 <CollapsibleTrigger asChild>
-                  <button
-                    type="button"
-                    className="flex items-center justify-between w-full px-4 py-2 text-sm text-muted-foreground hover:text-white transition-colors"
-                  >
+                  <button className="flex items-center justify-between w-full px-4 py-2 text-sm text-red-400 hover:text-red-300 transition-colors">
                     <span className="flex items-center gap-2">
                       <Info className="w-4 h-4" />
                       Legal Disclaimer
@@ -335,7 +416,7 @@ const Hotels = () => {
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <Card className="p-4 bg-card/50 border-border mt-2">
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-red-400">
                       Green Globe is an informational resource only. We do not provide legal advice. Always confirm current local laws and hotel policies before booking or consuming cannabis. International transport remains illegal.
                     </p>
                   </Card>
