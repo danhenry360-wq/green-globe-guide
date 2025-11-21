@@ -15,6 +15,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import LosAngeles from "./pages/LosAngeles";
+import SanFrancisco from "./pages/SanFrancisco";
+import SanDiego from "./pages/SanDiego";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +38,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/usa/california/los-angeles" element={<LosAngeles />} />
+          <Route path="/usa/california/san-francisco" element={<SanFrancisco />} />
+          <Route path="/usa/california/san-diego" element={<SanDiego />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
