@@ -10,7 +10,7 @@ import {
   ArrowRight, Zap, Building2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 
 /* ============================================
@@ -137,73 +137,6 @@ const WORLD_GUIDE: Continent[] = [
             slug: "guadalajara",
             name: "Guadalajara",
             atGlance: ["Tech hub", "Younger crowd", "Check Airbnb rules"],
-          },
-        ],
-      },
-    ],
-  },
-
-  // === SOUTH AMERICA ===
-  {
-    id: "south-america",
-    name: "South America",
-    emoji: "🌎",
-    description: "Leading legalization in Uruguay; progressive cities across the continent",
-    countriesCount: 2,
-    countries: [
-      {
-        slug: "uruguay",
-        name: "Uruguay",
-        legalStatus: "Recreational",
-        possession: "40 g monthly (residents only)",
-        airport: "Transport prohibited",
-        tourist: "Tourists cannot purchase—locals only",
-        description: "World's first full legalization; pharmacy sales and clubs for residents.",
-        flag: "🇺🇾",
-        image: "/dest-5.jpg",
-        cities: [
-          {
-            slug: "montevideo",
-            name: "Montevideo",
-            atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"],
-          },
-          {
-            slug: "punta-del-este",
-            name: "Punta del Este",
-            atGlance: ["Upscale resort town", "Private circles", "Beautiful beaches"],
-          },
-          {
-            slug: "colonia",
-            name: "Colonia del Sacramento",
-            atGlance: ["Historic small town", "Relaxed vibe", "Day-trip to Buenos Aires"],
-          },
-        ],
-      },
-      {
-        slug: "colombia",
-        name: "Colombia",
-        legalStatus: "Medical",
-        possession: "Medical only with prescription",
-        airport: "Strictly prohibited",
-        tourist: "Medical clinics available",
-        description: "Medical legalization since 2015; world's largest cannabis exporter.",
-        flag: "🇨🇴",
-        image: "/dest-4.jpg",
-        cities: [
-          {
-            slug: "bogota",
-            name: "Bogotá",
-            atGlance: ["Capital city", "Medical clinics", "Cool mountain air"],
-          },
-          {
-            slug: "medellin",
-            name: "Medellín",
-            atGlance: ["City of innovation", "Spring-like weather", "Transformed culture"],
-          },
-          {
-            slug: "cartagena",
-            name: "Cartagena",
-            atGlance: ["Caribbean coast", "Historic charm", "Tourist hub"],
           },
         ],
       },
@@ -394,179 +327,6 @@ const WORLD_GUIDE: Continent[] = [
             slug: "incheon",
             name: "Incheon",
             atGlance: ["Gateway city", "Modern infrastructure", "Medical access"],
-          },
-        ],
-      },
-    ],
-  },
-
-  // === AFRICA ===
-  {
-    id: "africa",
-    name: "Africa",
-    emoji: "🌍",
-    description: "Emerging legalization; South Africa leads the continent",
-    countriesCount: 1,
-    countries: [
-      {
-        slug: "south-africa",
-        name: "South Africa",
-        legalStatus: "Decriminalized",
-        possession: "Private use & grow OK",
-        airport: "Transport prohibited",
-        tourist: "Private homes only—enjoy safari & wine",
-        description: "Private use & cultivation legal; public use prohibited, no commercial sales.",
-        flag: "🇿🇦",
-        image: "/dest-5.jpg",
-        cities: [
-          {
-            slug: "cape-town",
-            name: "Cape Town",
-            atGlance: ["Private homes only", "Wine over weed", "Stunning nature"],
-          },
-          {
-            slug: "johannesburg",
-            name: "Johannesburg",
-            atGlance: ["Business city", "Security-conscious", "Safari hub"],
-          },
-          {
-            slug: "durban",
-            name: "Durban",
-            atGlance: ["Beach city", "Indian Ocean vibes", "Respect traditional areas"],
-          },
-        ],
-      },
-    ],
-  },
-
-  // === CARIBBEAN ===
-  {
-    id: "caribbean",
-    name: "Caribbean",
-    emoji: "🏝️",
-    description: "Island culture with relaxed cannabis attitudes",
-    countriesCount: 2,
-    countries: [
-      {
-        slug: "jamaica",
-        name: "Jamaica",
-        legalStatus: "Decriminalized",
-        possession: "Small amounts tolerated",
-        airport: "Do not transport",
-        tourist: "Enjoy reggae & beaches; herb is secondary",
-        description: "Decriminalized 2015; medical & Rasta sacramental use legal.",
-        flag: "🇯🇲",
-        image: "/dest-6.jpg",
-        cities: [
-          {
-            slug: "kingston",
-            name: "Kingston",
-            atGlance: ["Reggae birthplace", "Cultural herb tours", "Downtown discretion"],
-          },
-          {
-            slug: "montego-bay",
-            name: "Montego Bay",
-            atGlance: ["Resort security high", "Balconies OK", "Tourist police visible"],
-          },
-          {
-            slug: "negril",
-            name: "Negril",
-            atGlance: ["Seven-mile beach", "Sunset cliffs", "Small-town friendly"],
-          },
-        ],
-      },
-      {
-        slug: "barbados",
-        name: "Barbados",
-        legalStatus: "Decriminalized",
-        possession: "Small amounts tolerated",
-        airport: "Do not transport",
-        tourist: "Private use accepted",
-        description: "Decriminalized small amounts; island community culture.",
-        flag: "🇧🇧",
-        image: "/dest-4.jpg",
-        cities: [
-          {
-            slug: "bridgetown",
-            name: "Bridgetown",
-            atGlance: ["Capital city", "Harbor charm", "Local vibe"],
-          },
-          {
-            slug: "carlisle-bay",
-            name: "Carlisle Bay",
-            atGlance: ["Beach resort area", "Water activities", "Tourist hotspot"],
-          },
-          {
-            slug: "bathsheba",
-            name: "Bathsheba",
-            atGlance: ["Atlantic coast", "Rugged beauty", "Local community"],
-          },
-        ],
-      },
-    ],
-  },
-
-  // === OCEANIA ===
-  {
-    id: "oceania",
-    name: "Oceania",
-    emoji: "🇦🇺",
-    description: "Australia and New Zealand leading with medical legalization",
-    countriesCount: 2,
-    countries: [
-      {
-        slug: "australia",
-        name: "Australia",
-        legalStatus: "Medical",
-        possession: "Medical only with prescription",
-        airport: "Strictly prohibited",
-        tourist: "Medical clinics available",
-        description: "Medical legalization federally; ACT decriminalized; states vary.",
-        flag: "🇦🇺",
-        image: "/dest-2.jpg",
-        cities: [
-          {
-            slug: "sydney",
-            name: "Sydney",
-            atGlance: ["Major city", "Medical access", "Beautiful harbor"],
-          },
-          {
-            slug: "melbourne",
-            name: "Melbourne",
-            atGlance: ["Cultural hub", "Progressive city", "Coffee culture"],
-          },
-          {
-            slug: "canberra",
-            name: "Canberra",
-            atGlance: ["Capital decriminalized", "Political hub", "More relaxed"],
-          },
-        ],
-      },
-      {
-        slug: "new-zealand",
-        name: "New Zealand",
-        legalStatus: "Medical",
-        possession: "Medical only",
-        airport: "Strictly prohibited",
-        tourist: "Medical prescriptions accepted",
-        description: "Medical legalization; recreational referendums narrowly failed.",
-        flag: "🇳🇿",
-        image: "/dest-3.jpg",
-        cities: [
-          {
-            slug: "auckland",
-            name: "Auckland",
-            atGlance: ["Largest city", "Medical access", "Vibrant culture"],
-          },
-          {
-            slug: "wellington",
-            name: "Wellington",
-            atGlance: ["Capital city", "Progressive politics", "Creative scene"],
-          },
-          {
-            slug: "christchurch",
-            name: "Christchurch",
-            atGlance: ["South Island", "Outdoor adventure", "Rebuild spirit"],
           },
         ],
       },
@@ -822,23 +582,8 @@ const WorldGuide = () => {
     );
   };
 
-  // SEO Metadata
-  const pageTitle = "Global Cannabis Travel Guide | BudQuest";
-  const pageDescription = "Explore cannabis laws, regulations, and travel tips for countries worldwide. Find legal cannabis destinations for medical and recreational use.";
-
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO Meta Tags */}
-      <head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="keywords" content="cannabis travel, marijuana laws, global cannabis guide, legal cannabis countries, weed tourism" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://budquest.guide/world" />
-      </head>
-
       <Navigation />
 
       <div className="pt-20 sm:pt-24 pb-16 sm:pb-20 px-4">
