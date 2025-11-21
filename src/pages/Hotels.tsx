@@ -4,7 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, ExternalLink, Search, Building, Globe } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, MapPin, ExternalLink, Search, Building, Globe, Leaf } from "lucide-react";
 import { useMemo, useState } from "react";
 
 /* ----------------------------------------------------
@@ -15,10 +16,10 @@ interface Hotel {
   name: string;
   city: string;
   state: string;
-  rating: number;
+  rating: number; // 0-5
   policies: string;
   website: string;
-  flag: string;          // lazy-loaded flag url
+  flag: string;
 }
 
 const HOTELS: Hotel[] = [
@@ -90,8 +91,8 @@ const HOTELS: Hotel[] = [
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ItemPage",
-  name: "420-Friendly Hotels | Green Globe",
-  description: "Verified cannabis-friendly hotels worldwide. Book with confidence.",
+  name: "BudQuest Verified Hotels | Green Globe",
+  description: "Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises.",
   url: "https://greenglobe.com/hotels",
   mainEntity: {
     "@type": "ItemList",
@@ -110,12 +111,34 @@ const structuredData = {
 };
 
 /* ----------------------------------------------------
+   HELPERS
+----------------------------------------------------- */
+const Star = ({ filled }: { filled: boolean }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className={`w-4 h-4 ${filled ? "fill-yellow-400 text-yellow-400" : "text-gray-600"}`}
+  >
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+const StarRating = ({ value }: { value: number }) => (
+  <div className="flex items-center gap-1">
+    {[1, 2, 3, 4, 5].map((i) => (
+      <Star key={i} filled={i <= Math.round(value)} />
+    ))}
+    <span className="text-xs text-muted-foreground ml-1">{value.toFixed(1)}</span>
+  </div>
+);
+
+/* ----------------------------------------------------
    COMPONENT
 ----------------------------------------------------- */
 const Hotels = () => {
   const [query, setQuery] = useState("");
 
-  // live filter (name, city, state)
+  // live filter
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return HOTELS;
@@ -130,8 +153,8 @@ const Hotels = () => {
   return (
     <>
       <head>
-        <title>420-Friendly Hotels | Green Globe – Cannabis Travel Stays</title>
-        <meta name="description" content="Book verified cannabis-friendly hotels worldwide. 420-friendly policies, premium stays, no surprises." />
+        <title>BudQuest Verified Hotels | Green Globe – 420-Friendly Stays</title>
+        <meta name="description" content="Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
         <link rel="canonical" href="https://greenglobe.com/hotels" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </head>
@@ -143,8 +166,8 @@ const Hotels = () => {
           <div className="container mx-auto max-w-7xl">
             {/* HERO */}
             <div className="max-w-3xl mx-auto mb-10 text-center">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">420-Friendly Hotels</h1>
-              <p className="text-sm sm:text-base text-muted-foreground">Verified cannabis-friendly stays worldwide. Book with confidence.</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
+              <p className="text-sm sm:text-base text-muted-foreground">420-friendly stays worldwide. Policies checked, premium experience.</p>
             </div>
 
             {/* STICKY SEARCH */}
@@ -184,19 +207,21 @@ const Hotels = () => {
                   </div>
 
                   <div className="p-5 flex flex-col gap-3 flex-1">
+                    {/* title + BudQuest badge */}
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="text-lg font-semibold text-white line-clamp-1">{hotel.name}</h3>
-                      <Badge className="bg-green-600 text-white text-xs">420</Badge>
+                      <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
+                        <Leaf className="w-3 h-3" />
+                        Verified
+                      </Badge>
                     </div>
 
                     <p className="text-sm text-muted-foreground">
                       {hotel.city}, {hotel.state}
                     </p>
 
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm font-medium text-white">{hotel.rating}</span>
-                      <span className="text-xs text-muted-foreground">/ 5</span>
-                    </div>
+                    {/* STAR RATING */}
+                    <StarRating value={hotel.rating} />
 
                     {hotel.policies && (
                       <p className="text-sm text-muted-foreground line-clamp-3 flex-1">{hotel.policies}</p>
@@ -218,10 +243,10 @@ const Hotels = () => {
             {/* FOOTER STATS */}
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               {[
-                { label: "Verified Hotels", value: filtered.length, icon: Building },
-                { label: "Cities Covered", value: new Set(filtered.map((h) => h.city)).size, icon: Globe },
-                { label: "States", value: new Set(filtered.map((h) => h.state)).size, icon: Globe },
-                { label: "Avg Rating", value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1), icon: Globe },
+                { label: "Verified Hotels", value: filtered.length },
+                { label: "Cities Covered", value: new Set(filtered.map((h) => h.city)).size },
+                { label: "States", value: new Set(filtered.map((h) => h.state)).size },
+                { label: "Avg Rating", value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1) },
               ].map((stat) => (
                 <Card key={stat.label} className="p-4 border-border bg-card/50">
                   <p className="text-2xl font-bold text-white">{stat.value}</p>
