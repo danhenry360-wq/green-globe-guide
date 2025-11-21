@@ -11,23 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-/* ----------  JSON-LD structured data (SEO)  ---------- */
-const structuredData = {
-  "@context": "https://schema.org ",
-  "@type": "ContactPage",
-  name: "Contact Green Globe",
-  url: "https://greenglobe.com/contact ",
-  mainEntity: {
-    "@type": "Organization",
-    name: "Green Globe",
-    url: "https://greenglobe.com ",
-    logo: "https://greenglobe.com/logo.png ",
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+1-555-123-4567",
-      contactType: "customer support",
-      email: "support@greenglobe.com",
-      availableLanguage: ["English"],
+/* ----------  JSON-LD structuredavailableLanguage: ["English"],
       areaServed: "US",
     },
   },
@@ -86,7 +70,26 @@ const Contact = () => {
         <meta name="description" content="Reach Green Globe for questions, suggestions, or to report outdated cannabis travel info. We usually reply within 24 hours." />
         <meta name="keywords" content="Green Globe contact, cannabis travel support, 420 travel help, report outdated law, marijuana tourism question" />
         <link rel="canonical" href="https://greenglobe.com/contact " />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        {(() => {
+          const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Green Globe",
+            url: "https://greenglobe.com/contact",
+            mainEntity: {
+              "@type": "Organization",
+              name: "Green Globe Guide",
+              url: "https://greenglobe.com",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+1-800-555-0199",
+                contactType: "customer service",
+                email: "support@greenglobe.com",
+              },
+            },
+          };
+          return <script type="application/ld+json">{JSON.stringify(structuredData)}</script>;
+        })()}
       </head>
 
       <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">

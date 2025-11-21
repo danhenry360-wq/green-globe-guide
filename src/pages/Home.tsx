@@ -172,8 +172,7 @@ const BLOG_DATA: BlogItem[] = [
 ];
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
-const SEOHead = () => {
-  useEffect(() => {
+  const SEOHead = () => {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "WebApplication",
@@ -187,17 +186,18 @@ const SEOHead = () => {
         priceCurrency: "USD"
       }
     };
-    
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
 
-    return () => document.head.removeChild(script);
-  }, []);
+    useEffect(() => {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(structuredData);
+      document.head.appendChild(script);
 
-  return null;
-};
+      return () => document.head.removeChild(script);
+    }, []);
+
+    return null;
+  };
 
 /* ----------  COMPONENT  ---------- */
 /**
