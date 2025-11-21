@@ -164,8 +164,8 @@ const DATA: CountryData[] = [
         ],
       },
     ],
-    // OTHER COUNTRIES – same pattern, just drop hotels directly
-    {
+  },
+  {
       country: "Canada",
       slug: "canada",
       flag: "https://flagcdn.com/w40/ca.png",
