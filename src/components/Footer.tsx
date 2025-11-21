@@ -48,13 +48,13 @@ export const Footer = () => {
           {/* Column 3: About */}
           <div>
             <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
-              <Info className="w-5 h-5 mr-2" /> About Green Globe Guide
+              <Info className="w-5 h-5 mr-2" /> About Global Canna Pass
             </h4>
             <p className="text-sm text-gray-400 mb-4">
               Your trusted source for up-to-date, verified cannabis travel laws and 420-friendly destinations worldwide.
             </p>
             <p className="text-xs text-gray-500">
-              © 2025 Green Globe Guide. All rights reserved.
+              © 2025 Global Canna Pass. All rights reserved.
             </p>
           </div>
         </div>
