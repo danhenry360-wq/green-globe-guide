@@ -10,18 +10,17 @@ import {
   MapPin,
   Building2,
   Shield,
-  Calendar,
   Users,
 } from "lucide-react";
 
-const LosAngeles = () => {
+const SanFrancisco = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Los Angeles Cannabis Guide - Global Canna Pass</title>
+        <title>San Francisco Cannabis Guide - Global Canna Pass</title>
         <meta
           name="description"
-          content="Complete educational guide to Los Angeles cannabis culture, laws, neighborhoods, and travel information."
+          content="Complete educational guide to San Francisco cannabis culture, laws, neighborhoods, and travel information."
         />
       </Helmet>
 
@@ -41,10 +40,10 @@ const LosAngeles = () => {
               Major City Guide
             </Badge>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 px-2">
-              Los Angeles Cannabis Guide
+              San Francisco Cannabis Guide
             </h1>
             <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
-              An educational overview of cannabis culture and regulations in the City of Angels
+              An educational overview of cannabis culture and regulations in the City by the Bay
             </p>
           </motion.div>
         </div>
@@ -64,16 +63,16 @@ const LosAngeles = () => {
               Introduction
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Los Angeles stands as one of the most influential cities in modern cannabis culture. From the counterculture movements of the 1960s to today's sophisticated retail environment, L.A. has been at the forefront of cannabis normalization and legalization efforts in the United States.
+              San Francisco has been at the forefront of cannabis culture and progressive drug policy reform for decades. From the Summer of Love in 1967 to today's sophisticated consumption lounges, the city has continuously shaped cannabis normalization efforts nationwide.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              This guide provides an educational overview of cannabis culture, regulations, and the social landscape in Los Angeles. All information is presented for educational purposes only.
+              This guide provides an educational overview of cannabis culture, regulations, and the social landscape in San Francisco. All information is presented for educational purposes only.
             </p>
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mt-6">
               <p className="text-sm text-amber-200 flex items-start gap-2">
                 <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong>Important:</strong> Laws and regulations change frequently. Always verify information with official California state and Los Angeles county sources before making any decisions.
+                  <strong>Important:</strong> Laws and regulations change frequently. Always verify information with official California state and San Francisco city sources before making any decisions.
                 </span>
               </p>
             </div>
@@ -104,33 +103,33 @@ const LosAngeles = () => {
               </p>
             </Card>
 
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3 text-accent">
+            <Card className="p-4 md:p-6">
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-accent">
                 Age Restrictions
               </h3>
               <p className="text-muted-foreground mb-2">
                 <strong>Minimum age: 21 years old</strong>
               </p>
               <p className="text-muted-foreground text-sm">
-                Valid government-issued ID required for all purchases. Medical patients under 21 require valid medical card.
+                Valid government-issued ID required for all purchases.
               </p>
             </Card>
 
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3 text-accent">
+            <Card className="p-4 md:p-6">
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-accent">
                 Possession Limits
               </h3>
               <p className="text-muted-foreground text-sm">
-                Adults may possess up to 28.5 grams (approximately 1 ounce) of cannabis flower, or up to 8 grams of concentrated cannabis in public spaces.
+                Adults may possess up to 28.5 grams (approximately 1 ounce) of cannabis flower, or up to 8 grams of concentrated cannabis.
               </p>
             </Card>
 
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3 text-accent">
+            <Card className="p-4 md:p-6">
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-accent">
                 Consumption Restrictions
               </h3>
               <p className="text-muted-foreground text-sm">
-                Cannabis consumption is <strong>prohibited</strong> in public spaces, within 1,000 feet of schools, in vehicles, and on federal land. Private residence use only.
+                Cannabis consumption is <strong>prohibited</strong> in public spaces, within 1,000 feet of schools, in vehicles, and on federal land.
               </p>
             </Card>
           </div>
@@ -150,19 +149,19 @@ const LosAngeles = () => {
             </h2>
             <div className="space-y-4 text-muted-foreground">
               <p className="leading-relaxed">
-                Los Angeles has been a cultural epicenter for cannabis advocacy and lifestyle since the 1960s. The city's entertainment industry, combined with California's progressive political climate, helped shape modern cannabis culture as we know it.
+                San Francisco's cannabis culture emerged from the counterculture movements of the 1960s and evolved through the AIDS crisis of the 1980s, when the city pioneered compassionate use programs. The Haight-Ashbury district remains symbolically important to cannabis history.
               </p>
               <p className="leading-relaxed">
-                The West Coast legalization movement found strong roots in L.A., with medical marijuana compassion clubs opening in Venice Beach and West Hollywood as early as the 1990s. Today, cannabis is deeply integrated into the city's music, art, wellness, and entrepreneurial scenes.
+                The city was home to some of California's first medical cannabis dispensaries in the 1990s and has since developed a sophisticated adult-use market. San Francisco also became one of the first cities to permit on-site cannabis consumption lounges.
               </p>
               <p className="leading-relaxed">
-                Los Angeles hosts numerous cannabis-related events, industry conferences, and cultural festivals throughout the year, solidifying its position as a global leader in cannabis innovation and normalization.
+                Today, cannabis is integrated into San Francisco's progressive social fabric, with the industry contributing to local arts, music, and wellness communities.
               </p>
             </div>
           </Card>
         </motion.section>
 
-        {/* Dispensary Environment */}
+        {/* Consumption Lounges */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -171,35 +170,18 @@ const LosAngeles = () => {
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2">
             <Building2 className="w-6 h-6 md:w-7 md:h-7 text-accent" />
-            Dispensary Environment (Observational)
+            Consumption Lounges (Observational)
           </h2>
           <Card className="p-4 md:p-8">
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Los Angeles has one of the highest densities of licensed cannabis retailers in the United States. The retail landscape ranges from boutique storefronts with curated selections to large-scale operations offering extensive product variety.
+              San Francisco was among the first U.S. cities to authorize licensed cannabis consumption lounges. These venues allow adults 21+ to consume cannabis products on-premises in a social setting.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Different neighborhoods have developed distinct retail characters:
+              Notable licensed venues have included establishments like Moe Greens and Barbary Coast Collective, which offer lounge-style environments. Operating hours, admission policies, and available amenities vary by location.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-              <li>
-                <strong>Hollywood:</strong> Tourist-oriented shops with themed décor and celebrity branding
-              </li>
-              <li>
-                <strong>Downtown L.A.:</strong> Modern retail spaces emphasizing design and professionalism
-              </li>
-              <li>
-                <strong>Venice Beach:</strong> Maintains counterculture aesthetic with artistic storefronts
-              </li>
-              <li>
-                <strong>West Hollywood:</strong> Upscale boutique experiences targeting affluent clientele
-              </li>
-              <li>
-                <strong>San Fernando Valley:</strong> Community-focused shops serving local residents
-              </li>
-            </ul>
             <div className="bg-accent/10 border border-accent/30 rounded-lg p-4 mt-6">
               <p className="text-sm text-accent-foreground">
-                <strong>Note:</strong> All legal cannabis sales in California must occur through state-licensed dispensaries. Unlicensed sales remain illegal.
+                <strong>Note:</strong> All consumption lounges must be state-licensed. Verify licensing status before visiting any venue.
               </p>
             </div>
           </Card>
@@ -219,29 +201,24 @@ const LosAngeles = () => {
           <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {[
               {
-                name: "Hollywood",
+                name: "Haight-Ashbury",
                 description:
-                  "Cannabis retail in Hollywood blends with the entertainment district's tourist appeal. Stores often feature pop culture themes and celebrity-endorsed products, catering to both locals and visitors.",
+                  "Historic birthplace of 1960s counterculture. Cannabis retail here maintains connection to the neighborhood's bohemian heritage. A cultural landmark for cannabis history.",
               },
               {
-                name: "Venice Beach",
+                name: "Mission District",
                 description:
-                  "Historically significant in cannabis counterculture, Venice maintains its bohemian character. The neighborhood's cannabis scene reflects its artistic heritage and progressive community values.",
+                  "Vibrant arts and food scene with several dispensaries. The neighborhood blends Latin American culture with San Francisco's progressive values.",
               },
               {
-                name: "Downtown Los Angeles",
+                name: "SoMa (South of Market)",
                 description:
-                  "DTLA's cannabis retailers emphasize modern, professional retail environments. The area has seen growth in upscale dispensaries as the neighborhood continues its urban renaissance.",
+                  "Urban tech hub with modern dispensaries and consumption lounges. The area serves both residents and tech workers.",
               },
               {
-                name: "West Hollywood",
+                name: "Castro District",
                 description:
-                  "Known for its vibrant nightlife and LGBTQ+ community, WeHo features boutique cannabis shops that integrate with the neighborhood's social scene and progressive values.",
-              },
-              {
-                name: "San Fernando Valley",
-                description:
-                  "The Valley's cannabis retail serves a more local, residential demographic. Shops tend to focus on community relationships and everyday consumer needs.",
+                  "Historic LGBTQ+ neighborhood where cannabis compassionate-use programs first emerged during the AIDS crisis. Cannabis retail reflects community values.",
               },
             ].map((neighborhood, index) => (
               <Card key={index} className="p-4 md:p-6 hover:border-accent/50 transition-colors">
@@ -256,48 +233,17 @@ const LosAngeles = () => {
           </div>
         </motion.section>
 
-        {/* Hotels & Accommodations */}
+        {/* Safety & Public Rules */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
           className="mb-16"
         >
-          <Card className="p-4 md:p-8 bg-card/50 backdrop-blur">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2">
-              <Building2 className="w-6 h-6 md:w-7 md:h-7 text-accent" />
-              Hotels & Accommodations
-            </h2>
-            <div className="space-y-4 text-muted-foreground">
-              <p className="leading-relaxed">
-                Under California state law and Los Angeles municipal code, smoking of any substance (including cannabis) is generally prohibited in hotels, motels, and other lodging facilities. Most establishments maintain strict no-smoking policies in all rooms and common areas.
-              </p>
-              <p className="leading-relaxed">
-                Some private vacation rentals, Airbnb properties, and specialty accommodations may have different policies. It is essential to verify smoking policies directly with property owners or management before booking.
-              </p>
-              <p className="leading-relaxed">
-                Cannabis consumption in hotel rooms, even if privately owned, may violate property rules and result in fees, eviction, or loss of security deposits.
-              </p>
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mt-4">
-                <p className="text-sm text-amber-200">
-                  <strong>Always check official policies:</strong> Contact accommodations directly to understand their specific cannabis policies before booking.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </motion.section>
-
-        {/* Safety, Etiquette & Public Rules */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mb-16"
-        >
           <Card className="p-4 md:p-8 bg-gradient-to-br from-red-500/5 to-transparent border-red-500/20">
             <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2">
               <AlertCircle className="w-6 h-6 md:w-7 md:h-7 text-red-400" />
-              Safety, Etiquette & Public Rules
+              Safety & Public Rules
             </h2>
             <div className="space-y-4">
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
@@ -305,7 +251,7 @@ const LosAngeles = () => {
                   Public Consumption is Illegal
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Cannabis use in any public space, including streets, parks, sidewalks, businesses, and outdoor dining areas, is prohibited and may result in fines.
+                  Despite liberal attitudes, public cannabis consumption remains illegal. Golden Gate Park, streets, and sidewalks are not legal consumption areas.
                 </p>
               </div>
 
@@ -314,7 +260,7 @@ const LosAngeles = () => {
                   Federal Land Prohibition
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Cannabis remains federally illegal. Possession or use on any federal property (national parks, federal buildings, military installations) is a federal crime.
+                  Federal properties including the Presidio, Golden Gate National Recreation Area, and Alcatraz Island strictly prohibit cannabis possession or use.
                 </p>
               </div>
 
@@ -323,16 +269,7 @@ const LosAngeles = () => {
                   Transportation Rules
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Cannabis must be transported in sealed, unopened containers. Open containers in vehicles are illegal. Driving under the influence of cannabis is a DUI offense with serious penalties.
-                </p>
-              </div>
-
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-300 mb-2">
-                  Community Respect
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Even where legal, respect for non-consumers and local community standards is essential. Avoid consuming near schools, playgrounds, or family areas.
+                  Cannabis must be transported in sealed containers. Open containers in vehicles are illegal. DUI laws apply to cannabis.
                 </p>
               </div>
             </div>
@@ -343,7 +280,7 @@ const LosAngeles = () => {
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 0.8 }}
           className="mb-16"
         >
           <Card className="p-4 md:p-8 bg-accent/5 border-accent/30">
@@ -362,15 +299,15 @@ const LosAngeles = () => {
                   Possession Limit
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Up to 28.5g flower or 8g concentrate in public
+                  Up to 28.5g flower or 8g concentrate
                 </p>
               </div>
               <div>
                 <h3 className="font-semibold text-accent mb-2">
-                  Smoking Restrictions
+                  Consumption Lounges
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Prohibited in all public spaces and most hotels
+                  Licensed on-site consumption venues available
                 </p>
               </div>
               <div>
@@ -378,23 +315,7 @@ const LosAngeles = () => {
                   Local Culture
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Hub of cannabis innovation, entertainment, and advocacy
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-accent mb-2">
-                  Retail Environment
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  High density of licensed dispensaries across neighborhoods
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-accent mb-2">
-                  Important Reminders
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Private use only, no public consumption, verify laws before travel
+                  Historic cannabis culture hub since 1960s
                 </p>
               </div>
             </div>
@@ -405,15 +326,14 @@ const LosAngeles = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          transition={{ delay: 0.9 }}
           className="bg-muted/30 border border-border rounded-lg p-6 text-center"
         >
           <p className="text-sm text-muted-foreground">
             <strong>Educational Information Only:</strong> This guide is for
             informational and educational purposes. Cannabis laws can change
             frequently. Always verify current regulations with official California
-            state authorities, Los Angeles County government sources, and local
-            legal counsel before making any decisions regarding cannabis.
+            state authorities and San Francisco city government sources.
           </p>
         </motion.div>
       </div>
@@ -423,4 +343,4 @@ const LosAngeles = () => {
   );
 };
 
-export default LosAngeles;
+export default SanFrancisco;

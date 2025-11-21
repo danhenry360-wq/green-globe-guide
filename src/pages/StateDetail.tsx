@@ -58,26 +58,26 @@ const StateDetail = () => {
           </div>
 
           {/* Hero Section */}
-          <div className="mb-12">
-            <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="mb-8 md:mb-12">
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-4">
               <div>
-                <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-3">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3">
                   {state.name} Cannabis Travel Guide
                 </h1>
                 {state.subtitle && (
-                  <p className="text-xl text-muted-foreground">{state.subtitle}</p>
+                  <p className="text-base md:text-xl text-muted-foreground">{state.subtitle}</p>
                 )}
               </div>
-              <Badge className={`${getStatusColor(state.status)} text-lg px-6 py-2 capitalize flex-shrink-0`}>
+              <Badge className={`${getStatusColor(state.status)} text-sm md:text-lg px-4 md:px-6 py-2 capitalize flex-shrink-0`}>
                 {state.status}
               </Badge>
             </div>
           </div>
 
           {/* Quick Facts Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <Card className="p-6 bg-gradient-card border-border/50">
-              <h3 className="text-xl font-bold mb-4 text-accent flex items-center">
+          <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
+            <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
+              <h3 className="text-lg md:text-xl font-bold mb-4 text-accent flex items-center">
                 <Scale className="w-5 h-5 mr-2" />
                 Legal Overview & Quick Facts
               </h3>
@@ -115,8 +115,8 @@ const StateDetail = () => {
               </div>
             </Card>
 
-            <Card className="p-6 bg-gradient-card border-border/50">
-              <h3 className="text-xl font-bold mb-4 text-accent">Quick Facts</h3>
+            <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
+              <h3 className="text-lg md:text-xl font-bold mb-4 text-accent">Quick Facts</h3>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -147,10 +147,10 @@ const StateDetail = () => {
           </div>
 
           {/* Detailed Information */}
-          <div className="space-y-6 mb-12">
+          <div className="space-y-4 md:space-y-6 mb-8 md:mb-12">
             {state.consumption_rules && (
-              <Card className="p-6 bg-gradient-card border-border/50">
-                <h3 className="text-xl font-bold mb-4 text-foreground flex items-center">
+              <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
+                <h3 className="text-lg md:text-xl font-bold mb-4 text-foreground flex items-center">
                   <Home className="w-5 h-5 mr-2 text-accent" />
                   Where to Consume
                 </h3>
@@ -159,8 +159,8 @@ const StateDetail = () => {
             )}
 
             {state.travel_rules && (
-              <Card className="p-6 bg-gradient-card border-border/50">
-                <h3 className="text-xl font-bold mb-4 text-foreground flex items-center">
+              <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
+                <h3 className="text-lg md:text-xl font-bold mb-4 text-foreground flex items-center">
                   <Plane className="w-5 h-5 mr-2 text-accent" />
                   Airport Rules
                 </h3>
@@ -169,8 +169,8 @@ const StateDetail = () => {
             )}
 
             {state.purchase_rules && (
-              <Card className="p-6 bg-gradient-card border-border/50">
-                <h3 className="text-xl font-bold mb-4 text-foreground flex items-center">
+              <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
+                <h3 className="text-lg md:text-xl font-bold mb-4 text-foreground flex items-center">
                   <Car className="w-5 h-5 mr-2 text-accent" />
                   Purchase & Transportation
                 </h3>
@@ -181,12 +181,12 @@ const StateDetail = () => {
 
           {/* Cities & Destinations */}
           {state.cities && state.cities.length > 0 && (
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-foreground flex items-center">
-                <MapPin className="w-8 h-8 mr-3 text-accent" />
+            <div className="mb-8 md:mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground flex items-center">
+                <MapPin className="w-6 h-6 md:w-8 md:h-8 mr-2 md:mr-3 text-accent" />
                 Cities & Destinations
               </h2>
-              <p className="text-muted-foreground mb-8">
+              <p className="text-sm md:text-base text-muted-foreground mb-6 md:mb-8">
                 Explore detailed guides for cannabis-friendly cities and notable areas in {state.name}.
               </p>
               <CityList stateSlug={state.slug} cities={state.cities} />
@@ -194,8 +194,8 @@ const StateDetail = () => {
           )}
 
           {/* Disclaimer */}
-          <Card className="p-6 bg-accent/5 border-accent/20">
-            <p className="text-sm text-muted-foreground text-center">
+          <Card className="p-4 md:p-6 bg-accent/5 border-accent/20">
+            <p className="text-xs md:text-sm text-muted-foreground text-center">
               <strong className="text-foreground">Disclaimer:</strong> This information is for educational purposes only. 
               Cannabis laws can change rapidly. Always verify current laws before traveling and consume responsibly where legal.
             </p>
