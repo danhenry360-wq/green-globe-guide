@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/green-globe-logo.png";
+import logo from "@/assets/global-canna-pass-logo.png";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -12,9 +12,9 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <img src={logo} alt="Green Globe" className="h-10 w-10 group-hover:scale-110 transition-transform" />
+            <img src={logo} alt="Global Canna Pass" className="h-10 w-10 group-hover:scale-110 transition-transform" />
             <span className="text-xl font-bold bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">
-              Green Globe
+              Global Canna Pass
             </span>
           </Link>
 

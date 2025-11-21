@@ -118,9 +118,7 @@ const Home = () => {
 
           {/* Fluid typography */}
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
-            <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">The Green Globe</span>
-            <br />
-            <span className="text-foreground/90 font-light text-[clamp(1.8rem,6vw,4rem)]">Guide</span>
+            <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">Global Canna Pass</span>
           </h1>
 
           <p className="text-[clamp(1.1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-6 max-w-4xl mx-auto leading-relaxed">
@@ -140,7 +138,7 @@ const Home = () => {
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 aria-label="Search cannabis destinations"
               />
-              <Button onClick={handleSearch} className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20">
+              <Button onClick={() => handleSearch()} className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20">
                 Search
               </Button>
             </div>
