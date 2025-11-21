@@ -173,11 +173,11 @@ const BLOG_DATA: BlogItem[] = [
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
 const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org ",
   "@type": "WebApplication",
   name: "BudQuest",
   description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com",
+  url: "https://budquest.com ",
   applicationCategory: "TravelApplication",
   offers: {
     "@type": "Offer",
@@ -281,17 +281,10 @@ const Home = () => {
               <Input
                 id="search-destinations"
                 placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
-<<<<<<< HEAD
-                className="pl-14 pr-28 h-14 sm:h-16 bg-card/80 border-2 border-white/10 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl text-base sm:text-lg placeholder:text-muted-foreground/60 shadow-2xl"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-=======
                 className="pl-16 pr-32 sm:pr-40 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
->>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
                 aria-label="Search cannabis-friendly destinations worldwide"
               />
               <Button 
@@ -534,48 +527,6 @@ const Home = () => {
           whileInView="animate"
           viewport={{ once: true }}
           variants={STAGGER}
-<<<<<<< HEAD
-          className="container mx-auto text-center"
-        >
-          <motion.div variants={FADE_IN} className="mb-8 sm:mb-12">
-            <Badge className="px-4 sm:px-5 py-2 bg-accent/10 text-accent border-accent/30 mb-4 sm:mb-6 backdrop-blur-md text-xs sm:text-sm inline-flex">
-              <Globe2 className="w-4 h-4 mr-2" aria-hidden="true" />
-              Interactive Global Map
-            </Badge>
-            <h2 id="map-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Global Cannabis Legality Map
-            </h2>
-            <p className="text-base sm:text-xl text-gray-400 px-2 sm:px-0">
-              Tap any country to instantly check cannabis laws, regulations, and travel safety information
-            </p>
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="hidden md:block max-w-6xl mx-auto mb-12">
-            <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-accent/10 bg-black/40 backdrop-blur-sm p-4">
-              <InteractiveWorldMap />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-accent/5 rounded-full blur-[100px] -z-10" aria-hidden="true" />
-            </div>
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="md:hidden mb-12">
-            <ContinentSelector />
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="mb-8 sm:mb-12">
-            <MapLegend />
-          </motion.div>
-
-          <motion.div variants={FADE_IN}>
-            <Link to="/world">
-              <Button 
-                size="lg" 
-                className="h-12 sm:h-16 px-6 sm:px-10 text-base sm:text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-2xl hover:scale-105 transition-transform"
-              >
-                <Map className="w-5 h-5 mr-2 sm:mr-3" aria-hidden="true" />
-                Advanced Map & Filters
-              </Button>
-            </Link>
-=======
           className="container mx-auto"
         >
           <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
@@ -597,68 +548,10 @@ const Home = () => {
                 <InteractiveWorldMap />
               </div>
             </Card>
->>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
           </motion.div>
         </motion.div>
       </section>
 
-<<<<<<< HEAD
-      {/* ==========  TRUST & LEGAL NOTICE SECTION  ========== */}
-      <section className="py-12 sm:py-16 px-4 bg-black border-t border-white/5">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="container mx-auto"
-        >
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 max-w-4xl mx-auto">
-            <div className="flex gap-4 flex-1">
-              <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Legal Disclaimer</h3>
-                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                  Cannabis laws change frequently. BudQuest provides research-backed information, but always verify local regulations before traveling. Users are responsible for understanding and complying with local laws.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4 flex-1">
-              <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Always Up-to-Date</h3>
-                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                  Our database is regularly updated with the latest cannabis regulations from trusted sources worldwide.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  CTA SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-gradient-to-t from-background to-black relative overflow-hidden"
-        aria-labelledby="cta-heading"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-accent/10 blur-3xl" aria-hidden="true" />
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="container mx-auto text-center relative z-10"
-        >
-          <h2 id="cta-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-8 text-white px-2">
-            Ready to Travel with Confidence?
-          </h2>
-          <p className="text-base sm:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto px-2">
-            Get instant access to verified cannabis laws, 420-friendly accommodations, and travel safety information for 120+ countries worldwide.
-          </p>
-          <Link to="/usa">
-            <Button 
-              size="lg" 
-              className="h-12 sm:h-16 px-6 sm:px-12 text-base sm:text-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-2xl hover:scale-105 transition-transform"
-            >
-              Start Exploring Now
-=======
       {/* ==========  CALL TO ACTION  ========== */}
       <section className="py-16 sm:py-20 px-4 bg-black" aria-labelledby="cta-heading">
         <motion.div
@@ -681,7 +574,6 @@ const Home = () => {
               className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20"
             >
               Search Destinations
->>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
             </Button>
           </div>
         </motion.div>
@@ -693,4 +585,3 @@ const Home = () => {
 };
 
 export default Home;
-'''
