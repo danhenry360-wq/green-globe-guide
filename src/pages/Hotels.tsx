@@ -325,9 +325,9 @@ const Hotels = () => {
               <p className="text-sm sm:text-base text-muted-foreground">Browse by country or state. Policies checked, premium experience.</p>
             </section>
 
-            {/* STATIC SEARCH */}
-            <div className="mb-8">
-              <div className="relative max-w-xl mx-auto">
+            {/* STICKY SEARCH */}
+            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-lg border border-border p-3 mb-8 max-w-xl mx-auto">
+              <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
@@ -354,18 +354,18 @@ const Hotels = () => {
                     onOpenChange={() => setOpenCountry(openCountry === country.slug ? null : country.slug)}
                   >
                     <CollapsibleTrigger asChild>
-                      <button className="flex items-center justify-between w-full px-4 py-3 text-left">
+                      <button className="flex items-center justify-between w-full px-4 py-4 text-left hover:bg-card/70 transition-colors">
                         <div className="flex items-center gap-3">
                           <img src={country.flag} alt={country.country} className="h-6 w-8 rounded border border-border" />
-                          <span className="font-semibold text-white">{country.country}</span>
-                          <Badge variant="secondary">{country.states.reduce((sum, s) => sum + s.hotels.length, 0)} hotels</Badge>
+                          <span className="font-bold text-lg text-white">{country.country}</span>
+                          <Badge variant="secondary" className="hidden sm:inline-flex">{country.states.reduce((sum, s) => sum + s.hotels.length, 0)} hotels</Badge>
                         </div>
-                        <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${openCountry === country.slug ? "rotate-180" : ""}`} />
+                        <ChevronDown className={`w-6 h-6 text-accent transition-transform ${openCountry === country.slug ? "rotate-180" : ""}`} />
                       </button>
                     </CollapsibleTrigger>
 
                     <CollapsibleContent>
-                      <div className="px-4 pb-4 space-y-4 border-t border-border">
+                      <div className="px-4 pb-4 space-y-4 border-t border-border/50">
                         {country.states.map((state) => (
                           <Collapsible
                             key={state.slug}
@@ -373,39 +373,49 @@ const Hotels = () => {
                             onOpenChange={() => setOpenState(openState === state.slug ? null : state.slug)}
                           >
                             <CollapsibleTrigger asChild>
-                              <button className="flex items-center justify-between w-full py-2 text-left">
-                                <span className="text-sm text-white">{state.state}</span>
-                                <Badge variant="outline">{state.hotels.length}</Badge>
-                                <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${openState === state.slug ? "rotate-180" : ""}`} />
+                              <button className="flex items-center justify-between w-full py-3 text-left border-b border-border/30 last:border-b-0">
+                                <span className="text-base font-medium text-white">{state.state}</span>
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="outline" className="text-xs">{state.hotels.length} hotels</Badge>
+                                  <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${openState === state.slug ? "rotate-180" : ""}`} />
+                                </div>
                               </button>
                             </CollapsibleTrigger>
 
                             <CollapsibleContent>
                               <div className="grid grid-cols-1 gap-3 pt-2">
                                 {state.hotels.map((hotel) => (
-                                  <Card key={hotel.id} className="p-3 bg-card/70 border-border/50">
-                                    <div className="flex items-start justify-between gap-2">
+                                  <Card key={hotel.id} className="p-4 bg-card/70 border-border/50 hover:border-accent transition-colors">
+                                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                                       <div className="flex-1">
-                                        <h4 className="font-semibold text-white text-sm">{hotel.name}</h4>
-                                        <p className="text-xs text-muted-foreground">
+                                        <h4 className="font-bold text-white text-base flex items-center gap-2">
+                                          {hotel.name}
+                                          <Badge className="bg-green-600 text-white text-xs flex items-center gap-1 h-5 px-2">
+                                            <Leaf className="w-3 h-3" />
+                                            Verified
+                                          </Badge>
+                                        </h4>
+                                        <p className="text-sm text-muted-foreground mt-1">
+                                          <MapPin className="w-3 h-3 inline mr-1" />
                                           {hotel.city}, {hotel.state}
                                         </p>
-                                        <StarRating value={hotel.rating} />
-                                        <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{hotel.policies}</p>
+                                        <div className="flex items-center mt-1">
+                                          <StarRating value={hotel.rating} />
+                                          {hotel.priceRange && <span className="text-xs text-muted-foreground ml-3">{hotel.priceRange}</span>}
+                                        </div>
                                       </div>
-                                      <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
-                                        <Leaf className="w-3 h-3" />
-                                        Verified
-                                      </Badge>
+                                      <a
+                                        href={hotel.website}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-foreground shrink-0 mt-2 sm:mt-0"
+                                      >
+                                        View Deal <ExternalLink className="w-4 h-4" />
+                                      </a>
                                     </div>
-                                    <a
-                                      href={hotel.website}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 text-xs text-accent hover:text-accent-foreground mt-2"
-                                    >
-                                      Visit <ExternalLink className="w-3 h-3" />
-                                    </a>
+                                    <p className="text-xs text-muted-foreground mt-3 border-t border-border pt-3">
+                                      **Policy:** {hotel.policies}
+                                    </p>
                                   </Card>
                                 ))}
                               </div>
