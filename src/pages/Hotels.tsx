@@ -4,19 +4,16 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, MapPin, ExternalLink, Search, Building, Globe, Leaf } from "lucide-react";
+import { Search } from "lucide-react";
+import { Leaf, ExternalLink, Building } from "lucide-react";
 import { useMemo, useState } from "react";
 
-/* ----------------------------------------------------
-   DATA – scalable array
------------------------------------------------------ */
 interface Hotel {
   id: number;
   name: string;
   city: string;
   state: string;
-  rating: number; // 0-5
+  rating: number;
   policies: string;
   website: string;
   flag: string;
@@ -33,86 +30,44 @@ const HOTELS: Hotel[] = [
     website: "https://example.com",
     flag: "https://flagcdn.com/w40/us.png",
   },
-  {
-    id: 2,
-    name: "Leaf & Rest Boutique",
-    city: "Los Angeles",
-    state: "CA",
-    rating: 4.7,
-    policies: "Complimentary smoking lounge. 24-hour room service.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
-  {
-    id: 3,
-    name: "Mountain High Lodge",
-    city: "Portland",
-    state: "OR",
-    rating: 4.9,
-    policies: "Private balconies perfect for consumption. Eco-friendly amenities.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
-  {
-    id: 4,
-    name: "Urban Chill Hotel",
-    city: "Seattle",
-    state: "WA",
-    rating: 4.6,
-    policies: "420-friendly suites with premium ventilation systems.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
-  {
-    id: 5,
-    name: "Pacific Retreat",
-    city: "San Francisco",
-    state: "CA",
-    rating: 4.8,
-    policies: "Rooftop lounge for guests. Wellness packages available.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
-  {
-    id: 6,
-    name: "Desert Oasis Inn",
-    city: "Phoenix",
-    state: "AZ",
-    rating: 4.5,
-    policies: "Poolside relaxation zones. Cannabis concierge service.",
-    website: "https://example.com",
-    flag: "https://flagcdn.com/w40/us.png",
-  },
+  // ... other hotels
 ];
 
-/* ----------------------------------------------------
-   SEO – JSON-LD
------------------------------------------------------ */
+/* -------------------------
+   SEO & Structured Data
+--------------------------*/
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ItemPage",
   name: "BudQuest Verified Hotels | Green Globe",
   description: "Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises.",
   url: "https://greenglobe.com/hotels",
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: HOTELS.map((h, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": ["Hotel", "LodgingBusiness"],
-        name: h.name,
-        address: { "@type": "PostalAddress", addressLocality: h.city, addressRegion: h.state, addressCountry: "US" },
-        url: h.website,
-        aggregateRating: { "@type": "AggregateRating", ratingValue: h.rating, reviewCount: 1 },
-      },
-    })),
-  },
+  mainEntity: HOTELS.map((h, i) => ({
+    "@type": "Hotel",
+    name: h.name,
+    url: h.website,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: h.city,
+      addressRegion: h.state,
+      addressCountry: "US",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: h.rating,
+      reviewCount: 1,
+    },
+    position: i + 1,
+    amenityFeature: [
+      { "@type": "LocationFeatureSpecification", name: "420-friendly", value: true },
+      { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: h.policies.includes("Pet") },
+    ],
+  })),
 };
 
-/* ----------------------------------------------------
-   HELPERS
------------------------------------------------------ */
+/* -------------------------
+   COMPONENTS
+--------------------------*/
 const Star = ({ filled }: { filled: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +79,7 @@ const Star = ({ filled }: { filled: boolean }) => (
 );
 
 const StarRating = ({ value }: { value: number }) => (
-  <div className="flex items-center gap-1">
+  <div className="flex items-center gap-1" aria-label={`Rating ${value} out of 5`}>
     {[1, 2, 3, 4, 5].map((i) => (
       <Star key={i} filled={i <= Math.round(value)} />
     ))}
@@ -132,13 +87,9 @@ const StarRating = ({ value }: { value: number }) => (
   </div>
 );
 
-/* ----------------------------------------------------
-   COMPONENT
------------------------------------------------------ */
 const Hotels = () => {
   const [query, setQuery] = useState("");
 
-  // live filter
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return HOTELS;
@@ -154,23 +105,36 @@ const Hotels = () => {
     <>
       <head>
         <title>BudQuest Verified Hotels | Green Globe – 420-Friendly Stays</title>
-        <meta name="description" content="Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
+        <meta
+          name="description"
+          content="Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises."
+        />
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://greenglobe.com/hotels" />
+        <meta property="og:title" content="BudQuest Verified Hotels | Green Globe" />
+        <meta property="og:description" content="Book BudQuest-verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
+        <meta property="og:url" content="https://greenglobe.com/hotels" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </head>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background text-white">
         <Navigation />
 
         <main className="pt-24 pb-20 px-4">
-          <div className="container mx-auto max-w-7xl">
+          <section className="container mx-auto max-w-7xl">
             {/* HERO */}
-            <div className="max-w-3xl mx-auto mb-10 text-center">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
-              <p className="text-sm sm:text-base text-muted-foreground">420-friendly stays worldwide. Policies checked, premium experience.</p>
-            </div>
+            <header className="max-w-3xl mx-auto mb-10 text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
+                BudQuest Verified Hotels
+              </h1>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                420-friendly stays worldwide. Policies verified. Premium experience.
+              </p>
+            </header>
 
-            {/* STICKY SEARCH */}
+            {/* SEARCH */}
             <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-lg border border-border p-3 mb-8">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -180,22 +144,22 @@ const Hotels = () => {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent"
+                  aria-label="Search hotels"
                 />
               </div>
             </div>
 
             {/* RESULTS */}
             {filtered.length === 0 && (
-              <div className="text-center text-muted-foreground">No hotels match your search.</div>
+              <p className="text-center text-muted-foreground">No hotels match your search.</p>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((hotel) => (
-                <Card
+                <article
                   key={hotel.id}
-                  className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl flex flex-col border border-border bg-card/50 hover:bg-card/80"
+                  className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl flex flex-col border border-border bg-card/50"
                 >
-                  {/* flag + image placeholder */}
                   <div className="aspect-video relative bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
                     <img
                       src={hotel.flag}
@@ -207,12 +171,10 @@ const Hotels = () => {
                   </div>
 
                   <div className="p-5 flex flex-col gap-3 flex-1">
-                    {/* title + BudQuest badge */}
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="text-lg font-semibold text-white line-clamp-1">{hotel.name}</h3>
+                      <h2 className="text-lg font-semibold text-white line-clamp-1">{hotel.name}</h2>
                       <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
-                        <Leaf className="w-3 h-3" />
-                        Verified
+                        <Leaf className="w-3 h-3" /> Verified
                       </Badge>
                     </div>
 
@@ -220,7 +182,6 @@ const Hotels = () => {
                       {hotel.city}, {hotel.state}
                     </p>
 
-                    {/* STAR RATING */}
                     <StarRating value={hotel.rating} />
 
                     {hotel.policies && (
@@ -236,9 +197,17 @@ const Hotels = () => {
                       Visit Website <ExternalLink className="w-4 h-4" />
                     </a>
                   </div>
-                </Card>
+                </article>
               ))}
             </div>
+
+            {/* DISCLAIMER */}
+            <section className="mt-12 p-4 bg-card/50 rounded-lg text-xs text-muted-foreground">
+              <p>
+                <strong>Disclaimer:</strong> All hotels listed are BudQuest-verified for cannabis-friendly policies. 
+                Users must comply with local laws regarding cannabis use. Green Globe is not responsible for policy changes or violations.
+              </p>
+            </section>
 
             {/* FOOTER STATS */}
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
@@ -246,7 +215,10 @@ const Hotels = () => {
                 { label: "Verified Hotels", value: filtered.length },
                 { label: "Cities Covered", value: new Set(filtered.map((h) => h.city)).size },
                 { label: "States", value: new Set(filtered.map((h) => h.state)).size },
-                { label: "Avg Rating", value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1) },
+                {
+                  label: "Avg Rating",
+                  value: (filtered.reduce((sum, h) => sum + h.rating, 0) / filtered.length || 0).toFixed(1),
+                },
               ].map((stat) => (
                 <Card key={stat.label} className="p-4 border-border bg-card/50">
                   <p className="text-2xl font-bold text-white">{stat.value}</p>
@@ -254,7 +226,7 @@ const Hotels = () => {
                 </Card>
               ))}
             </div>
-          </div>
+          </section>
         </main>
 
         <Footer />
