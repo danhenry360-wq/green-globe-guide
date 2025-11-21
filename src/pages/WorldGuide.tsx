@@ -1,4 +1,4 @@
-on world guide, when i click the link, america nad europe are already open, i dont want that , i want user to chose by themself here is the code , make it more seo friendly and optimized .   // src/pages/WorldGuide.tsx
+// src/pages/WorldGuide.tsx
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -627,7 +627,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
         <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-primary/10 overflow-hidden group">
           <img
             src={country.image}
-            alt={country.name}
+            alt={`Cannabis travel in ${country.name}`}
             className="w-full h-full object-cover transition-transform group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -641,7 +641,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
         <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
           {/* Country name */}
           <div>
-            <h3 className="text-lg sm:text-xl font-bold text-foreground">{country.name}</h3>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground">{country.name}</h2>
             <p className="text-xs sm:text-sm text-muted-foreground">{country.description}</p>
           </div>
 
@@ -698,7 +698,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-sm text-foreground">{city.name}</h4>
+                          <h3 className="font-semibold text-sm text-foreground">{city.name}</h3>
                           <ul className="text-xs text-muted-foreground list-disc list-inside mt-1 space-y-0.5">
                             {city.atGlance.map((item, i) => (
                               <li key={i} className="truncate">{item}</li>
@@ -708,6 +708,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                         <Link
                           to={`/world/${country.slug}/${city.slug}`}
                           className="text-xs text-accent hover:text-accent/80 font-medium shrink-0 whitespace-nowrap"
+                          aria-label={`View ${city.name} cannabis guide`}
                         >
                           Guide →
                         </Link>
@@ -750,11 +751,12 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
         onClick={onToggle}
         className="w-full mb-4 sm:mb-6 bg-gradient-to-r from-accent/10 to-accent/5 hover:from-accent/20 hover:to-accent/10 border border-accent/20 hover:border-accent/40 rounded-2xl p-4 sm:p-6 transition-all group"
         aria-expanded={isOpen}
+        aria-controls={`continent-${continent.id}`}
       >
         <div className="flex items-center justify-between gap-4">
           <div className="text-left flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-3xl sm:text-4xl">{continent.emoji}</span>
+              <span className="text-3xl sm:text-4xl" aria-hidden="true">{continent.emoji}</span>
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{continent.name}</h2>
             </div>
             <p className="text-sm sm:text-base text-muted-foreground">{continent.description}</p>
@@ -766,6 +768,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
           <ChevronDown
             className="w-6 h-6 sm:w-8 sm:h-8 text-accent shrink-0 transition-transform group-hover:scale-110"
             style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+            aria-hidden="true"
           />
         </div>
       </button>
@@ -774,6 +777,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id={`continent-${continent.id}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -795,7 +799,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
 ============================================ */
 const WorldGuide = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [openContinents, setOpenContinents] = useState<string[]>(["north-america", "europe"]);
+  const [openContinents, setOpenContinents] = useState<string[]>([]); // All continents start closed
 
   const filteredData = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
@@ -818,8 +822,23 @@ const WorldGuide = () => {
     );
   };
 
+  // SEO Metadata
+  const pageTitle = "Global Cannabis Travel Guide | BudQuest";
+  const pageDescription = "Explore cannabis laws, regulations, and travel tips for countries worldwide. Find legal cannabis destinations for medical and recreational use.";
+
   return (
     <div className="min-h-screen bg-background">
+      {/* SEO Meta Tags */}
+      <head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content="cannabis travel, marijuana laws, global cannabis guide, legal cannabis countries, weed tourism" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://budquest.guide/world" />
+      </head>
+
       <Navigation />
 
       <div className="pt-20 sm:pt-24 pb-16 sm:pb-20 px-4">
@@ -832,10 +851,10 @@ const WorldGuide = () => {
             className="max-w-4xl mx-auto mb-10 sm:mb-12 text-center"
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
-              BudQuest Global Cannabis Guide
+              Global Cannabis Travel Guide
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
-              Explore cannabis laws by continent, country, and city worldwide
+              Explore cannabis laws, regulations, and travel tips for countries worldwide. Find legal destinations for medical and recreational use.
             </p>
 
             {/* STICKY SEARCH BAR */}
@@ -849,7 +868,7 @@ const WorldGuide = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base"
-                    aria-label="Search cannabis-friendly destinations"
+                    aria-label="Search cannabis-friendly destinations worldwide"
                   />
                 </div>
               </div>
@@ -891,7 +910,7 @@ const WorldGuide = () => {
               transition={{ delay: 0.5 }}
               className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border text-center"
             >
-              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Need more information?</h3>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Need more information?</h2>
               <p className="text-sm sm:text-base text-muted-foreground mb-6">
                 Check our detailed travel guides and hotel recommendations
               </p>
@@ -919,4 +938,4 @@ const WorldGuide = () => {
   );
 };
 
-export default WorldGuide;           
+export default WorldGuide;
