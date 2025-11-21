@@ -1,3 +1,4 @@
+'''
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -61,7 +62,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    image: "/dest-1.jpg",
+    image: "/dest-california.jpg",
     imageAlt: "California cannabis dispensaries and 420-friendly destinations",
     color: "bg-green-500/90", 
     link: "/usa/california" 
@@ -97,7 +98,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Uruguay", 
     status: "Recreational", 
     country: "South America", 
-    image: "/dest-5.jpg",
+    image: "/dest-uruguay.jpg",
     imageAlt: "Uruguay pioneering cannabis legalization travel guide",
     color: "bg-green-500/90", 
     link: "/world" 
@@ -281,10 +282,17 @@ const Home = () => {
               <Input
                 id="search-destinations"
                 placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
+<<<<<<< HEAD
                 className="pl-14 pr-28 h-14 sm:h-16 bg-card/80 border-2 border-white/10 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl text-base sm:text-lg placeholder:text-muted-foreground/60 shadow-2xl"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+=======
+                className="pl-16 pr-32 sm:pr-40 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
+>>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
                 aria-label="Search cannabis-friendly destinations worldwide"
               />
               <Button 
@@ -527,6 +535,7 @@ const Home = () => {
           whileInView="animate"
           viewport={{ once: true }}
           variants={STAGGER}
+<<<<<<< HEAD
           className="container mx-auto text-center"
         >
           <motion.div variants={FADE_IN} className="mb-8 sm:mb-12">
@@ -567,10 +576,34 @@ const Home = () => {
                 Advanced Map & Filters
               </Button>
             </Link>
+=======
+          className="container mx-auto"
+        >
+          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
+            <h2 id="map-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
+              Global Legality at a Glance
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
+              Explore our interactive map to see cannabis laws worldwide. Filter by legal status and continent to plan your travels with confidence.
+            </p>
+          </motion.div>
+
+          <motion.div variants={FADE_IN}>
+            <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
+              <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <ContinentSelector />
+                <MapLegend />
+              </div>
+              <div className="h-[400px] sm:h-[600px] w-full bg-gray-900 rounded-lg overflow-hidden border border-white/10">
+                <InteractiveWorldMap />
+              </div>
+            </Card>
+>>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
           </motion.div>
         </motion.div>
       </section>
 
+<<<<<<< HEAD
       {/* ==========  TRUST & LEGAL NOTICE SECTION  ========== */}
       <section className="py-12 sm:py-16 px-4 bg-black border-t border-white/5">
         <motion.div
@@ -626,8 +659,32 @@ const Home = () => {
               className="h-12 sm:h-16 px-6 sm:px-12 text-base sm:text-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-2xl hover:scale-105 transition-transform"
             >
               Start Exploring Now
+=======
+      {/* ==========  CALL TO ACTION  ========== */}
+      <section className="py-16 sm:py-20 px-4 bg-black" aria-labelledby="cta-heading">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="container mx-auto text-center"
+        >
+          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-8 sm:p-12 rounded-3xl border border-white/10 shadow-2xl">
+            <h2 id="cta-heading" className="text-3xl sm:text-5xl font-bold mb-4 text-white">
+              Ready to Explore?
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+              Start your journey with BudQuest. Search for your next destination and travel with confidence.
+            </p>
+            <Button 
+              size="lg" 
+              onClick={() => document.getElementById('search-destinations')?.focus()} 
+              className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20"
+            >
+              Search Destinations
+>>>>>>> 9cb4431 (Feature: Update Popular Destinations with new images for California and Uruguay)
             </Button>
-          </Link>
+          </div>
         </motion.div>
       </section>
 
@@ -637,3 +694,4 @@ const Home = () => {
 };
 
 export default Home;
+'''
