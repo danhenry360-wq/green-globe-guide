@@ -61,7 +61,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    image: "/dest-california.jpg",
+    image: "/dest-california-2025.jpg",
     imageAlt: "California cannabis dispensaries and 420-friendly destinations",
     color: "bg-green-500/90", 
     link: "/usa/california" 
@@ -88,7 +88,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Canada", 
     status: "Recreational", 
     country: "North America", 
-    image: "/dest-4.jpg",
+    image: "/dest-canada-2025.jpg",
     imageAlt: "Canada legal cannabis travel and dispensary locations",
     color: "bg-green-500/90", 
     link: "/world" 
