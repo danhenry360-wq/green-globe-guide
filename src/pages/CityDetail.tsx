@@ -39,7 +39,7 @@ const FullCityGuide = ({ city, state }: { city: CityData, state: typeof USA_STAT
         <Shield className="w-6 h-6 md:w-7 md:h-7 text-accent" />
         Legal Overview in {state.name}
       </h2>
-      <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
         <Card className="p-4 md:p-6">
           <h3 className="text-lg md:text-xl font-semibold mb-3 text-accent">
             State Status
@@ -279,7 +279,7 @@ const CityDetail = () => {
       
       {/* Hero Section */}
       <motion.section 
-        className="relative pt-32 pb-20 px-4 bg-gradient-to-br from-background to-card/50 overflow-hidden"
+        className="relative pt-24 pb-12 px-4 bg-gradient-to-br from-background to-card/50 overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -294,8 +294,8 @@ const CityDetail = () => {
             Back to {state.name} Guide
           </Link>
 
-          <div className="flex items-start justify-between mb-6">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+          <div className="flex flex-col sm:flex-row items-start justify-between mb-6">
+            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-tight mb-4 sm:mb-0">
               <span className="bg-gradient-to-r from-accent to-gold bg-clip-text text-transparent">
                 {city.name}
               </span>{' '}
@@ -308,7 +308,7 @@ const CityDetail = () => {
             </Badge>
           </div>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl font-light">
+            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl font-light">
             Your essential guide to navigating the local cannabis scene in {city.name}, {state.name}.
           </p>
         </div>
@@ -317,7 +317,7 @@ const CityDetail = () => {
       <div className="pb-20 px-4">
         <div className="container mx-auto max-w-5xl">
           {/* Main Content */}
-          <div className="mt-[-60px] relative z-20">
+          <div className="mt-[-40px] relative z-20">
             <motion.section 
               className="p-8 bg-card rounded-xl shadow-2xl border border-border/50"
               initial={{ opacity: 0, y: 20 }}
