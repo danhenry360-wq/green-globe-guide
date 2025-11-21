@@ -795,7 +795,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
 ============================================ */
 const WorldGuide = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [openContinents, setOpenContinents] = useState<string[]>(["north-america", "europe"]);
+  const [openContinents, setOpenContinents] = useState<string[]>([]);
 
   const filteredData = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();

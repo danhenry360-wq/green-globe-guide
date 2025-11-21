@@ -67,39 +67,67 @@ const Hotels = () => {
     );
   }, [query]);
 
-  // Group filtered hotels by Country/State for display
-  const groupedHotels = useMemo(() => {
-    return filteredData.reduce((acc, hotel) => {
-      const key = `${hotel.country} - ${hotel.stateName}`;
-      if (!acc[key]) {
-        acc[key] = {
+  // Group filtered hotels by Country -> State -> City for hierarchical display
+  const hierarchicalHotels = useMemo(() => {
+    const countries: Record<string, { country: string, flag: string, states: Record<string, { state: string, cities: Record<string, (Hotel & { country: string, stateName: string, countryFlag: string })[]> }> }> = {};
+
+    filteredData.forEach(hotel => {
+      // 1. Group by Country
+      if (!countries[hotel.country]) {
+        countries[hotel.country] = {
           country: hotel.country,
-          state: hotel.stateName,
           flag: hotel.countryFlag,
-          hotels: [],
+          states: {},
         };
       }
-      acc[key].hotels.push(hotel);
-      return acc;
-    }, {} as Record<string, { country: string, state: string, flag: string, hotels: (Hotel & { country: string, stateName: string, countryFlag: string })[] }>);
-  }, [filteredData]); // Changed dependency to filteredData to re-run when filter changes
+
+      // 2. Group by State
+      const country = countries[hotel.country];
+      if (!country.states[hotel.stateName]) {
+        country.states[hotel.stateName] = {
+          state: hotel.stateName,
+          cities: {},
+        };
+      }
+
+      // 3. Group by City (for simplicity, we'll just use city name as key)
+      const stateGroup = country.states[hotel.stateName];
+      if (!stateGroup.cities[hotel.city]) {
+        stateGroup.cities[hotel.city] = [];
+      }
+
+      stateGroup.cities[hotel.city].push(hotel);
+    });
+
+    // Convert to array for rendering
+    return Object.values(countries).map(country => ({
+      ...country,
+      states: Object.values(country.states).map(state => ({
+        ...state,
+        cities: Object.entries(state.cities).map(([city, hotels]) => ({
+          city,
+          hotels,
+        })),
+      })),
+    }));
+  }, [filteredData]);
 
   return (
     <>
       <head>
-        <title>BudQuest Verified 420-Friendly Hotels | Green Globe</title>
+        <title>BudQuest Verified 420-Friendly Hotels | BudQuest</title>
         <meta name="description" content="Book BudQuest-verified 420-friendly hotels by country and state. Cannabis policies checked, star-rated, premium stays." />
-        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, Green Globe, USA, Canada, Netherlands, marijuana accommodation" />
+        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, BudQuest, USA, Canada, Netherlands, marijuana accommodation" />
         <link rel="canonical" href="https://greenglobe.com/hotels" />
 
-        <meta property="og:title" content="BudQuest Verified 420-Friendly Hotels | Green Globe" />
+        <meta property="og:title" content="BudQuest Verified 420-Friendly Hotels | BudQuest" />
         <meta property="og:description" content="Book verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://greenglobe.com/hotels" />
         <script type="application/ld+json">{JSON.stringify(HOTELS_STRUCTURED_DATA)}</script>
         <meta property="og:image" content="https://greenglobe.com/og-hotels.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="BudQuest Verified 420-Friendly Hotels | Green Globe" />
+        <meta name="twitter:title" content="BudQuest Verified 420-Friendly Hotels | BudQuest" />
         <meta name="twitter:description" content="Book verified 420-friendly hotels worldwide. Cannabis policies checked, premium stays, no surprises." />
         <meta name="twitter:image" content="https://greenglobe.com/og-hotels.jpg" />
       </head>
@@ -147,38 +175,49 @@ const Hotels = () => {
               )}
             </AnimatePresence>
 
-            {/* FLAT LIST GROUPED BY COUNTRY/STATE */}
+            {/* HIERARCHICAL LIST GROUPED BY COUNTRY -> STATE -> CITY */}
             <div className="space-y-10">
-              {Object.entries(groupedHotels).map(([key, group]) => (
-                <motion.section
-                  key={key}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="group"
-                >
-                  {/* Group Header */}
-                  <div className="flex items-center gap-3 mb-6 pb-2 border-b border-accent/50">
-                    <img src={group.flag} alt={group.country} className="h-6 w-8 rounded border border-border shadow-md" />
-                    <h2 className="text-2xl font-bold text-white">
-                      {group.country}
-                      {group.country !== group.state && <span className="text-xl font-normal text-gray-400"> / {group.state}</span>}
-                    </h2>
-                    <Badge className="bg-accent/10 text-accent border border-accent/30">{group.hotels.length} Hotels</Badge>
-                  </div>
-
-                  {/* Hotel Cards Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <AnimatePresence>
-                      {group.hotels.map((hotel) => (
-                        <HotelCard 
-                          key={hotel.id} 
-                          hotel={hotel} 
-                        />
-                      ))}
-                    </AnimatePresence>
-                  </div>
-                </motion.section>
+              {hierarchicalHotels.map((countryGroup) => (
+                <Collapsible key={countryGroup.country} className="border border-border rounded-xl shadow-lg bg-card/50">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-6 hover:bg-card transition-colors rounded-t-xl">
+                    <div className="flex items-center gap-3">
+                      <img src={countryGroup.flag} alt={countryGroup.country} className="h-6 w-8 rounded border border-border shadow-md" />
+                      <h2 className="text-xl md:text-2xl font-bold text-white">{countryGroup.country}</h2>
+                    </div>
+                    <ChevronDown className="w-5 h-5 text-accent ui-open:rotate-180 transition-transform" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="p-4 md:p-6 border-t border-border/50 space-y-6">
+                    {countryGroup.states.map((stateGroup) => (
+                      <Collapsible key={stateGroup.state} className="border border-border rounded-lg bg-background/50">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-t-lg">
+                          <h3 className="text-lg font-semibold text-accent">{stateGroup.state}</h3>
+                          <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="p-3 border-t border-border/50 space-y-4">
+                          {stateGroup.cities.map((cityGroup) => (
+                            <div key={cityGroup.city} className="space-y-3">
+                              <h4 className="text-base font-bold text-white flex items-center gap-2">
+                                <MapPin className="w-4 h-4 text-gold" />
+                                {cityGroup.city}
+                                <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">{cityGroup.hotels.length} Hotels</Badge>
+                              </h4>
+                              <div className="grid grid-cols-1 gap-4">
+                                <AnimatePresence>
+                                  {cityGroup.hotels.map((hotel) => (
+                                    <HotelCard 
+                                      key={hotel.id} 
+                                      hotel={hotel} 
+                                    />
+                                  ))}
+                                </AnimatePresence>
+                              </div>
+                            </div>
+                          ))}
+                        </CollapsibleContent>
+                      </Collapsible>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
               ))}
             </div>
 
@@ -197,7 +236,7 @@ const Hotels = () => {
                 <CollapsibleContent>
                   <Card className="p-4 bg-card/50 border-border mt-2">
                     <p className="text-xs text-red-400">
-                      Green Globe is an informational resource only. We do not provide legal advice. Always confirm current local laws and hotel policies before booking or consuming cannabis. International transport remains illegal.
+                      BudQuest is an informational resource only. We do not provide legal advice. Always confirm current local laws and hotel policies before booking or consuming cannabis. International transport remains illegal.
                     </p>
                   </Card>
                 </CollapsibleContent>

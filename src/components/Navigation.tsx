@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./ThemeToggle";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/global-canna-pass-logo.png";
@@ -20,6 +21,7 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
+            <ThemeToggle />
             <Link to="/usa" className="text-sm text-foreground hover:text-accent transition-colors">
               USA Guide
             </Link>
@@ -47,6 +49,39 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu className="h-6 w-6 text-foreground" />
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 flex flex-col gap-4">
+            <ThemeToggle />
+            <Link to="/usa" className="text-sm text-foreground hover:text-accent">
+              USA Guide
+            </Link>
+            <Link to="/world" className="text-sm text-foreground hover:text-accent">
+              World Guide
+            </Link>
+            <Link to="/hotels" className="text-sm text-foreground hover:text-accent">
+              Hotels
+            </Link>
+            <Link to="/tours" className="text-sm text-foreground hover:text-accent">
+              Tours
+            </Link>
+            <Link to="/blog" className="text-sm text-foreground hover:text-accent">
+              Blog
+            </Link>
+            <Link to="/about" className="text-sm text-foreground hover:text-accent">
+              About
+            </Link>
+            <Link to="/contact" className="text-sm text-foreground hover:text-accent">
+              Contact Us
+            </Link>
+          </div>
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
