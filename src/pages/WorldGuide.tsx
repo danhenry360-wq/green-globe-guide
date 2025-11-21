@@ -1,137 +1,548 @@
-import React, { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import WORLD_DATA from "@/data/world_data_top7"; // adjust path if needed
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+// src/pages/WorldGuide.tsx
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, MapPin, Plane, Users, Info, Search, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 
-/**
- * WorldGuide.jsx
- * - Searchable country + city index
- * - Mobile-first responsive grid
- * - SEO friendly headings
- */
+/* ----------------------------------------------------
+   DATA – same shape you already use
+----------------------------------------------------- */
+interface City {
+  slug: string;
+  name: string;
+  atGlance: string[];
+}
 
-const CountryCard = ({ country }) => {
+interface Country {
+  slug: string;
+  name: string;
+  region: string;
+  legalStatus: "Recreational" | "Medical" | "Decriminalized";
+  possession: string;
+  airport: string;
+  tourist: string;
+  description: string;
+  cities: City[];
+  image: string;
+}
+
+const COUNTRIES: Country[] = [
+  // === NORTH AMERICA ===
+  {
+    slug: "canada",
+    name: "Canada",
+    region: "North America",
+    legalStatus: "Recreational",
+    possession: "30 g public / unlimited home",
+    airport: "30 g domestic only",
+    tourist: "Gov stores only; ID required",
+    description: "First G7 nation to legalise recreational cannabis nationwide.",
+    cities: [
+      { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
+      { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
+      { slug: "montreal", name: "Montreal", atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"] },
+    ],
+    image: "/dest-4.jpg",
+  },
+  {
+    slug: "mexico",
+    name: "Mexico",
+    region: "North America",
+    legalStatus: "Decriminalized",
+    possession: "Small amounts tolerated",
+    airport: "Zero tolerance",
+    tourist: "Private use low priority; avoid public",
+    description: "Supreme Court ruled prohibition unconstitutional; possession is administrative.",
+    cities: [
+      { slug: "mexico-city", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Great street food"] },
+      { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Enjoy beaches"] },
+      { slug: "guadalajara", name: "Guadalajara", atGlance: ["Tech hub, younger crowd", "More relaxed than coast", "Check Airbnb rules"] },
+    ],
+    image: "/dest-4.jpg",
+  },
+
+  // === EUROPE ===
+  {
+    slug: "netherlands",
+    name: "Netherlands",
+    region: "Europe",
+    legalStatus: "Decriminalized",
+    possession: "5 g tolerated",
+    airport: "Do not transport",
+    tourist: "Coffee-shop weed is potent—start small",
+    description: "Sale tolerated under strict conditions; production remains illegal.",
+    cities: [
+      { slug: "amsterdam", name: "Amsterdam", atGlance: ["150+ coffee shops", "No tobacco inside", "Avoid street dealers"] },
+      { slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops, less touristy", "Higher quality", "Residency checks"] },
+      { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] },
+    ],
+    image: "/dest-3.jpg",
+  },
+  {
+    slug: "germany",
+    name: "Germany",
+    region: "Europe",
+    legalStatus: "Recreational",
+    possession: "25 g public / 50 g home",
+    airport: "Domestic OK within limit",
+    tourist: "Join social club for access",
+    description: "Legalised April 2024; cannabis social clubs launching nationwide.",
+    cities: [
+      { slug: "berlin", name: "Berlin", atGlance: ["Club culture capital", "No smoking near kids", "Low-THC starters"] },
+      { slug: "hamburg", name: "Hamburg", atGlance: ["St. Pauli most open", "Harbour lounges discreet", "Use trams, don’t drive"] },
+      { slug: "munich", name: "Munich", atGlance: ["Conservative but OK", "English widely spoken", "Beer gardens = no weed"] },
+    ],
+    image: "/dest-1.jpg",
+  },
+
+  // === SOUTH AMERICA ===
+  {
+    slug: "uruguay",
+    name: "Uruguay",
+    region: "South America",
+    legalStatus: "Recreational",
+    possession: "40 g monthly (residents)",
+    airport: "Transport prohibited",
+    tourist: "Tourists cannot purchase—locals only",
+    description: "World’s first full legalisation; pharmacy sales & clubs for residents.",
+    cities: [
+      { slug: "montevideo", name: "Montevideo", atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"] },
+      { slug: "punta-del-este", name: "Punta del Este", atGlance: ["Upscale = enforcement", "Private circles", "Enjoy beaches"] },
+      { slug: "colonia", name: "Colonia", atGlance: ["Historic small town", "Use noticeable", "Day-trip to Buenos Aires"] },
+    ],
+    image: "/dest-5.jpg",
+  },
+
+  // === ASIA ===
+  {
+    slug: "thailand",
+    name: "Thailand",
+    region: "Asia",
+    legalStatus: "Medical",
+    possession: "Prescription required",
+    airport: "Strictly prohibited",
+    tourist: "Medical clinics need Thai doctor letter",
+    description: "Decriminalised 2022, medical-only 2024. Recreational use illegal.",
+    cities: [
+      { slug: "bangkok", name: "Bangkok", atGlance: ["Med clinics w/ script", "Cafés closed", "Discreet only"] },
+      { slug: "phuket", name: "Phuket", atGlance: ["Tourist enforcement high", "Beach parties = no weed", "Consider weed-free holiday"] },
+      { slug: "chiang-mai", name: "Chiang Mai", atGlance: ["Conservative north", "Traditional meds", "Docs essential"] },
+    ],
+    image: "/dest-6.jpg",
+  },
+
+  // === AFRICA ===
+  {
+    slug: "south-africa",
+    name: "South Africa",
+    region: "Africa",
+    legalStatus: "Decriminalized",
+    possession: "Private use & grow OK",
+    airport: "Transport prohibited",
+    tourist: "Private homes only—enjoy safari & wine",
+    description: "Private use & cultivation legal; public use prohibited, no commercial sales.",
+    cities: [
+      { slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Wine over weed", "Stunning nature"] },
+      { slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city, low profile", "Security tight", "Safari hub"] },
+      { slug: "durban", name: "Durban", atGlance: ["Beach rules strict", "Indian Ocean vibes", "Respect traditional areas"] },
+    ],
+    image: "/dest-5.jpg",
+  },
+
+  // === CARIBBEAN ===
+  {
+    slug: "jamaica",
+    name: "Jamaica",
+    region: "Caribbean",
+    legalStatus: "Decriminalized",
+    possession: "Small amounts tolerated",
+    airport: "Do not transport",
+    tourist: "Enjoy reggae & beaches; herb is secondary",
+    description: "Decriminalised 2015; medical & Rasta sacramental use legal. Public use frowned upon.",
+    cities: [
+      { slug: "kingston", name: "Kingston", atGlance: ["Reggae birthplace", "Cultural herb tours", "Downtown discretion"] },
+      { slug: "montego-bay", name: "Montego Bay", atGlance: ["Resort security high", "Balconies OK", "Tourist police visible"] },
+      { slug: "negril", name: "Negril", atGlance: ["Seven-mile beach", "Sunset cliffs", "Small-town friendly"] },
+    ],
+    image: "/dest-6.jpg",
+  },
+];
+
+/* --------------  HELPERS  -------------- */
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Recreational":
+      return "bg-green-500/90 text-white";
+    case "Medical":
+      return "bg-blue-500/90 text-white";
+    case "Decriminalized":
+      return "bg-amber-500/90 text-white";
+    default:
+      return "bg-red-500/90 text-white";
+  }
+};
+
+/* --------------  NEW: TREE & SEARCH  -------------- */
+type Node = {
+  type: "continent" | "country" | "city";
+  slug?: string; // only for country/city
+  name: string;
+  children?: Node[];
+  parent?: Node;
+  countrySlug?: string; // for city
+};
+
+// build hierarchical tree
+const useTree = () => {
+  return useMemo(() => {
+    const map = new Map<string, Node>();
+    const continents = new Set<string>();
+    COUNTRIES.forEach((c) => continents.add(c.region));
+    const root: Node = { type: "continent", name: "ROOT", children: [] };
+    continents.forEach((con) => {
+      const conNode: Node = { type: "continent", name: con, children: [], parent: root };
+      root.children!.push(conNode);
+      map.set(con, conNode);
+    });
+    COUNTRIES.forEach((c) => {
+      const conNode = map.get(c.region)!;
+      const couNode: Node = {
+        type: "country",
+        slug: c.slug,
+        name: c.name,
+        parent: conNode,
+        children: [],
+      };
+      conNode.children!.push(couNode);
+      c.cities.forEach((city) => {
+        const cityNode: Node = {
+          type: "city",
+          slug: city.slug,
+          name: city.name,
+          parent: couNode,
+          countrySlug: c.slug,
+        };
+        couNode.children!.push(cityNode);
+      });
+    });
+    return root;
+  }, []);
+};
+
+// fuzzy search
+const useSearch = (query: string) => {
+  const tree = useTree();
+  return useMemo(() => {
+    const q = query.toLowerCase().trim();
+    if (!q) return [];
+    const res: Node[] = [];
+    const walk = (n: Node) => {
+      if (n.type !== "root") {
+        if (n.name.toLowerCase().includes(q)) res.push(n);
+      }
+      n.children?.forEach(walk);
+    };
+    walk(tree);
+    return res;
+  }, [query, tree]);
+};
+
+// mobile friendly accordion
+const Accordion = ({ node }: { node: Node }) => {
+  const [open, setOpen] = useState(false);
+  const hasChildren = node.children && node.children.length > 0;
   return (
-    <Link to={`/world/${country.slug}`} className="block">
-      <Card className="h-full p-4 hover:scale-[1.02] transform-gpu transition duration-200">
-        <div className="flex flex-col h-full">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <h3 className="text-lg font-semibold">{country.name}</h3>
-            <Badge className="uppercase text-xs">{country.status}</Badge>
-          </div>
-
-          <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{country.subtitle}</p>
-
-          <div className="mt-auto flex items-center justify-between text-xs text-muted-foreground">
-            <div>{country.cities.length} cities</div>
-            <div className="text-right">
-              <div className="font-medium">Possession</div>
-              <div className="mt-1">{country.possession_limits ?? "Varies"}</div>
-            </div>
-          </div>
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger asChild>
+        <Button
+          variant="ghost"
+          className="w-full justify-between px-3 py-2 h-auto"
+        >
+          <span className="font-medium text-sm">{node.name}</span>
+          {hasChildren && (
+            <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
+          )}
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="pl-4 pt-2 space-y-2">
+          {node.children?.map((c) =>
+            c.type === "city" ? (
+              <Link
+                key={c.slug}
+                to={`/world/${c.countrySlug}/${c.slug}`}
+                className="block text-sm text-accent hover:underline"
+              >
+                {c.name}
+              </Link>
+            ) : (
+              <Accordion key={c.name} node={c} />
+            )
+          )}
         </div>
-      </Card>
-    </Link>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 
+/* --------------  COMPONENT  -------------- */
 const WorldGuide = () => {
   const [query, setQuery] = useState("");
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    if (!q) return COUNTRIES;
+    return COUNTRIES.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.region.toLowerCase().includes(q) ||
+        c.cities.some((city) => city.name.toLowerCase().includes(q))
+    );
+  }, [query]);
 
-  // flatten for quick search
-  const flatIndex = useMemo(() => {
-    const rows = [];
-    WORLD_DATA.forEach((c) => {
-      rows.push({ type: "country", name: c.name, slug: c.slug, country: c });
-      c.cities.forEach((city) =>
-        rows.push({ type: "city", name: city.name, slug: city.slug, country: c })
-      );
-    });
-    return rows;
-  }, []);
-
-  const filteredCountries = useMemo(() => {
-    if (!query.trim()) return WORLD_DATA;
-    const q = query.toLowerCase();
-    // search by country or city name
-    const matchedCountrySlugs = new Set();
-    flatIndex.forEach((row) => {
-      if (row.name.toLowerCase().includes(q)) matchedCountrySlugs.add(row.country.slug);
-    });
-    return WORLD_DATA.filter((c) => matchedCountrySlugs.has(c.slug));
-  }, [query, flatIndex]);
+  const searchResults = useSearch(query);
+  const tree = useTree();
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Global Cannabis Guide — World Map & Country Laws</title>
-        <meta name="description" content="Educational world cannabis travel guide: country rules, city guides, and travel awareness." />
-      </Helmet>
-
       <Navigation />
 
-      {/* Hero */}
-      <header className="pt-24 pb-8 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">Global Cannabis Guide</h1>
-          <p className="text-sm md:text-lg text-muted-foreground">Educational country & city guides: laws, travel rules and cultural context. Information is for reference only.</p>
+      <div className="pt-24 pb-20 px-4">
+        <div className="container mx-auto max-w-7xl">
+          {/* HERO + STICKY SEARCH */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto mb-12 text-center"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Global Cannabis Laws</h1>
+            <p className="text-xl text-muted-foreground mb-6">Search countries or cities</p>
 
-          <div className="mt-6">
-            <div className="mx-auto max-w-2xl">
-              <label htmlFor="search" className="sr-only">Search countries or cities</label>
-              <input
-                id="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search country or city — e.g. Germany, Berlin"
-                className="w-full px-4 py-3 rounded-xl bg-card/60 border border-border/50 placeholder:text-muted-foreground focus:ring-4 focus:ring-accent/20"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+            {/* sticky search – mobile friendly */}
+            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-lg border border-border p-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search countries, cities..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent"
+                />
+              </div>
 
-      {/* Countries grid */}
-      <main className="px-4 pb-20">
-        <div className="container mx-auto max-w-6xl">
-          <section aria-label="Countries" className="mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredCountries.map((country) => (
-                <CountryCard key={country.id} country={country} />
-              ))}
-            </div>
-          </section>
-
-          {/* Quick links for cities (mobile friendly) */}
-          <section className="mt-8">
-            <h2 className="text-xl font-bold mb-3">Quick jump to cities</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {WORLD_DATA.flatMap((country) =>
-                country.cities.map((city) => (
-                  <Link
-                    key={`${country.slug}-${city.slug}`}
-                    to={`/world/${country.slug}/${city.slug}`}
-                    className="block p-3 rounded-lg bg-card/30 hover:bg-card/50 transition"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium">{city.name}</div>
-                        <div className="text-xs text-muted-foreground">{country.name} • {city.type}</div>
+              {/* scalable dropdown */}
+              {query && (
+                <Card className="mt-2 max-h-72 overflow-y-auto p-3 text-left">
+                  {searchResults.length === 0 && (
+                    <p className="text-sm text-muted-foreground">No results</p>
+                  )}
+                  {searchResults.map((n) =>
+                    n.type === "city" ? (
+                      <Link
+                        key={n.slug}
+                        to={`/world/${n.countrySlug}/${n.slug}`}
+                        className="block px-2 py-1.5 text-sm hover:bg-accent/10 rounded"
+                        onClick={() => setQuery("")}
+                      >
+                        {n.parent!.parent!.name} → {n.parent!.name} → <span className="text-accent">{n.name}</span>
+                      </Link>
+                    ) : n.type === "country" ? (
+                      <Link
+                        key={n.slug}
+                        to={`/world/${n.slug}`}
+                        className="block px-2 py-1.5 text-sm hover:bg-accent/10 rounded"
+                        onClick={() => setQuery("")}
+                      >
+                        {n.parent!.name} → <span className="text-accent font-medium">{n.name}</span>
+                      </Link>
+                    ) : (
+                      <div key={n.name} className="px-2 py-1.5 text-sm font-medium">
+                        {n.name}
                       </div>
-                      <div className="text-xs text-accent">Open</div>
-                    </div>
-                  </Link>
-                ))
+                    )
+                  )}
+                </Card>
               )}
             </div>
-          </section>
+          </motion.div>
 
+          {/* MAP PLACEHOLDER */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-16 max-w-6xl mx-auto"
+          >
+            <div className="aspect-video relative rounded-2xl border border-white/10 shadow-lg bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+              <p className="text-muted-foreground">Interactive world map coming soon</p>
+            </div>
+          </motion.div>
+
+          {/* MOBILE FIRST: accordion by continent */}
+          <div className="md:hidden">
+            {tree.children?.map((con) => (
+              <Card key={con.name} className="mb-3 p-3">
+                <Accordion node={con} />
+              </Card>
+            ))}
+          </div>
+
+          {/* DESKTOP: 3 column mega menu */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
+            {tree.children?.map((con) => (
+              <Card key={con.name} className="p-4">
+                <h3 className="font-bold mb-3">{con.name}</h3>
+                <div className="space-y-3">
+                  {con.children?.map((cou) => (
+                    <div key={cou.slug}>
+                      <Link
+                        to={`/world/${cou.slug}`}
+                        className="font-medium text-sm hover:text-accent"
+                      >
+                        {cou.name}
+                      </Link>
+                      <div className="ml-3 mt-1 space-y-1">
+                        {cou.children?.map((city) => (
+                          <Link
+                            key={city.slug}
+                            to={`/world/${city.countrySlug}/${city.slug}`}
+                            className="block text-xs text-muted-foreground hover:text-accent"
+                          >
+                            {city.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* RESULTS (kept intact) */}
+          {filtered.length === 0 && (
+            <div className="text-center text-muted-foreground mt-10">No countries match your search.</div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {filtered.map((c, i) => (
+              <motion.div
+                key={c.slug}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <Card className="overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
+                  {/* image + badge */}
+                  <div className="aspect-video relative bg-gradient-to-br from-primary/20 to-primary/10">
+                    <img src={c.image} alt={c.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <Badge className={`absolute top-3 right-3 ${getStatusColor(c.legalStatus)} border-none`}>
+                      {c.legalStatus}
+                    </Badge>
+                  </div>
+
+                  <div className="p-5 flex flex-col gap-4 flex-1">
+                    {/* header */}
+                    <div>
+                      <h3 className="text-xl font-bold mb-1">{c.name}</h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <MapPin className="w-4 h-4" />
+                        {c.region}
+                      </p>
+                    </div>
+
+                    {/* quick facts row – mobile wraps gracefully */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                      <div className="flex items-start gap-2">
+                        <Info className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold">Possession</p>
+                          <p className="text-muted-foreground">{c.possession}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Plane className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold">Airport</p>
+                          <p className="text-muted-foreground">{c.airport}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Users className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold">Tourist tip</p>
+                          <p className="text-muted-foreground">{c.tourist}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* description */}
+                    <p className="text-sm text-muted-foreground">{c.description}</p>
+
+                    {/* collapsible city list – big tap target */}
+                    <Collapsible>
+                      <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="sm" className="w-full justify-between text-accent">
+                          <span className="font-medium">Popular cities</span>
+                          <ChevronDown className="w-4 h-4 ui-open:rotate-180 transition-transform" />
+                        </Button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <AnimatePresence>
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="mt-4 space-y-3"
+                          >
+                            {c.cities.map((city) => (
+                              <Card
+                                key={city.slug}
+                                className="p-4 bg-card/50 border-border/40 hover:border-accent/50 transition-colors"
+                              >
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <Link
+                                      to={`/world/${c.slug}/${city.slug}`}
+                                      className="font-semibold text-foreground hover:text-accent"
+                                    >
+                                      {city.name}
+                                    </Link>
+                                    <ul className="text-xs text-muted-foreground list-disc ml-4 mt-1 space-y-0.5">
+                                      {city.atGlance.map((g, i) => (
+                                        <li key={i}>{g}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                  <Link
+                                    to={`/world/${c.slug}/${city.slug}`}
+                                    className="text-xs text-accent hover:underline shrink-0 ml-3"
+                                  >
+                                    Guide →
+                                  </Link>
+                                </div>
+                              </Card>
+                            ))}
+                          </motion.div>
+                        </AnimatePresence>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </div>
