@@ -50,7 +50,8 @@ const Hotels = () => {
         state.hotels.map(hotel => ({
           ...hotel,
           country: country.country,
-          stateName: state.stateName,
+          // Remove country from state name display to avoid duplicates like "Canada (Canada)"
+          stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
           countryFlag: country.flagPath,
         }))
       )
