@@ -368,95 +368,84 @@ const Hotels = () => {
               </div>
             )}
 
-            {/* RESULTS */}
-            <AnimatePresence mode="wait">
-              {filteredData.length === 0 && (
-                <motion.div
-                  key="no-results"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-center text-muted-foreground py-8"
-                >
-                  <Building className="w-8 h-8 mx-auto mb-3 text-accent" />
-                  <p className="text-base">No verified 420-friendly hotels match your search.</p>
-                  <p className="text-xs mt-1">Try a different city or country.</p>
-                  {hasActiveFilters && (
-                    <Button 
-                      onClick={clearFilters} 
-                      variant="outline" 
-                      size="sm"
-                      className="mt-3 gap-2"
-                    >
-                      <X className="w-3 h-3" />
-                      Clear Search & Filters
-                    </Button>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* CLEAN HIERARCHICAL LIST - Back to original mobile-friendly layout */}
-            <div className="space-y-6">
-              {hierarchicalHotels.map((countryGroup) => (
-                <Collapsible 
-                  key={countryGroup.country} 
-                  className="border border-border rounded-xl bg-card/50"
-                  open={expandedCountries.has(countryGroup.country)}
-                  onOpenChange={() => toggleCountry(countryGroup.country)}
-                >
-                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-5 hover:bg-card transition-colors rounded-t-xl">
-                    <div className="flex items-center gap-3">
-                      <img src={countryGroup.flag} alt={countryGroup.country} className="h-5 w-7 rounded border border-border shadow-sm" />
-                      <div className="text-left">
-                        <h2 className="text-lg md:text-xl font-bold text-white">{countryGroup.country}</h2>
-                        <p className="text-xs text-muted-foreground">
-                          {countryGroup.states.reduce((total, state) => 
-                            total + state.cities.reduce((cityTotal, city) => 
-                              cityTotal + city.hotels.length, 0
-                            ), 0
-                          )} hotels
-                        </p>
+            {/* FIXED RESULTS SECTION - Removed problematic AnimatePresence */}
+            {filteredData.length === 0 ? (
+              <div className="text-center text-muted-foreground py-8">
+                <Building className="w-8 h-8 mx-auto mb-3 text-accent" />
+                <p className="text-base">No verified 420-friendly hotels match your search.</p>
+                <p className="text-xs mt-1">Try a different city or country.</p>
+                {hasActiveFilters && (
+                  <Button 
+                    onClick={clearFilters} 
+                    variant="outline" 
+                    size="sm"
+                    className="mt-3 gap-2"
+                  >
+                    <X className="w-3 h-3" />
+                    Clear Search & Filters
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {hierarchicalHotels.map((countryGroup) => (
+                  <Collapsible 
+                    key={countryGroup.country} 
+                    className="border border-border rounded-xl bg-card/50"
+                    open={expandedCountries.has(countryGroup.country)}
+                    onOpenChange={() => toggleCountry(countryGroup.country)}
+                  >
+                    <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-5 hover:bg-card transition-colors rounded-t-xl">
+                      <div className="flex items-center gap-3">
+                        <img src={countryGroup.flag} alt={countryGroup.country} className="h-5 w-7 rounded border border-border shadow-sm" />
+                        <div className="text-left">
+                          <h2 className="text-lg md:text-xl font-bold text-white">{countryGroup.country}</h2>
+                          <p className="text-xs text-muted-foreground">
+                            {countryGroup.states.reduce((total, state) => 
+                              total + state.cities.reduce((cityTotal, city) => 
+                                cityTotal + city.hotels.length, 0
+                              ), 0
+                            )} hotels
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="p-4 border-t border-border/50 space-y-4">
-                    {countryGroup.states.map((stateGroup) => (
-                      <Collapsible key={stateGroup.state} className="rounded-lg bg-background/30">
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-t-lg">
-                          <h3 className="text-base font-semibold text-accent">{stateGroup.state}</h3>
-                          <ChevronDown className="w-3 h-3 text-accent ui-open:rotate-180 transition-transform" />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="p-3 border-t border-border/50 space-y-3">
-                          {stateGroup.cities.map((cityGroup) => (
-                            <div key={cityGroup.city} className="space-y-2">
-                              <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                                <MapPin className="w-3 h-3 text-gold" />
-                                {cityGroup.city}
-                                <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">
-                                  {cityGroup.hotels.length}
-                                </Badge>
-                              </h4>
-                              <div className="grid grid-cols-1 gap-3">
-                                <AnimatePresence>
+                      <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="p-4 border-t border-border/50 space-y-4">
+                      {countryGroup.states.map((stateGroup) => (
+                        <Collapsible key={stateGroup.state} className="rounded-lg bg-background/30">
+                          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-t-lg">
+                            <h3 className="text-base font-semibold text-accent">{stateGroup.state}</h3>
+                            <ChevronDown className="w-3 h-3 text-accent ui-open:rotate-180 transition-transform" />
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className="p-3 border-t border-border/50 space-y-3">
+                            {stateGroup.cities.map((cityGroup) => (
+                              <div key={cityGroup.city} className="space-y-2">
+                                <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                                  <MapPin className="w-3 h-3 text-gold" />
+                                  {cityGroup.city}
+                                  <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">
+                                    {cityGroup.hotels.length}
+                                  </Badge>
+                                </h4>
+                                <div className="grid grid-cols-1 gap-3">
                                   {cityGroup.hotels.map((hotel) => (
                                     <HotelCard 
                                       key={hotel.id} 
                                       hotel={hotel} 
                                     />
                                   ))}
-                                </AnimatePresence>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </CollapsibleContent>
-                      </Collapsible>
-                    ))}
-                  </CollapsibleContent>
-                </Collapsible>
-              ))}
-            </div>
+                            ))}
+                          </CollapsibleContent>
+                        </Collapsible>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
+                ))}
+              </div>
+            )}
 
             {/* CLEAN DISCLAIMER */}
             <section className="mt-8">
