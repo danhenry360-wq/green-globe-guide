@@ -26,6 +26,57 @@ export interface Destination {
 // --- 2. Hotel Data ---
 
 /**
+ * Represents a single Dispensary.
+ */
+export interface Dispensary {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  rating: number; // Star rating (e.g., 4.7)
+  reviewCount: number;
+  address: string;
+  status: string; // e.g., "Licensed", "Temporary Approval"
+  isRecreational: boolean;
+  isMedical: boolean;
+  hasDelivery: boolean;
+  hasATM: boolean;
+  hasParking: boolean;
+  policyHighlights: string;
+  description: string;
+  image: string; // Path to the image asset
+  website: string; // Link to the dispensary website
+}
+
+/**
+ * Represents a collection of dispensaries within a specific City.
+ */
+export interface CityDispensaries {
+  cityName: string;
+  dispensaries: Dispensary[];
+}
+
+/**
+ * Represents a collection of dispensaries within a specific State or Province.
+ */
+export interface StateDispensaries {
+  stateName: string; // Full name of the state/province (e.g., 'California')
+  cities: CityDispensaries[];
+}
+
+/**
+ * Represents a collection of dispensaries within a specific Country.
+ */
+export interface CountryDispensaries {
+  country: string;
+  flagPath: string; // Path to the flag image (e.g., 'https://flagcdn.com/w40/us.png')
+  states: StateDispensaries[];
+}
+
+// --- 3. Hotel Data (renumbered to 4) ---
+
+/**
  * Represents a single 420-Friendly Hotel.
  */
 export interface Hotel {
@@ -58,7 +109,7 @@ export interface CountryHotels {
   states: StateHotels[];
 }
 
-// --- 3. Blog/Article Data ---
+// --- 4. Blog/Article Data ---
 
 /**
  * Represents a single blog post or travel guide article.
@@ -72,7 +123,7 @@ export interface Article {
   link: string; // The route to the article page
 }
 
-// --- 4. Statistics Data ---
+// --- 5. Statistics Data ---
 
 /**
  * Represents a single statistic item for the homepage.
@@ -84,7 +135,7 @@ export interface StatItem {
   suffix: string;
 }
 
-// --- 5. Feature Data ---
+// --- 6. Feature Data ---
 
 /**
  * Represents a single feature/resource item for the homepage.

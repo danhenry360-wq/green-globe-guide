@@ -5,9 +5,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, MapPin, Search, Store, Info, Filter, X } from "lucide-react";
-import { HotelCard } from "@/components/HotelCard"; // NOTE: Will need to replace with DispensaryCard
-import { Hotel, CountryHotels } from "@/types/data"; // NOTE: Will need to replace with Dispensary types
-import { HOTEL_DATA } from "@/data/hotel_data"; // NOTE: Will need to replace with dispensary_data
+import { DispensaryCard } from "@/components/DispensaryCard";
+import { Dispensary, CountryDispensaries } from "@/types/data";
+import { DISPENSARY_DATA } from "@/data/dispensary_data";
 import { useMemo, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -41,7 +41,7 @@ const generateStructuredData = (dispensaryCount: number) => ({
 ============================================ */
 // NOTE: Using HOTEL_DATA as a placeholder for now. This will need to be replaced with actual dispensary data.
 // Assuming the structure is similar for now to avoid breaking the template logic.
-const DATA: CountryHotels[] = HOTEL_DATA; 
+const DATA: CountryDispensaries[] = DISPENSARY_DATA; 
 
 type FilterType = 'all' | 'recreational' | 'medical' | 'delivery' | 'atm' | 'parking';
 type SortType = 'rating' | 'distance-low' | 'name';
@@ -58,16 +58,18 @@ const Dispensary = () => {
       ...country,
       states: country.states.map(state => ({
         ...state,
-        stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
-        hotels: state.hotels.map(dispensary => ({ // Renaming 'hotels' to 'dispensary' for clarity in this context
-          ...dispensary,
-          state: dispensary.state ? dispensary.state.replace(/\s*\(.*\)$/, '') : dispensary.state,
-          // Placeholder logic for dispensary-specific filters
-          isRecreational: dispensary.isPremium, // Placeholder
-          isMedical: dispensary.isBudget, // Placeholder
-          hasDelivery: dispensary.policyHighlights?.toLowerCase().includes('delivery') || false,
-          hasATM: dispensary.policyHighlights?.toLowerCase().includes('atm') || false,
-          hasParking: dispensary.policyHighlights?.toLowerCase().includes('parking') || false,
+        stateName: state.stateName, // No need to replace state name here, it's clean in the new data
+        cities: state.cities.map(city => ({
+          ...city,
+          dispensaries: city.dispensaries.map(dispensary => ({
+            ...dispensary,
+            // Ensure all boolean flags are present
+            isRecreational: dispensary.isRecreational,
+            isMedical: dispensary.isMedical,
+            hasDelivery: dispensary.hasDelivery,
+            hasATM: dispensary.hasATM,
+            hasParking: dispensary.hasParking,
+          }))
         }))
       }))
     }));
@@ -79,12 +81,14 @@ const Dispensary = () => {
     
     let allDispensaries = processedData.flatMap(country => 
       country.states.flatMap(state => 
-        state.hotels.map(dispensary => ({ // Renaming 'hotels' to 'dispensary'
-          ...dispensary,
-          country: country.country,
-          stateName: state.stateName,
-          countryFlag: country.flagPath,
-        }))
+        state.cities.flatMap(city => 
+          city.dispensaries.map(dispensary => ({
+            ...dispensary,
+            country: country.country,
+            stateName: state.stateName,
+            countryFlag: country.flagPath,
+          }))
+        )
       )
     );
 
@@ -123,7 +127,7 @@ const Dispensary = () => {
 
   // Group data for display
   const groupedDispensaries = useMemo(() => {
-    const groups: { country: string; flag: string; states: { state: string; cities: { city: string; hotels: typeof filteredData }[] }[] }[] = [];
+    const groups: { country: string; flag: string; states: { state: string; cities: { city: string; dispensaries: Dispensary[] }[] }[] }[] = [];
 
     filteredData.forEach(dispensary => {
       let countryGroup = groups.find(g => g.country === dispensary.country);
@@ -140,11 +144,11 @@ const Dispensary = () => {
 
       let cityGroup = stateGroup.cities.find(c => c.city === dispensary.city);
       if (!cityGroup) {
-        cityGroup = { city: dispensary.city, hotels: [] }; // Renaming 'hotels' to 'dispensaries' for clarity
+        cityGroup = { city: dispensary.city, dispensaries: [] };
         stateGroup.cities.push(cityGroup);
       }
 
-      cityGroup.hotels.push(dispensary);
+      cityGroup.dispensaries.push(dispensary);
     });
 
     return groups;
@@ -170,6 +174,8 @@ const Dispensary = () => {
   const sortOptions = [
     { value: 'rating' as SortType, label: 'Highest Rated' },
     { value: 'distance-low' as SortType, label: 'Distance: Nearest' },
+    { value: 'price-low' as SortType, label: 'Price: Low to High' },
+    { value: 'price-high' as SortType, label: 'Price: High to Low' },
     { value: 'name' as SortType, label: 'Alphabetical' },
   ];
 
@@ -209,8 +215,12 @@ const Dispensary = () => {
               <p className="text-base sm:text-lg text-muted-foreground mb-3">
                 Find legal cannabis stores worldwide
               </p>
-              <p className="text-sm sm:text-base text-muted-foreground/80">
+                <p className="text-sm sm:text-base text-muted-foreground/80">
                 {filteredData.length} verified dispensaries • Verified locations • Premium selection
+              </p>
+              <p className="text-xs text-muted-foreground/60 mt-1">
+                <Store className="inline w-3 h-3 mr-1 text-accent" />
+                *Currently showing Los Angeles area dispensaries.
               </p>
             </section>
 
@@ -362,7 +372,7 @@ const Dispensary = () => {
                             <p className="text-sm text-muted-foreground">
                               {countryGroup.states.reduce((total, state) => 
                                 total + state.cities.reduce((cityTotal, city) => 
-                                  cityTotal + city.hotels.length, 0
+                                  cityTotal + city.dispensaries.length, 0
                                 ), 0
                               )} dispensaries
                             </p>
@@ -391,15 +401,14 @@ const Dispensary = () => {
                                       {cityGroup.city}
                                     </h4>
                                     <Badge className="bg-accent/15 text-accent border border-accent/40 text-xs font-semibold px-3 py-1">
-                                      {cityGroup.hotels.length}
+                                      {cityGroup.dispensaries.length}
                                     </Badge>
                                   </div>
                                   <div className="grid grid-cols-1 gap-3">
-                                    {/* NOTE: This will need to be replaced with a DispensaryCard component */}
-                                    {cityGroup.hotels.map((dispensary) => (
-                                      <HotelCard 
+                                    {cityGroup.dispensaries.map((dispensary) => (
+                                      <DispensaryCard 
                                         key={dispensary.id} 
-                                        hotel={dispensary} 
+                                        dispensary={dispensary} 
                                       />
                                     ))}
                                   </div>
