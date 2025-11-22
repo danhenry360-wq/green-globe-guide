@@ -10,6 +10,7 @@ import StateDetail from "./pages/StateDetail";
 import WorldGuide from "./pages/WorldGuide";
 import Hotels from "./pages/Hotels";
 import Tours from "./pages/Tours";
+import Dispensary from "./pages/Dispensary";
 import CityDetail from "./pages/CityDetail";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
           <Route path="/world" element={<WorldGuide />} />
           <Route path="/hotels" element={<Hotels />} />
+          <Route path="/dispensary" element={<Dispensary />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/about" element={<About />} />
