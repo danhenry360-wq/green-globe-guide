@@ -8,7 +8,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import {
   ChevronDown, MapPin, Plane, Users, Info, Search, Globe,
-  ArrowRight, Zap, Building2,
+  ArrowRight, Zap, Building2, Leaf, Mountain, Waves, Palmtree,
+  Landmark, Compass, Wind, Sun, Droplets, Trees, Coffee,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,16 +35,50 @@ interface Country {
   cities: City[];
   image: string;
   flag: string;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 interface Continent {
   id: string;
   name: string;
   emoji: string;
+  icon?: React.ComponentType<{ className?: string }>;
   description: string;
   countriesCount: number;
   countries: Country[];
 }
+
+/* ============================================
+   ICON MAPPING
+============================================ */
+const ContinentIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  "north-america": Mountain,
+  "south-america": Palmtree,
+  "europe": Landmark,
+  "asia": Compass,
+  "africa": Sun,
+  "caribbean": Waves,
+  "oceania": Droplets,
+};
+
+const CountryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  "canada": Trees,
+  "usa": Landmark,
+  "mexico": Sun,
+  "uruguay": Waves,
+  "colombia": Leaf,
+  "netherlands": Wind,
+  "germany": Mountain,
+  "spain": Sun,
+  "portugal": Waves,
+  "thailand": Palmtree,
+  "south-korea": Compass,
+  "south-africa": Sun,
+  "jamaica": Palmtree,
+  "barbados": Waves,
+  "australia": Droplets,
+  "new-zealand": Mountain,
+};
 
 /* ============================================
    DATA – CONTINENT-ORGANIZED
@@ -54,6 +89,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "north-america",
     name: "North America",
     emoji: "🌎",
+    icon: Mountain,
     description: "Progressive cannabis policies with recreational and medical options",
     countriesCount: 3,
     countries: [
@@ -67,6 +103,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "First G7 nation to fully legalize recreational cannabis nationwide.",
         flag: "🇨🇦",
         image: "/dest-4.jpg",
+        icon: Trees,
         cities: [
           {
             slug: "toronto",
@@ -95,6 +132,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Patchwork of state laws; California, Colorado, and New York lead legalization.",
         flag: "🇺🇸",
         image: "/dest-1.jpg",
+        icon: Landmark,
         cities: [
           {
             slug: "los-angeles",
@@ -123,6 +161,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Supreme Court ruled prohibition unconstitutional; private use is administrative.",
         flag: "🇲🇽",
         image: "/dest-4.jpg",
+        icon: Sun,
         cities: [
           {
             slug: "mexico-city",
@@ -149,6 +188,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "south-america",
     name: "South America",
     emoji: "🌎",
+    icon: Palmtree,
     description: "Leading legalization in Uruguay; progressive cities across the continent",
     countriesCount: 2,
     countries: [
@@ -162,6 +202,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "World's first full legalization; pharmacy sales and clubs for residents.",
         flag: "🇺🇾",
         image: "/dest-5.jpg",
+        icon: Waves,
         cities: [
           {
             slug: "montevideo",
@@ -190,6 +231,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Medical legalization since 2015; world's largest cannabis exporter.",
         flag: "🇨🇴",
         image: "/dest-4.jpg",
+        icon: Leaf,
         cities: [
           {
             slug: "bogota",
@@ -216,6 +258,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "europe",
     name: "Europe",
     emoji: "🇪🇺",
+    icon: Landmark,
     description: "Diverse cannabis policies; from decriminalized to fully legal",
     countriesCount: 4,
     countries: [
@@ -229,6 +272,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Sale tolerated under strict conditions; production remains illegal.",
         flag: "🇳🇱",
         image: "/dest-3.jpg",
+        icon: Wind,
         cities: [
           {
             slug: "amsterdam",
@@ -257,6 +301,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Legalized April 2024; cannabis social clubs launching nationwide.",
         flag: "🇩🇪",
         image: "/dest-1.jpg",
+        icon: Mountain,
         cities: [
           {
             slug: "berlin",
@@ -285,6 +330,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Private use and personal cultivation legal; sale remains illegal.",
         flag: "🇪🇸",
         image: "/dest-2.jpg",
+        icon: Sun,
         cities: [
           {
             slug: "barcelona",
@@ -313,6 +359,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Decriminalized since 2001; cannabis treated as public health issue.",
         flag: "🇵🇹",
         image: "/dest-3.jpg",
+        icon: Waves,
         cities: [
           {
             slug: "lisbon",
@@ -339,6 +386,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "asia",
     name: "Asia",
     emoji: "🌏",
+    icon: Compass,
     description: "Limited legalization; medical options emerging in select countries",
     countriesCount: 2,
     countries: [
@@ -352,6 +400,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Decriminalized 2022, medical-only 2024. Recreational use illegal.",
         flag: "🇹🇭",
         image: "/dest-6.jpg",
+        icon: Palmtree,
         cities: [
           {
             slug: "bangkok",
@@ -380,6 +429,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Medical-only legalization; recreational use illegal with harsh penalties.",
         flag: "🇰🇷",
         image: "/dest-5.jpg",
+        icon: Compass,
         cities: [
           {
             slug: "seoul",
@@ -406,6 +456,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "africa",
     name: "Africa",
     emoji: "🌍",
+    icon: Sun,
     description: "Emerging legalization; South Africa leads the continent",
     countriesCount: 1,
     countries: [
@@ -419,6 +470,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Private use & cultivation legal; public use prohibited, no commercial sales.",
         flag: "🇿🇦",
         image: "/dest-5.jpg",
+        icon: Sun,
         cities: [
           {
             slug: "cape-town",
@@ -445,6 +497,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "caribbean",
     name: "Caribbean",
     emoji: "🏝️",
+    icon: Waves,
     description: "Island culture with relaxed cannabis attitudes",
     countriesCount: 2,
     countries: [
@@ -458,6 +511,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Decriminalized 2015; medical & Rasta sacramental use legal.",
         flag: "🇯🇲",
         image: "/dest-6.jpg",
+        icon: Palmtree,
         cities: [
           {
             slug: "kingston",
@@ -486,6 +540,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Decriminalized small amounts; island community culture.",
         flag: "🇧🇧",
         image: "/dest-4.jpg",
+        icon: Waves,
         cities: [
           {
             slug: "bridgetown",
@@ -512,6 +567,7 @@ const WORLD_GUIDE: Continent[] = [
     id: "oceania",
     name: "Oceania",
     emoji: "🇦🇺",
+    icon: Droplets,
     description: "Australia and New Zealand leading with medical legalization",
     countriesCount: 2,
     countries: [
@@ -525,6 +581,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Medical legalization federally; ACT decriminalized; states vary.",
         flag: "🇦🇺",
         image: "/dest-2.jpg",
+        icon: Droplets,
         cities: [
           {
             slug: "sydney",
@@ -553,6 +610,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Medical legalization; recreational referendums narrowly failed.",
         flag: "🇳🇿",
         image: "/dest-3.jpg",
+        icon: Mountain,
         cities: [
           {
             slug: "auckland",
@@ -600,15 +658,13 @@ const getStatusIcon = (status: string) => {
     case "Decriminalized":
       return "🟡";
     default:
-      return "⚪";
+      return "🔴";
   }
 };
 
 /* ============================================
-   COMPONENTS
+   COUNTRY CARD COMPONENT
 ============================================ */
-
-/** Country Card Component */
 interface CountryCardProps {
   country: Country;
   delay: number;
@@ -616,6 +672,9 @@ interface CountryCardProps {
 
 const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const CountryIcon = country.icon || Globe;
 
   return (
     <motion.div
@@ -623,31 +682,37 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      <Card className="overflow-hidden h-full flex flex-col bg-card border-border hover:border-accent/50 transition-colors">
-        {/* Header with image */}
-        <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-primary/10 overflow-hidden group">
+      <Card className="h-full flex flex-col bg-card border-border/40 hover:border-accent/50 hover:shadow-lg transition-all overflow-hidden group">
+        {/* Country Header with Icon */}
+        <div className="relative h-32 sm:h-40 bg-gradient-to-br from-accent/20 to-accent/5 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+            <CountryIcon className="w-24 h-24 sm:w-32 sm:h-32 text-accent" />
+          </div>
           <img
             src={country.image}
             alt={country.name}
-            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+            className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <Badge className={`absolute top-3 right-3 ${getStatusColor(country.legalStatus)} border-none text-xs sm:text-sm`}>
-            {getStatusIcon(country.legalStatus)} {country.legalStatus}
-          </Badge>
-          <div className="absolute top-3 left-3 text-3xl">{country.flag}</div>
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex items-center gap-2">
+            <span className="text-2xl sm:text-3xl">{country.flag}</span>
+            <CountryIcon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
-          {/* Country name */}
+        {/* Country Info */}
+        <div className="flex-1 p-3 sm:p-4 flex flex-col gap-3">
           <div>
-            <h3 className="text-lg sm:text-xl font-bold text-foreground">{country.name}</h3>
-            <p className="text-xs sm:text-sm text-muted-foreground">{country.description}</p>
+            <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1">{country.name}</h3>
+            <Badge className={`${getStatusColor(country.legalStatus)} w-fit text-xs sm:text-sm`}>
+              {getStatusIcon(country.legalStatus)} {country.legalStatus}
+            </Badge>
           </div>
 
-          {/* Quick facts grid */}
-          <div className="grid grid-cols-1 gap-2 text-xs">
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{country.description}</p>
+
+          {/* Quick Info Grid */}
+          <div className="space-y-2 text-xs sm:text-sm">
             <div className="flex items-start gap-2 bg-muted/40 p-2 rounded-lg">
               <Users className="w-4 h-4 text-accent shrink-0 mt-0.5" />
               <div className="min-w-0">
@@ -739,6 +804,8 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
   onToggle,
   filteredCountries,
 }) => {
+  const ContinentIcon = continent.icon || Globe;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -756,6 +823,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
           <div className="text-left flex-1">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-3xl sm:text-4xl">{continent.emoji}</span>
+              <ContinentIcon className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{continent.name}</h2>
             </div>
             <p className="text-sm sm:text-base text-muted-foreground">{continent.description}</p>
@@ -849,40 +917,15 @@ const WorldGuide = () => {
                     placeholder="Search countries or cities (e.g., Amsterdam, California)..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card border border-border focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm sm:text-base"
-                    aria-label="Search cannabis-friendly destinations"
+                    className="w-full pl-12 pr-4 py-3 sm:py-4 bg-muted border border-border/40 rounded-xl focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all text-sm sm:text-base"
                   />
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* INTERACTIVE MAP */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-12 sm:mb-16"
-          >
-            <InteractiveWorldMap />
-          </motion.div>
-
-          {/* NO RESULTS MESSAGE */}
-          {filteredData.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12 sm:py-16"
-            >
-              <Globe className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground/50 mx-auto mb-4" />
-              <p className="text-base sm:text-lg text-muted-foreground">
-                No destinations match "{searchQuery}". Try searching for a country or city name.
-              </p>
-            </motion.div>
-          )}
-
           {/* CONTINENTS SECTIONS */}
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-8 sm:space-y-10">
             {filteredData.map((continent) => (
               <ContinentSection
                 key={continent.id}
@@ -894,32 +937,16 @@ const WorldGuide = () => {
             ))}
           </div>
 
-          {/* FOOTER CTA */}
-          {filteredData.length > 0 && (
+          {/* NO RESULTS */}
+          {filteredData.length === 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border text-center"
+              className="text-center py-12"
             >
-              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Need more information?</h3>
-              <p className="text-sm sm:text-base text-muted-foreground mb-6">
-                Check our detailed travel guides and hotel recommendations
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link to="/guides">
-                  <Button size="lg" className="w-full sm:w-auto bg-accent hover:bg-accent/90">
-                    <ArrowRight className="w-4 h-4 mr-2" />
-                    Travel Guides
-                  </Button>
-                </Link>
-                <Link to="/hotels">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    <Building2 className="w-4 h-4 mr-2" />
-                    420-Friendly Hotels
-                  </Button>
-                </Link>
-              </div>
+              <Globe className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">No results found</h3>
+              <p className="text-muted-foreground">Try adjusting your search terms</p>
             </motion.div>
           )}
         </div>
