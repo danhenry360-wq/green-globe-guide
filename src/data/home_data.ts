@@ -53,7 +53,7 @@ export const FEATURED_DESTINATIONS: Destination[] = [
     imageAlt: "Amsterdam coffee shops and Netherlands cannabis culture",
     legalStatus: "Decriminalized",
     statusColor: getStatusColor("Decriminalized"),
-    link: "/world" 
+    link: "/world#europe" 
   },
   { 
     id: 4,
@@ -65,7 +65,7 @@ export const FEATURED_DESTINATIONS: Destination[] = [
     imageAlt: "Canada legal cannabis travel and dispensary locations",
     legalStatus: "Recreational",
     statusColor: getStatusColor("Recreational"),
-    link: "/world" 
+    link: "/world#north-america" 
   },
   { 
     id: 5,
@@ -77,7 +77,7 @@ export const FEATURED_DESTINATIONS: Destination[] = [
     imageAlt: "Uruguay pioneering cannabis legalization travel guide",
     legalStatus: "Recreational",
     statusColor: getStatusColor("Recreational"),
-    link: "/world" 
+    link: "/world#south-america" 
   },
   { 
     id: 6,
@@ -89,7 +89,7 @@ export const FEATURED_DESTINATIONS: Destination[] = [
     imageAlt: "Thailand medical cannabis tourism and regulations",
     legalStatus: "Medical",
     statusColor: getStatusColor("Medical"),
-    link: "/world" 
+    link: "/world#asia" 
   },
 ];
 

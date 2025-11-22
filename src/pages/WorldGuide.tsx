@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import {
   ChevronDown, MapPin, Plane, Users, Info, Search, Globe,
   ArrowRight, Zap, Building2,
@@ -832,7 +833,7 @@ const WorldGuide = () => {
             className="max-w-4xl mx-auto mb-10 sm:mb-12 text-center"
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
-              BudQuest Global Cannabis Guide
+              Global Canna Pass Global Cannabis Guide
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
               Explore cannabis laws by continent, country, and city worldwide
@@ -854,6 +855,16 @@ const WorldGuide = () => {
                 </div>
               </div>
             </div>
+          </motion.div>
+
+          {/* INTERACTIVE MAP */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-12 sm:mb-16"
+          >
+            <InteractiveWorldMap />
           </motion.div>
 
           {/* NO RESULTS MESSAGE */}
