@@ -155,21 +155,21 @@ const Hotels = () => {
         <main className="pt-24 pb-20 px-4">
           <div className="container mx-auto max-w-7xl">
             {/* HERO */}
-            <section className="max-w-3xl mx-auto mb-12 text-center">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
-              <p className="text-sm sm:text-base text-muted-foreground">Browse by country or state. Policies checked, premium experience.</p>
+            <section className="max-w-3xl mx-auto mb-8 text-center">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground">Browse by country or state. Policies checked, premium experience.</p>
             </section>
 
             {/* STICKY SEARCH */}
-            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border p-3 mb-10 max-w-xl mx-auto shadow-2xl">
+            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-lg border border-border p-3 mb-8 max-w-xl mx-auto shadow-lg">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                 <input
                   type="text"
                   placeholder="Search hotels, cities, states, countries..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border-none focus:outline-none focus:ring-2 focus:ring-accent text-white"
+                  className="w-full pl-9 pr-4 py-2 rounded-lg bg-card border-none focus:outline-none focus:ring-1 focus:ring-accent text-white text-sm"
                   aria-label="Search hotels"
                 />
               </div>
@@ -183,42 +183,44 @@ const Hotels = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="text-center text-muted-foreground py-10"
+                  className="text-center text-muted-foreground py-8"
                 >
-                  <Building className="w-10 h-10 mx-auto mb-4 text-accent" />
-                  <p className="text-lg">No verified 420-friendly hotels match your search query.</p>
-                  <p className="text-sm mt-1">Try a different city or country.</p>
+                  <Building className="w-8 h-8 mx-auto mb-3 text-accent" />
+                  <p className="text-base">No verified 420-friendly hotels match your search query.</p>
+                  <p className="text-xs mt-1">Try a different city or country.</p>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* HIERARCHICAL LIST GROUPED BY COUNTRY -> STATE -> CITY */}
-            <div className="space-y-10">
+            <div className="space-y-6">
               {hierarchicalHotels.map((countryGroup) => (
-                <Collapsible key={countryGroup.country} className="border border-border rounded-xl shadow-lg bg-card/50">
-                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-6 hover:bg-card transition-colors rounded-t-xl">
+                <Collapsible key={countryGroup.country} className="rounded-xl bg-card/30 backdrop-blur-sm">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-5 hover:bg-card/50 transition-colors rounded-xl">
                     <div className="flex items-center gap-3">
-                      <img src={countryGroup.flag} alt={countryGroup.country} className="h-6 w-8 rounded border border-border shadow-md" />
-                      <h2 className="text-xl md:text-2xl font-bold text-white">{countryGroup.country}</h2>
+                      <img src={countryGroup.flag} alt={countryGroup.country} className="h-5 w-7 rounded border border-border shadow-sm" />
+                      <h2 className="text-lg md:text-xl font-bold text-white">{countryGroup.country}</h2>
                     </div>
-                    <ChevronDown className="w-5 h-5 text-accent ui-open:rotate-180 transition-transform" />
+                    <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="p-4 md:p-6 border-t border-border/50 space-y-6">
+                  <CollapsibleContent className="px-2 md:px-4 pb-4 space-y-4">
                     {countryGroup.states.map((stateGroup) => (
-                      <Collapsible key={stateGroup.state} className="border border-border rounded-lg bg-background/50">
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-t-lg">
-                          <h3 className="text-lg font-semibold text-accent">{stateGroup.state}</h3>
-                          <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
+                      <Collapsible key={stateGroup.state} className="rounded-lg bg-background/30">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background/50 transition-colors rounded-lg">
+                          <h3 className="text-base font-semibold text-accent">{stateGroup.state}</h3>
+                          <ChevronDown className="w-3 h-3 text-accent ui-open:rotate-180 transition-transform" />
                         </CollapsibleTrigger>
-                        <CollapsibleContent className="p-3 border-t border-border/50 space-y-4">
+                        <CollapsibleContent className="px-2 pb-3 space-y-3">
                           {stateGroup.cities.map((cityGroup) => (
-                            <div key={cityGroup.city} className="space-y-3">
-                              <h4 className="text-base font-bold text-white flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-gold" />
+                            <div key={cityGroup.city} className="space-y-2">
+                              <h4 className="text-sm font-bold text-white flex items-center gap-2 px-1">
+                                <MapPin className="w-3 h-3 text-gold" />
                                 {cityGroup.city}
-                                <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">{cityGroup.hotels.length} Hotels</Badge>
+                                <Badge className="bg-gold/10 text-gold border border-gold/20 text-xs px-1.5 py-0">
+                                  {cityGroup.hotels.length}
+                                </Badge>
                               </h4>
-                              <div className="grid grid-cols-1 gap-4">
+                              <div className="grid grid-cols-1 gap-3">
                                 <AnimatePresence>
                                   {cityGroup.hotels.map((hotel) => (
                                     <HotelCard 
@@ -238,21 +240,21 @@ const Hotels = () => {
               ))}
             </div>
 
-            {/* RED DISCLAIMER – FIXED: No dropdown, just static text */}
-            <section className="mt-12">
-              <Card className="p-4 bg-card/50 border-border-red border-red-500/50">
+            {/* RED DISCLAIMER */}
+            <section className="mt-8">
+              <Card className="p-3 bg-red-950/20 border-red-500/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="w-4 h-4 text-red-400" />
-                  <span className="text-sm font-semibold text-red-400">Legal Disclaimer</span>
+                  <Info className="w-3 h-3 text-red-400" />
+                  <span className="text-xs font-semibold text-red-400">Legal Disclaimer</span>
                 </div>
-                <p className="text-xs text-red-400">
+                <p className="text-xs text-red-400/90">
                   BudQuest is an informational resource only. We do not provide legal advice. Always confirm current local laws and hotel policies before booking or consuming cannabis. International transport remains illegal.
                 </p>
               </Card>
             </section>
 
             {/* INTERNAL LINKS FOR CRAWLERS */}
-            <nav className="mt-10 text-center text-sm text-muted-foreground">
+            <nav className="mt-8 text-center text-xs text-muted-foreground">
               Explore more:{" "}
               <Link to="/usa" className="text-accent hover:underline">
                 USA Guide
