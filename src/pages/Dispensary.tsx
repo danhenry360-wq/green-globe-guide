@@ -10,7 +10,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 
-import { DISPENSARY_DATA, CountryData, StateDispensaries, Dispensary as DispensaryType } from "@/lib/dispensary_data";
+import { DISPENSARY_DATA, CountryData } from "@/lib/dispensary_data";
+
+// Define Dispensary type locally to avoid conflicts
+interface DispensaryType {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  type: string;
+  specialty: string;
+  rating: number;
+  website: string;
+  priceRange?: string;
+}
 
 const DATA: CountryData[] = DISPENSARY_DATA;
 
@@ -311,9 +324,6 @@ const FilterPanel = ({
   );
 };
 
-/* ============================================
-   DISPENSARY CARD COMPONENT
-============================================ */
 const DispensaryCard = ({ dispensary }: { dispensary: DispensaryType & { country: string; state: string } }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
