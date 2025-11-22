@@ -134,10 +134,8 @@ const Hotels = () => {
 
   // Update document title and meta tags
   useEffect(() => {
-    // Update document title
     document.title = getPageTitle;
 
-    // Update meta description
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
       metaDescription = document.createElement('meta');
@@ -146,7 +144,6 @@ const Hotels = () => {
     }
     metaDescription.setAttribute('content', getMetaDescription);
 
-    // Update canonical URL
     let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (!canonicalLink) {
       canonicalLink = document.createElement('link');
@@ -155,7 +152,6 @@ const Hotels = () => {
     }
     canonicalLink.setAttribute('href', 'https://greenglobe.com/hotels');
 
-    // Add structured data
     const structuredDataScript = document.createElement('script');
     structuredDataScript.type = 'application/ld+json';
     structuredDataScript.textContent = JSON.stringify(HOTELS_STRUCTURED_DATA);
@@ -166,7 +162,6 @@ const Hotels = () => {
     breadcrumbScript.textContent = JSON.stringify(BREADCRUMB_STRUCTURED_DATA);
     document.head.appendChild(breadcrumbScript);
 
-    // Cleanup function
     return () => {
       document.head.removeChild(structuredDataScript);
       document.head.removeChild(breadcrumbScript);
@@ -311,63 +306,74 @@ const Hotels = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_STRUCTURED_DATA) }}
       />
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
         <Navigation />
 
         <main className="pt-24 pb-20 px-4">
           <div className="container mx-auto max-w-7xl">
-            {/* SEO-Friendly HERO SECTION */}
+            {/* LIQUID GLASS HERO SECTION */}
             <header className="max-w-4xl mx-auto mb-8 text-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-white">
-                {query ? `420-Friendly Hotels in ${query}` : 'Verified 420-Friendly Hotels Worldwide'}
-              </h1>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-4">
-                {getMetaDescription}
-              </p>
-              
-              {/* SEO Stats */}
-              <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground mb-4">
-                <div className="flex items-center gap-1">
-                  <Badge variant="secondary" className="bg-green-500/20 text-green-400">
-                    {SEO_DATA.totalHotels}+
-                  </Badge>
-                  <span>Verified Hotels</span>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="backdrop-blur-xl bg-white/5 rounded-2xl p-8 border border-white/10 shadow-2xl shadow-purple-500/10"
+              >
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-green-300 via-purple-300 to-amber-300 bg-clip-text text-transparent">
+                  {query ? `420-Friendly Hotels in ${query}` : 'Verified 420-Friendly Hotels Worldwide'}
+                </h1>
+                <p className="text-sm sm:text-base text-gray-300 mb-4">
+                  {getMetaDescription}
+                </p>
+                
+                {/* Liquid Glass Stats */}
+                <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+                  <div className="flex items-center gap-1 backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                    <Badge variant="secondary" className="bg-green-500/30 text-green-300 border-green-500/50">
+                      {SEO_DATA.totalHotels}+
+                    </Badge>
+                    <span>Verified Hotels</span>
+                  </div>
+                  <div className="flex items-center gap-1 backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                    <Badge variant="secondary" className="bg-purple-500/30 text-purple-300 border-purple-500/50">
+                      {SEO_DATA.countries.length}+
+                    </Badge>
+                    <span>Countries</span>
+                  </div>
+                  <div className="flex items-center gap-1 backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                    <Badge variant="secondary" className="bg-amber-500/30 text-amber-300 border-amber-500/50">
+                      {SEO_DATA.cities.length}+
+                    </Badge>
+                    <span>Cities</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Badge variant="secondary" className="bg-blue-500/20 text-blue-400">
-                    {SEO_DATA.countries.length}+
-                  </Badge>
-                  <span>Countries</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Badge variant="secondary" className="bg-purple-500/20 text-purple-400">
-                    {SEO_DATA.cities.length}+
-                  </Badge>
-                  <span>Cities</span>
-                </div>
-              </div>
+              </motion.div>
             </header>
 
-            {/* SEARCH & FILTERS */}
-            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border p-3 mb-8 max-w-4xl mx-auto shadow-lg">
+            {/* LIQUID GLASS SEARCH & FILTERS */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="sticky top-20 z-10 backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-4 mb-8 max-w-4xl mx-auto shadow-2xl shadow-purple-500/10"
+            >
               <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-400" />
                   <input
                     type="text"
                     placeholder="Search 420-friendly hotels, cities, states, countries..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-lg bg-card border-none focus:outline-none focus:ring-1 focus:ring-accent text-white text-sm"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl backdrop-blur-sm bg-white/5 border border-white/20 focus:border-green-400 focus:ring-2 focus:ring-green-400/20 text-white text-sm transition-all duration-300 placeholder-gray-400"
                     aria-label="Search 420-friendly hotels"
                   />
                   {query && (
                     <button
                       onClick={() => setQuery("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-400 transition-colors"
                       aria-label="Clear search"
                     >
-                      <X className="w-3 h-3" />
+                      <X className="w-4 h-4" />
                     </button>
                   )}
                 </div>
@@ -377,17 +383,17 @@ const Hotels = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="gap-1 border-border text-xs sm:text-sm"
+                    className="gap-2 backdrop-blur-sm bg-white/5 border border-white/20 text-green-300 hover:bg-green-500/20 hover:text-green-200 hover:border-green-400 text-sm transition-all duration-300"
                     aria-label="Filter hotels"
                   >
-                    <Filter className="w-3 h-3" />
+                    <Filter className="w-4 h-4" />
                     <span className="hidden sm:inline">Filters</span>
                   </Button>
                   
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortType)}
-                    className="px-2 py-2 rounded-lg bg-card border border-border text-white text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-accent min-w-20"
+                    className="px-3 py-3 rounded-xl backdrop-blur-sm bg-white/5 border border-white/20 text-green-300 text-sm focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all duration-300"
                     aria-label="Sort hotels by"
                   >
                     {sortOptions.map(option => (
@@ -399,7 +405,7 @@ const Hotels = () => {
                 </div>
               </div>
 
-              {/* FILTER CHIPS */}
+              {/* LIQUID GLASS FILTER CHIPS */}
               <AnimatePresence>
                 {(isFilterOpen || hasActiveFilters) && (
                   <motion.div
@@ -408,94 +414,117 @@ const Hotels = () => {
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="flex flex-wrap gap-1 sm:gap-2 mt-3 pt-3 border-t border-border/50">
+                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/20">
                       {filterOptions.map((filter) => (
-                        <button
+                        <motion.button
                           key={filter.value}
                           onClick={() => setActiveFilter(filter.value)}
-                          className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all ${
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-sm ${
                             activeFilter === filter.value
-                              ? 'bg-accent text-accent-foreground'
-                              : 'bg-card/70 text-muted-foreground hover:text-white border border-border'
+                              ? 'bg-gradient-to-r from-green-500 to-purple-500 text-white shadow-lg shadow-green-500/25'
+                              : 'bg-white/5 text-gray-300 hover:text-green-300 hover:bg-white/10 border border-white/10'
                           }`}
                           aria-label={`Filter by ${filter.label}`}
                         >
                           {filter.icon}
                           {filter.label}
-                          <span className={`px-1 rounded text-xs ${
+                          <span className={`px-2 py-1 rounded-full text-xs ${
                             activeFilter === filter.value 
-                              ? 'bg-accent-foreground/20' 
-                              : 'bg-muted'
+                              ? 'bg-white/20 text-white' 
+                              : 'bg-white/10 text-gray-400'
                           }`}>
                             {filter.count}
                           </span>
-                        </button>
+                        </motion.button>
                       ))}
                       
                       {hasActiveFilters && (
-                        <button
+                        <motion.button
                           onClick={clearFilters}
-                          className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-red-400 hover:text-red-300 hover:bg-red-950/20"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all duration-300 backdrop-blur-sm border border-white/10"
                           aria-label="Clear all filters"
                         >
-                          <X className="w-3 h-3" />
+                          <X className="w-4 h-4" />
                           Clear
-                        </button>
+                        </motion.button>
                       )}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
 
-            {/* SEO-Friendly RESULTS COUNT */}
+            {/* LIQUID GLASS RESULTS COUNT */}
             {hasActiveFilters && (
-              <div className="text-center mb-6">
-                <p className="text-sm text-muted-foreground">
-                  Found <span className="text-accent font-semibold">{filteredData.length}</span> 420-friendly hotels
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center mb-6"
+              >
+                <p className="text-base text-gray-300 backdrop-blur-sm bg-white/5 rounded-full px-4 py-2 border border-white/10 inline-block">
+                  Found <span className="text-green-400 font-semibold">{filteredData.length}</span> 420-friendly hotels
                   {query && ` in ${query}`}
                   {activeFilter !== 'all' && ` matching ${activeFilter} filter`}
                 </p>
-              </div>
+              </motion.div>
             )}
 
-            {/* SEO-Friendly RESULTS with semantic HTML */}
+            {/* LIQUID GLASS RESULTS - MANUAL EXPANSION */}
             <section aria-label="420-friendly hotel listings">
               {filteredData.length === 0 ? (
-                <div className="text-center text-muted-foreground py-8" role="status" aria-live="polite">
-                  <Building className="w-8 h-8 mx-auto mb-3 text-accent" />
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center text-gray-300 py-12 backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 shadow-2xl shadow-purple-500/10"
+                  role="status" 
+                  aria-live="polite"
+                >
+                  <Building className="w-12 h-12 mx-auto mb-4 text-green-400" />
                   <h2 className="text-lg font-semibold mb-2">No 420-friendly hotels found</h2>
                   <p className="text-base mb-4">No verified cannabis-friendly accommodations match your search criteria.</p>
-                  <p className="text-xs mb-4">Try a different city, country, or adjust your filters.</p>
+                  <p className="text-sm mb-4">Try a different city, country, or adjust your filters.</p>
                   {hasActiveFilters && (
                     <Button 
                       onClick={clearFilters} 
                       variant="outline" 
                       size="sm"
-                      className="mt-3 gap-2"
+                      className="mt-3 gap-2 backdrop-blur-sm bg-white/5 border border-white/20 text-green-300 hover:bg-green-500/20"
                     >
-                      <X className="w-3 h-3" />
+                      <X className="w-4 h-4" />
                       Clear Search & Filters
                     </Button>
                   )}
-                </div>
+                </motion.div>
               ) : (
-                <div className="space-y-8">
-                  {groupedHotels.map((countryGroup) => (
-                    <article key={countryGroup.country} className="border border-border rounded-xl bg-card/50">
-                      <Collapsible defaultOpen>
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-5 hover:bg-card transition-colors rounded-t-xl">
-                          <div className="flex items-center gap-3">
-                            <img 
-                              src={countryGroup.flag} 
-                              alt={`Flag of ${countryGroup.country}`} 
-                              className="h-5 w-7 rounded border border-border shadow-sm" 
-                            />
+                <div className="space-y-6">
+                  {groupedHotels.map((countryGroup, index) => (
+                    <motion.article 
+                      key={countryGroup.country}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 shadow-2xl shadow-purple-500/10 overflow-hidden"
+                    >
+                      <Collapsible>
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-6 hover:bg-white/10 transition-all duration-300 group">
+                          <div className="flex items-center gap-4">
+                            <div className="relative">
+                              <img 
+                                src={countryGroup.flag} 
+                                alt={`Flag of ${countryGroup.country}`} 
+                                className="h-8 w-12 rounded-lg border border-white/20 shadow-lg" 
+                              />
+                              <div className="absolute -inset-1 bg-gradient-to-r from-green-500/20 to-purple-500/20 rounded-lg blur-sm group-hover:from-green-500/30 group-hover:to-purple-500/30 transition-all" />
+                            </div>
                             <div className="text-left">
-                              <h2 className="text-lg md:text-xl font-bold text-white">
-                                420-Friendly Hotels in {countryGroup.country}
+                              <h2 className="text-xl font-bold text-white group-hover:text-green-300 transition-colors">
+                                🌿 420-Friendly Hotels in {countryGroup.country}
                               </h2>
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-sm text-gray-400 group-hover:text-green-400/80 transition-colors">
                                 {countryGroup.states.reduce((total, state) => 
                                   total + state.cities.reduce((cityTotal, city) => 
                                     cityTotal + city.hotels.length, 0
@@ -504,34 +533,34 @@ const Hotels = () => {
                               </p>
                             </div>
                           </div>
-                          <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
+                          <ChevronDown className="w-5 h-5 text-green-400 group-hover:scale-110 ui-open:rotate-180 transition-transform duration-300" />
                         </CollapsibleTrigger>
-                        <CollapsibleContent className="p-4 border-t border-border/50 space-y-6">
+                        <CollapsibleContent className="p-6 border-t border-white/10 space-y-6">
                           {countryGroup.states.map((stateGroup) => (
                             <section key={stateGroup.state}>
-                              <Collapsible defaultOpen>
-                                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-lg">
-                                  <h3 className="text-base font-semibold text-accent">
-                                    {stateGroup.state} 420-Friendly Hotels
+                              <Collapsible>
+                                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-white/10 transition-all duration-300 rounded-xl group">
+                                  <h3 className="text-lg font-semibold text-green-300 group-hover:text-green-200">
+                                    🍃 {stateGroup.state} 420-Friendly Hotels
                                   </h3>
                                   <div className="flex items-center gap-3">
-                                    <Badge variant="outline" className="bg-background/50 text-xs">
+                                    <Badge variant="outline" className="backdrop-blur-sm bg-white/5 text-green-300 border-white/20 text-sm">
                                       {stateGroup.cities.length} cities
                                     </Badge>
-                                    <ChevronDown className="w-3 h-3 text-accent ui-open:rotate-180 transition-transform" />
+                                    <ChevronDown className="w-4 h-4 text-green-400 group-hover:scale-110 ui-open:rotate-180 transition-transform duration-300" />
                                   </div>
                                 </CollapsibleTrigger>
-                                <CollapsibleContent className="p-3 space-y-4">
+                                <CollapsibleContent className="p-4 space-y-4">
                                   {stateGroup.cities.map((cityGroup) => (
                                     <div key={cityGroup.city} className="space-y-3">
-                                      <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                                        <MapPin className="w-3 h-3 text-gold" />
+                                      <h4 className="text-base font-bold text-white flex items-center gap-2">
+                                        <MapPin className="w-4 h-4 text-amber-400" />
                                         Cannabis-Friendly Hotels in {cityGroup.city}
-                                        <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">
+                                        <Badge className="backdrop-blur-sm bg-amber-500/20 text-amber-300 border-amber-500/30 text-sm">
                                           {cityGroup.hotels.length} {cityGroup.hotels.length === 1 ? 'Hotel' : 'Hotels'}
                                         </Badge>
                                       </h4>
-                                      <div className="grid grid-cols-1 gap-3" role="list" aria-label={`Hotels in ${cityGroup.city}`}>
+                                      <div className="grid grid-cols-1 gap-4" role="list" aria-label={`Hotels in ${cityGroup.city}`}>
                                         {cityGroup.hotels.map((hotel) => (
                                           <div key={hotel.id} role="listitem">
                                             <HotelCard hotel={hotel} />
@@ -546,80 +575,97 @@ const Hotels = () => {
                           ))}
                         </CollapsibleContent>
                       </Collapsible>
-                    </article>
+                    </motion.article>
                   ))}
                 </div>
               )}
             </section>
 
-            {/* SEO-Focused Internal Linking */}
-            <nav aria-label="Related cannabis travel guides" className="mt-8">
-              <Card className="p-6 bg-card/30 border-border">
-                <h2 className="text-lg font-bold text-white mb-4">Explore More Cannabis Travel Guides</h2>
+            {/* LIQUID GLASS INTERNAL LINKING */}
+            <motion.nav 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              aria-label="Related cannabis travel guides" 
+              className="mt-8"
+            >
+              <Card className="p-6 backdrop-blur-xl bg-gradient-to-br from-white/5 to-white/10 rounded-2xl border border-white/20 shadow-2xl shadow-purple-500/10">
+                <h2 className="text-lg font-bold text-white mb-4">🌱 Explore More Cannabis Travel Guides</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <Link 
                     to="/usa" 
-                    className="p-3 rounded-lg bg-background/50 hover:bg-background transition-colors border border-border"
+                    className="p-4 rounded-xl backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-green-400/30 group"
                   >
                     <h3 className="font-semibold text-white mb-1">🇺🇸 USA Cannabis Guide</h3>
-                    <p className="text-muted-foreground text-xs">State-by-state guide to cannabis laws and 420-friendly accommodations</p>
+                    <p className="text-gray-400 text-sm group-hover:text-green-400/80 transition-colors">State-by-state guide to cannabis laws and 420-friendly accommodations</p>
                   </Link>
                   <Link 
                     to="/canada" 
-                    className="p-3 rounded-lg bg-background/50 hover:bg-background transition-colors border border-border"
+                    className="p-4 rounded-xl backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-purple-400/30 group"
                   >
                     <h3 className="font-semibold text-white mb-1">🇨🇦 Canada Cannabis Guide</h3>
-                    <p className="text-muted-foreground text-xs">Complete guide to legal cannabis and 420-friendly stays in Canada</p>
+                    <p className="text-gray-400 text-sm group-hover:text-purple-400/80 transition-colors">Complete guide to legal cannabis and 420-friendly stays in Canada</p>
                   </Link>
                   <Link 
                     to="/europe" 
-                    className="p-3 rounded-lg bg-background/50 hover:bg-background transition-colors border border-border"
+                    className="p-4 rounded-xl backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-amber-400/30 group"
                   >
                     <h3 className="font-semibold text-white mb-1">🇪🇺 Europe Cannabis Guide</h3>
-                    <p className="text-muted-foreground text-xs">Navigating cannabis laws and accommodations across Europe</p>
+                    <p className="text-gray-400 text-sm group-hover:text-amber-400/80 transition-colors">Navigating cannabis laws and accommodations across Europe</p>
                   </Link>
                 </div>
               </Card>
-            </nav>
+            </motion.nav>
 
-            {/* Enhanced DISCLAIMER with SEO context */}
-            <aside className="mt-8" aria-label="Legal disclaimer">
-              <Card className="p-4 bg-card/50 border-border">
+            {/* LIQUID GLASS DISCLAIMER */}
+            <motion.aside 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-8" 
+              aria-label="Legal disclaimer"
+            >
+              <Card className="p-6 backdrop-blur-xl bg-gradient-to-br from-red-500/10 to-red-500/5 rounded-2xl border border-red-500/20 shadow-2xl shadow-red-500/10">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="w-4 h-4 text-red-400" />
-                  <span className="text-sm font-semibold text-red-400">Legal Disclaimer & Travel Advisory</span>
+                  <span className="text-sm font-semibold text-red-400">🚨 Legal Disclaimer & Travel Advisory</span>
                 </div>
-                <p className="text-xs text-red-400/90">
+                <p className="text-sm text-red-400/90">
                   BudQuest provides information about 420-friendly hotels and cannabis tourism for educational purposes only. 
                   We do not provide legal advice. Cannabis laws vary by jurisdiction and change frequently. 
                   Always verify current local regulations before traveling or consuming cannabis. 
                   International transportation of cannabis remains illegal. Consume responsibly and be aware of local laws.
                 </p>
               </Card>
-            </aside>
+            </motion.aside>
 
-            {/* SEO Footer Links */}
-            <footer className="mt-8 text-center">
+            {/* LIQUID GLASS FOOTER LINKS */}
+            <motion.footer 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-8 text-center"
+            >
               <nav aria-label="Site navigation">
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-base text-gray-400 mb-4">
                   Explore more cannabis travel resources:
                 </p>
-                <div className="flex flex-wrap justify-center gap-4 text-sm">
-                  <Link to="/blog/cannabis-travel-tips" className="text-accent hover:underline">
+                <div className="flex flex-wrap justify-center gap-4 text-base">
+                  <Link to="/blog/cannabis-travel-tips" className="text-green-400 hover:text-green-300 hover:underline transition-colors backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
                     Cannabis Travel Tips
                   </Link>
-                  <Link to="/guide/420-friendly-airbnb" className="text-accent hover:underline">
+                  <Link to="/guide/420-friendly-airbnb" className="text-green-400 hover:text-green-300 hover:underline transition-colors backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
                     420-Friendly Airbnb Guide
                   </Link>
-                  <Link to="/resources/cannabis-laws" className="text-accent hover:underline">
+                  <Link to="/resources/cannabis-laws" className="text-green-400 hover:text-green-300 hover:underline transition-colors backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
                     Cannabis Laws by Country
                   </Link>
-                  <Link to="/contact" className="text-accent hover:underline">
+                  <Link to="/contact" className="text-green-400 hover:text-green-300 hover:underline transition-colors backdrop-blur-sm bg-white/5 rounded-full px-3 py-1 border border-white/10">
                     Submit a Hotel
                   </Link>
                 </div>
               </nav>
-            </footer>
+            </motion.footer>
           </div>
         </main>
 
