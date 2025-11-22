@@ -57,8 +57,8 @@ const WORLD_GUIDE: Continent[] = [
     emoji: "🌎",
     description: "Progressive cannabis policies with recreational and medical options",
     countriesCount: 3,
-    bgColor: "from-emerald-500/10 to-emerald-400/5",
-    iconColor: "text-emerald-500",
+    bgColor: "from-accent/10 to-accent/5",
+    iconColor: "text-accent",
     countries: [
       {
         slug: "canada",
