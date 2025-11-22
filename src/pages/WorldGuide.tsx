@@ -686,7 +686,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
         {/* Country Header with Icon */}
         <div className="relative h-32 sm:h-40 bg-gradient-to-br from-accent/20 to-accent/5 overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-            <CountryIcon className="w-24 h-24 sm:w-32 sm:h-32 text-accent" />
+            {/* Removed CountryIcon as per user request */}
           </div>
           <img
             src={country.image}
@@ -696,7 +696,6 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
           <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex items-center gap-2">
             <span className="text-2xl sm:text-3xl">{country.flag}</span>
-            <CountryIcon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
           </div>
         </div>
 
@@ -804,7 +803,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
   onToggle,
   filteredCountries,
 }) => {
-  const ContinentIcon = continent.icon || Globe;
+  const ContinentIcon = Globe;
 
   return (
     <motion.div
@@ -822,8 +821,8 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
         <div className="flex items-center justify-between gap-4">
           <div className="text-left flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-3xl sm:text-4xl">{continent.emoji}</span>
-              <ContinentIcon className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
+              <Globe className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
+              
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{continent.name}</h2>
             </div>
             <p className="text-sm sm:text-base text-muted-foreground">{continent.description}</p>
