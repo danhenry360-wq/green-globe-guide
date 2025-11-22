@@ -5,13 +5,155 @@ import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { USA_STATE_DATA, CityData } from "@/lib/usa_state_data";
+import { DETAILED_CITY_GUIDES } from "@/lib/detailed_city_data";
 import { ArrowLeft, Landmark, MapPin, Info, Scale, AlertCircle, Building2, Shield, Users } from "lucide-react";
 
-import { AlertCircle, Building2, Shield, Users } from "lucide-react";
-
 // Helper component for the Full City Guide template
-const FullCityGuide = ({ city, state }: { city: CityData, state: typeof USA_STATE_DATA[0] }) => (
-  <div className="space-y-8 md:space-y-12">
+const FullCityGuide = ({ city, state }: { city: CityData, state: typeof USA_STATE_DATA[0] }) => {
+  const detailedGuideKey = `${state.slug}-${city.slug}`;
+  const detailedGuide = DETAILED_CITY_GUIDES[detailedGuideKey];
+
+  if (detailedGuide) {
+    // Use detailed guide if available
+    return (
+      <div className="space-y-6 md:space-y-8">
+        {/* Introduction */}
+        <section>
+          <Card className="p-4 md:p-6 bg-card/50 backdrop-blur border-l-4 border-accent">
+            <h2 className="text-lg md:text-xl font-bold mb-3 flex items-center gap-2 text-accent">
+              <Info className="w-5 h-5 text-accent" />
+              Introduction to {city.name}
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-3">
+              Welcome to the comprehensive cannabis travel guide for **{city.name}, {state.name}**. This guide provides essential information for cannabis tourists visiting this destination.
+            </p>
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mt-3">
+              <p className="text-xs text-amber-200 flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>
+                  <strong>Important:</strong> {detailedGuide.disclaimer}
+                </span>
+              </p>
+            </div>
+          </Card>
+        </section>
+
+        {/* Legal Status */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-accent" />
+            Legal Status
+          </h2>
+          <Card className="p-4 md:p-6">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.legalStatus}</p>
+          </Card>
+        </section>
+
+        {/* Age & Purchase */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Users className="w-5 h-5 text-accent" />
+            Age & Purchase Requirements
+          </h2>
+          <Card className="p-4 md:p-6">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.agePurchase}</p>
+          </Card>
+        </section>
+
+        {/* Possession Limits */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Scale className="w-5 h-5 text-accent" />
+            Possession Limits
+          </h2>
+          <Card className="p-4 md:p-6">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.possessionLimits}</p>
+          </Card>
+        </section>
+
+        {/* Where to Consume */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-accent" />
+            Where to Consume
+          </h2>
+          <Card className="p-4 md:p-6 bg-gradient-to-br from-accent/5 to-transparent">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.whereToConsume}</p>
+          </Card>
+        </section>
+
+        {/* Dispensary Info */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-accent" />
+            Dispensary Information
+          </h2>
+          <Card className="p-4 md:p-6">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.dispensaryInfo}</p>
+          </Card>
+        </section>
+
+        {/* Airport & Transport */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Landmark className="w-5 h-5 text-accent" />
+            Airport & Transportation Rules
+          </h2>
+          <Card className="p-4 md:p-6 bg-gradient-to-br from-red-500/5 to-transparent border-red-500/20">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.airportTransport}</p>
+          </Card>
+        </section>
+
+        {/* Safety Tips */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-red-400" />
+            Safety Tips & Warnings
+          </h2>
+          <Card className="p-4 md:p-6 bg-gradient-to-br from-red-500/5 to-transparent border-red-500/20">
+            <ul className="space-y-2">
+              {detailedGuide.safetyTips.map((tip, index) => (
+                <li key={index} className="flex items-start gap-2 text-sm md:text-base text-muted-foreground">
+                  <span className="text-red-400 font-bold mt-0.5">•</span>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </section>
+
+        {/* Best Neighborhoods */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-accent" />
+            Best Neighborhoods for Cannabis Tourists
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {detailedGuide.bestNeighborhoods.map((neighborhood, index) => (
+              <Card key={index} className="p-4 md:p-6 bg-gradient-to-br from-accent/5 to-transparent">
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{neighborhood}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Local Etiquette */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
+            <Users className="w-5 h-5 text-accent" />
+            Local Etiquette & Cultural Norms
+          </h2>
+          <Card className="p-4 md:p-6 bg-gradient-to-br from-gold/5 to-transparent">
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{detailedGuide.localEtiquette}</p>
+          </Card>
+        </section>
+      </div>
+    );
+  }
+
+  // Fallback to original template if no detailed guide
+  return (
+    <div className="space-y-8 md:space-y-12">
     {/* Introduction */}
     <section>
       <Card className="p-4 md:p-8 bg-card/50 backdrop-blur border-l-4 border-accent">
@@ -146,7 +288,8 @@ const FullCityGuide = ({ city, state }: { city: CityData, state: typeof USA_STAT
       </Card>
     </section>
   </div>
-);
+  );
+};
 
 
 // Helper component for the Short Guide template
@@ -274,7 +417,7 @@ const CityDetail = () => {
           {/* Main Content */}
           <div className="mt-[-40px] relative z-20">
             <motion.section 
-              className="p-8 bg-card rounded-xl shadow-2xl border border-border/50"
+              className="p-4 md:p-8 bg-card rounded-xl shadow-2xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}

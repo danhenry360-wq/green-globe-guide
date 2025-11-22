@@ -46,7 +46,7 @@ const CityList = ({ stateSlug, cities }: CityListProps) => {
         <Card className="p-4 hover:border-accent/50 hover:shadow-glow-subtle transition-all cursor-pointer h-full group bg-gradient-card flex items-center justify-between">
           <div className="flex items-center">
             {icon}
-            <h5 className="text-lg font-semibold group-hover:text-accent transition-colors">{city.name}</h5>
+            <h5 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors">{city.name}</h5>
           </div>
           <Badge className={badgeClass}>{badgeText}</Badge>
         </Card>
@@ -60,7 +60,7 @@ const CityList = ({ stateSlug, cities }: CityListProps) => {
         <div className="flex items-start">
           <Info className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-secondary" />
           <div>
-            <h5 className="text-lg font-semibold mb-1">{city.name}</h5>
+            <h5 className="text-lg font-semibold mb-1 text-foreground">{city.name}</h5>
             <p className="text-sm text-muted-foreground">{city.content}</p>
           </div>
         </div>

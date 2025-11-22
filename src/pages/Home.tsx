@@ -57,7 +57,9 @@ const SEOHead = () => {
     script.textContent = JSON.stringify(HOME_STRUCTURED_DATA);
     document.head.appendChild(script);
 
-    return () => document.head.removeChild(script);
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   return null;
