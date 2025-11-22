@@ -37,7 +37,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-
+          <Route path="/hotels/:country/:state/:city/:hotelId" element={<HotelDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
