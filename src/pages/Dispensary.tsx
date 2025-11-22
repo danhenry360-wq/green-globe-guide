@@ -11,7 +11,7 @@ import { DISPENSARY_DATA } from "@/data/dispensary_data";
 import { useMemo, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 import { Helmet } from "react-helmet";
 
 /* ============================================
@@ -173,9 +173,6 @@ const Dispensary = () => {
 
   const sortOptions = [
     { value: 'rating' as SortType, label: 'Highest Rated' },
-    { value: 'distance-low' as SortType, label: 'Distance: Nearest' },
-    { value: 'price-low' as SortType, label: 'Price: Low to High' },
-    { value: 'price-high' as SortType, label: 'Price: High to Low' },
     { value: 'name' as SortType, label: 'Alphabetical' },
   ];
 
@@ -249,15 +246,13 @@ const Dispensary = () => {
                 </div>
 
                 <div className="flex gap-2 items-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10 transition-all"
+                    className="gap-2 border border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10 transition-all flex items-center bg-card/80 text-white"
                   >
                     <Filter className="w-5 h-5" />
                     <span className="hidden sm:inline font-medium">Filters</span>
-                  </Button>
+                  </button>
                   
                   <select
                     value={sortBy}
@@ -339,14 +334,13 @@ const Dispensary = () => {
                 <p className="text-muted-foreground text-base mb-2">No verified dispensaries match your search.</p>
                 <p className="text-muted-foreground/80 text-sm mb-6">Try searching a different city or country.</p>
                 {hasActiveFilters && (
-                  <Button 
+                  <button 
                     onClick={clearFilters} 
-                    variant="outline"
-                    className="gap-2 border-border/50 hover:bg-accent/10"
+                    className="gap-2 border border-border/50 hover:bg-accent/10 px-4 py-2 rounded-lg flex items-center bg-card/80 text-white transition-all"
                   >
                     <X className="w-4 h-4" />
-                    Clear All
-                  </Button>
+                    Clear All Filters
+                  </button>
                 )}
               </div>
             ) : (
