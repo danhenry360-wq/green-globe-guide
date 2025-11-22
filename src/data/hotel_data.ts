@@ -2,7 +2,7 @@
 import { CountryHotels } from "@/types/data";
 
 export const HOTEL_DATA: CountryHotels[] = [
-  // USA – notable cannabis states
+  /* -------------------- USA -------------------- */
   {
     country: "USA",
     slug: "usa",
@@ -116,60 +116,70 @@ export const HOTEL_DATA: CountryHotels[] = [
       },
     ],
   },
+
+  /* -------------------- CANADA (FIXED) -------------------- */
   {
-      country: "Canada",
-      slug: "canada",
-      flagPath: "https://flagcdn.com/w40/ca.png",
-      states: [
-        {
-          stateName: "Canada",
-          slug: "canada",
-          hotels: [
-            {
-              id: 21,
-              name: "Maple Leaf Lodge",
-              city: "Toronto",
-              state: "ON",
-              rating: 4.8,
-              policies: "Designated consumption lounges. Government-licensed retailer on-site.",
-              website: "https://example.com",
-              priceRange: "$$",
-            },
-            {
-              id: 22,
-              name: "Rocky Mountain Retreat",
-              city: "Vancouver",
-              state: "BC",
-              rating: 4.9,
-              policies: "Balcony-friendly, pet-friendly, edible welcome kit.",
-              website: "https://example.com",
-              priceRange: "$$$",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      country: "Netherlands",
-      slug: "netherlands",
-      flagPath: "https://flagcdn.com/w40/nl.png",
-      states: [
-        {
-          stateName: "Netherlands",
-          slug: "netherlands",
-          hotels: [
-            {
-              id: 31,
-              name: "Canal View Cannabis Hotel",
-              city: "Amsterdam",
-              state: "NH",
-              rating: 4.7,
-              policies: "Coffee-shop partners, no tobacco inside, canal-view rooms.",
-              website: "https://example.com",
-              priceRange: "$$$",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+    country: "Canada",
+    slug: "canada",
+    flagPath: "https://flagcdn.com/w40/ca.png",
+    states: [
+      {
+        stateName: "Ontario",
+        slug: "ontario",
+        hotels: [
+          {
+            id: 21,
+            name: "Maple Leaf Lodge",
+            city: "Toronto",
+            state: "ON",
+            rating: 4.8,
+            policies: "Designated consumption lounges. Government-licensed retailer on-site.",
+            website: "https://example.com",
+            priceRange: "$$",
+          },
+        ],
+      },
+      {
+        stateName: "British Columbia",
+        slug: "british-columbia",
+        hotels: [
+          {
+            id: 22,
+            name: "Rocky Mountain Retreat",
+            city: "Vancouver",
+            state: "BC",
+            rating: 4.9,
+            policies: "Balcony-friendly, pet-friendly, edible welcome kit.",
+            website: "https://example.com",
+            priceRange: "$$$",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* -------------------- NETHERLANDS (FIXED) -------------------- */
+  {
+    country: "Netherlands",
+    slug: "netherlands",
+    flagPath: "https://flagcdn.com/w40/nl.png",
+    states: [
+      {
+        stateName: "North Holland",
+        slug: "north-holland",
+        hotels: [
+          {
+            id: 31,
+            name: "Canal View Cannabis Hotel",
+            city: "Amsterdam",
+            state: "NH",
+            rating: 4.7,
+            policies: "Coffee-shop partners, no tobacco inside, canal-view rooms.",
+            website: "https://example.com",
+            priceRange: "$$$",
+          },
+        ],
+      },
+    ],
+  },
+];
