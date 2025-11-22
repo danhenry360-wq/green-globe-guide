@@ -41,17 +41,33 @@ const HOTELS_STRUCTURED_DATA = {
 const Hotels = () => {
   const [query, setQuery] = useState("");
 
+  // Clean state names by removing country in parentheses
+  const cleanData = useMemo(() => {
+    return DATA.map(country => ({
+      ...country,
+      states: country.states.map(state => ({
+        ...state,
+        // Remove country from state name (e.g., "Toronto (Canada)" becomes "Toronto")
+        stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
+        hotels: state.hotels.map(hotel => ({
+          ...hotel,
+          // Also clean the hotel's state field if it exists
+          state: hotel.state ? hotel.state.replace(/\s*\(.*\)$/, '') : hotel.state,
+        }))
+      }))
+    }));
+  }, []);
+
   // live filter (country, state, city, hotel name)
   const filteredData = useMemo(() => {
     const q = query.toLowerCase().trim();
     
-    const allHotels = DATA.flatMap(country => 
+    const allHotels = cleanData.flatMap(country => 
       country.states.flatMap(state => 
         state.hotels.map(hotel => ({
           ...hotel,
           country: country.country,
-          // Remove country from state name display to avoid duplicates like "Canada (Canada)"
-          stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
+          stateName: state.stateName,
           countryFlag: country.flagPath,
         }))
       )
@@ -62,11 +78,11 @@ const Hotels = () => {
     return allHotels.filter(h => 
       h.name.toLowerCase().includes(q) ||
       h.city.toLowerCase().includes(q) ||
-      h.state.toLowerCase().includes(q) ||
+      (h.state && h.state.toLowerCase().includes(q)) ||
       h.country.toLowerCase().includes(q) ||
       h.stateName.toLowerCase().includes(q)
     );
-  }, [query]);
+  }, [query, cleanData]);
 
   // Group filtered hotels by Country -> State -> City for hierarchical display
   const hierarchicalHotels = useMemo(() => {
