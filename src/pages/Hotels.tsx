@@ -12,7 +12,6 @@ import { useMemo, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 
 /* ----------------------------------------------------
    DATA – scalable by country / state / city
@@ -71,7 +70,7 @@ const Hotels = () => {
     }));
   }, []);
 
-  // Enhanced search and filtering with debounce simulation
+  // Enhanced search and filtering
   const filteredData = useMemo(() => {
     const q = query.toLowerCase().trim();
     
@@ -214,7 +213,7 @@ const Hotels = () => {
   }, []);
 
   const filterOptions: { value: FilterType; label: string; icon: React.ReactNode; count: number }[] = [
-    { value: 'all', label: 'All Hotels', icon: <Building className="w-3 h-3" />, count: filteredData.length },
+    { value: 'all', label: 'All', icon: <Building className="w-3 h-3" />, count: filteredData.length },
     { value: 'premium', label: 'Premium', icon: <Sparkles className="w-3 h-3" />, count: filteredData.filter(h => h.isPremium).length },
     { value: 'budget', label: 'Budget', icon: <Leaf className="w-3 h-3" />, count: filteredData.filter(h => h.isBudget).length },
     { value: 'smoking', label: 'Smoking', icon: <Leaf className="w-3 h-3" />, count: filteredData.filter(h => h.hasSmoking).length },
@@ -223,11 +222,13 @@ const Hotels = () => {
   ];
 
   const sortOptions: { value: SortType; label: string }[] = [
-    { value: 'rating', label: 'Highest Rated' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'name', label: 'Alphabetical' },
+    { value: 'rating', label: 'Rating' },
+    { value: 'price-low', label: 'Price: Low' },
+    { value: 'price-high', label: 'Price: High' },
+    { value: 'name', label: 'Name' },
   ];
+
+  const hasActiveFilters = query || activeFilter !== 'all';
 
   return (
     <>
@@ -252,42 +253,26 @@ const Hotels = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-24 pb-20 px-4 sm:px-6">
+        <main className="pt-24 pb-20 px-4">
           <div className="container mx-auto max-w-7xl">
-            {/* ENHANCED HERO SECTION */}
-            <section className="max-w-4xl mx-auto mb-8 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="flex justify-center items-center gap-2 mb-3">
-                  <Shield className="w-6 h-6 text-accent" />
-                  <Badge variant="secondary" className="bg-accent/20 text-accent border-accent/30">
-                    Verified & Secure
-                  </Badge>
-                </div>
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
-                  BudQuest Verified Hotels
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                  Discover premium 420-friendly accommodations worldwide. Every hotel personally verified for cannabis policies and quality standards.
-                </p>
-              </motion.div>
+            {/* CLEAN HERO SECTION */}
+            <section className="max-w-3xl mx-auto mb-8 text-center">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-white">BudQuest Verified Hotels</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground">Browse by country or state. Policies checked, premium experience.</p>
             </section>
 
-            {/* ENHANCED SEARCH AND FILTERS SECTION */}
-            <div className="sticky top-20 z-30 bg-background/95 backdrop-blur-xl rounded-2xl border border-border/50 p-4 mb-8 max-w-4xl mx-auto shadow-2xl shadow-black/20">
-              <div className="flex flex-col sm:flex-row gap-3">
+            {/* ENHANCED BUT CLEAN SEARCH & FILTERS */}
+            <div className="sticky top-20 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border p-3 mb-8 max-w-4xl mx-auto shadow-lg">
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                 {/* SEARCH INPUT */}
                 <div className="flex-1 relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                   <input
                     type="text"
-                    placeholder="Search hotels, cities, amenities..."
+                    placeholder="Search hotels, cities, states, countries..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-card/50 border border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200 text-white placeholder:text-muted-foreground/70"
+                    className="w-full pl-10 pr-4 py-2 rounded-lg bg-card border-none focus:outline-none focus:ring-1 focus:ring-accent text-white text-sm"
                     aria-label="Search hotels"
                   />
                   {query && (
@@ -295,27 +280,27 @@ const Hotels = () => {
                       onClick={() => setQuery("")}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3 h-3" />
                     </button>
                   )}
                 </div>
 
-                {/* FILTER BUTTONS */}
+                {/* FILTER CONTROLS - Better mobile layout */}
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="gap-2 border-border/50 hover:border-accent/50"
+                    className="gap-1 border-border text-xs sm:text-sm"
                   >
-                    <Filter className="w-4 h-4" />
-                    Filters
+                    <Filter className="w-3 h-3" />
+                    <span className="hidden sm:inline">Filters</span>
                   </Button>
                   
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortType)}
-                    className="px-3 py-2 rounded-xl bg-card/50 border border-border/50 text-white text-sm focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                    className="px-2 py-2 rounded-lg bg-card border border-border text-white text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-accent min-w-20"
                   >
                     {sortOptions.map(option => (
                       <option key={option.value} value={option.value}>
@@ -326,45 +311,45 @@ const Hotels = () => {
                 </div>
               </div>
 
-              {/* EXPANDED FILTER OPTIONS */}
+              {/* FILTER CHIPS - Appear below search bar */}
               <AnimatePresence>
-                {isFilterOpen && (
+                {(isFilterOpen || hasActiveFilters) && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
+                    <div className="flex flex-wrap gap-1 sm:gap-2 mt-3 pt-3 border-t border-border/50">
                       {filterOptions.map((filter) => (
                         <button
                           key={filter.value}
                           onClick={() => setActiveFilter(filter.value)}
-                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                          className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all ${
                             activeFilter === filter.value
-                              ? 'bg-accent text-accent-foreground shadow-lg shadow-accent/25'
-                              : 'bg-card/50 text-muted-foreground hover:text-white hover:bg-card border border-border/30'
+                              ? 'bg-accent text-accent-foreground'
+                              : 'bg-card/70 text-muted-foreground hover:text-white border border-border'
                           }`}
                         >
                           {filter.icon}
                           {filter.label}
-                          <Badge variant="secondary" className={`ml-1 text-xs ${
+                          <span className={`px-1 rounded text-xs ${
                             activeFilter === filter.value 
-                              ? 'bg-accent-foreground/20 text-accent-foreground' 
-                              : 'bg-muted text-muted-foreground'
+                              ? 'bg-accent-foreground/20' 
+                              : 'bg-muted'
                           }`}>
                             {filter.count}
-                          </Badge>
+                          </span>
                         </button>
                       ))}
                       
-                      {(query || activeFilter !== 'all') && (
+                      {hasActiveFilters && (
                         <button
                           onClick={clearFilters}
-                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-red-950/20 transition-all"
+                          className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-red-400 hover:text-red-300 hover:bg-red-950/20 transition-all"
                         >
                           <X className="w-3 h-3" />
-                          Clear All
+                          Clear
                         </button>
                       )}
                     </div>
@@ -373,216 +358,129 @@ const Hotels = () => {
               </AnimatePresence>
             </div>
 
-            {/* ENHANCED RESULTS SECTION */}
+            {/* RESULTS COUNT */}
+            {hasActiveFilters && (
+              <div className="text-center mb-6">
+                <p className="text-sm text-muted-foreground">
+                  Found <span className="text-accent font-semibold">{filteredData.length}</span> hotels
+                  {query && ` for "${query}"`}
+                </p>
+              </div>
+            )}
+
+            {/* RESULTS */}
             <AnimatePresence mode="wait">
-              {filteredData.length === 0 ? (
+              {filteredData.length === 0 && (
                 <motion.div
                   key="no-results"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="text-center py-16"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center text-muted-foreground py-8"
                 >
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-card/50 flex items-center justify-center">
-                    <Building className="w-10 h-10 text-accent/70" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">No hotels found</h3>
-                  <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                    {query || activeFilter !== 'all' 
-                      ? "Try adjusting your search terms or filters to find more options."
-                      : "We're constantly adding new verified hotels. Check back soon!"
-                    }
-                  </p>
-                  {(query || activeFilter !== 'all') && (
-                    <Button onClick={clearFilters} variant="outline" className="gap-2">
-                      <X className="w-4 h-4" />
+                  <Building className="w-8 h-8 mx-auto mb-3 text-accent" />
+                  <p className="text-base">No verified 420-friendly hotels match your search.</p>
+                  <p className="text-xs mt-1">Try a different city or country.</p>
+                  {hasActiveFilters && (
+                    <Button 
+                      onClick={clearFilters} 
+                      variant="outline" 
+                      size="sm"
+                      className="mt-3 gap-2"
+                    >
+                      <X className="w-3 h-3" />
                       Clear Search & Filters
                     </Button>
                   )}
                 </motion.div>
-              ) : (
-                <motion.div
-                  key="results"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-6"
-                >
-                  {/* QUICK STATS */}
-                  <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
-                        {filteredData.length}
-                      </Badge>
-                      <span>Verified Hotels</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                        {new Set(filteredData.map(h => h.country)).size}
-                      </Badge>
-                      <span>Countries</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-                        {new Set(filteredData.map(h => h.city)).size}
-                      </Badge>
-                      <span>Cities</span>
-                    </div>
-                  </div>
-
-                  {/* ENHANCED HOTELS LIST */}
-                  <div className="space-y-8">
-                    {hierarchicalHotels.map((countryGroup) => (
-                      <motion.div
-                        key={countryGroup.country}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="rounded-2xl bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border border-border/30 shadow-xl shadow-black/10"
-                      >
-                        <Collapsible
-                          open={expandedCountries.has(countryGroup.country)}
-                          onOpenChange={() => toggleCountry(countryGroup.country)}
-                        >
-                          <CollapsibleTrigger className="flex items-center justify-between w-full p-6 hover:bg-card/30 transition-all duration-200 rounded-2xl group">
-                            <div className="flex items-center gap-4">
-                              <div className="relative">
-                                <img 
-                                  src={countryGroup.flag} 
-                                  alt={countryGroup.country} 
-                                  className="h-8 w-12 rounded-lg border-2 border-border shadow-lg"
-                                />
-                                <div className="absolute -inset-1 bg-accent/20 rounded-lg blur-sm group-hover:bg-accent/30 transition-colors" />
-                              </div>
-                              <div className="text-left">
-                                <h2 className="text-xl font-bold text-white group-hover:text-accent transition-colors">
-                                  {countryGroup.country}
-                                </h2>
-                                <p className="text-sm text-muted-foreground mt-1">
-                                  {countryGroup.states.length} regions • {' '}
-                                  {countryGroup.states.reduce((total, state) => 
-                                    total + state.cities.reduce((cityTotal, city) => 
-                                      cityTotal + city.hotels.length, 0
-                                    ), 0
-                                  )} verified hotels
-                                </p>
-                              </div>
-                            </div>
-                            <ChevronDown className="w-5 h-5 text-accent group-hover:scale-110 ui-open:rotate-180 transition-transform duration-200" />
-                          </CollapsibleTrigger>
-                          
-                          <CollapsibleContent className="overflow-hidden">
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.1 }}
-                              className="p-6 pt-4 space-y-6"
-                            >
-                              {countryGroup.states.map((stateGroup) => (
-                                <Collapsible key={stateGroup.state}>
-                                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-background/30 rounded-xl transition-colors group">
-                                    <h3 className="text-lg font-semibold text-accent group-hover:text-accent/80">
-                                      {stateGroup.state}
-                                    </h3>
-                                    <div className="flex items-center gap-3">
-                                      <Badge variant="outline" className="bg-background/50">
-                                        {stateGroup.cities.length} cities
-                                      </Badge>
-                                      <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
-                                    </div>
-                                  </CollapsibleTrigger>
-                                  <CollapsibleContent className="px-4 pb-4 space-y-4">
-                                    {stateGroup.cities.map((cityGroup) => (
-                                      <motion.div
-                                        key={cityGroup.city}
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        className="space-y-3"
-                                      >
-                                        <h4 className="text-base font-bold text-white flex items-center gap-3 px-2">
-                                          <MapPin className="w-4 h-4 text-gold" />
-                                          {cityGroup.city}
-                                          <Badge className="bg-gold/15 text-gold border-gold/30">
-                                            {cityGroup.hotels.length} {cityGroup.hotels.length === 1 ? 'Hotel' : 'Hotels'}
-                                          </Badge>
-                                        </h4>
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                                          <AnimatePresence>
-                                            {cityGroup.hotels.map((hotel, index) => (
-                                              <motion.div
-                                                key={hotel.id}
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: index * 0.1 }}
-                                              >
-                                                <HotelCard 
-                                                  hotel={hotel} 
-                                                />
-                                              </motion.div>
-                                            ))}
-                                          </AnimatePresence>
-                                        </div>
-                                      </motion.div>
-                                    ))}
-                                  </CollapsibleContent>
-                                </Collapsible>
-                              ))}
-                            </motion.div>
-                          </CollapsibleContent>
-                        </Collapsible>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
               )}
             </AnimatePresence>
 
-            {/* ENHANCED DISCLAIMER */}
-            <motion.section
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-12"
-            >
-              <Card className="p-6 bg-gradient-to-r from-red-950/30 to-orange-950/20 border-red-500/20 backdrop-blur-sm">
-                <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-sm font-semibold text-red-400 mb-2">Legal Disclaimer & Safety Notice</h3>
-                    <p className="text-xs text-red-400/90 leading-relaxed">
-                      BudQuest serves as an informational resource only and does not constitute legal advice. Cannabis laws vary by jurisdiction and change frequently. 
-                      Always verify current local regulations and individual hotel policies before booking or consuming. International transportation of cannabis remains illegal. 
-                      Consume responsibly and be aware of local consumption laws.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.section>
+            {/* CLEAN HIERARCHICAL LIST - Back to original mobile-friendly layout */}
+            <div className="space-y-6">
+              {hierarchicalHotels.map((countryGroup) => (
+                <Collapsible 
+                  key={countryGroup.country} 
+                  className="border border-border rounded-xl bg-card/50"
+                  open={expandedCountries.has(countryGroup.country)}
+                  onOpenChange={() => toggleCountry(countryGroup.country)}
+                >
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-5 hover:bg-card transition-colors rounded-t-xl">
+                    <div className="flex items-center gap-3">
+                      <img src={countryGroup.flag} alt={countryGroup.country} className="h-5 w-7 rounded border border-border shadow-sm" />
+                      <div className="text-left">
+                        <h2 className="text-lg md:text-xl font-bold text-white">{countryGroup.country}</h2>
+                        <p className="text-xs text-muted-foreground">
+                          {countryGroup.states.reduce((total, state) => 
+                            total + state.cities.reduce((cityTotal, city) => 
+                              cityTotal + city.hotels.length, 0
+                            ), 0
+                          )} hotels
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-accent ui-open:rotate-180 transition-transform" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="p-4 border-t border-border/50 space-y-4">
+                    {countryGroup.states.map((stateGroup) => (
+                      <Collapsible key={stateGroup.state} className="rounded-lg bg-background/30">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 hover:bg-background transition-colors rounded-t-lg">
+                          <h3 className="text-base font-semibold text-accent">{stateGroup.state}</h3>
+                          <ChevronDown className="w-3 h-3 text-accent ui-open:rotate-180 transition-transform" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="p-3 border-t border-border/50 space-y-3">
+                          {stateGroup.cities.map((cityGroup) => (
+                            <div key={cityGroup.city} className="space-y-2">
+                              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                                <MapPin className="w-3 h-3 text-gold" />
+                                {cityGroup.city}
+                                <Badge className="bg-gold/10 text-gold border border-gold/30 text-xs">
+                                  {cityGroup.hotels.length}
+                                </Badge>
+                              </h4>
+                              <div className="grid grid-cols-1 gap-3">
+                                <AnimatePresence>
+                                  {cityGroup.hotels.map((hotel) => (
+                                    <HotelCard 
+                                      key={hotel.id} 
+                                      hotel={hotel} 
+                                    />
+                                  ))}
+                                </AnimatePresence>
+                              </div>
+                            </div>
+                          ))}
+                        </CollapsibleContent>
+                      </Collapsible>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              ))}
+            </div>
 
-            {/* ENHANCED NAVIGATION */}
-            <nav className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground mb-4">Explore more cannabis-friendly destinations</p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link 
-                  to="/usa" 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-card/50 border border-border/30 hover:border-accent/50 hover:bg-card transition-all duration-200 text-white text-sm font-medium"
-                >
-                  <MapPin className="w-4 h-4" />
-                  USA Guide
-                </Link>
-                <Link 
-                  to="/world" 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-card/50 border border-border/30 hover:border-accent/50 hover:bg-card transition-all duration-200 text-white text-sm font-medium"
-                >
-                  <Globe className="w-4 h-4" />
-                  World Guide
-                </Link>
-                <Link 
-                  to="/blog" 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-card/50 border border-border/30 hover:border-accent/50 hover:bg-card transition-all duration-200 text-white text-sm font-medium"
-                >
-                  <Leaf className="w-4 h-4" />
-                  Travel Tips
-                </Link>
-              </div>
+            {/* CLEAN DISCLAIMER */}
+            <section className="mt-8">
+              <Card className="p-4 bg-card/50 border-border">
+                <div className="flex items-center gap-2 mb-2">
+                  <Info className="w-4 h-4 text-red-400" />
+                  <span className="text-sm font-semibold text-red-400">Legal Disclaimer</span>
+                </div>
+                <p className="text-xs text-red-400/90">
+                  BudQuest is an informational resource only. We do not provide legal advice. Always confirm current local laws and hotel policies before booking or consuming cannabis. International transport remains illegal.
+                </p>
+              </Card>
+            </section>
+
+            {/* CLEAN INTERNAL LINKS */}
+            <nav className="mt-8 text-center text-sm text-muted-foreground">
+              Explore more:{" "}
+              <Link to="/usa" className="text-accent hover:underline">
+                USA Guide
+              </Link>{" "}
+              •{" "}
+              <Link to="/world" className="text-accent hover:underline">
+                World Guide
+              </Link>
             </nav>
           </div>
         </main>
