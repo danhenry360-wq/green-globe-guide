@@ -33,7 +33,6 @@ interface Country {
   cities: City[];
   image: string;
   flag: string;
-  iconColor?: string;
 }
 
 interface Continent {
@@ -71,7 +70,6 @@ const WORLD_GUIDE: Continent[] = [
         description: "First G7 nation to fully legalize recreational cannabis nationwide.",
         flag: "🇨🇦",
         image: "/dest-4.jpg",
-        iconColor: "text-green-600",
         cities: [
           { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
           { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
@@ -88,7 +86,6 @@ const WORLD_GUIDE: Continent[] = [
         description: "Patchwork of state laws; California, Colorado, and New York lead legalization.",
         flag: "🇺🇸",
         image: "/dest-1.jpg",
-        iconColor: "text-blue-600",
         cities: [
           { slug: "los-angeles", name: "Los Angeles, California", atGlance: ["500+ dispensaries", "Delivery available", "Tourist-friendly"] },
           { slug: "denver", name: "Denver, Colorado", atGlance: ["Pioneer state", "Recreational since 2014", "Mountain culture"] },
@@ -105,7 +102,6 @@ const WORLD_GUIDE: Continent[] = [
         description: "Supreme Court ruled prohibition unconstitutional; private use is administrative.",
         flag: "🇲🇽",
         image: "/dest-4.jpg",
-        iconColor: "text-amber-600",
         cities: [
           { slug: "mexico-city", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Vibrant culture"] },
           { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Beautiful beaches"] },
