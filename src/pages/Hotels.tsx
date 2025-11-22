@@ -8,11 +8,10 @@ import { ChevronDown, MapPin, Search, Building, Info, Filter, X, Sparkles, Leaf,
 import { HotelCard } from "@/components/HotelCard";
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Helmet } from "react-helmet-async";
 
 /* ----------------------------------------------------
    DATA – scalable by country / state / city
@@ -132,6 +131,47 @@ const Hotels = () => {
     }
     return "420-Friendly Hotels Worldwide | BudQuest Verified Cannabis Accommodations";
   }, [query, activeFilter]);
+
+  // Update document title and meta tags
+  useEffect(() => {
+    // Update document title
+    document.title = getPageTitle;
+
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', getMetaDescription);
+
+    // Update canonical URL
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', 'https://greenglobe.com/hotels');
+
+    // Add structured data
+    const structuredDataScript = document.createElement('script');
+    structuredDataScript.type = 'application/ld+json';
+    structuredDataScript.textContent = JSON.stringify(HOTELS_STRUCTURED_DATA);
+    document.head.appendChild(structuredDataScript);
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(BREADCRUMB_STRUCTURED_DATA);
+    document.head.appendChild(breadcrumbScript);
+
+    // Cleanup function
+    return () => {
+      document.head.removeChild(structuredDataScript);
+      document.head.removeChild(breadcrumbScript);
+    };
+  }, [getPageTitle, getMetaDescription]);
 
   // Clean and prepare data
   const processedData = useMemo(() => {
@@ -261,38 +301,15 @@ const Hotels = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{getPageTitle}</title>
-        <meta name="description" content={getMetaDescription} />
-        <meta name="keywords" content={`420 friendly hotels, cannabis hotels, marijuana friendly accommodation, weed friendly stays, ${SEO_DATA.countries.join(', ')}, ${SEO_DATA.cities.slice(0, 10).join(', ')}, 420 travel, cannabis tourism`} />
-        <link rel="canonical" href="https://greenglobe.com/hotels" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={getPageTitle} />
-        <meta property="og:description" content={getMetaDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://greenglobe.com/hotels" />
-        <meta property="og:image" content="https://greenglobe.com/og-hotels.jpg" />
-        <meta property="og:site_name" content="BudQuest" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={getPageTitle} />
-        <meta name="twitter:description" content={getMetaDescription} />
-        <meta name="twitter:image" content="https://greenglobe.com/og-hotels.jpg" />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(HOTELS_STRUCTURED_DATA)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(BREADCRUMB_STRUCTURED_DATA)}
-        </script>
-
-        {/* Additional SEO Meta Tags */}
-        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-        <link rel="alternate" type="application/rss+xml" title="BudQuest Hotels RSS" href="https://greenglobe.com/hotels/rss.xml" />
-      </Helmet>
+      {/* Inline SEO meta tags for initial load */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOTELS_STRUCTURED_DATA) }}
+      />
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_STRUCTURED_DATA) }}
+      />
 
       <div className="min-h-screen bg-background">
         <Navigation />
