@@ -3,8 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, MapPin, Search, Building, Info, Filter, X } from "lucide-react";
+import { ChevronDown, MapPin, Search, Building, Info, Filter, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { HotelCard } from "@/components/HotelCard";
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
@@ -21,151 +20,138 @@ const generateStructuredData = (hotelCount: number) => ({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "BudQuest Verified 420-Friendly Hotels | Book Cannabis-Friendly Accommodations Worldwide",
-  description: "Discover and book BudQuest-verified 420-friendly hotels across USA, Canada, Netherlands, and worldwide. Cannabis-verified policies, ratings, and reviews.",
+  description: "Discover and book BudQuest-verified 420-friendly hotels across USA, Canada, Netherlands, and worldwide.",
   url: "https://budquest.com/hotels",
   mainEntity: {
     "@type": "ItemList",
     name: "420-Friendly Hotels Collection",
-    description: `Browse ${hotelCount} verified cannabis-friendly hotels by country, state, and city`,
     numberOfItems: hotelCount,
   },
   publisher: {
     "@type": "Organization",
     name: "BudQuest",
-    logo: "https://budquest.com/logo.png",
   },
 });
 
 /* ============================================
-   DATA – scalable by country / state / city
+   TYPES
 ============================================ */
-const DATA: CountryHotels[] = HOTEL_DATA;
-
 type FilterType = 'all' | 'premium' | 'budget' | 'smoking' | 'vaping' | 'edibles';
 type SortType = 'rating' | 'price-low' | 'price-high' | 'name';
 
-const Hotels = () => {
-  const [query, setQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [sortBy, setSortBy] = useState<SortType>('rating');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+interface FilterState {
+  country: string;
+  state: string;
+  type: FilterType;
+  sort: SortType;
+  search: string;
+}
 
-  // Clean and prepare data
-  const processedData = useMemo(() => {
-    return DATA.map(country => ({
-      ...country,
-      states: country.states.map(state => ({
-        ...state,
-        stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
-        hotels: state.hotels.map(hotel => ({
-          ...hotel,
-          state: hotel.state ? hotel.state.replace(/\s*\(.*\)$/, '') : hotel.state,
-          isBudget: hotel.price < 100,
-          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') || 
-                     hotel.policyHighlights?.toLowerCase().includes('balcony') ||
-                     hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
-          hasVaping: hotel.policyHighlights?.toLowerCase().includes('vaping') ||
-                    hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
-          hasEdibles: hotel.policyHighlights?.toLowerCase().includes('edible') ||
-                     hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
-        }))
-      }))
-    }));
-  }, []);
+/* ============================================
+   PAGINATION COMPONENT
+============================================ */
+const Pagination = ({ 
+  currentPage, 
+  totalPages, 
+  onPageChange 
+}: { 
+  currentPage: number; 
+  totalPages: number; 
+  onPageChange: (page: number) => void;
+}) => {
+  if (totalPages <= 1) return null;
 
-  // Filter and sort data
-  const filteredData = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    
-    let allHotels = processedData.flatMap(country => 
-      country.states.flatMap(state => 
-        state.hotels.map(hotel => ({
-          ...hotel,
-          country: country.country,
-          stateName: state.stateName,
-          countryFlag: country.flagPath,
-        }))
-      )
-    );
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const visiblePages = pages.filter(p => 
+    p === 1 || 
+    p === totalPages || 
+    (p >= currentPage - 1 && p <= currentPage + 1)
+  );
 
-    if (q) {
-      allHotels = allHotels.filter(h => 
-        h.name.toLowerCase().includes(q) ||
-        h.city.toLowerCase().includes(q) ||
-        h.country.toLowerCase().includes(q) ||
-        h.stateName.toLowerCase().includes(q) ||
-        h.policyHighlights?.toLowerCase().includes(q)
-      );
-    }
+  return (
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 px-4">
+      <p className="text-sm text-muted-foreground">
+        Page <span className="font-bold text-accent">{currentPage}</span> of <span className="font-bold text-accent">{totalPages}</span>
+      </p>
+      
+      <div className="flex items-center gap-2">
+        <Button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          variant="outline"
+          size="sm"
+          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span className="hidden sm:inline">Previous</span>
+        </Button>
 
-    if (activeFilter !== 'all') {
-      allHotels = allHotels.filter(hotel => {
-        switch (activeFilter) {
-          case 'premium': return hotel.isPremium;
-          case 'budget': return hotel.isBudget;
-          case 'smoking': return hotel.hasSmoking;
-          case 'vaping': return hotel.hasVaping;
-          case 'edibles': return hotel.hasEdibles;
-          default: return true;
-        }
-      });
-    }
+        <div className="flex gap-1">
+          {visiblePages.map((page, idx) => {
+            const isPrevEllipsis = idx > 0 && visiblePages[idx - 1] !== page - 1;
+            const isNextEllipsis = idx < visiblePages.length - 1 && visiblePages[idx + 1] !== page + 1;
 
-    return [...allHotels].sort((a, b) => {
-      switch (sortBy) {
-        case 'name': return a.name.localeCompare(b.name);
-        case 'rating': return b.rating - a.rating;
-        case 'price-low': return a.price - b.price;
-        case 'price-high': return b.price - a.price;
-        default: return 0;
-      }
-    });
-  }, [query, processedData, activeFilter, sortBy]);
+            return (
+              <div key={page}>
+                {isPrevEllipsis && <span className="px-2 text-muted-foreground">...</span>}
+                <button
+                  onClick={() => onPageChange(page)}
+                  className={`w-10 h-10 rounded-lg font-semibold transition-all ${
+                    currentPage === page
+                      ? 'bg-accent text-white'
+                      : 'bg-card/50 text-muted-foreground hover:bg-card/80 hover:text-white border border-border/40'
+                  }`}
+                >
+                  {page}
+                </button>
+                {isNextEllipsis && <span className="px-2 text-muted-foreground">...</span>}
+              </div>
+            );
+          })}
+        </div>
 
-  // Group data for display
-  const groupedHotels = useMemo(() => {
-    const groups: { country: string; flag: string; states: { state: string; cities: { city: string; hotels: typeof filteredData }[] }[] }[] = [];
+        <Button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          variant="outline"
+          size="sm"
+          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+        >
+          <span className="hidden sm:inline">Next</span>
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+};
 
-    filteredData.forEach(hotel => {
-      let countryGroup = groups.find(g => g.country === hotel.country);
-      if (!countryGroup) {
-        countryGroup = { country: hotel.country, flag: hotel.countryFlag, states: [] };
-        groups.push(countryGroup);
-      }
-
-      let stateGroup = countryGroup.states.find(s => s.state === hotel.stateName);
-      if (!stateGroup) {
-        stateGroup = { state: hotel.stateName, cities: [] };
-        countryGroup.states.push(stateGroup);
-      }
-
-      let cityGroup = stateGroup.cities.find(c => c.city === hotel.city);
-      if (!cityGroup) {
-        cityGroup = { city: hotel.city, hotels: [] };
-        stateGroup.cities.push(cityGroup);
-      }
-
-      cityGroup.hotels.push(hotel);
-    });
-
-    return groups;
-  }, [filteredData]);
-
-  // Filter handlers
-  const clearFilters = useCallback(() => {
-    setQuery("");
-    setActiveFilter('all');
-    setSortBy('rating');
-    setIsFilterOpen(false);
-  }, []);
-
+/* ============================================
+   FILTER PANEL COMPONENT
+============================================ */
+const FilterPanel = ({
+  filters,
+  onFilterChange,
+  countries,
+  states,
+  filterCounts,
+  isOpen,
+  onClose
+}: {
+  filters: FilterState;
+  onFilterChange: (key: keyof FilterState, value: string) => void;
+  countries: string[];
+  states: string[];
+  filterCounts: Record<string, number>;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const filterOptions = [
-    { value: 'all' as FilterType, label: 'All Hotels', count: filteredData.length },
-    { value: 'premium' as FilterType, label: 'Premium', count: filteredData.filter(h => h.isPremium).length },
-    { value: 'budget' as FilterType, label: 'Budget', count: filteredData.filter(h => h.isBudget).length },
-    { value: 'smoking' as FilterType, label: 'Smoking', count: filteredData.filter(h => h.hasSmoking).length },
-    { value: 'vaping' as FilterType, label: 'Vaping', count: filteredData.filter(h => h.hasVaping).length },
-    { value: 'edibles' as FilterType, label: 'Edibles', count: filteredData.filter(h => h.hasEdibles).length },
+    { value: 'all' as FilterType, label: 'All Hotels' },
+    { value: 'premium' as FilterType, label: 'Premium' },
+    { value: 'budget' as FilterType, label: 'Budget' },
+    { value: 'smoking' as FilterType, label: 'Smoking' },
+    { value: 'vaping' as FilterType, label: 'Vaping' },
+    { value: 'edibles' as FilterType, label: 'Edibles' },
   ];
 
   const sortOptions = [
@@ -175,26 +161,286 @@ const Hotels = () => {
     { value: 'name' as SortType, label: 'Alphabetical' },
   ];
 
-  const hasActiveFilters = query || activeFilter !== 'all';
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* MOBILE BACKDROP */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          />
+          
+          {/* FILTER PANEL */}
+          <motion.div
+            initial={{ x: -400, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -400, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-border/50 overflow-y-auto md:overflow-visible"
+          >
+            <div className="p-6 space-y-6">
+              {/* CLOSE BUTTON (MOBILE) */}
+              <button
+                onClick={onClose}
+                className="md:hidden absolute top-4 right-4 p-2 hover:bg-accent/10 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div>
+                <h3 className="text-lg font-bold text-white mb-4">Filters</h3>
+              </div>
+
+              {/* COUNTRY FILTER */}
+              <div>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">Country</label>
+                <select
+                  value={filters.country}
+                  onChange={(e) => {
+                    onFilterChange('country', e.target.value);
+                    onFilterChange('state', '');
+                  }}
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                >
+                  <option value="">All Countries</option>
+                  {countries.map(country => (
+                    <option key={country} value={country} className="bg-card">
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* STATE FILTER */}
+              {filters.country && (
+                <div>
+                  <label className="block text-sm font-semibold text-muted-foreground mb-3">State/Province</label>
+                  <select
+                    value={filters.state}
+                    onChange={(e) => onFilterChange('state', e.target.value)}
+                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  >
+                    <option value="">All States</option>
+                    {states.map(state => (
+                      <option key={state} value={state} className="bg-card">
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* TYPE FILTER */}
+              <div>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">Type</label>
+                <div className="space-y-2">
+                  {filterOptions.map(option => (
+                    <button
+                      key={option.value}
+                      onClick={() => onFilterChange('type', option.value)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        filters.type === option.value
+                          ? 'bg-accent text-white'
+                          : 'bg-background/80 text-muted-foreground hover:text-white hover:bg-background border border-border/40'
+                      }`}
+                    >
+                      {option.label}
+                      <span className="text-xs bg-muted/50 px-2 py-1 rounded">
+                        {filterCounts[option.value] || 0}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* SORT */}
+              <div>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">Sort By</label>
+                <select
+                  value={filters.sort}
+                  onChange={(e) => onFilterChange('sort', e.target.value)}
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.value} value={option.value} className="bg-card">
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* APPLY BUTTON (MOBILE) */}
+              <Button
+                onClick={onClose}
+                className="w-full md:hidden bg-accent hover:bg-accent/90 text-white rounded-xl font-semibold py-3"
+              >
+                Apply Filters
+              </Button>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+/* ============================================
+   MAIN HOTELS PAGE
+============================================ */
+const Hotels = () => {
+  const DATA: CountryHotels[] = HOTEL_DATA;
+  const ITEMS_PER_PAGE = 12;
+
+  const [filters, setFilters] = useState<FilterState>({
+    country: '',
+    state: '',
+    type: 'all',
+    sort: 'rating',
+    search: '',
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  // Process and flatten data
+  const processedData = useMemo(() => {
+    return DATA.flatMap(country => 
+      country.states.flatMap(state => 
+        state.hotels.map(hotel => ({
+          ...hotel,
+          country: country.country,
+          countryFlag: country.flagPath,
+          stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
+          isBudget: hotel.price < 100,
+          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') || 
+                     hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
+          hasVaping: hotel.policyHighlights?.toLowerCase().includes('vaping') ||
+                    hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
+          hasEdibles: hotel.policyHighlights?.toLowerCase().includes('edible') ||
+                     hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
+        }))
+      )
+    );
+  }, []);
+
+  // Get unique countries and states
+  const countries = useMemo(() => 
+    Array.from(new Set(processedData.map(h => h.country))).sort(),
+    [processedData]
+  );
+
+  const states = useMemo(() => {
+    if (!filters.country) return [];
+    return Array.from(
+      new Set(
+        processedData
+          .filter(h => h.country === filters.country)
+          .map(h => h.stateName)
+      )
+    ).sort();
+  }, [processedData, filters.country]);
+
+  // Filter data
+  const filteredData = useMemo(() => {
+    let result = [...processedData];
+    const q = filters.search.toLowerCase().trim();
+
+    // Country filter
+    if (filters.country) {
+      result = result.filter(h => h.country === filters.country);
+    }
+
+    // State filter
+    if (filters.state) {
+      result = result.filter(h => h.stateName === filters.state);
+    }
+
+    // Type filter
+    if (filters.type !== 'all') {
+      result = result.filter(h => {
+        switch (filters.type) {
+          case 'premium': return h.isPremium;
+          case 'budget': return h.isBudget;
+          case 'smoking': return h.hasSmoking;
+          case 'vaping': return h.hasVaping;
+          case 'edibles': return h.hasEdibles;
+          default: return true;
+        }
+      });
+    }
+
+    // Search filter
+    if (q) {
+      result = result.filter(h => 
+        h.name.toLowerCase().includes(q) ||
+        h.city.toLowerCase().includes(q) ||
+        h.country.toLowerCase().includes(q) ||
+        h.stateName.toLowerCase().includes(q) ||
+        h.policyHighlights?.toLowerCase().includes(q)
+      );
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      switch (filters.sort) {
+        case 'name': return a.name.localeCompare(b.name);
+        case 'rating': return b.rating - a.rating;
+        case 'price-low': return a.price - b.price;
+        case 'price-high': return b.price - a.price;
+        default: return 0;
+      }
+    });
+
+    return result;
+  }, [processedData, filters]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredData.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredData, currentPage]);
+
+  // Filter counts
+  const filterCounts = useMemo(() => ({
+    all: processedData.length,
+    premium: processedData.filter(h => h.isPremium).length,
+    budget: processedData.filter(h => h.isBudget).length,
+    smoking: processedData.filter(h => h.hasSmoking).length,
+    vaping: processedData.filter(h => h.hasVaping).length,
+    edibles: processedData.filter(h => h.hasEdibles).length,
+  }), [processedData]);
+
+  // Handlers
+  const handleFilterChange = useCallback((key: keyof FilterState, value: string) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+    setCurrentPage(1);
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    setFilters({
+      country: '',
+      state: '',
+      type: 'all',
+      sort: 'rating',
+      search: '',
+    });
+    setCurrentPage(1);
+    setIsFilterOpen(false);
+  }, []);
+
+  const hasActiveFilters = filters.search || filters.country || filters.state || filters.type !== 'all';
 
   return (
     <>
       <Helmet>
         <title>BudQuest Verified 420-Friendly Hotels | Book Cannabis-Friendly Stays</title>
-        <meta name="description" content="Discover BudQuest-verified 420-friendly hotels worldwide. Browse cannabis-friendly accommodations by country, state, and city. Policies checked, ratings verified." />
-        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels, cannabis travel, USA hotels, Canada hotels, Netherlands hotels" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charSet="utf-8" />
+        <meta name="description" content="Discover BudQuest-verified 420-friendly hotels worldwide. Browse cannabis-friendly accommodations by country, state, and city." />
+        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels" />
         <link rel="canonical" href="https://budquest.com/hotels" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="BudQuest Verified 420-Friendly Hotels | Cannabis Travel Guide" />
-        <meta property="og:description" content="Browse and book verified 420-friendly hotels across USA, Canada, Netherlands, and worldwide." />
-        <meta property="og:url" content="https://budquest.com/hotels" />
-        <meta property="og:site_name" content="BudQuest" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="BudQuest Verified 420-Friendly Hotels" />
-        <meta name="twitter:description" content="Book cannabis-friendly hotels worldwide with BudQuest verification." />
         <script type="application/ld+json">{JSON.stringify(generateStructuredData(filteredData.length))}</script>
       </Helmet>
 
@@ -208,224 +454,184 @@ const Hotels = () => {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white leading-tight">
                 Verified 420-Friendly Hotels
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground mb-3">
+              <p className="text-base sm:text-lg text-muted-foreground mb-2">
                 Discover cannabis-friendly accommodations worldwide
               </p>
               <p className="text-sm sm:text-base text-muted-foreground/80">
-                {filteredData.length} verified hotels • Policies checked • Premium experience
+                {processedData.length} verified hotels • Policies checked • Premium experience
               </p>
             </section>
 
-            {/* SEARCH & FILTERS */}
-            <div className="sticky top-20 z-10 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-10 max-w-4xl mx-auto shadow-2xl">
-              <div className="flex flex-col sm:flex-row gap-3 items-stretch">
-                <div className="flex-1 relative">
-                  <label htmlFor="hotel-search" className="sr-only">Search hotels</label>
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
-                  <input
-                    id="hotel-search"
-                    type="text"
-                    placeholder="Search hotels, cities, states..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base sm:text-lg placeholder:text-muted-foreground/60 transition-all duration-200"
-                  />
-                  {query && (
-                    <button
-                      onClick={() => setQuery("")}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors p-1 hover:bg-accent/10 rounded-lg"
-                      aria-label="Clear search"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="flex gap-2 items-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10 transition-all"
-                  >
-                    <Filter className="w-5 h-5" />
-                    <span className="hidden sm:inline font-medium">Filters</span>
-                  </Button>
-                  
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortType)}
-                    className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-accent/20 hover:border-border/60 transition-all h-11 sm:h-12"
-                  >
-                    {sortOptions.map(option => (
-                      <option key={option.value} value={option.value} className="bg-card">
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className="flex gap-6 md:gap-8">
+              {/* FILTER PANEL - DESKTOP */}
+              <div className="hidden md:block w-64 flex-shrink-0">
+                <FilterPanel
+                  filters={filters}
+                  onFilterChange={handleFilterChange}
+                  countries={countries}
+                  states={states}
+                  filterCounts={filterCounts}
+                  isOpen={true}
+                  onClose={() => {}}
+                />
               </div>
 
-              {/* FILTER CHIPS */}
-              <AnimatePresence>
-                {(isFilterOpen || hasActiveFilters) && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
-                      {filterOptions.map((filter) => (
+              {/* MAIN CONTENT */}
+              <div className="flex-1 min-w-0">
+                {/* SEARCH BAR - MOBILE/TABLET */}
+                <div className="sticky top-20 z-30 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl md:mb-10">
+                  <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                    <div className="flex-1 relative">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                      <input
+                        type="text"
+                        placeholder="Search hotels, cities, states..."
+                        value={filters.search}
+                        onChange={(e) => handleFilterChange('search', e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                      />
+                      {filters.search && (
                         <button
-                          key={filter.value}
-                          onClick={() => setActiveFilter(filter.value)}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                            activeFilter === filter.value
-                              ? 'bg-accent text-white shadow-lg'
-                              : 'bg-card/50 text-muted-foreground hover:text-white hover:bg-card/80 border border-border/40'
-                          }`}
-                          aria-pressed={activeFilter === filter.value}
+                          onClick={() => handleFilterChange('search', '')}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
                         >
-                          {filter.label}
-                          <span className={`px-2 py-0.5 rounded-md text-xs font-semibold ${
-                            activeFilter === filter.value 
-                              ? 'bg-white/20' 
-                              : 'bg-muted'
-                          }`}>
-                            {filter.count}
-                          </span>
-                        </button>
-                      ))}
-                      
-                      {hasActiveFilters && (
-                        <button
-                          onClick={clearFilters}
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-red-950/20 border border-red-500/30 transition-all"
-                        >
-                          <X className="w-4 h-4" />
-                          Clear
+                          <X className="w-5 h-5 text-muted-foreground hover:text-white" />
                         </button>
                       )}
                     </div>
-                  </motion.div>
+
+                    <Button
+                      onClick={() => setIsFilterOpen(true)}
+                      variant="outline"
+                      size="sm"
+                      className="md:hidden gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
+                    >
+                      <Filter className="w-5 h-5" />
+                      Filters
+                    </Button>
+
+                    <select
+                      value={filters.sort}
+                      onChange={(e) => handleFilterChange('sort', e.target.value as SortType)}
+                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+                    >
+                      <option value="rating" className="bg-card">Highest Rated</option>
+                      <option value="price-low" className="bg-card">Price: Low to High</option>
+                      <option value="price-high" className="bg-card">Price: High to Low</option>
+                      <option value="name" className="bg-card">Alphabetical</option>
+                    </select>
+                  </div>
+
+                  {/* ACTIVE FILTERS DISPLAY */}
+                  {hasActiveFilters && (
+                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
+                      {filters.country && (
+                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                          {filters.country}
+                          <button onClick={() => handleFilterChange('country', '')} className="hover:opacity-70">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </Badge>
+                      )}
+                      {filters.state && (
+                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                          {filters.state}
+                          <button onClick={() => handleFilterChange('state', '')} className="hover:opacity-70">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </Badge>
+                      )}
+                      {filters.type !== 'all' && (
+                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                          {filters.type}
+                          <button onClick={() => handleFilterChange('type', 'all')} className="hover:opacity-70">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </Badge>
+                      )}
+                      <button
+                        onClick={handleClearFilters}
+                        className="text-red-400 hover:text-red-300 text-xs font-semibold px-3 py-1 rounded-lg hover:bg-red-950/20 transition-colors"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* RESULTS */}
+                {filteredData.length === 0 ? (
+                  <div className="text-center py-16">
+                    <Building className="w-16 h-16 mx-auto mb-6 text-muted-foreground/40" />
+                    <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">No hotels found</h2>
+                    <p className="text-muted-foreground text-sm mb-4">Try adjusting your filters or search terms.</p>
+                    {hasActiveFilters && (
+                      <Button onClick={handleClearFilters} variant="outline" className="gap-2 border-border/50">
+                        <X className="w-4 h-4" />
+                        Clear Filters
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <div className="mb-8">
+                      <p className="text-sm text-muted-foreground">
+                        Showing <span className="text-accent font-bold">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to{' '}
+                        <span className="text-accent font-bold">
+                          {Math.min(currentPage * ITEMS_PER_PAGE, filteredData.length)}
+                        </span>{' '}
+                        of <span className="text-accent font-bold">{filteredData.length}</span> hotels
+                      </p>
+                    </div>
+
+                    {/* HOTEL CARDS GRID */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12">
+                      {paginatedData.map((hotel, idx) => (
+                        <motion.div
+                          key={hotel.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.05 }}
+                        >
+                          <HotelCard hotel={hotel} />
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* PAGINATION */}
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={(page) => {
+                        setCurrentPage(page);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    />
+                  </>
                 )}
-              </AnimatePresence>
+              </div>
             </div>
 
-            {/* RESULTS COUNT */}
-            {hasActiveFilters && (
-              <div className="text-center mb-8">
-                <p className="text-base sm:text-lg text-muted-foreground">
-                  Found <span className="text-accent font-bold text-lg">{filteredData.length}</span> hotels
-                  {query && ` matching "${query}"`}
-                </p>
-              </div>
-            )}
-
-            {/* RESULTS */}
-            {filteredData.length === 0 ? (
-              <div className="text-center py-16">
-                <Building className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 text-muted-foreground/40" />
-                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3">No hotels found</h2>
-                <p className="text-muted-foreground text-base mb-2">No verified 420-friendly hotels match your search.</p>
-                <p className="text-muted-foreground/80 text-sm mb-6">Try searching a different city or country.</p>
-                {hasActiveFilters && (
-                  <Button 
-                    onClick={clearFilters} 
-                    variant="outline"
-                    className="gap-2 border-border/50 hover:bg-accent/10"
-                  >
-                    <X className="w-4 h-4" />
-                    Clear All
-                  </Button>
-                )}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {groupedHotels.map((countryGroup, idx) => (
-                  <motion.div
-                    key={countryGroup.country}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                  >
-                    <Collapsible className="border border-border/50 rounded-2xl bg-card/40 backdrop-blur-sm overflow-hidden hover:border-border/70 transition-all">
-                      <CollapsibleTrigger className="flex items-center justify-between w-full p-5 sm:p-7 hover:bg-card/60 transition-colors group">
-                        <div className="flex items-center gap-4 min-w-0">
-                          <img 
-                            src={countryGroup.flag} 
-                            alt={`${countryGroup.country} flag`}
-                            loading="lazy"
-                            className="h-6 w-9 sm:h-7 sm:w-10 rounded-lg border border-border/50 shadow-md flex-shrink-0 object-cover" 
-                          />
-                          <div className="text-left min-w-0">
-                            <h2 className="text-xl sm:text-2xl font-bold text-white group-hover:text-accent transition-colors">{countryGroup.country}</h2>
-                            <p className="text-sm text-muted-foreground">
-                              {countryGroup.states.reduce((total, state) => 
-                                total + state.cities.reduce((cityTotal, city) => 
-                                  cityTotal + city.hotels.length, 0
-                                ), 0
-                              )} hotels
-                            </p>
-                          </div>
-                        </div>
-                        <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-accent group-hover:scale-110 transition-transform flex-shrink-0 ui-open:rotate-180" />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="p-5 sm:p-7 border-t border-border/30 space-y-4">
-                        {countryGroup.states.map((stateGroup) => (
-                          <Collapsible key={stateGroup.state} className="rounded-xl bg-background/40 border border-border/30 overflow-hidden">
-                            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-background/60 transition-colors group">
-                              <h3 className="text-lg font-semibold text-accent group-hover:text-accent/80 transition-colors">{stateGroup.state}</h3>
-                              <ChevronDown className="w-5 h-5 text-accent group-hover:scale-110 transition-transform ui-open:rotate-180" />
-                            </CollapsibleTrigger>
-                            <CollapsibleContent className="p-4 border-t border-border/30 space-y-5">
-                              {stateGroup.cities.map((cityGroup) => (
-                                <motion.div 
-                                  key={cityGroup.city} 
-                                  className="space-y-3"
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                >
-                                  <div className="flex items-center gap-3 flex-wrap">
-                                    <h4 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                                      <MapPin className="w-5 h-5 text-accent flex-shrink-0" />
-                                      {cityGroup.city}
-                                    </h4>
-                                    <Badge className="bg-accent/15 text-accent border border-accent/40 text-xs font-semibold px-3 py-1">
-                                      {cityGroup.hotels.length}
-                                    </Badge>
-                                  </div>
-                                  <div className="grid grid-cols-1 gap-3">
-                                    {cityGroup.hotels.map((hotel) => (
-                                      <HotelCard 
-                                        key={hotel.id} 
-                                        hotel={hotel} 
-                                      />
-                                    ))}
-                                  </div>
-                                </motion.div>
-                              ))}
-                            </CollapsibleContent>
-                          </Collapsible>
-                        ))}
-                      </CollapsibleContent>
-                    </Collapsible>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            {/* FILTER PANEL - MOBILE */}
+            <FilterPanel
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              countries={countries}
+              states={states}
+              filterCounts={filterCounts}
+              isOpen={isFilterOpen}
+              onClose={() => setIsFilterOpen(false)}
+            />
 
             {/* DISCLAIMER */}
-            <section className="mt-16" aria-label="Legal information">
-              <Card className="p-6 sm:p-8 bg-gradient-to-r from-red-950/20 to-red-900/10 border border-red-500/30 rounded-2xl backdrop-blur-sm">
-                <div className="flex items-start gap-4 mb-4">
+            <section className="mt-20" aria-label="Legal information">
+              <Card className="p-6 sm:p-8 bg-gradient-to-r from-red-950/20 to-red-900/10 border border-red-500/30 rounded-2xl">
+                <div className="flex items-start gap-4">
                   <Info className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-red-300 mb-3">Legal Disclaimer</h3>
-                    <p className="text-sm sm:text-base text-red-200/90 leading-relaxed">
-                      BudQuest is an informational resource only. We do not provide legal advice. Always verify current local laws and confirm hotel policies before booking or consuming cannabis. International transport of cannabis remains illegal. Users are responsible for ensuring compliance with applicable laws.
+                    <h3 className="text-lg font-bold text-red-300 mb-2">Legal Disclaimer</h3>
+                    <p className="text-sm text-red-200/90 leading-relaxed">
+                      BudQuest is an informational resource only. Always verify current local laws and confirm hotel policies before booking.
                     </p>
                   </div>
                 </div>
@@ -433,20 +639,13 @@ const Hotels = () => {
             </section>
 
             {/* INTERNAL LINKS */}
-            <nav className="mt-12 text-center" aria-label="Related pages">
-              <p className="text-muted-foreground mb-4 text-sm sm:text-base">Explore more cannabis travel resources:</p>
+            <nav className="mt-12 text-center">
               <div className="flex flex-wrap justify-center gap-4">
-                <Link 
-                  to="/usa" 
-                  className="text-accent hover:text-accent/80 font-semibold transition-colors text-sm sm:text-base px-3 py-2 rounded-lg hover:bg-accent/10"
-                >
+                <Link to="/usa" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
                   USA Guide
                 </Link>
                 <span className="text-muted-foreground/40">•</span>
-                <Link 
-                  to="/world" 
-                  className="text-accent hover:text-accent/80 font-semibold transition-colors text-sm sm:text-base px-3 py-2 rounded-lg hover:bg-accent/10"
-                >
+                <Link to="/world" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
                   World Guide
                 </Link>
               </div>
