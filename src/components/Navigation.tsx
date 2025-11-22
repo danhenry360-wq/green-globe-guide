@@ -34,6 +34,9 @@ export const Navigation = () => {
             <Link to="/tours" className="text-sm text-foreground hover:text-accent transition-colors">
               Tours
             </Link>
+            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent transition-colors">
+              Dispensary
+            </Link>
             <Link to="/blog" className="text-sm text-foreground hover:text-accent transition-colors">
               Blog
             </Link>
@@ -71,6 +74,9 @@ export const Navigation = () => {
             </Link>
             <Link to="/tours" className="text-sm text-foreground hover:text-accent">
               Tours
+            </Link>
+            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent">
+              Dispensary
             </Link>
             <Link to="/blog" className="text-sm text-foreground hover:text-accent">
               Blog
