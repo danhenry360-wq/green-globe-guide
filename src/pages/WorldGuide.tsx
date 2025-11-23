@@ -703,39 +703,39 @@ export default WorldGuide;-start gap-1.5 bg-muted/40 p-1.5 rounded">
                   
                   <AnimatePresence>
                     {openRegion === stateRegion.slug && (
-                      <CollapsibleContent asChild forceMount>
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="mt-1.5 space-y-1.5 border-t border-border/30 pt-1.5"
+                      <CollapsibleContent asChild>
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="mt-1.5 space-y-1.5 border-t border-border/30 pt-1.5"
+                    >
+                      {stateRegion.cities.map((city) => (
+                        <Card
+                          key={city.slug}
+                          className="p-2 bg-card/50 border-border/40 hover:border-accent/50 hover:bg-card/70 transition-colors"
                         >
-                          {stateRegion.cities.map((city) => (
-                            <Card
-                              key={city.slug}
-                              className="p-2 bg-card/50 border-border/40 hover:border-accent/50 hover:bg-card/70 transition-colors"
+                          <div className="flex flex-col gap-1">
+                            <div>
+                              <h5 className="font-semibold text-xs text-foreground">{city.name}</h5>
+                              <ul className="text-xs text-muted-foreground space-y-0.5 mt-0.5">
+                                {city.atGlance.slice(0, 2).map((item, i) => (
+                                  <li key={i} className="line-clamp-1">• {item}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <Link
+                              to={`/world/${country.slug}/${stateRegion.slug}/${city.slug}`}
+                              className="text-xs text-accent hover:text-accent/80 font-bold self-start whitespace-nowrap mt-0.5"
                             >
-                              <div className="flex flex-col gap-1">
-                                <div>
-                                  <h5 className="font-semibold text-xs text-foreground">{city.name}</h5>
-                                  <ul className="text-xs text-muted-foreground space-y-0.5 mt-0.5">
-                                    {city.atGlance.slice(0, 2).map((item, i) => (
-                                      <li key={i} className="line-clamp-1">• {item}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                                <Link
-                                  to={`/world/${country.slug}/${stateRegion.slug}/${city.slug}`}
-                                  className="text-xs text-accent hover:text-accent/80 font-bold self-start whitespace-nowrap mt-0.5"
-                                >
-                                  View Guide →
-                                </Link>
-                              </div>
-                            </Card>
-                          ))}
-                        </motion.div>
-                      </CollapsibleContent>
+                              View Guide →
+                            </Link>
+                          </div>
+                        </Card>
+                      ))}
+                    </motion.div>
+                  </CollapsibleContent>
                     )}
                   </AnimatePresence>
                 </Collapsible>
