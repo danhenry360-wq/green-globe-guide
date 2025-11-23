@@ -50,21 +50,12 @@ interface FilterState {
 /* ============================================
    PAGINATION COMPONENT
 ============================================ */
-const Pagination = ({ 
-  currentPage, 
-  totalPages, 
-  onPageChange 
-}: { 
-  currentPage: number; 
-  totalPages: number; 
-  onPageChange: (page: number) => void;
-}) => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
-
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const visiblePages = pages.filter(p => 
-    p === 1 || 
-    p === totalPages || 
+  const visiblePages = pages.filter(p =>
+    p === 1 ||
+    p === totalPages ||
     (p >= currentPage - 1 && p <= currentPage + 1)
   );
 
@@ -73,7 +64,7 @@ const Pagination = ({
       <p className="text-sm text-muted-foreground">
         Page <span className="font-bold text-accent">{currentPage}</span> of <span className="font-bold text-accent">{totalPages}</span>
       </p>
-      
+
       <div className="flex items-center gap-2">
         <Button
           onClick={() => onPageChange(currentPage - 1)}
@@ -128,37 +119,21 @@ const Pagination = ({
 /* ============================================
    FILTER PANEL COMPONENT
 ============================================ */
-const FilterPanel = ({
-  filters,
-  onFilterChange,
-  countries,
-  states,
-  filterCounts,
-  isOpen,
-  onClose
-}: {
-  filters: FilterState;
-  onFilterChange: (key: keyof FilterState, value: string) => void;
-  countries: string[];
-  states: string[];
-  filterCounts: Record<string, number>;
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
+const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts, isOpen, onClose }) => {
   const filterOptions = [
-    { value: 'all' as FilterType, label: 'All Hotels' },
-    { value: 'premium' as FilterType, label: 'Premium' },
-    { value: 'budget' as FilterType, label: 'Budget' },
-    { value: 'smoking' as FilterType, label: 'Smoking' },
-    { value: 'vaping' as FilterType, label: 'Vaping' },
-    { value: 'edibles' as FilterType, label: 'Edibles' },
+    { value: 'all', label: 'All Hotels' },
+    { value: 'premium', label: 'Premium' },
+    { value: 'budget', label: 'Budget' },
+    { value: 'smoking', label: 'Smoking' },
+    { value: 'vaping', label: 'Vaping' },
+    { value: 'edibles', label: 'Edibles' },
   ];
 
   const sortOptions = [
-    { value: 'rating' as SortType, label: 'Highest Rated' },
-    { value: 'price-low' as SortType, label: 'Price: Low to High' },
-    { value: 'price-high' as SortType, label: 'Price: High to Low' },
-    { value: 'name' as SortType, label: 'Alphabetical' },
+    { value: 'rating', label: 'Highest Rated' },
+    { value: 'price-low', label: 'Price: Low to High' },
+    { value: 'price-high', label: 'Price: High to Low' },
+    { value: 'name', label: 'Alphabetical' },
   ];
 
   return (
@@ -173,7 +148,7 @@ const FilterPanel = ({
             onClick={onClose}
             className="fixed inset-0 bg-black/50 z-40 md:hidden"
           />
-          
+
           {/* FILTER PANEL */}
           <motion.div
             initial={{ x: -400, opacity: 0 }}
@@ -204,7 +179,7 @@ const FilterPanel = ({
                     onFilterChange('country', e.target.value);
                     onFilterChange('state', '');
                   }}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
                 >
                   <option value="">All Countries</option>
                   {countries.map(country => (
@@ -222,7 +197,7 @@ const FilterPanel = ({
                   <select
                     value={filters.state}
                     onChange={(e) => onFilterChange('state', e.target.value)}
-                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
                   >
                     <option value="">All States</option>
                     {states.map(state => (
@@ -263,7 +238,7 @@ const FilterPanel = ({
                 <select
                   value={filters.sort}
                   onChange={(e) => onFilterChange('sort', e.target.value)}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
                 >
                   {sortOptions.map(option => (
                     <option key={option.value} value={option.value} className="bg-card">
@@ -307,27 +282,27 @@ const Hotels = () => {
 
   // Process and flatten data
   const processedData = useMemo(() => {
-    return DATA.flatMap(country => 
-      country.states.flatMap(state => 
+    return DATA.flatMap(country =>
+      country.states.flatMap(state =>
         state.hotels.map(hotel => ({
           ...hotel,
           country: country.country,
           countryFlag: country.flagPath,
           stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
           isBudget: hotel.price < 100,
-          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') || 
-                     hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
+          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') ||
+                      hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
           hasVaping: hotel.policyHighlights?.toLowerCase().includes('vaping') ||
-                    hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
+                     hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
           hasEdibles: hotel.policyHighlights?.toLowerCase().includes('edible') ||
-                     hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
+                      hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
         }))
       )
     );
   }, []);
 
   // Get unique countries and states
-  const countries = useMemo(() => 
+  const countries = useMemo(() =>
     Array.from(new Set(processedData.map(h => h.country))).sort(),
     [processedData]
   );
@@ -374,7 +349,7 @@ const Hotels = () => {
 
     // Search filter
     if (q) {
-      result = result.filter(h => 
+      result = result.filter(h =>
         h.name.toLowerCase().includes(q) ||
         h.city.toLowerCase().includes(q) ||
         h.country.toLowerCase().includes(q) ||
@@ -478,8 +453,9 @@ const Hotels = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* SEARCH BAR - MOBILE/TABLET */}
-                <div className="sticky top-20 z-30 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl md:mb-10">
+                
+                {/* SEARCH BAR - now STATIC */}
+                <div className="w-full z-10 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl md:mb-10">
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
