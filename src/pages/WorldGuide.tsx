@@ -25,7 +25,7 @@ interface City {
 interface StateRegion {
   slug: string;
   name: string;
-  regionalLaw: string; // Specific law details for the state/region
+  regionalLaw: string;
   cities: City[];
 }
 
@@ -37,7 +37,7 @@ interface Country {
   airport: string;
   tourist: string;
   description: string;
-  states: StateRegion[]; // Updated: Replaced 'cities' with 'states'
+  states: StateRegion[];
   image: string;
   flag: string;
 }
@@ -54,7 +54,7 @@ interface Continent {
 }
 
 /* ============================================
-    DATA – CONTINENT-ORGANIZED (UNCHANGED from previous refactor)
+    DATA – CONTINENT-ORGANIZED
 ============================================ */
 const WORLD_GUIDE: Continent[] = [
   // === NORTH AMERICA ===
@@ -77,7 +77,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "First G7 nation to fully legalize recreational cannabis nationwide. Provincial laws vary.",
         flag: "🇨🇦",
         image: "/dest-4.jpg",
-        states: [ // Refactored to use states/provinces
+        states: [
           { slug: "ontario", name: "Ontario", regionalLaw: "Legal age 19. Public smoking limited.", cities: [
             { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
           ]},
@@ -99,7 +99,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Patchwork of state laws; Federal law prohibits transport and sale.",
         flag: "🇺🇸",
         image: "/dest-1.jpg",
-        states: [ // Refactored to use states
+        states: [
           { slug: "california", name: "California", regionalLaw: "Recreational since 2016. Possession: 28.5g.", cities: [
             { slug: "los-angeles", name: "Los Angeles", atGlance: ["500+ dispensaries", "Delivery available", "Tourist-friendly"] },
           ]},
@@ -121,7 +121,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Supreme Court ruled prohibition unconstitutional; private use is administrative.",
         flag: "🇲🇽",
         image: "/dest-4.jpg",
-        states: [ // Simplified for Mexico
+        states: [
           { slug: "federal-district", name: "Mexico City Region", regionalLaw: "Most progressive and tolerant area for private use.", cities: [
             { slug: "mexico-city", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Vibrant culture"] },
           ]},
@@ -133,7 +133,7 @@ const WORLD_GUIDE: Continent[] = [
     ],
   },
 
-  // === SOUTH AMERICA (Original structure maintained for simplicity) ===
+  // === SOUTH AMERICA ===
   {
     id: "south-america",
     name: "South America",
@@ -153,7 +153,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "World's first full legalization; pharmacy sales and clubs for residents.",
         flag: "🇺🇾",
         image: "/dest-5.jpg",
-        states: [ // Grouping all cities under one national region
+        states: [
           { slug: "national", name: "National Overview", regionalLaw: "Laws apply nationwide.", cities: [
             { slug: "montevideo", name: "Montevideo", atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"] },
             { slug: "punta-del-este", name: "Punta del Este", atGlance: ["Upscale resort town", "Private circles", "Beautiful beaches"] },
@@ -222,7 +222,7 @@ const WORLD_GUIDE: Continent[] = [
         description: "Legalized April 2024; cannabis social clubs launching nationwide. Some local limits may apply.",
         flag: "🇩🇪",
         image: "/dest-1.jpg",
-        states: [ // Refactored to use major states
+        states: [
           { slug: "berlin", name: "Berlin State", regionalLaw: "Very progressive, focus on social clubs and public safety.", cities: [
             { slug: "berlin", name: "Berlin", atGlance: ["Club culture capital", "No smoking near kids", "Low-THC starters"] },
           ]},
@@ -354,7 +354,7 @@ const WORLD_GUIDE: Continent[] = [
     ],
   },
 
-  // === CARIBBEAN (Original structure maintained for simplicity) ===
+  // === CARIBBEAN ===
   {
     id: "caribbean",
     name: "Caribbean",
@@ -401,7 +401,7 @@ const WORLD_GUIDE: Continent[] = [
     ],
   },
 
-  // === OCEANIA (Original structure maintained for simplicity) ===
+  // === OCEANIA ===
   {
     id: "oceania",
     name: "Oceania",
@@ -455,7 +455,7 @@ const WORLD_GUIDE: Continent[] = [
 ];
 
 /* ============================================
-    HELPERS (UNCHANGED)
+    HELPERS
 ============================================ */
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -484,7 +484,7 @@ const getStatusIcon = (status: string) => {
 };
 
 /* ============================================
-    COUNTRY CARD COMPONENT (FIXED JSX NESTING)
+    COUNTRY CARD COMPONENT
 ============================================ */
 interface CountryCardProps {
   country: Country;
@@ -492,7 +492,6 @@ interface CountryCardProps {
 }
 
 const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
-  // State to manage which State/Region collapsible is open
   const [openRegion, setOpenRegion] = useState<string | null>(null);
 
   const toggleRegion = (slug: string) => {
@@ -508,7 +507,6 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
       <Card className="h-full flex flex-col bg-card border-border/40 hover:border-accent/50 hover:shadow-lg transition-all overflow-hidden group">
         {/* Country Header with Image */}
         <div className="relative h-32 sm:h-40 bg-muted overflow-hidden">
-          {/* Background image and overlay */}
           <img
             src={country.image}
             alt={country.name}
@@ -518,43 +516,42 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
           {/* Flag and Status */}
           <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex flex-col gap-1">
             <span className="text-3xl sm:text-4xl">{country.flag}</span>
-            <Badge className={`${getStatusColor(country.legalStatus)} w-fit text-sm sm:text-base`}>
+            <Badge className={`${getStatusColor(country.legalStatus)} w-fit text-xs sm:text-sm`}>
               {getStatusIcon(country.legalStatus)} {country.legalStatus}
             </Badge>
           </div>
         </div>
 
         {/* Country Info and Law Description */}
-        <div className="flex-1 p-3 sm:p-4 flex flex-col gap-3">
-          <h3 className="text-xl sm:text-2xl font-bold text-foreground">{country.name}</h3>
+        <div className="flex-1 p-3 sm:p-4 flex flex-col gap-3 overflow-hidden">
+          <h3 className="text-lg sm:text-2xl font-bold text-foreground line-clamp-2">{country.name}</h3>
 
-          {/* Brief Description of the cannabis law */}
-          <p className="text-sm sm:text-base text-white/90 font-medium">
+          <p className="text-xs sm:text-sm text-white/90 font-medium line-clamp-3">
             {country.description}
           </p>
           
           {/* Quick Info Grid */}
-          <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm pt-2 border-t border-border/30">
-            <div className="flex items-center gap-2 bg-muted/40 p-2 rounded-lg">
-              <Users className="w-4 h-4 text-accent shrink-0" />
+          <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-border/30">
+            <div className="flex items-start gap-2 bg-muted/40 p-2 rounded-lg min-h-16">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5" />
               <div className="min-w-0">
-                <p className="font-semibold text-foreground">National Possession</p>
-                <p className="text-muted-foreground truncate">{country.possession}</p>
+                <p className="font-semibold text-foreground text-xs line-clamp-1">Possession</p>
+                <p className="text-muted-foreground line-clamp-2 text-xs">{country.possession}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 bg-muted/40 p-2 rounded-lg">
-              <Plane className="w-4 h-4 text-accent shrink-0" />
+            <div className="flex items-start gap-2 bg-muted/40 p-2 rounded-lg min-h-16">
+              <Plane className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5" />
               <div className="min-w-0">
-                <p className="font-semibold text-foreground">Airport Rule</p>
-                <p className="text-muted-foreground truncate">{country.airport}</p>
+                <p className="font-semibold text-foreground text-xs line-clamp-1">Airport</p>
+                <p className="text-muted-foreground line-clamp-2 text-xs">{country.airport}</p>
               </div>
             </div>
           </div>
 
-          {/* STATES/REGIONS Collapsible - Clickable State Section */}
-          <div className="mt-4 space-y-2">
-            <h4 className="text-sm font-bold text-foreground/80 mb-1 flex items-center gap-1">
-                <MapPin className="w-4 h-4" /> Explore Major Regions ({country.states.length})
+          {/* STATES/REGIONS Collapsible */}
+          <div className="mt-3 space-y-2">
+            <h4 className="text-xs font-bold text-foreground/80 mb-1 flex items-center gap-1">
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4" /> Regions ({country.states.length})
             </h4>
             
             {country.states.map((stateRegion) => (
@@ -568,10 +565,10 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full justify-between text-left px-3 h-auto py-2 bg-muted hover:bg-muted/70 rounded-lg"
+                    className="w-full justify-between text-left px-2 h-auto py-2 bg-muted hover:bg-muted/70 rounded-lg gap-1"
                   >
-                    <div className="flex flex-col items-start min-w-0 pr-4">
-                        <span className="font-bold text-sm text-foreground truncate">
+                    <div className="flex flex-col items-start min-w-0 flex-1">
+                        <span className="font-bold text-xs sm:text-sm text-foreground truncate">
                             {stateRegion.name}
                         </span>
                         <span className="text-xs text-muted-foreground truncate">
@@ -579,13 +576,12 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                         </span>
                     </div>
                     <ChevronDown
-                      className="w-4 h-4 text-accent shrink-0 transition-transform"
+                      className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 transition-transform"
                       style={{ transform: openRegion === stateRegion.slug ? "rotate(180deg)" : "rotate(0deg)" }}
                     />
                   </Button>
                 </CollapsibleTrigger>
                 
-                {/* FIX APPLIED HERE: AnimatePresence wraps the CollapsibleContent conditionally. */}
                 <AnimatePresence>
                   {openRegion === stateRegion.slug && (
                     <CollapsibleContent asChild forceMount>
@@ -594,30 +590,29 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="mt-2 p-3 pt-0 space-y-2 border-t border-border/40"
+                        className="mt-2 p-2 pt-0 space-y-2 border-t border-border/40"
                       >
                         {stateRegion.cities.map((city) => (
                           <Card
                             key={city.slug}
-                            className="p-3 bg-card/50 border-border/40 hover:border-accent/50 hover:bg-card/70 transition-colors"
+                            className="p-2 bg-card/50 border-border/40 hover:border-accent/50 hover:bg-card/70 transition-colors"
                           >
-                            <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-start justify-between gap-1">
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-semibold text-sm text-foreground">{city.name}</h4>
-                                <ul className="text-xs text-muted-foreground list-disc list-inside mt-1 space-y-0.5">
-                                  {city.atGlance.map((item, i) => (
+                                <h4 className="font-semibold text-xs sm:text-sm text-foreground line-clamp-1">{city.name}</h4>
+                                <ul className="text-xs text-muted-foreground list-disc list-inside mt-0.5 space-y-0">
+                                  {city.atGlance.slice(0, 2).map((item, i) => (
                                     <li key={i} className="truncate">
                                       {item}
                                     </li>
                                   ))}
                                 </ul>
                               </div>
-                              {/* The city guide link with full route: /world/{country}/{state}/{city} */}
                               <Link
                                 to={`/world/${country.slug}/${stateRegion.slug}/${city.slug}`}
-                                className="text-xs text-accent hover:text-accent/80 font-bold shrink-0 whitespace-nowrap"
+                                className="text-xs text-accent hover:text-accent/80 font-bold shrink-0 whitespace-nowrap underline"
                               >
-                                View City Guide →
+                                View →
                               </Link>
                             </div>
                           </Card>
@@ -635,7 +630,9 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
   );
 };
 
-/** Continent Section Component (UNCHANGED) */
+/* ============================================
+    CONTINENT SECTION COMPONENT
+============================================ */
 interface ContinentSectionProps {
   continent: Continent;
   isOpen: boolean;
@@ -658,32 +655,30 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
       transition={{ duration: 0.5 }}
       className="mb-6 sm:mb-8"
     >
-      {/* Continent Header - Clickable to open countries */}
       <button
         onClick={onToggle}
-        className={`w-full mb-4 sm:mb-6 bg-gradient-to-r ${continent.bgColor} hover:from-accent/15 hover:to-accent/8 border border-accent/20 hover:border-accent/40 rounded-2xl p-4 sm:p-6 transition-all group`}
+        className={`w-full mb-4 sm:mb-6 bg-gradient-to-r ${continent.bgColor} hover:from-accent/15 hover:to-accent/8 border border-accent/20 hover:border-accent/40 rounded-2xl p-3 sm:p-6 transition-all group`}
         aria-expanded={isOpen}
       >
-        <div className="flex items-center justify-between gap-4">
-          <div className="text-left flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <Globe className={`w-8 h-8 sm:w-10 sm:h-10 ${continent.iconColor}`} />
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{continent.name}</h2>
+        <div className="flex items-start justify-between gap-2 sm:gap-4">
+          <div className="text-left flex-1 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+              <Globe className={`w-6 h-6 sm:w-10 sm:h-10 ${continent.iconColor} shrink-0`} />
+              <h2 className="text-lg sm:text-3xl font-bold text-foreground line-clamp-2">{continent.name}</h2>
             </div>
-            <p className="text-sm sm:text-base text-muted-foreground">{continent.description}</p>
-            <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm">
-              <Zap className={`w-4 h-4 ${continent.iconColor}`} />
-              <span>{filteredCountries.length} cannabis-friendly countries</span>
+            <p className="text-xs sm:text-base text-muted-foreground line-clamp-2">{continent.description}</p>
+            <div className="flex items-center gap-2 mt-1 sm:mt-2 text-xs sm:text-sm">
+              <Zap className={`w-3 h-3 sm:w-4 sm:h-4 ${continent.iconColor} shrink-0`} />
+              <span>{filteredCountries.length} countries</span>
             </div>
           </div>
           <ChevronDown
-            className={`w-6 h-6 sm:w-8 sm:h-8 shrink-0 transition-transform group-hover:scale-110 ${continent.iconColor}`}
+            className={`w-5 h-5 sm:w-8 sm:h-8 shrink-0 transition-transform group-hover:scale-110 ${continent.iconColor}`}
             style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
           />
         </div>
       </button>
 
-      {/* Countries Grid - Collapsible content */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -704,7 +699,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
 };
 
 /* ============================================
-    MAIN COMPONENT (UNCHANGED)
+    MAIN COMPONENT
 ============================================ */
 const WorldGuide = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -720,11 +715,11 @@ const WorldGuide = () => {
         (country) =>
           country.name.toLowerCase().includes(q) ||
           country.description.toLowerCase().includes(q) ||
-          country.states.some( // Check State/Region name or law
+          country.states.some(
             (state) => 
               state.name.toLowerCase().includes(q) ||
               state.regionalLaw.toLowerCase().includes(q) ||
-              state.cities.some((city) => city.name.toLowerCase().includes(q)) // Check City name
+              state.cities.some((city) => city.name.toLowerCase().includes(q))
           )
       ),
     })).filter((c) => c.countries.length > 0);
@@ -740,33 +735,33 @@ const WorldGuide = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <div className="pt-20 sm:pt-24 pb-16 sm:pb-20 px-4">
+      <div className="pt-20 sm:pt-24 pb-16 sm:pb-20 px-3 sm:px-4">
         <div className="container mx-auto max-w-7xl">
           {/* HERO SECTION */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto mb-10 sm:mb-12 text-center"
+            className="max-w-4xl mx-auto mb-8 sm:mb-12 text-center"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4 line-clamp-2">
               Global Cannabis Guide
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
-              Explore cannabis laws by continent, country, region, and city worldwide
+            <p className="text-sm sm:text-lg text-muted-foreground mb-4 sm:mb-6 line-clamp-2">
+              Explore cannabis laws by continent, country, region, and city
             </p>
 
             {/* STICKY SEARCH BAR */}
-            <div className="sticky top-20 z-40 bg-background/80 backdrop-blur-md -mx-4 px-4 py-3 sm:py-4 mb-6 sm:mb-8">
+            <div className="sticky top-20 z-40 bg-background/80 backdrop-blur-md -mx-3 sm:-mx-4 px-3 sm:px-4 py-2 sm:py-4 mb-6 sm:mb-8">
               <div className="max-w-2xl mx-auto">
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
                   <input
                     type="text"
-                    placeholder="Search countries, regions, or cities (e.g., California, Berlin, Toronto)..."
+                    placeholder="Search countries, regions, cities..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 sm:py-4 bg-muted border border-border/40 rounded-xl focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all text-sm sm:text-base"
+                    className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-4 bg-muted border border-border/40 rounded-xl focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all text-xs sm:text-base"
                   />
                 </div>
               </div>
@@ -774,7 +769,7 @@ const WorldGuide = () => {
           </motion.div>
 
           {/* CONTINENTS SECTIONS */}
-          <div className="space-y-8 sm:space-y-10">
+          <div className="space-y-6 sm:space-y-10">
             {filteredData.map((continent) => (
               <ContinentSection
                 key={continent.id}
@@ -793,9 +788,9 @@ const WorldGuide = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-12"
             >
-              <Globe className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">No results found</h3>
-              <p className="text-muted-foreground">Try adjusting your search terms</p>
+              <Globe className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">No results found</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">Try adjusting your search terms</p>
             </motion.div>
           )}
         </div>
