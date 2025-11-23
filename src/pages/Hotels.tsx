@@ -675,3 +675,28 @@ const Hotels = () => {
                     </p>
                   </div>
                 </div>
+              </Card>
+            </section>
+
+            {/* INTERNAL LINKS */}
+            <nav className="mt-12 text-center">
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/usa" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
+                  USA Guide
+                </Link>
+                <span className="text-muted-foreground/40">•</span>
+                <Link to="/world" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
+                  World Guide
+                </Link>
+              </div>
+            </nav>
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    </>
+  );
+};
+
+export default Hotels;
