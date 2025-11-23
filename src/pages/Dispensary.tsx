@@ -661,8 +661,8 @@ const Dispensary = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* SEARCH & SORT BAR - STATIC POSITION */}
-                <div className="bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
+                {/* SEARCH & SORT BAR */}
+                <div className="sticky top-20 z-30 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
