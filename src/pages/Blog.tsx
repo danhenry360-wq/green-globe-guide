@@ -84,9 +84,9 @@ const IconMap = {
 
 // --- 3. FULL POST DATA SOURCE (Updated with 2025 CA Guide) ---
 const fullPostData: FullBlogPost[] = [
-    // --- POST 1: Los Angeles Cannabis Guide: New Laws & Tips for 2025 Travel ---
+    // --- POST 1: California Cannabis Guide 2025: LA Laws, Consumption Lounges & Tourist Rules ---
     {
-        title: "Los Angeles Cannabis Guide: New Laws & Tips for 2025 Travel",
+        title: "California Cannabis Guide 2025: LA Laws, Consumption Lounges & Tourist Rules",
         excerpt: "The complete guide to California's recreational cannabis laws, possession limits, and crucial travel tips focused on Los Angeles, including new consumption lounge rules.",
         image: "/blog-california-2025.jpg", 
         date: "Nov 23, 2025", 
@@ -409,7 +409,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
     const neighborhoods = post?.neighborhoods || [];
 
     // Simple check to trigger the 'Major Guide' styling for the LA post
-    const isMajorGuide = displayPost.title.includes("Los Angeles");
+    const isMajorGuide = displayPost.title.includes("California Cannabis Guide");
 
     return (
         <main className="pt-24 sm:pt-28 pb-16 sm:pb-20 bg-background text-foreground">
@@ -425,7 +425,15 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                     <div className="flex justify-between items-start mb-4">
                         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
                             {/* Dynamically style the first few words if it's a guide */}
-                            {displayPost.title.split(' ').slice(0, 2).join(' ')} <span className="text-accent">{displayPost.title.split(' ').slice(2).join(' ')}</span>
+                            {/* Split the title by colon for styling: "California Cannabis Guide 2025" : "LA Laws, Consumption Lounges & Tourist Rules" */}
+                            {displayPost.title.split(':').length > 1 ? (
+                                <>
+                                    {displayPost.title.split(':')[0]}
+                                    <span className="text-accent">{displayPost.title.split(':').slice(1).join(':')}</span>
+                                </>
+                            ) : (
+                                displayPost.title
+                            )}
                         </h1>
                         {isMajorGuide && (
                              <Badge className="bg-accent text-background text-sm font-bold px-3 py-1.5 shadow-lg flex-shrink-0 mt-2">
@@ -449,7 +457,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                 </div>
 
                 {/* --- Introduction Box (Only for LA Guide) --- */}
-                {displayPost.title.includes("Los Angeles") && (
+                {displayPost.title.includes("California Cannabis Guide") && (
                     <section className="mb-12">
                         <ImportantBox type="intro">
                             Welcome to the comprehensive cannabis travel guide for **Los Angeles, California**. This guide provides essential information for cannabis tourists visiting this destination.
