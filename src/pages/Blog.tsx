@@ -228,9 +228,9 @@ const fullPostData: FullBlogPost[] = [
             }
         ]
     },
-    { title: "Top 10 Cannabis Strains for Creative Work", excerpt: "Explore the best sativa strains that can enhance your creativity and focus.", image: "/blog-strains.jpg", date: "Dec 28, 2024", category: "Strains", readTime: "7 min read", author: "Jamie Taylor", tags: ["strains", "sativa", "creativity", "productivity"] , content: ["Full article coming soon for Top 10 Cannabis Strains for Creative Work.", "Stay tuned for an in-depth look at strains that can spark your imagination and boost focus."]},
-    { title: "Cannabis and Meditation: A Perfect Pairing", excerpt: "How incorporating cannabis into your meditation practice can deepen your mindfulness experience.", image: "/blog-meditation.jpg", date: "Dec 22, 2024", category: "Wellness", readTime: "8 min read", author: "Maya Patel", tags: ["wellness", "meditation", "mindfulness", "health"] , content: ["Full article coming soon for Cannabis and Meditation: A Perfect Pairing.", "Discover how mindfulness and cannabis can work together for enhanced well-being."]},
-    { title: "420-Friendly Activities in Denver", excerpt: "From cannabis tours to consumption-friendly events, discover what to do in the Mile High City.", image: "/blog-denver.jpg", date: "Dec 18, 2024", category: "Travel", readTime: "5 min read", author: "Mike Johnson", tags: ["denver", "activities", "tours", "colorado"] , content: ["Full article coming soon for 420-Friendly Activities in Denver.", "Get ready to explore the Mile High City's best cannabis experiences."]},
+    { title: "Top 10 Cannabis Strains for Creative Work", excerpt: "Explore the best sativa strains that can enhance your creativity and focus.", image: "/blog-strains.jpg", date: "Dec 28, 2024", category: "Strains", readTime: "7 min read", author: "Jamie Taylor", tags: ["strains", "sativa", "creativity", "productivity"] , content: ["Full article content is coming soon for Top 10 Cannabis Strains for Creative Work.", "Stay tuned for an in-depth look at strains that can spark your imagination and boost focus."]},
+    { title: "Cannabis and Meditation: A Perfect Pairing", excerpt: "How incorporating cannabis into your meditation practice can deepen your mindfulness experience.", image: "/blog-meditation.jpg", date: "Dec 22, 2024", category: "Wellness", readTime: "8 min read", author: "Maya Patel", tags: ["wellness", "meditation", "mindfulness", "health"] , content: ["Full article content is coming soon for Cannabis and Meditation: A Perfect Pairing.", "Discover how mindfulness and cannabis can work together for enhanced well-being."]},
+    { title: "420-Friendly Activities in Denver", excerpt: "From cannabis tours to consumption-friendly events, discover what to do in the Mile High City.", image: "/blog-denver.jpg", date: "Dec 18, 2024", category: "Travel", readTime: "5 min read", author: "Mike Johnson", tags: ["denver", "activities", "tours", "colorado"] , content: ["Full article content is coming soon for 420-Friendly Activities in Denver.", "Get ready to explore the Mile High City's best cannabis experiences."]},
 
 ];
 // --- END: FULL POST DATA SOURCE ---
@@ -484,4 +484,56 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main
+      <main className="pt-24 sm:pt-28 pb-16 sm:pb-20">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          {/* Header Section */}
+          <section className="text-center mb-12 sm:mb-16 px-2">
+            <Badge 
+              className="bg-accent/20 text-accent border-accent/30 mb-4 text-sm"
+              aria-label="Blog section"
+            >
+              Blog
+            </Badge>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-foreground leading-tight">
+              Cannabis Travel Insights
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Expert guides, legal updates, and travel tips for cannabis enthusiasts worldwide.
+            </p>
+          </section>
+
+          {/* Blog Posts Grid */}
+          <section aria-label="Blog posts" className="mb-12">
+            <div className={getGridColumns()}>
+              {blogPosts.map((post, index) => (
+                <BlogPostCard 
+                  key={`${post.title}-${index}`}
+                  post={post}
+                  index={index}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Load More Section - For future pagination */}
+          <section className="text-center" aria-label="Load more posts">
+            <button
+              className="px-6 sm:px-8 py-3 bg-accent text-accent-foreground rounded-full font-semibold hover:bg-accent/90 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+              onClick={() => {/* Pagination logic to be implemented */}}
+              aria-label="Load more blog posts"
+            >
+              Load More Articles
+            </button>
+            <p className="text-sm text-muted-foreground mt-4">
+              Showing {blogPosts.length} of 24 articles
+            </p>
+          </section>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Blog;
