@@ -532,26 +532,26 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
           
           {/* Quick Info Grid */}
           <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-border/30">
-            <div className="flex items-start gap-2 bg-muted/40 p-2 rounded-lg min-h-16">
-              <Users className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5" />
-              <div className="min-w-0">
-                <p className="font-semibold text-foreground text-xs line-clamp-1">Possession</p>
-                <p className="text-muted-foreground line-clamp-2 text-xs">{country.possession}</p>
+            <div className="flex items-start gap-1.5 bg-muted/40 p-2 rounded-lg">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-foreground text-xs leading-tight">Possession</p>
+                <p className="text-muted-foreground line-clamp-2 text-xs leading-tight">{country.possession}</p>
               </div>
             </div>
-            <div className="flex items-start gap-2 bg-muted/40 p-2 rounded-lg min-h-16">
-              <Plane className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5" />
-              <div className="min-w-0">
-                <p className="font-semibold text-foreground text-xs line-clamp-1">Airport</p>
-                <p className="text-muted-foreground line-clamp-2 text-xs">{country.airport}</p>
+            <div className="flex items-start gap-1.5 bg-muted/40 p-2 rounded-lg">
+              <Plane className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 mt-0.5 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-foreground text-xs leading-tight">Airport</p>
+                <p className="text-muted-foreground line-clamp-2 text-xs leading-tight">{country.airport}</p>
               </div>
             </div>
           </div>
 
           {/* STATES/REGIONS Collapsible */}
-          <div className="mt-3 space-y-2">
-            <h4 className="text-xs font-bold text-foreground/80 mb-1 flex items-center gap-1">
-                <MapPin className="w-3 h-3 sm:w-4 sm:h-4" /> Regions ({country.states.length})
+          <div className="mt-3 space-y-1.5">
+            <h4 className="text-xs font-bold text-foreground/80 flex items-center gap-1">
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" /> Regions
             </h4>
             
             {country.states.map((stateRegion) => (
@@ -559,24 +559,24 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                 key={stateRegion.slug}
                 open={openRegion === stateRegion.slug} 
                 onOpenChange={() => toggleRegion(stateRegion.slug)} 
-                className="border border-border/40 rounded-lg"
+                className="border border-border/40 rounded-lg overflow-hidden"
               >
                 <CollapsibleTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full justify-between text-left px-2 h-auto py-2 bg-muted hover:bg-muted/70 rounded-lg gap-1"
+                    className="w-full justify-between text-left px-2 h-auto py-2 bg-muted hover:bg-muted/70 rounded-lg gap-2"
                   >
-                    <div className="flex flex-col items-start min-w-0 flex-1">
-                        <span className="font-bold text-xs sm:text-sm text-foreground truncate">
+                    <div className="flex flex-col items-start min-w-0 flex-1 pr-2">
+                        <span className="font-bold text-xs sm:text-sm text-foreground truncate w-full">
                             {stateRegion.name}
                         </span>
-                        <span className="text-xs text-muted-foreground truncate">
+                        <span className="text-xs text-muted-foreground truncate w-full">
                             {stateRegion.regionalLaw}
                         </span>
                     </div>
                     <ChevronDown
-                      className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 transition-transform"
+                      className="w-3 h-3 sm:w-4 sm:h-4 text-accent shrink-0 transition-transform mt-1"
                       style={{ transform: openRegion === stateRegion.slug ? "rotate(180deg)" : "rotate(0deg)" }}
                     />
                   </Button>
