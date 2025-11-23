@@ -54,7 +54,7 @@ interface Continent {
 }
 
 /* ============================================
-    DATA – CONTINENT-ORGANIZED (UPDATED Hierarchy)
+    DATA – CONTINENT-ORGANIZED (UNCHANGED from previous refactor)
 ============================================ */
 const WORLD_GUIDE: Continent[] = [
   // === NORTH AMERICA ===
@@ -484,7 +484,7 @@ const getStatusIcon = (status: string) => {
 };
 
 /* ============================================
-    COUNTRY CARD COMPONENT (UPDATED for State/Region Layer)
+    COUNTRY CARD COMPONENT (FIXED JSX NESTING)
 ============================================ */
 interface CountryCardProps {
   country: Country;
@@ -584,9 +584,11 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                     />
                   </Button>
                 </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <AnimatePresence>
-                    {openRegion === stateRegion.slug && (
+                
+                {/* FIX APPLIED HERE: AnimatePresence wraps the CollapsibleContent conditionally. */}
+                <AnimatePresence>
+                  {openRegion === stateRegion.slug && (
+                    <CollapsibleContent asChild forceMount>
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -621,9 +623,9 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
                           </Card>
                         ))}
                       </motion.div>
-                    )}
-                  </AnimatePresence>
-                </CollapsibleContent>
+                    </CollapsibleContent>
+                  )}
+                </AnimatePresence>
               </Collapsible>
             ))}
           </div>
@@ -633,7 +635,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
   );
 };
 
-/** Continent Section Component (Minimal change to accommodate State/Region search) */
+/** Continent Section Component (UNCHANGED) */
 interface ContinentSectionProps {
   continent: Continent;
   isOpen: boolean;
@@ -702,7 +704,7 @@ const ContinentSection: React.FC<ContinentSectionProps> = ({
 };
 
 /* ============================================
-    MAIN COMPONENT (UPDATED for State/Region Search Logic)
+    MAIN COMPONENT (UNCHANGED)
 ============================================ */
 const WorldGuide = () => {
   const [searchQuery, setSearchQuery] = useState("");
