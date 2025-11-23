@@ -3,7 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Timer } from "lucide-react";
+import { Calendar, Timer, AlertTriangle, Briefcase, Leaf, MapPin, Truck, Utensils, Hotel } from "lucide-react";
 
 // Types for better scalability
 interface BlogPost {
@@ -20,8 +20,9 @@ interface BlogPost {
 // Interface for the full article content
 interface FullBlogPost extends BlogPost {
     content: string[];
-    retailerRecommendations?: RetailerRecommendation[]; // Make optional for posts without them
-    hotelRecommendations?: HotelRecommendation[]; // New: for hotel-specific posts
+    retailerRecommendations?: RetailerRecommendation[];
+    hotelRecommendations?: HotelRecommendation[];
+    guideSections?: GuideSection[]; // New structure for guide-style content
 }
 
 interface RetailerRecommendation {
@@ -38,6 +39,12 @@ interface HotelRecommendation {
     amenities: string[];
 }
 
+interface GuideSection {
+    icon: string; // E.g., 'Leaf', 'AlertTriangle'
+    title: string;
+    points: (string | string[])[]; // Can be a string or a list of strings
+}
+
 // Helper function to create a clean URL slug from the title
 const slugify = (text: string) => {
     return text
@@ -48,12 +55,23 @@ const slugify = (text: string) => {
       .replace(/^-+|-+$/g, '');
 };
 
+// --- ICON MAPPER for dynamically rendering Lucide icons ---
+const IconMap = {
+    'AlertTriangle': AlertTriangle,
+    'Briefcase': Briefcase,
+    'Leaf': Leaf,
+    'MapPin': MapPin,
+    'Truck': Truck,
+    'Utensils': Utensils,
+    'Hotel': Hotel,
+};
+
 // --- START: FULL POST DATA SOURCE (Simulating API/CMS fetch) ---
 const fullPostData: FullBlogPost[] = [
     {
         title: "Is Weed Legal in California in 2025?",
         excerpt: "Complete guide to California's recreational cannabis laws, possession limits, and travel tips for tourists.",
-        image: "/blog-california.jpg", // Original image
+        image: "/blog-california.jpg",
         date: "Jan 15, 2025",
         category: "Legal Guide",
         readTime: "5 min read",
@@ -61,83 +79,104 @@ const fullPostData: FullBlogPost[] = [
         content: [
             "California has been at the forefront of cannabis legalization, and as we move into 2025, the laws remain largely consistent with previous years, offering both residents and tourists a clear framework for recreational use.",
             "For adults 21 and over, it is legal to possess up to 28.5 grams (one ounce) of cannabis flower or up to 8 grams of concentrated cannabis. You can also grow up to six cannabis plants at home for personal use. These limits are strictly enforced, and exceeding them can lead to significant penalties.",
-            "When traveling in California, remember that cannabis consumption is generally prohibited in public places, including federal lands (like national parks), schools, and anywhere tobacco smoking is banned. The best practice is to consume cannabis responsibly in private residences or at licensed consumption lounges where available.",
-            "Purchasing cannabis must be done through licensed dispensaries. Look for dispensaries displaying their state license to ensure you're buying safe, tested products. Many dispensaries also offer delivery services within their operational zones.",
-            "It is illegal to drive under the influence of cannabis. Law enforcement officers can (and do) issue DUIs for impaired driving, so always use a designated driver or ride-share services if you plan to consume cannabis.",
-            "For tourists, flying with cannabis is illegal, even if you are traveling between two legal states. Federal laws apply at airports, so it's best to consume or dispose of any cannabis before heading to the airport."
+            "Purchasing cannabis must be done through licensed dispensaries. Look for dispensaries displaying their state license to ensure you're buying safe, tested products. Many dispensaries also offer delivery services within their operational zones."
         ],
-        retailerRecommendations: [ // Placeholder for California specific retailers
+        guideSections: [
             {
-                name: "The Pottery - Los Angeles",
-                policy: "Premium dispensary in Mid-City known for its curated selection and stylish atmosphere.",
-                menuLink: "https://thepottery.la/menu",
-                license: "C10-0000001-LIC"
+                icon: 'Briefcase',
+                title: 'Possession Limits & Rules',
+                points: [
+                    "Adults 21+ can possess up to **1 oz (28.5g) of flower** or **8g of concentrate**.",
+                    "You can grow up to **6 living plants** at home for personal use.",
+                    "Public consumption results in a **$100 fine**."
+                ]
             },
             {
-                name: "Barbary Coast - San Francisco",
-                policy: "Historic San Francisco dispensary with a luxurious lounge experience.",
-                menuLink: "https://barbarycoastdispensary.org/menu",
-                license: "C10-0000002-LIC"
+                icon: 'AlertTriangle',
+                title: 'Safety Tips & Warnings',
+                points: [
+                    "**Driving under influence** is DUI. Use Uber/Lyft; LAPD does sobriety checkpoints.",
+                    "Only buy from **licensed dispensaries** (check Bureau of Cannabis Control website).",
+                    "Beach and park enforcement (lifeguards and park rangers) will **cite for consumption**.",
+                    "Some LA neighborhoods (e.g., Pasadena, Beverly Hills) have strict local ordinances – research before visiting."
+                ]
             }
+        ],
+        retailerRecommendations: [
+            { name: "The Pottery - Los Angeles", policy: "Premium dispensary in Mid-City known for its curated selection and stylish atmosphere.", menuLink: "https://thepottery.la/menu", license: "C10-0000001-LIC" },
+            { name: "Barbary Coast - San Francisco", policy: "Historic San Francisco dispensary with a luxurious lounge experience.", menuLink: "https://barbarycoastdispensary.org/menu", license: "C10-0000002-LIC" }
         ]
     },
     {
         title: "Best 420-Friendly Hotels in Amsterdam",
         excerpt: "Discover the top cannabis-friendly accommodations in Amsterdam for an unforgettable experience.",
-        image: "/blog-amsterdam.jpg", // Original image
+        image: "/blog-amsterdam.jpg",
         date: "Jan 10, 2025",
         category: "Travel",
         readTime: "4 min read",
         author: "Sarah Chen",
         content: [
             "Amsterdam remains a global beacon for cannabis tourism, renowned for its liberal coffee shop culture. While coffee shops are plentiful, finding truly 420-friendly accommodation can enhance your stay significantly. It’s important to distinguish between 'tolerated' use and explicit 'friendly' policies.",
-            "Many hotels have strict no-smoking policies, which can include cannabis. However, a growing number of establishments are becoming more accommodating, often providing private balconies, designated smoking areas, or even specialized ventilation. Always confirm the hotel's policy directly when booking.",
-            "We've identified a selection of hotels that are known for their relaxed attitude towards cannabis, allowing you to enjoy your experience comfortably and discreetly. These often come with excellent locations, close to popular coffee shops and Amsterdam's vibrant attractions."
+            "Many hotels have strict no-smoking policies, which can include cannabis. However, a growing number of establishments are becoming more accommodating, often providing private balconies, designated smoking areas, or even specialized ventilation. Always confirm the hotel's policy directly when booking."
         ],
-        hotelRecommendations: [ // Placeholder for Amsterdam hotels
+        guideSections: [
             {
-                name: "The Bulldog Hotel Amsterdam",
-                description: "Directly linked to the famous Bulldog Coffee Shop, this hotel is truly 420-friendly and central.",
-                bookingLink: "https://www.bulldoghotel.com/en/",
-                amenities: ["Designated smoking areas", "Central location", "Bar & Cafe"]
-            },
-            {
-                name: "Smoke Palace Hotel",
-                description: "Located near many coffee shops, offering a relaxed environment for cannabis enthusiasts.",
-                bookingLink: "https://www.booking.com/hotel/nl/smoke-palace", // Example booking link
-                amenities: ["Private rooms", "Near city center", "Friendly staff"]
+                icon: 'Hotel',
+                title: 'Consumption Rules',
+                points: [
+                    "Consumption is strictly limited to **private property** or the smoking area of a **licensed coffee shop**.",
+                    "Public consumption, including in parks and near schools, is illegal.",
+                    "Hotels that permit smoking often require it on **private balconies** or **designated rooms**."
+                ]
             }
+        ],
+        hotelRecommendations: [
+            { name: "The Bulldog Hotel Amsterdam", description: "Directly linked to the famous Bulldog Coffee Shop, this hotel is truly 420-friendly and central.", bookingLink: "https://www.bulldoghotel.com/en/", amenities: ["Designated smoking areas", "Central location", "Bar & Cafe"] },
+            { name: "Smoke Palace Hotel", description: "Located near many coffee shops, offering a relaxed environment for cannabis enthusiasts.", bookingLink: "https://www.booking.com/hotel/nl/smoke-palace", amenities: ["Private rooms", "Near city center", "Friendly staff"] }
         ]
     },
     {
         title: "Uruguay Cannabis Laws: What Tourists Need to Know",
         excerpt: "Navigate Uruguay's unique cannabis regulations and discover what makes it a special destination.",
-        image: "/blog-uruguay.jpg", // Original image
+        image: "/blog-uruguay.jpg",
         date: "Jan 5, 2025",
         category: "Legal Guide",
         readTime: "6 min read",
         author: "Carlos Rodriguez",
         content: [
             "Uruguay made history as the first country to fully legalize cannabis in 2013, implementing a state-controlled market for production, distribution, and sale. However, what's legal for citizens isn't always available to tourists.",
-            "For non-residents, purchasing cannabis from pharmacies or registered clubs is not permitted. The law explicitly limits sales to Uruguayan citizens and permanent residents who are registered with the government. This means tourists cannot legally buy cannabis through these official channels.",
-            "Despite these restrictions, personal consumption in private is generally tolerated. It's common to find social consumption, particularly in popular tourist areas, but officially, tourists cannot legally purchase.",
-            "Travelers should be extremely cautious. While police generally ignore small amounts of personal possession, strict laws against selling or providing cannabis to unregistered individuals (which includes tourists) carry severe penalties. Do not attempt to buy from unregistered sources or share with others.",
-            "The best way to experience cannabis in Uruguay as a tourist is through private social invitations or 420-friendly private accommodations where local hosts might share. Always respect local customs and laws to ensure a smooth trip.",
-            "Exporting cannabis from Uruguay is strictly prohibited and subject to international drug trafficking laws. Do not attempt to take cannabis out of the country."
+            "For non-residents, purchasing cannabis from pharmacies or registered clubs is not permitted. The law explicitly limits sales to **Uruguayan citizens and permanent residents** who are registered with the government. This means tourists cannot legally buy cannabis through these official channels.",
+            "The best way to experience cannabis in Uruguay as a tourist is through **private social invitations** or 420-friendly private accommodations where local hosts might share. Always respect local customs and laws."
         ],
-        retailerRecommendations: [ // Placeholder for general travel info or local guides
+        guideSections: [
             {
-                name: "Uruguay Cannabis Tour Guides",
-                policy: "Connects tourists with local experts for educational insights into cannabis culture (no sales).",
-                menuLink: "https://www.example.com/uruguay-tours", // Example link for tours
-                license: "N/A - Information Service"
+                icon: 'Briefcase',
+                title: 'Key Tourist Restrictions',
+                points: [
+                    "**Tourists CANNOT legally purchase** cannabis from pharmacies or registered clubs.",
+                    "Personal possession and consumption are **tolerated in private** residences.",
+                    "**Exporting cannabis** from Uruguay is strictly prohibited."
+                ]
+            },
+            {
+                icon: 'AlertTriangle',
+                title: 'Safety Tips',
+                points: [
+                    "Avoid black market purchases.",
+                    "Do not attempt to sell or share cannabis with locals who are not registered users.",
+                    "Consumption in public spaces is generally discouraged."
+                ]
             }
+        ],
+        retailerRecommendations: [
+            { name: "Uruguay Cannabis Tour Guides", policy: "Connects tourists with local experts for educational insights into cannabis culture (no sales).", menuLink: "https://www.example.com/uruguay-tours", license: "N/A - Information Service" }
         ]
     },
+    // ... other fullPostData entries (kept for context)
     {
         title: "Dispensaries Near LAX: The Ultimate Guide for Arrivals",
         excerpt: "Just landed in LA? Find out which verified dispensaries are closest to the airport and offer the quickest pickup.",
-        image: "/blog-lax-dispensary.jpg", // Original image
+        image: "/blog-lax-dispensary.jpg",
         date: "Feb 5, 2025",
         category: "Local LA",
         readTime: "3 min read",
@@ -148,24 +187,9 @@ const fullPostData: FullBlogPost[] = [
             "We highly recommend checking the live menus before you go. Prices and inventory change frequently, and pre-ordering online is the fastest way to get in and out, minimizing your travel downtime."
         ],
         retailerRecommendations: [
-            {
-                name: "MedMen LAX",
-                policy: "This location is the **closest major dispensary** to the airport and the rental car center area. Perfect for a quick, efficient purchase on your way out of the area.",
-                menuLink: "https://www.medmen.com/menu/lax", // The critical Menu Link!
-                license: "C10-0000123-LIC"
-            },
-            {
-                name: "The Artist Tree - Hawthorne",
-                policy: "A great stop if you are heading south toward Orange County or are looking for a **wider variety** of local California flower strains. Excellent customer service.",
-                menuLink: "https://www.leafly.com/dispensary/artist-tree-hawthorne", // The critical Menu Link!
-                license: "C10-0000456-LIC"
-            },
-             {
-                name: "Cookies Inglewood",
-                policy: "Known for its **powerful brand name** and exclusive genetics. A solid choice for experienced users who know what strains they are looking for.",
-                menuLink: "https://weedmaps.com/dispensaries/cookies-inglewood", // Another critical Menu Link!
-                license: "C10-0000789-LIC"
-            }
+            { name: "MedMen LAX", policy: "This location is the **closest major dispensary** to the airport and the rental car center area. Perfect for a quick, efficient purchase on your way out of the area.", menuLink: "https://www.medmen.com/menu/lax", license: "C10-0000123-LIC" },
+            { name: "The Artist Tree - Hawthorne", policy: "A great stop if you are heading south toward Orange County or are looking for a **wider variety** of local California flower strains. Excellent customer service.", menuLink: "https://www.leafly.com/dispensary/artist-tree-hawthorne", license: "C10-0000456-LIC" },
+             { name: "Cookies Inglewood", policy: "Known for its **powerful brand name** and exclusive genetics. A solid choice for experienced users who know what strains they are looking for.", menuLink: "https://weedmaps.com/dispensaries/cookies-inglewood", license: "C10-0000789-LIC" }
         ]
     },
     {
@@ -184,18 +208,8 @@ const fullPostData: FullBlogPost[] = [
             "Remember to store edibles safely and out of reach of children and pets. The effects of edibles can be more intense and longer-lasting than inhaled cannabis, so plan your environment accordingly. Enjoy the journey responsibly!"
         ],
         retailerRecommendations: [
-            {
-                name: "Sweet Flower - Arts District",
-                policy: "Known for its extensive edible selection and knowledgeable staff in a vibrant neighborhood.",
-                menuLink: "https://sweetflower.com/pages/arts-district-menu",
-                license: "C10-0000420-LIC"
-            },
-            {
-                name: "ERBA Markets - Beverly Hills",
-                policy: "Offers a curated selection of premium edibles, perfect for discerning customers.",
-                menuLink: "https://erbabevelyhills.com/menu",
-                license: "C10-0000555-LIC"
-            }
+            { name: "Sweet Flower - Arts District", policy: "Known for its extensive edible selection and knowledgeable staff in a vibrant neighborhood.", menuLink: "https://sweetflower.com/pages/arts-district-menu", license: "C10-0000420-LIC" },
+            { name: "ERBA Markets - Beverly Hills", policy: "Offers a curated selection of premium edibles, perfect for discerning customers.", menuLink: "https://erbabevelyhills.com/menu", license: "C10-0000555-LIC" }
         ]
     },
     {
@@ -214,18 +228,8 @@ const fullPostData: FullBlogPost[] = [
             "For those exploring Hollywood's post-activity scene, having access to these later options ensures your experience is seamless. Whether you're unwinding after a show or enjoying a late-night stroll, responsible and legal access is key."
         ],
         retailerRecommendations: [
-            {
-                name: "Essence WeHo",
-                policy: "Open late with a wide selection, conveniently located in West Hollywood.",
-                menuLink: "https://essence.la/weho-menu",
-                license: "C10-0000678-LIC"
-            },
-            {
-                name: "Mankind Dispensary - Hollywood",
-                policy: "Offers competitive pricing and often has late-night deals, check their menu for current hours.",
-                menuLink: "https://mankindcannabis.com/hollywood-menu",
-                license: "C10-0000789-LIC"
-            }
+            { name: "Essence WeHo", policy: "Open late with a wide selection, conveniently located in West Hollywood.", menuLink: "https://essence.la/weho-menu", license: "C10-0000678-LIC" },
+            { name: "Mankind Dispensary - Hollywood", policy: "Offers competitive pricing and often has late-night deals, check their menu for current hours.", menuLink: "https://mankindcannabis.com/hollywood-menu", license: "C10-0000789-LIC" }
         ]
     },
     { title: "Top 10 Cannabis Strains for Creative Work", excerpt: "Explore the best sativa strains that can enhance your creativity and focus.", image: "/blog-strains.jpg", date: "Dec 28, 2024", category: "Strains", readTime: "7 min read", author: "Jamie Taylor", tags: ["strains", "sativa", "creativity", "productivity"] , content: ["Full article content is coming soon for Top 10 Cannabis Strains for Creative Work.", "Stay tuned for an in-depth look at strains that can spark your imagination and boost focus."]},
@@ -235,7 +239,7 @@ const fullPostData: FullBlogPost[] = [
 ];
 // --- END: FULL POST DATA SOURCE ---
 
-// The list of all posts (used for the grid view) - ENSURE IMAGES ARE CORRECT HERE
+// The list of all posts (used for the grid view)
 const blogPosts: BlogPost[] = [
     { title: "Is Weed Legal in California in 2025?", excerpt: "Complete guide to California's recreational cannabis laws, possession limits, and travel tips for tourists.", image: "/blog-california.jpg", date: "Jan 15, 2025", category: "Legal Guide", readTime: "5 min read", author: "Alex Morgan", tags: ["california", "legal", "travel", "recreational"] },
     { title: "Best 420-Friendly Hotels in Amsterdam", excerpt: "Discover the top cannabis-friendly accommodations in Amsterdam for an unforgettable experience.", image: "/blog-amsterdam.jpg", date: "Jan 10, 2025", category: "Travel", readTime: "4 min read", author: "Sarah Chen", tags: ["amsterdam", "hotels", "accommodation", "coffee-shops"] },
@@ -248,29 +252,51 @@ const blogPosts: BlogPost[] = [
     { title: "The Night Owl Guide: Finding Dispensaries Open After 10 PM in Hollywood", excerpt: "Everything you need to know about late-night cannabis shopping and legal delivery options across Hollywood and WeHo.", image: "/blog-hollywood-nightlife.jpg", date: "Jan 28, 2025", category: "Local LA", readTime: "4 min read", author: "Sarah Chen", tags: ["hollywood", "late-night", "delivery", "weho"] },
 ];
 
+// --- NEW COMPONENT: Guide Section Card ---
+const GuideSectionCard = ({ icon, title, points }: GuideSection) => {
+    const IconComponent = IconMap[icon as keyof typeof IconMap] || Leaf;
+
+    return (
+        <div className="bg-card p-5 rounded-lg border border-border/50 space-y-3">
+            <h3 className="flex items-center text-lg font-semibold text-foreground">
+                <IconComponent className="w-5 h-5 mr-2 text-accent" />
+                {title}
+            </h3>
+            <ul className="space-y-2 text-muted-foreground list-disc list-inside">
+                {points.map((point, index) => (
+                    // Handle nested lists or simple strings
+                    <li key={index} className="text-sm">
+                        {Array.isArray(point) ? (
+                            <>
+                                {point[0]}
+                                <ul className="list-disc list-inside ml-4 mt-1 space-y-1">
+                                    {point.slice(1).map((subPoint, subIndex) => (
+                                        <li key={subIndex} className="text-xs text-muted-foreground/80">{subPoint}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : (
+                            point
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
 
 const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => void }) => {
-    if (!slug) return null; // Should not happen if this component is rendered
+    if (!slug) return null;
 
-    // Find the full post data in our 'mock' database
     const post = fullPostData.find(p => slugify(p.title) === slug);
-    const originalPost = blogPosts.find(p => slugify(p.title) === slug); // Fallback for basic info
-
-    // If no full post data exists, display a "Coming Soon" message but use basic info
+    const originalPost = blogPosts.find(p => slugify(p.title) === slug);
     const displayPost = post || originalPost;
 
-    if (!displayPost) {
-        return (
-            <div className="min-h-screen flex flex-col justify-center items-center text-center bg-background">
-                <h1 className="text-6xl font-bold text-accent">404</h1>
-                <p className="text-xl text-muted-foreground mt-4">Article Not Found</p>
-                <button onClick={onBack} className="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors">Go Back to Blog</button>
-            </div>
-        );
-    }
+    if (!displayPost) return null;
 
-    // Determine content and recommendations based on if fullPostData exists
     const content = post?.content || ["The full article content is coming soon! Check back later for details on this popular topic.", "In the meantime, feel free to browse our other guides or return to the list."];
+    const guideSections = post?.guideSections || [];
     const retailerRecommendations = post?.retailerRecommendations || [];
     const hotelRecommendations = post?.hotelRecommendations || [];
 
@@ -292,8 +318,8 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                     
                     {/* Meta Line */}
                     <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground mt-4 flex-wrap">
-                        <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> <time dateTime={displayPost.date}>{displayPost.date}</time></span>
-                        <span className="flex items-center gap-1"><Timer className="w-4 h-4" /> {displayPost.readTime}</span>
+                        <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-accent" /> <time dateTime={displayPost.date}>{displayPost.date}</time></span>
+                        <span className="flex items-center gap-1"><Timer className="w-4 h-4 text-accent" /> {displayPost.readTime}</span>
                         <span>By {displayPost.author}</span>
                     </div>
                 </header>
@@ -310,7 +336,27 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                     ))}
                 </article>
 
-                {/* Retailer Recommendations (The Monetization Section) - Only render if available */}
+                {/* --- Guide Sections (New BudQuest Style) --- */}
+                {guideSections.length > 0 && (
+                    <section className="mt-12 space-y-6">
+                        <h2 className="text-3xl font-bold pt-6 text-foreground">🚨 Quick Guide: Key Rules</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {guideSections.map((section, index) => (
+                                <GuideSectionCard key={index} {...section} />
+                            ))}
+                        </div>
+                    </section>
+                )}
+                
+                {/* Legal Notice - Style replicated from image_dd3fef.png */}
+                <div className="mt-12 p-5 bg-card border border-amber-500/50 rounded-lg text-sm">
+                    <h3 className="text-lg font-bold text-amber-500 mb-2">Important Legal Notice</h3>
+                    <p className="text-muted-foreground">
+                        Information is educational only and laws change frequently. Last updated: November 23, 2025. Always verify current laws with official sources before traveling or making any legal decisions.
+                    </p>
+                </div>
+
+                {/* Retailer Recommendations (Monetization Section) */}
                 {retailerRecommendations.length > 0 && (
                     <section className="mt-12">
                         <hr className="my-10 border-border/50" />
@@ -322,7 +368,6 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                                     <h3 className="text-xl font-semibold mb-2 text-accent">{retailer.name}</h3>
                                     <p className="text-muted-foreground text-sm mb-4 flex-1">{retailer.policy}</p>
                                     
-                                    {/* CRITICAL: The Menu Link Button */}
                                     <a
                                         href={retailer.menuLink}
                                         target="_blank"
@@ -332,7 +377,6 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                                         View Live Menu & Order
                                     </a>
                                     
-                                    {/* Verification Detail */}
                                     <div className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/30">
                                         <Badge variant="secondary" className="bg-green-100/10 text-green-400 border-green-400/30">
                                             Verified License
@@ -345,7 +389,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                     </section>
                 )}
 
-                {/* Hotel Recommendations (New Section) - Only render if available */}
+                {/* Hotel Recommendations */}
                 {hotelRecommendations.length > 0 && (
                     <section className="mt-12">
                         <hr className="my-10 border-border/50" />
@@ -386,24 +430,14 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
 
 
 const Blog = () => {
-  // State to manage which post is currently selected for the detail view
     const [selectedPostSlug, setSelectedPostSlug] = useState<string | null>(null);
 
-  // Configurable constants for easy maintenance
-  const BLOG_CONFIG = {
-    postsPerPage: 6,
-    featuredPostsCount: 3,
-    categories: ['Legal Guide', 'Travel', 'Culture', 'Strains', 'Wellness', 'Local LA'] as const
-  };
-
-  // Helper function for responsive grid columns
-  const getGridColumns = () => {
-    return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
-  };
+    const getGridColumns = () => {
+        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+    };
 
   // Blog post card component for reusability
   const BlogPostCard = ({ post, index }: { post: BlogPost; index: number }) => {
-        // Function to handle the click and set the state
         const handleCardClick = () => {
             const slug = slugify(post.title);
             setSelectedPostSlug(slug);
@@ -414,7 +448,6 @@ const Blog = () => {
                 className="overflow-hidden bg-gradient-card border-border/50 hover:border-accent/50 hover:shadow-glow-subtle transition-all duration-300 cursor-pointer group h-full flex flex-col"
                 role="article"
                 aria-label={`Blog post: ${post.title}`}
-                // Attach the click handler to the entire card
                 onClick={handleCardClick}
             >
                 <div className="aspect-video bg-muted overflow-hidden flex-shrink-0">
@@ -435,7 +468,7 @@ const Blog = () => {
                             {post.category}
                         </Badge>
                         <div className="flex items-center gap-1 text-xs text-muted-foreground flex-nowrap">
-                            <Calendar className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
+                            <Calendar className="w-3 h-3 flex-shrink-0 text-accent" aria-hidden="true" />
                             <time dateTime={post.date}>{post.date}</time>
                         </div>
                         {post.readTime && (
