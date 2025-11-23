@@ -513,13 +513,13 @@ const Dispensary = () => {
 
     if (filters.type !== "all") {
       result = result.filter(
-        (d) => d.type?.toLowerCase().includes(filters.type) // ✅ safe
+        (d) => d.type?.toLowerCase().includes(filters.type)
       );
     }
 
     if (filters.specialty !== "all") {
       result = result.filter(
-        (d) => d.specialty?.toLowerCase().includes(filters.specialty) // ✅ safe
+        (d) => d.specialty?.toLowerCase().includes(filters.specialty)
       );
     }
 
@@ -530,7 +530,7 @@ const Dispensary = () => {
           d.city.toLowerCase().includes(q) ||
           d.country.toLowerCase().includes(q) ||
           d.stateObj.toLowerCase().includes(q) ||
-          d.specialty?.toLowerCase().includes(q) // ✅ safe
+          d.specialty?.toLowerCase().includes(q)
       );
     }
 
@@ -566,7 +566,7 @@ const Dispensary = () => {
       processedData.filter((d) =>
         type === "all"
           ? true
-          : d.type?.toLowerCase().includes(type) // ✅ safe
+          : d.type?.toLowerCase().includes(type)
       ).length;
 
     return {
@@ -629,7 +629,66 @@ const Dispensary = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-24 pb-20 px-4 sm:px-6">
+        {/* FIXED SEARCH & SORT BAR */}
+        <div className="fixed left-0 right-0 top-20 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/50 shadow-2xl md:hidden">
+          <div className="px-4 sm:px-6 py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+              <div className="flex-1 relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search dispensaries, cities, states..."
+                  value={filters.search}
+                  onChange={(e) =>
+                    handleFilterChange("search", e.target.value)
+                  }
+                  className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                />
+                {filters.search && (
+                  <button
+                    onClick={() => handleFilterChange("search", "")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-muted-foreground hover:text-white" />
+                  </button>
+                )}
+              </div>
+
+              <Button
+                onClick={() => setIsFilterOpen(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
+              >
+                <Filter className="w-5 h-5" />
+                Filters
+              </Button>
+
+              <select
+                value={filters.sort}
+                onChange={(e) =>
+                  handleFilterChange("sort", e.target.value as SortType)
+                }
+                className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+              >
+                <option value="rating" className="bg-card">
+                  Highest Rated
+                </option>
+                <option value="name" className="bg-card">
+                  Alphabetical
+                </option>
+                <option value="price-low" className="bg-card">
+                  Price: Low to High
+                </option>
+                <option value="price-high" className="bg-card">
+                  Price: High to Low
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <main className="pt-24 pb-20 px-4 sm:px-6 md:pt-24">
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-12 text-center">
@@ -661,8 +720,8 @@ const Dispensary = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* SEARCH & SORT BAR */}
-                <div className="sticky top-20 z-30 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
+                {/* SEARCH & SORT BAR - DESKTOP ONLY */}
+                <div className="hidden md:block bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
@@ -684,16 +743,6 @@ const Dispensary = () => {
                         </button>
                       )}
                     </div>
-
-                    <Button
-                      onClick={() => setIsFilterOpen(true)}
-                      variant="outline"
-                      size="sm"
-                      className="md:hidden gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
-                    >
-                      <Filter className="w-5 h-5" />
-                      Filters
-                    </Button>
 
                     <select
                       value={filters.sort}
@@ -775,6 +824,9 @@ const Dispensary = () => {
                     </div>
                   )}
                 </div>
+
+                {/* MOBILE SPACING FOR FIXED BAR */}
+                <div className="h-32 md:h-0" />
 
                 {/* RESULTS */}
                 {filteredData.length === 0 ? (
