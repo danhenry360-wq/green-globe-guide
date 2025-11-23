@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Navigation } from "@/components/Navigation";
+// Assuming these utility components are imported from your shared UI library
+import { Navigation } from "@/components/Navigation"; 
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Timer, AlertTriangle, Briefcase, Leaf, MapPin, Truck, Utensils, Hotel, CheckCircle, Info, Star, Plane, Euro, DollarSign } from "lucide-react";
+// Icons used for the detailed sections (lucide-react)
+import { 
+    Calendar, Timer, AlertTriangle, Briefcase, Leaf, MapPin, Truck, Utensils, 
+    Hotel, CheckCircle, Info, Star, Plane, Euro, DollarSign 
+} from "lucide-react";
 
-// --- Types (Simplified for brevity, assuming they are defined correctly) ---
+// --- 1. TYPES/INTERFACES ---
 interface BlogPost { 
     title: string;
     excerpt: string;
@@ -28,25 +33,22 @@ interface HotelRecommendation {
     bookingLink: string;
     amenities: string[];
 }
-
 interface NeighborhoodRecommendation {
     name: string;
     description: string;
 }
-
 interface DetailedSection {
-    icon: string; // E.g., 'Leaf', 'AlertTriangle'
+    icon: keyof typeof IconMap; // Forces the icon string to be a valid key of the map below
     title: string;
-    content: string | string[]; // Can be a paragraph or a list of bullet points
+    content: string | string[]; // Can be a paragraph (string) or a list (string[])
     type: 'paragraph' | 'list' | 'neighborhoods' | 'etiquette' | 'warning';
 }
-
 interface FullBlogPost extends BlogPost {
-    content: string[];
+    content: string[]; // Main narrative content paragraphs
     retailerRecommendations?: RetailerRecommendation[];
     hotelRecommendations?: HotelRecommendation[];
-    detailedSections?: DetailedSection[]; // Detailed sections replacing the simple guideSections
-    neighborhoods?: NeighborhoodRecommendation[]; // Separate data for neighborhood cards
+    detailedSections?: DetailedSection[]; 
+    neighborhoods?: NeighborhoodRecommendation[]; 
 }
 
 // Helper function to create a clean URL slug from the title
@@ -59,7 +61,7 @@ const slugify = (text: string) => {
       .replace(/^-+|-+$/g, '');
 };
 
-// --- ICON MAPPER for dynamically rendering Lucide icons ---
+// --- 2. ICON MAPPER for dynamically rendering Lucide icons ---
 const IconMap = {
     'AlertTriangle': AlertTriangle,
     'Briefcase': Briefcase,
@@ -80,77 +82,76 @@ const IconMap = {
     'DollarSign': DollarSign,
 };
 
-// --- START: FULL POST DATA SOURCE (Populated with 3 Posts) ---
+// --- 3. FULL POST DATA SOURCE (Updated with 2025 CA Guide) ---
 const fullPostData: FullBlogPost[] = [
-    // --- POST 1: Is Weed Legal in California in 2025? (LA Guide) ---
+    // --- POST 1: Los Angeles Cannabis Guide: New Laws & Tips for 2025 Travel ---
     {
-        title: "Los Angeles Cannabis Guide: Is Weed Legal in California in 2025?",
-        excerpt: "The complete guide to California's recreational cannabis laws, possession limits, and travel tips focused on Los Angeles.",
-        image: "/blog-california.jpg",
-        date: "Jan 15, 2025",
+        title: "Los Angeles Cannabis Guide: New Laws & Tips for 2025 Travel",
+        excerpt: "The complete guide to California's recreational cannabis laws, possession limits, and crucial travel tips focused on Los Angeles, including new consumption lounge rules.",
+        image: "/blog-california-2025.jpg", 
+        date: "Nov 23, 2025", 
         category: "Legal Guide",
         readTime: "5 min read",
         author: "Alex Morgan",
         content: [
-            "California has been at the forefront of cannabis legalization, and as we move into 2025, the laws remain largely consistent with previous years, offering both residents and tourists a clear framework for recreational use. This guide focuses on the specific rules and culture within Los Angeles County.",
-            "Purchasing cannabis must be done through licensed dispensaries. Look for dispensaries displaying their state license to ensure you're buying safe, tested products. Many dispensaries also offer delivery services within their operational zones."
+            "California remains the undisputed leader in North American cannabis culture. As we conclude 2025, the state's cannabis framework is stable, but new regulations (like the implementation of AB 1775) are revolutionizing the social consumption scene, particularly in Los Angeles. This guide details the laws you need to know as a visitor.",
+            "Purchasing cannabis must be done through licensed dispensaries. Look for the state license display to ensure you're buying safe, tested products. The new regulations aim to improve consumer experience and access while maintaining strict safety standards."
         ],
         neighborhoods: [
-            { name: "Venice Beach", description: "Progressive cannabis culture, many dispensaries, consumption lounges, artistic vibe - tourist-friendly" },
-            { name: "West Hollywood", description: "Lowell Cafe (consumption restaurant), premium dispensaries, nightlife - very cannabis-friendly" },
-            { name: "Hollywood", description: "Tourist center, many dispensaries, 420-friendly hotels - convenient for visitors" },
-            { name: "Arts District/Downtown", description: "Urban warehouses converted to cannabis lounges and dispensaries - creative scene" },
+            { name: "West Hollywood (WeHo)", description: "Home to landmark consumption venues (like Lowell Cafe) and premier dispensaries—a top destination for cannabis tourists." },
+            { name: "Venice Beach", description: "Progressive, beachside culture with multiple licensed shops. Great for quick purchases and enjoying the outdoor atmosphere (but remember: no public consumption!)." },
+            { name: "Arts District/Downtown LA", description: "Emerging hub with modern dispensaries and consumption lounges. Check local listings for live events allowed under AB 1775." },
+            { name: "Hollywood", description: "Centrally located with many dispensaries and 420-friendly rentals—ideal for first-time visitors to the city." },
         ],
         detailedSections: [
             {
                 icon: 'Legal',
                 title: 'Legal Status & Age Requirements',
-                content: "Recreational cannabis fully legal since 2016 for adults 21+ with government-issued ID. No medical card required for recreational. Out-of-state IDs accepted.",
+                content: "Recreational cannabis is fully legal since 2016 for adults **21+** with government-issued ID (out-of-state IDs and passports are accepted). Medical cards are not required for recreational purchases.",
                 type: 'paragraph'
             },
             {
                 icon: 'Legal',
-                title: 'Possession Limits',
+                title: 'Possession Limits for Tourists',
                 content: [
-                    "1 oz (28.5 grams) of cannabis flower or 8 grams of concentrate.",
-                    "6 living plants allowed at home per residence.",
-                    "Unlimited possession at private residence."
+                    "**1 oz (28.5 grams)** of non-concentrated cannabis flower.",
+                    "**8 grams** of concentrated cannabis (vape cartridges, shatter, wax, etc.).",
+                    "Possession must remain below these limits at all times in public."
                 ],
                 type: 'list'
             },
             {
                 icon: 'Consumption',
-                title: 'Where to Consume in LA',
+                title: 'Where to Consume (The 2025 Update)',
                 content: [
-                    "Private property is generally safe.",
-                    "Licensed consumption lounges (The Woods, Lowell Cafe) are legally allowed in certain municipalities.",
-                    "**Public consumption is a $100 citation.** (No beaches, parks, streets, or cars)."
+                    "**Private Property:** Allowed, but landlords (hotels, Airbnbs) can prohibit it. **Always check your rental policy.**",
+                    "**Licensed Consumption Lounges (AB 1775):** New state law allows licensed lounges to serve **non-cannabis food/drinks and host live entertainment** (e.g., music, comedy). **This is the best legal option for social consumption.**",
+                    "**Public Consumption:** Remains illegal. Fines start at $100 for consumption in parks, sidewalks, or beaches."
                 ],
                 type: 'list'
             },
             {
                 icon: 'Briefcase',
                 title: 'Dispensary & Purchase Information',
-                content: "500+ licensed dispensaries throughout LA County. Average prices $30-60/eighth. Premium options like MedMen and Stiizy are common. Delivery services are widely available. Sales tax applies.",
+                content: "Only buy from DCC-licensed shops (easy to verify online). Adults pay a 15% excise tax (plus local sales tax). **Cash is still dominant**, though many shops use third-party payment solutions.",
                 type: 'paragraph'
             },
             {
                 icon: 'Truck',
                 title: 'Airport & Transportation Rules',
                 content: [
-                    "Driving under the influence (DUI) is strictly enforced.",
-                    "LAX officially permits cannabis in checked bags for CA travel *only* but federal law still prohibits flying with cannabis anywhere.",
-                    "Do not transport cannabis across state lines or internationally."
+                    "**Driving:** Cannot be under the influence (DUI) and must have cannabis in a sealed container or in the trunk.",
+                    "**LAX/Airports:** TSA (Federal Agency) officially prohibits cannabis. While state law is tolerant for *in-state* travel, **federal law takes precedence**, making flying with cannabis highly risky."
                 ],
                 type: 'list'
             },
             {
                 icon: 'Safety',
-                title: 'Safety Tips & Warnings',
+                title: 'Safety, Potency & Employment Laws',
                 content: [
-                    "Always buy from licensed shops. Unlicensed shops often sell untested, contaminated products.",
-                    "Respect local ordinances; some LA neighborhoods (Pasadena, Beverly Hills) have strict rules.",
-                    "Use ride-sharing (Uber/Lyft) if you plan on consuming; LAPD runs sobriety checkpoints."
+                    "**Potency:** Edibles are limited to 10mg THC per serving and 100mg per package. Start with 2.5mg - 5mg if you are a beginner.",
+                    "**Illegal Shops:** Never buy from unlicensed stores; products are untested and potentially harmful.",
+                    "**Employment Note:** New 2024 laws (AB 2188/SB 700) protect employees from discrimination based on off-duty, off-site cannabis use, but federal jobs and safety-sensitive roles are exempt."
                 ],
                 type: 'list'
             },
@@ -163,7 +164,7 @@ const fullPostData: FullBlogPost[] = [
             {
                 icon: 'Etiquette',
                 title: 'Local Etiquette & Cultural Norms',
-                content: "LA has a mature, casual cannabis culture. Locals value discretion. Tipping your budtender is standard practice ($5-10).",
+                content: "LA's culture is sophisticated and discrete. Always respect private property rules. Tipping budtenders for good service is standard practice.",
                 type: 'paragraph'
             }
         ],
@@ -295,7 +296,7 @@ const blogPosts: BlogPost[] = fullPostData.map(p => ({
 }));
 
 
-// --- NEW COMPONENTS for Guide Feel (Re-included for completeness) ---
+// --- 4. REUSABLE COMPONENTS FOR BLOG DETAIL ---
 
 // Component for the Neighborhood grid
 const NeighborhoodCard = ({ name, description }: NeighborhoodRecommendation) => (
@@ -305,7 +306,7 @@ const NeighborhoodCard = ({ name, description }: NeighborhoodRecommendation) => 
     </div>
 );
 
-// Component for the important boxed warnings, mirroring the style
+// Component for the important boxed warnings
 const ImportantBox = ({ type, children }: { type: 'intro' | 'legal' | 'critical', children: React.ReactNode }) => {
     const baseClass = "p-4 rounded-lg text-sm mb-4";
     const headerClass = "font-bold mb-1 flex items-center";
@@ -347,18 +348,18 @@ const ImportantBox = ({ type, children }: { type: 'intro' | 'legal' | 'critical'
 
 // Component for the major section cards
 const GuideSectionList = ({ icon, title, content, type, neighborhoods }: DetailedSection & { neighborhoods: FullBlogPost['neighborhoods'] }) => {
-    const IconComponent = IconMap[icon as keyof typeof IconMap] || Leaf;
+    const IconComponent = IconMap[icon] || Leaf;
 
     // Determine the bullet color for list items (Red for Safety/Warning, Green for everything else)
     let bulletColor = 'bg-accent';
-    if (icon === 'Safety' || icon === 'AlertTriangle' || type === 'warning') {
+    if (icon === 'Safety' || icon === 'AlertTriangle' || type === 'warning' || title.includes("CRITICAL")) {
         bulletColor = 'bg-red-500'; 
     }
 
     return (
         <div className="bg-card p-5 rounded-lg border border-border/50 shadow-md">
             <h2 className="flex items-center text-xl font-bold mb-3 text-foreground">
-                <IconComponent className="w-5 h-5 mr-3 text-accent" />
+                <IconComponent className={`w-5 h-5 mr-3 ${bulletColor.replace('bg-', 'text-')}`} />
                 {title}
             </h2>
             
@@ -381,7 +382,7 @@ const GuideSectionList = ({ icon, title, content, type, neighborhoods }: Detaile
 
             {/* Neighborhood Grid Content */}
             {type === 'neighborhoods' && neighborhoods && neighborhoods.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     {neighborhoods.map((n, index) => (
                         <NeighborhoodCard key={index} {...n} />
                     ))}
@@ -391,7 +392,7 @@ const GuideSectionList = ({ icon, title, content, type, neighborhoods }: Detaile
     );
 };
 
-// --- MAIN DETAIL COMPONENT (Styled) ---
+// --- 5. MAIN DETAIL COMPONENT ---
 const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => void }) => {
     if (!slug) return null;
 
@@ -400,7 +401,8 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
 
     if (!displayPost) return null;
 
-    const content = post?.content || ["The full article content is coming soon! Check back later for details on this popular topic.", "In the meantime, feel free to browse our other guides or return to the list."];
+    // Default to filler if full data is missing, though we now have full data for the first 3 posts
+    const content = post?.content || ["The full article content is coming soon!"];
     const detailedSections = post?.detailedSections || [];
     const retailerRecommendations = post?.retailerRecommendations || [];
     const hotelRecommendations = post?.hotelRecommendations || [];
@@ -540,7 +542,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                                     
                                     <div className="mb-4">
                                         <p className="text-xs font-semibold text-foreground mb-1">Amenities:</p>
-                                        <ul className="list-disc list-inside text-xs text-muted-foreground">
+                                        <ul className="list-disc list-inside text-xs text-muted-foreground ml-4">
                                             {hotel.amenities.map((amenity, idx) => (
                                                 <li key={idx}>{amenity}</li>
                                             ))}
@@ -576,7 +578,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
 };
 
 
-// The rest of the Blog component remains the same, using BlogPostDetail when selected
+// --- 6. MAIN BLOG COMPONENT (List View Controller) ---
 const Blog = () => {
     const [selectedPostSlug, setSelectedPostSlug] = useState<string | null>(null);
 
