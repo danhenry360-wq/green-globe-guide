@@ -3,18 +3,42 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Timer, AlertTriangle, Briefcase, Leaf, MapPin, Truck, Utensils, Hotel, CheckCircle, Info } from "lucide-react";
+import { Calendar, Timer, AlertTriangle, Briefcase, Leaf, MapPin, Truck, Utensils, Hotel, CheckCircle, Info, Star } from "lucide-react";
 
 // --- Types (Simplified for brevity, assuming they are defined correctly) ---
-interface BlogPost { /* ... */ }
-interface RetailerRecommendation { /* ... */ }
-interface HotelRecommendation { /* ... */ }
+interface BlogPost { 
+    title: string;
+    excerpt: string;
+    image: string;
+    date: string;
+    category: string;
+    readTime?: string;
+    author?: string;
+    tags?: string[];
+}
+interface RetailerRecommendation { 
+    name: string;
+    policy: string;
+    menuLink: string;
+    license: string;
+}
+interface HotelRecommendation { 
+    name: string;
+    description: string;
+    bookingLink: string;
+    amenities: string[];
+}
+
+interface NeighborhoodRecommendation {
+    name: string;
+    description: string;
+}
 
 interface DetailedSection {
     icon: string; // E.g., 'Leaf', 'AlertTriangle'
     title: string;
     content: string | string[]; // Can be a paragraph or a list of bullet points
-    type: 'paragraph' | 'list';
+    type: 'paragraph' | 'list' | 'neighborhoods' | 'etiquette';
 }
 
 interface FullBlogPost extends BlogPost {
@@ -22,6 +46,7 @@ interface FullBlogPost extends BlogPost {
     retailerRecommendations?: RetailerRecommendation[];
     hotelRecommendations?: HotelRecommendation[];
     detailedSections?: DetailedSection[]; // Detailed sections replacing the simple guideSections
+    neighborhoods?: NeighborhoodRecommendation[]; // Separate data for neighborhood cards
 }
 
 // Helper function to create a clean URL slug from the title
@@ -45,13 +70,14 @@ const IconMap = {
     'Hotel': Hotel,
     'CheckCircle': CheckCircle,
     'Info': Info,
-    // Add new icons seen in guide screenshots
-    'Legal': Briefcase, // Using Briefcase for legal/possession
-    'Consumption': Utensils, // Using Utensils for consumption
-    'Safety': AlertTriangle, // Using AlertTriangle for warnings
+    'Legal': Briefcase, 
+    'Consumption': Utensils, 
+    'Safety': AlertTriangle, 
+    'Neighborhood': MapPin,
+    'Etiquette': Star,
 };
 
-// --- START: FULL POST DATA SOURCE (Updated with DetailedSections) ---
+// --- START: FULL POST DATA SOURCE (Adding Neighborhoods) ---
 const fullPostData: FullBlogPost[] = [
     {
         title: "Is Weed Legal in California in 2025?",
@@ -64,6 +90,12 @@ const fullPostData: FullBlogPost[] = [
         content: [
             "California has been at the forefront of cannabis legalization, and as we move into 2025, the laws remain largely consistent with previous years, offering both residents and tourists a clear framework for recreational use.",
             "Purchasing cannabis must be done through licensed dispensaries. Look for dispensaries displaying their state license to ensure you're buying safe, tested products. Many dispensaries also offer delivery services within their operational zones."
+        ],
+        neighborhoods: [
+            { name: "Venice Beach", description: "Progressive cannabis culture, many dispensaries, consumption lounges, artistic vibe - tourist-friendly" },
+            { name: "West Hollywood", description: "Lowell Cafe (consumption restaurant), premium dispensaries, nightlife - very cannabis-friendly" },
+            { name: "Hollywood", description: "Tourist center, many dispensaries, 420-friendly hotels - convenient for visitors" },
+            { name: "Arts District/Downtown", description: "Urban warehouses converted to cannabis lounges and dispensaries - creative scene" },
         ],
         detailedSections: [
             {
@@ -125,6 +157,18 @@ const fullPostData: FullBlogPost[] = [
                     "Some LA neighborhoods (Pasadena, Beverly Hills) have strict local ordinances – research before visiting."
                 ],
                 type: 'list'
+            },
+            {
+                icon: 'Neighborhood',
+                title: 'Best Neighborhoods for Cannabis Tourists',
+                content: [], // Content handled by the dedicated component
+                type: 'neighborhoods'
+            },
+            {
+                icon: 'Etiquette',
+                title: 'Local Etiquette & Cultural Norms',
+                content: "LA has sophisticated cannabis culture – locals consume casually, but discreetly. Don’t smoke in public. Tipping budtenders is appreciated. Asking for recommendations is encouraged. Cannabis tourism is normalized – no stigma.",
+                type: 'paragraph'
             }
         ],
         retailerRecommendations: [
@@ -137,9 +181,27 @@ const fullPostData: FullBlogPost[] = [
 // --- END: FULL POST DATA SOURCE ---
 
 // The list of all posts (used for the grid view)
-const blogPosts: BlogPost[] = [ /* ... remains the same ... */ ];
+const blogPosts: BlogPost[] = [ 
+    { title: "Is Weed Legal in California in 2025?", excerpt: "Complete guide to California's recreational cannabis laws, possession limits, and travel tips for tourists.", image: "/blog-california.jpg", date: "Jan 15, 2025", category: "Legal Guide", readTime: "5 min read", author: "Alex Morgan", tags: ["california", "legal", "travel", "recreational"] },
+    { title: "Best 420-Friendly Hotels in Amsterdam", excerpt: "Discover the top cannabis-friendly accommodations in Amsterdam for an unforgettable experience.", image: "/blog-amsterdam.jpg", date: "Jan 10, 2025", category: "Travel", readTime: "4 min read", author: "Sarah Chen", tags: ["amsterdam", "hotels", "accommodation", "coffee-shops"] },
+    { title: "Uruguay Cannabis Laws: What Tourists Need to Know", excerpt: "Navigate Uruguay's unique cannabis regulations and discover what makes it a special destination.", image: "/blog-uruguay.jpg", date: "Jan 5, 2025", category: "Legal Guide", readTime: "6 min read", author: "Carlos Rodriguez", tags: ["uruguay", "legal", "south-america", "regulations"] },
+    { title: "Top 10 Cannabis Strains for Creative Work", excerpt: "Explore the best sativa strains that can enhance your creativity and focus.", image: "/blog-strains.jpg", date: "Dec 28, 2024", category: "Strains", readTime: "7 min read", author: "Jamie Taylor", tags: ["strains", "sativa", "creativity", "productivity"] },
+    { title: "Cannabis and Meditation: A Perfect Pairing", excerpt: "How incorporating cannabis into your meditation practice can deepen your mindfulness experience.", image: "/blog-meditation.jpg", date: "Dec 22, 2024", category: "Wellness", readTime: "8 min read", author: "Maya Patel", tags: ["wellness", "meditation", "mindfulness", "health"] },
+    { title: "420-Friendly Activities in Denver", excerpt: "From cannabis tours to consumption-friendly events, discover what to do in the Mile High City.", image: "/blog-denver.jpg", date: "Dec 18, 2024", category: "Travel", readTime: "5 min read", author: "Mike Johnson", tags: ["denver", "activities", "tours", "colorado"] },
+    { title: "Dispensaries Near LAX: The Ultimate Guide for Arrivals", excerpt: "Just landed in LA? Find out which verified dispensaries are closest to the airport and offer the quickest pickup.", image: "/blog-lax-dispensary.jpg", date: "Feb 5, 2025", category: "Local LA", readTime: "3 min read", author: "Alex Morgan", tags: ["LAX", "los-angeles", "airport", "dispensary"] },
+    { title: "LA's Best Edibles: Shopping for First-Timers & Low-Dose Users", excerpt: "A guide to finding safe, tested, and enjoyable edibles in Los Angeles, including dosage tips and menu links.", image: "/blog-la-edibles.jpg", date: "Feb 1, 2025", category: "Strains", readTime: "6 min read", author: "Jamie Taylor", tags: ["edibles", "low-dose", "safety", "LA"] },
+    { title: "The Night Owl Guide: Finding Dispensaries Open After 10 PM in Hollywood", excerpt: "Everything you need to know about late-night cannabis shopping and legal delivery options across Hollywood and WeHo.", image: "/blog-hollywood-nightlife.jpg", date: "Jan 28, 2025", category: "Local LA", readTime: "4 min read", author: "Sarah Chen", tags: ["hollywood", "late-night", "delivery", "weho"] },
+];
 
 // --- NEW COMPONENTS for Guide Feel ---
+
+// Component for the Neighborhood grid
+const NeighborhoodCard = ({ name, description }: NeighborhoodRecommendation) => (
+    <div className="bg-background border border-border/50 p-4 rounded-md shadow-inner">
+        <h4 className="font-semibold text-foreground text-sm mb-1">{name}</h4>
+        <p className="text-xs text-muted-foreground">{description}</p>
+    </div>
+);
 
 // Component for the important boxed warnings, mirroring the style
 const ImportantBox = ({ type, children }: { type: 'intro' | 'legal', children: React.ReactNode }) => {
@@ -157,10 +219,9 @@ const ImportantBox = ({ type, children }: { type: 'intro' | 'legal', children: R
         title = "Introduction to Los Angeles";
         boxClasses = "bg-card border border-accent/70";
         titleClasses = "text-accent";
-    } else { // type === 'legal' (Inline Legal Notice within sections)
+    } else { // type === 'legal' (Inline Warning)
         icon = <AlertTriangle className="w-4 h-4 mr-2 text-amber-500" />;
         title = "Important";
-        // Styling the inner warning box like the one inside the Intro card
         boxClasses = "bg-yellow-900/40 border border-amber-500/80 p-3 mt-3";
         titleClasses = "text-amber-500";
     }
@@ -179,10 +240,15 @@ const ImportantBox = ({ type, children }: { type: 'intro' | 'legal', children: R
 };
 
 // Component for the major section cards, matching the dark aesthetic
-const GuideSectionList = ({ icon, title, content, type }: DetailedSection) => {
+const GuideSectionList = ({ icon, title, content, type, neighborhoods }: DetailedSection & { neighborhoods: FullBlogPost['neighborhoods'] }) => {
     const IconComponent = IconMap[icon as keyof typeof IconMap] || Leaf;
 
-    // Based on Los Angeles guide sections (Screenshot 2025-11-23 021057.png)
+    // Determine the bullet color for list items
+    let bulletColor = 'text-accent';
+    if (icon === 'Safety') {
+        bulletColor = 'text-red-500'; // Safety items often styled as warnings
+    }
+
     return (
         <div className="bg-card p-5 rounded-lg border border-border/50 shadow-md">
             <h2 className="flex items-center text-xl font-bold mb-3 text-foreground">
@@ -190,25 +256,36 @@ const GuideSectionList = ({ icon, title, content, type }: DetailedSection) => {
                 {title}
             </h2>
             
-            {type === 'paragraph' && (
+            {/* Paragraph Content */}
+            {(type === 'paragraph' || type === 'etiquette') && typeof content === 'string' && (
                 <p className="text-muted-foreground text-base leading-relaxed">{content}</p>
             )}
             
+            {/* List Content */}
             {type === 'list' && Array.isArray(content) && (
                 <ul className="space-y-2 text-muted-foreground list-none pl-0">
                     {content.map((point, index) => (
                         <li key={index} className="text-base flex items-start">
-                            <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0 text-accent" />
+                            <span className={`w-2 h-2 rounded-full mr-3 mt-2 flex-shrink-0 ${icon === 'Safety' ? 'bg-red-500' : 'bg-accent'}`}></span>
                             <span className="leading-relaxed">{point}</span>
                         </li>
                     ))}
                 </ul>
             )}
+
+            {/* Neighborhood Grid Content */}
+            {type === 'neighborhoods' && neighborhoods && neighborhoods.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {neighborhoods.map((n, index) => (
+                        <NeighborhoodCard key={index} {...n} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
-// --- MAIN DETAIL COMPONENT (Refactored) ---
+// --- MAIN DETAIL COMPONENT (Refactored and Styled) ---
 const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => void }) => {
     if (!slug) return null;
 
@@ -221,24 +298,37 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
     const detailedSections = post?.detailedSections || [];
     const retailerRecommendations = post?.retailerRecommendations || [];
     const hotelRecommendations = post?.hotelRecommendations || [];
+    const neighborhoods = post?.neighborhoods || [];
+
+    // Check if it's a major guide (like California, based on the data structure)
+    const isMajorGuide = displayPost.category === 'Legal Guide' && displayPost.title.includes("California");
 
     return (
         <main className="pt-24 sm:pt-28 pb-16 sm:pb-20 bg-background text-foreground">
             <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
                 
-                {/* Back Button */}
+                {/* Back Button - Styled to match guide color */}
                 <button onClick={onBack} className="text-sm text-accent hover:text-accent-foreground mb-8 flex items-center">
-                    &larr; Back to all Articles
+                    &larr; Back to California Guide
                 </button>
                 
-                {/* Header and Metadata (Matching image_deff3d.jpg) */}
-                <header className="text-center mb-10">
-                    <Badge className="bg-primary/10 text-primary border-primary/30 mb-4">{displayPost.category}</Badge>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight">{displayPost.title}</h1>
-                    <p className="text-lg text-muted-foreground max-w-3xl mx-auto">{displayPost.excerpt}</p>
+                {/* Header (Los Angeles Cannabis Guide style) */}
+                <header className="mb-10">
+                    <div className="flex justify-between items-start mb-4">
+                         {/* This mimics the dynamic title style for guides (Screenshot 2025-11-23 021049.png) */}
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+                            {displayPost.title.split(' ').slice(0, 2).join(' ')} <span className="text-accent">{displayPost.title.split(' ').slice(2).join(' ')}</span>
+                        </h1>
+                        {isMajorGuide && (
+                             <Badge className="bg-accent text-background text-sm font-bold px-3 py-1.5 shadow-lg flex-shrink-0 mt-2">
+                                Major Guide
+                             </Badge>
+                        )}
+                    </div>
+                    <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">{displayPost.excerpt}</p>
                     
-                    {/* Meta Line */}
-                    <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground mt-4 flex-wrap">
+                    {/* Meta Line - Less prominent for the 'guide' feel, but kept for SEO */}
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mt-4 flex-wrap">
                         <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-accent" /> <time dateTime={displayPost.date}>{displayPost.date}</time></span>
                         <span className="flex items-center gap-1"><Timer className="w-4 h-4 text-accent" /> {displayPost.readTime}</span>
                         <span>By {displayPost.author}</span>
@@ -246,14 +336,13 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                 </header>
                 
                 {/* Featured Image */}
-                <div className="aspect-video bg-muted overflow-hidden rounded-lg mb-10">
+                <div className="aspect-video bg-muted overflow-hidden rounded-lg mb-12">
                     <img src={displayPost.image} alt={displayPost.title} className="w-full h-full object-cover" />
                 </div>
 
-                {/* --- Introduction Section (Matching image_df11a3.png / Screenshot 2025-11-23 021049.png) --- */}
-                {/* We simulate the introduction text here using the ImportantBox component for styling consistency */}
-                {post?.title.includes("California") && (
-                    <section className="mb-10">
+                {/* --- Introduction Section (Matching image_df11a3.png) --- */}
+                {isMajorGuide && (
+                    <section className="mb-12">
                         <ImportantBox type="intro">
                             Welcome to the comprehensive cannabis travel guide for **Los Angeles, California**. This guide provides essential information for cannabis tourists visiting this destination.
                             
@@ -278,7 +367,12 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                 {detailedSections.length > 0 && (
                     <section className="mt-12 space-y-8">
                         {detailedSections.map((section, index) => (
-                            <GuideSectionList key={index} {...section} />
+                            <GuideSectionList 
+                                key={index} 
+                                {...section}
+                                // Pass neighborhoods data only if the section type is 'neighborhoods'
+                                neighborhoods={section.type === 'neighborhoods' ? neighborhoods : []}
+                            />
                         ))}
                     </section>
                 )}
@@ -351,7 +445,7 @@ const BlogPostDetail = ({ slug, onBack }: { slug: string | null, onBack: () => v
                     </section>
                 )}
                 
-                {/* --- IMPORTANT LEGAL NOTICE (Near Footer, as requested) --- */}
+                {/* --- IMPORTANT LEGAL NOTICE (Near Footer, as requested and referenced from image_dd3fef.png) --- */}
                 <div className="mt-16 pt-8 border-t border-border/50">
                     <Card className="p-5 bg-card border border-border/50 shadow-md">
                         <h3 className="text-lg font-bold text-accent mb-2">Important Legal Notice</h3>
