@@ -50,12 +50,21 @@ interface FilterState {
 /* ============================================
    PAGINATION COMPONENT
 ============================================ */
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ 
+  currentPage, 
+  totalPages, 
+  onPageChange 
+}: { 
+  currentPage: number; 
+  totalPages: number; 
+  onPageChange: (page: number) => void;
+}) => {
   if (totalPages <= 1) return null;
+
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const visiblePages = pages.filter(p =>
-    p === 1 ||
-    p === totalPages ||
+  const visiblePages = pages.filter(p => 
+    p === 1 || 
+    p === totalPages || 
     (p >= currentPage - 1 && p <= currentPage + 1)
   );
 
@@ -64,7 +73,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <p className="text-sm text-muted-foreground">
         Page <span className="font-bold text-accent">{currentPage}</span> of <span className="font-bold text-accent">{totalPages}</span>
       </p>
-
+      
       <div className="flex items-center gap-2">
         <Button
           onClick={() => onPageChange(currentPage - 1)}
@@ -119,21 +128,37 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 /* ============================================
    FILTER PANEL COMPONENT
 ============================================ */
-const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts, isOpen, onClose }) => {
+const FilterPanel = ({
+  filters,
+  onFilterChange,
+  countries,
+  states,
+  filterCounts,
+  isOpen,
+  onClose
+}: {
+  filters: FilterState;
+  onFilterChange: (key: keyof FilterState, value: string) => void;
+  countries: string[];
+  states: string[];
+  filterCounts: Record<string, number>;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const filterOptions = [
-    { value: 'all', label: 'All Hotels' },
-    { value: 'premium', label: 'Premium' },
-    { value: 'budget', label: 'Budget' },
-    { value: 'smoking', label: 'Smoking' },
-    { value: 'vaping', label: 'Vaping' },
-    { value: 'edibles', label: 'Edibles' },
+    { value: 'all' as FilterType, label: 'All Hotels' },
+    { value: 'premium' as FilterType, label: 'Premium' },
+    { value: 'budget' as FilterType, label: 'Budget' },
+    { value: 'smoking' as FilterType, label: 'Smoking' },
+    { value: 'vaping' as FilterType, label: 'Vaping' },
+    { value: 'edibles' as FilterType, label: 'Edibles' },
   ];
 
   const sortOptions = [
-    { value: 'rating', label: 'Highest Rated' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'name', label: 'Alphabetical' },
+    { value: 'rating' as SortType, label: 'Highest Rated' },
+    { value: 'price-low' as SortType, label: 'Price: Low to High' },
+    { value: 'price-high' as SortType, label: 'Price: High to Low' },
+    { value: 'name' as SortType, label: 'Alphabetical' },
   ];
 
   return (
@@ -148,7 +173,7 @@ const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts,
             onClick={onClose}
             className="fixed inset-0 bg-black/50 z-40 md:hidden"
           />
-
+          
           {/* FILTER PANEL */}
           <motion.div
             initial={{ x: -400, opacity: 0 }}
@@ -179,7 +204,7 @@ const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts,
                     onFilterChange('country', e.target.value);
                     onFilterChange('state', '');
                   }}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
                 >
                   <option value="">All Countries</option>
                   {countries.map(country => (
@@ -197,7 +222,7 @@ const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts,
                   <select
                     value={filters.state}
                     onChange={(e) => onFilterChange('state', e.target.value)}
-                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
+                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
                   >
                     <option value="">All States</option>
                     {states.map(state => (
@@ -238,7 +263,7 @@ const FilterPanel = ({ filters, onFilterChange, countries, states, filterCounts,
                 <select
                   value={filters.sort}
                   onChange={(e) => onFilterChange('sort', e.target.value)}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm"
+                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
                 >
                   {sortOptions.map(option => (
                     <option key={option.value} value={option.value} className="bg-card">
@@ -282,27 +307,27 @@ const Hotels = () => {
 
   // Process and flatten data
   const processedData = useMemo(() => {
-    return DATA.flatMap(country =>
-      country.states.flatMap(state =>
+    return DATA.flatMap(country => 
+      country.states.flatMap(state => 
         state.hotels.map(hotel => ({
           ...hotel,
           country: country.country,
           countryFlag: country.flagPath,
           stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
           isBudget: hotel.price < 100,
-          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') ||
-                      hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
+          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') || 
+                     hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
           hasVaping: hotel.policyHighlights?.toLowerCase().includes('vaping') ||
-                     hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
+                    hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
           hasEdibles: hotel.policyHighlights?.toLowerCase().includes('edible') ||
-                      hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
+                     hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
         }))
       )
     );
   }, []);
 
   // Get unique countries and states
-  const countries = useMemo(() =>
+  const countries = useMemo(() => 
     Array.from(new Set(processedData.map(h => h.country))).sort(),
     [processedData]
   );
@@ -349,7 +374,7 @@ const Hotels = () => {
 
     // Search filter
     if (q) {
-      result = result.filter(h =>
+      result = result.filter(h => 
         h.name.toLowerCase().includes(q) ||
         h.city.toLowerCase().includes(q) ||
         h.country.toLowerCase().includes(q) ||
@@ -422,7 +447,54 @@ const Hotels = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-24 pb-20 px-4 sm:px-6">
+        {/* FIXED SEARCH & SORT BAR - MOBILE */}
+        <div className="fixed left-0 right-0 top-20 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/50 shadow-2xl md:hidden">
+          <div className="px-4 sm:px-6 py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+              <div className="flex-1 relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search hotels, cities, states..."
+                  value={filters.search}
+                  onChange={(e) => handleFilterChange('search', e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                />
+                {filters.search && (
+                  <button
+                    onClick={() => handleFilterChange('search', '')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-muted-foreground hover:text-white" />
+                  </button>
+                )}
+              </div>
+
+              <Button
+                onClick={() => setIsFilterOpen(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
+              >
+                <Filter className="w-5 h-5" />
+                Filters
+              </Button>
+
+              <select
+                value={filters.sort}
+                onChange={(e) => handleFilterChange('sort', e.target.value as SortType)}
+                className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+              >
+                <option value="rating" className="bg-card">Highest Rated</option>
+                <option value="price-low" className="bg-card">Price: Low to High</option>
+                <option value="price-high" className="bg-card">Price: High to Low</option>
+                <option value="name" className="bg-card">Alphabetical</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <main className="pt-24 pb-20 px-4 sm:px-6 md:pt-24">
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-12 text-center">
@@ -453,9 +525,8 @@ const Hotels = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                
-                {/* SEARCH BAR - now STATIC */}
-                <div className="w-full z-10 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl md:mb-10">
+                {/* SEARCH BAR - DESKTOP ONLY */}
+                <div className="hidden md:block bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
@@ -475,16 +546,6 @@ const Hotels = () => {
                         </button>
                       )}
                     </div>
-
-                    <Button
-                      onClick={() => setIsFilterOpen(true)}
-                      variant="outline"
-                      size="sm"
-                      className="md:hidden gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
-                    >
-                      <Filter className="w-5 h-5" />
-                      Filters
-                    </Button>
 
                     <select
                       value={filters.sort}
@@ -534,6 +595,9 @@ const Hotels = () => {
                     </div>
                   )}
                 </div>
+
+                {/* MOBILE SPACING FOR FIXED BAR */}
+                <div className="h-32 md:h-0" />
 
                 {/* RESULTS */}
                 {filteredData.length === 0 ? (
@@ -611,28 +675,3 @@ const Hotels = () => {
                     </p>
                   </div>
                 </div>
-              </Card>
-            </section>
-
-            {/* INTERNAL LINKS */}
-            <nav className="mt-12 text-center">
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/usa" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
-                  USA Guide
-                </Link>
-                <span className="text-muted-foreground/40">•</span>
-                <Link to="/world" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
-                  World Guide
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </main>
-
-        <Footer />
-      </div>
-    </>
-  );
-};
-
-export default Hotels;
