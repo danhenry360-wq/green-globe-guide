@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Search, Globe, MapPin, Users, Plane, Info, ArrowLeft, Zap } from "lucide-react";
 
 /* ============================================
+   IMAGE POOL
+============================================ */
+const imagePool = ["/dest-1.jpg", "/dest-2.jpg", "/dest-3.jpg", "/dest-4.jpg", "/dest-5.jpg", "/dest-6.jpg"];
+const getRandomImage = () => imagePool[Math.floor(Math.random() * imagePool.length)];
+
+/* ============================================
    TYPES
 ============================================ */
 interface City {
@@ -43,14 +49,7 @@ interface Continent {
 }
 
 /* ============================================
-   IMAGE POOL
-============================================ */
-const imagePool = ["/dest-1.jpg", "/dest-2.jpg", "/dest-3.jpg", "/dest-4.jpg", "/dest-5.jpg", "/dest-6.jpg"];
-
-const getRandomImage = () => imagePool[Math.floor(Math.random() * imagePool.length)];
-
-/* ============================================
-   DATA
+   DATA - ALL CONTINENTS WITH STATES
 ============================================ */
 const WORLD_GUIDE: Continent[] = [
   {
@@ -74,30 +73,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-red-600",
         states: [
-          {
-            slug: "ontario",
-            name: "Ontario",
-            cities: [
-              { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
-              { slug: "ottawa", name: "Ottawa", atGlance: ["Capital city", "Government hub", "Moderate vibe"] },
-            ],
-          },
-          {
-            slug: "british-columbia",
-            name: "British Columbia",
-            cities: [
-              { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
-              { slug: "victoria", name: "Victoria", atGlance: ["Island capital", "Relaxed culture", "Beach town vibes"] },
-            ],
-          },
-          {
-            slug: "quebec",
-            name: "Quebec",
-            cities: [
-              { slug: "montreal", name: "Montreal", atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"] },
-              { slug: "quebec-city", name: "Quebec City", atGlance: ["Historic charm", "Smaller scene", "Cultural hub"] },
-            ],
-          },
+          { slug: "ontario", name: "Ontario", cities: [
+            { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
+            { slug: "ottawa", name: "Ottawa", atGlance: ["Capital city", "Government hub", "Moderate vibe"] },
+          ]},
+          { slug: "british-columbia", name: "British Columbia", cities: [
+            { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
+            { slug: "victoria", name: "Victoria", atGlance: ["Island capital", "Relaxed culture", "Beach town vibes"] },
+          ]},
+          { slug: "quebec", name: "Quebec", cities: [
+            { slug: "montreal", name: "Montreal", atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"] },
+            { slug: "quebec-city", name: "Quebec City", atGlance: ["Historic charm", "Smaller scene", "Cultural hub"] },
+          ]},
         ],
       },
       {
@@ -112,30 +99,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-blue-600",
         states: [
-          {
-            slug: "california",
-            name: "California",
-            cities: [
-              { slug: "los-angeles", name: "Los Angeles", atGlance: ["500+ dispensaries", "Delivery available", "Tourist-friendly"] },
-              { slug: "san-francisco", name: "San Francisco", atGlance: ["Tech city", "Open culture", "Premium pricing"] },
-            ],
-          },
-          {
-            slug: "colorado",
-            name: "Colorado",
-            cities: [
-              { slug: "denver", name: "Denver", atGlance: ["Pioneer state", "Recreational since 2014", "Mountain culture"] },
-              { slug: "boulder", name: "Boulder", atGlance: ["College town", "Outdoor vibes", "Health-conscious"] },
-            ],
-          },
-          {
-            slug: "new-york",
-            name: "New York",
-            cities: [
-              { slug: "new-york-city", name: "New York City", atGlance: ["Recently legalized", "Delivery booming", "Check local zones"] },
-              { slug: "buffalo", name: "Buffalo", atGlance: ["Upstate hub", "Growing scene", "Affordable prices"] },
-            ],
-          },
+          { slug: "california", name: "California", cities: [
+            { slug: "los-angeles", name: "Los Angeles", atGlance: ["500+ dispensaries", "Delivery available", "Tourist-friendly"] },
+            { slug: "san-francisco", name: "San Francisco", atGlance: ["Tech city", "Open culture", "Premium pricing"] },
+          ]},
+          { slug: "colorado", name: "Colorado", cities: [
+            { slug: "denver", name: "Denver", atGlance: ["Pioneer state", "Recreational since 2014", "Mountain culture"] },
+            { slug: "boulder", name: "Boulder", atGlance: ["College town", "Outdoor vibes", "Health-conscious"] },
+          ]},
+          { slug: "new-york", name: "New York", cities: [
+            { slug: "new-york-city", name: "New York City", atGlance: ["Recently legalized", "Delivery booming", "Check local zones"] },
+            { slug: "buffalo", name: "Buffalo", atGlance: ["Upstate hub", "Growing scene", "Affordable prices"] },
+          ]},
         ],
       },
       {
@@ -150,30 +125,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-red-500",
         states: [
-          {
-            slug: "mexico-city",
-            name: "Mexico City",
-            cities: [
-              { slug: "mexico-city-center", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Vibrant culture"] },
-              { slug: "coyoacan", name: "Coyoacán", atGlance: ["Historic district", "Artsy neighborhood", "Cafe culture"] },
-            ],
-          },
-          {
-            slug: "quintana-roo",
-            name: "Quintana Roo",
-            cities: [
-              { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Beautiful beaches"] },
-              { slug: "tulum", name: "Tulum", atGlance: ["Beach town", "Tourist hub", "Beachfront ruins"] },
-            ],
-          },
-          {
-            slug: "jalisco",
-            name: "Jalisco",
-            cities: [
-              { slug: "guadalajara", name: "Guadalajara", atGlance: ["Tech hub", "Younger crowd", "Check Airbnb rules"] },
-              { slug: "puerto-vallarta", name: "Puerto Vallarta", atGlance: ["Beach resort", "Tourist friendly", "Sunset vibes"] },
-            ],
-          },
+          { slug: "mexico-city", name: "Mexico City", cities: [
+            { slug: "mexico-city-center", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Vibrant culture"] },
+            { slug: "coyoacan", name: "Coyoacán", atGlance: ["Historic district", "Artsy neighborhood", "Cafe culture"] },
+          ]},
+          { slug: "quintana-roo", name: "Quintana Roo", cities: [
+            { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Beautiful beaches"] },
+            { slug: "tulum", name: "Tulum", atGlance: ["Beach town", "Tourist hub", "Beachfront ruins"] },
+          ]},
+          { slug: "jalisco", name: "Jalisco", cities: [
+            { slug: "guadalajara", name: "Guadalajara", atGlance: ["Tech hub", "Younger crowd", "Check Airbnb rules"] },
+            { slug: "puerto-vallarta", name: "Puerto Vallarta", atGlance: ["Beach resort", "Tourist friendly", "Sunset vibes"] },
+          ]},
         ],
       },
     ],
@@ -199,30 +162,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-cyan-600",
         states: [
-          {
-            slug: "montevideo-dept",
-            name: "Montevideo",
-            cities: [
-              { slug: "montevideo", name: "Montevideo", atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"] },
-              { slug: "pocitos", name: "Pocitos", atGlance: ["Upscale neighborhood", "Beach town", "Trendy dining"] },
-            ],
-          },
-          {
-            slug: "maldonado",
-            name: "Maldonado",
-            cities: [
-              { slug: "punta-del-este", name: "Punta del Este", atGlance: ["Upscale resort town", "Private circles", "Beautiful beaches"] },
-              { slug: "jose-ignacio", name: "José Ignacio", atGlance: ["Luxury destination", "Artistic vibe", "Sunset village"] },
-            ],
-          },
-          {
-            slug: "colonia-dept",
-            name: "Colonia",
-            cities: [
-              { slug: "colonia", name: "Colonia del Sacramento", atGlance: ["Historic small town", "Relaxed vibe", "Day-trip to Buenos Aires"] },
-              { slug: "carmelo", name: "Carmelo", atGlance: ["Wine country", "River town", "Peaceful escape"] },
-            ],
-          },
+          { slug: "montevideo-dept", name: "Montevideo", cities: [
+            { slug: "montevideo", name: "Montevideo", atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"] },
+            { slug: "pocitos", name: "Pocitos", atGlance: ["Upscale neighborhood", "Beach town", "Trendy dining"] },
+          ]},
+          { slug: "maldonado", name: "Maldonado", cities: [
+            { slug: "punta-del-este", name: "Punta del Este", atGlance: ["Upscale resort town", "Private circles", "Beautiful beaches"] },
+            { slug: "jose-ignacio", name: "José Ignacio", atGlance: ["Luxury destination", "Artistic vibe", "Sunset village"] },
+          ]},
+          { slug: "colonia-dept", name: "Colonia", cities: [
+            { slug: "colonia", name: "Colonia del Sacramento", atGlance: ["Historic small town", "Relaxed vibe", "Day-trip to Buenos Aires"] },
+            { slug: "carmelo", name: "Carmelo", atGlance: ["Wine country", "River town", "Peaceful escape"] },
+          ]},
         ],
       },
       {
@@ -237,30 +188,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-yellow-600",
         states: [
-          {
-            slug: "cundinamarca",
-            name: "Cundinamarca",
-            cities: [
-              { slug: "bogota", name: "Bogotá", atGlance: ["Capital city", "Medical clinics", "Cool mountain air"] },
-              { slug: "zipaquira", name: "Zipaquirá", atGlance: ["Salt cathedral", "Mountain town", "Day trip from Bogotá"] },
-            ],
-          },
-          {
-            slug: "antioquia",
-            name: "Antioquia",
-            cities: [
-              { slug: "medellin", name: "Medellín", atGlance: ["City of innovation", "Spring-like weather", "Transformed culture"] },
-              { slug: "guatape", name: "Guatapé", atGlance: ["Colorful town", "Lake activities", "Rock climbing"] },
-            ],
-          },
-          {
-            slug: "bolivar",
-            name: "Bolívar",
-            cities: [
-              { slug: "cartagena", name: "Cartagena", atGlance: ["Caribbean coast", "Historic charm", "Tourist hub"] },
-              { slug: "isla-rosario", name: "Isla de Rosario", atGlance: ["Island paradise", "Beaches", "Snorkeling"] },
-            ],
-          },
+          { slug: "cundinamarca", name: "Cundinamarca", cities: [
+            { slug: "bogota", name: "Bogotá", atGlance: ["Capital city", "Medical clinics", "Cool mountain air"] },
+            { slug: "zipaquira", name: "Zipaquirá", atGlance: ["Salt cathedral", "Mountain town", "Day trip from Bogotá"] },
+          ]},
+          { slug: "antioquia", name: "Antioquia", cities: [
+            { slug: "medellin", name: "Medellín", atGlance: ["City of innovation", "Spring-like weather", "Transformed culture"] },
+            { slug: "guatape", name: "Guatapé", atGlance: ["Colorful town", "Lake activities", "Rock climbing"] },
+          ]},
+          { slug: "bolivar", name: "Bolívar", cities: [
+            { slug: "cartagena", name: "Cartagena", atGlance: ["Caribbean coast", "Historic charm", "Tourist hub"] },
+            { slug: "isla-rosario", name: "Isla de Rosario", atGlance: ["Island paradise", "Beaches", "Snorkeling"] },
+          ]},
         ],
       },
     ],
@@ -286,30 +225,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-orange-600",
         states: [
-          {
-            slug: "north-holland",
-            name: "North Holland",
-            cities: [
-              { slug: "amsterdam", name: "Amsterdam", atGlance: ["150+ coffee shops", "No tobacco inside", "Avoid street dealers"] },
-              { slug: "haarlem", name: "Haarlem", atGlance: ["Small city charm", "20 shops", "Less crowded"] },
-            ],
-          },
-          {
-            slug: "south-holland",
-            name: "South Holland",
-            cities: [
-              { slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops, less touristy", "Higher quality", "Residency checks"] },
-              { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] },
-            ],
-          },
-          {
-            slug: "flevoland",
-            name: "Flevoland",
-            cities: [
-              { slug: "almere", name: "Almere", atGlance: ["Newer city", "Fewer shops", "Quieter scene"] },
-              { slug: "lelystad", name: "Lelystad", atGlance: ["Regional hub", "Growing area", "Local vibes"] },
-            ],
-          },
+          { slug: "north-holland", name: "North Holland", cities: [
+            { slug: "amsterdam", name: "Amsterdam", atGlance: ["150+ coffee shops", "No tobacco inside", "Avoid street dealers"] },
+            { slug: "haarlem", name: "Haarlem", atGlance: ["Small city charm", "20 shops", "Less crowded"] },
+          ]},
+          { slug: "south-holland", name: "South Holland", cities: [
+            { slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops, less touristy", "Higher quality", "Residency checks"] },
+            { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] },
+          ]},
+          { slug: "flevoland", name: "Flevoland", cities: [
+            { slug: "almere", name: "Almere", atGlance: ["Newer city", "Fewer shops", "Quieter scene"] },
+            { slug: "lelystad", name: "Lelystad", atGlance: ["Regional hub", "Growing area", "Local vibes"] },
+          ]},
         ],
       },
       {
@@ -324,30 +251,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-red-600",
         states: [
-          {
-            slug: "berlin",
-            name: "Berlin",
-            cities: [
-              { slug: "berlin-center", name: "Berlin", atGlance: ["Club culture capital", "No smoking near kids", "Low-THC starters"] },
-              { slug: "potsdam", name: "Potsdam", atGlance: ["Historic palaces", "Artistic vibe", "Day trip destination"] },
-            ],
-          },
-          {
-            slug: "hamburg",
-            name: "Hamburg",
-            cities: [
-              { slug: "hamburg-center", name: "Hamburg", atGlance: ["St. Pauli most open", "Harbour lounges", "Use trams, not cars"] },
-              { slug: "altona", name: "Altona", atGlance: ["Trendy district", "Alternative culture", "Great restaurants"] },
-            ],
-          },
-          {
-            slug: "bavaria",
-            name: "Bavaria",
-            cities: [
-              { slug: "munich", name: "Munich", atGlance: ["Conservative but OK", "English widely spoken", "Beer gardens = no weed"] },
-              { slug: "nuremberg", name: "Nuremberg", atGlance: ["Historic city", "Growing scene", "Affordable living"] },
-            ],
-          },
+          { slug: "berlin", name: "Berlin", cities: [
+            { slug: "berlin-center", name: "Berlin", atGlance: ["Club culture capital", "No smoking near kids", "Low-THC starters"] },
+            { slug: "potsdam", name: "Potsdam", atGlance: ["Historic palaces", "Artistic vibe", "Day trip destination"] },
+          ]},
+          { slug: "hamburg", name: "Hamburg", cities: [
+            { slug: "hamburg-center", name: "Hamburg", atGlance: ["St. Pauli most open", "Harbour lounges", "Use trams, not cars"] },
+            { slug: "altona", name: "Altona", atGlance: ["Trendy district", "Alternative culture", "Great restaurants"] },
+          ]},
+          { slug: "bavaria", name: "Bavaria", cities: [
+            { slug: "munich", name: "Munich", atGlance: ["Conservative but OK", "English widely spoken", "Beer gardens = no weed"] },
+            { slug: "nuremberg", name: "Nuremberg", atGlance: ["Historic city", "Growing scene", "Affordable living"] },
+          ]},
         ],
       },
       {
@@ -362,30 +277,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-yellow-500",
         states: [
-          {
-            slug: "catalonia",
-            name: "Catalonia",
-            cities: [
-              { slug: "barcelona", name: "Barcelona", atGlance: ["Cannabis clubs abundant", "Beach city vibes", "Membership clubs"] },
-              { slug: "girona", name: "Girona", atGlance: ["Medieval town", "Quiet vibes", "Costa Brava nearby"] },
-            ],
-          },
-          {
-            slug: "madrid-region",
-            name: "Madrid",
-            cities: [
-              { slug: "madrid", name: "Madrid", atGlance: ["Capital hub", "Active community", "City exploration"] },
-              { slug: "toledo", name: "Toledo", atGlance: ["Historic city", "Art center", "Day trip"] },
-            ],
-          },
-          {
-            slug: "valencia-region",
-            name: "Valencia",
-            cities: [
-              { slug: "valencia", name: "Valencia", atGlance: ["Coastal charm", "Relaxed atmosphere", "Paella & culture"] },
-              { slug: "benidorm", name: "Benidorm", atGlance: ["Beach resort", "Vibrant nightlife", "Tourist friendly"] },
-            ],
-          },
+          { slug: "catalonia", name: "Catalonia", cities: [
+            { slug: "barcelona", name: "Barcelona", atGlance: ["Cannabis clubs abundant", "Beach city vibes", "Membership clubs"] },
+            { slug: "girona", name: "Girona", atGlance: ["Medieval town", "Quiet vibes", "Costa Brava nearby"] },
+          ]},
+          { slug: "madrid-region", name: "Madrid", cities: [
+            { slug: "madrid", name: "Madrid", atGlance: ["Capital hub", "Active community", "City exploration"] },
+            { slug: "toledo", name: "Toledo", atGlance: ["Historic city", "Art center", "Day trip"] },
+          ]},
+          { slug: "valencia-region", name: "Valencia", cities: [
+            { slug: "valencia", name: "Valencia", atGlance: ["Coastal charm", "Relaxed atmosphere", "Paella & culture"] },
+            { slug: "benidorm", name: "Benidorm", atGlance: ["Beach resort", "Vibrant nightlife", "Tourist friendly"] },
+          ]},
         ],
       },
       {
@@ -400,30 +303,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-green-600",
         states: [
-          {
-            slug: "lisbon-region",
-            name: "Lisbon",
-            cities: [
-              { slug: "lisbon", name: "Lisbon", atGlance: ["Capital vibrancy", "Coastal beauty", "Laid-back culture"] },
-              { slug: "cascais", name: "Cascais", atGlance: ["Beach town", "Cliffside views", "Relaxed vibe"] },
-            ],
-          },
-          {
-            slug: "norte",
-            name: "Norte",
-            cities: [
-              { slug: "porto", name: "Porto", atGlance: ["Wine country", "Riverside charm", "Local community"] },
-              { slug: "guarda", name: "Guarda", atGlance: ["Mountain town", "Historic center", "Peaceful"] },
-            ],
-          },
-          {
-            slug: "algarve-region",
-            name: "Algarve",
-            cities: [
-              { slug: "algarve", name: "Algarve", atGlance: ["Beach destination", "Tourist-friendly", "Warm climate"] },
-              { slug: "tavira", name: "Tavira", atGlance: ["Clifftop town", "Golden cliffs", "Photography hub"] },
-            ],
-          },
+          { slug: "lisbon-region", name: "Lisbon", cities: [
+            { slug: "lisbon", name: "Lisbon", atGlance: ["Capital vibrancy", "Coastal beauty", "Laid-back culture"] },
+            { slug: "cascais", name: "Cascais", atGlance: ["Beach town", "Cliffside views", "Relaxed vibe"] },
+          ]},
+          { slug: "norte", name: "Norte", cities: [
+            { slug: "porto", name: "Porto", atGlance: ["Wine country", "Riverside charm", "Local community"] },
+            { slug: "guarda", name: "Guarda", atGlance: ["Mountain town", "Historic center", "Peaceful"] },
+          ]},
+          { slug: "algarve-region", name: "Algarve", cities: [
+            { slug: "algarve", name: "Algarve", atGlance: ["Beach destination", "Tourist-friendly", "Warm climate"] },
+            { slug: "tavira", name: "Tavira", atGlance: ["Clifftop town", "Golden cliffs", "Photography hub"] },
+          ]},
         ],
       },
     ],
@@ -449,30 +340,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-blue-500",
         states: [
-          {
-            slug: "bangkok-region",
-            name: "Bangkok",
-            cities: [
-              { slug: "bangkok", name: "Bangkok", atGlance: ["Med clinics with script", "Bustling capital", "Discreet only"] },
-              { slug: "thonburi", name: "Thonburi", atGlance: ["Old Bangkok vibes", "Canal tours", "Local markets"] },
-            ],
-          },
-          {
-            slug: "phuket-region",
-            name: "Phuket",
-            cities: [
-              { slug: "phuket", name: "Phuket", atGlance: ["Tourist enforcement high", "Beach paradise", "Consider weed-free holiday"] },
-              { slug: "patong", name: "Patong", atGlance: ["Beach resort", "Nightlife hub", "Tourist area"] },
-            ],
-          },
-          {
-            slug: "chiang-mai-region",
-            name: "Chiang Mai",
-            cities: [
-              { slug: "chiang-mai", name: "Chiang Mai", atGlance: ["Conservative north", "Traditional meds", "Docs essential"] },
-              { slug: "pai", name: "Pai", atGlance: ["Mountain town", "Artistic community", "Hippie vibe"] },
-            ],
-          },
+          { slug: "bangkok-region", name: "Bangkok", cities: [
+            { slug: "bangkok", name: "Bangkok", atGlance: ["Med clinics with script", "Bustling capital", "Discreet only"] },
+            { slug: "thonburi", name: "Thonburi", atGlance: ["Old Bangkok vibes", "Canal tours", "Local markets"] },
+          ]},
+          { slug: "phuket-region", name: "Phuket", cities: [
+            { slug: "phuket", name: "Phuket", atGlance: ["Tourist enforcement high", "Beach paradise", "Consider weed-free holiday"] },
+            { slug: "patong", name: "Patong", atGlance: ["Beach resort", "Nightlife hub", "Tourist area"] },
+          ]},
+          { slug: "chiang-mai-region", name: "Chiang Mai", cities: [
+            { slug: "chiang-mai", name: "Chiang Mai", atGlance: ["Conservative north", "Traditional meds", "Docs essential"] },
+            { slug: "pai", name: "Pai", atGlance: ["Mountain town", "Artistic community", "Hippie vibe"] },
+          ]},
         ],
       },
       {
@@ -487,30 +366,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-red-500",
         states: [
-          {
-            slug: "seoul-region",
-            name: "Seoul",
-            cities: [
-              { slug: "seoul", name: "Seoul", atGlance: ["Capital city", "Tech-forward", "Strict enforcement"] },
-              { slug: "gangnam", name: "Gangnam", atGlance: ["Upscale district", "Modern vibe", "Shopping hub"] },
-            ],
-          },
-          {
-            slug: "busan-region",
-            name: "Busan",
-            cities: [
-              { slug: "busan", name: "Busan", atGlance: ["Coastal port", "Relaxed vibe", "Beautiful beaches"] },
-              { slug: "haeundae", name: "Haeundae", atGlance: ["Beach district", "Summer resort", "Water sports"] },
-            ],
-          },
-          {
-            slug: "incheon-region",
-            name: "Incheon",
-            cities: [
-              { slug: "incheon", name: "Incheon", atGlance: ["Gateway city", "Modern infrastructure", "Medical access"] },
-              { slug: "songdo", name: "Songdo", atGlance: ["New city", "International business", "Digital hub"] },
-            ],
-          },
+          { slug: "seoul-region", name: "Seoul", cities: [
+            { slug: "seoul", name: "Seoul", atGlance: ["Capital city", "Tech-forward", "Strict enforcement"] },
+            { slug: "gangnam", name: "Gangnam", atGlance: ["Upscale district", "Modern vibe", "Shopping hub"] },
+          ]},
+          { slug: "busan-region", name: "Busan", cities: [
+            { slug: "busan", name: "Busan", atGlance: ["Coastal port", "Relaxed vibe", "Beautiful beaches"] },
+            { slug: "haeundae", name: "Haeundae", atGlance: ["Beach district", "Summer resort", "Water sports"] },
+          ]},
+          { slug: "incheon-region", name: "Incheon", cities: [
+            { slug: "incheon", name: "Incheon", atGlance: ["Gateway city", "Modern infrastructure", "Medical access"] },
+            { slug: "songdo", name: "Songdo", atGlance: ["New city", "International business", "Digital hub"] },
+          ]},
         ],
       },
     ],
@@ -536,30 +403,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-emerald-600",
         states: [
-          {
-            slug: "western-cape",
-            name: "Western Cape",
-            cities: [
-              { slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Wine over weed", "Stunning nature"] },
-              { slug: "stellenbosch", name: "Stellenbosch", atGlance: ["Wine region", "University town", "Relaxed vibe"] },
-            ],
-          },
-          {
-            slug: "gauteng",
-            name: "Gauteng",
-            cities: [
-              { slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city", "Security-conscious", "Safari hub"] },
-              { slug: "pretoria", name: "Pretoria", atGlance: ["Admin capital", "Government hub", "Parks & gardens"] },
-            ],
-          },
-          {
-            slug: "kwazulu-natal",
-            name: "KwaZulu-Natal",
-            cities: [
-              { slug: "durban", name: "Durban", atGlance: ["Beach city", "Indian Ocean vibes", "Respect traditional areas"] },
-              { slug: "umhlanga", name: "Umhlanga", atGlance: ["Beach resort", "Luxury destination", "Upscale dining"] },
-            ],
-          },
+          { slug: "western-cape", name: "Western Cape", cities: [
+            { slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Wine over weed", "Stunning nature"] },
+            { slug: "stellenbosch", name: "Stellenbosch", atGlance: ["Wine region", "University town", "Relaxed vibe"] },
+          ]},
+          { slug: "gauteng", name: "Gauteng", cities: [
+            { slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city", "Security-conscious", "Safari hub"] },
+            { slug: "pretoria", name: "Pretoria", atGlance: ["Admin capital", "Government hub", "Parks & gardens"] },
+          ]},
+          { slug: "kwazulu-natal", name: "KwaZulu-Natal", cities: [
+            { slug: "durban", name: "Durban", atGlance: ["Beach city", "Indian Ocean vibes", "Respect traditional areas"] },
+            { slug: "umhlanga", name: "Umhlanga", atGlance: ["Beach resort", "Luxury destination", "Upscale dining"] },
+          ]},
         ],
       },
     ],
@@ -585,30 +440,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-yellow-600",
         states: [
-          {
-            slug: "kingston-parish",
-            name: "Kingston",
-            cities: [
-              { slug: "kingston", name: "Kingston", atGlance: ["Reggae birthplace", "Cultural herb tours", "Downtown discretion"] },
-              { slug: "port-royal", name: "Port Royal", atGlance: ["Historic pirate town", "Beach bar vibes", "Island escape"] },
-            ],
-          },
-          {
-            slug: "st-james",
-            name: "Saint James",
-            cities: [
-              { slug: "montego-bay", name: "Montego Bay", atGlance: ["Resort security high", "Balconies OK", "Tourist police visible"] },
-              { slug: "falmouth", name: "Falmouth", atGlance: ["Historic port", "Colonial architecture", "Cruise ships"] },
-            ],
-          },
-          {
-            slug: "westmoreland",
-            name: "Westmoreland",
-            cities: [
-              { slug: "negril", name: "Negril", atGlance: ["Seven-mile beach", "Sunset cliffs", "Small-town friendly"] },
-              { slug: "lucea", name: "Lucea", atGlance: ["Coastal town", "Local beaches", "Laid-back vibe"] },
-            ],
-          },
+          { slug: "kingston-parish", name: "Kingston", cities: [
+            { slug: "kingston", name: "Kingston", atGlance: ["Reggae birthplace", "Cultural herb tours", "Downtown discretion"] },
+            { slug: "port-royal", name: "Port Royal", atGlance: ["Historic pirate town", "Beach bar vibes", "Island escape"] },
+          ]},
+          { slug: "st-james", name: "Saint James", cities: [
+            { slug: "montego-bay", name: "Montego Bay", atGlance: ["Resort security high", "Balconies OK", "Tourist police visible"] },
+            { slug: "falmouth", name: "Falmouth", atGlance: ["Historic port", "Colonial architecture", "Cruise ships"] },
+          ]},
+          { slug: "westmoreland", name: "Westmoreland", cities: [
+            { slug: "negril", name: "Negril", atGlance: ["Seven-mile beach", "Sunset cliffs", "Small-town friendly"] },
+            { slug: "lucea", name: "Lucea", atGlance: ["Coastal town", "Local beaches", "Laid-back vibe"] },
+          ]},
         ],
       },
       {
@@ -623,30 +466,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-blue-500",
         states: [
-          {
-            slug: "saint-michael",
-            name: "Saint Michael",
-            cities: [
-              { slug: "bridgetown", name: "Bridgetown", atGlance: ["Capital city", "Harbor charm", "Local vibe"] },
-              { slug: "garrison", name: "Garrison", atGlance: ["Historic district", "UNESCO site", "Museums"] },
-            ],
-          },
-          {
-            slug: "saint-james",
-            name: "Saint James",
-            cities: [
-              { slug: "carlisle-bay", name: "Carlisle Bay", atGlance: ["Beach resort area", "Water activities", "Tourist hotspot"] },
-              { slug: "holetown", name: "Holetown", atGlance: ["West coast", "Upscale shopping", "Nightlife"] },
-            ],
-          },
-          {
-            slug: "saint-joseph",
-            name: "Saint Joseph",
-            cities: [
-              { slug: "bathsheba", name: "Bathsheba", atGlance: ["Atlantic coast", "Rugged beauty", "Local community"] },
-              { slug: "cattlewash", name: "Cattlewash", atGlance: ["Quiet beach", "Fishing village", "Authentic vibe"] },
-            ],
-          },
+          { slug: "saint-michael", name: "Saint Michael", cities: [
+            { slug: "bridgetown", name: "Bridgetown", atGlance: ["Capital city", "Harbor charm", "Local vibe"] },
+            { slug: "garrison", name: "Garrison", atGlance: ["Historic district", "UNESCO site", "Museums"] },
+          ]},
+          { slug: "saint-james", name: "Saint James", cities: [
+            { slug: "carlisle-bay", name: "Carlisle Bay", atGlance: ["Beach resort area", "Water activities", "Tourist hotspot"] },
+            { slug: "holetown", name: "Holetown", atGlance: ["West coast", "Upscale shopping", "Nightlife"] },
+          ]},
+          { slug: "saint-joseph", name: "Saint Joseph", cities: [
+            { slug: "bathsheba", name: "Bathsheba", atGlance: ["Atlantic coast", "Rugged beauty", "Local community"] },
+            { slug: "cattlewash", name: "Cattlewash", atGlance: ["Quiet beach", "Fishing village", "Authentic vibe"] },
+          ]},
         ],
       },
     ],
@@ -672,30 +503,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-green-500",
         states: [
-          {
-            slug: "new-south-wales",
-            name: "New South Wales",
-            cities: [
-              { slug: "sydney", name: "Sydney", atGlance: ["Major city", "Medical access", "Beautiful harbor"] },
-              { slug: "newcastle", name: "Newcastle", atGlance: ["Beach city", "Growing scene", "Nearby vineyards"] },
-            ],
-          },
-          {
-            slug: "victoria",
-            name: "Victoria",
-            cities: [
-              { slug: "melbourne", name: "Melbourne", atGlance: ["Cultural hub", "Progressive city", "Coffee culture"] },
-              { slug: "geelong", name: "Geelong", atGlance: ["Beach town", "Surf culture", "Art scene"] },
-            ],
-          },
-          {
-            slug: "australian-capital-territory",
-            name: "ACT",
-            cities: [
-              { slug: "canberra", name: "Canberra", atGlance: ["Capital decriminalized", "Political hub", "More relaxed"] },
-              { slug: "queanbeyan", name: "Queanbeyan", atGlance: ["Neighboring town", "Mountain views", "Gateway to mountains"] },
-            ],
-          },
+          { slug: "new-south-wales", name: "New South Wales", cities: [
+            { slug: "sydney", name: "Sydney", atGlance: ["Major city", "Medical access", "Beautiful harbor"] },
+            { slug: "newcastle", name: "Newcastle", atGlance: ["Beach city", "Growing scene", "Nearby vineyards"] },
+          ]},
+          { slug: "victoria", name: "Victoria", cities: [
+            { slug: "melbourne", name: "Melbourne", atGlance: ["Cultural hub", "Progressive city", "Coffee culture"] },
+            { slug: "geelong", name: "Geelong", atGlance: ["Beach town", "Surf culture", "Art scene"] },
+          ]},
+          { slug: "australian-capital-territory", name: "ACT", cities: [
+            { slug: "canberra", name: "Canberra", atGlance: ["Capital decriminalized", "Political hub", "More relaxed"] },
+            { slug: "queanbeyan", name: "Queanbeyan", atGlance: ["Neighboring town", "Mountain views", "Gateway to mountains"] },
+          ]},
         ],
       },
       {
@@ -710,30 +529,18 @@ const WORLD_GUIDE: Continent[] = [
         image: getRandomImage(),
         iconColor: "text-pink-600",
         states: [
-          {
-            slug: "auckland-region",
-            name: "Auckland",
-            cities: [
-              { slug: "auckland", name: "Auckland", atGlance: ["Largest city", "Medical access", "Vibrant culture"] },
-              { slug: "waitakere", name: "Waitakere", atGlance: ["Volcano region", "City beaches", "Hiking trails"] },
-            ],
-          },
-          {
-            slug: "wellington-region",
-            name: "Wellington",
-            cities: [
-              { slug: "wellington", name: "Wellington", atGlance: ["Capital city", "Progressive politics", "Creative scene"] },
-              { slug: "hutt-valley", name: "Hutt Valley", atGlance: ["Urban sprawl", "Suburban living", "Valley town"] },
-            ],
-          },
-          {
-            slug: "canterbury",
-            name: "Canterbury",
-            cities: [
-              { slug: "christchurch", name: "Christchurch", atGlance: ["South Island", "Outdoor adventure", "Rebuild spirit"] },
-              { slug: "oamaru", name: "Oamaru", atGlance: ["Victorian town", "Penguin spotting", "Coastal charm"] },
-            ],
-          },
+          { slug: "auckland-region", name: "Auckland", cities: [
+            { slug: "auckland", name: "Auckland", atGlance: ["Largest city", "Medical access", "Vibrant culture"] },
+            { slug: "waitakere", name: "Waitakere", atGlance: ["Volcano region", "City beaches", "Hiking trails"] },
+          ]},
+          { slug: "wellington-region", name: "Wellington", cities: [
+            { slug: "wellington", name: "Wellington", atGlance: ["Capital city", "Progressive politics", "Creative scene"] },
+            { slug: "hutt-valley", name: "Hutt Valley", atGlance: ["Urban sprawl", "Suburban living", "Valley town"] },
+          ]},
+          { slug: "canterbury", name: "Canterbury", cities: [
+            { slug: "christchurch", name: "Christchurch", atGlance: ["South Island", "Outdoor adventure", "Rebuild spirit"] },
+            { slug: "oamaru", name: "Oamaru", atGlance: ["Victorian town", "Penguin spotting", "Coastal charm"] },
+          ]},
         ],
       },
     ],
@@ -745,27 +552,19 @@ const WORLD_GUIDE: Continent[] = [
 ============================================ */
 const getStatusColor = (status) => {
   switch (status) {
-    case "Recreational":
-      return "bg-green-500/90 text-white";
-    case "Medical":
-      return "bg-blue-500/90 text-white";
-    case "Decriminalized":
-      return "bg-amber-500/90 text-white";
-    default:
-      return "bg-red-500/90 text-white";
+    case "Recreational": return "bg-green-500/90 text-white";
+    case "Medical": return "bg-blue-500/90 text-white";
+    case "Decriminalized": return "bg-amber-500/90 text-white";
+    default: return "bg-red-500/90 text-white";
   }
 };
 
 const getStatusIcon = (status) => {
   switch (status) {
-    case "Recreational":
-      return "🟢";
-    case "Medical":
-      return "🔵";
-    case "Decriminalized":
-      return "🟡";
-    default:
-      return "🔴";
+    case "Recreational": return "🟢";
+    case "Medical": return "🔵";
+    case "Decriminalized": return "🟡";
+    default: return "🔴";
   }
 };
 
@@ -773,21 +572,18 @@ const getStatusIcon = (status) => {
    VIEW COMPONENTS
 ============================================ */
 
-// CONTINENTS VIEW
 const ContinentsView = ({ continents, onSelectContinent, searchQuery }) => {
   const filteredContinents = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
     if (!q) return continents;
-
     return continents.map((continent) => ({
       ...continent,
-      countries: continent.countries.filter(
-        (country) =>
-          country.name.toLowerCase().includes(q) ||
-          country.description.toLowerCase().includes(q) ||
-          country.states.some((state) =>
-            state.cities.some((city) => city.name.toLowerCase().includes(q))
-          )
+      countries: continent.countries.filter((country) =>
+        country.name.toLowerCase().includes(q) ||
+        country.description.toLowerCase().includes(q) ||
+        country.states.some((state) =>
+          state.cities.some((city) => city.name.toLowerCase().includes(q))
+        )
       ),
     })).filter((c) => c.countries.length > 0);
   }, [searchQuery, continents]);
@@ -840,7 +636,6 @@ const ContinentsView = ({ continents, onSelectContinent, searchQuery }) => {
   );
 };
 
-// COUNTRIES VIEW
 const CountriesView = ({ continent, onSelectCountry, onBack }) => {
   return (
     <motion.div
@@ -897,7 +692,6 @@ const CountriesView = ({ continent, onSelectCountry, onBack }) => {
   );
 };
 
-// COUNTRY DETAIL VIEW
 const CountryDetailView = ({ country, onSelectState, onBack }) => {
   return (
     <motion.div
@@ -915,7 +709,6 @@ const CountryDetailView = ({ country, onSelectState, onBack }) => {
         Back to Countries
       </button>
 
-      {/* Country Header with Image */}
       <div className="relative h-40 sm:h-48 bg-gradient-to-br from-green-500/20 to-green-400/5 rounded-2xl overflow-hidden border border-green-500/20">
         <div className="absolute inset-0 flex items-center justify-center opacity-10">
           <Globe className="w-32 h-32 sm:w-40 sm:h-40 text-green-600" />
@@ -939,10 +732,8 @@ const CountryDetailView = ({ country, onSelectState, onBack }) => {
         </div>
       </div>
 
-      {/* Country Description */}
       <p className="text-sm sm:text-base text-muted-foreground bg-green-500/10 rounded-xl p-4">{country.description}</p>
 
-      {/* Quick Info */}
       <div className="space-y-3">
         <div className="flex items-start gap-3 bg-green-500/10 p-3 sm:p-4 rounded-lg">
           <Users className="w-5 h-5 text-green-500 shrink-0 mt-1" />
@@ -967,9 +758,8 @@ const CountryDetailView = ({ country, onSelectState, onBack }) => {
         </div>
       </div>
 
-      {/* States */}
       <div>
-        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4">Popular States/Regions ({country.states.length})</h3>
+        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4">Popular States ({country.states.length})</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {country.states.map((state) => (
             <motion.button
@@ -997,7 +787,6 @@ const CountryDetailView = ({ country, onSelectState, onBack }) => {
   );
 };
 
-// STATE DETAIL VIEW
 const StateDetailView = ({ country, state, onBack }) => {
   return (
     <motion.div
@@ -1015,7 +804,6 @@ const StateDetailView = ({ country, state, onBack }) => {
         Back to {country.name}
       </button>
 
-      {/* State Header */}
       <div className="relative h-32 sm:h-40 bg-gradient-to-br from-green-500/20 to-green-400/5 rounded-2xl overflow-hidden border border-green-500/20">
         <div className="absolute inset-0 flex items-center justify-center opacity-10">
           <MapPin className="w-32 h-32 sm:w-40 sm:h-40 text-green-600" />
@@ -1037,7 +825,6 @@ const StateDetailView = ({ country, state, onBack }) => {
         </div>
       </div>
 
-      {/* Cities */}
       <div>
         <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4">Popular Cities</h3>
         <div className="space-y-3">
@@ -1110,7 +897,6 @@ const WorldGuide = () => {
     <div className="min-h-screen bg-background">
       <div className="pt-20 sm:pt-24 pb-16 sm:pb-20 px-4">
         <div className="container mx-auto max-w-7xl">
-          {/* HERO & SEARCH */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1124,7 +910,6 @@ const WorldGuide = () => {
               Explore cannabis laws by continent, country, state, and city worldwide
             </p>
 
-            {/* SEARCH BAR */}
             <div className="max-w-2xl mx-auto">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -1139,7 +924,6 @@ const WorldGuide = () => {
             </div>
           </motion.div>
 
-          {/* VIEW CONTENT */}
           <AnimatePresence mode="wait">
             {currentView === "continents" && (
               <ContinentsView
