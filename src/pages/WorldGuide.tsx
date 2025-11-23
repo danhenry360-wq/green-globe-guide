@@ -490,7 +490,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, delay }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      <Card className="h-full flex flex-col bg-card border-border/40 hover:border-accent/50 hover:shadow-lg transition-all overflow-hidden group">
+      <div className="h-full flex flex-col bg-card border border-border/40 rounded-lg hover:border-accent/50 hover:shadow-lg transition-all overflow-hidden group">
         {/* Header Image - Reduced height for mobile */}
         <div className="relative w-full h-20 sm:h-28 md:h-36 bg-muted overflow-hidden flex-shrink-0">
           <img
@@ -743,7 +743,7 @@ export default WorldGuide;-start gap-1.5 bg-muted/40 p-1.5 rounded">
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     </motion.div>
   );
 };
