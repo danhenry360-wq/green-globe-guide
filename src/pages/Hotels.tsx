@@ -685,6 +685,10 @@ const Hotels = () => {
                   USA Guide
                 </Link>
                 <span className="text-muted-foreground/40">•</span>
+                <Link to="/dispensaries" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
+                  Dispensaries
+                </Link>
+                <span className="text-muted-foreground/40">•</span>
                 <Link to="/world" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
                   World Guide
                 </Link>
