@@ -42,12 +42,12 @@ const DATA: CountryData[] = DISPENSARY_DATA;
    SEO STRUCTURED DATA
 ============================================ */
 const generateStructuredData = (dispensaryCount: number) => ({
-  "@context": "https://schema.org",
+  "@context": "https://schema.org ",
   "@type": "CollectionPage",
   name: "BudQuest Verified Dispensaries | Find Cannabis Shops Worldwide",
   description:
     "Browse and discover BudQuest-verified dispensaries by country, state, and city. Policies checked, premium experience.",
-  url: "https://budquest.com/dispensaries",
+  url: "https://budquest.com/dispensaries ",
   mainEntity: {
     "@type": "ItemList",
     name: "Verified Dispensaries Collection",
@@ -85,7 +85,7 @@ const StarRating = ({ value }: { value: number }) => (
     {[1, 2, 3, 4, 5].map((i) => (
       <svg
         key={i}
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="http://www.w3.org/2000/svg "
         viewBox="0 0 24 24"
         className={`w-4 h-4 ${
           i <= Math.round(value)
@@ -620,7 +620,7 @@ const Dispensary = () => {
           name="keywords"
           content="dispensaries, 420 shops, cannabis stores, BudQuest verified, marijuana stores, weed shops, USA, Canada, Netherlands"
         />
-        <link rel="canonical" href="https://budquest.com/dispensaries" />
+        <link rel="canonical" href="https://budquest.com/dispensaries " />
         <script type="application/ld+json">
           {JSON.stringify(generateStructuredData(filteredData.length))}
         </script>
@@ -629,10 +629,10 @@ const Dispensary = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        {/* FIXED SEARCH & SORT BAR */}
-        <div className="fixed left-0 right-0 top-20 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/50 shadow-2xl md:hidden">
-          <div className="px-4 sm:px-6 py-4 sm:py-6">
-            <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+        {/* MOBILE SEARCH BAR – NOW STATIC AT TOP */}
+        <div className="md:hidden sticky top-0 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/50 shadow-2xl">
+          <div className="px-4 py-4">
+            <div className="flex gap-3 items-stretch">
               <div className="flex-1 relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                 <input
@@ -642,7 +642,7 @@ const Dispensary = () => {
                   onChange={(e) =>
                     handleFilterChange("search", e.target.value)
                   }
-                  className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                 />
                 {filters.search && (
                   <button
@@ -658,7 +658,7 @@ const Dispensary = () => {
                 onClick={() => setIsFilterOpen(true)}
                 variant="outline"
                 size="sm"
-                className="gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
+                className="gap-2 border-border/50 text-sm px-4 h-11 rounded-xl hover:bg-accent/10"
               >
                 <Filter className="w-5 h-5" />
                 Filters
@@ -669,7 +669,7 @@ const Dispensary = () => {
                 onChange={(e) =>
                   handleFilterChange("sort", e.target.value as SortType)
                 }
-                className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+                className="px-4 py-3 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11"
               >
                 <option value="rating" className="bg-card">
                   Highest Rated
@@ -688,10 +688,10 @@ const Dispensary = () => {
           </div>
         </div>
 
-        <main className="pt-24 pb-20 px-4 sm:px-6 md:pt-24">
+        <main className="pb-20 px-4 sm:px-6">
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
-            <section className="max-w-4xl mx-auto mb-12 text-center">
+            <section className="max-w-4xl mx-auto mb-12 text-center pt-6 md:pt-12">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white leading-tight">
                 BudQuest Verified Dispensaries
               </h1>
@@ -824,9 +824,6 @@ const Dispensary = () => {
                     </div>
                   )}
                 </div>
-
-                {/* MOBILE SPACING FOR FIXED BAR */}
-                <div className="h-32 md:h-0" />
 
                 {/* RESULTS */}
                 {filteredData.length === 0 ? (
