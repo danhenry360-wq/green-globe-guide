@@ -1,464 +1,197 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useState, KeyboardEvent, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
-import { DestinationCard } from "@/components/DestinationCard";
-import { ArticleCard } from "@/components/ArticleCard";
-import {
-  Search, MapPin, Shield, Globe2, Plane, Building2, Map, Compass,
-  ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, CheckCircle,
-  AlertCircle, LucideIcon,
-} from "lucide-react";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import InteractiveWorldMap from "@/components/InteractiveWorldMap";
-import ContinentSelector from "@/components/ContinentSelector";
-import MapLegend from "@/components/MapLegend";
-import heroImage from "@/assets/hero-cannabis-travel.jpg";
+import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { MapPin, Star, ExternalLink, Globe, Building } from "lucide-react";
+import { useEffect } from "react";
 
-import { Destination, StatItem, FeatureItem, Article } from "@/types/data";
-import { FEATURED_DESTINATIONS, STATS_DATA, FEATURES_DATA, BLOG_DATA } from "@/data/home_data";
+const Hotels = () => {
+  const { data: hotels, isLoading } = useQuery({
+    queryKey: ["hotels"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("hotels")
+        .select(`
+          *,
+          cities (
+            name,
+            states (
+              name
+            )
+          )
+        `)
+        .order("rating", { ascending: false });
 
-/* ----------  ANIMATION VARIANTS  ---------- */
-const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
-const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
+      if (error) throw error;
+      return data;
+    },
+  });
 
-/* ----------  ICON MAPPING  ---------- */
-// Map string names from data to Lucide React components
-const iconMap: { [key: string]: LucideIcon } = {
-  Globe2, MapPin, Building2, Shield, Plane, Map, Flame, Stethoscope,
-};
-
-/* ----------  ANIMATION VARIANTS  ---------- */
-
-/* ----------  SEO META TAGS COMPONENT  ---------- */
-const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "BudQuest",
-  description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com",
-  applicationCategory: "TravelApplication",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD"
-  }
-};
-
-const SEOHead = () => {
+  // Load Airbnb script safely in React
   useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(HOME_STRUCTURED_DATA);
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
+    const script = document.createElement("script");
+    script.src = "https://www.airbnb.com/embeddable/airbnb_jssdk";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
   }, []);
 
-  return null;
-};
-
-/* ----------  COMPONENT  ---------- */
-/**
- * Home Component - BudQuest Landing Page
- * Professional, SEO-optimized cannabis travel guide homepage
- */
-const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
-
-  const handleSearch = (term?: string) => {
-    const finalTerm = term || searchTerm;
-    if (finalTerm.trim()) navigate(`/usa?search=${encodeURIComponent(finalTerm.trim())}`);
-  };
-
-  const scrollToStats = () => {
-    document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
-      <SEOHead />
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
-        Skip to main content
-      </a>
 
-      {/* ==========  HERO SECTION  ========== */}
-      <section 
-        className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
-        role="banner"
-        aria-label="BudQuest cannabis travel guide hero section"
-      >
-        {/* Background layers */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center" 
-          style={{ backgroundImage: `url(${heroImage})` }}
-          role="img"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/15 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
+      <div className="pt-16 pb-10 px-4 md:px-6">
+        <div className="container mx-auto">
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="container mx-auto text-center relative z-10 px-2"
-        >
-          {/* Badge with sparkle */}
-          <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 hover:bg-accent/20 shadow-[0_0_30px_-10px_rgba(34,197,94,0.6)] transition-shadow">
-            <Sparkles className="w-4 h-4 mr-2 inline animate-pulse" aria-hidden="true" />
-            Global Cannabis Travel Intelligence
-          </Badge>
-
-          {/* Main Heading */}
-          <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
-            <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-              BudQuest
-            </span>
-          </h1>
-
-          <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto leading-relaxed">
-            Your Global Cannabis Travel Companion
-          </p>
-
-          <p className="text-[clamp(0.95rem,2vw,1.3rem)] text-muted-foreground/80 font-normal mt-3 max-w-4xl mx-auto leading-relaxed">
-            Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 120+ countries with verified, real-time information.
-          </p>
-
-          {/* Search bar with glow & micro-interaction */}
-          <div className="max-w-3xl mx-auto mt-10">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" aria-hidden="true" />
-              <Search 
-                className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" 
-                aria-hidden="true"
-              />
-              <Input
-                id="search-destinations"
-                placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
-                className="pl-14 pr-28 h-14 sm:h-16 bg-card/80 border-2 border-white/10 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl text-base sm:text-lg placeholder:text-muted-foreground/60 shadow-2xl"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                aria-label="Search cannabis-friendly destinations worldwide"
-              />
-              <Button 
-                onClick={() => handleSearch()} 
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20 text-sm sm:text-base"
-                aria-label="Search destinations"
-              >
-                Search
-              </Button>
-            </div>
+          {/* HEADER */}
+          <div className="max-w-3xl mx-auto mb-8 text-center">
+            <h1 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">
+              420-Friendly Stays & Accommodations
+            </h1>
+            <p className="text-base md:text-lg text-muted-foreground">
+              Verified cannabis-friendly stays across top cities and states.
+            </p>
           </div>
 
-          {/* Quick tags with hover lift */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
-            {[
-              { label: "🔥 California", term: "California", Icon: Flame },
-              { label: "💊 Medical Only", term: "Medical", Icon: Stethoscope },
-              { label: "🌍 Europe", term: "Europe", Icon: Globe2 },
-              { label: "🏨 420 Hotels", term: "Hotels", Icon: Building2 },
-            ].map((tag) => (
-              <motion.button
-                key={tag.term}
-                onClick={() => navigate(`/usa?search=${tag.term}`)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white"
-                aria-label={`Search ${tag.label}`}
-              >
-                <tag.Icon className="w-4 h-4 text-accent" aria-hidden="true" />
-                <span>{tag.label}</span>
-              </motion.button>
-            ))}
+          {/* USA & WORLD GUIDE SECTION */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {/* USA Guide Card */}
+            <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-2 hover:border-accent/40">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-50 p-3 rounded-lg">
+                  <Building className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1">USA Guide</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    State-by-state regulations & 420-friendly hotels
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>120+ Cities</span>
+                    <span>•</span>
+                    <span>50 States</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* World Guide Card */}
+            <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-2 hover:border-accent/40">
+              <div className="flex items-center gap-4">
+                <div className="bg-green-50 p-3 rounded-lg">
+                  <Globe className="h-6 w-6 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1">World Guide</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Global cannabis-friendly travel destinations
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>300+ Destinations</span>
+                    <span>•</span>
+                    <span>94% Coverage</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
 
-          {/* Scroll hint */}
-          <button
-            onClick={scrollToStats}
-            aria-label="Scroll to statistics"
-            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block hover:text-white transition-colors"
+          {/* ➜ AIRBNB EMBED */}
+          <div
+            className="airbnb-embed-frame mb-10"
+            data-id="724009894767429847"
+            data-view="home"
+            data-hide-price="true"
+            style={{
+              width: "450px",
+              height: "300px",
+              margin: "0 auto",
+            }}
           >
-            <ChevronDown className="w-8 h-8 animate-bounce" aria-hidden="true" />
-          </button>
-        </motion.div>
-      </section>
-
-      {/* ==========  STATS SECTION  ========== */}
-      <section 
-        id="stats" 
-        className="py-16 sm:py-20 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent"
-        aria-labelledby="stats-heading"
-      >
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="container mx-auto"
-        >
-          <h2 id="stats-heading" className="sr-only">BudQuest Global Coverage Statistics</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-            {STATS_DATA.map((stat, i) => {
-              const IconComponent = iconMap[stat.icon];
-              return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="text-center group"
-                >
-                  <div className="w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center border border-accent/20 shadow-lg shadow-accent/5">
-                    {IconComponent && <IconComponent className="w-8 sm:w-10 h-8 sm:h-10 text-accent" aria-hidden="true" />}
-                  </div>
-                  <div className="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                    <AnimatedCounter end={stat.count} />
-                    {stat.suffix}
-                  </div>
-                  <div className="text-base sm:text-lg text-muted-foreground font-light">{stat.label}</div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  FEATURED DESTINATIONS SECTION  ========== */}
-      <section 
-        id="main-content"
-        className="py-16 sm:py-20 px-4 bg-black"
-        aria-labelledby="destinations-heading"
-      >
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="container mx-auto"
-        >
-          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
-            <h2 id="destinations-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Popular Destinations
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400">
-              Explore BudQuest's curated list of cannabis-friendly travel hotspots worldwide
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {FEATURED_DESTINATIONS.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} />
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  FEATURES/RESOURCES SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-black"
-        aria-labelledby="resources-heading"
-      >
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="container mx-auto"
-        >
-          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
-            <h2 id="resources-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Essential Resources
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400">
-              Everything the modern cannabis traveler needs for safe, informed journeys
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {FEATURES_DATA.map((feat) => {
-              const IconComponent = iconMap[feat.icon];
-              return (
-                <motion.div key={feat.title} variants={FADE_IN} whileHover={{ y: -6 }}>
-                  <Link to={feat.link} aria-label={feat.title}>
-                    <Card className="p-6 sm:p-8 h-full bg-gray-900/50 border-white/10 hover:border-accent/30 hover:bg-gray-900 backdrop-blur-xl transition-all group">
-                      <div className="w-12 sm:w-14 h-12 sm:h-14 mb-4 sm:mb-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
-                        {IconComponent && <IconComponent className="w-6 sm:w-7 h-6 sm:h-7 text-accent group-hover:scale-110 transition-transform" aria-hidden="true" />}
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3 text-white group-hover:text-accent transition-colors">{feat.title}</h3>
-                      <p className="text-sm sm:text-base text-gray-400 flex-grow leading-relaxed mb-3 sm:mb-4">{feat.desc}</p>
-                      <div className="flex items-center gap-2 text-accent font-medium group-hover:gap-3 transition-all text-sm sm:text-base">
-                        <span>Explore</span>
-                        <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                      </div>
-                    </Card>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  BLOG/TRAVEL GUIDES SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-black"
-        aria-labelledby="guides-heading"
-      >
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="container mx-auto"
-        >
-          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
-            <h2 id="guides-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Travel Guides & Articles
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400">
-              In-depth BudQuest guides for your next cannabis-friendly adventure
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-{BLOG_DATA.map((post) => (
-              <ArticleCard key={post.id} article={post} />
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  INTERACTIVE MAP SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-gradient-to-b from-black via-gray-950 to-black"
-        aria-labelledby="map-heading"
-      >
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="container mx-auto text-center"
-        >
-          <motion.div variants={FADE_IN} className="mb-8 sm:mb-12">
-            <Badge className="px-4 sm:px-5 py-2 bg-accent/10 text-accent border-accent/30 mb-4 sm:mb-6 backdrop-blur-md text-xs sm:text-sm inline-flex">
-              <Globe2 className="w-4 h-4 mr-2" aria-hidden="true" />
-              Interactive Global Map
-            </Badge>
-            <h2 id="map-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Global Cannabis Legality Map
-            </h2>
-            <p className="text-base sm:text-xl text-gray-400 px-2 sm:px-0">
-              Tap any country to instantly check cannabis laws, regulations, and travel safety information
-            </p>
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="hidden md:block max-w-6xl mx-auto mb-12">
-            <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-accent/10 bg-black/40 backdrop-blur-sm p-4">
-              <InteractiveWorldMap />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-accent/5 rounded-full blur-[100px] -z-10" aria-hidden="true" />
-            </div>
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="md:hidden mb-12">
-            <ContinentSelector />
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="mb-8 sm:mb-12">
-            <MapLegend />
-          </motion.div>
-
-          <motion.div variants={FADE_IN}>
-            <Link to="/world">
-              <Button 
-                size="lg" 
-                className="h-12 sm:h-16 px-6 sm:px-10 text-base sm:text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-2xl hover:scale-105 transition-transform"
-              >
-                <Map className="w-5 h-5 mr-2 sm:mr-3" aria-hidden="true" />
-                Advanced Map & Filters
-              </Button>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* ==========  TRUST & LEGAL NOTICE SECTION  ========== */}
-      <section className="py-12 sm:py-16 px-4 bg-black border-t border-white/5">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="container mx-auto"
-        >
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 max-w-4xl mx-auto">
-            <div className="flex gap-4 flex-1">
-              <AlertCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Legal Disclaimer</h3>
-                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                  Cannabis laws change frequently. BudQuest provides research-backed information, but always verify local regulations before traveling. Users are responsible for understanding and complying with local laws.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4 flex-1">
-              <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Always Up-to-Date</h3>
-                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                  Our database is regularly updated with the latest cannabis regulations from trusted sources worldwide.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  CTA SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-gradient-to-t from-background to-black relative overflow-hidden"
-        aria-labelledby="cta-heading"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-accent/10 blur-3xl" aria-hidden="true" />
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="container mx-auto text-center relative z-10"
-        >
-          <h2 id="cta-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-8 text-white px-2">
-            Ready to Travel with Confidence?
-          </h2>
-          <p className="text-base sm:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto px-2">
-            Get instant access to verified cannabis laws, 420-friendly accommodations, and travel safety information for 120+ countries worldwide.
-          </p>
-          <Link to="/usa">
-            <Button 
-              size="lg" 
-              className="h-12 sm:h-16 px-6 sm:px-12 text-base sm:text-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-glow rounded-2xl hover:scale-105 transition-transform"
+            <a href="https://www.airbnb.com/rooms/724009894767429847?check_in=2025-12-06&check_out=2025-12-11&guests=1&adults=1&s=66&source=embed_widget">
+              View On Airbnb
+            </a>
+            <a
+              href="https://www.airbnb.com/rooms/724009894767429847?check_in=2025-12-06&check_out=2025-12-11&guests=1&adults=1&s=66&source=embed_widget"
+              rel="nofollow"
             >
-              Start Exploring Now
-            </Button>
-          </Link>
-        </motion.div>
-      </section>
+              Guesthouse in Malibu · ★4.98 · 1 bedroom · 1 bed · 1 bath
+            </a>
+          </div>
+
+          {/* HOTELS GRID */}
+          {isLoading ? (
+            <div className="text-center text-muted-foreground py-8">Loading stays...</div>
+          ) : hotels && hotels.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {hotels.map((hotel) => (
+                <Card
+                  key={hotel.id}
+                  className="overflow-hidden hover:shadow-lg hover:border-accent/40 transition-all rounded-xl"
+                >
+                  <div className="aspect-video bg-gradient-to-br from-accent/20 to-gold/20 flex items-center justify-center">
+                    <MapPin className="h-10 w-10 text-muted-foreground" />
+                  </div>
+
+                  <div className="p-5 flex flex-col gap-2">
+                    <div className="flex items-start justify-between">
+                      <h3 className="text-lg font-semibold leading-tight line-clamp-1">
+                        {hotel.name}
+                      </h3>
+                      {hotel.is_420_friendly && (
+                        <Badge className="bg-accent text-accent-foreground whitespace-nowrap">
+                          420 Friendly
+                        </Badge>
+                      )}
+                    </div>
+
+                    {hotel.cities && (
+                      <p className="text-sm text-muted-foreground">
+                        {hotel.cities.name}, {hotel.cities.states?.name}
+                      </p>
+                    )}
+
+                    {hotel.rating && (
+                      <div className="flex items-center gap-1">
+                        <Star className="h4 w-4 fill-gold text-gold" />
+                        <span className="text-sm font-medium">{hotel.rating}</span>
+                      </div>
+                    )}
+
+                    {hotel.policies && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {hotel.policies}
+                      </p>
+                    )}
+
+                    {hotel.website && (
+                      <a
+                        href={hotel.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-accent hover:opacity-80 mt-2"
+                      >
+                        Visit Website <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-muted-foreground">No stays found. Check again soon.</p>
+            </div>
+          )}
+        </div>
+      </div>
 
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default Hotels;
