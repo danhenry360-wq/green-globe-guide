@@ -50,6 +50,18 @@ interface BlogItem {
   link: string;
 }
 
+interface Continent {
+  name: string;
+  count: string;
+  icon: React.ElementType;
+  countries: Array<{
+    name: string;
+    status: string;
+    color: string;
+    link: string;
+  }>;
+}
+
 /* ----------  ANIMATION VARIANTS  ---------- */
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
@@ -170,21 +182,74 @@ const BLOG_DATA: BlogItem[] = [
   },
 ];
 
-// Continent data for mobile grid - UPDATED TO MATCH IMAGE
-const CONTINENT_DATA = [
-  { name: "Americas", count: "8 countries", icon: Globe2 },
-  { name: "Europe", count: "4 countries", icon: Globe2 },
-  { name: "Asia", count: "4 countries", icon: Globe2 },
-  { name: "Africa", count: "4 countries", icon: Globe2 },
-  { name: "Oceania", count: "2 countries", icon: Globe2 },
+// Continent data for mobile grid with countries
+const CONTINENT_DATA: Continent[] = [
+  { 
+    name: "Americas", 
+    count: "8 countries", 
+    icon: Globe2,
+    countries: [
+      { name: "United States", status: "Mixed", color: "bg-amber-500", link: "/usa" },
+      { name: "Canada", status: "Recreational", color: "bg-green-500", link: "/canada" },
+      { name: "Uruguay", status: "Recreational", color: "bg-green-500", link: "/uruguay" },
+      { name: "Mexico", status: "Medical", color: "bg-blue-500", link: "/mexico" },
+      { name: "Jamaica", status: "Decriminalized", color: "bg-amber-500", link: "/jamaica" },
+      { name: "Colombia", status: "Medical", color: "bg-blue-500", link: "/colombia" },
+      { name: "Argentina", status: "Medical", color: "bg-blue-500", link: "/argentina" },
+      { name: "Brazil", status: "Medical", color: "bg-blue-500", link: "/brazil" }
+    ]
+  },
+  { 
+    name: "Europe", 
+    count: "4 countries", 
+    icon: Globe2,
+    countries: [
+      { name: "Netherlands", status: "Decriminalized", color: "bg-amber-500", link: "/netherlands" },
+      { name: "Portugal", status: "Decriminalized", color: "bg-amber-500", link: "/portugal" },
+      { name: "Spain", status: "Decriminalized", color: "bg-amber-500", link: "/spain" },
+      { name: "Germany", status: "Medical", color: "bg-blue-500", link: "/germany" }
+    ]
+  },
+  { 
+    name: "Asia", 
+    count: "4 countries", 
+    icon: Globe2,
+    countries: [
+      { name: "Thailand", status: "Medical", color: "bg-blue-500", link: "/thailand" },
+      { name: "Israel", status: "Medical", color: "bg-blue-500", link: "/israel" },
+      { name: "South Korea", status: "Medical", color: "bg-blue-500", link: "/south-korea" },
+      { name: "Philippines", status: "Illegal", color: "bg-red-500", link: "/philippines" }
+    ]
+  },
+  { 
+    name: "Africa", 
+    count: "4 countries", 
+    icon: Globe2,
+    countries: [
+      { name: "South Africa", status: "Decriminalized", color: "bg-amber-500", link: "/south-africa" },
+      { name: "Lesotho", status: "Medical", color: "bg-blue-500", link: "/lesotho" },
+      { name: "Zimbabwe", status: "Medical", color: "bg-blue-500", link: "/zimbabwe" },
+      { name: "Morocco", status: "Mixed", color: "bg-amber-500", link: "/morocco" }
+    ]
+  },
+  { 
+    name: "Oceania", 
+    count: "2 countries", 
+    icon: Globe2,
+    countries: [
+      { name: "Australia", status: "Medical", color: "bg-blue-500", link: "/australia" },
+      { name: "New Zealand", status: "Medical", color: "bg-blue-500", link: "/new-zealand" }
+    ]
+  },
 ];
 
-// Legal status data - UPDATED TO MATCH IMAGE EXACTLY
+// Legal status data
 const LEGAL_STATUS_DATA = [
   { status: "Recreational", description: "Legal for adult use", color: "bg-green-500", icon: CheckCircle },
   { status: "Medical Only", description: "Legal with prescription", color: "bg-blue-500", icon: Stethoscope },
   { status: "Decriminalized", description: "Not criminal offense", color: "bg-amber-500", icon: AlertCircle },
   { status: "Illegal", description: "Prohibited by law", color: "bg-red-500", icon: AlertCircle },
+  { status: "Mixed", description: "Varies by region", color: "bg-purple-500", icon: AlertCircle },
 ];
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
@@ -222,6 +287,7 @@ const SEOHead = () => {
  */
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -239,7 +305,7 @@ const Home = () => {
     if (searchTerm.trim()) {
       searchTimeoutRef.current = setTimeout(() => {
         handleSearch(searchTerm);
-      }, 800); // Wait 800ms after user stops typing
+      }, 800);
     }
 
     return () => {
@@ -251,6 +317,10 @@ const Home = () => {
 
   const scrollToStats = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleContinentClick = (continentName: string) => {
+    setSelectedContinent(selectedContinent === continentName ? null : continentName);
   };
 
   return (
@@ -529,11 +599,11 @@ const Home = () => {
             </p>
           </motion.div>
 
-          {/* Mobile View - Continent Grid (hidden on medium screens and up) */}
+          {/* Mobile View - Continent Grid with Expandable Countries */}
           <div className="block md:hidden">
-            <motion.div variants={FADE_IN} className="space-y-8">
+            <motion.div variants={FADE_IN} className="space-y-6">
               {/* Continent Grid */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-2 gap-4">
                 {CONTINENT_DATA.map((continent, index) => (
                   <motion.div
                     key={continent.name}
@@ -541,26 +611,60 @@ const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="text-center"
                   >
-                    <Card className="p-6 bg-gray-900/50 border-white/10 hover:border-accent/30 transition-colors cursor-pointer">
-                      <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-accent/10 flex items-center justify-center">
-                        <continent.icon className="w-6 h-6 text-accent" aria-hidden="true" />
+                    <Card 
+                      className="p-4 bg-gray-900/50 border-white/10 hover:border-accent/30 transition-colors cursor-pointer"
+                      onClick={() => handleContinentClick(continent.name)}
+                    >
+                      <div className="text-center">
+                        <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-accent/10 flex items-center justify-center">
+                          <continent.icon className="w-5 h-5 text-accent" aria-hidden="true" />
+                        </div>
+                        <h3 className="text-base font-semibold text-white mb-1">{continent.name}</h3>
+                        <p className="text-xs text-gray-400">{continent.count}</p>
                       </div>
-                      <h3 className="text-lg font-semibold text-white mb-1">{continent.name}</h3>
-                      <p className="text-sm text-gray-400">{continent.count}</p>
                     </Card>
+
+                    {/* Expandable Countries List */}
+                    {selectedContinent === continent.name && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-2 space-y-2"
+                      >
+                        {continent.countries.map((country, countryIndex) => (
+                          <motion.div
+                            key={country.name}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: countryIndex * 0.05 }}
+                          >
+                            <Link to={country.link}>
+                              <Card className="p-3 bg-gray-800/50 border-white/5 hover:border-accent/20 transition-colors">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-white">{country.name}</span>
+                                  <Badge className={`${country.color} text-white border-none text-xs px-2 py-1`}>
+                                    {country.status}
+                                  </Badge>
+                                </div>
+                              </Card>
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
                   </motion.div>
                 ))}
               </div>
 
               {/* Divider */}
-              <div className="border-t border-white/10 my-8"></div>
+              <div className="border-t border-white/10 my-6"></div>
 
               {/* Legal Status Legend */}
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-white text-center mb-6">Legal Status</h3>
-                <div className="space-y-4">
+                <h3 className="text-lg font-bold text-white text-center mb-4">Legal Status</h3>
+                <div className="space-y-3">
                   {LEGAL_STATUS_DATA.map((status, index) => (
                     <motion.div
                       key={status.status}
@@ -568,12 +672,12 @@ const Home = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border border-white/10"
+                      className="flex items-start gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10"
                     >
-                      <div className={`w-4 h-4 rounded-full ${status.color} mt-1 flex-shrink-0`} aria-hidden="true" />
+                      <div className={`w-3 h-3 rounded-full ${status.color} mt-1 flex-shrink-0`} aria-hidden="true" />
                       <div className="flex-1">
-                        <p className="text-base font-semibold text-white mb-1">{status.status}</p>
-                        <p className="text-sm text-gray-400">{status.description}</p>
+                        <p className="text-sm font-semibold text-white mb-1">{status.status}</p>
+                        <p className="text-xs text-gray-400">{status.description}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -582,7 +686,7 @@ const Home = () => {
             </motion.div>
           </div>
 
-          {/* Desktop View - Interactive Map (hidden on small screens) */}
+          {/* Desktop View - Interactive Map */}
           <div className="hidden md:block">
             <motion.div variants={FADE_IN} className="w-full">
               <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
