@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { MapPin, Star, ExternalLink, Globe, Building } from "lucide-react";
-import { useEffect } from "react";
 
 const Hotels = () => {
   const { data: hotels, isLoading } = useQuery({
@@ -30,15 +29,6 @@ const Hotels = () => {
     },
   });
 
-  // Load Airbnb script safely in React
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://www.airbnb.com/embeddable/airbnb_jssdk";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => document.body.removeChild(script);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -46,7 +36,7 @@ const Hotels = () => {
       <div className="pt-16 pb-10 px-4 md:px-6">
         <div className="container mx-auto">
 
-          {/* HEADER */}
+          {/* HEADER - Reduced spacing */}
           <div className="max-w-3xl mx-auto mb-8 text-center">
             <h1 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">
               420-Friendly Stays & Accommodations
@@ -56,7 +46,7 @@ const Hotels = () => {
             </p>
           </div>
 
-          {/* USA & WORLD GUIDE SECTION */}
+          {/* USA & WORLD GUIDE SECTION - Added */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             {/* USA Guide Card */}
             <Card className="p-6 hover:shadow-md transition-all cursor-pointer border-2 hover:border-accent/40">
@@ -99,30 +89,7 @@ const Hotels = () => {
             </Card>
           </div>
 
-          {/* ➜ AIRBNB EMBED */}
-          <div
-            className="airbnb-embed-frame mb-10"
-            data-id="724009894767429847"
-            data-view="home"
-            data-hide-price="true"
-            style={{
-              width: "450px",
-              height: "300px",
-              margin: "0 auto",
-            }}
-          >
-            <a href="https://www.airbnb.com/rooms/724009894767429847?check_in=2025-12-06&check_out=2025-12-11&guests=1&adults=1&s=66&source=embed_widget">
-              View On Airbnb
-            </a>
-            <a
-              href="https://www.airbnb.com/rooms/724009894767429847?check_in=2025-12-06&check_out=2025-12-11&guests=1&adults=1&s=66&source=embed_widget"
-              rel="nofollow"
-            >
-              Guesthouse in Malibu · ★4.98 · 1 bedroom · 1 bed · 1 bath
-            </a>
-          </div>
-
-          {/* HOTELS GRID */}
+          {/* HOTELS GRID - Reduced spacing */}
           {isLoading ? (
             <div className="text-center text-muted-foreground py-8">Loading stays...</div>
           ) : hotels && hotels.length > 0 ? (
@@ -132,11 +99,14 @@ const Hotels = () => {
                   key={hotel.id}
                   className="overflow-hidden hover:shadow-lg hover:border-accent/40 transition-all rounded-xl"
                 >
+                  {/* IMAGE (IF NO IMAGE, USE ICON) */}
                   <div className="aspect-video bg-gradient-to-br from-accent/20 to-gold/20 flex items-center justify-center">
                     <MapPin className="h-10 w-10 text-muted-foreground" />
                   </div>
 
                   <div className="p-5 flex flex-col gap-2">
+                    
+                    {/* HOTEL TITLE + BADGE */}
                     <div className="flex items-start justify-between">
                       <h3 className="text-lg font-semibold leading-tight line-clamp-1">
                         {hotel.name}
@@ -148,25 +118,29 @@ const Hotels = () => {
                       )}
                     </div>
 
+                    {/* CITY / STATE */}
                     {hotel.cities && (
                       <p className="text-sm text-muted-foreground">
                         {hotel.cities.name}, {hotel.cities.states?.name}
                       </p>
                     )}
 
+                    {/* RATING */}
                     {hotel.rating && (
                       <div className="flex items-center gap-1">
-                        <Star className="h4 w-4 fill-gold text-gold" />
+                        <Star className="h-4 w-4 fill-gold text-gold" />
                         <span className="text-sm font-medium">{hotel.rating}</span>
                       </div>
                     )}
 
+                    {/* POLICIES PREVIEW */}
                     {hotel.policies && (
                       <p className="text-sm text-muted-foreground line-clamp-3">
                         {hotel.policies}
                       </p>
                     )}
 
+                    {/* LINK */}
                     {hotel.website && (
                       <a
                         href={hotel.website}
@@ -183,7 +157,9 @@ const Hotels = () => {
             </div>
           ) : (
             <div className="text-center py-10">
-              <p className="text-muted-foreground">No stays found. Check again soon.</p>
+              <p className="text-muted-foreground">
+                No stays found. Check again soon.
+              </p>
             </div>
           )}
         </div>
