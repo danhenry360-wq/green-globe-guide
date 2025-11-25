@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent, useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
@@ -223,11 +223,31 @@ const SEOHead = () => {
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSearch = (term?: string) => {
     const finalTerm = term || searchTerm;
     if (finalTerm.trim()) navigate(`/usa?search=${encodeURIComponent(finalTerm.trim())}`);
   };
+
+  // Auto-search with debounce
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+    
+    if (searchTerm.trim()) {
+      searchTimeoutRef.current = setTimeout(() => {
+        handleSearch(searchTerm);
+      }, 800); // Wait 800ms after user stops typing
+    }
+
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [searchTerm]);
 
   const scrollToStats = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
@@ -335,14 +355,16 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Scroll hint */}
-          <button
-            onClick={scrollToStats}
-            aria-label="Scroll to statistics"
-            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block hover:text-white transition-colors cursor-pointer"
-          >
-            <ChevronDown className="w-8 h-8 animate-bounce" aria-hidden="true" />
-          </button>
+          {/* Scroll hint - immediately after filter tags */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={scrollToStats}
+              aria-label="Scroll to statistics"
+              className="text-muted-foreground/50 hover:text-white transition-colors cursor-pointer"
+            >
+              <ChevronDown className="w-8 h-8 animate-bounce" aria-hidden="true" />
+            </button>
+          </div>
         </motion.div>
       </section>
 
@@ -415,7 +437,7 @@ const Home = () => {
                 className="group"
               >
                 <Link to={dest.link} className="block h-full" aria-label={`View ${dest.name} cannabis travel guide`}>
-                  <Card className="relative h-80 sm:h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-2xl cursor-pointer hover:shadow-accent/50 transition-shadow">
+                  <Card className="relative h-80 sm:h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900/80 backdrop-blur-xl shadow-2xl cursor-pointer hover:shadow-accent/50 transition-all hover:border-accent/30">
                     <img
                       src={dest.image}
                       alt={dest.imageAlt}
@@ -564,11 +586,11 @@ const Home = () => {
           <div className="hidden md:block">
             <motion.div variants={FADE_IN} className="w-full">
               <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
-                <div className="mb-6 flex justify-end items-center">
-                  <MapLegend />
-                </div>
                 <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
                   <InteractiveWorldMap />
+                </div>
+                <div className="mt-6 flex justify-center items-center">
+                  <MapLegend />
                 </div>
               </Card>
             </motion.div>

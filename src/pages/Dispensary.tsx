@@ -691,7 +691,7 @@ const Dispensary = () => {
         <main className="pb-20 px-4 sm:px-6">
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
-            <section className="max-w-4xl mx-auto mb-12 text-center pt-6 md:pt-12">
+            <section className="max-w-4xl mx-auto mb-12 text-center pt-12 md:pt-20">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white leading-tight">
                 BudQuest Verified Dispensaries
               </h1>
