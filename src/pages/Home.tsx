@@ -417,7 +417,7 @@ const Home = () => {
                     </div>
                     <div className="absolute bottom-0 left-0 p-4 sm:p-6 text-white w-full">
                       <h3 className="text-2xl sm:text-3xl font-bold mb-1 transition-transform group-hover:translate-x-2">{dest.name}</h3>
-                      <p className="text-base sm:text-lg text-gray-300 transition-transform group-hover:translate-x-2 delay-75">{dest.country}</p>
+                      <p className="text-base sm:text-lg text-gray-300 transition-transform group-hover:translate-x-2 delay-75 hidden sm:block">{dest.country}</p>
                     </div>
                   </Card>
                 </Link>
