@@ -310,7 +310,7 @@ const Home = () => {
                 onClick={() => navigate(`/usa?search=${tag.term}`)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer"
                 aria-label={`Search ${tag.label}`}
               >
                 <tag.Icon className="w-4 h-4 text-accent" aria-hidden="true" />
@@ -323,7 +323,7 @@ const Home = () => {
           <button
             onClick={scrollToStats}
             aria-label="Scroll to statistics"
-            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block hover:text-white transition-colors"
+            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hidden md:block hover:text-white transition-colors cursor-pointer"
           >
             <ChevronDown className="w-8 h-8 animate-bounce" aria-hidden="true" />
           </button>
@@ -398,8 +398,8 @@ const Home = () => {
                 whileHover={{ y: -8 }}
                 className="group"
               >
-                <Link to={dest.link} aria-label={`View ${dest.name} cannabis travel guide`}>
-                  <Card className="relative h-80 sm:h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-2xl">
+                <Link to={dest.link} className="block h-full" aria-label={`View ${dest.name} cannabis travel guide`}>
+                  <Card className="relative h-80 sm:h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-2xl cursor-pointer hover:shadow-accent/50 transition-shadow">
                     <img
                       src={dest.image}
                       alt={dest.imageAlt}
@@ -408,7 +408,7 @@ const Home = () => {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true" />
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 z-10">
                       <Badge 
                         className={`${dest.color} text-white border-none px-3 py-1 backdrop-blur-md text-xs sm:text-sm`}
                       >
@@ -451,8 +451,8 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {FEATURES_DATA.map((feat) => (
               <motion.div key={feat.title} variants={FADE_IN} whileHover={{ y: -6 }}>
-                <Link to={feat.link} aria-label={feat.title}>
-                  <Card className="p-6 sm:p-8 h-full bg-gray-900/50 border-white/10 hover:border-accent/30 hover:bg-gray-900 backdrop-blur-xl transition-all group">
+                <Link to={feat.link} className="block h-full" aria-label={feat.title}>
+                  <Card className="p-6 sm:p-8 h-full bg-gray-900/50 border-white/10 hover:border-accent/30 hover:bg-gray-900 backdrop-blur-xl transition-all group cursor-pointer">
                     <div className="w-12 sm:w-14 h-12 sm:h-14 mb-4 sm:mb-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
                       <feat.icon className="w-6 sm:w-7 h-6 sm:h-7 text-accent group-hover:scale-110 transition-transform" aria-hidden="true" />
                     </div>
@@ -494,23 +494,25 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {BLOG_DATA.map((post) => (
               <motion.div key={post.title} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 shadow-2xl flex flex-col">
-                  <img
-                    src={post.image}
-                    alt={post.imageAlt}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-48 sm:h-56 object-cover transition-transform hover:scale-110"
-                  />
-                  <div className="p-6 sm:p-8 flex flex-col flex-grow">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">{post.title}</h3>
-                    <p className="text-sm sm:text-base text-gray-400 flex-grow leading-relaxed mb-4 sm:mb-6">{post.summary}</p>
-                    <Link to={post.link} className="group flex items-center gap-2 text-accent font-medium text-sm sm:text-base">
-                      <span>Read Article</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </Link>
-                  </div>
-                </Card>
+                <Link to={post.link} className="block h-full" aria-label={`Read ${post.title}`}>
+                  <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 shadow-2xl flex flex-col cursor-pointer hover:border-accent/30 transition-colors">
+                    <img
+                      src={post.image}
+                      alt={post.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-48 sm:h-56 object-cover transition-transform hover:scale-110"
+                    />
+                    <div className="p-6 sm:p-8 flex flex-col flex-grow">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">{post.title}</h3>
+                      <p className="text-sm sm:text-base text-gray-400 flex-grow leading-relaxed mb-4 sm:mb-6">{post.summary}</p>
+                      <div className="group flex items-center gap-2 text-accent font-medium text-sm sm:text-base">
+                        <span>Read Article</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -538,13 +540,17 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <motion.div variants={FADE_IN}>
-            <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
-              <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <ContinentSelector />
-                <MapLegend />
+          <motion.div variants={FADE_IN} className="w-full">
+            <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
+              <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
+                <div className="w-full sm:w-auto">
+                  <ContinentSelector />
+                </div>
+                <div className="w-full sm:w-auto">
+                  <MapLegend />
+                </div>
               </div>
-              <div className="h-[400px] sm:h-[600px] w-full bg-gray-900 rounded-lg overflow-hidden border border-white/10">
+              <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
                 <InteractiveWorldMap />
               </div>
             </Card>
@@ -571,7 +577,7 @@ const Home = () => {
             <Button 
               size="lg" 
               onClick={() => document.getElementById('search-destinations')?.focus()} 
-              className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20"
+              className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 cursor-pointer"
             >
               Search Destinations
             </Button>
