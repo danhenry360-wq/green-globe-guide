@@ -224,19 +224,6 @@ const SEOHead = () => {
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on mount and resize
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const handleSearch = (term?: string) => {
     const finalTerm = term || searchTerm;
@@ -521,8 +508,8 @@ const Home = () => {
             </p>
           </motion.div>
 
-          {/* Mobile View - Continent Grid */}
-          {isMobile ? (
+          {/* Mobile View - Continent Grid (hidden on medium screens and up) */}
+          <div className="block md:hidden">
             <motion.div variants={FADE_IN} className="space-y-8">
               {/* Continent Grid */}
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -572,8 +559,10 @@ const Home = () => {
                 </div>
               </div>
             </motion.div>
-          ) : (
-            /* Desktop View - Interactive Map */
+          </div>
+
+          {/* Desktop View - Interactive Map (hidden on small screens) */}
+          <div className="hidden md:block">
             <motion.div variants={FADE_IN} className="w-full">
               <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
                 <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
@@ -589,7 +578,7 @@ const Home = () => {
                 </div>
               </Card>
             </motion.div>
-          )}
+          </div>
         </motion.div>
       </section>
 
