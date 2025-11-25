@@ -172,11 +172,11 @@ const BLOG_DATA: BlogItem[] = [
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
 const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org ",
   "@type": "WebApplication",
   name: "BudQuest",
   description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com",
+  url: "https://budquest.com ",
   applicationCategory: "TravelApplication",
   offers: {
     "@type": "Offer",
