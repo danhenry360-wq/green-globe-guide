@@ -171,13 +171,30 @@ const BLOG_DATA: BlogItem[] = [
   },
 ];
 
+// Continent data for mobile grid
+const CONTINENT_DATA = [
+  { name: "Americas", count: "8 countries", icon: Globe2 },
+  { name: "Europe", count: "1 country", icon: Globe2 },
+  { name: "Asia", count: "4 countries", icon: Globe2 },
+  { name: "Africa", count: "4 countries", icon: Globe2 },
+  { name: "Oceania", count: "2 countries", icon: Globe2 },
+];
+
+// Legal status data
+const LEGAL_STATUS_DATA = [
+  { status: "Recreational", description: "Legal for adult use", color: "bg-green-500", icon: CheckCircle },
+  { status: "Medical Only", description: "Legal with prescription", color: "bg-amber-700", icon: Stethoscope },
+  { status: "Decriminalized", description: "Not criminal offense", color: "bg-amber-500", icon: AlertCircle },
+  { status: "Illegal", description: "Prosecuted by law", color: "bg-red-500", icon: AlertCircle },
+];
+
 /* ----------  SEO META TAGS COMPONENT  ---------- */
 const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org ",
+  "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "BudQuest",
   description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com ",
+  url: "https://budquest.com",
   applicationCategory: "TravelApplication",
   offers: {
     "@type": "Offer",
@@ -207,6 +224,19 @@ const SEOHead = () => {
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSearch = (term?: string) => {
     const finalTerm = term || searchTerm;
@@ -307,7 +337,7 @@ const Home = () => {
             ].map((tag) => (
               <motion.button
                 key={tag.term}
-                onClick={() => navigate(`/usa?search=${tag.term}`)}
+                onClick={() => handleSearch(tag.term)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer"
@@ -470,6 +500,96 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* ==========  GLOBAL LEGALITY SECTION  ========== */}
+      <section 
+        className="py-16 sm:py-20 px-4 bg-gradient-to-b from-black via-gray-950 to-black"
+        aria-labelledby="legality-heading"
+      >
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={STAGGER}
+          className="container mx-auto"
+        >
+          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
+            <h2 id="legality-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
+              Global Legality at a Glance
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
+              Explore cannabis laws worldwide. Filter by legal status and continent to plan your travels with confidence.
+            </p>
+          </motion.div>
+
+          {/* Mobile View - Continent Grid */}
+          {isMobile ? (
+            <motion.div variants={FADE_IN} className="space-y-8">
+              {/* Continent Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {CONTINENT_DATA.map((continent, index) => (
+                  <motion.div
+                    key={continent.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="text-center"
+                  >
+                    <Card className="p-6 bg-gray-900/50 border-white/10 hover:border-accent/30 transition-colors cursor-pointer">
+                      <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-accent/10 flex items-center justify-center">
+                        <continent.icon className="w-6 h-6 text-accent" aria-hidden="true" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-1">{continent.name}</h3>
+                      <p className="text-sm text-gray-400">{continent.count}</p>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Legal Status Legend */}
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-white text-center mb-4">Legal Status</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {LEGAL_STATUS_DATA.map((status, index) => (
+                    <motion.div
+                      key={status.status}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10"
+                    >
+                      <div className={`w-3 h-3 rounded-full ${status.color}`} aria-hidden="true" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-white">{status.status}</p>
+                        <p className="text-xs text-gray-400">{status.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            /* Desktop View - Interactive Map */
+            <motion.div variants={FADE_IN} className="w-full">
+              <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
+                <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
+                  <div className="w-full sm:w-auto">
+                    <ContinentSelector />
+                  </div>
+                  <div className="w-full sm:w-auto">
+                    <MapLegend />
+                  </div>
+                </div>
+                <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
+                  <InteractiveWorldMap />
+                </div>
+              </Card>
+            </motion.div>
+          )}
+        </motion.div>
+      </section>
+
       {/* ==========  BLOG/TRAVEL GUIDES SECTION  ========== */}
       <section 
         className="py-16 sm:py-20 px-4 bg-black"
@@ -516,45 +636,6 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
-      </section>
-
-      {/* ==========  INTERACTIVE MAP SECTION  ========== */}
-      <section 
-        className="py-16 sm:py-20 px-4 bg-gradient-to-b from-black via-gray-950 to-black"
-        aria-labelledby="map-heading"
-      >
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="container mx-auto"
-        >
-          <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
-            <h2 id="map-heading" className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
-              Global Legality at a Glance
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
-              Explore our interactive map to see cannabis laws worldwide. Filter by legal status and continent to plan your travels with confidence.
-            </p>
-          </motion.div>
-
-          <motion.div variants={FADE_IN} className="w-full">
-            <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
-              <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
-                <div className="w-full sm:w-auto">
-                  <ContinentSelector />
-                </div>
-                <div className="w-full sm:w-auto">
-                  <MapLegend />
-                </div>
-              </div>
-              <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
-                <InteractiveWorldMap />
-              </div>
-            </Card>
-          </motion.div>
         </motion.div>
       </section>
 
