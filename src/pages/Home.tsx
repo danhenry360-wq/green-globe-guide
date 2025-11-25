@@ -171,21 +171,21 @@ const BLOG_DATA: BlogItem[] = [
   },
 ];
 
-// Continent data for mobile grid
+// Continent data for mobile grid - UPDATED TO MATCH IMAGE
 const CONTINENT_DATA = [
   { name: "Americas", count: "8 countries", icon: Globe2 },
-  { name: "Europe", count: "1 country", icon: Globe2 },
+  { name: "Europe", count: "4 countries", icon: Globe2 },
   { name: "Asia", count: "4 countries", icon: Globe2 },
   { name: "Africa", count: "4 countries", icon: Globe2 },
   { name: "Oceania", count: "2 countries", icon: Globe2 },
 ];
 
-// Legal status data
+// Legal status data - UPDATED TO MATCH IMAGE EXACTLY
 const LEGAL_STATUS_DATA = [
   { status: "Recreational", description: "Legal for adult use", color: "bg-green-500", icon: CheckCircle },
-  { status: "Medical Only", description: "Legal with prescription", color: "bg-amber-700", icon: Stethoscope },
+  { status: "Medical Only", description: "Legal with prescription", color: "bg-blue-500", icon: Stethoscope },
   { status: "Decriminalized", description: "Not criminal offense", color: "bg-amber-500", icon: AlertCircle },
-  { status: "Illegal", description: "Prosecuted by law", color: "bg-red-500", icon: AlertCircle },
+  { status: "Illegal", description: "Prohibited by law", color: "bg-red-500", icon: AlertCircle },
 ];
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
@@ -525,7 +525,7 @@ const Home = () => {
           {isMobile ? (
             <motion.div variants={FADE_IN} className="space-y-8">
               {/* Continent Grid */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 mb-8">
                 {CONTINENT_DATA.map((continent, index) => (
                   <motion.div
                     key={continent.name}
@@ -546,10 +546,13 @@ const Home = () => {
                 ))}
               </div>
 
+              {/* Divider */}
+              <div className="border-t border-white/10 my-8"></div>
+
               {/* Legal Status Legend */}
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-white text-center mb-4">Legal Status</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <h3 className="text-xl font-bold text-white text-center mb-6">Legal Status</h3>
+                <div className="space-y-4">
                   {LEGAL_STATUS_DATA.map((status, index) => (
                     <motion.div
                       key={status.status}
@@ -557,12 +560,12 @@ const Home = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10"
+                      className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border border-white/10"
                     >
-                      <div className={`w-3 h-3 rounded-full ${status.color}`} aria-hidden="true" />
+                      <div className={`w-4 h-4 rounded-full ${status.color} mt-1 flex-shrink-0`} aria-hidden="true" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-white">{status.status}</p>
-                        <p className="text-xs text-gray-400">{status.description}</p>
+                        <p className="text-base font-semibold text-white mb-1">{status.status}</p>
+                        <p className="text-sm text-gray-400">{status.description}</p>
                       </div>
                     </motion.div>
                   ))}
