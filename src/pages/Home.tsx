@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import InteractiveWorldMap from "@/components/InteractiveWorldMap";
-import ContinentSelector from "@/components/ContinentSelector";
 import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
@@ -565,13 +564,8 @@ const Home = () => {
           <div className="hidden md:block">
             <motion.div variants={FADE_IN} className="w-full">
               <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
-                <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
-                  <div className="w-full sm:w-auto">
-                    <ContinentSelector />
-                  </div>
-                  <div className="w-full sm:w-auto">
-                    <MapLegend />
-                  </div>
+                <div className="mb-6 flex justify-end items-center">
+                  <MapLegend />
                 </div>
                 <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
                   <InteractiveWorldMap />
