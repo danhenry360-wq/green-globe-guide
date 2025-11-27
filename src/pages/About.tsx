@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import {
   Globe, Shield, Users, TrendingUp, MapPin, Calendar, Scale, Leaf,
   Plane, CheckCircle, Sparkles, Clock, SearchCheck, ThumbsUp,
-  ArrowRight, Award, Zap, ChevronDown, ChevronUp
+  ArrowRight, Award, Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -76,8 +76,6 @@ const BREADCRUMB_SCHEMA = {
    COMPONENT
 ============================================ */
 const About = () => {
-  const [isDisclaimerExpanded, setDisclaimerExpanded] = useState(false);
-
   const values = [
     {
       icon: Globe,
@@ -430,7 +428,7 @@ const About = () => {
         </motion.div>
       </section>
 
-      {/* ========== LEGAL DISCLAIMER (Mobile Optimized) ========== */}
+      {/* ========== LEGAL DISCLAIMER ========== */}
       <section className="py-12 sm:py-16 px-4">
         <motion.div
           initial={{ opacity: 0 }}
@@ -438,53 +436,14 @@ const About = () => {
           viewport={{ once: true }}
           className="container mx-auto max-w-3xl"
         >
-          <Card 
-            className="overflow-hidden bg-gradient-to-br from-accent/5 to-accent/10 border-accent/20 cursor-pointer sm:cursor-default transition-all"
-            onClick={() => setDisclaimerExpanded(!isDisclaimerExpanded)}
-          >
-            <div className="p-5 sm:p-8 md:p-10">
-              <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-                
-                {/* Header Row: Icon + Title + Mobile Chevron */}
-                <div className="flex items-center justify-between w-full sm:w-auto">
-                  <div className="flex items-center gap-3 sm:items-start">
-                    <Shield className="w-5 h-5 sm:w-8 sm:h-8 text-accent shrink-0" />
-                    <h2 className="text-base sm:text-xl md:text-2xl font-bold text-foreground sm:mt-[-2px]">
-                      Attorney-Backed Disclaimer
-                    </h2>
-                  </div>
-                  
-                  {/* Mobile Toggle Icon */}
-                  <div className="sm:hidden text-accent/70">
-                    {isDisclaimerExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="w-full">
-                  <div 
-                    className={`
-                      text-xs sm:text-base text-muted-foreground leading-relaxed transition-all duration-300 ease-in-out
-                      ${isDisclaimerExpanded ? "max-h-[500px] opacity-100" : "max-h-12 sm:max-h-none opacity-80 sm:opacity-100 overflow-hidden relative"}
-                    `}
-                  >
-                    <p>
-                      BudQuest provides informational content only and does <strong>not</strong> constitute legal advice. Cannabis laws vary by jurisdiction and can change rapidly. Always verify current statutes with local authorities before traveling, and consume responsibly where permitted. Travelers are solely responsible for compliance with all applicable laws. For legal questions, consult with a qualified attorney in your jurisdiction.
-                    </p>
-                    
-                    {/* Fade effect for mobile when collapsed */}
-                    {!isDisclaimerExpanded && (
-                      <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-card/10 to-transparent sm:hidden" />
-                    )}
-                  </div>
-                  
-                  {/* Mobile "Read More" text hint */}
-                  {!isDisclaimerExpanded && (
-                    <p className="text-[10px] font-semibold text-accent mt-2 sm:hidden uppercase tracking-wider">
-                      Tap to read full disclaimer
-                    </p>
-                  )}
-                </div>
+          <Card className="p-6 sm:p-8 md:p-10 bg-gradient-to-br from-accent/5 to-accent/10 border-accent/20">
+            <div className="flex items-start gap-4">
+              <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-accent shrink-0 mt-1" />
+              <div>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-foreground">Attorney-Backed Disclaimer</h2>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  BudQuest provides informational content only and does <strong>not</strong> constitute legal advice. Cannabis laws vary by jurisdiction and can change rapidly. Always verify current statutes with local authorities before traveling, and consume responsibly where permitted. Travelers are solely responsible for compliance with all applicable laws. For legal questions, consult with a qualified attorney in your jurisdiction.
+                </p>
               </div>
             </div>
           </Card>
