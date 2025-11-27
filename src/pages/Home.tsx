@@ -60,7 +60,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    image: "/dest-california-2025.jpg",
+    image: "/dest-california-2025-new.jpg", // NEW IMAGE
     imageAlt: "California cannabis dispensaries and 420-friendly destinations",
     color: "bg-green-500/90", 
     link: "/usa/california" 
@@ -87,7 +87,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Canada", 
     status: "Recreational", 
     country: "North America", 
-    image: "/dest-canada-2025.jpg",
+    image: "/dest-canada-2025-new.jpg", // NEW IMAGE
     imageAlt: "Canada legal cannabis travel and dispensary locations",
     color: "bg-green-500/90", 
     link: "/world" 
@@ -172,11 +172,11 @@ const BLOG_DATA: BlogItem[] = [
 
 /* ----------  SEO META TAGS COMPONENT  ---------- */
 const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org ",
+  "@context": "https://schema.org  ",
   "@type": "WebApplication",
   name: "BudQuest",
   description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com ",
+  url: "https://budquest.com  ",
   applicationCategory: "TravelApplication",
   offers: {
     "@type": "Offer",
