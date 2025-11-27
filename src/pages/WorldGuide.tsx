@@ -19,7 +19,7 @@ import {
   Waves,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 
 /* ----------------------------------------------------
@@ -38,7 +38,7 @@ interface Region {
 interface Country {
   slug: string;
   name: string;
-  legalStatus: "Recreational" | "Medical" | "Decriminalized";
+  legalStatus: "Recreational" | "Medical" | "Decriminalized" | "Illegal";
   possession: string;
   airport: string;
   tourist: string;
@@ -54,7 +54,7 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA – every country you listed
+   FULL WORLD DATA
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -1491,571 +1491,290 @@ const WORLD: Continent[] = [
           },
         ],
       },
+      /* --- Microstates and Northern Europe (Moved from Africa block) --- */
       {
-        slug: "kazakhstan",
-        name: "Kazakhstan",
+        slug: "aland-islands",
+        name: "Åland Islands",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; steppe vast",
+        tourist: "Medical only; Swedish-speaking",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-4.jpg",
         regions: [
           {
-            slug: "astana-region",
-            name: "Astana Region",
+            slug: "mariehamn-region",
+            name: "Mariehamn Region",
             cities: [
               {
-                slug: "astana",
-                name: "Astana",
-                atGlance: ["Steppe capital", "Medical only", "Futuristic"],
+                slug: "mariehamn",
+                name: "Mariehamn",
+                atGlance: ["Swedish capital", "Medical only", "Autonomous"],
               },
             ],
           },
         ],
       },
       {
-        slug: "uzbekistan",
-        name: "Uzbekistan",
+        slug: "faroe-islands",
+        name: "Faroe Islands",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; Silk Road",
+        tourist: "Medical only; sheep islands",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-5.jpg",
         regions: [
           {
-            slug: "tashkent-region",
-            name: "Tashkent Region",
+            slug: "torshavn-region",
+            name: "Tórshavn Region",
             cities: [
               {
-                slug: "tashkent",
-                name: "Tashkent",
-                atGlance: ["Silk Road capital", "Medical only", "Soviet legacy"],
+                slug: "torshavn",
+                name: "Tórshavn",
+                atGlance: ["Sheep capital", "Medical only", "Nordic"],
               },
             ],
           },
         ],
       },
       {
-        slug: "kyrgyzstan",
-        name: "Kyrgyzstan",
+        slug: "greenland",
+        name: "Greenland",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; mountain lakes",
+        tourist: "Medical only; Inuit island",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-6.jpg",
         regions: [
           {
-            slug: "bishkek-region",
-            name: "Bishkek Region",
+            slug: "nuuk-region",
+            name: "Nuuk Region",
             cities: [
               {
-                slug: "bishkek",
-                name: "Bishkek",
-                atGlance: ["Mountain capital", "Medical only", "Cheap kebabs"],
+                slug: "nuuk",
+                name: "Nuuk",
+                atGlance: ["Arctic capital", "Medical only", "Icebergs"],
               },
             ],
           },
         ],
       },
       {
-        slug: "tajikistan",
-        name: "Tajikistan",
+        slug: "jersey",
+        name: "Jersey",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; Pamir peaks",
+        tourist: "Medical only; Channel island",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-4.jpg",
         regions: [
           {
-            slug: "dushanbe-region",
-            name: "Dushanbe Region",
+            slug: "saint-helier-region",
+            name: "Saint Helier Region",
             cities: [
               {
-                slug: "dushanbe",
-                name: "Dushanbe",
-                atGlance: ["Pamir gateway", "Medical only", "Persian culture"],
+                slug: "saint-helier",
+                name: "Saint Helier",
+                atGlance: ["Channel capital", "Medical only", "British crown"],
               },
             ],
           },
         ],
       },
       {
-        slug: "turkmenistan",
-        name: "Turkmenistan",
+        slug: "guernsey",
+        name: "Guernsey",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; Ashgabat marble",
+        tourist: "Medical only; Channel island",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-5.jpg",
         regions: [
           {
-            slug: "ashgabat-region",
-            name: "Ashgabat Region",
+            slug: "saint-peter-port-region",
+            name: "Saint Peter Port Region",
             cities: [
               {
-                slug: "ashgabat",
-                name: "Ashgabat",
-                atGlance: ["Marble capital", "Medical only", "Closed country"],
+                slug: "saint-peter-port",
+                name: "Saint Peter Port",
+                atGlance: ["Channel capital", "Medical only", "British crown"],
               },
             ],
           },
         ],
       },
       {
-        slug: "mongolia",
-        name: "Mongolia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; vast steppe",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "ulaanbaatar-region",
-            name: "Ulaanbaatar Region",
-            cities: [
-              {
-                slug: "ulaanbaatar",
-                name: "Ulaanbaatar",
-                atGlance: ["Steppe capital", "Illegal", "Yurt districts"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "china",
-        name: "China",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "beijing-region",
-            name: "Beijing Region",
-            cities: [
-              {
-                slug: "beijing",
-                name: "Beijing",
-                atGlance: ["Forbidden City", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-          {
-            slug: "shanghai-region",
-            name: "Shanghai Region",
-            cities: [
-              {
-                slug: "shanghai",
-                name: "Shanghai",
-                atGlance: ["Skyline hub", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "japan",
-        name: "Japan",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; zero tolerance",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "tokyo-region",
-            name: "Tokyo Region",
-            cities: [
-              {
-                slug: "tokyo",
-                name: "Tokyo",
-                atGlance: ["Neon capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-          {
-            slug: "osaka-region",
-            name: "Osaka Region",
-            cities: [
-              {
-                slug: "osaka",
-                name: "Osaka",
-                atGlance: ["Food capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "south-korea",
-        name: "South Korea",
+        slug: "isle-of-man",
+        name: "Isle of Man",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; K-culture",
+        tourist: "Medical only; Celtic island",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-6.jpg",
         regions: [
           {
-            slug: "seoul-region",
-            name: "Seoul Region",
+            slug: "douglas-region",
+            name: "Douglas Region",
             cities: [
               {
-                slug: "seoul",
-                name: "Seoul",
-                atGlance: ["K-pop capital", "Medical only", "No public use"],
+                slug: "douglas",
+                name: "Douglas",
+                atGlance: ["TT capital", "Medical only", "British crown"],
               },
             ],
           },
         ],
       },
       {
-        slug: "north-korea",
-        name: "North Korea",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; unknown regime",
-        description:
-          "Cannabis illegal; regime opaque.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "pyongyang-region",
-            name: "Pyongyang Region",
-            cities: [
-              {
-                slug: "pyongyang",
-                name: "Pyongyang",
-                atGlance: ["Regime capital", "Illegal", "Unknown penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "vietnam",
-        name: "Vietnam",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "hanoi-region",
-            name: "Hanoi Region",
-            cities: [
-              {
-                slug: "hanoi",
-                name: "Hanoi",
-                atGlance: ["Old quarter", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-          {
-            slug: "ho-chi-minh-region",
-            name: "Ho Chi Minh Region",
-            cities: [
-              {
-                slug: "ho-chi-minh-city",
-                name: "Ho Chi Minh City",
-                atGlance: ["Motorbike chaos", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "laos",
-        name: "Laos",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; backpacker caution",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "vientiane-region",
-            name: "Vientiane Region",
-            cities: [
-              {
-                slug: "vientiane",
-                name: "Vientiane",
-                atGlance: ["Mekong capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "cambodia",
-        name: "Cambodia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; backpacker caution",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "phnom-penh-region",
-            name: "Phnom Penh Region",
-            cities: [
-              {
-                slug: "phnom-penh",
-                name: "Phnom Penh",
-                atGlance: ["River capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "myanmar",
-        name: "Myanmar",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; civil-war zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "yangon-region",
-            name: "Yangon Region",
-            cities: [
-              {
-                slug: "yangon",
-                name: "Yangon",
-                atGlance: ["Shwedagon pagoda", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "thailand",
-        name: "Thailand",
+        slug: "gibraltar",
+        name: "Gibraltar",
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; tropical beaches",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "bangkok-region",
-            name: "Bangkok Region",
-            cities: [
-              {
-                slug: "bangkok",
-                name: "Bangkok",
-                atGlance: ["Med clinics w/ script", "Cafés closed", "Discreet only"],
-              },
-            ],
-          },
-          {
-            slug: "phuket-region",
-            name: "Phuket Region",
-            cities: [
-              {
-                slug: "phuket",
-                name: "Phuket",
-                atGlance: ["Tourist enforcement high", "Beach parties = no weed", "Consider weed-free holiday"],
-              },
-            ],
-          },
-          {
-            slug: "chiang-mai-region",
-            name: "Chiang Mai Region",
-            cities: [
-              {
-                slug: "chiang-mai",
-                name: "Chiang Mai",
-                atGlance: ["Conservative north", "Traditional meds", "Docs essential"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "singapore",
-        name: "Singapore",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; death-penalty risk",
-        description:
-          "Cannabis illegal; severe penalties including death.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "singapore-island",
-            name: "Singapore Island",
-            cities: [
-              {
-                slug: "singapore",
-                name: "Singapore",
-                atGlance: ["Garden city", "Illegal", "Death-penalty risk"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "malaysia",
-        name: "Malaysia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "kuala-lumpur-region",
-            name: "Kuala Lumpur Region",
-            cities: [
-              {
-                slug: "kuala-lumpur",
-                name: "Kuala Lumpur",
-                atGlance: ["Petronas towers", "Medical only", "Death-penalty caution"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "indonesia",
-        name: "Indonesia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "jakarta-region",
-            name: "Jakarta Region",
-            cities: [
-              {
-                slug: "jakarta",
-                name: "Jakarta",
-                atGlance: ["Mega-capital", "Medical only", "Death-penalty caution"],
-              },
-            ],
-          },
-          {
-            slug: "bali-region",
-            name: "Bali Region",
-            cities: [
-              {
-                slug: "denpasar",
-                name: "Denpasar",
-                atGlance: ["Island hub", "Medical only", "Death-penalty caution"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "philippines",
-        name: "Philippines",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
+        tourist: "Medical only; Rock monkeys",
         description:
           "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-4.jpg",
         regions: [
           {
-            slug: "manila-region",
-            name: "Manila Region",
+            slug: "gibraltar-town-region",
+            name: "Gibraltar Town Region",
             cities: [
               {
-                slug: "manila",
-                name: "Manila",
-                atGlance: ["Mega-city", "Medical only", "Death-penalty caution"],
+                slug: "gibraltar-town",
+                name: "Gibraltar Town",
+                atGlance: ["Rock capital", "Medical only", "Monkeys"],
               },
             ],
           },
         ],
       },
       {
-        slug: "brunei",
-        name: "Brunei",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
+        slug: "monaco",
+        name: "Monaco",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; death-penalty risk",
+        tourist: "Medical only; casino principality",
         description:
-          "Cannabis illegal; severe penalties including death.",
+          "Medical cannabis legal; recreational use prohibited.",
         image: "/dest-5.jpg",
         regions: [
           {
-            slug: "bandar-seri-begawan-region",
-            name: "Bandar Seri Begawan Region",
+            slug: "monaco-ville-region",
+            name: "Monaco-Ville Region",
             cities: [
               {
-                slug: "bandar-seri-begawan",
-                name: "Bandar Seri Begawan",
-                atGlance: ["Sultanate capital", "Illegal", "Death-penalty risk"],
+                slug: "monaco-ville",
+                name: "Monaco-Ville",
+                atGlance: ["Principality capital", "Medical only", "Casino"],
               },
             ],
           },
         ],
       },
       {
-        slug: "east-timor",
-        name: "East Timor",
+        slug: "vatican",
+        name: "Vatican City",
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; developing nation",
+        tourist: "Strongly discouraged; holy city",
         description:
           "Cannabis illegal; possession criminalised.",
         image: "/dest-6.jpg",
         regions: [
           {
-            slug: "dili-region",
-            name: "Dili Region",
+            slug: "vatican-city-region",
+            name: "Vatican City Region",
             cities: [
               {
-                slug: "dili",
-                name: "Dili",
-                atGlance: ["Coastal capital", "Illegal", "Developing"],
+                slug: "vatican-city",
+                name: "Vatican City",
+                atGlance: ["Holy capital", "Illegal", "Severe penalties"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "san-marino",
+        name: "San Marino",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; micro-nation",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-4.jpg",
+        regions: [
+          {
+            slug: "san-marino-city-region",
+            name: "San Marino City Region",
+            cities: [
+              {
+                slug: "san-marino-city",
+                name: "San Marino City",
+                atGlance: ["Micro capital", "Medical only", "Clifftop"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "liechtenstein",
+        name: "Liechtenstein",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; Alpine principality",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-5.jpg",
+        regions: [
+          {
+            slug: "vaduz-region",
+            name: "Vaduz Region",
+            cities: [
+              {
+                slug: "vaduz",
+                name: "Vaduz",
+                atGlance: ["Alpine capital", "Medical only", "Principality"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "andorra",
+        name: "Andorra",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; ski principality",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-6.jpg",
+        regions: [
+          {
+            slug: "andorra-la-vella-region",
+            name: "Andorra la Vella Region",
+            cities: [
+              {
+                slug: "andorra-la-vella",
+                name: "Andorra la Vella",
+                atGlance: ["Ski capital", "Medical only", "Duty-free"],
               },
             ],
           },
@@ -2906,30 +2625,6 @@ const WORLD: Continent[] = [
         ],
       },
       {
-        slug: "barbados",
-        name: "Barbados",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; rum & beaches",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "bridgetown-region",
-            name: "Bridgetown Region",
-            cities: [
-              {
-                slug: "bridgetown",
-                name: "Bridgetown",
-                atGlance: ["Rum capital", "Medical only", "Crop-Over festival"],
-              },
-            ],
-          },
-        ],
-      },
-      {
         slug: "bermuda",
         name: "Bermuda",
         legalStatus: "Recreational",
@@ -3128,6 +2823,128 @@ const WORLD: Continent[] = [
     name: "Asia",
     icon: Mountain,
     countries: [
+      /* --- Central Asia (Moved from Europe block) --- */
+      {
+        slug: "kazakhstan",
+        name: "Kazakhstan",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; steppe vast",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-4.jpg",
+        regions: [
+          {
+            slug: "astana-region",
+            name: "Astana Region",
+            cities: [
+              {
+                slug: "astana",
+                name: "Astana",
+                atGlance: ["Steppe capital", "Medical only", "Futuristic"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "uzbekistan",
+        name: "Uzbekistan",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; Silk Road",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-5.jpg",
+        regions: [
+          {
+            slug: "tashkent-region",
+            name: "Tashkent Region",
+            cities: [
+              {
+                slug: "tashkent",
+                name: "Tashkent",
+                atGlance: ["Silk Road capital", "Medical only", "Soviet legacy"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "kyrgyzstan",
+        name: "Kyrgyzstan",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; mountain lakes",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-6.jpg",
+        regions: [
+          {
+            slug: "bishkek-region",
+            name: "Bishkek Region",
+            cities: [
+              {
+                slug: "bishkek",
+                name: "Bishkek",
+                atGlance: ["Mountain capital", "Medical only", "Cheap kebabs"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "tajikistan",
+        name: "Tajikistan",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; Pamir peaks",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-4.jpg",
+        regions: [
+          {
+            slug: "dushanbe-region",
+            name: "Dushanbe Region",
+            cities: [
+              {
+                slug: "dushanbe",
+                name: "Dushanbe",
+                atGlance: ["Pamir gateway", "Medical only", "Persian culture"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "turkmenistan",
+        name: "Turkmenistan",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; Ashgabat marble",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-5.jpg",
+        regions: [
+          {
+            slug: "ashgabat-region",
+            name: "Ashgabat Region",
+            cities: [
+              {
+                slug: "ashgabat",
+                name: "Ashgabat",
+                atGlance: ["Marble capital", "Medical only", "Closed country"],
+              },
+            ],
+          },
+        ],
+      },
+      /* --- Rest of Asia --- */
       {
         slug: "thailand",
         name: "Thailand",
@@ -4209,30 +4026,6 @@ const WORLD: Continent[] = [
         ],
       },
       {
-        slug: "kuwait",
-        name: "Kuwait",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description:
-          "Cannabis illegal; severe penalties.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "kuwait-city-region",
-            name: "Kuwait City Region",
-            cities: [
-              {
-                slug: "kuwait-city",
-                name: "Kuwait City",
-                atGlance: ["Oil capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
         slug: "brunei",
         name: "Brunei",
         legalStatus: "Illegal",
@@ -5230,534 +5023,7 @@ const WORLD: Continent[] = [
           },
         ],
       },
-      {
-        slug: "uganda",
-        name: "Uganda",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; gorilla trekking",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "kampala-region",
-            name: "Kampala Region",
-            cities: [
-              {
-                slug: "kampala",
-                name: "Kampala",
-                atGlance: ["Lake capital", "Medical only", "Gorilla gateway"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "rwanda",
-        name: "Rwanda",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; gorilla trekking",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "kigali-region",
-            name: "Kigali Region",
-            cities: [
-              {
-                slug: "kigali",
-                name: "Kigali",
-                atGlance: ["Clean capital", "Illegal", "Gorilla gateway"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "burundi",
-        name: "Burundi",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; crisis zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "bujumbura-region",
-            name: "Bujumbura Region",
-            cities: [
-              {
-                slug: "bujumbura",
-                name: "Bujumbura",
-                atGlance: ["Lake capital", "Illegal", "Crisis zone"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tanzania",
-        name: "Tanzania",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Zanzibar beaches",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "dar-es-salaam-region",
-            name: "Dar es Salaam Region",
-            cities: [
-              {
-                slug: "dar-es-salaam",
-                name: "Dar es Salaam",
-                atGlance: ["Port capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "zambia",
-        name: "Zambia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Victoria Falls",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "lusaka-region",
-            name: "Lusaka Region",
-            cities: [
-              {
-                slug: "lusaka",
-                name: "Lusaka",
-                atGlance: ["High-altitude capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "botswana",
-        name: "Botswana",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Okavango Delta",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "gaborone-region",
-            name: "Gaborone Region",
-            cities: [
-              {
-                slug: "gaborone",
-                name: "Gaborone",
-                atGlance: ["Desert capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "namibia",
-        name: "Namibia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; desert vastness",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "windhoek-region",
-            name: "Windhoek Region",
-            cities: [
-              {
-                slug: "windhoek",
-                name: "Windhoek",
-                atGlance: ["Desert capital", "Illegal", "German beer"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "angola",
-        name: "Angola",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; oil-rich",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "luanda-region",
-            name: "Luanda Region",
-            cities: [
-              {
-                slug: "luanda",
-                name: "Luanda",
-                atGlance: ["Oil capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "mozambique",
-        name: "Mozambique",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Indian-Ocean beaches",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "maputo-region",
-            name: "Maputo Region",
-            cities: [
-              {
-                slug: "maputo",
-                name: "Maputo",
-                atGlance: ["Indian-Ocean port", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "malawi",
-        name: "Malawi",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Lake Malawi",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "lilongwe-region",
-            name: "Lilongwe Region",
-            cities: [
-              {
-                slug: "lilongwe",
-                name: "Lilongwe",
-                atGlance: ["Lake capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "madagascar",
-        name: "Madagascar",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; lemur island",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "antananarivo-region",
-            name: "Antananarivo Region",
-            cities: [
-              {
-                slug: "antananarivo",
-                name: "Antananarivo",
-                atGlance: ["Hill capital", "Illegal", "Lemurs"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "mauritius",
-        name: "Mauritius",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; island paradise",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "port-louis-region",
-            name: "Port Louis Region",
-            cities: [
-              {
-                slug: "port-louis",
-                name: "Port Louis",
-                atGlance: ["Port capital", "Medical only", "Multicultural"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "seychelles",
-        name: "Seychelles",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; granite islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "victoria-region",
-            name: "Victoria Region",
-            cities: [
-              {
-                slug: "victoria-seychelles",
-                name: "Victoria",
-                atGlance: ["Tiny capital", "Medical only", "Paradise"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "comoros",
-        name: "Comoros",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; perfume islands",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "moroni-region",
-            name: "Moroni Region",
-            cities: [
-              {
-                slug: "moroni",
-                name: "Moroni",
-                atGlance: ["Perfume capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "sao-tome-principe",
-        name: "São Tomé & Príncipe",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; chocolate islands",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "sao-tome-region",
-            name: "São Tomé Region",
-            cities: [
-              {
-                slug: "sao-tome",
-                name: "São Tomé",
-                atGlance: ["Chocolate capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "equatorial-guinea",
-        name: "Equatorial Guinea",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; oil-rich",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "malabo-region",
-            name: "Malabo Region",
-            cities: [
-              {
-                slug: "malabo",
-                name: "Malabo",
-                atGlance: ["Island capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "gabon",
-        name: "Gabon",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; rainforest",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "libreville-region",
-            name: "Libreville Region",
-            cities: [
-              {
-                slug: "libreville",
-                name: "Libreville",
-                atGlance: ["Rainforest capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "republic-congo",
-        name: "Republic of the Congo",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; rainforest",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "brazzaville-region",
-            name: "Brazzaville Region",
-            cities: [
-              {
-                slug: "brazzaville",
-                name: "Brazzaville",
-                atGlance: ["Congo capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "democratic-republic-congo",
-        name: "Democratic Republic of the Congo",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; conflict zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "kinshasa-region",
-            name: "Kinshasa Region",
-            cities: [
-              {
-                slug: "kinshasa",
-                name: "Kinshasa",
-                atGlance: ["Mega-river capital", "Illegal", "Conflict zone"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "cameroon",
-        name: "Cameroon",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; bilingual nation",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "yaounde-region",
-            name: "Yaoundé Region",
-            cities: [
-              {
-                slug: "yaounde",
-                name: "Yaoundé",
-                atGlance: ["Bilingual capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "central-african-republic",
-        name: "Central African Republic",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; war zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "bangui-region",
-            name: "Bangui Region",
-            cities: [
-              {
-                slug: "bangui",
-                name: "Bangui",
-                atGlance: ["War-torn capital", "Illegal", "Avoid travel"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "chad",
-        name: "Chad",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; desert vast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "ndjamena-region",
-            name: "N’Djamena Region",
-            cities: [
-              {
-                slug: "ndjamena",
-                name: "N’Djamena",
-                atGlance: ["Desert capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
+      /* --- West Africa & Islands (Added from the duplicate block) --- */
       {
         slug: "benin",
         name: "Benin",
@@ -5807,54 +5073,6 @@ const WORLD: Continent[] = [
         ],
       },
       {
-        slug: "burkina-faso",
-        name: "Burkina Faso",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; crisis zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "ouagadougou-region",
-            name: "Ouagadougou Region",
-            cities: [
-              {
-                slug: "ouagadougou",
-                name: "Ouagadougou",
-                atGlance: ["Crisis capital", "Illegal", "Avoid travel"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "niger",
-        name: "Niger",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Sahara-Sahel",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "niamey-region",
-            name: "Niamey Region",
-            cities: [
-              {
-                slug: "niamey",
-                name: "Niamey",
-                atGlance: ["Sahel capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
         slug: "ivory-coast",
         name: "Ivory Coast",
         legalStatus: "Illegal",
@@ -5863,7 +5081,7 @@ const WORLD: Continent[] = [
         tourist: "Strongly discouraged; cocoa coast",
         description:
           "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
+        image: "/dest-4.jpg",
         regions: [
           {
             slug: "abidjan-region",
@@ -6023,30 +5241,6 @@ const WORLD: Continent[] = [
         ],
       },
       {
-        slug: "mauritania",
-        name: "Mauritania",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Sahara vast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "nouakchott-region",
-            name: "Nouakchott Region",
-            cities: [
-              {
-                slug: "nouakchott",
-                name: "Nouakchott",
-                atGlance: ["Desert capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
         slug: "cape-verde",
         name: "Cape Verde",
         legalStatus: "Illegal",
@@ -6055,7 +5249,7 @@ const WORLD: Continent[] = [
         tourist: "Strongly discouraged; Atlantic islands",
         description:
           "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
+        image: "/dest-4.jpg",
         regions: [
           {
             slug: "praia-region",
@@ -6185,486 +5379,6 @@ const WORLD: Continent[] = [
                 slug: "antananarivo",
                 name: "Antananarivo",
                 atGlance: ["Hill capital", "Illegal", "Lemurs"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "chad",
-        name: "Chad",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; desert vast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "ndjamena-region",
-            name: "N’Djamena Region",
-            cities: [
-              {
-                slug: "ndjamena",
-                name: "N’Djamena",
-                atGlance: ["Desert capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "niger",
-        name: "Niger",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Sahara-Sahel",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "niamey-region",
-            name: "Niamey Region",
-            cities: [
-              {
-                slug: "niamey",
-                name: "Niamey",
-                atGlance: ["Sahel capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "mali",
-        name: "Mali",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; conflict zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "bamako-region",
-            name: "Bamako Region",
-            cities: [
-              {
-                slug: "bamako",
-                name: "Bamako",
-                atGlance: ["Niger capital", "Illegal", "Conflict zone"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "burkina-faso",
-        name: "Burkina Faso",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; crisis zone",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "ouagadougou-region",
-            name: "Ouagadougou Region",
-            cities: [
-              {
-                slug: "ouagadougou",
-                name: "Ouagadougou",
-                atGlance: ["Crisis capital", "Illegal", "Avoid travel"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "senegal",
-        name: "Senegal",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; teranga hospitality",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "dakar-region",
-            name: "Dakar Region",
-            cities: [
-              {
-                slug: "dakar",
-                name: "Dakar",
-                atGlance: ["Teranga capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "ivory-coast",
-        name: "Ivory Coast",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; cocoa coast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "abidjan-region",
-            name: "Abidjan Region",
-            cities: [
-              {
-                slug: "abidjan",
-                name: "Abidjan",
-                atGlance: ["Cocoa capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "togo",
-        name: "Togo",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; narrow nation",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "lome-region",
-            name: "Lomé Region",
-            cities: [
-              {
-                slug: "lome",
-                name: "Lomé",
-                atGlance: ["Beach capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "benin",
-        name: "Benin",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; voodoo heartland",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "porto-novo-region",
-            name: "Porto-Novo Region",
-            cities: [
-              {
-                slug: "porto-novo",
-                name: "Porto-Novo",
-                atGlance: ["Voodoo capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "gambia",
-        name: "Gambia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; river nation",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "banjul-region",
-            name: "Banjul Region",
-            cities: [
-              {
-                slug: "banjul",
-                name: "Banjul",
-                atGlance: ["River capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "guinea-bissau",
-        name: "Guinea-Bissau",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; cashew coast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "bissau-region",
-            name: "Bissau Region",
-            cities: [
-              {
-                slug: "bissau",
-                name: "Bissau",
-                atGlance: ["Cashew capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "guinea",
-        name: "Guinea",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; bauxite rich",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "conakry-region",
-            name: "Conakry Region",
-            cities: [
-              {
-                slug: "conakry",
-                name: "Conakry",
-                atGlance: ["Peninsula capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "liberia",
-        name: "Liberia",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; war recovery",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "monrovia-region",
-            name: "Monrovia Region",
-            cities: [
-              {
-                slug: "monrovia",
-                name: "Monrovia",
-                atGlance: ["War-recovery capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "sierra-leone",
-        name: "Sierra Leone",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; diamond coast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "freetown-region",
-            name: "Freetown Region",
-            cities: [
-              {
-                slug: "freetown",
-                name: "Freetown",
-                atGlance: ["Diamond capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "mauritania",
-        name: "Mauritania",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Sahara vast",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "nouakchott-region",
-            name: "Nouakchott Region",
-            cities: [
-              {
-                slug: "nouakchott",
-                name: "Nouakchott",
-                atGlance: ["Desert capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "cape-verde",
-        name: "Cape Verde",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; Atlantic islands",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "praia-region",
-            name: "Praia Region",
-            cities: [
-              {
-                slug: "praia",
-                name: "Praia",
-                atGlance: ["Atlantic capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "sao-tome-principe",
-        name: "São Tomé & Príncipe",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; chocolate islands",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "sao-tome-region",
-            name: "São Tomé Region",
-            cities: [
-              {
-                slug: "sao-tome",
-                name: "São Tomé",
-                atGlance: ["Chocolate capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "comoros",
-        name: "Comoros",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; perfume islands",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "moroni-region",
-            name: "Moroni Region",
-            cities: [
-              {
-                slug: "moroni",
-                name: "Moroni",
-                atGlance: ["Perfume capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "madagascar",
-        name: "Madagascar",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; lemur island",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "antananarivo-region",
-            name: "Antananarivo Region",
-            cities: [
-              {
-                slug: "antananarivo",
-                name: "Antananarivo",
-                atGlance: ["Hill capital", "Illegal", "Lemurs"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "seychelles",
-        name: "Seychelles",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; granite islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "victoria-region",
-            name: "Victoria Region",
-            cities: [
-              {
-                slug: "victoria-seychelles",
-                name: "Victoria",
-                atGlance: ["Tiny capital", "Medical only", "Paradise"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "mauritius",
-        name: "Mauritius",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; island paradise",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "port-louis-region",
-            name: "Port Louis Region",
-            cities: [
-              {
-                slug: "port-louis",
-                name: "Port Louis",
-                atGlance: ["Port capital", "Medical only", "Multicultural"],
               },
             ],
           },
@@ -6737,1170 +5451,6 @@ const WORLD: Continent[] = [
                 slug: "strombine",
                 name: "Strombine",
                 atGlance: ["Tiny capital", "Medical only", "French island"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "aland-islands",
-        name: "Åland Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Swedish-speaking",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "mariehamn-region",
-            name: "Mariehamn Region",
-            cities: [
-              {
-                slug: "mariehamn",
-                name: "Mariehamn",
-                atGlance: ["Swedish capital", "Medical only", "Autonomous"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "faroe-islands",
-        name: "Faroe Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; sheep islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "torshavn-region",
-            name: "Tórshavn Region",
-            cities: [
-              {
-                slug: "torshavn",
-                name: "Tórshavn",
-                atGlance: ["Sheep capital", "Medical only", "Nordic"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "greenland",
-        name: "Greenland",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Inuit island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "nuuk-region",
-            name: "Nuuk Region",
-            cities: [
-              {
-                slug: "nuuk",
-                name: "Nuuk",
-                atGlance: ["Arctic capital", "Medical only", "Icebergs"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "jersey",
-        name: "Jersey",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Channel island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "saint-helier-region",
-            name: "Saint Helier Region",
-            cities: [
-              {
-                slug: "saint-helier",
-                name: "Saint Helier",
-                atGlance: ["Channel capital", "Medical only", "British crown"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "guernsey",
-        name: "Guernsey",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Channel island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "saint-peter-port-region",
-            name: "Saint Peter Port Region",
-            cities: [
-              {
-                slug: "saint-peter-port",
-                name: "Saint Peter Port",
-                atGlance: ["Channel capital", "Medical only", "British crown"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "isle-of-man",
-        name: "Isle of Man",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Celtic island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "douglas-region",
-            name: "Douglas Region",
-            cities: [
-              {
-                slug: "douglas",
-                name: "Douglas",
-                atGlance: ["TT capital", "Medical only", "British crown"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "gibraltar",
-        name: "Gibraltar",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Rock monkeys",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "gibraltar-town-region",
-            name: "Gibraltar Town Region",
-            cities: [
-              {
-                slug: "gibraltar-town",
-                name: "Gibraltar Town",
-                atGlance: ["Rock capital", "Medical only", "Monkeys"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "monaco",
-        name: "Monaco",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; casino principality",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "monaco-ville-region",
-            name: "Monaco-Ville Region",
-            cities: [
-              {
-                slug: "monaco-ville",
-                name: "Monaco-Ville",
-                atGlance: ["Principality capital", "Medical only", "Casino"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "vatican",
-        name: "Vatican City",
-        legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; holy city",
-        description:
-          "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "vatican-city-region",
-            name: "Vatican City Region",
-            cities: [
-              {
-                slug: "vatican-city",
-                name: "Vatican City",
-                atGlance: ["Holy capital", "Illegal", "Severe penalties"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "san-marino",
-        name: "San Marino",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; micro-nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "san-marino-city-region",
-            name: "San Marino City Region",
-            cities: [
-              {
-                slug: "san-marino-city",
-                name: "San Marino City",
-                atGlance: ["Micro capital", "Medical only", "Clifftop"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "liechtenstein",
-        name: "Liechtenstein",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Alpine principality",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "vaduz-region",
-            name: "Vaduz Region",
-            cities: [
-              {
-                slug: "vaduz",
-                name: "Vaduz",
-                atGlance: ["Alpine capital", "Medical only", "Principality"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "andorra",
-        name: "Andorra",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; ski principality",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "andorra-la-vella-region",
-            name: "Andorra la Vella Region",
-            cities: [
-              {
-                slug: "andorra-la-vella",
-                name: "Andorra la Vella",
-                atGlance: ["Ski capital", "Medical only", "Duty-free"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tokelau",
-        name: "Tokelau",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; NZ territory",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "tokelau-atoll-region",
-            name: "Tokelau Atoll Region",
-            cities: [
-              {
-                slug: "tokelau-atoll",
-                name: "Tokelau Atoll",
-                atGlance: ["Remote atoll", "Medical only", "NZ territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "niue",
-        name: "Niue",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; coral island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "alofi-region",
-            name: "Alofi Region",
-            cities: [
-              {
-                slug: "alofi",
-                name: "Alofi",
-                atGlance: ["Coral capital", "Medical only", "NZ territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "cook-islands",
-        name: "Cook Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; NZ territory",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "avarua-region",
-            name: "Avarua Region",
-            cities: [
-              {
-                slug: "avarua",
-                name: "Avarua",
-                atGlance: ["Lagoon capital", "Medical only", "NZ territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "nauru",
-        name: "Nauru",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; phosphate island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "yaren-region",
-            name: "Yaren Region",
-            cities: [
-              {
-                slug: "yaren",
-                name: "Yaren",
-                atGlance: ["Phosphate capital", "Medical only", "Smallest republic"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "palau",
-        name: "Palau",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; dive paradise",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "ngerulmud-region",
-            name: "Ngerulmud Region",
-            cities: [
-              {
-                slug: "ngerulmud",
-                name: "Ngerulmud",
-                atGlance: ["Jungle capital", "Medical only", "Dive paradise"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "marshall-islands",
-        name: "Marshall Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; atoll nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "majuro-region",
-            name: "Majuro Region",
-            cities: [
-              {
-                slug: "majuro",
-                name: "Majuro",
-                atGlance: ["Atoll capital", "Medical only", "US territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "federated-states-micronesia",
-        name: "Federated States of Micronesia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Pacific islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "palikir-region",
-            name: "Palikir Region",
-            cities: [
-              {
-                slug: "palikir",
-                name: "Palikir",
-                atGlance: ["Pacific capital", "Medical only", "US territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "vanuatu",
-        name: "Vanuatu",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; volcano nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "port-vila-region",
-            name: "Port Vila Region",
-            cities: [
-              {
-                slug: "port-vila",
-                name: "Port Vila",
-                atGlance: ["Volcano capital", "Medical only", "Pacific vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "solomon-islands",
-        name: "Solomon Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; WWII history",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "honiara-region",
-            name: "Honiara Region",
-            cities: [
-              {
-                slug: "honiara",
-                name: "Honiara",
-                atGlance: ["WWII capital", "Medical only", "Pacific history"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "samoa",
-        name: "Samoa",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Polynesian culture",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "apia-region",
-            name: "Apia Region",
-            cities: [
-              {
-                slug: "apia",
-                name: "Apia",
-                atGlance: ["Polynesian capital", "Medical only", "Island vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tonga",
-        name: "Tonga",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; kingdom island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "nukualofa-region",
-            name: "Nukuʻalofa Region",
-            cities: [
-              {
-                slug: "nukualofa",
-                name: "Nukuʻalofa",
-                atGlance: ["Kingdom capital", "Medical only", "Polynesian"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "kiribati",
-        name: "Kiribati",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; equatorial islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "tarawa-region",
-            name: "Tarawa Region",
-            cities: [
-              {
-                slug: "tarawa",
-                name: "Tarawa",
-                atGlance: ["Equatorial capital", "Medical only", "Remote"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tuvalu",
-        name: "Tuvalu",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; sinking islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "funafuti-region",
-            name: "Funafuti Region",
-            cities: [
-              {
-                slug: "funafuti",
-                name: "Funafuti",
-                atGlance: ["Sinking capital", "Medical only", "Remote"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "fiji",
-        name: "Fiji",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; coral islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "suva-region",
-            name: "Suva Region",
-            cities: [
-              {
-                slug: "suva",
-                name: "Suva",
-                atGlance: ["Coral capital", "Medical only", "Island vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "new-zealand",
-        name: "New Zealand",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Middle-earth",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "auckland-region",
-            name: "Auckland Region",
-            cities: [
-              {
-                slug: "auckland",
-                name: "Auckland",
-                atGlance: ["City of sails", "Medical only", "Volcanic"],
-              },
-            ],
-          },
-          {
-            slug: "wellington-region",
-            name: "Wellington Region",
-            cities: [
-              {
-                slug: "wellington",
-                name: "Wellington",
-                atGlance: ["Windy capital", "Medical only", "Café culture"],
-              },
-            ],
-          },
-          {
-            slug: "christchurch-region",
-            name: "Christchurch Region",
-            cities: [
-              {
-                slug: "christchurch",
-                name: "Christchurch",
-                atGlance: ["Garden city", "Medical only", "Quake rebuilt"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "australia",
-        name: "Australia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; surf & outback",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "sydney-region",
-            name: "Sydney Region",
-            cities: [
-              {
-                slug: "sydney",
-                name: "Sydney",
-                atGlance: ["Harbour capital", "Medical only", "Opera House"],
-              },
-            ],
-          },
-          {
-            slug: "melbourne-region",
-            name: "Melbourne Region",
-            cities: [
-              {
-                slug: "melbourne",
-                name: "Melbourne",
-                atGlance: ["Cultural capital", "Medical only", "Coffee culture"],
-              },
-            ],
-          },
-          {
-            slug: "brisbane-region",
-            name: "Brisbane Region",
-            cities: [
-              {
-                slug: "brisbane",
-                name: "Brisbane",
-                atGlance: ["River city", "Medical only", "Sunshine State"],
-              },
-            ],
-          },
-          {
-            slug: "perth-region",
-            name: "Perth Region",
-            cities: [
-              {
-                slug: "perth",
-                name: "Perth",
-                atGlance: ["Isolated capital", "Medical only", "Sunset coast"],
-              },
-            ],
-          },
-          {
-            slug: "adelaide-region",
-            name: "Adelaide Region",
-            cities: [
-              {
-                slug: "adelaide",
-                name: "Adelaide",
-                atGlance: ["Festival city", "Medical only", "Wine region"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "papua-new-guinea",
-        name: "Papua New Guinea",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; jungle nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "port-moresby-region",
-            name: "Port Moresby Region",
-            cities: [
-              {
-                slug: "port-moresby",
-                name: "Port Moresby",
-                atGlance: ["Jungle capital", "Medical only", "High crime"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "solomon-islands",
-        name: "Solomon Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; WWII history",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "honiara-region",
-            name: "Honiara Region",
-            cities: [
-              {
-                slug: "honiara",
-                name: "Honiara",
-                atGlance: ["WWII capital", "Medical only", "Pacific history"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "vanuatu",
-        name: "Vanuatu",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; volcano nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "port-vila-region",
-            name: "Port Vila Region",
-            cities: [
-              {
-                slug: "port-vila",
-                name: "Port Vila",
-                atGlance: ["Volcano capital", "Medical only", "Pacific vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "fiji",
-        name: "Fiji",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; coral islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "suva-region",
-            name: "Suva Region",
-            cities: [
-              {
-                slug: "suva",
-                name: "Suva",
-                atGlance: ["Coral capital", "Medical only", "Island vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "samoa",
-        name: "Samoa",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Polynesian culture",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "apia-region",
-            name: "Apia Region",
-            cities: [
-              {
-                slug: "apia",
-                name: "Apia",
-                atGlance: ["Polynesian capital", "Medical only", "Island vibes"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tonga",
-        name: "Tonga",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; kingdom island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "nukualofa-region",
-            name: "Nukuʻalofa Region",
-            cities: [
-              {
-                slug: "nukualofa",
-                name: "Nukuʻalofa",
-                atGlance: ["Kingdom capital", "Medical only", "Polynesian"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "kiribati",
-        name: "Kiribati",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; equatorial islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "tarawa-region",
-            name: "Tarawa Region",
-            cities: [
-              {
-                slug: "tarawa",
-                name: "Tarawa",
-                atGlance: ["Equatorial capital", "Medical only", "Remote"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "tuvalu",
-        name: "Tuvalu",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; sinking islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "funafuti-region",
-            name: "Funafuti Region",
-            cities: [
-              {
-                slug: "funafuti",
-                name: "Funafuti",
-                atGlance: ["Sinking capital", "Medical only", "Remote"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "nauru",
-        name: "Nauru",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; phosphate island",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "yaren-region",
-            name: "Yaren Region",
-            cities: [
-              {
-                slug: "yaren",
-                name: "Yaren",
-                atGlance: ["Phosphate capital", "Medical only", "Smallest republic"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "palau",
-        name: "Palau",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; dive paradise",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "ngerulmud-region",
-            name: "Ngerulmud Region",
-            cities: [
-              {
-                slug: "ngerulmud",
-                name: "Ngerulmud",
-                atGlance: ["Jungle capital", "Medical only", "Dive paradise"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "marshall-islands",
-        name: "Marshall Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; atoll nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "majuro-region",
-            name: "Majuro Region",
-            cities: [
-              {
-                slug: "majuro",
-                name: "Majuro",
-                atGlance: ["Atoll capital", "Medical only", "US territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "federated-states-micronesia",
-        name: "Federated States of Micronesia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Pacific islands",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "palikir-region",
-            name: "Palikir Region",
-            cities: [
-              {
-                slug: "palikir",
-                name: "Palikir",
-                atGlance: ["Pacific capital", "Medical only", "US territory"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "papua-new-guinea",
-        name: "Papua New Guinea",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; jungle nation",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
-        regions: [
-          {
-            slug: "port-moresby-region",
-            name: "Port Moresby Region",
-            cities: [
-              {
-                slug: "port-moresby",
-                name: "Port Moresby",
-                atGlance: ["Jungle capital", "Medical only", "High crime"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "new-zealand",
-        name: "New Zealand",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; Middle-earth",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [
-          {
-            slug: "auckland-region",
-            name: "Auckland Region",
-            cities: [
-              {
-                slug: "auckland",
-                name: "Auckland",
-                atGlance: ["City of sails", "Medical only", "Volcanic"],
-              },
-            ],
-          },
-          {
-            slug: "wellington-region",
-            name: "Wellington Region",
-            cities: [
-              {
-                slug: "wellington",
-                name: "Wellington",
-                atGlance: ["Windy capital", "Medical only", "Café culture"],
-              },
-            ],
-          },
-          {
-            slug: "christchurch-region",
-            name: "Christchurch Region",
-            cities: [
-              {
-                slug: "christchurch",
-                name: "Christchurch",
-                atGlance: ["Garden city", "Medical only", "Quake rebuilt"],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        slug: "australia",
-        name: "Australia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; surf & outback",
-        description:
-          "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
-        regions: [
-          {
-            slug: "sydney-region",
-            name: "Sydney Region",
-            cities: [
-              {
-                slug: "sydney",
-                name: "Sydney",
-                atGlance: ["Harbour capital", "Medical only", "Opera House"],
-              },
-            ],
-          },
-          {
-            slug: "melbourne-region",
-            name: "Melbourne Region",
-            cities: [
-              {
-                slug: "melbourne",
-                name: "Melbourne",
-                atGlance: ["Cultural capital", "Medical only", "Coffee culture"],
-              },
-            ],
-          },
-          {
-            slug: "brisbane-region",
-            name: "Brisbane Region",
-            cities: [
-              {
-                slug: "brisbane",
-                name: "Brisbane",
-                atGlance: ["River city", "Medical only", "Sunshine State"],
-              },
-            ],
-          },
-          {
-            slug: "perth-region",
-            name: "Perth Region",
-            cities: [
-              {
-                slug: "perth",
-                name: "Perth",
-                atGlance: ["Isolated capital", "Medical only", "Sunset coast"],
-              },
-            ],
-          },
-          {
-            slug: "adelaide-region",
-            name: "Adelaide Region",
-            cities: [
-              {
-                slug: "adelaide",
-                name: "Adelaide",
-                atGlance: ["Festival city", "Medical only", "Wine region"],
               },
             ],
           },
@@ -8369,6 +5919,7 @@ const WORLD: Continent[] = [
           },
         ],
       },
+      /* --- NZ, Aus & others (Moved from Africa duplicate block) --- */
       {
         slug: "tokelau",
         name: "Tokelau",
@@ -8436,6 +5987,120 @@ const WORLD: Continent[] = [
                 slug: "avarua",
                 name: "Avarua",
                 atGlance: ["Lagoon capital", "Medical only", "NZ territory"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "new-zealand",
+        name: "New Zealand",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; Middle-earth",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-6.jpg",
+        regions: [
+          {
+            slug: "auckland-region",
+            name: "Auckland Region",
+            cities: [
+              {
+                slug: "auckland",
+                name: "Auckland",
+                atGlance: ["City of sails", "Medical only", "Volcanic"],
+              },
+            ],
+          },
+          {
+            slug: "wellington-region",
+            name: "Wellington Region",
+            cities: [
+              {
+                slug: "wellington",
+                name: "Wellington",
+                atGlance: ["Windy capital", "Medical only", "Café culture"],
+              },
+            ],
+          },
+          {
+            slug: "christchurch-region",
+            name: "Christchurch Region",
+            cities: [
+              {
+                slug: "christchurch",
+                name: "Christchurch",
+                atGlance: ["Garden city", "Medical only", "Quake rebuilt"],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "australia",
+        name: "Australia",
+        legalStatus: "Medical",
+        possession: "Medical prescription only",
+        airport: "Zero tolerance",
+        tourist: "Medical only; surf & outback",
+        description:
+          "Medical cannabis legal; recreational use prohibited.",
+        image: "/dest-4.jpg",
+        regions: [
+          {
+            slug: "sydney-region",
+            name: "Sydney Region",
+            cities: [
+              {
+                slug: "sydney",
+                name: "Sydney",
+                atGlance: ["Harbour capital", "Medical only", "Opera House"],
+              },
+            ],
+          },
+          {
+            slug: "melbourne-region",
+            name: "Melbourne Region",
+            cities: [
+              {
+                slug: "melbourne",
+                name: "Melbourne",
+                atGlance: ["Cultural capital", "Medical only", "Coffee culture"],
+              },
+            ],
+          },
+          {
+            slug: "brisbane-region",
+            name: "Brisbane Region",
+            cities: [
+              {
+                slug: "brisbane",
+                name: "Brisbane",
+                atGlance: ["River city", "Medical only", "Sunshine State"],
+              },
+            ],
+          },
+          {
+            slug: "perth-region",
+            name: "Perth Region",
+            cities: [
+              {
+                slug: "perth",
+                name: "Perth",
+                atGlance: ["Isolated capital", "Medical only", "Sunset coast"],
+              },
+            ],
+          },
+          {
+            slug: "adelaide-region",
+            name: "Adelaide Region",
+            cities: [
+              {
+                slug: "adelaide",
+                name: "Adelaide",
+                atGlance: ["Festival city", "Medical only", "Wine region"],
               },
             ],
           },
@@ -8885,7 +6550,7 @@ const WorldGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation /> {/* ← header is now present */}
+      <Navigation /> 
       {(() => {
         if (ciSlug && city && region && country) return <CityDetail city={city} region={region} country={country} />;
         if (rSlug && region && country) return <CityIndex continent={continent!} country={country} region={region} />;
