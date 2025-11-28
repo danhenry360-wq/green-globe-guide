@@ -17,7 +17,13 @@ import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-/* ----------  TYPES  ---------- */
+// --- START of NEW IMPORTS for uploaded images ---
+// Assuming these file paths are relative to your component's location or handled by your build system
+import torontoStreetViewImage from "./toronto-street-view.jpg"; 
+import veniceBeachImage from "./beautiful-shot-venice-beach-with-waves-california.jpg";
+// --- END of NEW IMPORTS for uploaded images ---
+
+/* ---------- TYPES ---------- */
 interface Destination {
   name: string;
   status: string;
@@ -50,18 +56,19 @@ interface BlogItem {
   link: string;
 }
 
-/* ----------  ANIMATION VARIANTS  ---------- */
+/* ---------- ANIMATION VARIANTS ---------- */
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
 
-/* ----------  STATIC DATA  ---------- */
+/* ---------- STATIC DATA ---------- */
 const FEATURED_DESTINATIONS: Destination[] = [
   { 
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    image: "/dest-california-2025-new.jpg", // NEW IMAGE
-    imageAlt: "California cannabis dispensaries and 420-friendly destinations",
+    // UPDATED IMAGE SOURCE
+    image: veniceBeachImage,
+    imageAlt: "Beautiful shot of Venice Beach with waves in California, a cannabis-friendly destination", 
     color: "bg-green-500/90", 
     link: "/usa/california" 
   },
@@ -70,7 +77,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     status: "Recreational", 
     country: "USA", 
     image: "/dest-2.jpg",
-    imageAlt: "Denver Colorado cannabis travel guide and legal status",
+    imageAlt: "Denver Colorado cannabis travel guide and legal status", 
     color: "bg-green-500/90", 
     link: "/usa/colorado" 
   },
@@ -79,7 +86,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     status: "Decriminalized", 
     country: "Europe", 
     image: "/dest-3.jpg",
-    imageAlt: "Amsterdam coffee shops and Netherlands cannabis culture",
+    imageAlt: "Amsterdam coffee shops and Netherlands cannabis culture", 
     color: "bg-amber-500/90", 
     link: "/world" 
   },
@@ -87,8 +94,9 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Canada", 
     status: "Recreational", 
     country: "North America", 
-    image: "/dest-canada-2025-new.jpg", // NEW IMAGE
-    imageAlt: "Canada legal cannabis travel and dispensary locations",
+    // UPDATED IMAGE SOURCE
+    image: torontoStreetViewImage,
+    imageAlt: "Toronto street view with skyscrapers and Canadian flag, Canada legal cannabis travel", 
     color: "bg-green-500/90", 
     link: "/world" 
   },
@@ -97,7 +105,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     status: "Recreational", 
     country: "South America", 
     image: "/dest-uruguay.jpg",
-    imageAlt: "Uruguay pioneering cannabis legalization travel guide",
+    imageAlt: "Uruguay pioneering cannabis legalization travel guide", 
     color: "bg-green-500/90", 
     link: "/world" 
   },
@@ -106,7 +114,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     status: "Medical", 
     country: "Asia", 
     image: "/dest-6.jpg",
-    imageAlt: "Thailand medical cannabis tourism and regulations",
+    imageAlt: "Thailand medical cannabis tourism and regulations", 
     color: "bg-amber-700/90", 
     link: "/world" 
   },
@@ -151,32 +159,32 @@ const BLOG_DATA: BlogItem[] = [
     title: "Amsterdam Coffee Shops Guide 2025", 
     summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips for an authentic Amsterdam experience.",
     image: "/blog-amsterdam.jpg",
-    imageAlt: "Amsterdam coffee shop interior and cannabis selection guide",
+    imageAlt: "Amsterdam coffee shop interior and cannabis selection guide", 
     link: "/guides/amsterdam" 
   },
   { 
     title: "California Cannabis Travel Handbook", 
     summary: "Complete guide to California dispensaries, regulations, and 420-friendly activities in major cities.",
     image: "/blog-california.jpg",
-    imageAlt: "California dispensary exterior and cannabis products display",
+    imageAlt: "California dispensary exterior and cannabis products display", 
     link: "/guides/california" 
   },
   { 
     title: "Uruguay: The First Legal Cannabis Nation", 
     summary: "Deep dive into Uruguay's pioneering legalization model and what travelers need to know.",
     image: "/blog-uruguay.jpg",
-    imageAlt: "Montevideo Uruguay urban landscape and cannabis culture",
+    imageAlt: "Montevideo Uruguay urban landscape and cannabis culture", 
     link: "/guides/uruguay" 
   },
 ];
 
-/* ----------  SEO META TAGS COMPONENT  ---------- */
+/* ---------- SEO META TAGS COMPONENT ---------- */
 const HOME_STRUCTURED_DATA = {
-  "@context": "https://schema.org  ",
+  "@context": "https://schema.org ",
   "@type": "WebApplication",
   name: "BudQuest",
   description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
-  url: "https://budquest.com  ",
+  url: "https://budquest.com ",
   applicationCategory: "TravelApplication",
   offers: {
     "@type": "Offer",
@@ -198,7 +206,7 @@ const SEOHead = () => {
   return null;
 };
 
-/* ----------  COMPONENT  ---------- */
+/* ---------- COMPONENT ---------- */
 /**
  * Home Component - BudQuest Landing Page
  * Professional, SEO-optimized cannabis travel guide homepage
@@ -244,7 +252,7 @@ const Home = () => {
         Skip to main content
       </a>
 
-      {/* ==========  HERO SECTION  ========== */}
+      {/* ========== HERO SECTION ========== */}
       <section 
         className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
         role="banner"
@@ -351,7 +359,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  STATS SECTION  ========== */}
+      {/* ========== STATS SECTION ========== */}
       <section 
         id="stats" 
         className="py-16 sm:py-20 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent"
@@ -389,7 +397,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  FEATURED DESTINATIONS SECTION  ========== */}
+      {/* ========== FEATURED DESTINATIONS SECTION ========== */}
       <section 
         id="main-content"
         className="py-16 sm:py-20 px-4 bg-black"
@@ -448,7 +456,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  FEATURES/RESOURCES SECTION  ========== */}
+      {/* ========== FEATURES/RESOURCES SECTION ========== */}
       <section 
         className="py-16 sm:py-20 px-4 bg-black"
         aria-labelledby="resources-heading"
@@ -491,7 +499,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  GLOBAL LEGALITY SECTION  ========== */}
+      {/* ========== GLOBAL LEGALITY SECTION ========== */}
       <section 
         className="py-16 sm:py-20 px-4 bg-gradient-to-b from-black via-gray-950 to-black"
         aria-labelledby="legality-heading"
@@ -611,7 +619,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  BLOG/TRAVEL GUIDES SECTION  ========== */}
+      {/* ========== BLOG/TRAVEL GUIDES SECTION ========== */}
       <section 
         className="py-16 sm:py-20 px-4 bg-black"
         aria-labelledby="guides-heading"
@@ -660,7 +668,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  CALL TO ACTION  ========== */}
+      {/* ========== CALL TO ACTION ========== */}
       <section className="py-16 sm:py-20 px-4 bg-black" aria-labelledby="cta-heading">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
