@@ -514,83 +514,80 @@ const Home = () => {
             </p>
           </motion.div>
 
-          {/* Mobile View - EXACT LAYOUT FROM SCREENSHOT */}
+          {/* Mobile View - 2x2 Card Grid with Emojis */}
           <div className="block md:hidden">
-            <motion.div variants={FADE_IN} className="space-y-8">
+            <motion.div variants={FADE_IN} className="space-y-6">
               
-              {/* Continent Grid - EXACTLY as shown in screenshot */}
-              <div className="space-y-6">
-                {/* Americas */}
-                <div className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-white/10">
-                  <span className="text-white font-medium">Americas</span>
-                  <span className="text-gray-400 text-sm">8 countries</span>
-                </div>
+              {/* 2x2 Continent Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <Link to="/world/north-america" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
+                  <span className="text-4xl mb-3">🌎</span>
+                  <span className="text-base font-semibold text-foreground">Americas</span>
+                  <span className="text-sm text-muted-foreground">8 countries</span>
+                </Link>
                 
-                {/* Europe */}
-                <div className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-white/10">
-                  <span className="text-white font-medium">Europe</span>
-                  <span className="text-gray-400 text-sm">4 countries</span>
-                </div>
+                <Link to="/world/europe" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
+                  <span className="text-4xl mb-3">🇪🇺</span>
+                  <span className="text-base font-semibold text-foreground">Europe</span>
+                  <span className="text-sm text-muted-foreground">8 countries</span>
+                </Link>
                 
-                {/* Asia */}
-                <div className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-white/10">
-                  <span className="text-white font-medium">Asia</span>
-                  <span className="text-gray-400 text-sm">4 countries</span>
-                </div>
+                <Link to="/world/asia" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
+                  <span className="text-4xl mb-3">🌏</span>
+                  <span className="text-base font-semibold text-foreground">Asia</span>
+                  <span className="text-sm text-muted-foreground">4 countries</span>
+                </Link>
                 
-                {/* Africa */}
-                <div className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-white/10">
-                  <span className="text-white font-medium">Africa</span>
-                  <span className="text-gray-400 text-sm">4 countries</span>
-                </div>
-                
-                {/* Oceania */}
-                <div className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-white/10">
-                  <span className="text-white font-medium">Oceania</span>
-                  <span className="text-gray-400 text-sm">2 countries</span>
-                </div>
+                <Link to="/world/africa" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
+                  <span className="text-4xl mb-3">🌍</span>
+                  <span className="text-base font-semibold text-foreground">Africa</span>
+                  <span className="text-sm text-muted-foreground">4 countries</span>
+                </Link>
               </div>
 
-              {/* Divider */}
-              <div className="border-t border-white/10 my-6"></div>
+              {/* Oceania - Full Width */}
+              <Link to="/world/oceania" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all w-full">
+                <span className="text-4xl mb-3">🏝️</span>
+                <span className="text-base font-semibold text-foreground">Oceania</span>
+                <span className="text-sm text-muted-foreground">2 countries</span>
+              </Link>
 
-              {/* Legal Status Legend - EXACTLY as shown in screenshot */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-white text-center mb-4">Legal Status</h3>
+              {/* Divider */}
+              <div className="border-t border-border/50 my-4"></div>
+
+              {/* Legal Status Legend */}
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-foreground text-center mb-4">Legal Status</h3>
                 
-                {/* Recreational */}
-                <div className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10">
-                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" aria-hidden="true" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">Recreational</p>
-                    <p className="text-xs text-gray-400">Legal for adult use</p>
+                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
+                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Recreational</p>
+                    <p className="text-xs text-muted-foreground">Legal for adult use</p>
                   </div>
                 </div>
                 
-                {/* Medical Only */}
-                <div className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10">
-                  <div className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0" aria-hidden="true" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">Medical Only</p>
-                    <p className="text-xs text-gray-400">Legal with prescription</p>
+                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
+                  <div className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Medical Only</p>
+                    <p className="text-xs text-muted-foreground">Legal with prescription</p>
                   </div>
                 </div>
                 
-                {/* Decriminalized */}
-                <div className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10">
-                  <div className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" aria-hidden="true" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">Decriminalized</p>
-                    <p className="text-xs text-gray-400">Not criminal offense</p>
+                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
+                  <div className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Decriminalized</p>
+                    <p className="text-xs text-muted-foreground">Not criminal offense</p>
                   </div>
                 </div>
                 
-                {/* Illegal */}
-                <div className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-white/10">
-                  <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0" aria-hidden="true" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">Illegal</p>
-                    <p className="text-xs text-gray-400">Prohibited by law</p>
+                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
+                  <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Illegal</p>
+                    <p className="text-xs text-muted-foreground">Prohibited by law</p>
                   </div>
                 </div>
               </div>
@@ -600,8 +597,8 @@ const Home = () => {
           {/* Desktop View - Interactive Map */}
           <div className="hidden md:block">
             <motion.div variants={FADE_IN} className="w-full">
-              <Card className="bg-gray-900/50 border-white/10 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
-                <div className="w-full h-[400px] sm:h-[600px] bg-gray-900 rounded-lg overflow-hidden border border-white/10">
+              <Card className="bg-card/50 border-border/50 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full overflow-hidden">
+                <div className="w-full h-[400px] sm:h-[600px] bg-card rounded-lg overflow-hidden border border-border/50">
                   <InteractiveWorldMap />
                 </div>
                 <div className="mt-6 flex justify-center items-center">
@@ -663,7 +660,7 @@ const Home = () => {
       </section>
 
       {/* ==========  CALL TO ACTION  ========== */}
-      <section className="py-16 sm:py-20 px-4 bg-black" aria-labelledby="cta-heading">
+      <section className="py-12 sm:py-20 px-4 bg-background" aria-labelledby="cta-heading">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -671,17 +668,17 @@ const Home = () => {
           transition={{ duration: 0.8 }}
           className="container mx-auto text-center"
         >
-          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-8 sm:p-12 rounded-3xl border border-white/10 shadow-2xl">
-            <h2 id="cta-heading" className="text-3xl sm:text-5xl font-bold mb-4 text-white">
+          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-6 sm:p-12 rounded-2xl sm:rounded-3xl border border-border/50 shadow-2xl">
+            <h2 id="cta-heading" className="text-2xl sm:text-5xl font-bold mb-3 sm:mb-4 text-foreground">
               Ready to Explore?
             </h2>
-            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Start your journey with BudQuest. Search for your next destination and travel with confidence.
+            <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
+              Start your journey with Global Canna Pass. Search for your next destination and travel with confidence.
             </p>
             <Button 
               size="lg" 
               onClick={() => document.getElementById('search-destinations')?.focus()} 
-              className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 cursor-pointer"
+              className="h-12 sm:h-14 px-6 sm:px-10 text-base sm:text-lg rounded-xl bg-accent hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 cursor-pointer w-full sm:w-auto"
             >
               Search Destinations
             </Button>
