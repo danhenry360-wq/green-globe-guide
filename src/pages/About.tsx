@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import {
   Globe, Shield, Users, TrendingUp, MapPin, Calendar, Scale, Leaf,
   Plane, CheckCircle, Sparkles, Clock, SearchCheck, ThumbsUp,
-  ArrowRight, Award, Zap,
+  Award, Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -163,16 +163,9 @@ const About = () => {
 
       <Navigation />
 
-      {/* ========== BREADCRUMB NAVIGATION ========== */}
-      <nav className="hidden sm:flex items-center gap-2 px-4 pt-20 pb-4 text-xs text-muted-foreground border-b border-border/50" aria-label="Breadcrumb">
-        <a href="/" className="hover:text-accent transition-colors">Home</a>
-        <ArrowRight className="w-3 h-3" />
-        <span className="text-foreground font-medium">About</span>
-      </nav>
-
       {/* ========== HERO SECTION ========== */}
       <section
-        className="relative min-h-[50svh] sm:min-h-[60svh] flex items-center justify-center px-4 pt-16 sm:pt-20 pb-12 sm:pb-16 overflow-hidden"
+        className="relative min-h-[50svh] sm:min-h-[60svh] flex items-center justify-center px-4 pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden"
         role="banner"
         aria-label="BudQuest About page hero"
       >
