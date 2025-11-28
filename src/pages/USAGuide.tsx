@@ -194,7 +194,8 @@ const USAGuide = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent">
+            {/* FIXED: Removed gradient, used solid white text-white */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
               {pageTitle}
             </h1>
             {!activeRegionID && !searchTerm && (
