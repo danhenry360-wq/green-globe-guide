@@ -1,3 +1,5 @@
+import { useState, useMemo, useEffect } from "react"; // ✅ Fixed Import
+import { Filter, Search, X, Map } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,7 +12,7 @@ import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 
-// --- FULL REGION MAPPING ---
+// --- DATA INTEGRITY: Full Region Mapping ---
 const STATE_REGIONS: Record<string, string> = {
   'Alabama': 'South', 'Alaska': 'West', 'Arizona': 'West', 'Arkansas': 'South',
   'California': 'West', 'Colorado': 'West', 'Connecticut': 'Northeast', 'Delaware': 'South',
@@ -32,7 +34,7 @@ const USAGuide = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({ status: '', region: '' });
 
-  // Prevent body scroll when mobile filter is open
+  // 1. Mobile Experience: Prevent body scroll when drawer is open
   useEffect(() => {
     if (isFilterOpen) {
       document.body.style.overflow = 'hidden';
@@ -42,7 +44,7 @@ const USAGuide = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isFilterOpen]);
 
-  // 1. Data Filtering Logic
+  // 2. Core Logic: Filter States (Unchanged)
   const filteredStates = useMemo(() => {
     return USA_STATE_DATA.filter(state => {
       const matchesSearch = state.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -52,7 +54,7 @@ const USAGuide = () => {
     });
   }, [searchTerm, filters]);
 
-  // 2. Data Grouping Logic
+  // 3. Core Logic: Group by Region (Unchanged)
   const groupedByRegion = useMemo(() => {
     return filteredStates.reduce((acc, state) => {
       const region = STATE_REGIONS[state.name] || 'Other';
@@ -62,6 +64,7 @@ const USAGuide = () => {
     }, {} as Record<string, typeof USA_STATE_DATA>);
   }, [filteredStates]);
 
+  // Helper variables for UI state
   const isSearchActive = searchTerm.length > 0;
   const activeFilterCount = (filters.status ? 1 : 0) + (filters.region ? 1 : 0);
 
@@ -73,18 +76,18 @@ const USAGuide = () => {
         <div className="container mx-auto px-4">
           
           {/* ===================================================
-              MOBILE EXPERIENCE: App-Like Sticky Header
+              MOBILE VIEW: App-Like Sticky Header
           =================================================== */}
           <div className="md:hidden sticky top-16 z-30 -mx-4 px-4 bg-background/80 backdrop-blur-xl border-b border-border/40 shadow-sm transition-all duration-200">
             <div className="py-3 space-y-3">
-              {/* Search Row */}
+              {/* Row 1: Search Bar + Filter Toggle */}
               <div className="flex gap-3 items-center">
                 <div className="relative flex-grow">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                     <Search className="h-4 w-4 text-muted-foreground" />
                   </div>
                   <Input
-                    placeholder="Search 50 states..."
+                    placeholder="Search states..."
                     className="pl-9 h-11 bg-muted/50 border-transparent focus:bg-background focus:border-primary transition-all rounded-xl text-base"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -103,7 +106,7 @@ const USAGuide = () => {
                   onClick={() => setIsFilterOpen(true)} 
                   variant={activeFilterCount > 0 ? "default" : "outline"}
                   className="h-11 w-11 px-0 flex-shrink-0 rounded-xl relative border-border/50 bg-background"
-                  aria-label="Filters"
+                  aria-label="Open filters"
                 >
                   <Filter className="w-5 h-5" />
                   {activeFilterCount > 0 && (
@@ -114,20 +117,20 @@ const USAGuide = () => {
                 </Button>
               </div>
 
-              {/* Active Filter Chips (Horizontal Scroll) */}
+              {/* Row 2: Active Filter Chips (Horizontal Scroll) */}
               {(filters.status || filters.region) && (
                 <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-1 px-1">
                   {filters.status && (
                     <Badge variant="secondary" className="h-7 px-3 gap-1 rounded-lg flex-shrink-0 bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, status: '' }))}>
-                      Status: {filters.status} <X className="h-3 w-3" />
+                      {filters.status} <X className="h-3 w-3" />
                     </Badge>
                   )}
                   {filters.region && (
                     <Badge variant="secondary" className="h-7 px-3 gap-1 rounded-lg flex-shrink-0 bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer" onClick={() => setFilters(prev => ({ ...prev, region: '' }))}>
-                      Region: {filters.region} <X className="h-3 w-3" />
+                      {filters.region} <X className="h-3 w-3" />
                     </Badge>
                   )}
-                  <button onClick={() => setFilters({ status: '', region: '' })} className="text-xs text-muted-foreground whitespace-nowrap px-2">
+                  <button onClick={() => setFilters({ status: '', region: '' })} className="text-xs text-muted-foreground whitespace-nowrap px-2 font-medium">
                     Clear all
                   </button>
                 </div>
@@ -136,7 +139,7 @@ const USAGuide = () => {
           </div>
 
           {/* ===================================================
-              DESKTOP EXPERIENCE: Side-by-Side
+              DESKTOP VIEW: Sidebar Layout (Original Logic)
           =================================================== */}
           <div className="hidden md:flex md:space-x-8 pt-6">
             <aside className="w-1/4 sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto pr-2 custom-scrollbar">
@@ -186,7 +189,7 @@ const USAGuide = () => {
           </div>
 
           {/* ===================================================
-              MOBILE CONTENT: Hybrid List
+              MOBILE CONTENT: Hybrid List Logic
           =================================================== */}
           <div className="md:hidden mt-4 min-h-[50vh]">
             <div className="flex justify-between items-center mb-4 px-1">
@@ -198,7 +201,7 @@ const USAGuide = () => {
             {filteredStates.length === 0 ? (
               <EmptyState />
             ) : isSearchActive || (filters.status && !filters.region) ? (
-              // SEARCH/FILTER MODE: Flat list for speed
+              // CASE A: User is searching/filtering -> Show Flat List (Better UX)
               <motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }}
@@ -209,7 +212,7 @@ const USAGuide = () => {
                 ))}
               </motion.div>
             ) : (
-              // BROWSE MODE: Grouped Accordions
+              // CASE B: User is just browsing -> Show Regions Accordion (Original UX)
               <Accordion type="multiple" className="w-full space-y-3">
                 {Object.entries(groupedByRegion).map(([region, states]) => (
                   <AccordionItem 
@@ -243,7 +246,7 @@ const USAGuide = () => {
       </div>
 
       {/* ===================================================
-          MOBILE BOTTOM SHEET (Filter Drawer)
+          MOBILE DRAWER: Bottom Sheet Filter
       =================================================== */}
       <AnimatePresence>
         {isFilterOpen && (
@@ -257,7 +260,7 @@ const USAGuide = () => {
               className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             />
             
-            {/* Slide-up Drawer */}
+            {/* Drawer */}
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -265,59 +268,3 @@ const USAGuide = () => {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-[20px] shadow-2xl flex flex-col max-h-[85vh]"
             >
-              {/* Drawer Handle */}
-              <div className="flex justify-center pt-3 pb-1" onClick={() => setIsFilterOpen(false)}>
-                <div className="w-12 h-1.5 bg-muted-foreground/20 rounded-full" />
-              </div>
-
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 pb-4 border-b border-border/40">
-                <h2 className="text-lg font-bold">Filter States</h2>
-                <Button variant="ghost" size="icon" className="rounded-full h-8 w-8" onClick={() => setIsFilterOpen(false)}>
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-
-              {/* Scrollable Content */}
-              <div className="overflow-y-auto p-6 space-y-8 flex-1">
-                <FilterStates onFilterChange={setFilters} currentFilters={filters} />
-                
-                <div className="pt-4 border-t border-border/40">
-                  <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Legend</h4>
-                  <MapLegend />
-                </div>
-              </div>
-
-              {/* Sticky Footer Action */}
-              <div className="p-4 border-t border-border/40 bg-background pb-8">
-                <Button 
-                  className="w-full h-12 text-base font-semibold rounded-xl" 
-                  onClick={() => setIsFilterOpen(false)}
-                >
-                  Show {filteredStates.length} Results
-                </Button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      <Footer />
-    </div>
-  );
-};
-
-// Helper: Improved Empty State
-const EmptyState = () => (
-  <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-    <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mb-4">
-      <Map className="w-8 h-8 text-muted-foreground/50" />
-    </div>
-    <h3 className="text-lg font-semibold text-foreground mb-1">No states found</h3>
-    <p className="text-muted-foreground max-w-xs mx-auto">
-      We couldn't find any states matching your criteria. Try clearing your filters.
-    </p>
-  </div>
-);
-
-export default USAGuide;
