@@ -60,8 +60,8 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    image: "/dest-california-2025.jpg",
-    imageAlt: "California cannabis dispensaries and 420-friendly destinations",
+    image: "/dest-california-beach.jpg",
+    imageAlt: "California beach coastline with waves and mountains in background",
     color: "bg-green-500/90", 
     link: "/usa/california" 
   },
@@ -87,8 +87,8 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Canada", 
     status: "Recreational", 
     country: "North America", 
-    image: "/dest-canada-2025.jpg",
-    imageAlt: "Canada legal cannabis travel and dispensary locations",
+    image: "/dest-canada-toronto.jpg",
+    imageAlt: "Toronto skyline with Canadian flag and skyscrapers",
     color: "bg-green-500/90", 
     link: "/world" 
   },
