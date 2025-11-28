@@ -200,6 +200,160 @@ const SEOHead = () => {
   return null;
 };
 
+/* ----------  MOBILE CONTINENT MAP COMPONENT  ---------- */
+const MobileContinentMap = () => {
+  const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const continentDisplay = [
+    { name: "Americas", emoji: "🌎", count: 8, slug: "north-america" },
+    { name: "Europe", emoji: "🇪🇺", count: 8, slug: "europe" },
+    { name: "Asia", emoji: "🌏", count: 4, slug: "asia" },
+    { name: "Africa", emoji: "🌍", count: 4, slug: "africa" },
+    { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
+  ];
+
+  const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
+    "north-america": [
+      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational, 38 medical", slug: "united-states" },
+      { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
+      { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
+      { name: "Uruguay", status: "Recreational", description: "First country to fully legalize in 2013", slug: "uruguay" },
+      { name: "Jamaica", status: "Decriminalized", description: "Decriminalized, medical and religious use legal", slug: "jamaica" },
+    ],
+    "europe": [
+      { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
+      { name: "Germany", status: "Recreational", description: "Legalized for recreational use in 2024", slug: "germany" },
+      { name: "Spain", status: "Decriminalized", description: "Private clubs legal", slug: "spain" },
+      { name: "Portugal", status: "Decriminalized", description: "Decriminalized all drugs in 2001", slug: "portugal" },
+      { name: "Switzerland", status: "Medical", description: "Medical use legal, low-THC available", slug: "switzerland" },
+    ],
+    "asia": [
+      { name: "Thailand", status: "Recreational", description: "Legalized in 2022", slug: "thailand" },
+      { name: "Japan", status: "Illegal", description: "Strict prohibition", slug: "japan" },
+      { name: "South Korea", status: "Medical", description: "Medical only", slug: "south-korea" },
+      { name: "India", status: "Decriminalized", description: "Varies by state", slug: "india" },
+    ],
+    "africa": [
+      { name: "South Africa", status: "Decriminalized", description: "Private use legal", slug: "south-africa" },
+      { name: "Morocco", status: "Illegal", description: "Traditional hash culture", slug: "morocco" },
+      { name: "Lesotho", status: "Medical", description: "First African medical license", slug: "lesotho" },
+      { name: "Malawi", status: "Medical", description: "Medical cultivation legal", slug: "malawi" },
+    ],
+    "oceania": [
+      { name: "Australia", status: "Medical", description: "Medical nationwide, ACT recreational", slug: "australia" },
+      { name: "New Zealand", status: "Medical", description: "Medical legal since 2020", slug: "new-zealand" },
+    ],
+  };
+
+  const getStatusDot = (status: string) => {
+    switch (status) {
+      case "Recreational": return "bg-green-500";
+      case "Medical": return "bg-amber-500";
+      case "Decriminalized": return "bg-blue-500";
+      default: return "bg-red-500";
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Recreational": return "text-green-400 border-green-500/50";
+      case "Medical": return "text-amber-400 border-amber-500/50";
+      case "Decriminalized": return "text-blue-400 border-blue-500/50";
+      default: return "text-red-400 border-red-500/50";
+    }
+  };
+
+  // Country list view when a continent is selected
+  if (selectedContinent) {
+    const continent = continentDisplay.find(c => c.slug === selectedContinent);
+    const countries = countriesByContinent[selectedContinent] || [];
+
+    return (
+      <div className="block md:hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-4"
+        >
+          {/* Header with back button */}
+          <div className="flex items-center gap-3 mb-6">
+            <span className="text-3xl">{continent?.emoji}</span>
+            <h3 className="text-xl font-bold text-foreground">{continent?.name}</h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSelectedContinent(null)}
+              className="ml-auto border-border/50 hover:border-accent/50 text-foreground"
+            >
+              ← Back
+            </Button>
+          </div>
+
+          {/* Country List */}
+          <div className="space-y-3">
+            {countries.map((country, index) => (
+              <motion.div
+                key={country.slug}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * index }}
+                onClick={() => navigate(`/world/${selectedContinent}/${country.slug}`)}
+                className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 transition-all cursor-pointer"
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-3 h-3 rounded-full mt-1.5 flex-shrink-0 ${getStatusDot(country.status)}`} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-semibold text-foreground">{country.name}</span>
+                      <Badge className={`text-xs border ${getStatusColor(country.status)} bg-transparent`}>
+                        {country.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{country.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Main continent grid view
+  return (
+    <div className="block md:hidden">
+      <motion.div variants={FADE_IN} className="space-y-4">
+        {/* 2x2 Continent Grid */}
+        <div className="grid grid-cols-2 gap-4">
+          {continentDisplay.slice(0, 4).map((continent) => (
+            <button
+              key={continent.slug}
+              onClick={() => setSelectedContinent(continent.slug)}
+              className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all"
+            >
+              <span className="text-4xl mb-3">{continent.emoji}</span>
+              <span className="text-base font-semibold text-foreground">{continent.name}</span>
+              <span className="text-sm text-muted-foreground">{continent.count} countries</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Oceania - Full Width */}
+        <button
+          onClick={() => setSelectedContinent("oceania")}
+          className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all w-full"
+        >
+          <span className="text-4xl mb-3">🏝️</span>
+          <span className="text-base font-semibold text-foreground">Oceania</span>
+          <span className="text-sm text-muted-foreground">2 countries</span>
+        </button>
+      </motion.div>
+    </div>
+  );
+};
+
 /* ----------  COMPONENT  ---------- */
 /**
  * Home Component - BudQuest Landing Page
@@ -515,84 +669,7 @@ const Home = () => {
           </motion.div>
 
           {/* Mobile View - 2x2 Card Grid with Emojis */}
-          <div className="block md:hidden">
-            <motion.div variants={FADE_IN} className="space-y-6">
-              
-              {/* 2x2 Continent Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                <Link to="/world/north-america" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
-                  <span className="text-4xl mb-3">🌎</span>
-                  <span className="text-base font-semibold text-foreground">Americas</span>
-                  <span className="text-sm text-muted-foreground">8 countries</span>
-                </Link>
-                
-                <Link to="/world/europe" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
-                  <span className="text-4xl mb-3">🇪🇺</span>
-                  <span className="text-base font-semibold text-foreground">Europe</span>
-                  <span className="text-sm text-muted-foreground">8 countries</span>
-                </Link>
-                
-                <Link to="/world/asia" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
-                  <span className="text-4xl mb-3">🌏</span>
-                  <span className="text-base font-semibold text-foreground">Asia</span>
-                  <span className="text-sm text-muted-foreground">4 countries</span>
-                </Link>
-                
-                <Link to="/world/africa" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all">
-                  <span className="text-4xl mb-3">🌍</span>
-                  <span className="text-base font-semibold text-foreground">Africa</span>
-                  <span className="text-sm text-muted-foreground">4 countries</span>
-                </Link>
-              </div>
-
-              {/* Oceania - Full Width */}
-              <Link to="/world/oceania" className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all w-full">
-                <span className="text-4xl mb-3">🏝️</span>
-                <span className="text-base font-semibold text-foreground">Oceania</span>
-                <span className="text-sm text-muted-foreground">2 countries</span>
-              </Link>
-
-              {/* Divider */}
-              <div className="border-t border-border/50 my-4"></div>
-
-              {/* Legal Status Legend */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-foreground text-center mb-4">Legal Status</h3>
-                
-                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
-                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Recreational</p>
-                    <p className="text-xs text-muted-foreground">Legal for adult use</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
-                  <div className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Medical Only</p>
-                    <p className="text-xs text-muted-foreground">Legal with prescription</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
-                  <div className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Decriminalized</p>
-                    <p className="text-xs text-muted-foreground">Not criminal offense</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 p-4 bg-card/60 rounded-xl border border-border/50">
-                  <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Illegal</p>
-                    <p className="text-xs text-muted-foreground">Prohibited by law</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          <MobileContinentMap />
 
           {/* Desktop View - Interactive Map */}
           <div className="hidden md:block">
