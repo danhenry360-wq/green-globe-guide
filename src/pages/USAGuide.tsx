@@ -13,39 +13,40 @@ import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { cn } from "@/lib/utils";
 
 // --- CONFIGURATION: PREMIUM REGION CARDS ---
-// Styled to match the "World Guide" screenshot (Green Icons, Dark Theme)
+// ID must match the values in STATE_REGIONS below exactly
 const REGION_CONFIG = [
   {
-    id: 'West',
+    id: 'West', 
     name: 'The West',
     description: 'Pacific Coast, Rockies & Desert',
     count: '13 states',
-    icon: Mountain, // Represents mountains/nature
+    icon: Mountain, 
   },
   {
     id: 'Midwest',
     name: 'The Midwest',
     description: 'Great Lakes & Great Plains',
     count: '12 states',
-    icon: Wheat, // Represents agriculture/plains
+    icon: Wheat, 
   },
   {
     id: 'South',
     name: 'The South',
     description: 'Deep South, Texas & Florida',
     count: '17 jurisdictions',
-    icon: Sun, // Represents warmer climate
+    icon: Sun, 
   },
   {
     id: 'Northeast',
     name: 'The Northeast',
     description: 'New England & Mid-Atlantic',
     count: '9 states',
-    icon: Building2, // Represents urbanization/history
+    icon: Building2, 
   }
 ];
 
 // --- STATE MAPPING ---
+// Keys = State Name in Data | Values = Region ID
 const STATE_REGIONS: Record<string, string> = {
   'Alabama': 'South', 'Alaska': 'West', 'Arizona': 'West', 'Arkansas': 'South',
   'California': 'West', 'Colorado': 'West', 'Connecticut': 'Northeast', 'Delaware': 'South',
@@ -64,7 +65,7 @@ const STATE_REGIONS: Record<string, string> = {
 
 const USAGuide = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+  const [activeRegionID, setActiveRegionID] = useState<string | null>(null);
 
   // --- FILTER LOGIC ---
   const filteredStates = useMemo(() => {
@@ -78,28 +79,29 @@ const USAGuide = () => {
     }
 
     // 2. Region Drill-down Mode
-    if (activeRegion) {
-      return data.filter(state => STATE_REGIONS[state.name] === 'The ' + activeRegion || STATE_REGIONS[state.name] === activeRegion);
+    // FIX: Compares the mapped value ("South") with the active ID ("South")
+    if (activeRegionID) {
+      return data.filter(state => STATE_REGIONS[state.name] === activeRegionID);
     }
 
     return []; 
-  }, [searchTerm, activeRegion]);
+  }, [searchTerm, activeRegionID]);
 
   const isSearchActive = searchTerm.length > 0;
+  
+  // Get display name for the header
+  const activeRegionName = activeRegionID 
+    ? REGION_CONFIG.find(r => r.id === activeRegionID)?.name 
+    : null;
 
-  // Animation variants for smooth entrance
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+    show: { opacity: 1, transition: { staggerChildren: 0.05 } }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     show: { opacity: 1, y: 0 }
   };
 
@@ -115,16 +117,16 @@ const USAGuide = () => {
           =================================================== */}
           <div className="flex flex-col items-center mb-8 md:mb-12 text-center">
             
-            {/* Back Button (Only shows when drilled down) */}
+            {/* Back Button */}
             <div className="h-8 mb-2 w-full flex justify-start">
-              {activeRegion && !isSearchActive && (
+              {activeRegionID && !isSearchActive && (
                 <motion.div 
                   initial={{ opacity: 0, x: -10 }} 
                   animate={{ opacity: 1, x: 0 }}
                 >
                   <Button 
                     variant="ghost" 
-                    onClick={() => setActiveRegion(null)}
+                    onClick={() => setActiveRegionID(null)}
                     className="hover:bg-white/5 text-gray-400 hover:text-white transition-colors p-0 h-auto font-medium text-base gap-2"
                   >
                     <ArrowLeft className="w-5 h-5" />
@@ -140,10 +142,10 @@ const USAGuide = () => {
               className="space-y-4 max-w-3xl"
             >
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-white to-gray-400 bg-clip-text text-transparent">
-                {isSearchActive ? "Search Results" : activeRegion ? activeRegion : "USA Cannabis Guide"}
+                {isSearchActive ? "Search Results" : activeRegionName ? activeRegionName : "USA Cannabis Guide"}
               </h1>
               
-              {!activeRegion && !isSearchActive && (
+              {!activeRegionID && !isSearchActive && (
                 <p className="text-lg text-gray-400 max-w-xl mx-auto">
                   Select a region below to explore regulations, or search for a specific state.
                 </p>
@@ -157,7 +159,7 @@ const USAGuide = () => {
           <div className="sticky top-20 z-40 mb-10 -mx-4 px-4 sm:mx-0 sm:px-0">
             <div className="relative max-w-xl mx-auto">
               <div className="relative group">
-                {/* Glow effect behind search */}
+                {/* Glow effect */}
                 <div className="absolute inset-0 bg-green-500/10 blur-xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl transition-all group-focus-within:border-green-500/50 group-focus-within:bg-black/80">
@@ -187,8 +189,8 @@ const USAGuide = () => {
           <div className="min-h-[40vh]">
             <AnimatePresence mode="wait">
               
-              {/* VIEW 1: REGION CARDS (The "World Guide" Look) */}
-              {!isSearchActive && !activeRegion && (
+              {/* VIEW 1: REGION CARDS (The Premium Look) */}
+              {!isSearchActive && !activeRegionID && (
                 <motion.div 
                   key="regions"
                   variants={containerVariants}
@@ -203,10 +205,10 @@ const USAGuide = () => {
                       variants={itemVariants}
                       whileHover={{ scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => setActiveRegion(region.name)} // Use full name for matching logic if needed
+                      onClick={() => setActiveRegionID(region.id)}
                       className={cn(
                         "group relative p-6 rounded-2xl border border-white/10 cursor-pointer overflow-hidden transition-all duration-300",
-                        "bg-white/5 flex items-center justify-between shadow-lg"
+                        "bg-white/5 flex items-center justify-between shadow-lg h-28 md:h-32"
                       )}
                     >
                       {/* Hover Gradient Glow */}
@@ -237,7 +239,7 @@ const USAGuide = () => {
               )}
 
               {/* VIEW 2: STATE LIST (Drill-down OR Search Results) */}
-              {(activeRegion || isSearchActive) && (
+              {(activeRegionID || isSearchActive) && (
                 <motion.div 
                   key="states"
                   initial={{ opacity: 0 }}
@@ -265,14 +267,15 @@ const USAGuide = () => {
                       </div>
                       <h3 className="text-2xl font-semibold text-white mb-2">No states found</h3>
                       <p className="text-gray-400 text-lg">
-                        We couldn't find "{searchTerm}" in our database.
+                        We couldn't find states in the "{activeRegionName}" region.
+                        <br/><span className="text-sm opacity-50">(Debug: Active Region ID = {activeRegionID})</span>
                       </p>
                       <Button 
                         variant="link" 
-                        onClick={() => setSearchTerm("")}
+                        onClick={() => { setSearchTerm(""); setActiveRegionID(null); }}
                         className="mt-4 text-green-400 hover:text-green-300 text-lg"
                       >
-                        Clear search
+                        Clear filters
                       </Button>
                     </div>
                   )}
