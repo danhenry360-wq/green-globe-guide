@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { 
   Search, X, ArrowLeft, 
   Mountain, Sun, Wheat, Building2, ChevronRight, Map 
@@ -76,35 +76,24 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "group relative rounded-2xl border border-border/50",
-            // ADAPTIVE GLASSMORPHISM: Works in Light & Dark
-            "bg-gradient-to-br from-green-500/5 via-card/50 to-transparent",
-            "p-6 shadow-lg hover:shadow-green-500/20 transition-all cursor-pointer overflow-hidden"
+            // Matches World Guide Styling exactly:
+            "group relative rounded-2xl border border-border", // Adaptive border
+            "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5", // Subtle green tint
+            "p-6 shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
           )}
           onClick={() => onSelect(region.id)}
         >
-          {/* Hover Glow Effect */}
-          <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          <div className="flex items-center gap-4 mb-4 relative z-10">
-            <div className="p-3 rounded-full bg-background/50 border border-border/50 text-green-500 shadow-sm">
-              <region.icon className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-foreground">{region.name}</h3>
-            </div>
+          <div className="flex items-center gap-4 mb-4">
+            {/* Icon Color matched to World Guide (Green-400) */}
+            <region.icon className="w-8 h-8 text-green-400" />
+            <h3 className="text-2xl font-bold text-foreground">{region.name}</h3>
           </div>
           
-          <div className="space-y-1 relative z-10">
-            <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-              {region.description}
-            </p>
-            <p className="text-xs text-muted-foreground/70 font-mono uppercase tracking-wider">
-              {region.count}
-            </p>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            {region.count}
+          </p>
 
-          <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground/40 group-hover:text-green-500 transition-colors z-10" />
+          <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground/40 group-hover:text-foreground transition-colors" />
         </motion.div>
       ))}
     </div>
@@ -117,7 +106,7 @@ const StateIndex = ({ states, onBack }: { states: typeof USA_STATE_DATA; onBack:
       <Button
         variant="ghost"
         onClick={onBack}
-        className="pl-0 hover:bg-transparent text-muted-foreground hover:text-primary transition-colors gap-2"
+        className="pl-0 hover:bg-transparent text-muted-foreground hover:text-foreground transition-colors gap-2"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Regions
       </Button>
@@ -134,7 +123,7 @@ const StateIndex = ({ states, onBack }: { states: typeof USA_STATE_DATA; onBack:
         ))
       ) : (
         <div className="col-span-full text-center py-20">
-          <div className="w-20 h-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-border/50">
+          <div className="w-20 h-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-border">
             <Map className="w-10 h-10 text-muted-foreground" />
           </div>
           <p className="text-muted-foreground">No states found in this region.</p>
@@ -175,9 +164,15 @@ const USAGuide = () => {
     return "USA Cannabis Guide";
   }, [searchTerm, activeRegionID]);
 
+  const pageSubtitle = useMemo(() => {
+    if (searchTerm) return `Found ${displayData.length} states`;
+    if (activeRegionID) return "Browse states in this region";
+    return "Select a region to explore regulations";
+  }, [searchTerm, activeRegionID, displayData.length]);
+
   return (
-    // CHANGED: 'bg-black' to 'bg-background' and 'text-white' to 'text-foreground'
-    <div className="min-h-screen bg-background text-foreground selection:bg-green-500/30">
+    // UPDATED: Uses semantic background/text classes for Light/Dark compatibility
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
       
       <div className="pt-24 pb-20 md:pt-32 md:pb-24">
@@ -189,42 +184,34 @@ const USAGuide = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            {/* Gradient matches theme variables, works in light & dark */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-foreground via-green-500 to-yellow-500 bg-clip-text text-transparent pb-2">
+            {/* Title matches World Guide font size and weight */}
+            <h1 className="text-4xl md:text-5xl font-bold mb-2 text-foreground">
               {pageTitle}
             </h1>
-            {!activeRegionID && !searchTerm && (
-              <p className="text-lg text-muted-foreground">
-                Select a region to explore regulations
-              </p>
-            )}
+            <p className="text-lg text-muted-foreground">
+              {pageSubtitle}
+            </p>
           </motion.div>
 
-          {/* --- STICKY SEARCH BAR (Adaptive Glassmorphism) --- */}
-          <div className="sticky top-20 z-50 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8">
+          {/* --- STICKY SEARCH BAR (Matches World Guide) --- */}
+          <div className="sticky top-20 z-40 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8 bg-background/95 backdrop-blur-xl border-b border-border/50 sm:rounded-xl sm:border">
             <div className="relative max-w-3xl mx-auto">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-green-500/20 blur-3xl rounded-full opacity-0 focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              {/* ADAPTIVE: bg-background/80 instead of bg-black/60 */}
-              <div className="relative flex items-center bg-background/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-lg overflow-hidden group focus-within:border-green-500/50 transition-colors">
-                <Search className="absolute left-4 w-5 h-5 text-muted-foreground group-focus-within:text-green-500 transition-colors" />
-                <input
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search states (e.g. California)..."
-                  className="w-full pl-12 pr-12 py-4 bg-transparent text-foreground placeholder:text-muted-foreground/70 focus:outline-none text-lg"
-                  type="text"
-                />
-                {searchTerm && (
-                  <button 
-                    onClick={() => setSearchTerm("")}
-                    className="absolute right-4 p-1 hover:bg-muted rounded-full transition-colors text-muted-foreground hover:text-foreground z-50"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                )}
-              </div>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search states (e.g. California)..."
+                className="w-full pl-10 pr-10 py-3 rounded-lg bg-card border border-border/50 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all placeholder:text-muted-foreground"
+                type="text"
+              />
+              {searchTerm && (
+                <button 
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-full transition-colors text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -255,7 +242,7 @@ const USAGuide = () => {
                     </div>
                  ) : (
                     <div className="text-center py-24">
-                      <div className="w-20 h-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-border/50">
+                      <div className="w-20 h-20 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-border">
                         <Search className="w-10 h-10 text-muted-foreground" />
                       </div>
                       <h3 className="text-2xl font-semibold text-foreground mb-2">No results</h3>
