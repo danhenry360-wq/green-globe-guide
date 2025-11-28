@@ -1,6 +1,7 @@
 import { useState, KeyboardEvent, useEffect, useRef, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
+import { Helmet } from "react-helmet-async"; // Make sure to install this package
 import {
   Search, MapPin, Shield, Globe2, Plane, Building2, Map, 
   ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2
@@ -19,7 +20,7 @@ import MapLegend from "@/components/MapLegend";
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-// Lazy Load Heavy Components
+// Lazy Load Heavy Components (Performance Win)
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
 
 /* ----------  TYPES  ---------- */
@@ -54,21 +55,47 @@ const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } }
 
 /* ----------  SUB-COMPONENTS  ---------- */
 
+// UPDATED: Professional SEO Component using Helmet
 const SEOHead = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "BudQuest",
-      description: "Global cannabis travel guide",
-      url: "https://budquest.com",
-    });
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
-  }, []);
-  return null;
+  const title = "BudQuest | Global Cannabis Travel Guide & Maps";
+  const description = "Navigate cannabis laws worldwide. Discover 420-friendly hotels, dispensaries, and travel regulations for 120+ countries with verified real-time data.";
+  const url = "https://budquest.com";
+  const image = "https://budquest.com/social-share.jpg"; // Replace with your actual public image URL
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "BudQuest",
+    description: description,
+    url: url,
+    applicationCategory: "TravelApplication",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
+  };
+
+  return (
+    <Helmet>
+      {/* Standard Meta Tags */}
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={url} />
+
+      {/* Open Graph / Facebook / LinkedIn */}
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={url} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+
+      {/* Structured Data */}
+      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+    </Helmet>
+  );
 };
 
 const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: string, id: string }) => (
@@ -82,7 +109,7 @@ const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: strin
   </motion.div>
 );
 
-/* ----------  MOBILE CONTINENT MAP  ---------- */
+/* ----------  MOBILE CONTINENT MAP (With Fixed Routing)  ---------- */
 const MobileContinentMap = () => {
   const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -95,16 +122,15 @@ const MobileContinentMap = () => {
     { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
 
-  // FIX: Added 'realRegion' property to distinguish South America from North America
+  // Logic: 'realRegion' property fixes the routing issue for South American countries inside the "Americas" group
   const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string; realRegion?: string }[]> = {
     "north-america": [
       { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
       { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
-      // Jamaica & Costa Rica are technically North America/Caribbean
       { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
       { name: "Costa Rica", status: "Decriminalized", description: "Personal use largely tolerated", slug: "costa-rica" },
-      // These 3 are South America, so we add realRegion override:
+      // South American Countries (explicitly marked)
       { name: "Uruguay", status: "Recreational", description: "Fully legal (South America)", slug: "uruguay", realRegion: "south-america" },
       { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia", realRegion: "south-america" },
       { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina", realRegion: "south-america" },
@@ -178,7 +204,8 @@ const MobileContinentMap = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * index }}
                 onClick={() => {
-                  // FIX: Use realRegion if it exists (for South America), otherwise use the parent continent slug
+                  // FIX: If a country has a specific 'realRegion' (like Uruguay -> South America), use that.
+                  // Otherwise, use the currently selected continent (North America).
                   const targetRegion = country.realRegion || selectedContinent;
                   navigate(`/world/${targetRegion}/${country.slug}`);
                 }}
@@ -267,7 +294,7 @@ const Home = () => {
         Skip to main content
       </a>
 
-      {/* ==========  HERO SECTION (ORIGINAL VISUALS)  ========== */}
+      {/* ==========  HERO SECTION (ORIGINAL MOODY VISUALS)  ========== */}
       <section 
         className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
         role="banner"
