@@ -17,11 +17,10 @@ import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-// --- START of NEW IMPORTS for uploaded images ---
-// Assuming these file paths are relative to your component's location or handled by your build system
-import torontoStreetViewImage from "./toronto-street-view.jpg"; 
-import veniceBeachImage from "./beautiful-shot-venice-beach-with-waves-california.jpg";
-// --- END of NEW IMPORTS for uploaded images ---
+// 🛠️ FIX: Using the alias paths (e.g., @/assets/) for uploaded images
+// ➡️ Ensure these two files are placed in your 'src/assets/' directory.
+import torontoStreetViewImage from "@/assets/toronto-street-view.jpg"; 
+import veniceBeachImage from "@/assets/beautiful-shot-venice-beach-with-waves-california.jpg";
 
 /* ---------- TYPES ---------- */
 interface Destination {
