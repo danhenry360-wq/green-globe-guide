@@ -1,20 +1,23 @@
 import { useState, useMemo } from "react";
 import { 
-  Search, X, ArrowLeft, 
-  Map, Mountain, Sun, Wheat, Building2, ChevronRight 
+  Search, ArrowLeft, 
+  Mountain, Sun, Wheat, Building2, ChevronRight, Map 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import StateCard from "@/components/StateCard"; 
+import StateCard from "@/components/StateCard"; // Assumed existing component
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { cn } from "@/lib/utils";
 
-// --- CONFIGURATION: PREMIUM REGION CARDS ---
-// ID must match the values in STATE_REGIONS below exactly
-const REGION_CONFIG = [
+/* ----------------------------------------------------
+   CONFIGURATION & DATA MODELS
+----------------------------------------------------- */
+
+// 1. Region Definitions (Styled like WorldGuide Continents)
+const REGIONS = [
   {
     id: 'West', 
     name: 'The West',
@@ -45,9 +48,8 @@ const REGION_CONFIG = [
   }
 ];
 
-// --- STATE MAPPING ---
-// Keys = State Name in Data | Values = Region ID
-const STATE_REGIONS: Record<string, string> = {
+// 2. State Mapping (Data Integrity)
+const STATE_TO_REGION: Record<string, string> = {
   'Alabama': 'South', 'Alaska': 'West', 'Arizona': 'West', 'Arkansas': 'South',
   'California': 'West', 'Colorado': 'West', 'Connecticut': 'Northeast', 'Delaware': 'South',
   'District of Columbia': 'South', 'Florida': 'South', 'Georgia': 'South', 'Hawaii': 'West',
@@ -63,226 +65,224 @@ const STATE_REGIONS: Record<string, string> = {
   'West Virginia': 'South', 'Wisconsin': 'Midwest', 'Wyoming': 'West'
 };
 
+/* ----------------------------------------------------
+   SUB-COMPONENTS (Mirroring WorldGuide Architecture)
+----------------------------------------------------- */
+
+// VIEW A: The Region List (Landing Page)
+const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {REGIONS.map((region) => (
+        <motion.div
+          key={region.id}
+          whileHover={{ scale: 1.02 }}
+          className={cn(
+            "group relative rounded-2xl border border-white/10",
+            "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+            "p-6 shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+          )}
+          onClick={() => onSelect(region.id)}
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 rounded-full bg-background/50 border border-white/10 text-green-400">
+              <region.icon className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold">{region.name}</h3>
+            </div>
+          </div>
+          
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-white/80">{region.description}</p>
+            <p className="text-xs text-muted-foreground">{region.count}</p>
+          </div>
+
+          <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 group-hover:text-white transition" />
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+// VIEW B: The State List (Filtered by Region)
+const StateIndex = ({ 
+  regionId, 
+  states, 
+  onBack 
+}: { 
+  regionId: string; 
+  states: typeof USA_STATE_DATA; 
+  onBack: () => void; 
+}) => {
+  const regionName = REGIONS.find(r => r.id === regionId)?.name || regionId;
+
+  return (
+    <>
+      <Button
+        variant="ghost"
+        onClick={onBack}
+        className="mb-6 gap-2 pl-0 hover:bg-transparent text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back to Regions
+      </Button>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {states.length > 0 ? (
+          states.map((state) => (
+            <StateCard key={state.slug} state={state} />
+          ))
+        ) : (
+          <div className="col-span-full text-center py-20">
+            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Map className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-muted-foreground">No states found in this region.</p>
+          </div>
+        )}
+      </motion.div>
+    </>
+  );
+};
+
+// VIEW C: Global Search Results
+const SearchResults = ({ results, query, onClear }: { results: typeof USA_STATE_DATA; query: string; onClear: () => void }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    className="space-y-6"
+  >
+    <div className="flex items-center justify-between">
+      <h2 className="text-xl font-semibold">Search Results</h2>
+      <Button variant="ghost" size="sm" onClick={onClear} className="text-green-400 hover:text-green-300">
+        Clear Search
+      </Button>
+    </div>
+
+    {results.length > 0 ? (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {results.map((state) => (
+          <StateCard key={state.slug} state={state} />
+        ))}
+      </div>
+    ) : (
+      <div className="text-center py-24">
+        <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10">
+          <Search className="w-10 h-10 text-muted-foreground" />
+        </div>
+        <h3 className="text-xl font-semibold mb-2">No states found</h3>
+        <p className="text-muted-foreground">We couldn't find "{query}" in the database.</p>
+      </div>
+    )}
+  </motion.div>
+);
+
+/* ----------------------------------------------------
+   MAIN CONTROLLER
+----------------------------------------------------- */
 const USAGuide = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeRegionID, setActiveRegionID] = useState<string | null>(null);
 
-  // --- FILTER LOGIC ---
-  const filteredStates = useMemo(() => {
-    let data = USA_STATE_DATA;
-
-    // 1. Global Search Mode (Overrides Region)
+  // --- LOGIC: Filter Data based on View Mode ---
+  const displayData = useMemo(() => {
+    // Mode 1: Search
     if (searchTerm) {
-      return data.filter(state => 
+      return USA_STATE_DATA.filter(state => 
         state.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    // 2. Region Drill-down Mode
-    // FIX: Compares the mapped value ("South") with the active ID ("South")
+    // Mode 2: Region Drill-down
     if (activeRegionID) {
-      return data.filter(state => STATE_REGIONS[state.name] === activeRegionID);
+      return USA_STATE_DATA.filter(state => STATE_TO_REGION[state.name] === activeRegionID);
     }
-
-    return []; 
+    // Mode 3: Landing (Return empty, show cards instead)
+    return [];
   }, [searchTerm, activeRegionID]);
 
-  const isSearchActive = searchTerm.length > 0;
-  
-  // Get display name for the header
-  const activeRegionName = activeRegionID 
-    ? REGION_CONFIG.find(r => r.id === activeRegionID)?.name 
-    : null;
+  // Determine Title
+  const pageTitle = useMemo(() => {
+    if (searchTerm) return "Search Results";
+    if (activeRegionID) return REGIONS.find(r => r.id === activeRegionID)?.name || "Region";
+    return "USA Cannabis Guide";
+  }, [searchTerm, activeRegionID]);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.05 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 }
-  };
+  const pageSubtitle = useMemo(() => {
+    if (searchTerm) return `Found ${displayData.length} states`;
+    if (activeRegionID) return "Browse states in this region";
+    return "Select a region to explore regulations";
+  }, [searchTerm, activeRegionID, displayData.length]);
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-green-500/30">
+    <div className="min-h-screen bg-background text-foreground selection:bg-green-500/30">
       <Navigation />
       
       <div className="pt-24 pb-20 md:pt-32 md:pb-24">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-7xl">
           
-          {/* ===================================================
-              HEADER SECTION
-          =================================================== */}
-          <div className="flex flex-col items-center mb-8 md:mb-12 text-center">
-            
-            {/* Back Button */}
-            <div className="h-8 mb-2 w-full flex justify-start">
-              {activeRegionID && !isSearchActive && (
-                <motion.div 
-                  initial={{ opacity: 0, x: -10 }} 
-                  animate={{ opacity: 1, x: 0 }}
+          {/* --- HEADER SECTION --- */}
+          <motion.div 
+            className="mb-10 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-br from-white to-white/60 bg-clip-text text-transparent">
+              {pageTitle}
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              {pageSubtitle}
+            </p>
+          </motion.div>
+
+          {/* --- STICKY SEARCH BAR (Exact WorldGuide Style) --- */}
+          <div className="sticky top-20 z-40 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8 bg-background/95 backdrop-blur-xl border-b border-white/10 sm:rounded-xl sm:border">
+            <div className="relative max-w-3xl mx-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search USA states..."
+                className="w-full pl-10 pr-10 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all"
+              />
+              {searchTerm && (
+                <button 
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors"
                 >
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => setActiveRegionID(null)}
-                    className="hover:bg-white/5 text-gray-400 hover:text-white transition-colors p-0 h-auto font-medium text-base gap-2"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                    Regions
-                  </Button>
-                </motion.div>
+                  <X className="w-4 h-4 text-muted-foreground hover:text-white" />
+                </button>
               )}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4 max-w-3xl"
-            >
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-white to-gray-400 bg-clip-text text-transparent">
-                {isSearchActive ? "Search Results" : activeRegionName ? activeRegionName : "USA Cannabis Guide"}
-              </h1>
-              
-              {!activeRegionID && !isSearchActive && (
-                <p className="text-lg text-gray-400 max-w-xl mx-auto">
-                  Select a region below to explore regulations, or search for a specific state.
-                </p>
-              )}
-            </motion.div>
-          </div>
-
-          {/* ===================================================
-              SEARCH BAR (Glassmorphism)
-          =================================================== */}
-          <div className="sticky top-20 z-40 mb-10 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div className="relative max-w-xl mx-auto">
-              <div className="relative group">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-green-500/10 blur-xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl transition-all group-focus-within:border-green-500/50 group-focus-within:bg-black/80">
-                  <Search className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-green-400 transition-colors" />
-                  <input
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search states..."
-                    className="w-full pl-12 pr-12 py-4 bg-transparent text-white placeholder:text-gray-500 focus:outline-none text-lg"
-                  />
-                  {searchTerm && (
-                    <button 
-                      onClick={() => setSearchTerm("")}
-                      className="absolute right-4 p-1 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* ===================================================
-              CONTENT GRID
-          =================================================== */}
-          <div className="min-h-[40vh]">
-            <AnimatePresence mode="wait">
-              
-              {/* VIEW 1: REGION CARDS (The Premium Look) */}
-              {!isSearchActive && !activeRegionID && (
-                <motion.div 
-                  key="regions"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="show"
-                  exit={{ opacity: 0 }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                >
-                  {REGION_CONFIG.map((region) => (
-                    <motion.div
-                      key={region.id}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setActiveRegionID(region.id)}
-                      className={cn(
-                        "group relative p-6 rounded-2xl border border-white/10 cursor-pointer overflow-hidden transition-all duration-300",
-                        "bg-white/5 flex items-center justify-between shadow-lg h-28 md:h-32"
-                      )}
-                    >
-                      {/* Hover Gradient Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-500/5 to-green-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+          {/* --- MAIN CONTENT SWITCHER --- */}
+          <AnimatePresence mode="wait">
+            {searchTerm ? (
+              <SearchResults 
+                key="search" 
+                results={displayData} 
+                query={searchTerm} 
+                onClear={() => setSearchTerm("")} 
+              />
+            ) : activeRegionID ? (
+              <motion.div key="state-index" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <StateIndex 
+                  regionId={activeRegionID} 
+                  states={displayData} 
+                  onBack={() => setActiveRegionID(null)} 
+                />
+              </motion.div>
+            ) : (
+              <motion.div key="region-index" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <RegionIndex onSelect={setActiveRegionID} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                      <div className="flex items-center gap-5 z-10">
-                        {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center text-green-400 shadow-inner">
-                          <region.icon className="w-6 h-6" />
-                        </div>
-                        
-                        {/* Text Info */}
-                        <div className="text-left">
-                          <h3 className="text-xl font-bold text-white group-hover:text-green-400 transition-colors">
-                            {region.name}
-                          </h3>
-                          <p className="text-sm text-gray-400 font-medium mt-0.5">
-                            {region.count}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Arrow */}
-                      <ChevronRight className="w-6 h-6 text-gray-500 group-hover:text-white transition-colors z-10" />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-
-              {/* VIEW 2: STATE LIST (Drill-down OR Search Results) */}
-              {(activeRegionID || isSearchActive) && (
-                <motion.div 
-                  key="states"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="w-full"
-                >
-                  {filteredStates.length > 0 ? (
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {filteredStates.map((state, i) => (
-                        <motion.div
-                          key={state.slug}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                        >
-                          <StateCard state={state} />
-                        </motion.div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-24">
-                      <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10">
-                        <Map className="w-10 h-10 text-gray-500" />
-                      </div>
-                      <h3 className="text-2xl font-semibold text-white mb-2">No states found</h3>
-                      <p className="text-gray-400 text-lg">
-                        We couldn't find states in the "{activeRegionName}" region.
-                        <br/><span className="text-sm opacity-50">(Debug: Active Region ID = {activeRegionID})</span>
-                      </p>
-                      <Button 
-                        variant="link" 
-                        onClick={() => { setSearchTerm(""); setActiveRegionID(null); }}
-                        className="mt-4 text-green-400 hover:text-green-300 text-lg"
-                      >
-                        Clear filters
-                      </Button>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
       </div>
 
