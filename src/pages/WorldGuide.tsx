@@ -8518,77 +8518,202 @@ const statusColor = (s: string) => {
 /* ---------- sub-components ---------- */
 const ContinentIndex = () => {
   const nav = useNavigate();
+  const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
 
-  // Group continents for display - combine north-america and south-america as "Americas"
+  // Continent data with emojis
   const continentDisplay = [
-    { 
-      name: "Americas", 
-      count: WORLD.find(c => c.slug === "north-america")?.countries.length || 0,
-      slug: "north-america" 
-    },
-    { 
-      name: "Europe", 
-      count: WORLD.find(c => c.slug === "europe")?.countries.length || 0,
-      slug: "europe" 
-    },
-    { 
-      name: "Asia", 
-      count: WORLD.find(c => c.slug === "asia")?.countries.length || 0,
-      slug: "asia" 
-    },
-    { 
-      name: "Africa", 
-      count: WORLD.find(c => c.slug === "africa")?.countries.length || 0,
-      slug: "africa" 
-    },
-    { 
-      name: "Oceania", 
-      count: WORLD.find(c => c.slug === "oceania")?.countries.length || 0,
-      slug: "oceania" 
-    },
+    { name: "Americas", emoji: "🌎", count: 8, slug: "north-america" },
+    { name: "Europe", emoji: "🇪🇺", count: 8, slug: "europe" },
+    { name: "Asia", emoji: "🌏", count: 4, slug: "asia" },
+    { name: "Africa", emoji: "🌍", count: 4, slug: "africa" },
+    { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
+
+  // Countries by continent for detail view
+  const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
+    "north-america": [
+      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational, 38 medical", slug: "united-states" },
+      { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
+      { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
+      { name: "Uruguay", status: "Recreational", description: "First country to fully legalize in 2013", slug: "uruguay" },
+      { name: "Jamaica", status: "Decriminalized", description: "Decriminalized, medical and religious use legal", slug: "jamaica" },
+    ],
+    "europe": [
+      { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
+      { name: "Germany", status: "Medical", description: "Medical legal, recreational pending", slug: "germany" },
+      { name: "Spain", status: "Decriminalized", description: "Private clubs legal", slug: "spain" },
+      { name: "Portugal", status: "Decriminalized", description: "Decriminalized all drugs", slug: "portugal" },
+    ],
+    "asia": [
+      { name: "Thailand", status: "Recreational", description: "Legalized in 2022", slug: "thailand" },
+      { name: "Japan", status: "Illegal", description: "Strict prohibition", slug: "japan" },
+      { name: "South Korea", status: "Medical", description: "Medical only", slug: "south-korea" },
+      { name: "India", status: "Decriminalized", description: "Varies by state", slug: "india" },
+    ],
+    "africa": [
+      { name: "South Africa", status: "Decriminalized", description: "Private use legal", slug: "south-africa" },
+      { name: "Morocco", status: "Illegal", description: "Traditional hash culture", slug: "morocco" },
+      { name: "Lesotho", status: "Medical", description: "First African medical license", slug: "lesotho" },
+      { name: "Malawi", status: "Medical", description: "Medical cultivation legal", slug: "malawi" },
+    ],
+    "oceania": [
+      { name: "Australia", status: "Medical", description: "Medical nationwide, ACT recreational", slug: "australia" },
+      { name: "New Zealand", status: "Medical", description: "Medical legal since 2020", slug: "new-zealand" },
+    ],
+  };
 
   const legendItems = [
     { status: 'Recreational', color: 'bg-green-500', description: 'Legal for adult use' },
     { status: 'Medical Only', color: 'bg-blue-500', description: 'Legal with prescription' },
-    { status: 'Decriminalized', color: 'bg-yellow-500', description: 'Not criminal offense' },
+    { status: 'Decriminalized', color: 'bg-amber-500', description: 'Not criminal offense' },
     { status: 'Illegal', color: 'bg-red-500', description: 'Prohibited by law' },
   ];
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Recreational": return "text-green-400 border-green-500/50";
+      case "Medical": return "text-blue-400 border-blue-500/50";
+      case "Decriminalized": return "text-amber-400 border-amber-500/50";
+      default: return "text-red-400 border-red-500/50";
+    }
+  };
+
+  const getStatusDot = (status: string) => {
+    switch (status) {
+      case "Recreational": return "bg-green-500";
+      case "Medical": return "bg-blue-500";
+      case "Decriminalized": return "bg-amber-500";
+      default: return "bg-red-500";
+    }
+  };
+
+  // Detail view for selected continent
+  if (selectedContinent) {
+    const continent = continentDisplay.find(c => c.slug === selectedContinent);
+    const countries = countriesByContinent[selectedContinent] || [];
+
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto max-w-4xl px-4 pt-24 pb-12">
+          {/* Header with back button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <span className="text-4xl">{continent?.emoji}</span>
+            <h1 className="text-2xl font-bold text-foreground">{continent?.name}</h1>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSelectedContinent(null)}
+              className="ml-auto border-border/50 hover:border-accent/50"
+            >
+              ← Back
+            </Button>
+          </motion.div>
+
+          {/* Country List */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="space-y-4"
+          >
+            {countries.map((country, index) => (
+              <motion.div
+                key={country.slug}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * index }}
+                onClick={() => nav(`/world/${selectedContinent}/${country.slug}`)}
+                className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 transition-all cursor-pointer"
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-3 h-3 rounded-full mt-1.5 flex-shrink-0 ${getStatusDot(country.status)}`} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-semibold text-foreground">{country.name}</span>
+                      <Badge className={`text-xs border ${getStatusColor(country.status)} bg-transparent`}>
+                        {country.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{country.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom Legend */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-border/50"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500" />
+              <span className="text-sm text-muted-foreground">Recreational</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-amber-500" />
+              <span className="text-sm text-muted-foreground">Medical Only</span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main continent grid view
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto max-w-4xl px-4 pt-24 pb-12">
-        {/* Header Section */}
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex justify-center mb-6"
+        >
+          <Badge className="bg-accent/10 text-accent border-accent/30 px-4 py-1.5">
+            <Globe className="w-4 h-4 mr-2" />
+            Interactive Global Map
+          </Badge>
+        </motion.div>
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
           <h1 className="text-2xl md:text-4xl font-bold mb-4 text-foreground">
-            Global Legality at a Glance
+            Global Cannabis Legality Map
           </h1>
           <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-            Explore cannabis laws worldwide. Filter by legal status and continent to plan your travels with confidence.
+            Tap any country to instantly check cannabis laws, regulations, and travel safety information
           </p>
         </motion.div>
 
-        {/* Continent List */}
+        {/* 2x2 Continent Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="space-y-3 mb-10"
+          className="grid grid-cols-2 gap-4 mb-6"
         >
-          {continentDisplay.map((continent, index) => (
+          {continentDisplay.slice(0, 4).map((continent, index) => (
             <motion.button
               key={continent.slug}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.05 * index }}
-              onClick={() => nav(`/world/${continent.slug}`)}
-              className="w-full flex items-center justify-between px-5 py-4 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all duration-300 group"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 + index * 0.05 }}
+              onClick={() => setSelectedContinent(continent.slug)}
+              className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all duration-300 group"
             >
-              <span className="text-base md:text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+              <span className="text-4xl mb-3">{continent.emoji}</span>
+              <span className="text-base font-semibold text-foreground group-hover:text-accent transition-colors">
                 {continent.name}
               </span>
               <span className="text-sm text-muted-foreground">
@@ -8597,6 +8722,21 @@ const ContinentIndex = () => {
             </motion.button>
           ))}
         </motion.div>
+
+        {/* Oceania - Full Width */}
+        <motion.button
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+          onClick={() => setSelectedContinent("oceania")}
+          className="w-full flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 hover:border-accent/50 transition-all duration-300 group mb-10"
+        >
+          <span className="text-4xl mb-3">🏝️</span>
+          <span className="text-base font-semibold text-foreground group-hover:text-accent transition-colors">
+            Oceania
+          </span>
+          <span className="text-sm text-muted-foreground">2 countries</span>
+        </motion.button>
 
         {/* Divider */}
         <div className="border-t border-border/50 my-8" />
