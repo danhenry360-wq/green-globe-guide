@@ -1,7 +1,6 @@
 import { useState, KeyboardEvent, useEffect, useRef, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
-// Removed 'react-helmet-async' to fix your build error
 import {
   Search, MapPin, Shield, Globe2, Plane, Building2, Map, 
   ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2
@@ -55,13 +54,11 @@ const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } }
 
 /* ----------  SUB-COMPONENTS  ---------- */
 
-// UPDATED: SEO Component without external library dependency
+// SEO Component (No-Dependency Version)
 const SEOHead = () => {
   useEffect(() => {
-    // 1. Set Title
     document.title = "BudQuest | Global Cannabis Travel Guide & Maps";
 
-    // 2. Helper to set meta tags safely
     const setMeta = (name: string, content: string) => {
       let element = document.querySelector(`meta[name="${name}"]`);
       if (!element) {
@@ -72,10 +69,8 @@ const SEOHead = () => {
       element.setAttribute("content", content);
     };
 
-    // 3. Set Description
     setMeta("description", "Navigate cannabis laws worldwide. Discover 420-friendly hotels, dispensaries, and travel regulations for 120+ countries with verified real-time data.");
 
-    // 4. Inject Structured Data (JSON-LD)
     const scriptId = "seo-structured-data";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
@@ -92,11 +87,6 @@ const SEOHead = () => {
       });
       document.head.appendChild(script);
     }
-
-    // Cleanup function
-    return () => {
-      // Optional: Clean up tags when leaving page if needed
-    };
   }, []);
 
   return null;
@@ -133,7 +123,6 @@ const MobileContinentMap = () => {
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
       { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
       { name: "Costa Rica", status: "Decriminalized", description: "Personal use largely tolerated", slug: "costa-rica" },
-      // South American Countries
       { name: "Uruguay", status: "Recreational", description: "Fully legal (South America)", slug: "uruguay", realRegion: "south-america" },
       { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia", realRegion: "south-america" },
       { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina", realRegion: "south-america" },
@@ -479,15 +468,19 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  CTA SECTION  ========== */}
-      <section className="py-20 px-4 bg-background">
+      {/* ==========  CTA SECTION (UPDATED FOR MOBILE)  ========== */}
+      <section className="py-12 sm:py-20 px-4 bg-background">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="container mx-auto text-center">
-          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-12 rounded-3xl border border-border/50 shadow-2xl">
-            <h2 className="text-5xl font-bold mb-4">Ready to Explore?</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-6 sm:p-12 rounded-2xl sm:rounded-3xl border border-border/50 shadow-2xl">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-4">Ready to Explore?</h2>
+            <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
               Start your journey with Global Canna Pass. Search for your next destination and travel with confidence.
             </p>
-            <Button size="lg" onClick={() => document.getElementById('search-destinations')?.focus()} className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20">
+            <Button 
+              size="lg" 
+              onClick={() => document.getElementById('search-destinations')?.focus()} 
+              className="w-full sm:w-auto h-12 sm:h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20"
+            >
               Search Destinations
             </Button>
           </div>
