@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+* eslint-disable react-refresh/only-export-components */
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -55,7 +55,8 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA (Optimized & Verified)
+   FULL WORLD DATA 
+   (Safety Audited: UAE, Asia, etc. fixed)
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -70,8 +71,7 @@ const WORLD: Continent[] = [
         possession: "30 g public / unlimited home",
         airport: "30 g domestic only",
         tourist: "Gov stores only; ID required",
-        description:
-          "First G7 nation to legalise recreational cannabis nationwide.",
+        description: "First G7 nation to legalise recreational cannabis nationwide.",
         image: "/dest-4.jpg",
         regions: [
           {
@@ -127,12 +127,11 @@ const WORLD: Continent[] = [
       {
         slug: "united-states",
         name: "United States",
-        legalStatus: "Recreational", // UPDATED: Reflects major tourist states
+        legalStatus: "Recreational", 
         possession: "Varies by state",
         airport: "Federal prohibition (TSA)",
         tourist: "Do not cross state lines with cannabis",
-        description:
-          "Federal illegal, but 24+ states (CA, NY, CO, NV) allow full recreational sales.",
+        description: "Federal illegal, but 24+ states (CA, NY, CO, NV) allow full recreational sales.",
         image: "/dest-1.jpg",
         regions: [
           {
@@ -176,8 +175,7 @@ const WORLD: Continent[] = [
         possession: "Small amounts tolerated",
         airport: "Zero tolerance",
         tourist: "Private use low priority; avoid public",
-        description:
-          "Supreme Court ruled prohibition unconstitutional; possession is administrative.",
+        description: "Supreme Court ruled prohibition unconstitutional; possession is administrative.",
         image: "/dest-4.jpg",
         regions: [
           {
@@ -335,7 +333,7 @@ const WORLD: Continent[] = [
         legalStatus: "Recreational",
         possession: "25 g public / 50 g home",
         airport: "Domestic OK within limit",
-        tourist: "Clubs are residents-only; no legal tourist sales yet", // UPDATED
+        tourist: "Clubs are residents-only; no legal tourist sales yet", 
         description: "Legalised April 2024. Possession legal, but buying is difficult for tourists (clubs require residency).",
         image: "/dest-1.jpg",
         regions: [
@@ -472,7 +470,7 @@ const WORLD: Continent[] = [
         legalStatus: "Recreational",
         possession: "7 g home / 3.5 g public",
         airport: "Do not transport",
-        tourist: "Associations are residents-only; strictly no public smoking", // UPDATED
+        tourist: "Associations are residents-only; strictly no public smoking",
         description: "Legalised 2021. Buying is hard for tourists as clubs require residency.",
         image: "/dest-5.jpg",
         regions: [{ slug: "malta-island", name: "Malta Island", cities: [{ slug: "valletta", name: "Valletta", atGlance: ["Fortress capital", "Associations members-only", "Beach relax"] }] }],
@@ -854,13 +852,13 @@ const WORLD: Continent[] = [
       {
         slug: "georgia",
         name: "Georgia",
-        legalStatus: "Decriminalized", // UPDATED
+        legalStatus: "Decriminalized", // Corrected
         possession: "Consumption legal; Sale illegal",
         airport: "Zero tolerance",
         tourist: "You can smoke, but you cannot buy legally",
         description: "Constitutional court legalized consumption, but cultivation and sale remain illegal.",
         image: "/dest-4.jpg",
-        regions: [{ slug: "tbilisi-region", name: "Tbilisi Region", cities: [{ slug: "tbilisi", name: "Tbilisi", atGlance: ["Caucasus capital", "Medical only", "Wine culture"] }] }],
+        regions: [{ slug: "tbilisi-region", name: "Tbilisi Region", cities: [{ slug: "tbilisi", name: "Tbilisi", atGlance: ["Caucasus capital", "Buying is illegal", "Wine culture"] }] }],
       },
       {
         slug: "armenia",
@@ -898,7 +896,7 @@ const WORLD: Continent[] = [
         possession: "40 g monthly (residents)",
         airport: "Transport prohibited",
         tourist: "Tourists cannot purchase—locals only",
-        description: "World’s first full legalisation; pharmacy sales & clubs for residents.",
+        description: "World’s first full legalisation; pharmacy sales & clubs for residents only.",
         image: "/dest-5.jpg",
         regions: [
           {
@@ -942,7 +940,7 @@ const WORLD: Continent[] = [
         possession: "Medical prescription only",
         airport: "Zero tolerance",
         tourist: "Medical only; coffee culture",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        description: "Medical cannabis legal; recreational use prohibited but personal dose decriminalized.",
         image: "/dest-5.jpg",
         regions: [{ slug: "bogota-region", name: "Bogotá Region", cities: [{ slug: "bogota", name: "Bogotá", atGlance: ["Mountain capital", "Medical only", "Cool climate"] }] }, { slug: "medellin-region", name: "Medellín Region", cities: [{ slug: "medellin", name: "Medellín", atGlance: ["City of eternal spring", "Medical only", "Innovative"] }] }],
       },
@@ -1390,37 +1388,70 @@ const WORLD: Continent[] = [
         ],
       },
       {
+        slug: "uae",
+        name: "United Arab Emirates",
+        legalStatus: "Illegal", // CORRECTED: Was dangerously "Medical"
+        possession: "Criminal offence",
+        airport: "Zero tolerance - Strict",
+        tourist: "DO NOT BRING ANY. Prescriptions NOT accepted.",
+        description: "Cannabis is strictly illegal. Foreign medical prescriptions are generally not recognized. Severe penalties apply.",
+        image: "/dest-6.jpg",
+        regions: [
+          {
+            slug: "dubai-region",
+            name: "Dubai Region",
+            cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Strictly Illegal", "Zero-tolerance"] }],
+          },
+          {
+            slug: "abu-dhabi-region",
+            name: "Abu Dhabi Region",
+            cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Capital", "Strictly Illegal", "Grand mosque"] }],
+          }
+        ],
+      },
+      {
         slug: "singapore",
         name: "Singapore",
         legalStatus: "Illegal",
         possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; death-penalty risk",
-        description: "Cannabis illegal; severe penalties including death.",
+        airport: "Zero tolerance - Death Penalty Risk",
+        tourist: "Strongly discouraged; severe penalties",
+        description: "Cannabis illegal; severe penalties including death for trafficking.",
         image: "/dest-4.jpg",
         regions: [{ slug: "singapore-island", name: "Singapore Island", cities: [{ slug: "singapore", name: "Singapore", atGlance: ["Garden city", "Illegal", "Death-penalty risk"] }] }],
       },
       {
         slug: "malaysia",
         name: "Malaysia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        legalStatus: "Illegal", // CORRECTED
+        possession: "Criminal offence",
+        airport: "Zero tolerance - Death Penalty Risk",
+        tourist: "Do not bring anything",
+        description: "Very strict laws. Possession can lead to severe punishment.",
         image: "/dest-5.jpg",
-        regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Medical only", "Death-penalty caution"] }] }],
+        regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Illegal", "Death-penalty caution"] }] }],
       },
       {
         slug: "indonesia",
         name: "Indonesia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        legalStatus: "Illegal", // CORRECTED
+        possession: "Criminal offence",
+        airport: "Zero tolerance - Death Penalty Risk",
+        tourist: "Zero tolerance; Bali is NOT safe for weed",
+        description: "Cannabis illegal; severe penalties. Medical marijuana is not legal.",
         image: "/dest-6.jpg",
-        regions: [{ slug: "jakarta-region", name: "Jakarta Region", cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Medical only", "Death-penalty caution"] }] }, { slug: "bali-region", name: "Bali Region", cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Island hub", "Medical only", "Death-penalty caution"] }] }],
+        regions: [
+          {
+            slug: "jakarta-region",
+            name: "Jakarta Region",
+            cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Illegal", "Death-penalty caution"] }]
+          }, 
+          {
+            slug: "bali-region",
+            name: "Bali Region",
+            cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Tourist trap for drugs", "Illegal", "Undercover police common"] }] 
+          }
+        ],
       },
       {
         slug: "philippines",
@@ -1494,10 +1525,10 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; zero tolerance",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "Zero tolerance; deportation likely",
+        description: "Cannabis illegal; possession criminalised. CBD (0% THC) is allowed but risky to import.",
         image: "/dest-4.jpg",
-        regions: [{ slug: "tokyo-region", name: "Tokyo Region", cities: [{ slug: "tokyo", name: "Tokyo", atGlance: ["Neon capital", "Illegal", "Severe penalties"] }] }, { slug: "osaka-region", name: "Osaka Region", cities: [{ slug: "osaka", name: "Osaka", atGlance: ["Food capital", "Illegal", "Severe penalties"] }] }],
+        regions: [{ slug: "tokyo-region", name: "Tokyo Region", cities: [{ slug: "tokyo", name: "Tokyo", atGlance: ["Neon capital", "Illegal", "Strict enforcement"] }] }, { slug: "osaka-region", name: "Osaka Region", cities: [{ slug: "osaka", name: "Osaka", atGlance: ["Food capital", "Illegal", "Severe penalties"] }] }],
       },
       {
         slug: "south-korea",
@@ -1753,17 +1784,6 @@ const WORLD: Continent[] = [
         regions: [{ slug: "riyadh-region", name: "Riyadh Region", cities: [{ slug: "riyadh", name: "Riyadh", atGlance: ["Desert capital", "Illegal", "Extreme penalties"] }] }, { slug: "jeddah-region", name: "Jeddah Region", cities: [{ slug: "jeddah", name: "Jeddah", atGlance: ["Red-Sea port", "Illegal", "Extreme penalties"] }] }],
       },
       {
-        slug: "uae",
-        name: "United Arab Emirates",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; zero-tolerance airport",
-        description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
-        regions: [{ slug: "dubai-region", name: "Dubai Region", cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Medical only", "Zero-tolerance airport"] }] }, { slug: "abu-dhabi-region", name: "Abu Dhabi Region", cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Oil capital", "Medical only", "Grand mosque"] }] }],
-      },
-      {
         slug: "qatar",
         name: "Qatar",
         legalStatus: "Illegal",
@@ -1853,9 +1873,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Private use & grow OK",
         airport: "Transport prohibited",
-        tourist: "No legal shops; gifting/private clubs gray area", // UPDATED
-        description:
-          "Constitutional Court legalized private personal consumption. Selling remains illegal.",
+        tourist: "No legal shops; private clubs exist (gray area)", // UPDATED
+        description: "Constitutional Court legalized private personal consumption. Selling remains illegal.",
         image: "/dest-5.jpg",
         regions: [
           {
