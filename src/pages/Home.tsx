@@ -81,7 +81,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     image: "/dest-3.jpg",
     imageAlt: "Amsterdam coffee shops and Netherlands cannabis culture",
     color: "bg-amber-500/90", 
-    link: "/world" 
+    link: "/world/europe/netherlands" 
   },
   { 
     name: "Canada", 
@@ -90,7 +90,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     image: "/dest-canada-toronto.jpg",
     imageAlt: "Toronto skyline with Canadian flag and skyscrapers",
     color: "bg-green-500/90", 
-    link: "/world" 
+    link: "/world/north-america/canada" 
   },
   { 
     name: "Uruguay", 
@@ -99,7 +99,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     image: "/dest-uruguay.jpg",
     imageAlt: "Uruguay pioneering cannabis legalization travel guide",
     color: "bg-green-500/90", 
-    link: "/world" 
+    link: "/world/south-america/uruguay" 
   },
   { 
     name: "Thailand", 
@@ -108,7 +108,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     image: "/dest-6.jpg",
     imageAlt: "Thailand medical cannabis tourism and regulations",
     color: "bg-amber-700/90", 
-    link: "/world" 
+    link: "/world/asia/thailand" 
   },
 ];
 
@@ -192,7 +192,9 @@ const SEOHead = () => {
     script.textContent = JSON.stringify(HOME_STRUCTURED_DATA);
     document.head.appendChild(script);
 
-    return () => document.head.removeChild(script);
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   return null;
