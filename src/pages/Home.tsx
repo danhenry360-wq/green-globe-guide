@@ -19,7 +19,7 @@ import MapLegend from "@/components/MapLegend";
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-// Lazy Load Heavy Components (Performance optimization)
+// Lazy Load Heavy Components
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
 
 /* ----------  TYPES  ---------- */
@@ -38,6 +38,14 @@ interface StatItem {
   label: string;
   count: number;
   suffix: string;
+}
+
+interface BlogItem {
+  title: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
+  link: string;
 }
 
 /* ----------  ANIMATION VARIANTS  ---------- */
@@ -63,7 +71,7 @@ const SEOHead = () => {
   return null;
 };
 
-// Reusable Header to keep code clean
+// Reusable Header
 const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: string, id: string }) => (
   <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
     <h2 id={id} className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
@@ -75,7 +83,7 @@ const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: strin
   </motion.div>
 );
 
-/* ----------  MOBILE CONTINENT MAP (RESTORED LOGIC)  ---------- */
+/* ----------  MOBILE CONTINENT MAP  ---------- */
 const MobileContinentMap = () => {
   const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -88,7 +96,6 @@ const MobileContinentMap = () => {
     { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
 
-  // Restored data structure for inline display
   const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
     "north-america": [
       { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
@@ -131,7 +138,6 @@ const MobileContinentMap = () => {
     }
   };
 
-  // If continent selected, show INLINE list (Restored Logic)
   if (selectedContinent) {
     const continent = continentDisplay.find(c => c.slug === selectedContinent);
     const countries = countriesByContinent[selectedContinent] || [];
@@ -154,7 +160,6 @@ const MobileContinentMap = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * index }}
-                // Original navigation logic kept, but styled as a card
                 onClick={() => navigate(`/world/${selectedContinent}/${country.slug}`)}
                 className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 cursor-pointer"
               >
@@ -178,7 +183,6 @@ const MobileContinentMap = () => {
     );
   }
 
-  // Grid View
   return (
     <div className="block md:hidden">
       <motion.div variants={FADE_IN} className="space-y-4">
@@ -195,7 +199,6 @@ const MobileContinentMap = () => {
             </button>
           ))}
         </div>
-        {/* Oceania Full Width */}
         <button
           onClick={() => setSelectedContinent("oceania")}
           className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 w-full"
@@ -216,7 +219,6 @@ const Home = () => {
   const navigate = useNavigate();
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // SEARCH LOGIC RESTORED: Pointing to /usa as requested
   const handleSearch = (term?: string) => {
     const finalTerm = term || searchTerm;
     if (finalTerm.trim()) {
@@ -240,20 +242,38 @@ const Home = () => {
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <SEOHead />
       <Navigation />
-      
-      {/* ==========  HERO SECTION  ========== */}
-      <section className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
+        Skip to main content
+      </a>
+
+      {/* ==========  HERO SECTION (RESTORED ORIGINAL LAYERS)  ========== */}
+      <section 
+        className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
+        role="banner"
+      >
+        {/* 1. Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${heroImage})` }}
+          aria-hidden="true"
+        />
+        {/* 2. Main Dark Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
-        
+        {/* 3. Bottom Fade Overlay (Restored) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        {/* 4. Green Accent Blob (Restored) */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/15 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
+        {/* 5. Gold Accent Blob (Restored) */}
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="container mx-auto text-center relative z-10 px-2"
         >
-          <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 animate-pulse">
-            <Sparkles className="w-4 h-4 mr-2 inline" />
+          <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 shadow-[0_0_30px_-10px_rgba(34,197,94,0.6)] animate-pulse">
+            <Sparkles className="w-4 h-4 mr-2 inline" aria-hidden="true" />
             Global Cannabis Travel Intelligence
           </Badge>
 
@@ -263,25 +283,32 @@ const Home = () => {
             </span>
           </h1>
 
-          <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto">
+          <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto leading-relaxed">
             Your Global Cannabis Travel Companion
           </p>
 
-          <div className="max-w-3xl mx-auto mt-10 relative group">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" />
-            <Input
-              placeholder="Search destinations (e.g., Thailand, California)..."
-              className="pl-16 pr-32 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent backdrop-blur-xl rounded-2xl relative z-10"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
-            />
-            <Button 
-              onClick={() => handleSearch()} 
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-6 rounded-xl bg-accent hover:bg-accent/90 z-20"
-            >
-              Search
-            </Button>
+          <p className="text-[clamp(0.95rem,2vw,1.3rem)] text-muted-foreground/80 font-normal mt-3 max-w-4xl mx-auto leading-relaxed">
+            Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 120+ countries with verified, real-time information.
+          </p>
+
+          <div className="max-w-3xl mx-auto mt-10">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" />
+              <Input
+                placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
+                className="pl-16 pr-32 sm:pr-40 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
+              />
+              <Button 
+                onClick={() => handleSearch()} 
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20 text-sm sm:text-base"
+              >
+                Search
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
@@ -295,15 +322,16 @@ const Home = () => {
                 key={tag.term}
                 onClick={() => handleSearch(tag.term)}
                 whileHover={{ scale: 1.05 }}
-                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-sm text-muted-foreground hover:text-white"
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer"
               >
                 {tag.label}
               </motion.button>
             ))}
           </div>
-          
+
           <div className="mt-8 flex justify-center">
-            <button onClick={scrollToStats} className="text-muted-foreground/50 hover:text-white transition-colors">
+            <button onClick={scrollToStats} className="text-muted-foreground/50 hover:text-white transition-colors cursor-pointer">
               <ChevronDown className="w-8 h-8 animate-bounce" />
             </button>
           </div>
@@ -311,11 +339,18 @@ const Home = () => {
       </section>
 
       {/* ==========  STATS SECTION  ========== */}
-      <section id="stats" className="py-16 sm:py-20 px-4">
-        <motion.div whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} viewport={{ once: true }} className="container mx-auto">
+      <section id="stats" className="py-16 sm:py-20 px-4 bg-gradient-to-b from-transparent via-accent/5 to-transparent">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="container mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             {STATS_DATA.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center group">
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center group"
+              >
                 <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center border border-accent/20">
                   <stat.icon className="w-10 h-10 text-accent" />
                 </div>
@@ -396,6 +431,21 @@ const Home = () => {
                 </Link>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ==========  CTA SECTION  ========== */}
+      <section className="py-20 px-4 bg-background">
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="container mx-auto text-center">
+          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-12 rounded-3xl border border-border/50 shadow-2xl">
+            <h2 className="text-5xl font-bold mb-4">Ready to Explore?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              Start your journey with Global Canna Pass. Search for your next destination and travel with confidence.
+            </p>
+            <Button size="lg" onClick={() => document.getElementById('search-destinations')?.focus()} className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20">
+              Search Destinations
+            </Button>
           </div>
         </motion.div>
       </section>
