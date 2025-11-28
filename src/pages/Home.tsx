@@ -52,7 +52,7 @@ interface BlogItem {
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
 
-/* ----------  SEO COMPONENT (MAXIMIZED)  ---------- */
+/* ----------  SEO COMPONENT  ---------- */
 const SEOHead = () => {
   useEffect(() => {
     // 1. Primary Meta Tags
@@ -71,13 +71,13 @@ const SEOHead = () => {
 
     const description = "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 120+ countries.";
     const url = "https://budquest.com";
-    const image = "https://budquest.com/og-social-share.jpg"; // *IMPORTANT: Ensure this image exists in public folder*
+    const image = "https://budquest.com/og-social-share.jpg"; // Ensure this image exists in public folder
 
     // Standard SEO
     updateMeta("description", description);
     updateMeta("keywords", "cannabis travel, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest");
     
-    // Canonical Link (Prevents duplicate content issues)
+    // Canonical Link
     let canonical = document.querySelector("link[rel='canonical']");
     if (!canonical) {
       canonical = document.createElement("link");
@@ -86,7 +86,7 @@ const SEOHead = () => {
     }
     canonical.setAttribute("href", url);
 
-    // Open Graph / Facebook (Critical for Social Sharing)
+    // Open Graph / Facebook
     updateMeta("og:type", "website", "property");
     updateMeta("og:url", url, "property");
     updateMeta("og:title", "BudQuest | Global Cannabis Travel Guide", "property");
@@ -101,7 +101,6 @@ const SEOHead = () => {
     updateMeta("twitter:image", image, "name");
 
     // 2. Structured Data (JSON-LD)
-    // We add "WebSite" (for Google Search box) and "Organization"
     const scriptId = "seo-structured-data";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
@@ -550,7 +549,7 @@ const Home = () => {
           <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-6 sm:p-12 rounded-2xl sm:rounded-3xl border border-border/50 shadow-2xl">
             <h2 className="text-3xl sm:text-5xl font-bold mb-4">Ready to Explore?</h2>
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
-              Start your journey with Global Canna Pass. Search for your next destination and travel with confidence.
+              Start your journey with BudQuest. Search for your next destination and travel with confidence.
             </p>
             <Button 
               size="lg" 
