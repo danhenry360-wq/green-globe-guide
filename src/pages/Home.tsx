@@ -17,10 +17,10 @@ import InteractiveWorldMap from "@/components/InteractiveWorldMap";
 import MapLegend from "@/components/MapLegend";
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-// 🛠️ FIX: Using the alias paths (e.g., @/assets/) for uploaded images
-// ➡️ Ensure these two files are placed in your 'src/assets/' directory.
-import torontoStreetViewImage from "@/assets/toronto-street-view.jpg"; 
-import veniceBeachImage from "@/assets/beautiful-shot-venice-beach-with-waves-california.jpg";
+// 🛠️ FIX: Using the root-relative path (/src/assets/) instead of the alias (@/assets/)
+// This is done to ensure file resolution during the server build process (Vercel/Node environment).
+import torontoStreetViewImage from "/src/assets/toronto-street-view.jpg"; 
+import veniceBeachImage from "/src/assets/beautiful-shot-venice-beach-with-waves-california.jpg";
 
 /* ---------- TYPES ---------- */
 interface Destination {
@@ -65,7 +65,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "California", 
     status: "Recreational", 
     country: "USA", 
-    // UPDATED IMAGE SOURCE
+    // UPDATED IMAGE SOURCE (using imported variable)
     image: veniceBeachImage,
     imageAlt: "Beautiful shot of Venice Beach with waves in California, a cannabis-friendly destination", 
     color: "bg-green-500/90", 
@@ -93,7 +93,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
     name: "Canada", 
     status: "Recreational", 
     country: "North America", 
-    // UPDATED IMAGE SOURCE
+    // UPDATED IMAGE SOURCE (using imported variable)
     image: torontoStreetViewImage,
     imageAlt: "Toronto street view with skyscrapers and Canadian flag, Canada legal cannabis travel", 
     color: "bg-green-500/90", 
