@@ -38,7 +38,7 @@ interface Region {
 interface Country {
   slug: string;
   name: string;
-  legalStatus: "Recreational" | "Medical" | "Decriminalized";
+  legalStatus: "Recreational" | "Medical" | "Decriminalized" | "Illegal";
   possession: string;
   airport: string;
   tourist: string;
@@ -8518,66 +8518,188 @@ const statusColor = (s: string) => {
 /* ---------- sub-components ---------- */
 const ContinentIndex = () => {
   const nav = useNavigate();
-  const [q, setQ] = useState("");
-  const filtered = useMemo(
-    () =>
-      q
-        ? WORLD.filter((c) =>
-            c.name.toLowerCase().includes(q.toLowerCase())
-          )
-        : WORLD,
-    [q]
-  );
+  const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
 
-  return (
-    <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+  // Define continent data with emojis for mobile view
+  const continentEmojis: Record<string, string> = {
+    "north-america": "🌎",
+    "europe": "🇪🇺",
+    "asia": "🌏",
+    "africa": "🌍",
+    "south-america": "🌎",
+    "oceania": "🏝️",
+  };
+
+  const selectedContinentData = selectedContinent 
+    ? WORLD.find((c) => c.slug === selectedContinent) 
+    : null;
+
+  // Mobile continent selector view
+  if (!selectedContinent) {
+    return (
+      <div className="container mx-auto max-w-7xl px-4 pt-24 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-10 text-center"
+          className="mb-8 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">
-            Global Cannabis Guide
+          <Badge className="mb-4 px-4 py-2 bg-accent/20 text-accent border-accent/30">
+            <Globe className="w-4 h-4 mr-2 inline" />
+            Interactive Global Map
+          </Badge>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+            Global Cannabis Legality Map
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Pick a continent to start
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Tap any country to instantly check cannabis laws, regulations, and travel safety information
           </p>
         </motion.div>
 
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search continents…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
+        {/* Continent Grid Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl rounded-3xl border border-accent/30 p-4 md:p-6 shadow-[0_0_60px_-20px_rgba(34,197,94,0.3)]"
+        >
+          <div className="grid grid-cols-2 gap-4">
+            {WORLD.map((continent, index) => (
+              <motion.button
+                key={continent.slug}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1 * index }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setSelectedContinent(continent.slug)}
+                className="relative bg-card/60 hover:bg-card/80 rounded-2xl border border-border/50 hover:border-accent/50 p-4 md:p-6 text-center transition-all duration-300 group"
+              >
+                <span className="text-4xl md:text-5xl mb-3 block">
+                  {continentEmojis[continent.slug] || "🌍"}
+                </span>
+                <h3 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-accent transition-colors">
+                  {continent.name === "North America" ? "Americas" : continent.name}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {continent.countries.length} countries
+                </p>
+              </motion.button>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((c) => (
-            <motion.div
-              key={c.slug}
-              whileHover={{ scale: 1.02 }}
-              className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5 p-6 shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
-              onClick={() => nav(`/world/${c.slug}`)}
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <c.icon className="w-8 h-8 text-green-400" />
-                <h3 className="text-2xl font-bold">{c.name}</h3>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                {c.countries.length} countries
-              </p>
-              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 group-hover:text-white transition" />
-            </motion.div>
+        {/* Legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-wrap justify-center gap-4 md:gap-6 mt-8"
+        >
+          {[
+            { status: 'Recreational', color: '#22c55e' },
+            { status: 'Medical Only', color: '#3b82f6' },
+            { status: 'Decriminalized', color: '#eab308' },
+            { status: 'Illegal', color: '#ef4444' },
+          ].map((item) => (
+            <div key={item.status} className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-sm text-muted-foreground">{item.status}</span>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </>
+    );
+  }
+
+  // Selected continent - show countries list
+  return (
+    <div className="container mx-auto max-w-7xl px-4 pt-24 pb-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-8"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl">{continentEmojis[selectedContinent] || "🌍"}</span>
+          <h1 className="text-2xl md:text-4xl font-bold">
+            {selectedContinentData?.name === "North America" ? "Americas" : selectedContinentData?.name}
+          </h1>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setSelectedContinent(null)}
+            className="ml-auto"
+          >
+            ← Back
+          </Button>
+        </div>
+      </motion.div>
+
+      <div className="space-y-3">
+        {selectedContinentData?.countries.map((country, index) => {
+          const statusColors: Record<string, string> = {
+            "Recreational": "bg-green-500",
+            "Medical": "bg-blue-500",
+            "Decriminalized": "bg-yellow-500",
+            "Illegal": "bg-red-500",
+          };
+          const dotColor = statusColors[country.legalStatus] || "bg-gray-500";
+
+          return (
+            <motion.div
+              key={country.slug}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.05 * index }}
+            >
+              <Card
+                className="p-4 bg-card/60 border-border/50 hover:border-accent/50 cursor-pointer transition-all"
+                onClick={() => nav(`/world/${selectedContinent}/${country.slug}`)}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-3 h-3 rounded-full mt-1.5 ${dotColor}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-lg font-bold text-white">{country.name}</h3>
+                      <Badge className={`${statusColor(country.legalStatus)} border-none text-xs`}>
+                        {country.legalStatus}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                      {country.description}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                </div>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-border/30"
+      >
+        {[
+          { status: 'Recreational', color: 'bg-green-500' },
+          { status: 'Medical Only', color: 'bg-blue-500' },
+          { status: 'Decriminalized', color: 'bg-yellow-500' },
+          { status: 'Illegal', color: 'bg-red-500' },
+        ].map((item) => (
+          <div key={item.status} className="flex items-center gap-2">
+            <div className={`w-3 h-3 rounded-full ${item.color}`} />
+            <span className="text-sm text-muted-foreground">{item.status}</span>
+          </div>
+        ))}
+      </motion.div>
+    </div>
   );
 };
 

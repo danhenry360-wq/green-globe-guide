@@ -19,7 +19,7 @@ interface StateDispensaries {
   dispensaries: Dispensary[];
 }
 
-interface CountryData {
+export interface CountryData {
   country: string;
   slug: string;
   flag: string;

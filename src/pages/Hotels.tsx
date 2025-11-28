@@ -314,13 +314,14 @@ const Hotels = () => {
           country: country.country,
           countryFlag: country.flagPath,
           stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
-          isBudget: hotel.price < 100,
-          hasSmoking: hotel.policyHighlights?.toLowerCase().includes('smoking') || 
-                     hotel.policyHighlights?.toLowerCase().includes('balcony') || false,
-          hasVaping: hotel.policyHighlights?.toLowerCase().includes('vaping') ||
-                    hotel.policyHighlights?.toLowerCase().includes('consumption') || false,
-          hasEdibles: hotel.policyHighlights?.toLowerCase().includes('edible') ||
-                     hotel.policyHighlights?.toLowerCase().includes('welcome kit') || false,
+          isBudget: hotel.priceRange === '$$',
+          isPremium: hotel.priceRange === '$$$$',
+          hasSmoking: hotel.policies?.toLowerCase().includes('smoking') || 
+                     hotel.policies?.toLowerCase().includes('balcony') || false,
+          hasVaping: hotel.policies?.toLowerCase().includes('vaping') ||
+                    hotel.policies?.toLowerCase().includes('consumption') || false,
+          hasEdibles: hotel.policies?.toLowerCase().includes('edible') ||
+                     hotel.policies?.toLowerCase().includes('welcome kit') || false,
         }))
       )
     );
@@ -379,17 +380,18 @@ const Hotels = () => {
         h.city.toLowerCase().includes(q) ||
         h.country.toLowerCase().includes(q) ||
         h.stateName.toLowerCase().includes(q) ||
-        h.policyHighlights?.toLowerCase().includes(q)
+        h.policies?.toLowerCase().includes(q)
       );
     }
 
-    // Sort
+    // Sort - use priceRange for sorting
+    const priceOrder = { '$$': 1, '$$$': 2, '$$$$': 3 };
     result.sort((a, b) => {
       switch (filters.sort) {
         case 'name': return a.name.localeCompare(b.name);
         case 'rating': return b.rating - a.rating;
-        case 'price-low': return a.price - b.price;
-        case 'price-high': return b.price - a.price;
+        case 'price-low': return (priceOrder[a.priceRange] || 0) - (priceOrder[b.priceRange] || 0);
+        case 'price-high': return (priceOrder[b.priceRange] || 0) - (priceOrder[a.priceRange] || 0);
         default: return 0;
       }
     });

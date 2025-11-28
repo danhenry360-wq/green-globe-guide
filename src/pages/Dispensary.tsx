@@ -25,7 +25,7 @@ import { DISPENSARY_DATA, CountryData } from "@/lib/dispensary_data";
 
 // Define Dispensary type locally to avoid conflicts
 interface DispensaryType {
-  id: string;
+  id: number;
   name: string;
   city: string;
   state: string;
@@ -513,7 +513,7 @@ const Dispensary = () => {
 
     if (filters.type !== "all") {
       result = result.filter(
-        (d) => d.type?.toLowerCase().includes(filters.type)
+        (d) => d.specialty?.toLowerCase().includes(filters.type)
       );
     }
 
@@ -566,7 +566,7 @@ const Dispensary = () => {
       processedData.filter((d) =>
         type === "all"
           ? true
-          : d.type?.toLowerCase().includes(type)
+          : d.specialty?.toLowerCase().includes(type)
       ).length;
 
     return {
