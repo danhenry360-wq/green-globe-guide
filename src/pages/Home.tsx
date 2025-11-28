@@ -71,7 +71,6 @@ const SEOHead = () => {
   return null;
 };
 
-// Reusable Header
 const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: string, id: string }) => (
   <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
     <h2 id={id} className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
@@ -96,27 +95,37 @@ const MobileContinentMap = () => {
     { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
 
+  // RESTORED: Full original data set
   const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
     "north-america": [
-      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
-      { name: "Canada", status: "Recreational", description: "Fully legal nationwide", slug: "canada" },
+      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational, 38 medical", slug: "united-states" },
+      { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
-      { name: "Uruguay", status: "Recreational", description: "Fully legal", slug: "uruguay" },
+      { name: "Uruguay", status: "Recreational", description: "First country to fully legalize in 2013", slug: "uruguay" },
+      { name: "Jamaica", status: "Decriminalized", description: "Decriminalized, medical and religious use legal", slug: "jamaica" },
     ],
     "europe": [
       { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
-      { name: "Germany", status: "Recreational", description: "Legalized recreational use", slug: "germany" },
+      { name: "Germany", status: "Recreational", description: "Legalized for recreational use in 2024", slug: "germany" },
       { name: "Spain", status: "Decriminalized", description: "Private clubs legal", slug: "spain" },
+      { name: "Portugal", status: "Decriminalized", description: "Decriminalized all drugs in 2001", slug: "portugal" },
+      { name: "Switzerland", status: "Medical", description: "Medical use legal, low-THC available", slug: "switzerland" },
     ],
     "asia": [
       { name: "Thailand", status: "Recreational", description: "Legalized in 2022", slug: "thailand" },
       { name: "Japan", status: "Illegal", description: "Strict prohibition", slug: "japan" },
+      { name: "South Korea", status: "Medical", description: "Medical only", slug: "south-korea" },
+      { name: "India", status: "Decriminalized", description: "Varies by state", slug: "india" },
     ],
     "africa": [
       { name: "South Africa", status: "Decriminalized", description: "Private use legal", slug: "south-africa" },
+      { name: "Morocco", status: "Illegal", description: "Traditional hash culture", slug: "morocco" },
+      { name: "Lesotho", status: "Medical", description: "First African medical license", slug: "lesotho" },
+      { name: "Malawi", status: "Medical", description: "Medical cultivation legal", slug: "malawi" },
     ],
     "oceania": [
-      { name: "Australia", status: "Medical", description: "Medical nationwide", slug: "australia" },
+      { name: "Australia", status: "Medical", description: "Medical nationwide, ACT recreational", slug: "australia" },
+      { name: "New Zealand", status: "Medical", description: "Medical legal since 2020", slug: "new-zealand" },
     ],
   };
 
@@ -246,7 +255,7 @@ const Home = () => {
         Skip to main content
       </a>
 
-      {/* ==========  HERO SECTION (RESTORED ORIGINAL LAYERS)  ========== */}
+      {/* ==========  HERO SECTION (RESTORED ORIGINAL VISUALS)  ========== */}
       <section 
         className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
         role="banner"
@@ -259,11 +268,11 @@ const Home = () => {
         />
         {/* 2. Main Dark Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
-        {/* 3. Bottom Fade Overlay (Restored) */}
+        {/* 3. Bottom Fade Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-        {/* 4. Green Accent Blob (Restored) */}
+        {/* 4. Green Accent Blob */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/15 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
-        {/* 5. Gold Accent Blob (Restored) */}
+        {/* 5. Gold Accent Blob */}
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
 
         <motion.div
