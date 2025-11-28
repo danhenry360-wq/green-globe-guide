@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react"; // ✅ Fixed Import
+import { useState, useMemo, useEffect } from "react";
 import { Filter, Search, X, Map } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
@@ -44,7 +44,7 @@ const USAGuide = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isFilterOpen]);
 
-  // 2. Core Logic: Filter States (Unchanged)
+  // 2. Core Logic: Filter States
   const filteredStates = useMemo(() => {
     return USA_STATE_DATA.filter(state => {
       const matchesSearch = state.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -54,7 +54,7 @@ const USAGuide = () => {
     });
   }, [searchTerm, filters]);
 
-  // 3. Core Logic: Group by Region (Unchanged)
+  // 3. Core Logic: Group by Region
   const groupedByRegion = useMemo(() => {
     return filteredStates.reduce((acc, state) => {
       const region = STATE_REGIONS[state.name] || 'Other';
@@ -268,3 +268,59 @@ const USAGuide = () => {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-[20px] shadow-2xl flex flex-col max-h-[85vh]"
             >
+              {/* Handle */}
+              <div className="flex justify-center pt-3 pb-1" onClick={() => setIsFilterOpen(false)}>
+                <div className="w-12 h-1.5 bg-muted-foreground/20 rounded-full" />
+              </div>
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 pb-4 border-b border-border/40">
+                <h2 className="text-lg font-bold">Filter States</h2>
+                <Button variant="ghost" size="icon" className="rounded-full h-8 w-8" onClick={() => setIsFilterOpen(false)}>
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              {/* Content */}
+              <div className="overflow-y-auto p-6 space-y-8 flex-1">
+                <FilterStates onFilterChange={setFilters} currentFilters={filters} />
+                
+                <div className="pt-4 border-t border-border/40">
+                  <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Legend</h4>
+                  <MapLegend />
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-4 border-t border-border/40 bg-background pb-8">
+                <Button 
+                  className="w-full h-12 text-base font-semibold rounded-xl" 
+                  onClick={() => setIsFilterOpen(false)}
+                >
+                  Show {filteredStates.length} Results
+                </Button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      <Footer />
+    </div>
+  );
+};
+
+// Helper: Empty State UI
+const EmptyState = () => (
+  <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+    <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mb-4">
+      <Map className="w-8 h-8 text-muted-foreground/50" />
+    </div>
+    <h3 className="text-lg font-semibold text-foreground mb-1">No states found</h3>
+    <p className="text-muted-foreground max-w-xs mx-auto">
+      We couldn't find any states matching your criteria. Try clearing your filters.
+    </p>
+  </div>
+);
+
+export default USAGuide;
