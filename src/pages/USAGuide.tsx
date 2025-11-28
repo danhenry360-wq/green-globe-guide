@@ -13,10 +13,10 @@ import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { cn } from "@/lib/utils";
 
 /* ----------------------------------------------------
-   CONFIGURATION & DATA
+   CONFIGURATION & DATA (Full Integrity)
 ----------------------------------------------------- */
 
-// 1. Region Styling (Premium Glass/Neon Look)
+// 1. Region Styling
 const REGIONS = [
   {
     id: 'West', 
@@ -69,7 +69,7 @@ const STATE_TO_REGION: Record<string, string> = {
    SUB-COMPONENTS
 ----------------------------------------------------- */
 
-// VIEW A: Region Grid (Premium Look)
+// VIEW A: Region Grid
 const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -80,13 +80,11 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
           whileTap={{ scale: 0.98 }}
           className={cn(
             "group relative rounded-2xl border border-white/10",
-            // Glassmorphism + Green Gradient Background
             "bg-gradient-to-br from-green-400/10 via-white/5 to-transparent",
             "p-6 shadow-lg hover:shadow-green-400/20 transition-all cursor-pointer overflow-hidden"
           )}
           onClick={() => onSelect(region.id)}
         >
-          {/* Hover Glow Effect */}
           <div className="absolute inset-0 bg-green-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           <div className="flex items-center gap-4 mb-4 relative z-10">
@@ -114,7 +112,7 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
   );
 };
 
-// VIEW B: State Grid (Filtered)
+// VIEW B: State Grid
 const StateIndex = ({ states, onBack }: { states: typeof USA_STATE_DATA; onBack: () => void }) => (
   <>
     <div className="mb-6">
@@ -194,8 +192,8 @@ const USAGuide = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            {/* FIXED: Removed gradient, used solid white text-white */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+            {/* FIXED: Using exact "About Page" gradient class */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent drop-shadow-2xl">
               {pageTitle}
             </h1>
             {!activeRegionID && !searchTerm && (
@@ -208,7 +206,6 @@ const USAGuide = () => {
           {/* --- STICKY SEARCH BAR (Glassmorphism) --- */}
           <div className="sticky top-20 z-50 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8">
             <div className="relative max-w-3xl mx-auto">
-              {/* Glow Effect */}
               <div className="absolute inset-0 bg-green-500/10 blur-2xl rounded-full opacity-0 focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
               
               <div className="relative flex items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden group focus-within:border-green-500/50 transition-colors">
