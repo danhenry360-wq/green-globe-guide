@@ -19,11 +19,10 @@ import MapLegend from "@/components/MapLegend";
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
-// Lazy Load Heavy Components (Performance Fix)
+// Lazy Load Heavy Components (Performance optimization)
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
 
 /* ----------  TYPES  ---------- */
-// (Ideally move to @/types/index.ts)
 interface Destination {
   name: string;
   status: string;
@@ -41,26 +40,11 @@ interface StatItem {
   suffix: string;
 }
 
-interface FeatureItem {
-  icon: React.ElementType;
-  title: string;
-  desc: string;
-  link: string;
-}
-
-interface BlogItem {
-  title: string;
-  summary: string;
-  image: string;
-  imageAlt: string;
-  link: string;
-}
-
 /* ----------  ANIMATION VARIANTS  ---------- */
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
 
-/* ----------  REUSABLE SUB-COMPONENTS  ---------- */
+/* ----------  SUB-COMPONENTS  ---------- */
 
 const SEOHead = () => {
   useEffect(() => {
@@ -70,9 +54,8 @@ const SEOHead = () => {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       name: "BudQuest",
-      description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
+      description: "Global cannabis travel guide",
       url: "https://budquest.com",
-      applicationCategory: "TravelApplication",
     });
     document.head.appendChild(script);
     return () => { document.head.removeChild(script); };
@@ -80,7 +63,7 @@ const SEOHead = () => {
   return null;
 };
 
-// DRY Component for Section Titles
+// Reusable Header to keep code clean
 const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: string, id: string }) => (
   <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
     <h2 id={id} className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
@@ -92,11 +75,11 @@ const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: strin
   </motion.div>
 );
 
+/* ----------  MOBILE CONTINENT MAP (RESTORED LOGIC)  ---------- */
 const MobileContinentMap = () => {
   const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // (Data truncated for brevity - kept logic identical to original)
   const continentDisplay = [
     { name: "Americas", emoji: "🌎", count: 8, slug: "north-america" },
     { name: "Europe", emoji: "🇪🇺", count: 8, slug: "europe" },
@@ -105,26 +88,97 @@ const MobileContinentMap = () => {
     { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
 
-  // If a continent is selected, show list (Simplified for this view)
+  // Restored data structure for inline display
+  const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
+    "north-america": [
+      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
+      { name: "Canada", status: "Recreational", description: "Fully legal nationwide", slug: "canada" },
+      { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
+      { name: "Uruguay", status: "Recreational", description: "Fully legal", slug: "uruguay" },
+    ],
+    "europe": [
+      { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
+      { name: "Germany", status: "Recreational", description: "Legalized recreational use", slug: "germany" },
+      { name: "Spain", status: "Decriminalized", description: "Private clubs legal", slug: "spain" },
+    ],
+    "asia": [
+      { name: "Thailand", status: "Recreational", description: "Legalized in 2022", slug: "thailand" },
+      { name: "Japan", status: "Illegal", description: "Strict prohibition", slug: "japan" },
+    ],
+    "africa": [
+      { name: "South Africa", status: "Decriminalized", description: "Private use legal", slug: "south-africa" },
+    ],
+    "oceania": [
+      { name: "Australia", status: "Medical", description: "Medical nationwide", slug: "australia" },
+    ],
+  };
+
+  const getStatusDot = (status: string) => {
+    switch (status) {
+      case "Recreational": return "bg-green-500";
+      case "Medical": return "bg-amber-500";
+      case "Decriminalized": return "bg-blue-500";
+      default: return "bg-red-500";
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Recreational": return "text-green-400 border-green-500/50";
+      case "Medical": return "text-amber-400 border-amber-500/50";
+      case "Decriminalized": return "text-blue-400 border-blue-500/50";
+      default: return "text-red-400 border-red-500/50";
+    }
+  };
+
+  // If continent selected, show INLINE list (Restored Logic)
   if (selectedContinent) {
+    const continent = continentDisplay.find(c => c.slug === selectedContinent);
+    const countries = countriesByContinent[selectedContinent] || [];
+
     return (
       <div className="block md:hidden">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <h3 className="text-xl font-bold text-foreground capitalize">{selectedContinent.replace("-", " ")}</h3>
+            <span className="text-3xl">{continent?.emoji}</span>
+            <h3 className="text-xl font-bold text-foreground">{continent?.name}</h3>
             <Button variant="outline" size="sm" onClick={() => setSelectedContinent(null)} className="ml-auto">
               ← Back
             </Button>
           </div>
-          <div className="p-4 bg-card/60 rounded-xl border border-border/50 text-center">
-            <p className="text-muted-foreground">Select specific countries in {selectedContinent}...</p>
-            <Button onClick={() => navigate(`/world/${selectedContinent}`)} className="mt-4 w-full">View All</Button>
+
+          <div className="space-y-3">
+            {countries.map((country, index) => (
+              <motion.div
+                key={country.slug}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * index }}
+                // Original navigation logic kept, but styled as a card
+                onClick={() => navigate(`/world/${selectedContinent}/${country.slug}`)}
+                className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 cursor-pointer"
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-3 h-3 rounded-full mt-1.5 flex-shrink-0 ${getStatusDot(country.status)}`} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-semibold text-foreground">{country.name}</span>
+                      <Badge className={`text-xs border ${getStatusColor(country.status)} bg-transparent`}>
+                        {country.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{country.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
     );
   }
 
+  // Grid View
   return (
     <div className="block md:hidden">
       <motion.div variants={FADE_IN} className="space-y-4">
@@ -137,9 +191,19 @@ const MobileContinentMap = () => {
             >
               <span className="text-4xl mb-3">{continent.emoji}</span>
               <span className="text-base font-semibold text-foreground">{continent.name}</span>
+              <span className="text-sm text-muted-foreground">{continent.count} countries</span>
             </button>
           ))}
         </div>
+        {/* Oceania Full Width */}
+        <button
+          onClick={() => setSelectedContinent("oceania")}
+          className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 w-full"
+        >
+          <span className="text-4xl mb-3">🏝️</span>
+          <span className="text-base font-semibold text-foreground">Oceania</span>
+          <span className="text-sm text-muted-foreground">2 countries</span>
+        </button>
       </motion.div>
     </div>
   );
@@ -152,12 +216,11 @@ const Home = () => {
   const navigate = useNavigate();
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // LOGIC FIX: Generic search routing
+  // SEARCH LOGIC RESTORED: Pointing to /usa as requested
   const handleSearch = (term?: string) => {
     const finalTerm = term || searchTerm;
     if (finalTerm.trim()) {
-      // Redirect to a dedicated search page instead of hardcoded '/usa'
-      navigate(`/search?q=${encodeURIComponent(finalTerm.trim())}`);
+      navigate(`/usa?search=${encodeURIComponent(finalTerm.trim())}`);
     }
   };
 
@@ -178,13 +241,9 @@ const Home = () => {
       <SEOHead />
       <Navigation />
       
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
-        Skip to main content
-      </a>
-
       {/* ==========  HERO SECTION  ========== */}
-      <section className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden" role="banner">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} aria-hidden="true" />
+      <section className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/70" />
         
         <motion.div
@@ -194,7 +253,7 @@ const Home = () => {
           className="container mx-auto text-center relative z-10 px-2"
         >
           <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 animate-pulse">
-            <Sparkles className="w-4 h-4 mr-2 inline" aria-hidden="true" />
+            <Sparkles className="w-4 h-4 mr-2 inline" />
             Global Cannabis Travel Intelligence
           </Badge>
 
@@ -204,12 +263,11 @@ const Home = () => {
             </span>
           </h1>
 
-          <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto">
             Your Global Cannabis Travel Companion
           </p>
 
           <div className="max-w-3xl mx-auto mt-10 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" />
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" />
             <Input
               placeholder="Search destinations (e.g., Thailand, California)..."
@@ -243,7 +301,7 @@ const Home = () => {
               </motion.button>
             ))}
           </div>
-
+          
           <div className="mt-8 flex justify-center">
             <button onClick={scrollToStats} className="text-muted-foreground/50 hover:text-white transition-colors">
               <ChevronDown className="w-8 h-8 animate-bounce" />
@@ -254,22 +312,10 @@ const Home = () => {
 
       {/* ==========  STATS SECTION  ========== */}
       <section id="stats" className="py-16 sm:py-20 px-4">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="container mx-auto"
-        >
+        <motion.div whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} viewport={{ once: true }} className="container mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             {STATS_DATA.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center group"
-              >
+              <motion.div key={stat.label} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center group">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center border border-accent/20">
                   <stat.icon className="w-10 h-10 text-accent" />
                 </div>
@@ -283,26 +329,16 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  FEATURED DESTINATIONS  ========== */}
+      {/* ==========  DESTINATIONS  ========== */}
       <section id="main-content" className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="destinations-heading"
-            title="Popular Destinations"
-            subtitle="Explore BudQuest's curated list of cannabis-friendly travel hotspots worldwide"
-          />
-
+          <SectionHeader id="destinations-heading" title="Popular Destinations" subtitle="Explore BudQuest's curated list of cannabis-friendly travel hotspots worldwide" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {FEATURED_DESTINATIONS.map((dest) => (
               <motion.div key={dest.name} variants={FADE_IN} whileHover={{ y: -8 }}>
                 <Link to={dest.link}>
                   <Card className="relative h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-xl hover:border-accent/30 group">
-                    <img
-                      src={dest.image}
-                      alt={dest.imageAlt}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    <img src={dest.image} alt={dest.imageAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 z-10">
                       <Badge className={`${dest.color} text-white border-none`}>{dest.status}</Badge>
@@ -322,31 +358,19 @@ const Home = () => {
       {/* ==========  GLOBAL LEGALITY MAP  ========== */}
       <section className="py-16 bg-gradient-to-b from-black via-gray-950 to-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="legality-heading"
-            title="Global Legality at a Glance"
-            subtitle="Explore cannabis laws worldwide. Filter by legal status and continent."
-          />
-
+          <SectionHeader id="legality-heading" title="Global Legality at a Glance" subtitle="Explore cannabis laws worldwide. Filter by legal status and continent." />
+          
           <MobileContinentMap />
 
           <div className="hidden md:block w-full">
             <motion.div variants={FADE_IN}>
               <Card className="bg-card/50 border-border/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
-                {/* LAZY LOADED MAP WRAPPED IN SUSPENSE */}
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
-                  <Suspense fallback={
-                    <div className="flex items-center justify-center h-full w-full text-accent">
-                      <Loader2 className="w-10 h-10 animate-spin" />
-                      <span className="ml-2">Loading Map Data...</span>
-                    </div>
-                  }>
+                  <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Map...</div>}>
                     <InteractiveWorldMap />
                   </Suspense>
                 </div>
-                <div className="mt-6 flex justify-center">
-                  <MapLegend />
-                </div>
+                <div className="mt-6 flex justify-center"><MapLegend /></div>
               </Card>
             </motion.div>
           </div>
@@ -356,12 +380,7 @@ const Home = () => {
       {/* ==========  BLOG SECTION  ========== */}
       <section className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="guides-heading"
-            title="Travel Guides & Articles"
-            subtitle="In-depth BudQuest guides for your next adventure"
-          />
-
+          <SectionHeader id="guides-heading" title="Travel Guides & Articles" subtitle="In-depth BudQuest guides for your next adventure" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {BLOG_DATA.map((post) => (
               <motion.div key={post.title} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
@@ -371,10 +390,7 @@ const Home = () => {
                     <div className="p-8 flex flex-col flex-grow">
                       <h3 className="text-2xl font-bold mb-3 text-white">{post.title}</h3>
                       <p className="text-gray-400 flex-grow mb-6">{post.summary}</p>
-                      <div className="flex items-center gap-2 text-accent">
-                        <span>Read Article</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </div>
+                      <div className="flex items-center gap-2 text-accent"><span>Read Article</span><ArrowRight className="w-4 h-4" /></div>
                     </div>
                   </Card>
                 </Link>
@@ -384,34 +400,12 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  CTA SECTION  ========== */}
-      <section className="py-20 px-4 bg-background">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="container mx-auto text-center"
-        >
-          <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-12 rounded-3xl border border-border/50 shadow-2xl">
-            <h2 className="text-5xl font-bold mb-4">Ready to Explore?</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Start your journey with Global Canna Pass. Search for your next destination and travel with confidence.
-            </p>
-            <Button size="lg" onClick={() => navigate('/search')} className="h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20">
-              Start Your Quest
-            </Button>
-          </div>
-        </motion.div>
-      </section>
-
       <Footer />
     </div>
   );
 };
 
-/* ----------  DATA CONSTANTS (Moved to bottom)  ---------- */
-// Move to src/data/homeData.ts in production
-
+/* ----------  DATA CONSTANTS  ---------- */
 const FEATURED_DESTINATIONS: Destination[] = [
   { name: "California", status: "Recreational", country: "USA", image: "/dest-california-beach.jpg", imageAlt: "California beach", color: "bg-green-500/90", link: "/usa/california" },
   { name: "Colorado", status: "Recreational", country: "USA", image: "/dest-2.jpg", imageAlt: "Colorado mountains", color: "bg-green-500/90", link: "/usa/colorado" },
