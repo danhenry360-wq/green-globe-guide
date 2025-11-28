@@ -95,17 +95,19 @@ const MobileContinentMap = () => {
     { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
   ];
 
-  // UPDATED: Full data lists to match the counts on the buttons
-  const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string }[]> = {
+  // FIX: Added 'realRegion' property to distinguish South America from North America
+  const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string; realRegion?: string }[]> = {
     "north-america": [
       { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
       { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
-      { name: "Uruguay", status: "Recreational", description: "Fully legal (South America)", slug: "uruguay" },
+      // Jamaica & Costa Rica are technically North America/Caribbean
       { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
-      { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia" },
       { name: "Costa Rica", status: "Decriminalized", description: "Personal use largely tolerated", slug: "costa-rica" },
-      { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina" },
+      // These 3 are South America, so we add realRegion override:
+      { name: "Uruguay", status: "Recreational", description: "Fully legal (South America)", slug: "uruguay", realRegion: "south-america" },
+      { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia", realRegion: "south-america" },
+      { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina", realRegion: "south-america" },
     ],
     "europe": [
       { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
@@ -175,7 +177,11 @@ const MobileContinentMap = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * index }}
-                onClick={() => navigate(`/world/${selectedContinent}/${country.slug}`)}
+                onClick={() => {
+                  // FIX: Use realRegion if it exists (for South America), otherwise use the parent continent slug
+                  const targetRegion = country.realRegion || selectedContinent;
+                  navigate(`/world/${targetRegion}/${country.slug}`);
+                }}
                 className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 cursor-pointer"
               >
                 <div className="flex items-start gap-3">
