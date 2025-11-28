@@ -38,7 +38,7 @@ interface Region {
 interface Country {
   slug: string;
   name: string;
-  legalStatus: "Recreational" | "Medical" | "Decriminalized";
+  legalStatus: "Recreational" | "Medical" | "Decriminalized" | "Illegal";
   possession: string;
   airport: string;
   tourist: string;
@@ -8545,14 +8545,14 @@ const ContinentIndex = () => {
           </p>
         </motion.div>
 
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
+        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border/50 p-4 mb-8">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search continents…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border/50 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
@@ -8562,17 +8562,17 @@ const ContinentIndex = () => {
             <motion.div
               key={c.slug}
               whileHover={{ scale: 1.02 }}
-              className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5 p-6 shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+              className="group relative rounded-2xl border border-border/50 bg-gradient-to-br from-accent/10 via-transparent to-accent/5 p-6 shadow-lg hover:shadow-accent/20 transition-shadow cursor-pointer"
               onClick={() => nav(`/world/${c.slug}`)}
             >
               <div className="flex items-center gap-4 mb-4">
-                <c.icon className="w-8 h-8 text-green-400" />
-                <h3 className="text-2xl font-bold">{c.name}</h3>
+                <c.icon className="w-8 h-8 text-accent" />
+                <h3 className="text-2xl font-bold text-foreground">{c.name}</h3>
               </div>
               <p className="text-sm text-muted-foreground">
                 {c.countries.length} countries
               </p>
-              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 group-hover:text-white transition" />
+              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground group-hover:text-foreground transition" />
             </motion.div>
           ))}
         </div>
@@ -8616,14 +8616,14 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
           <p className="text-lg text-muted-foreground">Choose a country</p>
         </motion.div>
 
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
+        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border/50 p-4 mb-8">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search countries…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border/50 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
@@ -8633,9 +8633,9 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
             <Card
               key={c.slug}
               className={cn(
-                "group relative overflow-hidden rounded-2xl border border-white/10",
-                "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
-                "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+                "group relative overflow-hidden rounded-2xl border border-border/50",
+                "bg-gradient-to-br from-accent/10 via-transparent to-accent/5",
+                "shadow-lg hover:shadow-accent/20 transition-shadow cursor-pointer"
               )}
               onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
             >
@@ -8646,7 +8646,7 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
               />
               <div className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold">{c.name}</h3>
+                  <h3 className="text-xl font-bold text-foreground">{c.name}</h3>
                   <Badge className={`${statusColor(c.legalStatus)} border-none`}>
                     {c.legalStatus}
                   </Badge>
@@ -8654,7 +8654,7 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
                 <p className="text-sm text-muted-foreground mb-3">
                   {c.description}
                 </p>
-                <Button size="sm" className="w-full">
+                <Button size="sm" className="w-full bg-accent hover:bg-accent/90">
                   View regions
                 </Button>
               </div>
@@ -8699,14 +8699,14 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
           <p className="text-lg text-muted-foreground">Choose a region</p>
         </motion.div>
 
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
+        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border/50 p-4 mb-8">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search regions…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border/50 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
@@ -8763,14 +8763,14 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
           <p className="text-lg text-muted-foreground">Choose a city</p>
         </motion.div>
 
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
+        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-border/50 p-4 mb-8">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search cities…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-border/50 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
@@ -8780,9 +8780,9 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
             <Card
               key={c.slug}
               className={cn(
-                "group relative rounded-2xl border border-white/10",
-                "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
-                "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer p-5"
+                "group relative rounded-2xl border border-border/50",
+                "bg-gradient-to-br from-accent/10 via-transparent to-accent/5",
+                "shadow-lg hover:shadow-accent/20 transition-shadow cursor-pointer p-5"
               )}
               onClick={() =>
                 nav(
@@ -8790,13 +8790,13 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
                 )
               }
             >
-              <h3 className="text-xl font-bold mb-3">{c.name}</h3>
+              <h3 className="text-xl font-bold mb-3 text-foreground">{c.name}</h3>
               <ul className="list-disc ml-6 text-sm text-muted-foreground space-y-1">
                 {c.atGlance.map((g, i) => (
                   <li key={i}>{g}</li>
                 ))}
               </ul>
-              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 group-hover:text-white transition" />
+              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground group-hover:text-foreground transition" />
             </Card>
           ))}
         </div>
@@ -8822,7 +8822,7 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Card className={cn("rounded-2xl border border-white/10", "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5 p-6 shadow-lg")}>
+          <Card className={cn("rounded-2xl border border-border/50", "bg-gradient-to-br from-accent/10 via-transparent to-accent/5 p-6 shadow-lg")}>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-3xl font-bold">{city.name}</h1>
               <Badge className={`${statusColor(country.legalStatus)} border-none`}>
@@ -8836,21 +8836,21 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm mb-6">
               <div className="flex items-start gap-2">
-                <Info className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                <Info className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">Possession</p>
                   <p className="text-muted-foreground">{country.possession}</p>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <Plane className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                <Plane className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">Airport</p>
                   <p className="text-muted-foreground">{country.airport}</p>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <Users className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                <Users className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">Tourist tip</p>
                   <p className="text-muted-foreground">{country.tourist}</p>
