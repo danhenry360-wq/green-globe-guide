@@ -261,4 +261,46 @@ const USAGuide = () => {
                       <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10">
                         <Search className="w-10 h-10 text-gray-600" />
                       </div>
-                      <h3 className="text-2xl font-semibol
+                      <h3 className="text-2xl font-semibold text-white mb-2">No results</h3>
+                      <p className="text-gray-400">We couldn't find "{searchTerm}" in the database.</p>
+                    </div>
+                 )}
+              </motion.div>
+
+            /* Case 2: Region Detail */
+            ) : activeRegionID ? (
+              <motion.div 
+                key="state-list" 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
+              >
+                <StateIndex 
+                  states={displayData} 
+                  onBack={() => setActiveRegionID(null)} 
+                />
+              </motion.div>
+
+            /* Case 3: Region Selection (Default) */
+            ) : (
+              <motion.div 
+                key="region-grid" 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
+              >
+                <RegionIndex onSelect={setActiveRegionID} />
+              </motion.div>
+            )}
+
+          </AnimatePresence>
+
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default USAGuide;
