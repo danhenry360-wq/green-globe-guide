@@ -52,39 +52,85 @@ interface BlogItem {
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
 
-/* ----------  SUB-COMPONENTS  ---------- */
-
-// SEO Component (No-Dependency Version)
+/* ----------  SEO COMPONENT (MAXIMIZED)  ---------- */
 const SEOHead = () => {
   useEffect(() => {
-    document.title = "BudQuest | Global Cannabis Travel Guide & Maps";
-
-    const setMeta = (name: string, content: string) => {
-      let element = document.querySelector(`meta[name="${name}"]`);
+    // 1. Primary Meta Tags
+    document.title = "BudQuest | The Ultimate Global Cannabis Travel Guide";
+    
+    // Helper to inject/update meta tags
+    const updateMeta = (name: string, content: string, attribute: 'name' | 'property' = 'name') => {
+      let element = document.querySelector(`meta[${attribute}="${name}"]`);
       if (!element) {
         element = document.createElement("meta");
-        element.setAttribute("name", name);
+        element.setAttribute(attribute, name);
         document.head.appendChild(element);
       }
       element.setAttribute("content", content);
     };
 
-    setMeta("description", "Navigate cannabis laws worldwide. Discover 420-friendly hotels, dispensaries, and travel regulations for 120+ countries with verified real-time data.");
+    const description = "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 120+ countries.";
+    const url = "https://budquest.com";
+    const image = "https://budquest.com/og-social-share.jpg"; // *IMPORTANT: Ensure this image exists in public folder*
 
+    // Standard SEO
+    updateMeta("description", description);
+    updateMeta("keywords", "cannabis travel, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest");
+    
+    // Canonical Link (Prevents duplicate content issues)
+    let canonical = document.querySelector("link[rel='canonical']");
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", url);
+
+    // Open Graph / Facebook (Critical for Social Sharing)
+    updateMeta("og:type", "website", "property");
+    updateMeta("og:url", url, "property");
+    updateMeta("og:title", "BudQuest | Global Cannabis Travel Guide", "property");
+    updateMeta("og:description", "Discover legal cannabis destinations, verified laws, and 420-friendly stays worldwide.", "property");
+    updateMeta("og:image", image, "property");
+    updateMeta("og:site_name", "BudQuest", "property");
+
+    // Twitter Card
+    updateMeta("twitter:card", "summary_large_image", "name");
+    updateMeta("twitter:title", "BudQuest | Global Cannabis Travel Guide", "name");
+    updateMeta("twitter:description", description, "name");
+    updateMeta("twitter:image", image, "name");
+
+    // 2. Structured Data (JSON-LD)
+    // We add "WebSite" (for Google Search box) and "Organization"
     const scriptId = "seo-structured-data";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
       script.id = scriptId;
       script.type = 'application/ld+json';
-      script.textContent = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: "BudQuest",
-        description: "Global cannabis travel guide",
-        url: "https://budquest.com",
-        applicationCategory: "TravelApplication",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
-      });
+      script.textContent = JSON.stringify([
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "BudQuest",
+          "url": url,
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": `${url}/search?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "BudQuest",
+          "url": url,
+          "logo": "https://budquest.com/logo.png",
+          "sameAs": [
+            "https://twitter.com/budquest",
+            "https://instagram.com/budquest"
+          ]
+        }
+      ]);
       document.head.appendChild(script);
     }
   }, []);
@@ -280,6 +326,7 @@ const Home = () => {
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <SEOHead />
       <Navigation />
+      {/* Skip link for Accessibility/SEO */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
         Skip to main content
       </a>
@@ -310,6 +357,7 @@ const Home = () => {
             Global Cannabis Travel Intelligence
           </Badge>
 
+          {/* H1 Optimized for Keywords while maintaining design */}
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
             <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
               BudQuest
@@ -329,6 +377,7 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" />
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" />
               <Input
+                aria-label="Search destinations"
                 placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
                 className="pl-16 pr-32 sm:pr-40 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
                 value={searchTerm}
@@ -338,6 +387,7 @@ const Home = () => {
               <Button 
                 onClick={() => handleSearch()} 
                 className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20 text-sm sm:text-base"
+                aria-label="Submit search"
               >
                 Search
               </Button>
@@ -364,7 +414,7 @@ const Home = () => {
           </div>
 
           <div className="mt-8 flex justify-center">
-            <button onClick={scrollToStats} className="text-muted-foreground/50 hover:text-white transition-colors cursor-pointer">
+            <button onClick={scrollToStats} className="text-muted-foreground/50 hover:text-white transition-colors cursor-pointer" aria-label="Scroll down to statistics">
               <ChevronDown className="w-8 h-8 animate-bounce" />
             </button>
           </div>
@@ -400,13 +450,24 @@ const Home = () => {
       {/* ==========  DESTINATIONS  ========== */}
       <section id="main-content" className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader id="destinations-heading" title="Popular Destinations" subtitle="Explore BudQuest's curated list of cannabis-friendly travel hotspots worldwide" />
+          <SectionHeader 
+            id="destinations-heading" 
+            title="Popular Cannabis Destinations" 
+            subtitle="Explore BudQuest's curated list of top 420-friendly travel hotspots worldwide" 
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {FEATURED_DESTINATIONS.map((dest) => (
               <motion.div key={dest.name} variants={FADE_IN} whileHover={{ y: -8 }}>
-                <Link to={dest.link}>
+                <Link to={dest.link} aria-label={`View cannabis laws and guides for ${dest.name}`}>
                   <Card className="relative h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-xl hover:border-accent/30 group">
-                    <img src={dest.image} alt={dest.imageAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img 
+                      src={dest.image} 
+                      alt={dest.imageAlt} 
+                      loading="lazy" 
+                      width="400"
+                      height="500"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 z-10">
                       <Badge className={`${dest.color} text-white border-none`}>{dest.status}</Badge>
@@ -426,7 +487,11 @@ const Home = () => {
       {/* ==========  GLOBAL LEGALITY MAP  ========== */}
       <section className="py-16 bg-gradient-to-b from-black via-gray-950 to-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader id="legality-heading" title="Global Legality at a Glance" subtitle="Explore cannabis laws worldwide. Filter by legal status and continent." />
+          <SectionHeader 
+            id="legality-heading" 
+            title="Global Cannabis Legality Map" 
+            subtitle="Explore marijuana laws worldwide. Filter by legal status (Recreational, Medical, Decriminalized) and continent." 
+          />
           
           <MobileContinentMap />
 
@@ -434,7 +499,7 @@ const Home = () => {
             <motion.div variants={FADE_IN}>
               <Card className="bg-card/50 border-border/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
-                  <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Map...</div>}>
+                  <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Global Map Data...</div>}>
                     <InteractiveWorldMap />
                   </Suspense>
                 </div>
@@ -448,13 +513,24 @@ const Home = () => {
       {/* ==========  BLOG SECTION  ========== */}
       <section className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader id="guides-heading" title="Travel Guides & Articles" subtitle="In-depth BudQuest guides for your next adventure" />
+          <SectionHeader 
+            id="guides-heading" 
+            title="Cannabis Travel Guides & News" 
+            subtitle="Expert advice, legal tips, and dispensary guides for your next adventure" 
+          />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {BLOG_DATA.map((post) => (
               <motion.div key={post.title} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Link to={post.link}>
+                <Link to={post.link} aria-label={`Read article: ${post.title}`}>
                   <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
-                    <img src={post.image} alt={post.imageAlt} loading="lazy" className="w-full h-56 object-cover transition-transform group-hover:scale-110" />
+                    <img 
+                      src={post.image} 
+                      alt={post.imageAlt} 
+                      loading="lazy" 
+                      width="400"
+                      height="224"
+                      className="w-full h-56 object-cover transition-transform group-hover:scale-110" 
+                    />
                     <div className="p-8 flex flex-col flex-grow">
                       <h3 className="text-2xl font-bold mb-3 text-white">{post.title}</h3>
                       <p className="text-gray-400 flex-grow mb-6">{post.summary}</p>
@@ -468,7 +544,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  CTA SECTION (UPDATED FOR MOBILE)  ========== */}
+      {/* ==========  CTA SECTION  ========== */}
       <section className="py-12 sm:py-20 px-4 bg-background">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="container mx-auto text-center">
           <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-6 sm:p-12 rounded-2xl sm:rounded-3xl border border-border/50 shadow-2xl">
@@ -494,12 +570,12 @@ const Home = () => {
 
 /* ----------  DATA CONSTANTS  ---------- */
 const FEATURED_DESTINATIONS: Destination[] = [
-  { name: "California", status: "Recreational", country: "USA", image: "/dest-california-beach.jpg", imageAlt: "California beach", color: "bg-green-500/90", link: "/usa/california" },
-  { name: "Colorado", status: "Recreational", country: "USA", image: "/dest-2.jpg", imageAlt: "Colorado mountains", color: "bg-green-500/90", link: "/usa/colorado" },
-  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "/dest-3.jpg", imageAlt: "Amsterdam canal", color: "bg-amber-500/90", link: "/world/europe/netherlands" },
-  { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Toronto skyline", color: "bg-green-500/90", link: "/world/north-america/canada" },
-  { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay coast", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
-  { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thai temple", color: "bg-amber-700/90", link: "/world/asia/thailand" },
+  { name: "California", status: "Recreational", country: "USA", image: "/dest-california-beach.jpg", imageAlt: "California cannabis tourism guide beach view", color: "bg-green-500/90", link: "/usa/california" },
+  { name: "Colorado", status: "Recreational", country: "USA", image: "/dest-2.jpg", imageAlt: "Colorado mountains dispensary guide", color: "bg-green-500/90", link: "/usa/colorado" },
+  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "/dest-3.jpg", imageAlt: "Amsterdam coffee shops canal view", color: "bg-amber-500/90", link: "/world/europe/netherlands" },
+  { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Canada legal weed travel guide Toronto", color: "bg-green-500/90", link: "/world/north-america/canada" },
+  { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay cannabis club travel", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
+  { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
 ];
 
 const STATS_DATA: StatItem[] = [
@@ -510,9 +586,9 @@ const STATS_DATA: StatItem[] = [
 ];
 
 const BLOG_DATA: BlogItem[] = [
-  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam shop", link: "/guides/amsterdam" },
-  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "Dispensary", link: "/guides/california" },
-  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay street", link: "/guides/uruguay" },
+  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam coffee shop interior", link: "/guides/amsterdam" },
+  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "California dispensary storefront", link: "/guides/california" },
+  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay legal cannabis guide", link: "/guides/uruguay" },
 ];
 
 export default Home;
