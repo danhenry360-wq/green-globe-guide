@@ -52,10 +52,12 @@ interface BlogItem {
 const FADE_IN: Variants = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } };
 
-/* ----------  SEO COMPONENT  ---------- */
+/* ----------  SUB-COMPONENTS  ---------- */
+
+// SEO Component (No-Dependency Version)
 const SEOHead = () => {
   useEffect(() => {
-    // 1. Primary Meta Tags
+    // 1. Set Title
     document.title = "BudQuest | The Ultimate Global Cannabis Travel Guide";
     
     // Helper to inject/update meta tags
@@ -71,7 +73,7 @@ const SEOHead = () => {
 
     const description = "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 120+ countries.";
     const url = "https://budquest.com";
-    const image = "https://budquest.com/og-social-share.jpg"; // Ensure this image exists in public folder
+    const image = "https://budquest.com/og-social-share.jpg";
 
     // Standard SEO
     updateMeta("description", description);
@@ -325,7 +327,6 @@ const Home = () => {
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <SEOHead />
       <Navigation />
-      {/* Skip link for Accessibility/SEO */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
         Skip to main content
       </a>
@@ -356,7 +357,6 @@ const Home = () => {
             Global Cannabis Travel Intelligence
           </Badge>
 
-          {/* H1 Optimized for Keywords while maintaining design */}
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
             <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
               BudQuest
@@ -395,19 +395,19 @@ const Home = () => {
 
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
             {[
-              { label: "🔥 California", term: "California" },
-              { label: "💊 Medical Only", term: "Medical" },
-              { label: "🌍 Europe", term: "Europe" },
-              { label: "🏨 420 Hotels", term: "Hotels" },
-            ].map((tag) => (
+              { label: "🔥 California", path: "/usa/california" },
+              { label: "🌎 World Guide", path: "/world" },
+              { label: "🇪🇺 Europe", path: "/world/europe" },
+              { label: "🏨 420 Hotels", path: "/hotels" },
+            ].map((item) => (
               <motion.button
-                key={tag.term}
-                onClick={() => handleSearch(tag.term)}
+                key={item.label}
+                onClick={() => navigate(item.path)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer"
               >
-                {tag.label}
+                {item.label}
               </motion.button>
             ))}
           </div>
@@ -543,7 +543,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* ==========  CTA SECTION  ========== */}
+      {/* ==========  CTA SECTION (UPDATED TEXT)  ========== */}
       <section className="py-12 sm:py-20 px-4 bg-background">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="container mx-auto text-center">
           <div className="bg-gradient-to-br from-accent/20 to-gold/20 p-6 sm:p-12 rounded-2xl sm:rounded-3xl border border-border/50 shadow-2xl">
@@ -580,14 +580,4 @@ const FEATURED_DESTINATIONS: Destination[] = [
 const STATS_DATA: StatItem[] = [
   { icon: Globe2, label: "Countries Covered", count: 120, suffix: "+" },
   { icon: MapPin, label: "Verified Destinations", count: 500, suffix: "+" },
-  { icon: Building2, label: "420-Friendly Hotels", count: 300, suffix: "+" },
-  { icon: Shield, label: "Data Accuracy", count: 94, suffix: "%" },
-];
-
-const BLOG_DATA: BlogItem[] = [
-  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam coffee shop interior", link: "/guides/amsterdam" },
-  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "California dispensary storefront", link: "/guides/california" },
-  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay legal cannabis guide", link: "/guides/uruguay" },
-];
-
-export default Home;
+  { icon: Building2, label: "420-Friend
