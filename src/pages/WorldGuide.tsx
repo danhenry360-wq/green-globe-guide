@@ -55,7 +55,7 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA 
+   FULL WORLD DATA (Optimized & Verified)
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -127,12 +127,12 @@ const WORLD: Continent[] = [
       {
         slug: "united-states",
         name: "United States",
-        legalStatus: "Medical",
+        legalStatus: "Recreational", // UPDATED: Reflects major tourist states
         possession: "Varies by state",
-        airport: "Federal prohibition",
-        tourist: "Check state laws; no interstate transport",
+        airport: "Federal prohibition (TSA)",
+        tourist: "Do not cross state lines with cannabis",
         description:
-          "Federal illegal, but 38 states allow medical use; 24 allow recreational.",
+          "Federal illegal, but 24+ states (CA, NY, CO, NV) allow full recreational sales.",
         image: "/dest-1.jpg",
         regions: [
           {
@@ -335,8 +335,8 @@ const WORLD: Continent[] = [
         legalStatus: "Recreational",
         possession: "25 g public / 50 g home",
         airport: "Domestic OK within limit",
-        tourist: "Join social club for access",
-        description: "Legalised April 2024; cannabis social clubs launching nationwide.",
+        tourist: "Clubs are residents-only; no legal tourist sales yet", // UPDATED
+        description: "Legalised April 2024. Possession legal, but buying is difficult for tourists (clubs require residency).",
         image: "/dest-1.jpg",
         regions: [
           {
@@ -472,8 +472,8 @@ const WORLD: Continent[] = [
         legalStatus: "Recreational",
         possession: "7 g home / 3.5 g public",
         airport: "Do not transport",
-        tourist: "EU’s first legal country; small island",
-        description: "Legalised 2021; cannabis associations for residents.",
+        tourist: "Associations are residents-only; strictly no public smoking", // UPDATED
+        description: "Legalised 2021. Buying is hard for tourists as clubs require residency.",
         image: "/dest-5.jpg",
         regions: [{ slug: "malta-island", name: "Malta Island", cities: [{ slug: "valletta", name: "Valletta", atGlance: ["Fortress capital", "Associations members-only", "Beach relax"] }] }],
       },
@@ -854,11 +854,11 @@ const WORLD: Continent[] = [
       {
         slug: "georgia",
         name: "Georgia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Decriminalized", // UPDATED
+        possession: "Consumption legal; Sale illegal",
         airport: "Zero tolerance",
-        tourist: "Medical only; wine country",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "You can smoke, but you cannot buy legally",
+        description: "Constitutional court legalized consumption, but cultivation and sale remain illegal.",
         image: "/dest-4.jpg",
         regions: [{ slug: "tbilisi-region", name: "Tbilisi Region", cities: [{ slug: "tbilisi", name: "Tbilisi", atGlance: ["Caucasus capital", "Medical only", "Wine culture"] }] }],
       },
@@ -1364,12 +1364,12 @@ const WORLD: Continent[] = [
       {
         slug: "thailand",
         name: "Thailand",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; tropical beaches",
+        legalStatus: "Recreational", // UPDATED: De-facto rec, laws tightening
+        possession: "Legal (low THC extracts restricted)",
+        airport: "Zero tolerance (International)",
+        tourist: "Shops currently open, but laws are tightening fast", // UPDATED
         description:
-          "Medical cannabis legal; recreational use prohibited. Laws are tightening.",
+          "Cannabis was delisted as a narcotic in 2022. Shops exist, but the gov is moving to restrict recreational use.",
         image: "/dest-6.jpg",
         regions: [
           {
@@ -1853,9 +1853,9 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Private use & grow OK",
         airport: "Transport prohibited",
-        tourist: "Private homes only—enjoy safari & wine",
+        tourist: "No legal shops; gifting/private clubs gray area", // UPDATED
         description:
-          "Private use & cultivation legal; public use prohibited, no commercial sales.",
+          "Constitutional Court legalized private personal consumption. Selling remains illegal.",
         image: "/dest-5.jpg",
         regions: [
           {
