@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/global-canna-pass-logo.png";
+import logoDark from "@/assets/global-canna-pass-logo.png";
+import logoLight from "@/assets/budquest-logo-light.png";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,12 +14,19 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden bg-gray-900 dark:bg-transparent group-hover:scale-110 transition-all duration-300">
+            <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden group-hover:scale-110 transition-all duration-300">
+              {/* Light mode logo */}
               <img 
-                src={logo} 
+                src={logoLight} 
                 alt="BudQuest Logo" 
-                className="h-full w-full object-contain
-                  dark:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+                className="h-full w-full object-cover rounded-lg dark:hidden"
+              />
+              {/* Dark mode logo */}
+              <img 
+                src={logoDark} 
+                alt="BudQuest Logo" 
+                className="h-full w-full object-contain hidden dark:block
+                  drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
               />
               {/* Glow effect for dark mode */}
               <div className="absolute inset-0 rounded-lg bg-accent/20 blur-md opacity-0 dark:opacity-50 group-hover:opacity-70 transition-opacity -z-10" />
