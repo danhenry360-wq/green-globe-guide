@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { AuthCallbackHandler } from "./components/AuthCallbackHandler";
 import { AgeGateModal } from "./components/AgeGateModal";
+import CookieConsent from "./components/CookieConsent";
 
 /* ---------- existing pages ---------- */
 import Home from "./pages/Home";
@@ -44,6 +45,7 @@ const App = () => (
         <ScrollToTop />
         <AuthCallbackHandler />
         <AgeGateModal />
+        <CookieConsent />
         <Routes>
           {/* home & static pages */}
           <Route path="/" element={<Home />} />
