@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck } from "lucide-react";
-import greenGlobeLogo from "@/assets/green-globe-logo.png";
+import logo from "@/assets/global-canna-pass-logo.png";
 
 const AGE_VERIFIED_KEY = "budquest-age-verified";
 
@@ -47,7 +47,7 @@ export function AgeGateModal() {
           <div className="relative">
             <div className="absolute inset-0 bg-accent/30 blur-xl rounded-full scale-150" />
             <img
-              src={greenGlobeLogo}
+              src={logo}
               alt="BudQuest"
               className="relative h-20 w-auto drop-shadow-[0_0_12px_rgba(34,197,94,0.7)]"
             />
