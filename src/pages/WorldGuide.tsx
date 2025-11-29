@@ -1,3 +1,4 @@
+
 /* eslint-disable react-refresh/only-export-components */
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -19,8 +20,10 @@ import {
   Waves,
   Sun,
   AlertTriangle,
-  Skull, // Added for Death Penalty warnings
+  Skull, 
   Siren,
+  Gavel, // Added for Prison/Legal warnings
+  ShieldAlert // Added for State of Exception/Arbitrary arrest
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
@@ -58,7 +61,7 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA (AUDITED & COMPLETE) 
+   FULL WORLD DATA (AUDITED) 
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -177,11 +180,11 @@ const WORLD: Continent[] = [
       {
         slug: "costa-rica",
         name: "Costa Rica",
-        legalStatus: "Illegal",
-        possession: "Decriminalized for personal use (Grey area)",
+        legalStatus: "Decriminalized",
+        possession: "No specific amount defined (Police discretion)",
         airport: "Zero tolerance",
-        tourist: "Discreet personal use generally ignored, but selling is illegal.",
-        description: "Personal consumption in private is not penalized, but buying/selling is a crime. Police may confiscate.",
+        tourist: "Personal consumption in private is tolerated. Police will confiscate public use.",
+        description: "Article 58 of Law 8204 does not penalize personal consumption, but provides no defined amount. Selling is a serious crime.",
         image: "/dest-5.jpg",
         regions: [
           {
@@ -195,9 +198,9 @@ const WORLD: Continent[] = [
         slug: "panama",
         name: "Panama",
         legalStatus: "Medical",
-        possession: "Medical prescription only (Strict)",
+        possession: "Prison sentences for recreational use",
         airport: "Zero tolerance",
-        tourist: "Strict laws; recreational use is illegal.",
+        tourist: "Strict laws. Recreational use is illegal.",
         description: "Medical cannabis legalized in 2021, but recreational use remains a crime with potential jail time.",
         image: "/dest-6.jpg",
         regions: [
@@ -212,16 +215,16 @@ const WORLD: Continent[] = [
         slug: "belize",
         name: "Belize",
         legalStatus: "Decriminalized",
-        possession: "Up to 10g private possession",
+        possession: "Up to 10g (Private property ONLY)",
         airport: "Zero tolerance",
-        tourist: "Private use tolerated; public use illegal.",
-        description: "Possession of small amounts (up to 10g) decriminalized on private property only.",
+        tourist: "Possession legal in private lodgings. Illegal in public.",
+        description: "Misuse of Drugs Act (2017) decriminalized possession up to 10g. This applies only to private residences.",
         image: "/dest-4.jpg",
         regions: [
           {
             slug: "belize-district",
             name: "Belize District",
-            cities: [{ slug: "belize-city", name: "Belize City", atGlance: ["Caution advised", "Private use only", "Island gateway"] }],
+            cities: [{ slug: "belize-city", name: "Belize City", atGlance: ["High crime rate", "Private use only", "Island gateway"] }],
           }
         ]
       },
@@ -229,23 +232,45 @@ const WORLD: Continent[] = [
         slug: "guatemala",
         name: "Guatemala",
         legalStatus: "Illegal",
-        possession: "Criminal offence",
+        possession: "Prison sentences (4 months - 2 years)",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; strict laws.",
-        description: "Cannabis remains illegal with strict penalties including prison.",
+        tourist: "High risk. Penalties are harsh even for consumption.",
+        description: "Under the Law Against Narcoactivity, possession for consumption carries mandatory prison time.",
         image: "/dest-3.jpg",
-        regions: [{ slug: "guatemala-city-region", name: "Guatemala City Region", cities: [{ slug: "guatemala-city", name: "Guatemala City", atGlance: ["High altitude", "Strict laws", "Cultural hub"] }] }]
+        regions: [{ slug: "guatemala-city-region", name: "Guatemala City Region", cities: [{ slug: "guatemala-city", name: "Guatemala City", atGlance: ["High altitude", "Strict laws", "Police checks"] }] }]
       },
       {
         slug: "el-salvador",
         name: "El Salvador",
         legalStatus: "Illegal",
-        possession: "Criminal offence",
+        possession: "Arrest and indefinite detention",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh crackdown.",
-        description: "Zero tolerance policy enforced aggressively by current administration.",
+        tourist: "WARNING: State of Exception. Risk of arbitrary arrest.",
+        description: "Strict enforcement. Constitutional guarantees (due process) are suspended. Tourists caught with drugs face immediate indefinite detention.",
         image: "/dest-1.jpg",
-        regions: [{ slug: "san-salvador-region", name: "San Salvador Region", cities: [{ slug: "san-salvador", name: "San Salvador", atGlance: ["Capital", "Zero tolerance", "Bitcoin hub"] }] }]
+        regions: [{ slug: "san-salvador-region", name: "San Salvador Region", cities: [{ slug: "san-salvador", name: "San Salvador", atGlance: ["Heavy military presence", "Zero tolerance", "Avoid"] }] }]
+      },
+      {
+        slug: "honduras",
+        name: "Honduras",
+        legalStatus: "Illegal",
+        possession: "Prison sentences",
+        airport: "Zero tolerance",
+        tourist: "Strongly discouraged. Strict drug laws.",
+        description: "Cannabis is illegal for all purposes. Possession is considered a crime against public health.",
+        image: "/dest-5.jpg",
+        regions: [{ slug: "roatan", name: "Roatán", cities: [{ slug: "roatan-city", name: "Roatán", atGlance: ["Cruise port", "Strict laws", "Police target tourists"] }] }]
+      },
+      {
+        slug: "nicaragua",
+        name: "Nicaragua",
+        legalStatus: "Illegal",
+        possession: "Prison sentences",
+        airport: "Zero tolerance",
+        tourist: "High caution. Political sensitivity and strict laws.",
+        description: "Strictly illegal. Police force is highly centralized and penalties are severe.",
+        image: "/dest-4.jpg",
+        regions: [{ slug: "managua-region", name: "Managua Region", cities: [{ slug: "managua", name: "Managua", atGlance: ["Capital", "Illegal", "Police presence"] }] }]
       },
     ]
   },
@@ -449,7 +474,7 @@ const WORLD: Continent[] = [
       {
         slug: "france",
         name: "France",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal",
         possession: "Fines / Police custody",
         airport: "Zero tolerance",
         tourist: "Strictly illegal. CBD shops common but THC banned.",
@@ -537,7 +562,7 @@ const WORLD: Continent[] = [
       {
         slug: "sweden",
         name: "Sweden",
-        legalStatus: "Illegal", // AUDIT FIX: Sweden is strict
+        legalStatus: "Illegal",
         possession: "Strict Penalties",
         airport: "Zero tolerance",
         tourist: "Zero tolerance culture. Do not bring.",
@@ -779,7 +804,7 @@ const WORLD: Continent[] = [
       {
         slug: "turkey",
         name: "Turkey",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal",
         possession: "Strict penalites",
         airport: "Zero tolerance",
         tourist: "Strict laws; enjoy kebabs",
@@ -801,7 +826,7 @@ const WORLD: Continent[] = [
       {
         slug: "georgia",
         name: "Georgia",
-        legalStatus: "Decriminalized", // Correcting based on recent laws but strict for sale
+        legalStatus: "Decriminalized",
         possession: "Small amounts tolerated",
         airport: "Zero tolerance",
         tourist: "Private use decriminalized, but buying is risky.",
@@ -1311,7 +1336,7 @@ const WORLD: Continent[] = [
       {
         slug: "thailand",
         name: "Thailand",
-        legalStatus: "Mixed", // AUDIT FIX: Reverting to Medical enforcement
+        legalStatus: "Mixed", 
         possession: "Medical prescription required (2025)",
         airport: "Illegal to import/export",
         tourist: "WARNING: Recreational era ending. Medical script required.",
@@ -1350,7 +1375,7 @@ const WORLD: Continent[] = [
       {
         slug: "malaysia",
         name: "Malaysia",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal", 
         possession: "Severe prison / Caning",
         airport: "Zero tolerance",
         tourist: "WARNING: Trafficking carries death penalty risk.",
@@ -1361,7 +1386,7 @@ const WORLD: Continent[] = [
       {
         slug: "indonesia",
         name: "Indonesia",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal", 
         possession: "Prison / Deportation",
         airport: "Zero tolerance (Death penalty risk for trafficking)",
         tourist: "WARNING: Severe penalties (Bali included). Do not buy.",
@@ -1372,7 +1397,7 @@ const WORLD: Continent[] = [
       {
         slug: "philippines",
         name: "Philippines",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal", 
         possession: "Life imprisonment for large amounts",
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Medical bill pending but not law.",
@@ -1702,7 +1727,7 @@ const WORLD: Continent[] = [
       {
         slug: "uae",
         name: "United Arab Emirates",
-        legalStatus: "Illegal", // AUDIT FIX
+        legalStatus: "Illegal", 
         possession: "4+ years prison / Deportation",
         airport: "Zero tolerance (Sensitive equipment)",
         tourist: "Strictly illegal. THC in blood stream counts as possession.",
@@ -2774,11 +2799,25 @@ const statusColor = (s: string) => {
   }
 };
 
-// HELPER: Detect High Risk Countries for visual warnings
-const isHighRisk = (country: Country) => {
-    const riskKeywords = ["death penalty", "caning", "lashes", "severe penalties", "zero tolerance", "extreme penalties"];
-    const combinedText = (country.tourist + country.description + country.airport).toLowerCase();
-    return riskKeywords.some(kw => combinedText.includes(kw));
+// HELPER: Detect Critical Human Rights Risks (Death/Caning)
+const isDeathPenalty = (country: Country) => {
+    const deathKeywords = ["death penalty", "execution", "capital punishment", "beheading"];
+    const combinedText = (country.tourist + country.description).toLowerCase();
+    return deathKeywords.some(kw => combinedText.includes(kw));
+}
+
+// HELPER: Detect Corporal Punishment (Caning/Lashes)
+const isCorporalPunishment = (country: Country) => {
+    const corporalKeywords = ["caning", "lashes", "whipping", "corporal punishment"];
+    const combinedText = (country.tourist + country.description).toLowerCase();
+    return corporalKeywords.some(kw => combinedText.includes(kw));
+}
+
+// HELPER: Detect Severe Legal/Prison Risks (Indefinite detention, state of exception)
+const isSeverePrison = (country: Country) => {
+   const strictKeywords = ["indefinite detention", "arbitrary arrest", "state of exception", "prison terms", "life imprisonment"];
+   const combinedText = (country.tourist + country.description).toLowerCase(); 
+   return strictKeywords.some(kw => combinedText.includes(kw));
 }
 
 /* ---------- sub-components ---------- */
@@ -2896,7 +2935,10 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c) => {
-            const highRisk = isHighRisk(c);
+            const deathRisk = isDeathPenalty(c);
+            const corporalRisk = isCorporalPunishment(c);
+            const prisonRisk = isSeverePrison(c);
+
             return (
                 <Card
                   key={c.slug}
@@ -2920,10 +2962,24 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
                       </Badge>
                     </div>
                     
-                    {highRisk && (
-                        <div className="flex items-center gap-2 mb-3 bg-red-950/30 text-red-400 p-2 rounded text-xs font-bold border border-red-500/20">
+                    {deathRisk && (
+                        <div className="flex items-center gap-2 mb-3 bg-red-950/40 text-red-400 p-2 rounded text-xs font-bold border border-red-500/30 animate-pulse">
                             <Skull className="w-4 h-4" />
-                            <span>SEVERE PENALTIES / DEATH RISK</span>
+                            <span>DEATH PENALTY RISK</span>
+                        </div>
+                    )}
+
+                    {!deathRisk && corporalRisk && (
+                        <div className="flex items-center gap-2 mb-3 bg-orange-950/40 text-orange-400 p-2 rounded text-xs font-bold border border-orange-500/30">
+                            <Gavel className="w-4 h-4" />
+                            <span>SEVERE PENALTIES / LASHES</span>
+                        </div>
+                    )}
+
+                    {!deathRisk && !corporalRisk && prisonRisk && (
+                        <div className="flex items-center gap-2 mb-3 bg-yellow-950/40 text-yellow-400 p-2 rounded text-xs font-bold border border-yellow-500/30">
+                            <ShieldAlert className="w-4 h-4" />
+                            <span>STRICT ENFORCEMENT</span>
                         </div>
                     )}
 
@@ -2956,7 +3012,9 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
     [q, country]
   );
   
-  const highRisk = isHighRisk(country);
+  const deathRisk = isDeathPenalty(country);
+  const corporalRisk = isCorporalPunishment(country);
+  const prisonRisk = isSeverePrison(country);
 
   return (
     <>
@@ -2980,11 +3038,23 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
                 <Badge className={`${statusColor(country.legalStatus)} text-sm px-3 py-1`}>
                     {country.legalStatus}
                 </Badge>
-                {highRisk && (
+                
+                {deathRisk && (
                     <Badge variant="destructive" className="animate-pulse bg-red-600 flex items-center gap-1">
-                        <Skull className="w-3 h-3"/> CRITICAL SAFETY WARNING
+                        <Skull className="w-3 h-3"/> DEATH PENALTY WARNING
                     </Badge>
                 )}
+                 {!deathRisk && corporalRisk && (
+                    <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1">
+                        <Gavel className="w-3 h-3"/> SEVERE CORPORAL PUNISHMENT
+                    </Badge>
+                )}
+                 {!deathRisk && !corporalRisk && prisonRisk && (
+                    <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1">
+                        <ShieldAlert className="w-3 h-3"/> STRICT ENFORCEMENT
+                    </Badge>
+                )}
+
              </div>
           </div>
           <div className="mt-4 p-4 rounded-lg bg-card border border-white/10 max-w-3xl">
@@ -3003,9 +3073,9 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
                   <span className="text-xs text-muted-foreground uppercase font-bold">Airport</span>
                   <p className="text-sm">{country.airport}</p>
               </div>
-              <div className={cn("bg-white/5 p-3 rounded border border-white/5", highRisk ? "border-red-500/30 bg-red-950/10" : "")}>
-                  <span className={cn("text-xs text-muted-foreground uppercase font-bold", highRisk ? "text-red-400" : "")}>Tourist Warning</span>
-                  <p className={cn("text-sm", highRisk ? "text-red-200 font-semibold" : "")}>{country.tourist}</p>
+              <div className={cn("bg-white/5 p-3 rounded border border-white/5", deathRisk ? "border-red-500/30 bg-red-950/10" : "")}>
+                  <span className={cn("text-xs text-muted-foreground uppercase font-bold", deathRisk ? "text-red-400" : "")}>Tourist Warning</span>
+                  <p className={cn("text-sm", deathRisk ? "text-red-200 font-semibold" : "")}>{country.tourist}</p>
               </div>
           </div>
         </motion.div>
@@ -3106,7 +3176,9 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
 
 const CityDetail = ({ city, region, country }: { city: City; region: Region; country: Country }) => {
   const nav = useNavigate();
-  const highRisk = isHighRisk(country);
+  const deathRisk = isDeathPenalty(country);
+  const corporalRisk = isCorporalPunishment(country);
+  const prisonRisk = isSeverePrison(country);
 
   return (
     <>
@@ -3130,7 +3202,17 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
                  <Badge className={`${statusColor(country.legalStatus)} border-none w-fit`}>
                     {country.legalStatus}
                  </Badge>
-                 {highRisk && <Badge variant="destructive" className="flex items-center gap-1"><Skull className="w-3 h-3"/> High Risk</Badge>}
+                 
+                {deathRisk && (
+                    <Badge variant="destructive" className="flex items-center gap-1"><Skull className="w-3 h-3"/> Death Penalty Risk</Badge>
+                )}
+                 {!deathRisk && corporalRisk && (
+                    <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1"><Gavel className="w-3 h-3"/> Corporal Punishment</Badge>
+                )}
+                 {!deathRisk && !corporalRisk && prisonRisk && (
+                    <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1"><ShieldAlert className="w-3 h-3"/> Strict Enforcement</Badge>
+                )}
+
               </div>
             </div>
 
@@ -3153,11 +3235,11 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
                   <p className="text-muted-foreground">{country.airport}</p>
                 </div>
               </div>
-              <div className={cn("flex items-start gap-2 bg-white/5 p-3 rounded", highRisk ? "bg-red-950/10 border border-red-500/20" : "")}>
-                <Users className={cn("w-4 h-4 shrink-0 mt-0.5", highRisk ? "text-red-400" : "text-green-400")} />
+              <div className={cn("flex items-start gap-2 bg-white/5 p-3 rounded", deathRisk ? "bg-red-950/10 border border-red-500/20" : "")}>
+                <Users className={cn("w-4 h-4 shrink-0 mt-0.5", deathRisk ? "text-red-400" : "text-green-400")} />
                 <div>
-                  <p className={cn("font-semibold", highRisk ? "text-red-400" : "")}>Tourist Warning</p>
-                  <p className={cn("text-muted-foreground", highRisk ? "text-red-200" : "")}>{country.tourist}</p>
+                  <p className={cn("font-semibold", deathRisk ? "text-red-400" : "")}>Tourist Warning</p>
+                  <p className={cn("text-muted-foreground", deathRisk ? "text-red-200" : "")}>{country.tourist}</p>
                 </div>
               </div>
             </div>
