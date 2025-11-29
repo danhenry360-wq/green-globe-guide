@@ -86,11 +86,13 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">
-            USA Cannabis Guide
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
+            <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+              USA Cannabis Guide
+            </span>
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Pick a region to start
+          <p className="text-base sm:text-lg text-muted-foreground font-light">
+            Pick a region to start exploring
           </p>
         </motion.div>
 

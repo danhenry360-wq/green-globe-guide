@@ -1,40 +1,123 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface CountryData {
   name: string;
-  status: 'recreational' | 'medical' | 'illegal' | 'decriminalized';
+  status: 'recreational' | 'medical' | 'illegal' | 'decriminalized' | 'mixed';
   description: string;
+  slug: string;
+  region: string;
+  image: string;
 }
 
+// Comprehensive country data synced with WorldGuide.tsx
 const countryData: Record<string, CountryData> = {
-  'USA': { name: 'United States', status: 'recreational', description: 'Varies by state - 24 states recreational, 38 medical' },
-  'Canada': { name: 'Canada', status: 'recreational', description: 'Fully legal nationwide since 2018' },
-  'Mexico': { name: 'Mexico', status: 'decriminalized', description: 'Decriminalized for personal use' },
-  'Uruguay': { name: 'Uruguay', status: 'recreational', description: 'First country to fully legalize in 2013' },
-  'Netherlands': { name: 'Netherlands', status: 'decriminalized', description: 'Tolerated in coffee shops' },
-  'Spain': { name: 'Spain', status: 'decriminalized', description: 'Legal in private cannabis clubs' },
-  'Portugal': { name: 'Portugal', status: 'decriminalized', description: 'Decriminalized all drugs in 2001' },
-  'Germany': { name: 'Germany', status: 'recreational', description: 'Legalized for recreational use in 2024' },
-  'Switzerland': { name: 'Switzerland', status: 'medical', description: 'Medical use legal, recreational pilot programs' },
-  'Czech Republic': { name: 'Czech Republic', status: 'medical', description: 'Medical legal, small amounts decriminalized' },
-  'Jamaica': { name: 'Jamaica', status: 'decriminalized', description: 'Decriminalized, medical and religious use legal' },
-  'Colombia': { name: 'Colombia', status: 'decriminalized', description: 'Personal use decriminalized' },
-  'Argentina': { name: 'Argentina', status: 'decriminalized', description: 'Personal use decriminalized' },
-  'Chile': { name: 'Chile', status: 'medical', description: 'Medical legal, personal cultivation allowed' },
-  'Australia': { name: 'Australia', status: 'medical', description: 'Medical legal nationwide, ACT decriminalized' },
-  'Thailand': { name: 'Thailand', status: 'medical', description: 'Medical legal since 2022' },
-  'Israel': { name: 'Israel', status: 'medical', description: 'Medical legal, decriminalized for personal use' },
-  'South Africa': { name: 'South Africa', status: 'decriminalized', description: 'Private use and cultivation legal' },
-  'Malta': { name: 'Malta', status: 'recreational', description: 'First EU country to legalize recreational use' },
-  'Luxembourg': { name: 'Luxembourg', status: 'recreational', description: 'Home cultivation legal since 2023' },
+  // NORTH AMERICA
+  'USA': { name: 'United States', status: 'mixed', description: 'Varies by state - 24 states recreational, federally illegal', slug: 'united-states', region: 'north-america', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=400&q=80' },
+  'Canada': { name: 'Canada', status: 'recreational', description: 'Fully legal nationwide since 2018', slug: 'canada', region: 'north-america', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=400&q=80' },
+  'Mexico': { name: 'Mexico', status: 'decriminalized', description: 'Decriminalized for personal use (<5g)', slug: 'mexico', region: 'north-america', image: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=400&q=80' },
+  
+  // CENTRAL AMERICA
+  'CostaRica': { name: 'Costa Rica', status: 'decriminalized', description: 'Personal consumption tolerated in private', slug: 'costa-rica', region: 'central-america', image: 'https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=400&q=80' },
+  'Panama': { name: 'Panama', status: 'medical', description: 'Medical cannabis legalized 2021', slug: 'panama', region: 'central-america', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80' },
+  'Belize': { name: 'Belize', status: 'decriminalized', description: 'Up to 10g legal on private property', slug: 'belize', region: 'central-america', image: 'https://images.unsplash.com/photo-1580237072617-771c3ecc4a24?w=400&q=80' },
+  'Guatemala': { name: 'Guatemala', status: 'illegal', description: 'Prison sentences for possession', slug: 'guatemala', region: 'central-america', image: 'https://images.unsplash.com/photo-1591377035549-9bf5c53f96e7?w=400&q=80' },
+  'ElSalvador': { name: 'El Salvador', status: 'illegal', description: 'State of Exception - Risk of arbitrary arrest', slug: 'el-salvador', region: 'central-america', image: 'https://images.unsplash.com/photo-1612362954221-c8b8f6b3c30c?w=400&q=80' },
+  'Honduras': { name: 'Honduras', status: 'illegal', description: 'Prison sentences for possession', slug: 'honduras', region: 'central-america', image: 'https://images.unsplash.com/photo-1572176596507-d0a9c1b79c40?w=400&q=80' },
+  'Nicaragua': { name: 'Nicaragua', status: 'illegal', description: 'Strictly illegal, severe penalties', slug: 'nicaragua', region: 'central-america', image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=400&q=80' },
+  
+  // EUROPE
+  'Netherlands': { name: 'Netherlands', status: 'decriminalized', description: 'Tolerated in coffee shops (5g limit)', slug: 'netherlands', region: 'europe', image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=400&q=80' },
+  'Germany': { name: 'Germany', status: 'recreational', description: 'Legalized recreational use April 2024', slug: 'germany', region: 'europe', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&q=80' },
+  'Spain': { name: 'Spain', status: 'decriminalized', description: 'Private cannabis clubs legal', slug: 'spain', region: 'europe', image: 'https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=400&q=80' },
+  'Portugal': { name: 'Portugal', status: 'decriminalized', description: 'Decriminalized all drugs in 2001', slug: 'portugal', region: 'europe', image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80' },
+  'Switzerland': { name: 'Switzerland', status: 'decriminalized', description: 'Low-THC (<1%) legal, civil fines', slug: 'switzerland', region: 'europe', image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=400&q=80' },
+  'CzechRepublic': { name: 'Czech Republic', status: 'decriminalized', description: 'Medical legal, <15g civil fine', slug: 'czech-republic', region: 'europe', image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?w=400&q=80' },
+  'Italy': { name: 'Italy', status: 'decriminalized', description: 'Cannabis Light (low THC) sold openly', slug: 'italy', region: 'europe', image: 'https://images.unsplash.com/photo-1515859005217-8a1f08870f59?w=400&q=80' },
+  'Austria': { name: 'Austria', status: 'decriminalized', description: 'Small amounts decriminalized', slug: 'austria', region: 'europe', image: 'https://images.unsplash.com/photo-1609856878074-cf31e21ccb6b?w=400&q=80' },
+  'Belgium': { name: 'Belgium', status: 'decriminalized', description: '3g civil fine, lowest priority', slug: 'belgium', region: 'europe', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80' },
+  'Malta': { name: 'Malta', status: 'recreational', description: 'First EU country to legalize', slug: 'malta', region: 'europe', image: 'https://images.unsplash.com/photo-1555881400-69a8a0691b82?w=400&q=80' },
+  'Luxembourg': { name: 'Luxembourg', status: 'recreational', description: 'Home cultivation legal since 2023', slug: 'luxembourg', region: 'europe', image: 'https://images.unsplash.com/photo-1577278219660-7fd07c82ea59?w=400&q=80' },
+  'France': { name: 'France', status: 'illegal', description: 'On-the-spot fines (€200), strict', slug: 'france', region: 'europe', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&q=80' },
+  'UK': { name: 'United Kingdom', status: 'medical', description: 'Medical only, Class B drug', slug: 'uk', region: 'europe', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80' },
+  'Ireland': { name: 'Ireland', status: 'medical', description: 'Medical pilot program only', slug: 'ireland', region: 'europe', image: 'https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=400&q=80' },
+  'Denmark': { name: 'Denmark', status: 'medical', description: 'Christiania enforcement, medical only', slug: 'denmark', region: 'europe', image: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=400&q=80' },
+  'Sweden': { name: 'Sweden', status: 'illegal', description: 'Zero tolerance culture', slug: 'sweden', region: 'europe', image: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=400&q=80' },
+  'Norway': { name: 'Norway', status: 'medical', description: 'Medical only, recreational prohibited', slug: 'norway', region: 'europe', image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=80' },
+  'Finland': { name: 'Finland', status: 'medical', description: 'Medical only, recreational prohibited', slug: 'finland', region: 'europe', image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=400&q=80' },
+  'Poland': { name: 'Poland', status: 'medical', description: 'Medical prescription only', slug: 'poland', region: 'europe', image: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=400&q=80' },
+  'Greece': { name: 'Greece', status: 'medical', description: 'Medical only, enjoy islands', slug: 'greece', region: 'europe', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&q=80' },
+  'Turkey': { name: 'Turkey', status: 'illegal', description: 'Strict penalties, avoid completely', slug: 'turkey', region: 'europe', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80' },
+  'Russia': { name: 'Russia', status: 'illegal', description: 'Severe penalties, political hostages', slug: 'russia', region: 'europe', image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=400&q=80' },
+  'Ukraine': { name: 'Ukraine', status: 'medical', description: 'Medical legal, wartime caution', slug: 'ukraine', region: 'europe', image: 'https://images.unsplash.com/photo-1561542320-9a18cd340469?w=400&q=80' },
+  'Croatia': { name: 'Croatia', status: 'medical', description: 'Medical only, Adriatic coast', slug: 'croatia', region: 'europe', image: 'https://images.unsplash.com/photo-1555990538-1e6c5549c81c?w=400&q=80' },
+  'Hungary': { name: 'Hungary', status: 'medical', description: 'Medical only, thermal baths', slug: 'hungary', region: 'europe', image: 'https://images.unsplash.com/photo-1551867633-194f125bddfa?w=400&q=80' },
+  'Romania': { name: 'Romania', status: 'medical', description: 'Medical only, Dracula castles', slug: 'romania', region: 'europe', image: 'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=400&q=80' },
+  
+  // SOUTH AMERICA
+  'Uruguay': { name: 'Uruguay', status: 'recreational', description: 'First country to fully legalize (2013)', slug: 'uruguay', region: 'south-america', image: 'https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=400&q=80' },
+  'Argentina': { name: 'Argentina', status: 'medical', description: 'REPROCANN medical program', slug: 'argentina', region: 'south-america', image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=400&q=80' },
+  'Chile': { name: 'Chile', status: 'medical', description: 'Medical legal, personal cultivation', slug: 'chile', region: 'south-america', image: 'https://images.unsplash.com/photo-1565013844965-b1eaeb2dcbb0?w=400&q=80' },
+  'Colombia': { name: 'Colombia', status: 'medical', description: 'Medical legal, decriminalized <20g', slug: 'colombia', region: 'south-america', image: 'https://images.unsplash.com/photo-1533699224246-a1e9a5bc8bfb?w=400&q=80' },
+  'Brazil': { name: 'Brazil', status: 'decriminalized', description: 'Decriminalized 40g (2024 ruling)', slug: 'brazil', region: 'south-america', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400&q=80' },
+  'Peru': { name: 'Peru', status: 'medical', description: 'Medical only, Machu Picchu', slug: 'peru', region: 'south-america', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=400&q=80' },
+  'Ecuador': { name: 'Ecuador', status: 'medical', description: 'Medical only, Galápagos', slug: 'ecuador', region: 'south-america', image: 'https://images.unsplash.com/photo-1570442296287-6e8ba16d0b2e?w=400&q=80' },
+  'Bolivia': { name: 'Bolivia', status: 'medical', description: 'Medical only, Altiplano', slug: 'bolivia', region: 'south-america', image: 'https://images.unsplash.com/photo-1591133524085-f1a61c1f47ac?w=400&q=80' },
+  'Venezuela': { name: 'Venezuela', status: 'illegal', description: 'Crisis zone, avoid travel', slug: 'venezuela', region: 'south-america', image: 'https://images.unsplash.com/photo-1568291607791-6a26c2de9e08?w=400&q=80' },
+  
+  // CARIBBEAN
+  'Jamaica': { name: 'Jamaica', status: 'decriminalized', description: 'Decriminalized, medical & Rasta legal', slug: 'jamaica', region: 'caribbean', image: 'https://images.unsplash.com/photo-1580995583564-3f47c0ab6d9e?w=400&q=80' },
+  'Bahamas': { name: 'Bahamas', status: 'illegal', description: 'Strictly illegal, paradise beaches', slug: 'bahamas', region: 'caribbean', image: 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80' },
+  'Cuba': { name: 'Cuba', status: 'illegal', description: 'Strictly illegal, salsa & cigars', slug: 'cuba', region: 'caribbean', image: 'https://images.unsplash.com/photo-1500759285222-a95626b934cb?w=400&q=80' },
+  'DominicanRepublic': { name: 'Dominican Republic', status: 'illegal', description: 'Strictly illegal, resort island', slug: 'dominican-republic', region: 'caribbean', image: 'https://images.unsplash.com/photo-1504391975026-8f7ca1e4c7c0?w=400&q=80' },
+  'PuertoRico': { name: 'Puerto Rico', status: 'medical', description: 'Medical only, US territory', slug: 'puerto-rico', region: 'caribbean', image: 'https://images.unsplash.com/photo-1569402928262-a88b4a36e7cd?w=400&q=80' },
+  'TrinidadTobago': { name: 'Trinidad & Tobago', status: 'decriminalized', description: 'Decriminalized 2019, carnival', slug: 'trinidad-tobago', region: 'caribbean', image: 'https://images.unsplash.com/photo-1593882898826-89a4e9c2a54a?w=400&q=80' },
+  'Bermuda': { name: 'Bermuda', status: 'recreational', description: 'Legalized 2022, home grow only', slug: 'bermuda', region: 'caribbean', image: 'https://images.unsplash.com/photo-1574068468760-e9d9f3eb4ca4?w=400&q=80' },
+  
+  // ASIA
+  'Thailand': { name: 'Thailand', status: 'medical', description: 'Medical legal, recreational restricted 2024', slug: 'thailand', region: 'asia', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=400&q=80' },
+  'Japan': { name: 'Japan', status: 'illegal', description: 'Strict prohibition - Travel Warning', slug: 'japan', region: 'asia', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80' },
+  'SouthKorea': { name: 'South Korea', status: 'medical', description: 'Strict medical only', slug: 'south-korea', region: 'asia', image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=400&q=80' },
+  'China': { name: 'China', status: 'illegal', description: 'Zero tolerance, severe penalties', slug: 'china', region: 'asia', image: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=400&q=80' },
+  'India': { name: 'India', status: 'decriminalized', description: 'Bhang legal, varies by state', slug: 'india', region: 'asia', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80' },
+  'Indonesia': { name: 'Indonesia', status: 'illegal', description: 'Death penalty possible, avoid', slug: 'indonesia', region: 'asia', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80' },
+  'Malaysia': { name: 'Malaysia', status: 'illegal', description: 'Death penalty, mandatory sentences', slug: 'malaysia', region: 'asia', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=400&q=80' },
+  'Singapore': { name: 'Singapore', status: 'illegal', description: 'Death penalty, zero tolerance', slug: 'singapore', region: 'asia', image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=400&q=80' },
+  'Philippines': { name: 'Philippines', status: 'illegal', description: 'Harsh penalties, drug war', slug: 'philippines', region: 'asia', image: 'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=400&q=80' },
+  'Vietnam': { name: 'Vietnam', status: 'illegal', description: 'Illegal but varied enforcement', slug: 'vietnam', region: 'asia', image: 'https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=400&q=80' },
+  'UAE': { name: 'UAE', status: 'illegal', description: 'Zero tolerance, prison sentences', slug: 'uae', region: 'asia', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=80' },
+  'Israel': { name: 'Israel', status: 'medical', description: 'Medical legal, decriminalized personal', slug: 'israel', region: 'asia', image: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=400&q=80' },
+  'Lebanon': { name: 'Lebanon', status: 'medical', description: 'Medical cultivation legal 2020', slug: 'lebanon', region: 'asia', image: 'https://images.unsplash.com/photo-1560797257-dcf33a9c2d35?w=400&q=80' },
+  'Nepal': { name: 'Nepal', status: 'illegal', description: 'Illegal but culturally present', slug: 'nepal', region: 'asia', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80' },
+  'SriLanka': { name: 'Sri Lanka', status: 'medical', description: 'Medical legal since 2023', slug: 'sri-lanka', region: 'asia', image: 'https://images.unsplash.com/photo-1586423702687-0e29e1a5e577?w=400&q=80' },
+  
+  // AFRICA
+  'SouthAfrica': { name: 'South Africa', status: 'decriminalized', description: 'Private use and cultivation legal', slug: 'south-africa', region: 'africa', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400&q=80' },
+  'Morocco': { name: 'Morocco', status: 'illegal', description: 'Major hash producer (Kief tolerated)', slug: 'morocco', region: 'africa', image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=400&q=80' },
+  'Lesotho': { name: 'Lesotho', status: 'medical', description: 'First African medical license', slug: 'lesotho', region: 'africa', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80' },
+  'Malawi': { name: 'Malawi', status: 'medical', description: 'Cultivation for medical/export legal', slug: 'malawi', region: 'africa', image: 'https://images.unsplash.com/photo-1613467656395-e32f94f21c5a?w=400&q=80' },
+  'Zimbabwe': { name: 'Zimbabwe', status: 'medical', description: 'Medical cannabis legal since 2018', slug: 'zimbabwe', region: 'africa', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&q=80' },
+  'Rwanda': { name: 'Rwanda', status: 'medical', description: 'Medical cannabis legal since 2021', slug: 'rwanda', region: 'africa', image: 'https://images.unsplash.com/photo-1628263118393-f6cdf3f5d0c9?w=400&q=80' },
+  'Kenya': { name: 'Kenya', status: 'illegal', description: 'Illegal but widely available', slug: 'kenya', region: 'africa', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&q=80' },
+  'Egypt': { name: 'Egypt', status: 'illegal', description: 'Strictly illegal, harsh penalties', slug: 'egypt', region: 'africa', image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=400&q=80' },
+  'Nigeria': { name: 'Nigeria', status: 'illegal', description: 'Illegal but discussions ongoing', slug: 'nigeria', region: 'africa', image: 'https://images.unsplash.com/photo-1618828665011-0abd973f7bb8?w=400&q=80' },
+  'Ghana': { name: 'Ghana', status: 'illegal', description: 'Illegal, narcotics law applies', slug: 'ghana', region: 'africa', image: 'https://images.unsplash.com/photo-1598890777032-6b7f7cc6a0a3?w=400&q=80' },
+  
+  // OCEANIA
+  'Australia': { name: 'Australia', status: 'medical', description: 'Medical nationwide, ACT recreational', slug: 'australia', region: 'oceania', image: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80' },
+  'NewZealand': { name: 'New Zealand', status: 'medical', description: 'Medical legal since 2020', slug: 'new-zealand', region: 'oceania', image: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=400&q=80' },
+  'Fiji': { name: 'Fiji', status: 'illegal', description: 'Strictly illegal, island paradise', slug: 'fiji', region: 'oceania', image: 'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?w=400&q=80' },
+  'Samoa': { name: 'Samoa', status: 'medical', description: 'Medical cannabis legal since 2023', slug: 'samoa', region: 'oceania', image: 'https://images.unsplash.com/photo-1579023154615-c3e3e39c4e50?w=400&q=80' },
+  'Vanuatu': { name: 'Vanuatu', status: 'medical', description: 'Medical cannabis legal since 2023', slug: 'vanuatu', region: 'oceania', image: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80' },
 };
 
 const statusColors = {
   recreational: '#22c55e', // green
-  medical: '#eab308', // yellow
+  medical: '#eab308', // yellow/amber
   decriminalized: '#3b82f6', // blue
   illegal: '#ef4444', // red
+  mixed: '#a855f7', // purple for mixed status
 };
 
 interface InteractiveWorldMapProps {
@@ -44,9 +127,37 @@ interface InteractiveWorldMapProps {
 const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) => {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleCountryClick = (countryCode: string) => {
-    setSelectedCountry(countryCode === selectedCountry ? null : countryCode);
+    const country = countryData[countryCode];
+    if (country) {
+      navigate(`/world/${country.region}/${country.slug}`);
+    }
+  };
+
+  const getCountryPath = (code: string, path: string) => {
+    const country = countryData[code];
+    if (!country) return null;
+    
+    return (
+      <g 
+        id={code} 
+        onClick={() => handleCountryClick(code)} 
+        onMouseEnter={() => setHoveredCountry(code)} 
+        onMouseLeave={() => setHoveredCountry(null)} 
+        className="cursor-pointer transition-all duration-300"
+      >
+        <path 
+          d={path}
+          fill={statusColors[country.status]} 
+          opacity={hoveredCountry === code || selectedCountry === code ? 0.95 : 0.75}
+          stroke="#fff" 
+          strokeWidth={hoveredCountry === code || selectedCountry === code ? "2" : "0.5"}
+          className="transition-all duration-300 hover:brightness-110"
+        />
+      </g>
+    );
   };
 
   return (
@@ -64,193 +175,115 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {/* Background */}
           <rect width="1000" height="500" fill="#0a0a0a" />
           
-          {/* Simplified country shapes with approximate positions */}
-          {/* North America */}
-          <g id="USA" onClick={() => handleCountryClick('USA')} onMouseEnter={() => setHoveredCountry('USA')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer transition-all duration-300">
-            <path d="M 100 100 L 250 100 L 280 150 L 260 200 L 200 220 L 150 200 L 100 180 Z" 
-              fill={statusColors[countryData['USA'].status]} 
-              opacity={hoveredCountry === 'USA' || selectedCountry === 'USA' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'USA' || selectedCountry === 'USA' ? "2" : "1"}
-              className="transition-all duration-300"
-            />
+          {/* Grid Lines for visual effect */}
+          <g stroke="rgba(255,255,255,0.05)" strokeWidth="0.5">
+            {[...Array(10)].map((_, i) => (
+              <line key={`h${i}`} x1="0" y1={i * 50} x2="1000" y2={i * 50} />
+            ))}
+            {[...Array(20)].map((_, i) => (
+              <line key={`v${i}`} x1={i * 50} y1="0" x2={i * 50} y2="500" />
+            ))}
           </g>
+
+          {/* NORTH AMERICA */}
+          {getCountryPath('Canada', 'M 80 40 L 300 40 L 310 70 L 280 100 L 250 90 L 200 85 L 150 90 L 100 95 L 80 75 Z')}
+          {getCountryPath('USA', 'M 100 100 L 250 105 L 280 150 L 265 195 L 205 215 L 150 195 L 100 175 Z')}
+          {getCountryPath('Mexico', 'M 130 215 L 200 220 L 215 255 L 185 275 L 145 260 L 130 235 Z')}
           
-          <g id="Canada" onClick={() => handleCountryClick('Canada')} onMouseEnter={() => setHoveredCountry('Canada')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 100 50 L 280 50 L 280 95 L 250 95 L 100 95 Z" 
-              fill={statusColors[countryData['Canada'].status]} 
-              opacity={hoveredCountry === 'Canada' || selectedCountry === 'Canada' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Canada' || selectedCountry === 'Canada' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Mexico" onClick={() => handleCountryClick('Mexico')} onMouseEnter={() => setHoveredCountry('Mexico')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 150 220 L 200 220 L 210 250 L 180 260 L 150 250 Z" 
-              fill={statusColors[countryData['Mexico'].status]} 
-              opacity={hoveredCountry === 'Mexico' || selectedCountry === 'Mexico' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Mexico' || selectedCountry === 'Mexico' ? "2" : "1"}
-            />
-          </g>
-          
-          {/* South America */}
-          <g id="Colombia" onClick={() => handleCountryClick('Colombia')} onMouseEnter={() => setHoveredCountry('Colombia')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 200 280 L 230 280 L 230 310 L 200 310 Z" 
-              fill={statusColors[countryData['Colombia'].status]} 
-              opacity={hoveredCountry === 'Colombia' || selectedCountry === 'Colombia' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Colombia' || selectedCountry === 'Colombia' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Uruguay" onClick={() => handleCountryClick('Uruguay')} onMouseEnter={() => setHoveredCountry('Uruguay')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 240 380 L 270 380 L 270 400 L 240 400 Z" 
-              fill={statusColors[countryData['Uruguay'].status]} 
-              opacity={hoveredCountry === 'Uruguay' || selectedCountry === 'Uruguay' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Uruguay' || selectedCountry === 'Uruguay' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Argentina" onClick={() => handleCountryClick('Argentina')} onMouseEnter={() => setHoveredCountry('Argentina')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 220 350 L 250 350 L 250 420 L 220 420 Z" 
-              fill={statusColors[countryData['Argentina'].status]} 
-              opacity={hoveredCountry === 'Argentina' || selectedCountry === 'Argentina' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Argentina' || selectedCountry === 'Argentina' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Chile" onClick={() => handleCountryClick('Chile')} onMouseEnter={() => setHoveredCountry('Chile')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 200 330 L 215 330 L 215 430 L 200 430 Z" 
-              fill={statusColors[countryData['Chile'].status]} 
-              opacity={hoveredCountry === 'Chile' || selectedCountry === 'Chile' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Chile' || selectedCountry === 'Chile' ? "2" : "1"}
-            />
-          </g>
-          
-          {/* Europe */}
-          <g id="Netherlands" onClick={() => handleCountryClick('Netherlands')} onMouseEnter={() => setHoveredCountry('Netherlands')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 480 110 L 495 110 L 495 125 L 480 125 Z" 
-              fill={statusColors[countryData['Netherlands'].status]} 
-              opacity={hoveredCountry === 'Netherlands' || selectedCountry === 'Netherlands' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Netherlands' || selectedCountry === 'Netherlands' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Germany" onClick={() => handleCountryClick('Germany')} onMouseEnter={() => setHoveredCountry('Germany')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 495 115 L 525 115 L 525 145 L 495 145 Z" 
-              fill={statusColors[countryData['Germany'].status]} 
-              opacity={hoveredCountry === 'Germany' || selectedCountry === 'Germany' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Germany' || selectedCountry === 'Germany' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Spain" onClick={() => handleCountryClick('Spain')} onMouseEnter={() => setHoveredCountry('Spain')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 450 160 L 490 160 L 490 185 L 450 185 Z" 
-              fill={statusColors[countryData['Spain'].status]} 
-              opacity={hoveredCountry === 'Spain' || selectedCountry === 'Spain' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Spain' || selectedCountry === 'Spain' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Portugal" onClick={() => handleCountryClick('Portugal')} onMouseEnter={() => setHoveredCountry('Portugal')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 435 160 L 450 160 L 450 185 L 435 185 Z" 
-              fill={statusColors[countryData['Portugal'].status]} 
-              opacity={hoveredCountry === 'Portugal' || selectedCountry === 'Portugal' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Portugal' || selectedCountry === 'Portugal' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Switzerland" onClick={() => handleCountryClick('Switzerland')} onMouseEnter={() => setHoveredCountry('Switzerland')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 500 145 L 515 145 L 515 160 L 500 160 Z" 
-              fill={statusColors[countryData['Switzerland'].status]} 
-              opacity={hoveredCountry === 'Switzerland' || selectedCountry === 'Switzerland' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Switzerland' || selectedCountry === 'Switzerland' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Czech Republic" onClick={() => handleCountryClick('Czech Republic')} onMouseEnter={() => setHoveredCountry('Czech Republic')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 525 125 L 545 125 L 545 140 L 525 140 Z" 
-              fill={statusColors[countryData['Czech Republic'].status]} 
-              opacity={hoveredCountry === 'Czech Republic' || selectedCountry === 'Czech Republic' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Czech Republic' || selectedCountry === 'Czech Republic' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Malta" onClick={() => handleCountryClick('Malta')} onMouseEnter={() => setHoveredCountry('Malta')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <circle cx="510" cy="190" r="5" 
-              fill={statusColors[countryData['Malta'].status]} 
-              opacity={hoveredCountry === 'Malta' || selectedCountry === 'Malta' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Malta' || selectedCountry === 'Malta' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Luxembourg" onClick={() => handleCountryClick('Luxembourg')} onMouseEnter={() => setHoveredCountry('Luxembourg')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <circle cx="490" cy="125" r="5" 
-              fill={statusColors[countryData['Luxembourg'].status]} 
-              opacity={hoveredCountry === 'Luxembourg' || selectedCountry === 'Luxembourg' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Luxembourg' || selectedCountry === 'Luxembourg' ? "2" : "1"}
-            />
-          </g>
-          
-          {/* Caribbean */}
-          <g id="Jamaica" onClick={() => handleCountryClick('Jamaica')} onMouseEnter={() => setHoveredCountry('Jamaica')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 240 240 L 255 240 L 255 250 L 240 250 Z" 
-              fill={statusColors[countryData['Jamaica'].status]} 
-              opacity={hoveredCountry === 'Jamaica' || selectedCountry === 'Jamaica' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Jamaica' || selectedCountry === 'Jamaica' ? "2" : "1"}
-            />
-          </g>
-          
-          {/* Africa */}
-          <g id="South Africa" onClick={() => handleCountryClick('South Africa')} onMouseEnter={() => setHoveredCountry('South Africa')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 530 380 L 570 380 L 570 420 L 530 420 Z" 
-              fill={statusColors[countryData['South Africa'].status]} 
-              opacity={hoveredCountry === 'South Africa' || selectedCountry === 'South Africa' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'South Africa' || selectedCountry === 'South Africa' ? "2" : "1"}
-            />
-          </g>
-          
-          {/* Asia/Pacific */}
-          <g id="Thailand" onClick={() => handleCountryClick('Thailand')} onMouseEnter={() => setHoveredCountry('Thailand')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 720 240 L 745 240 L 745 270 L 720 270 Z" 
-              fill={statusColors[countryData['Thailand'].status]} 
-              opacity={hoveredCountry === 'Thailand' || selectedCountry === 'Thailand' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Thailand' || selectedCountry === 'Thailand' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Israel" onClick={() => handleCountryClick('Israel')} onMouseEnter={() => setHoveredCountry('Israel')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 570 200 L 585 200 L 585 215 L 570 215 Z" 
-              fill={statusColors[countryData['Israel'].status]} 
-              opacity={hoveredCountry === 'Israel' || selectedCountry === 'Israel' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Israel' || selectedCountry === 'Israel' ? "2" : "1"}
-            />
-          </g>
-          
-          <g id="Australia" onClick={() => handleCountryClick('Australia')} onMouseEnter={() => setHoveredCountry('Australia')} onMouseLeave={() => setHoveredCountry(null)} className="cursor-pointer">
-            <path d="M 800 350 L 880 350 L 880 410 L 800 410 Z" 
-              fill={statusColors[countryData['Australia'].status]} 
-              opacity={hoveredCountry === 'Australia' || selectedCountry === 'Australia' ? 0.9 : 0.7}
-              stroke="#fff" 
-              strokeWidth={hoveredCountry === 'Australia' || selectedCountry === 'Australia' ? "2" : "1"}
-            />
-          </g>
+          {/* CENTRAL AMERICA */}
+          {getCountryPath('Guatemala', 'M 175 268 L 195 268 L 195 282 L 175 282 Z')}
+          {getCountryPath('Belize', 'M 195 262 L 205 262 L 205 275 L 195 275 Z')}
+          {getCountryPath('Honduras', 'M 195 275 L 220 275 L 220 288 L 195 288 Z')}
+          {getCountryPath('ElSalvador', 'M 180 282 L 195 282 L 195 292 L 180 292 Z')}
+          {getCountryPath('Nicaragua', 'M 195 288 L 220 288 L 220 305 L 195 305 Z')}
+          {getCountryPath('CostaRica', 'M 200 305 L 218 305 L 218 318 L 200 318 Z')}
+          {getCountryPath('Panama', 'M 218 308 L 245 308 L 245 320 L 218 320 Z')}
+
+          {/* CARIBBEAN */}
+          {getCountryPath('Cuba', 'M 235 235 L 275 235 L 275 250 L 235 250 Z')}
+          {getCountryPath('Jamaica', 'M 250 255 L 270 255 L 270 265 L 250 265 Z')}
+          {getCountryPath('Bahamas', 'M 270 220 L 290 220 L 290 235 L 270 235 Z')}
+          {getCountryPath('DominicanRepublic', 'M 280 245 L 310 245 L 310 260 L 280 260 Z')}
+          {getCountryPath('PuertoRico', 'M 310 250 L 325 250 L 325 260 L 310 260 Z')}
+          {getCountryPath('TrinidadTobago', 'M 315 290 L 330 290 L 330 302 L 315 302 Z')}
+          {getCountryPath('Bermuda', 'M 320 195 L 332 195 L 332 205 L 320 205 Z')}
+
+          {/* SOUTH AMERICA */}
+          {getCountryPath('Colombia', 'M 220 300 L 265 300 L 265 340 L 220 340 Z')}
+          {getCountryPath('Venezuela', 'M 265 295 L 310 295 L 310 325 L 265 325 Z')}
+          {getCountryPath('Ecuador', 'M 200 335 L 230 335 L 230 360 L 200 360 Z')}
+          {getCountryPath('Peru', 'M 210 355 L 255 355 L 255 400 L 210 400 Z')}
+          {getCountryPath('Brazil', 'M 255 310 L 340 310 L 340 390 L 280 420 L 255 400 Z')}
+          {getCountryPath('Bolivia', 'M 245 380 L 280 380 L 280 410 L 245 410 Z')}
+          {getCountryPath('Chile', 'M 235 400 L 255 400 L 255 470 L 235 470 Z')}
+          {getCountryPath('Argentina', 'M 255 400 L 295 400 L 295 470 L 260 470 L 255 450 Z')}
+          {getCountryPath('Uruguay', 'M 295 395 L 315 395 L 315 415 L 295 415 Z')}
+
+          {/* EUROPE */}
+          {getCountryPath('UK', 'M 450 95 L 470 95 L 470 130 L 450 130 Z')}
+          {getCountryPath('Ireland', 'M 435 100 L 450 100 L 450 125 L 435 125 Z')}
+          {getCountryPath('Portugal', 'M 430 160 L 445 160 L 445 190 L 430 190 Z')}
+          {getCountryPath('Spain', 'M 445 155 L 490 155 L 490 190 L 445 190 Z')}
+          {getCountryPath('France', 'M 470 125 L 510 125 L 510 160 L 470 160 Z')}
+          {getCountryPath('Belgium', 'M 480 115 L 500 115 L 500 125 L 480 125 Z')}
+          {getCountryPath('Netherlands', 'M 485 100 L 505 100 L 505 115 L 485 115 Z')}
+          {getCountryPath('Germany', 'M 505 105 L 545 105 L 545 145 L 505 145 Z')}
+          {getCountryPath('Luxembourg', 'M 490 130 L 500 130 L 500 140 L 490 140 Z')}
+          {getCountryPath('Switzerland', 'M 495 145 L 520 145 L 520 160 L 495 160 Z')}
+          {getCountryPath('Austria', 'M 520 140 L 555 140 L 555 155 L 520 155 Z')}
+          {getCountryPath('Italy', 'M 505 155 L 540 155 L 540 210 L 515 210 L 505 180 Z')}
+          {getCountryPath('Malta', 'M 515 210 L 525 210 L 525 218 L 515 218 Z')}
+          {getCountryPath('CzechRepublic', 'M 530 125 L 560 125 L 560 140 L 530 140 Z')}
+          {getCountryPath('Poland', 'M 545 100 L 590 100 L 590 130 L 545 130 Z')}
+          {getCountryPath('Denmark', 'M 505 85 L 530 85 L 530 100 L 505 100 Z')}
+          {getCountryPath('Sweden', 'M 530 50 L 555 50 L 555 95 L 530 95 Z')}
+          {getCountryPath('Norway', 'M 500 45 L 530 45 L 545 75 L 530 90 L 500 75 Z')}
+          {getCountryPath('Finland', 'M 555 50 L 590 50 L 590 90 L 555 90 Z')}
+          {getCountryPath('Greece', 'M 555 175 L 590 175 L 590 205 L 555 205 Z')}
+          {getCountryPath('Turkey', 'M 565 165 L 630 165 L 630 195 L 565 195 Z')}
+          {getCountryPath('Hungary', 'M 550 145 L 580 145 L 580 165 L 550 165 Z')}
+          {getCountryPath('Romania', 'M 570 150 L 610 150 L 610 175 L 570 175 Z')}
+          {getCountryPath('Croatia', 'M 535 155 L 560 155 L 560 175 L 535 175 Z')}
+          {getCountryPath('Ukraine', 'M 585 115 L 650 115 L 650 155 L 585 155 Z')}
+          {getCountryPath('Russia', 'M 620 50 L 780 50 L 780 160 L 650 160 L 650 110 L 620 110 Z')}
+
+          {/* AFRICA */}
+          {getCountryPath('Morocco', 'M 440 200 L 480 200 L 480 235 L 440 235 Z')}
+          {getCountryPath('Egypt', 'M 560 210 L 605 210 L 605 255 L 560 255 Z')}
+          {getCountryPath('Nigeria', 'M 480 290 L 520 290 L 520 330 L 480 330 Z')}
+          {getCountryPath('Ghana', 'M 455 300 L 480 300 L 480 330 L 455 330 Z')}
+          {getCountryPath('Kenya', 'M 575 310 L 610 310 L 610 350 L 575 350 Z')}
+          {getCountryPath('Rwanda', 'M 560 330 L 580 330 L 580 350 L 560 350 Z')}
+          {getCountryPath('Malawi', 'M 580 355 L 600 355 L 600 385 L 580 385 Z')}
+          {getCountryPath('Zimbabwe', 'M 555 370 L 590 370 L 590 400 L 555 400 Z')}
+          {getCountryPath('SouthAfrica', 'M 530 400 L 595 400 L 595 450 L 530 450 Z')}
+          {getCountryPath('Lesotho', 'M 565 420 L 580 420 L 580 435 L 565 435 Z')}
+
+          {/* MIDDLE EAST / WEST ASIA */}
+          {getCountryPath('Israel', 'M 575 200 L 590 200 L 590 225 L 575 225 Z')}
+          {getCountryPath('Lebanon', 'M 580 190 L 595 190 L 595 205 L 580 205 Z')}
+          {getCountryPath('UAE', 'M 645 230 L 680 230 L 680 255 L 645 255 Z')}
+
+          {/* ASIA */}
+          {getCountryPath('India', 'M 680 200 L 750 200 L 750 290 L 700 300 L 680 270 Z')}
+          {getCountryPath('Nepal', 'M 720 210 L 750 210 L 750 225 L 720 225 Z')}
+          {getCountryPath('SriLanka', 'M 720 300 L 738 300 L 738 325 L 720 325 Z')}
+          {getCountryPath('Thailand', 'M 755 250 L 785 250 L 785 305 L 755 305 Z')}
+          {getCountryPath('Vietnam', 'M 785 250 L 810 250 L 810 310 L 785 310 Z')}
+          {getCountryPath('Malaysia', 'M 770 310 L 810 310 L 810 335 L 770 335 Z')}
+          {getCountryPath('Singapore', 'M 785 335 L 800 335 L 800 345 L 785 345 Z')}
+          {getCountryPath('Indonesia', 'M 780 340 L 880 340 L 880 380 L 780 380 Z')}
+          {getCountryPath('Philippines', 'M 840 270 L 875 270 L 875 320 L 840 320 Z')}
+          {getCountryPath('China', 'M 750 140 L 870 140 L 870 230 L 750 230 Z')}
+          {getCountryPath('Japan', 'M 875 145 L 920 145 L 920 210 L 875 210 Z')}
+          {getCountryPath('SouthKorea', 'M 865 175 L 890 175 L 890 205 L 865 205 Z')}
+
+          {/* OCEANIA */}
+          {getCountryPath('Australia', 'M 815 380 L 920 380 L 920 460 L 815 460 Z')}
+          {getCountryPath('NewZealand', 'M 940 420 L 975 420 L 975 470 L 940 470 Z')}
+          {getCountryPath('Fiji', 'M 960 380 L 980 380 L 980 400 L 960 400 Z')}
+          {getCountryPath('Samoa', 'M 980 365 L 995 365 L 995 380 L 980 380 Z')}
+          {getCountryPath('Vanuatu', 'M 950 400 L 965 400 L 965 420 L 950 420 Z')}
         </svg>
         
         {/* Tooltip on hover */}
@@ -258,19 +291,43 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute top-4 left-1/2 -translate-x-1/2 bg-gray-900/95 backdrop-blur-xl border border-accent/50 rounded-xl px-6 py-4 shadow-2xl shadow-accent/30 z-10 max-w-sm"
+            className="absolute top-4 left-1/2 -translate-x-1/2 bg-gray-900/95 backdrop-blur-xl border border-accent/50 rounded-xl shadow-2xl shadow-accent/30 z-10 max-w-sm overflow-hidden"
           >
-            <h3 className="text-lg font-bold text-white mb-1">{countryData[hoveredCountry].name}</h3>
-            <div className="flex items-center gap-2 mb-2">
-              <div 
-                className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: statusColors[countryData[hoveredCountry].status] }}
+            {/* Country Image */}
+            <div className="h-24 w-full overflow-hidden">
+              <img 
+                src={countryData[hoveredCountry].image} 
+                alt={countryData[hoveredCountry].name}
+                className="w-full h-full object-cover"
               />
-              <span className="text-sm text-gray-300 capitalize">{countryData[hoveredCountry].status}</span>
             </div>
-            <p className="text-sm text-gray-400">{countryData[hoveredCountry].description}</p>
+            <div className="px-5 py-4">
+              <h3 className="text-lg font-bold text-white mb-1">{countryData[hoveredCountry].name}</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: statusColors[countryData[hoveredCountry].status] }}
+                />
+                <span className="text-sm text-gray-300 capitalize">{countryData[hoveredCountry].status.replace('-', ' ')}</span>
+              </div>
+              <p className="text-sm text-gray-400">{countryData[hoveredCountry].description}</p>
+              <p className="text-xs text-accent mt-2">Click to view details →</p>
+            </div>
           </motion.div>
         )}
+        
+        {/* Legend */}
+        <div className="absolute bottom-4 left-4 bg-gray-900/90 backdrop-blur-xl rounded-lg p-3 border border-white/10">
+          <div className="text-xs font-semibold text-white mb-2">Legal Status</div>
+          <div className="flex flex-wrap gap-3 text-xs">
+            {Object.entries(statusColors).map(([status, color]) => (
+              <div key={status} className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-gray-300 capitalize">{status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -410,8 +410,10 @@ export default function Blog() {
                   Expert Insights & Global Guides
                 </Badge>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3 sm:mb-4 text-foreground">
-                  Cannabis Travel Guides & News
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3 sm:mb-4">
+                  <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                    Cannabis Travel Guides & News
+                  </span>
                 </h1>
 
                 <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
