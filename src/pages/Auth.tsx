@@ -117,25 +117,11 @@ const Auth = () => {
             });
           }
         } else {
-          // Send OTP code via signInWithOtp (this sends actual 6-digit code)
-          const { error: otpError } = await supabase.auth.signInWithOtp({
-            email,
-            options: {
-              shouldCreateUser: false, // User already created via signUp
-            },
+          // Signup successful - redirect to verify email page
+          toast({
+            title: 'Verification Email Sent!',
+            description: 'Please check your email and click the verification link.',
           });
-          
-          if (otpError) {
-            toast({
-              title: 'Account Created',
-              description: 'Please check your email to verify your account.',
-            });
-          } else {
-            toast({
-              title: 'Verification Code Sent!',
-              description: 'Please check your email for a 6-digit verification code.',
-            });
-          }
           // Redirect to verify email page with email in state
           navigate('/verify-email', { state: { email } });
         }
