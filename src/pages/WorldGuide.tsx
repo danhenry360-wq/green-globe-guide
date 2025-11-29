@@ -1126,4 +1126,12 @@ const WorldGuide = () => {
         if (ciSlug && city && region && country) return <CityDetail city={city} region={region} country={country} />;
         if (rSlug && region && country) return <CityIndex continent={continent!} country={country} region={region} />;
         if (coSlug && country) return <RegionIndex continent={continent!} country={country} />;
-        if (cSlug
+        if (cSlug && continent) return <CountryIndex continent={continent} />;
+        return <ContinentIndex />;
+      })()}
+      <Footer />
+    </div>
+  );
+};
+
+export default WorldGuide;
