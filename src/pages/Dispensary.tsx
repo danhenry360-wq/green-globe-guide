@@ -89,13 +89,13 @@ const ITEMS_PER_PAGE = 10;
    HELPER COMPONENTS
 ============================================ */
 const StarRating = ({ value }: { value: number }) => (
-  <div className="flex items-center gap-1">
+  <div className="flex items-center gap-0.5 sm:gap-1">
     {[1, 2, 3, 4, 5].map((i) => (
       <svg
         key={i}
-        xmlns="http://www.w3.org/2000/svg "
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        className={`w-4 h-4 ${
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${
           i <= Math.round(value)
             ? "fill-yellow-400 text-yellow-400"
             : "text-gray-600"
@@ -104,7 +104,7 @@ const StarRating = ({ value }: { value: number }) => (
         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
       </svg>
     ))}
-    <span className="text-xs text-muted-foreground ml-1 font-medium">
+    <span className="text-[10px] sm:text-xs text-muted-foreground ml-0.5 sm:ml-1 font-medium">
       {value.toFixed(1)}
     </span>
   </div>
@@ -446,75 +446,80 @@ const DispensaryCard = ({
         state={{ dispensaryId: dispensary.id }}
         className="block"
       >
-        <Card className="p-4 sm:p-6 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <h4 className="text-lg sm:text-xl font-bold text-white break-words group-hover:text-accent transition-colors">
-                  {dispensary.name}
-                </h4>
-                <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-xs font-semibold gap-1 flex items-center px-2 py-1">
-                  <Leaf className="w-3 h-3" />
-                  Verified
-                </Badge>
-                {dispensary.isFromDb && (
-                  <Badge className="bg-gold/20 text-gold border border-gold/40 text-xs font-semibold px-2 py-1">
-                    Featured
-                  </Badge>
-                )}
+        <Card className="p-3 sm:p-5 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
+          <div className="flex flex-col gap-3 sm:gap-4">
+            {/* Header with name and badges */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
+                  <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-accent transition-colors leading-tight">
+                    {dispensary.name}
+                  </h4>
+                  <div className="flex gap-1.5">
+                    <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                      <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      Verified
+                    </Badge>
+                    {dispensary.isFromDb && (
+                      <Badge className="bg-gold/20 text-gold border border-gold/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
+                        Featured
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
+                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-accent" />
+                  {dispensary.city}, {dispensary.state}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                  <StarRating value={dispensary.rating} />
+                  <span className="text-[10px] sm:text-xs text-muted-foreground">
+                    ({dispensary.reviewCount} reviews)
+                  </span>
+                </div>
+
+                {/* Service badges */}
+                <div className="flex flex-wrap gap-1 sm:gap-2">
+                  {dispensary.isRecreational && (
+                    <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 text-green-400 border-green-500/40">
+                      Rec
+                    </Badge>
+                  )}
+                  {dispensary.isMedical && (
+                    <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 text-blue-400 border-blue-500/40">
+                      Med
+                    </Badge>
+                  )}
+                  {dispensary.hasDelivery && (
+                    <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 text-amber-400 border-amber-500/40">
+                      Delivery
+                    </Badge>
+                  )}
+                </div>
               </div>
 
-              <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
-                <MapPin className="w-4 h-4 flex-shrink-0 text-accent" />
-                {dispensary.city}, {dispensary.state}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <StarRating value={dispensary.rating} />
-                <span className="text-xs text-muted-foreground">
-                  ({dispensary.reviewCount} reviews)
+              {/* CTA Button - Full width on mobile */}
+              <div className="flex-shrink-0 mt-2 sm:mt-0">
+                <span className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-white text-xs sm:text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
+                  View Details
+                  <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </span>
-              </div>
-
-              {/* Service badges */}
-              <div className="flex flex-wrap gap-2">
-                {dispensary.isRecreational && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 text-green-400 border-green-500/40">
-                    Recreational
-                  </Badge>
-                )}
-                {dispensary.isMedical && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 text-blue-400 border-blue-500/40">
-                    Medical
-                  </Badge>
-                )}
-                {dispensary.hasDelivery && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 text-amber-400 border-amber-500/40">
-                    Delivery
-                  </Badge>
-                )}
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 flex-shrink-0 self-start sm:self-auto">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
-                View Details
-              <ExternalLink className="w-4 h-4" />
-              <ExternalLink className="w-4 h-4" />
-            </span>
+            {/* Address */}
+            <div className="pt-2 sm:pt-3 border-t border-border/30">
+              <p className="text-[10px] sm:text-xs text-muted-foreground/80 leading-relaxed">
+                <span className="font-semibold text-muted-foreground">Address:</span>{" "}
+                {dispensary.address}
+              </p>
+            </div>
           </div>
-        </div>
-
-        {/* Address */}
-        <div className="pt-4 border-t border-border/30">
-          <p className="text-xs text-muted-foreground/80">
-            <span className="font-semibold text-muted-foreground">Address:</span>{" "}
-            {dispensary.address}
-          </p>
-        </div>
-      </Card>
-    </Link>
-  </motion.div>
+        </Card>
+      </Link>
+    </motion.div>
   );
 };
 
