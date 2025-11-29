@@ -589,9 +589,9 @@ const STATS_DATA: StatItem[] = [
 ];
 
 const BLOG_DATA: BlogItem[] = [
-  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam coffee shop interior", link: "/guides/amsterdam" },
-  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "California dispensary storefront", link: "/guides/california" },
-  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay legal cannabis guide", link: "/guides/uruguay" },
+  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam coffee shop interior", link: "/blog" },
+  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "California dispensary storefront", link: "/blog" },
+  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay legal cannabis guide", link: "/blog" },
 ];
 
 export default Home;
