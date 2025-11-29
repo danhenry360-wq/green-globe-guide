@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -7,85 +7,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
-import { Mail, Loader2, RefreshCw, CheckCircle } from 'lucide-react';
+import { Mail, Loader2, RefreshCw } from 'lucide-react';
 import logo from '@/assets/global-canna-pass-logo.png';
 
 const VerifyEmail = () => {
   const [isResending, setIsResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verified, setVerified] = useState(false);
   
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
   
   // Get email from navigation state
   const email = location.state?.email || '';
-  
-  // Check for verification tokens in URL (from magic link)
-  useEffect(() => {
-    const handleVerification = async () => {
-      // Check if there's a hash with access_token (magic link clicked)
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
-      
-      if (accessToken && refreshToken) {
-        setIsVerifying(true);
-        try {
-          const { error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          });
-          
-          if (error) {
-            toast({
-              title: 'Verification Failed',
-              description: error.message,
-              variant: 'destructive',
-            });
-          } else {
-            setVerified(true);
-            toast({
-              title: 'Email Verified!',
-              description: 'Your account has been successfully verified. Welcome to BudQuest!',
-            });
-            setTimeout(() => navigate('/'), 2000);
-          }
-        } catch (error) {
-          toast({
-            title: 'Error',
-            description: 'Something went wrong during verification.',
-            variant: 'destructive',
-          });
-        } finally {
-          setIsVerifying(false);
-        }
-      }
-      
-      // Check for error in URL
-      const error = searchParams.get('error');
-      const errorDescription = searchParams.get('error_description');
-      if (error) {
-        toast({
-          title: 'Verification Error',
-          description: errorDescription || 'Unable to verify email. Please try again.',
-          variant: 'destructive',
-        });
-      }
-    };
-    
-    handleVerification();
-  }, [navigate, toast, searchParams]);
 
-  // If no email in state and no token, redirect to auth
+  // If no email in state, redirect to auth
   useEffect(() => {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const hasToken = hashParams.get('access_token');
-    
-    if (!email && !hasToken) {
+    if (!email) {
       navigate('/auth');
     }
   }, [email, navigate]);
@@ -108,7 +46,8 @@ const VerifyEmail = () => {
         type: 'signup',
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/verify-email`,
+          // Use root URL since that's what Lovable Cloud allows
+          emailRedirectTo: `${window.location.origin}/`,
         },
       });
 
@@ -135,52 +74,6 @@ const VerifyEmail = () => {
       setIsResending(false);
     }
   };
-
-  if (verified) {
-    return (
-      <>
-        <Helmet>
-          <title>Email Verified | BudQuest</title>
-        </Helmet>
-        <div className="min-h-screen bg-background">
-          <Navigation />
-          <main className="pt-24 pb-20 px-4 sm:px-6 flex items-center justify-center">
-            <Card className="w-full max-w-md bg-card/70 backdrop-blur-sm border-accent/30 shadow-xl">
-              <CardContent className="pt-8 pb-8 text-center">
-                <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-accent mb-2">Email Verified!</h2>
-                <p className="text-muted-foreground">Redirecting you to the homepage...</p>
-              </CardContent>
-            </Card>
-          </main>
-          <Footer />
-        </div>
-      </>
-    );
-  }
-
-  if (isVerifying) {
-    return (
-      <>
-        <Helmet>
-          <title>Verifying Email | BudQuest</title>
-        </Helmet>
-        <div className="min-h-screen bg-background">
-          <Navigation />
-          <main className="pt-24 pb-20 px-4 sm:px-6 flex items-center justify-center">
-            <Card className="w-full max-w-md bg-card/70 backdrop-blur-sm border-accent/30 shadow-xl">
-              <CardContent className="pt-8 pb-8 text-center">
-                <Loader2 className="w-12 h-12 text-accent mx-auto mb-4 animate-spin" />
-                <h2 className="text-xl font-bold text-foreground mb-2">Verifying your email...</h2>
-                <p className="text-muted-foreground">Please wait a moment.</p>
-              </CardContent>
-            </Card>
-          </main>
-          <Footer />
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
