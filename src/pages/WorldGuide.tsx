@@ -79,7 +79,7 @@ const WORLD: Continent[] = [
         tourist: "Gov stores only; ID required (18/19+)",
         description:
           "First G7 nation to legalise recreational cannabis nationwide. Strict driving laws apply.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("canada"),
         regions: [
           {
             slug: "ontario",
@@ -116,7 +116,7 @@ const WORLD: Continent[] = [
         tourist: "Check state laws; interstate transport is a Federal Crime",
         description:
           "Federally illegal. ~24 states allow recreational use, but crossing state lines (even between two legal states) is a federal felony.",
-        image: "/dest-1.jpg",
+        image: getCountryImage("united-states"),
         regions: [
           {
             slug: "california",
@@ -145,7 +145,7 @@ const WORLD: Continent[] = [
         tourist: "Technical tolerance, but police extortion is common.",
         description:
           "Supreme Court ruled prohibition unconstitutional, but regulations for sales are stalled. Police often target tourists for bribes.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("mexico"),
         regions: [
           {
             slug: "cdmx",
@@ -186,7 +186,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Personal consumption in private is tolerated. Police will confiscate public use.",
         description: "Article 58 of Law 8204 does not penalize personal consumption, but provides no defined amount. Selling is a serious crime.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("costa-rica"),
         regions: [
           {
             slug: "san-jose-region",
@@ -203,7 +203,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strict laws. Recreational use is illegal.",
         description: "Medical cannabis legalized in 2021, but recreational use remains a crime with potential jail time.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("panama"),
         regions: [
           {
             slug: "panama-province",
@@ -220,7 +220,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Possession legal in private lodgings. Illegal in public.",
         description: "Misuse of Drugs Act (2017) decriminalized possession up to 10g. This applies only to private residences.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("belize"),
         regions: [
           {
             slug: "belize-district",
@@ -237,7 +237,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "High risk. Penalties are harsh even for consumption.",
         description: "Under the Law Against Narcoactivity, possession for consumption carries mandatory prison time.",
-        image: "/dest-3.jpg",
+        image: getCountryImage("guatemala"),
         regions: [{ slug: "guatemala-city-region", name: "Guatemala City Region", cities: [{ slug: "guatemala-city", name: "Guatemala City", atGlance: ["High altitude", "Strict laws", "Police checks"] }] }]
       },
       {
@@ -248,7 +248,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: State of Exception. Risk of arbitrary arrest.",
         description: "Strict enforcement. Constitutional guarantees (due process) are suspended. Tourists caught with drugs face immediate indefinite detention.",
-        image: "/dest-1.jpg",
+        image: getCountryImage("el-salvador"),
         regions: [{ slug: "san-salvador-region", name: "San Salvador Region", cities: [{ slug: "san-salvador", name: "San Salvador", atGlance: ["Heavy military presence", "Zero tolerance", "Avoid"] }] }]
       },
       {
@@ -259,7 +259,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged. Strict drug laws.",
         description: "Cannabis is illegal for all purposes. Possession is considered a crime against public health.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("honduras"),
         regions: [{ slug: "roatan", name: "Roatán", cities: [{ slug: "roatan-city", name: "Roatán", atGlance: ["Cruise port", "Strict laws", "Police target tourists"] }] }]
       },
       {
@@ -270,7 +270,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "High caution. Political sensitivity and strict laws.",
         description: "Strictly illegal. Police force is highly centralized and penalties are severe.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("nicaragua"),
         regions: [{ slug: "managua-region", name: "Managua Region", cities: [{ slug: "managua", name: "Managua", atGlance: ["Capital", "Illegal", "Police presence"] }] }]
       },
     ]
@@ -288,7 +288,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport (Schengen rules)",
         tourist: "Coffee-shop weed is potent. Public use discouraged.",
         description: "Sale tolerated under strict conditions (gedoogbeleid); production remains illegal.",
-        image: "/dest-3.jpg",
+        image: getCountryImage("netherlands"),
         regions: [
           {
             slug: "north-holland",
@@ -310,7 +310,7 @@ const WORLD: Continent[] = [
         airport: "Domestic only (Risk)",
         tourist: "Possession legal, but BUYING is illegal for tourists.",
         description: "Legalised April 2024. 'Social Clubs' are for residents only. No commercial shops exist for tourists.",
-        image: "/dest-1.jpg",
+        image: getCountryImage("germany"),
         regions: [
           {
             slug: "berlin-region",
@@ -337,7 +337,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Join private cannabis club (Need referral)",
         description: "Personal cultivation & private consumption legal; public use fined. Clubs operate in legal grey area.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("spain"),
         regions: [
           {
             slug: "catalonia",
@@ -359,7 +359,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "CBD ('Cannabis Light') legal; THC illegal.",
         description: "Recreational use is decriminalized (administrative fines). 'Cannabis Light' (low THC) is sold openly.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("italy"),
         regions: [
           {
             slug: "lazio",
@@ -381,7 +381,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Decriminalized ≠ Legal. Police will confiscate.",
         description: "All drugs decriminalised 2001 (health issue). No legal shops for recreational cannabis.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("portugal"),
         regions: [
           {
             slug: "lisbon-region",
@@ -403,7 +403,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Low-THC (<1%) sold legally as tobacco substitute.",
         description: "High-THC cannabis trials in some cities (residents only). Low-THC cannabis is legal.",
-        image: "/dest-3.jpg",
+        image: getCountryImage("switzerland"),
         regions: [
           {
             slug: "zurich-region",
@@ -425,7 +425,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Enjoy Alps; herb secondary.",
         description: "Possession of small amounts decriminalised; hemp shops legal. High THC is illegal.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("austria"),
         regions: [{ slug: "vienna-region", name: "Vienna Region", cities: [{ slug: "vienna", name: "Vienna", atGlance: ["Coffee-house culture", "Hemp stores", "No public use"] }] }],
       },
       {
@@ -436,7 +436,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Tolerated but technically illegal to sell.",
         description: "Possession of <10g is an administrative offense. Medical cannabis is legal.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("czech-republic"),
         regions: [{ slug: "prague-region", name: "Prague Region", cities: [{ slug: "prague", name: "Prague", atGlance: ["Medieval centre", "Beer over bud", "Discreet only"] }] }],
       },
       {
@@ -447,7 +447,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Associations are Residents Only.",
         description: "Legalised 2021. Tourists cannot legally buy cannabis. Public consumption is fined.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("malta"),
         regions: [{ slug: "malta-island", name: "Malta Island", cities: [{ slug: "valletta", name: "Valletta", atGlance: ["Fortress capital", "Associations members-only", "Beach relax"] }] }],
       },
       {
@@ -458,7 +458,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Residents only; tourists cannot buy.",
         description: "Legal home cultivation & possession for residents. Sales strictly illegal.",
-        image: "/dest-3.jpg",
+        image: getCountryImage("luxembourg"),
         regions: [{ slug: "luxembourg-region", name: "Luxembourg Region", cities: [{ slug: "luxembourg-city", name: "Luxembourg City", atGlance: ["Banking centre", "Home grow only", "Beautiful old town"] }] }],
       },
       {
@@ -469,7 +469,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Enjoy waffles; herb secondary.",
         description: "Personal use (up to 3g) lowest prosecution priority for adults.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("belgium"),
         regions: [{ slug: "brussels-region", name: "Brussels Region", cities: [{ slug: "brussels", name: "Brussels", atGlance: ["EU capital", "Discreet only", "Chocolate & beer"] }] }],
       },
       {
@@ -480,7 +480,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strictly illegal. CBD shops common but THC banned.",
         description: "Strict penalties. On-the-spot fines (€200) for use/possession.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("france"),
         regions: [
           {
             slug: "ile-de-france",
@@ -502,7 +502,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only via specialist doctor (Private).",
         description: "Medical cannabis legal 2018 but restrictive. Recreational use is illegal (Class B drug).",
-        image: "/dest-4.jpg",
+        image: getCountryImage("united-kingdom"),
         regions: [
           {
             slug: "england",
@@ -524,7 +524,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; recreational illegal.",
         description: "Medical cannabis pilot program exists. Recreational use strictly illegal.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("ireland"),
         regions: [{ slug: "dublin-region", name: "Dublin Region", cities: [{ slug: "dublin", name: "Dublin", atGlance: ["Pub culture", "Medical only", "Discreet only"] }] }],
       },
       {
@@ -535,7 +535,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Christiania 'Pusher Street' closed/enforced.",
         description: "Medical cannabis legal. Famous 'Pusher Street' in Christiania is recently facing heavy police crackdown.",
-        image: "/dest-3.jpg",
+        image: getCountryImage("denmark"),
         regions: [{ slug: "copenhagen-region", name: "Copenhagen Region", cities: [{ slug: "copenhagen", name: "Copenhagen", atGlance: ["Bike capital", "Christiania enforcement", "Medical only"] }] }],
       },
       {
@@ -546,7 +546,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; saunas over smoke",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("finland"),
         regions: [{ slug: "helsinki-region", name: "Helsinki Region", cities: [{ slug: "helsinki", name: "Helsinki", atGlance: ["Design capital", "Medical only", "Sauna culture"] }] }],
       },
       {
@@ -557,7 +557,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; fjords over flower",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("norway"),
         regions: [{ slug: "oslo-region", name: "Oslo Region", cities: [{ slug: "oslo", name: "Oslo", atGlance: ["Fjord capital", "Medical only", "Outdoor life"] }] }],
       },
       {
@@ -568,7 +568,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Zero tolerance culture. Do not bring.",
         description: "Sweden has some of the strictest drug laws in Europe. Zero tolerance.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("sweden"),
         regions: [{ slug: "stockholm-region", name: "Stockholm Region", cities: [{ slug: "stockholm", name: "Stockholm", atGlance: ["Archipelago capital", "Strict laws", "Design hub"] }] }],
       },
       {
@@ -579,7 +579,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; enjoy glaciers",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("iceland"),
         regions: [{ slug: "reykjavik-region", name: "Reykjavik Region", cities: [{ slug: "reykjavik", name: "Reykjavik", atGlance: ["Northern lights", "Medical only", "Small-town vibe"] }] }],
       },
       {
@@ -590,7 +590,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; enjoy pierogi",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("poland"),
         regions: [{ slug: "warsaw-region", name: "Warsaw Region", cities: [{ slug: "warsaw", name: "Warsaw", atGlance: ["Rebuilt capital", "Medical only", "Vodka culture"] }] }, { slug: "krakow-region", name: "Kraków Region", cities: [{ slug: "krakow", name: "Kraków", atGlance: ["Medieval core", "Medical only", "Student vibe"] }] }],
       },
       {
@@ -601,7 +601,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; digital society",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("estonia"),
         regions: [{ slug: "tallinn-region", name: "Tallinn Region", cities: [{ slug: "tallinn", name: "Tallinn", atGlance: ["Medieval old town", "Medical only", "Tech hub"] }] }],
       },
       {
@@ -612,7 +612,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Art-Nouveau Riga",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("latvia"),
         regions: [{ slug: "riga-region", name: "Riga Region", cities: [{ slug: "riga", name: "Riga", atGlance: ["Art-Nouveau capital", "Medical only", "Baltic beaches"] }] }],
       },
       {
@@ -623,7 +623,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Baroque Vilnius",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("lithuania"),
         regions: [{ slug: "vilnius-region", name: "Vilnius Region", cities: [{ slug: "vilnius", name: "Vilnius", atGlance: ["Baroque old town", "Medical only", "Cheap beer"] }] }],
       },
       {
@@ -634,7 +634,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Lake Bled beauty",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("slovenia"),
         regions: [{ slug: "ljubljana-region", name: "Ljubljana Region", cities: [{ slug: "ljubljana", name: "Ljubljana", atGlance: ["Dragon bridge", "Medical only", "Green capital"] }] }],
       },
       {
@@ -645,7 +645,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Bratislava charm",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("slovakia"),
         regions: [{ slug: "bratislava-region", name: "Bratislava Region", cities: [{ slug: "bratislava", name: "Bratislava", atGlance: ["Danube capital", "Medical only", "Cheap beer"] }] }],
       },
       {
@@ -656,7 +656,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; thermal baths",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("hungary"),
         regions: [{ slug: "budapest-region", name: "Budapest Region", cities: [{ slug: "budapest", name: "Budapest", atGlance: ["Thermal baths", "Medical only", "Nightlife"] }] }],
       },
       {
@@ -667,7 +667,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Adriatic coast",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("croatia"),
         regions: [{ slug: "zagreb-region", name: "Zagreb Region", cities: [{ slug: "zagreb", name: "Zagreb", atGlance: ["Capital cafes", "Medical only", "Cheap coffee"] }] }, { slug: "split-region", name: "Split Region", cities: [{ slug: "split", name: "Split", atGlance: ["Diocletian palace", "Medical only", "Coast relax"] }] }],
       },
       {
@@ -678,7 +678,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Belgrade nightlife",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("serbia"),
         regions: [{ slug: "belgrade-region", name: "Belgrade Region", cities: [{ slug: "belgrade", name: "Belgrade", atGlance: ["Danube nightlife", "Medical only", "Cheap rakija"] }] }],
       },
       {
@@ -689,7 +689,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Sarajevo history",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("bosnia"),
         regions: [{ slug: "sarajevo-region", name: "Sarajevo Region", cities: [{ slug: "sarajevo", name: "Sarajevo", atGlance: ["Ottoman old town", "Medical only", "Coffee culture"] }] }],
       },
       {
@@ -700,7 +700,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Bay of Kotor",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("montenegro"),
         regions: [{ slug: "podgorica-region", name: "Podgorica Region", cities: [{ slug: "podgorica", name: "Podgorica", atGlance: ["Small capital", "Medical only", "Mountain lakes"] }] }],
       },
       {
@@ -711,7 +711,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Lake Ohrid",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("north-macedonia"),
         regions: [{ slug: "skopje-region", name: "Skopje Region", cities: [{ slug: "skopje", name: "Skopje", atGlance: ["Balkan capital", "Medical only", "Cheap wine"] }] }],
       },
       {
@@ -722,7 +722,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Tirana buzz",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("albania"),
         regions: [{ slug: "tirana-region", name: "Tirana Region", cities: [{ slug: "tirana", name: "Tirana", atGlance: ["Colourful capital", "Medical only", "Cheap coffee"] }] }],
       },
       {
@@ -733,7 +733,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; enjoy islands",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("greece"),
         regions: [{ slug: "athens-region", name: "Athens Region", cities: [{ slug: "athens", name: "Athens", atGlance: ["Acropolis views", "Medical only", "Ancient history"] }] }, { slug: "thessaloniki-region", name: "Thessaloniki Region", cities: [{ slug: "thessaloniki", name: "Thessaloniki", atGlance: ["Northern port", "Medical only", "Student vibe"] }] }],
       },
       {
@@ -744,7 +744,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Black-Sea beaches",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("bulgaria"),
         regions: [{ slug: "sofia-region", name: "Sofia Region", cities: [{ slug: "sofia", name: "Sofia", atGlance: ["Mountain capital", "Medical only", "Cheap eats"] }] }],
       },
       {
@@ -755,7 +755,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Dracula castles",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("romania"),
         regions: [{ slug: "bucharest-region", name: "Bucharest Region", cities: [{ slug: "bucharest", name: "Bucharest", atGlance: ["Party capital", "Medical only", "Cheap beer"] }] }],
       },
       {
@@ -766,7 +766,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; wine country",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("moldova"),
         regions: [{ slug: "chisinau-region", name: "Chișinău Region", cities: [{ slug: "chisinau", name: "Chișinău", atGlance: ["Wine capital", "Medical only", "Cheap wine"] }] }],
       },
       {
@@ -777,7 +777,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; war-time caution",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("ukraine"),
         regions: [{ slug: "kyiv-region", name: "Kyiv Region", cities: [{ slug: "kyiv", name: "Kyiv", atGlance: ["Wartime capital", "Medical only", "Check travel advisories"] }] }],
       },
       {
@@ -788,7 +788,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Political hostages possible.",
         description: "Cannabis illegal. Foreigners have been detained for small amounts (e.g. vape cartridges) for years.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("russia"),
         regions: [{ slug: "moscow-region", name: "Moscow Region", cities: [{ slug: "moscow", name: "Moscow", atGlance: ["Red Square", "Illegal", "Severe penalties"] }] }, { slug: "stpetersburg-region", name: "St Petersburg Region", cities: [{ slug: "saint-petersburg", name: "Saint Petersburg", atGlance: ["Hermitage", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -799,7 +799,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; authoritarian",
         description: "Cannabis illegal; possession criminalised.",
-        image: "/dest-6.jpg",
+        image: getCountryImage("belarus"),
         regions: [{ slug: "minsk-region", name: "Minsk Region", cities: [{ slug: "minsk", name: "Minsk", atGlance: ["Soviet capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -810,7 +810,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strict laws; enjoy kebabs",
         description: "Medical cannabis legal but heavily restricted. Recreational use prohibited.",
-        image: "/dest-5.jpg",
+        image: getCountryImage("turkey"),
         regions: [{ slug: "istanbul-region", name: "Istanbul Region", cities: [{ slug: "istanbul", name: "Istanbul", atGlance: ["East-meets-west", "Strict", "Bosphorus views"] }] }, { slug: "ankara-region", name: "Ankara Region", cities: [{ slug: "ankara", name: "Ankara", atGlance: ["Capital city", "Strict", "Anıtkabir"] }] }],
       },
       {
