@@ -88,6 +88,33 @@ const ITEMS_PER_PAGE = 10;
 /* ============================================
    HELPER COMPONENTS
 ============================================ */
+import { Skeleton } from "@/components/ui/skeleton";
+
+const DispensaryCardSkeleton = () => (
+  <Card className="p-3 sm:p-5 bg-card/60 border-border/40">
+    <div className="flex flex-col gap-3 sm:gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start gap-2 mb-2">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+          <Skeleton className="h-4 w-36 mb-3" />
+          <div className="flex items-center gap-2 mb-3">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-16" />
+          </div>
+          <div className="flex gap-2">
+            <Skeleton className="h-6 w-12" />
+            <Skeleton className="h-6 w-16" />
+            <Skeleton className="h-6 w-14" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+);
+
 const StarRating = ({ value }: { value: number }) => (
   <div className="flex items-center gap-0.5 sm:gap-1">
     {[1, 2, 3, 4, 5].map((i) => (
@@ -536,12 +563,14 @@ const Dispensary = () => {
     search: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [dbDispensaries, setDbDispensaries] = useState<DbDispensary[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch database dispensaries on mount
   useEffect(() => {
     const fetchDbDispensaries = async () => {
+      setIsLoading(true);
       const { data, error } = await supabase
         .from('dispensaries')
         .select('*')
@@ -550,6 +579,7 @@ const Dispensary = () => {
       if (!error && data) {
         setDbDispensaries(data);
       }
+      setIsLoading(false);
     };
     
     fetchDbDispensaries();
@@ -933,7 +963,19 @@ const Dispensary = () => {
                 </div>
 
                 {/* RESULTS */}
-                {filteredData.length === 0 ? (
+                {isLoading ? (
+                  <>
+                    <div className="mb-8">
+                      <Skeleton className="h-5 w-64" />
+                    </div>
+                    {/* DISPENSARY CARDS GRID - SKELETON */}
+                    <div className="space-y-4 mb-12">
+                      {Array.from({ length: ITEMS_PER_PAGE }).map((_, idx) => (
+                        <DispensaryCardSkeleton key={idx} />
+                      ))}
+                    </div>
+                  </>
+                ) : filteredData.length === 0 ? (
                   <div className="text-center py-16">
                     <Building className="w-16 h-16 mx-auto mb-6 text-muted-foreground/40" />
                     <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">
@@ -976,7 +1018,7 @@ const Dispensary = () => {
                       </p>
                     </div>
 
-                    {/* DISPENSARY CARDS GRID */}
+                {/* DISPENSARY CARDS GRID */}
                     <div className="space-y-4 mb-12">
                       <AnimatePresence mode="wait">
                         {paginatedData.map((dispensary) => (
