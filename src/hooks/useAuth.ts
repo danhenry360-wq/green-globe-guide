@@ -63,8 +63,19 @@ export const useAuth = () => {
     return { error: null };
   };
 
+  // Check if signup session exists
+  const hasSignupSession = () => {
+    return !!sessionStorage.getItem('pendingSignup');
+  };
+
   // Verify OTP and complete signup
   const verifyOTP = async (email: string, code: string) => {
+    // First check if we have the signup session data
+    const pendingData = sessionStorage.getItem('pendingSignup');
+    if (!pendingData) {
+      return { error: { message: 'Your signup session has expired. Please go back and sign up again.' }, sessionExpired: true };
+    }
+
     // Verify the OTP code via edge function
     const { data, error: verifyError } = await supabase.functions.invoke('verify-otp', {
       body: { email, code },
@@ -80,11 +91,6 @@ export const useAuth = () => {
     }
 
     // OTP verified - now complete the actual Supabase signup
-    const pendingData = sessionStorage.getItem('pendingSignup');
-    if (!pendingData) {
-      return { error: { message: 'Signup session expired. Please try again.' } };
-    }
-
     const { password, displayName } = JSON.parse(pendingData);
 
     // Create the user account with auto-confirm (since we verified email via OTP)
@@ -157,6 +163,7 @@ export const useAuth = () => {
     signOut,
     verifyOTP,
     resendOTP,
+    hasSignupSession,
     isAuthenticated: !!session,
   };
 };

@@ -18,13 +18,14 @@ const VerifyEmail = () => {
   const [resendCooldown, setResendCooldown] = useState(0);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
   
-  const { verifyOTP, resendOTP, isAuthenticated } = useAuth();
+  const { verifyOTP, resendOTP, hasSignupSession, isAuthenticated } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   
   // Get email from navigation state
   const email = location.state?.email || '';
+  const [sessionValid, setSessionValid] = useState(true);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -32,6 +33,13 @@ const VerifyEmail = () => {
       navigate('/');
     }
   }, [isAuthenticated, navigate, verificationSuccess]);
+
+  // Check if signup session exists
+  useEffect(() => {
+    if (!hasSignupSession()) {
+      setSessionValid(false);
+    }
+  }, [hasSignupSession]);
 
   // If no email in state, redirect to auth
   useEffect(() => {
@@ -70,6 +78,11 @@ const VerifyEmail = () => {
           variant: 'destructive',
         });
         setOtpCode('');
+        
+        // If session expired, update state to show message
+        if (result.sessionExpired) {
+          setSessionValid(false);
+        }
       } else {
         setVerificationSuccess(true);
         toast({
@@ -126,6 +139,45 @@ const VerifyEmail = () => {
       setIsResending(false);
     }
   };
+
+  // Session expired - show message to sign up again
+  if (!sessionValid) {
+    return (
+      <>
+        <Helmet>
+          <title>Session Expired | BudQuest</title>
+        </Helmet>
+
+        <div className="min-h-screen bg-background">
+          <Navigation />
+          
+          <main className="pt-24 pb-20 px-4 sm:px-6 flex items-center justify-center">
+            <Card className="w-full max-w-md bg-card/70 backdrop-blur-sm border-accent/30 shadow-xl">
+              <CardContent className="pt-8 pb-8 text-center">
+                <div className="flex justify-center mb-6">
+                  <div className="relative w-20 h-20 flex items-center justify-center">
+                    <RefreshCw className="w-12 h-12 text-muted-foreground" />
+                  </div>
+                </div>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Session Expired</h2>
+                <p className="text-muted-foreground mb-6">
+                  Your signup session has expired. Please sign up again to receive a new verification code.
+                </p>
+                <Button
+                  onClick={() => navigate('/auth')}
+                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold"
+                >
+                  Sign Up Again
+                </Button>
+              </CardContent>
+            </Card>
+          </main>
+          
+          <Footer />
+        </div>
+      </>
+    );
+  }
 
   if (verificationSuccess) {
     return (
