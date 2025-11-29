@@ -80,7 +80,22 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
 
   return (
     <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="relative max-w-3xl mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search regions..."
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -95,19 +110,6 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
             Pick a region to start exploring
           </p>
         </motion.div>
-
-        {/* Sticky Search Bar (Matches WorldGuide) */}
-        <div className="sticky top-20 z-40 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8 bg-background/95 backdrop-blur-xl border-b border-white/10 sm:rounded-xl sm:border">
-          <div className="relative max-w-3xl mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search regions..."
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {filteredRegions.map((region) => (
@@ -158,7 +160,22 @@ const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void
 
   return (
     <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="relative max-w-3xl mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search states..."
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <Button
           variant="ghost"
           onClick={onBack}
@@ -177,19 +194,6 @@ const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void
           </h1>
           <p className="text-lg text-muted-foreground">Choose a state</p>
         </motion.div>
-
-        {/* Sticky Search Bar */}
-        <div className="sticky top-20 z-40 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 mb-8 bg-background/95 backdrop-blur-xl border-b border-white/10 sm:rounded-xl sm:border">
-          <div className="relative max-w-3xl mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search states..."
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         {filteredStates.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

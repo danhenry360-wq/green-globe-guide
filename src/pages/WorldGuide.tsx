@@ -2837,7 +2837,22 @@ const ContinentIndex = () => {
 
   return (
     <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="relative max-w-3xl mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search continents…"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -2852,18 +2867,6 @@ const ContinentIndex = () => {
             Travel safe. Know the laws worldwide.
           </p>
         </motion.div>
-
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search continents…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c) => (
@@ -2904,7 +2907,22 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
 
   return (
     <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="relative max-w-3xl mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search countries…"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <Button
           variant="ghost"
           onClick={() => nav("/world")}
@@ -2923,18 +2941,6 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
           </h1>
           <p className="text-lg text-muted-foreground">Choose a country</p>
         </motion.div>
-
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search countries…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c) => {
@@ -3021,7 +3027,22 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
 
   return (
     <>
-      <div className="container mx-auto max-w-7xl px-4 pt-32 pb-12">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="relative max-w-3xl mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search regions…"
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <Button
           variant="ghost"
           onClick={() => nav(`/world/${continent.slug}`)}
@@ -3082,18 +3103,6 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
               </div>
           </div>
         </motion.div>
-
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search regions…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {filtered.map((r) => (
