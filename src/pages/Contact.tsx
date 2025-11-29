@@ -320,7 +320,7 @@ const ContactForm = () => {
         <Button
           type="submit"
           disabled={sent}
-          className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 sm:py-4 text-base sm:text-lg gap-2 transition-all disabled:opacity-50"
+          className="w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 sm:py-4 text-base sm:text-lg gap-2 transition-all disabled:opacity-50"
         >
           <Send className="w-5 h-5" />
           Send Message
