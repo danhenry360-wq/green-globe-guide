@@ -7,10 +7,8 @@ import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2 } from "lucide-react";
-import { ProductsSection } from "@/components/ProductsSection";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { DispensaryMap } from "@/components/DispensaryMap";
-
 // Types for database dispensary
 interface DbDispensary {
   id: string;
@@ -118,71 +116,70 @@ const DispensaryDetail = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-24 pb-20 px-4 sm:px-6">
+        <main className="pt-20 pb-16 px-3 sm:px-6">
           <div className="container mx-auto max-w-5xl">
-            {/* Header Section */}
-            <header className="mb-8">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                <div>
-                  <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2">{dbDispensary.name}</h1>
-                  <div className="flex items-center gap-3 text-lg text-muted-foreground">
-                    <MapPin className="w-5 h-5 text-accent" />
-                    <span>{dbDispensary.address}</span>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2 mt-2">
-                    <div className="flex">{renderRating(dbDispensary.rating || 0)}</div>
-                    <span className="text-xl font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
-                    <span className="text-base text-muted-foreground">({dbDispensary.review_count || 0} Reviews)</span>
-                    {dbDispensary.status && (
-                      <Badge className="ml-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold">
-                        {dbDispensary.status}
-                      </Badge>
-                    )}
-                  </div>
-                  {dbDispensary.hours && (
-                    <div className="flex items-center gap-2 mt-2 text-muted-foreground">
-                      <Clock className="w-4 h-4 text-accent" />
-                      <span>{dbDispensary.hours}</span>
-                    </div>
-                  )}
-                </div>
-                
-                {/* View Deal Button */}
-                {dbDispensary.website && (
-                  <a
-                    href={dbDispensary.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-lg font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 flex-shrink-0"
-                  >
-                    <Globe className="w-5 h-5" />
-                    Order Now
-                  </a>
+            {/* Header Section - Mobile Optimized */}
+            <header className="mb-6">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-3 leading-tight">{dbDispensary.name}</h1>
+              
+              <div className="flex items-start gap-2 text-sm sm:text-base text-muted-foreground mb-3">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span className="leading-tight">{dbDispensary.address}</span>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <div className="flex">{renderRating(dbDispensary.rating || 0)}</div>
+                <span className="text-lg sm:text-xl font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
+                <span className="text-sm sm:text-base text-muted-foreground">({dbDispensary.review_count || 0} Reviews)</span>
+                {dbDispensary.status && (
+                  <Badge className="bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-bold">
+                    {dbDispensary.status}
+                  </Badge>
                 )}
               </div>
+              
+              {dbDispensary.hours && (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                  <Clock className="w-4 h-4 text-accent" />
+                  <span>{dbDispensary.hours}</span>
+                </div>
+              )}
+              
+              {/* Order Now Button - Full width on mobile */}
+              {dbDispensary.website && (
+                <a
+                  href={dbDispensary.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-base sm:text-lg font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30"
+                >
+                  <Globe className="w-5 h-5" />
+                  Order Now
+                </a>
+              )}
             </header>
 
             {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {/* Left Column: Image and Description */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6">
                 <Card className="overflow-hidden rounded-xl shadow-xl bg-card/70 backdrop-blur-sm border-accent/30">
                   <img 
                     src={dbDispensary.image ? `${dbDispensary.image}${dbDispensary.image.includes('?') ? '&' : '?'}v=${Date.now()}` : '/dest-california.jpg'} 
                     alt={dbDispensary.name} 
-                    className="w-full h-96 object-cover"
+                    className="w-full h-48 sm:h-64 lg:h-80 object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null; 
                       target.src = "/dest-california.jpg";
                     }}
                   />
-                  <CardContent className="p-6">
-                    <h2 className="text-2xl font-bold text-foreground mb-3">About {dbDispensary.name}</h2>
-                    <p className="text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
+                  <CardContent className="p-4 sm:p-6">
+                    <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">About {dbDispensary.name}</h2>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
                     {dbDispensary.policy_highlights && (
-                      <div className="mt-4 p-4 rounded-lg bg-accent/10 border border-accent/20">
-                        <p className="text-sm text-foreground font-medium">{dbDispensary.policy_highlights}</p>
+                      <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg bg-accent/10 border border-accent/20">
+                        <p className="text-xs sm:text-sm text-foreground font-medium">{dbDispensary.policy_highlights}</p>
                       </div>
                     )}
                   </CardContent>
@@ -190,47 +187,42 @@ const DispensaryDetail = () => {
 
                 {/* Vital Information */}
                 <Card className="rounded-xl shadow-lg bg-card/70 backdrop-blur-sm border-accent/30">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-accent flex items-center gap-2">
-                      <Info className="w-6 h-6" /> Vital Information
+                  <CardHeader className="pb-2 sm:pb-4">
+                    <CardTitle className="text-lg sm:text-2xl font-bold text-accent flex items-center gap-2">
+                      <Info className="w-5 h-5 sm:w-6 sm:h-6" /> Vital Information
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-muted-foreground">
+                  <CardContent className="grid grid-cols-2 gap-2 sm:gap-4 text-sm sm:text-base text-muted-foreground">
                     <div className="flex items-center gap-2">
-                      <CheckCircle className={`w-5 h-5 ${dbDispensary.is_recreational ? 'text-green-500' : 'text-red-500'}`} />
+                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.is_recreational ? 'text-green-500' : 'text-red-500'}`} />
                       <span>Recreational: {dbDispensary.is_recreational ? 'Yes' : 'No'}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className={`w-5 h-5 ${dbDispensary.is_medical ? 'text-green-500' : 'text-red-500'}`} />
+                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.is_medical ? 'text-green-500' : 'text-red-500'}`} />
                       <span>Medical: {dbDispensary.is_medical ? 'Yes' : 'No'}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Truck className={`w-5 h-5 ${dbDispensary.has_delivery ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Delivery: {dbDispensary.has_delivery ? 'Available' : 'No'}</span>
+                      <Truck className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_delivery ? 'text-green-500' : 'text-red-500'}`} />
+                      <span>Delivery: {dbDispensary.has_delivery ? 'Yes' : 'No'}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CreditCard className={`w-5 h-5 ${dbDispensary.has_atm ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>ATM on Site: {dbDispensary.has_atm ? 'Yes' : 'No'}</span>
+                      <CreditCard className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_atm ? 'text-green-500' : 'text-red-500'}`} />
+                      <span>ATM: {dbDispensary.has_atm ? 'Yes' : 'No'}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Car className={`w-5 h-5 ${dbDispensary.has_parking ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Parking: {dbDispensary.has_parking ? 'Available' : 'No'}</span>
+                      <Car className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_parking ? 'text-green-500' : 'text-red-500'}`} />
+                      <span>Parking: {dbDispensary.has_parking ? 'Yes' : 'No'}</span>
                     </div>
                     {dbDispensary.website && (
                       <div className="flex items-center gap-2">
-                        <Globe className="w-5 h-5 text-accent" />
-                        <a href={dbDispensary.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                          Visit Website
+                        <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
+                        <a href={dbDispensary.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline truncate">
+                          Website
                         </a>
                       </div>
                     )}
                   </CardContent>
                 </Card>
-
-                {/* Products Section - Only for database dispensaries */}
-                {isDbDispensary && (
-                  <ProductsSection dispensaryId={dbDispensary.id} />
-                )}
 
                 {/* Reviews Section - Only for database dispensaries */}
                 {isDbDispensary && (
@@ -254,20 +246,20 @@ const DispensaryDetail = () => {
                 )}
               </div>
 
-              {/* Right Column: Map/Sidebar */}
-              <div className="lg:col-span-1 space-y-8">
+              {/* Right Column: Map/Sidebar - Shown first on mobile */}
+              <div className="lg:col-span-1 space-y-4 sm:space-y-6 order-first lg:order-last">
                 <Card className="rounded-xl shadow-lg bg-card/70 backdrop-blur-sm border-accent/30">
-                  <CardHeader>
-                    <CardTitle className="text-xl font-bold text-accent">Location Map</CardTitle>
+                  <CardHeader className="pb-2 sm:pb-4">
+                    <CardTitle className="text-lg sm:text-xl font-bold text-accent">Location</CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-3 sm:p-6 pt-0">
                     <DispensaryMap
                       latitude={dbDispensary.latitude}
                       longitude={dbDispensary.longitude}
                       dispensaryName={dbDispensary.name}
                       address={dbDispensary.address}
                     />
-                    <p className="text-sm text-muted-foreground mt-3">
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3">
                       {dbDispensary.address}
                     </p>
                   </CardContent>
