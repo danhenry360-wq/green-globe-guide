@@ -22,12 +22,13 @@ import {
   AlertTriangle,
   Skull, 
   Siren,
-  Gavel, // Added for Prison/Legal warnings
-  ShieldAlert // Added for State of Exception/Arbitrary arrest
+  Gavel,
+  ShieldAlert
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
+import { getCountryImage } from "@/data/country_images";
 
 /* ----------------------------------------------------
    4-LEVEL DATA MODEL
@@ -2842,11 +2843,13 @@ const ContinentIndex = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-10 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">
-            Global Cannabis Guide
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
+            <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+              Global Cannabis Guide
+            </span>
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Travel safe. Know the laws.
+          <p className="text-base sm:text-lg text-muted-foreground font-light">
+            Travel safe. Know the laws worldwide.
           </p>
         </motion.div>
 
