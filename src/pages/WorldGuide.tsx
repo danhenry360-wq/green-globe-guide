@@ -19,6 +19,8 @@ import {
   Waves,
   Sun,
   AlertTriangle,
+  Skull, // Added for Death Penalty warnings
+  Siren,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
@@ -40,7 +42,6 @@ interface Region {
 interface Country {
   slug: string;
   name: string;
-  // Added "Mixed" for USA/Australia to be accurate
   legalStatus: "Recreational" | "Medical" | "Decriminalized" | "Illegal" | "Mixed";
   possession: string;
   airport: string;
@@ -57,7 +58,7 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA (AUDITED) 
+   FULL WORLD DATA (AUDITED & COMPLETE) 
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -70,58 +71,34 @@ const WORLD: Continent[] = [
         name: "Canada",
         legalStatus: "Recreational",
         possession: "30 g public / unlimited home",
-        airport: "30 g domestic only",
-        tourist: "Gov stores only; ID required",
+        airport: "30 g domestic only (Illegal international)",
+        tourist: "Gov stores only; ID required (18/19+)",
         description:
-          "First G7 nation to legalise recreational cannabis nationwide.",
+          "First G7 nation to legalise recreational cannabis nationwide. Strict driving laws apply.",
         image: "/dest-4.jpg",
         regions: [
           {
             slug: "ontario",
             name: "Ontario",
             cities: [
-              {
-                slug: "toronto",
-                name: "Toronto",
-                atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"],
-              },
-              {
-                slug: "ottawa",
-                name: "Ottawa",
-                atGlance: ["Capital city", "Gov outlets", "Bilingual service"],
-              },
+              { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
+              { slug: "ottawa", name: "Ottawa", atGlance: ["Capital city", "Gov outlets", "Bilingual service"] },
             ],
           },
           {
             slug: "british-columbia",
             name: "British Columbia",
             cities: [
-              {
-                slug: "vancouver",
-                name: "Vancouver",
-                atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"],
-              },
-              {
-                slug: "victoria",
-                name: "Victoria",
-                atGlance: ["Island capital", "Relaxed vibe", "Ocean views"],
-              },
+              { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
+              { slug: "victoria", name: "Victoria", atGlance: ["Island capital", "Relaxed vibe", "Ocean views"] },
             ],
           },
           {
             slug: "quebec",
             name: "Quebec",
             cities: [
-              {
-                slug: "montreal",
-                name: "Montreal",
-                atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"],
-              },
-              {
-                slug: "quebec-city",
-                name: "Quebec City",
-                atGlance: ["Historic core", "Fewer stores", "European charm"],
-              },
+              { slug: "montreal", name: "Montreal", atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"] },
+              { slug: "quebec-city", name: "Quebec City", atGlance: ["Historic core", "Fewer stores", "European charm"] },
             ],
           },
         ],
@@ -129,44 +106,28 @@ const WORLD: Continent[] = [
       {
         slug: "united-states",
         name: "United States",
-        legalStatus: "Mixed", // AUDIT FIX: Was Medical
+        legalStatus: "Mixed",
         possession: "Varies by state (Illegal Federally)",
-        airport: "Federal prohibition (TSA)",
-        tourist: "Check state laws; no interstate transport",
+        airport: "Federal prohibition (TSA) - Do not cross state lines",
+        tourist: "Check state laws; interstate transport is a Federal Crime",
         description:
-          "Federally illegal, but 24 states allow recreational use. Crossing state lines is a federal crime.",
+          "Federally illegal. ~24 states allow recreational use, but crossing state lines (even between two legal states) is a federal felony.",
         image: "/dest-1.jpg",
         regions: [
           {
             slug: "california",
             name: "California",
             cities: [
-              {
-                slug: "los-angeles",
-                name: "Los Angeles",
-                atGlance: ["Thousands of stores", "Delivery legal", "No public use"],
-              },
-              {
-                slug: "san-francisco",
-                name: "San Francisco",
-                atGlance: ["Lounges allowed", "Golden Gate parks ban", "Bring ID"],
-              },
+              { slug: "los-angeles", name: "Los Angeles", atGlance: ["Thousands of stores", "Delivery legal", "No public use"] },
+              { slug: "san-francisco", name: "San Francisco", atGlance: ["Lounges allowed", "Golden Gate parks ban", "Bring ID"] },
             ],
           },
           {
             slug: "colorado",
             name: "Colorado",
             cities: [
-              {
-                slug: "denver",
-                name: "Denver",
-                atGlance: ["Birthplace of rec", "Social lounges", "No national-park use"],
-              },
-              {
-                slug: "boulder",
-                name: "Boulder",
-                atGlance: ["College town", "Mountain views", "Strict public ban"],
-              },
+              { slug: "denver", name: "Denver", atGlance: ["Birthplace of rec", "Social lounges", "No national-park use"] },
+              { slug: "boulder", name: "Boulder", atGlance: ["College town", "Mountain views", "Strict public ban"] },
             ],
           },
         ],
@@ -175,49 +136,33 @@ const WORLD: Continent[] = [
         slug: "mexico",
         name: "Mexico",
         legalStatus: "Decriminalized",
-        possession: "Small amounts tolerated",
+        possession: "Small amounts tolerated (<5g)",
         airport: "Zero tolerance",
-        tourist: "Private use low priority; avoid public",
+        tourist: "Technical tolerance, but police extortion is common.",
         description:
-          "Supreme Court ruled prohibition unconstitutional; possession is administrative but police still strict.",
+          "Supreme Court ruled prohibition unconstitutional, but regulations for sales are stalled. Police often target tourists for bribes.",
         image: "/dest-4.jpg",
         regions: [
           {
             slug: "cdmx",
             name: "Mexico City",
             cities: [
-              {
-                slug: "mexico-city",
-                name: "Mexico City",
-                atGlance: ["Capital vibe relaxed", "Private use tolerated", "Great street food"],
-              },
+              { slug: "mexico-city", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Great street food"] },
             ],
           },
           {
             slug: "quintana-roo",
             name: "Quintana Roo",
             cities: [
-              {
-                slug: "cancun",
-                name: "Cancun",
-                atGlance: ["Resort security tight", "Pool areas ban smoking", "Enjoy beaches"],
-              },
-              {
-                slug: "tulum",
-                name: "Tulum",
-                atGlance: ["Boho-chic", "Beach clubs", "Discreet only"],
-              },
+              { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Enjoy beaches"] },
+              { slug: "tulum", name: "Tulum", atGlance: ["Boho-chic", "Beach clubs", "Discreet only"] },
             ],
           },
           {
             slug: "jalisco",
             name: "Jalisco",
             cities: [
-              {
-                slug: "guadalajara",
-                name: "Guadalajara",
-                atGlance: ["Tech hub", "Younger crowd", "Check Airbnb rules"],
-              },
+              { slug: "guadalajara", name: "Guadalajara", atGlance: ["Tech hub", "Younger crowd", "Check Airbnb rules"] },
             ],
           },
         ],
@@ -233,10 +178,10 @@ const WORLD: Continent[] = [
         slug: "costa-rica",
         name: "Costa Rica",
         legalStatus: "Illegal",
-        possession: "Decriminalized for personal use",
+        possession: "Decriminalized for personal use (Grey area)",
         airport: "Zero tolerance",
-        tourist: "Discreet personal use generally ignored",
-        description: "Personal consumption in private is not penalized, but selling is illegal.",
+        tourist: "Discreet personal use generally ignored, but selling is illegal.",
+        description: "Personal consumption in private is not penalized, but buying/selling is a crime. Police may confiscate.",
         image: "/dest-5.jpg",
         regions: [
           {
@@ -250,10 +195,10 @@ const WORLD: Continent[] = [
         slug: "panama",
         name: "Panama",
         legalStatus: "Medical",
-        possession: "Medical prescription only",
+        possession: "Medical prescription only (Strict)",
         airport: "Zero tolerance",
-        tourist: "Strict laws; medical only",
-        description: "Medical cannabis legalized in 2021; recreational remains illegal.",
+        tourist: "Strict laws; recreational use is illegal.",
+        description: "Medical cannabis legalized in 2021, but recreational use remains a crime with potential jail time.",
         image: "/dest-6.jpg",
         regions: [
           {
@@ -269,8 +214,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Up to 10g private possession",
         airport: "Zero tolerance",
-        tourist: "Private use tolerated; public use illegal",
-        description: "Possession of small amounts decriminalized on private property.",
+        tourist: "Private use tolerated; public use illegal.",
+        description: "Possession of small amounts (up to 10g) decriminalized on private property only.",
         image: "/dest-4.jpg",
         regions: [
           {
@@ -286,8 +231,8 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; strict laws",
-        description: "Cannabis remains illegal with strict penalties.",
+        tourist: "Strongly discouraged; strict laws.",
+        description: "Cannabis remains illegal with strict penalties including prison.",
         image: "/dest-3.jpg",
         regions: [{ slug: "guatemala-city-region", name: "Guatemala City Region", cities: [{ slug: "guatemala-city", name: "Guatemala City", atGlance: ["High altitude", "Strict laws", "Cultural hub"] }] }]
       },
@@ -297,8 +242,8 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; very strict",
-        description: "Zero tolerance policy enforced by administration.",
+        tourist: "Strongly discouraged; harsh crackdown.",
+        description: "Zero tolerance policy enforced aggressively by current administration.",
         image: "/dest-1.jpg",
         regions: [{ slug: "san-salvador-region", name: "San Salvador Region", cities: [{ slug: "san-salvador", name: "San Salvador", atGlance: ["Capital", "Zero tolerance", "Bitcoin hub"] }] }]
       },
@@ -314,9 +259,9 @@ const WORLD: Continent[] = [
         name: "Netherlands",
         legalStatus: "Decriminalized",
         possession: "5 g tolerated",
-        airport: "Do not transport",
-        tourist: "Coffee-shop weed is potent—start small",
-        description: "Sale tolerated under strict conditions; production remains illegal.",
+        airport: "Do not transport (Schengen rules)",
+        tourist: "Coffee-shop weed is potent. Public use discouraged.",
+        description: "Sale tolerated under strict conditions (gedoogbeleid); production remains illegal.",
         image: "/dest-3.jpg",
         regions: [
           {
@@ -327,7 +272,7 @@ const WORLD: Continent[] = [
           {
             slug: "south-holland",
             name: "South Holland",
-            cities: [{ slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops", "Higher quality", "Residency checks"] }, { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] }],
+            cities: [{ slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops", "Higher quality", "Residency checks possible"] }, { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] }],
           },
         ],
       },
@@ -336,9 +281,9 @@ const WORLD: Continent[] = [
         name: "Germany",
         legalStatus: "Recreational",
         possession: "25 g public / 50 g home",
-        airport: "Domestic OK within limit",
-        tourist: "Join social club for access",
-        description: "Legalised April 2024; cannabis social clubs launching nationwide.",
+        airport: "Domestic only (Risk)",
+        tourist: "Possession legal, but BUYING is illegal for tourists.",
+        description: "Legalised April 2024. 'Social Clubs' are for residents only. No commercial shops exist for tourists.",
         image: "/dest-1.jpg",
         regions: [
           {
@@ -354,7 +299,7 @@ const WORLD: Continent[] = [
           {
             slug: "bavaria",
             name: "Bavaria",
-            cities: [{ slug: "munich", name: "Munich", atGlance: ["Conservative but OK", "Beer gardens = no weed", "English spoken"] }],
+            cities: [{ slug: "munich", name: "Munich", atGlance: ["Conservative enforcement", "Beer gardens = no weed", "English spoken"] }],
           },
         ],
       },
@@ -364,8 +309,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Private areas OK",
         airport: "Do not transport",
-        tourist: "Join private cannabis club",
-        description: "Personal cultivation & private consumption legal; public use fined.",
+        tourist: "Join private cannabis club (Need referral)",
+        description: "Personal cultivation & private consumption legal; public use fined. Clubs operate in legal grey area.",
         image: "/dest-5.jpg",
         regions: [
           {
@@ -384,10 +329,10 @@ const WORLD: Continent[] = [
         slug: "italy",
         name: "Italy",
         legalStatus: "Decriminalized",
-        possession: "Small home grow tolerated",
+        possession: "Small home grow tolerated (Court Ruling)",
         airport: "Zero tolerance",
-        tourist: "Medical only with local script",
-        description: "Light fines for personal use; medical cannabis available via pharmacy.",
+        tourist: "CBD ('Cannabis Light') legal; THC illegal.",
+        description: "Recreational use is decriminalized (administrative fines). 'Cannabis Light' (low THC) is sold openly.",
         image: "/dest-6.jpg",
         regions: [
           {
@@ -406,16 +351,16 @@ const WORLD: Continent[] = [
         slug: "portugal",
         name: "Portugal",
         legalStatus: "Decriminalized",
-        possession: "25 g civil fine",
+        possession: "25 g civil fine (Administrative)",
         airport: "Do not transport",
-        tourist: "Enjoy wine & coast; herb secondary",
-        description: "All drugs decriminalised 2001; cannabis social clubs emerging.",
+        tourist: "Decriminalized ≠ Legal. Police will confiscate.",
+        description: "All drugs decriminalised 2001 (health issue). No legal shops for recreational cannabis.",
         image: "/dest-5.jpg",
         regions: [
           {
             slug: "lisbon-region",
             name: "Lisbon Region",
-            cities: [{ slug: "lisbon", name: "Lisbon", atGlance: ["Hilly capital", "Social clubs", "Trams, don’t drive"] }],
+            cities: [{ slug: "lisbon", name: "Lisbon", atGlance: ["Street dealers often fake", "Social clubs rare", "Trams, don’t drive"] }],
           },
           {
             slug: "porto-region",
@@ -430,8 +375,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "10 g civil fine",
         airport: "Do not transport",
-        tourist: "Low-THC hemp shops legal",
-        description: "Medical cannabis legal; low-THC products sold openly.",
+        tourist: "Low-THC (<1%) sold legally as tobacco substitute.",
+        description: "High-THC cannabis trials in some cities (residents only). Low-THC cannabis is legal.",
         image: "/dest-3.jpg",
         regions: [
           {
@@ -452,8 +397,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Purchase seeds & hemp",
         airport: "Do not transport",
-        tourist: "Enjoy Alps; herb secondary",
-        description: "Possession of small amounts decriminalised; hemp shops legal.",
+        tourist: "Enjoy Alps; herb secondary.",
+        description: "Possession of small amounts decriminalised; hemp shops legal. High THC is illegal.",
         image: "/dest-6.jpg",
         regions: [{ slug: "vienna-region", name: "Vienna Region", cities: [{ slug: "vienna", name: "Vienna", atGlance: ["Coffee-house culture", "Hemp stores", "No public use"] }] }],
       },
@@ -463,8 +408,8 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "15 g civil fine",
         airport: "Do not transport",
-        tourist: "Great beer; herb secondary",
-        description: "Medical cannabis legal; personal use decriminalised.",
+        tourist: "Tolerated but technically illegal to sell.",
+        description: "Possession of <10g is an administrative offense. Medical cannabis is legal.",
         image: "/dest-4.jpg",
         regions: [{ slug: "prague-region", name: "Prague Region", cities: [{ slug: "prague", name: "Prague", atGlance: ["Medieval centre", "Beer over bud", "Discreet only"] }] }],
       },
@@ -474,8 +419,8 @@ const WORLD: Continent[] = [
         legalStatus: "Recreational",
         possession: "7 g home / 3.5 g public",
         airport: "Do not transport",
-        tourist: "EU’s first legal country; small island",
-        description: "Legalised 2021; cannabis associations for residents.",
+        tourist: "Associations are Residents Only.",
+        description: "Legalised 2021. Tourists cannot legally buy cannabis. Public consumption is fined.",
         image: "/dest-5.jpg",
         regions: [{ slug: "malta-island", name: "Malta Island", cities: [{ slug: "valletta", name: "Valletta", atGlance: ["Fortress capital", "Associations members-only", "Beach relax"] }] }],
       },
@@ -483,10 +428,10 @@ const WORLD: Continent[] = [
         slug: "luxembourg",
         name: "Luxembourg",
         legalStatus: "Recreational",
-        possession: "3 g home grow",
+        possession: "3 g home grow (Private only)",
         airport: "Do not transport",
-        tourist: "Residents only; tourists cannot buy",
-        description: "Legal home cultivation & possession; sales still illegal.",
+        tourist: "Residents only; tourists cannot buy.",
+        description: "Legal home cultivation & possession for residents. Sales strictly illegal.",
         image: "/dest-3.jpg",
         regions: [{ slug: "luxembourg-region", name: "Luxembourg Region", cities: [{ slug: "luxembourg-city", name: "Luxembourg City", atGlance: ["Banking centre", "Home grow only", "Beautiful old town"] }] }],
       },
@@ -496,19 +441,19 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "3 g civil fine",
         airport: "Do not transport",
-        tourist: "Enjoy waffles & chocolate; herb secondary",
-        description: "Personal use decriminalised; public use fined.",
+        tourist: "Enjoy waffles; herb secondary.",
+        description: "Personal use (up to 3g) lowest prosecution priority for adults.",
         image: "/dest-6.jpg",
         regions: [{ slug: "brussels-region", name: "Brussels Region", cities: [{ slug: "brussels", name: "Brussels", atGlance: ["EU capital", "Discreet only", "Chocolate & beer"] }] }],
       },
       {
         slug: "france",
         name: "France",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical, but strict for tourists
+        legalStatus: "Illegal", // AUDIT FIX
         possession: "Fines / Police custody",
         airport: "Zero tolerance",
-        tourist: "Enjoy wine; cannabis strictly illegal for tourists",
-        description: "Medical cannabis trials ongoing but inaccessible for tourists. Recreational use is illegal.",
+        tourist: "Strictly illegal. CBD shops common but THC banned.",
+        description: "Strict penalties. On-the-spot fines (€200) for use/possession.",
         image: "/dest-5.jpg",
         regions: [
           {
@@ -529,8 +474,8 @@ const WORLD: Continent[] = [
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only via specialist doctor",
-        description: "Medical cannabis legal 2018; recreational use prohibited.",
+        tourist: "Medical only via specialist doctor (Private).",
+        description: "Medical cannabis legal 2018 but restrictive. Recreational use is illegal (Class B drug).",
         image: "/dest-4.jpg",
         regions: [
           {
@@ -551,8 +496,8 @@ const WORLD: Continent[] = [
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; recreational illegal",
-        description: "Medical cannabis pilot; recreational use illegal.",
+        tourist: "Medical only; recreational illegal.",
+        description: "Medical cannabis pilot program exists. Recreational use strictly illegal.",
         image: "/dest-6.jpg",
         regions: [{ slug: "dublin-region", name: "Dublin Region", cities: [{ slug: "dublin", name: "Dublin", atGlance: ["Pub culture", "Medical only", "Discreet only"] }] }],
       },
@@ -562,10 +507,10 @@ const WORLD: Continent[] = [
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; Christiania tolerated",
-        description: "Medical cannabis legal; Christiania enclave tolerated.",
+        tourist: "Christiania 'Pusher Street' closed/enforced.",
+        description: "Medical cannabis legal. Famous 'Pusher Street' in Christiania is recently facing heavy police crackdown.",
         image: "/dest-3.jpg",
-        regions: [{ slug: "copenhagen-region", name: "Copenhagen Region", cities: [{ slug: "copenhagen", name: "Copenhagen", atGlance: ["Bike capital", "Christiania enclave", "Medical only"] }] }],
+        regions: [{ slug: "copenhagen-region", name: "Copenhagen Region", cities: [{ slug: "copenhagen", name: "Copenhagen", atGlance: ["Bike capital", "Christiania enforcement", "Medical only"] }] }],
       },
       {
         slug: "finland",
@@ -592,13 +537,13 @@ const WORLD: Continent[] = [
       {
         slug: "sweden",
         name: "Sweden",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Illegal", // AUDIT FIX: Sweden is strict
+        possession: "Strict Penalties",
         airport: "Zero tolerance",
-        tourist: "Medical only; enjoy archipelago",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "Zero tolerance culture. Do not bring.",
+        description: "Sweden has some of the strictest drug laws in Europe. Zero tolerance.",
         image: "/dest-6.jpg",
-        regions: [{ slug: "stockholm-region", name: "Stockholm Region", cities: [{ slug: "stockholm", name: "Stockholm", atGlance: ["Archipelago capital", "Medical only", "Design hub"] }] }],
+        regions: [{ slug: "stockholm-region", name: "Stockholm Region", cities: [{ slug: "stockholm", name: "Stockholm", atGlance: ["Archipelago capital", "Strict laws", "Design hub"] }] }],
       },
       {
         slug: "iceland",
@@ -815,8 +760,8 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "WARNING: Severe penalties. Political hostages possible.",
+        description: "Cannabis illegal. Foreigners have been detained for small amounts (e.g. vape cartridges) for years.",
         image: "/dest-4.jpg",
         regions: [{ slug: "moscow-region", name: "Moscow Region", cities: [{ slug: "moscow", name: "Moscow", atGlance: ["Red Square", "Illegal", "Severe penalties"] }] }, { slug: "stpetersburg-region", name: "St Petersburg Region", cities: [{ slug: "saint-petersburg", name: "Saint Petersburg", atGlance: ["Hermitage", "Illegal", "Severe penalties"] }] }],
       },
@@ -834,7 +779,7 @@ const WORLD: Continent[] = [
       {
         slug: "turkey",
         name: "Turkey",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical, but strict for tourists
+        legalStatus: "Illegal", // AUDIT FIX
         possession: "Strict penalites",
         airport: "Zero tolerance",
         tourist: "Strict laws; enjoy kebabs",
@@ -856,11 +801,11 @@ const WORLD: Continent[] = [
       {
         slug: "georgia",
         name: "Georgia",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Decriminalized", // Correcting based on recent laws but strict for sale
+        possession: "Small amounts tolerated",
         airport: "Zero tolerance",
-        tourist: "Medical only; wine country",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "Private use decriminalized, but buying is risky.",
+        description: "Constitutional court abolished fines for consumption, but purchase/sale is illegal.",
         image: "/dest-4.jpg",
         regions: [{ slug: "tbilisi-region", name: "Tbilisi Region", cities: [{ slug: "tbilisi", name: "Tbilisi", atGlance: ["Caucasus capital", "Medical only", "Wine culture"] }] }],
       },
@@ -951,13 +896,13 @@ const WORLD: Continent[] = [
       {
         slug: "brazil",
         name: "Brazil",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Illegal", // AUDIT FIX: Decrim but selling dangerous
+        possession: "Decriminalized (40g)",
         airport: "Zero tolerance",
-        tourist: "Medical only; carnival & beaches",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "Personal use decriminalized, but strictly NO selling.",
+        description: "Supreme Court decriminalized possession of 40g in 2024. However, police discretion is high and selling is a felony.",
         image: "/dest-4.jpg",
-        regions: [{ slug: "rio-de-janeiro-region", name: "Rio de Janeiro Region", cities: [{ slug: "rio-de-janeiro", name: "Rio de Janeiro", atGlance: ["Carnival capital", "Medical only", "Christ statue"] }] }, { slug: "sao-paulo-region", name: "São Paulo Region", cities: [{ slug: "sao-paulo", name: "São Paulo", atGlance: ["Mega-city", "Medical only", "Street art"] }] }],
+        regions: [{ slug: "rio-de-janeiro-region", name: "Rio de Janeiro Region", cities: [{ slug: "rio-de-janeiro", name: "Rio de Janeiro", atGlance: ["Carnival capital", "Decriminalized personal", "Christ statue"] }] }, { slug: "sao-paulo-region", name: "São Paulo Region", cities: [{ slug: "sao-paulo", name: "São Paulo", atGlance: ["Mega-city", "Medical only", "Street art"] }] }],
       },
       {
         slug: "peru",
@@ -1366,18 +1311,18 @@ const WORLD: Continent[] = [
       {
         slug: "thailand",
         name: "Thailand",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; tropical beaches",
+        legalStatus: "Mixed", // AUDIT FIX: Reverting to Medical enforcement
+        possession: "Medical prescription required (2025)",
+        airport: "Illegal to import/export",
+        tourist: "WARNING: Recreational era ending. Medical script required.",
         description:
-          "Medical cannabis legal; recreational use prohibited. Laws are tightening.",
+          "Decriminalized in 2022, but regulations are tightening significantly in 2025 to ban recreational use. Tourists should act with caution.",
         image: "/dest-6.jpg",
         regions: [
           {
             slug: "bangkok-region",
             name: "Bangkok Region",
-            cities: [{ slug: "bangkok", name: "Bangkok", atGlance: ["Med clinics w/ script", "Cafés closed", "Discreet only"] }],
+            cities: [{ slug: "bangkok", name: "Bangkok", atGlance: ["Shops closing/converting", "Scripts needed", "Discreet only"] }],
           },
           {
             slug: "phuket-region",
@@ -1395,45 +1340,45 @@ const WORLD: Continent[] = [
         slug: "singapore",
         name: "Singapore",
         legalStatus: "Illegal",
-        possession: "Criminal offence",
-        airport: "Zero tolerance",
-        tourist: "Strongly discouraged; death-penalty risk",
-        description: "Cannabis illegal; severe penalties including death.",
+        possession: "Caning & Long Prison Terms",
+        airport: "Zero tolerance (Death penalty risk)",
+        tourist: "WARNING: Mandatory death penalty for trafficking. Drug tests at entry.",
+        description: "Possession is a serious crime punishable by caning. Trafficking >500g cannabis carries the mandatory death penalty.",
         image: "/dest-4.jpg",
         regions: [{ slug: "singapore-island", name: "Singapore Island", cities: [{ slug: "singapore", name: "Singapore", atGlance: ["Garden city", "Illegal", "Death-penalty risk"] }] }],
       },
       {
         slug: "malaysia",
         name: "Malaysia",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical
-        possession: "Medical prescription only",
+        legalStatus: "Illegal", // AUDIT FIX
+        possession: "Severe prison / Caning",
         airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "WARNING: Trafficking carries death penalty risk.",
+        description: "Strictly illegal. While mandatory death penalty was abolished in 2023, it remains a discretionary punishment for trafficking.",
         image: "/dest-5.jpg",
-        regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Medical only", "Death-penalty caution"] }] }],
+        regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Illegal", "Death-penalty caution"] }] }],
       },
       {
         slug: "indonesia",
         name: "Indonesia",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        legalStatus: "Illegal", // AUDIT FIX
+        possession: "Prison / Deportation",
+        airport: "Zero tolerance (Death penalty risk for trafficking)",
+        tourist: "WARNING: Severe penalties (Bali included). Do not buy.",
+        description: "Strictly illegal. Constitutional Court rejected medical use. Police frequently target tourists in Bali.",
         image: "/dest-6.jpg",
-        regions: [{ slug: "jakarta-region", name: "Jakarta Region", cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Medical only", "Death-penalty caution"] }] }, { slug: "bali-region", name: "Bali Region", cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Island hub", "Medical only", "Death-penalty caution"] }] }],
+        regions: [{ slug: "jakarta-region", name: "Jakarta Region", cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Illegal", "Death-penalty caution"] }] }, { slug: "bali-region", name: "Bali Region", cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Island hub", "Illegal", "Death-penalty caution"] }] }],
       },
       {
         slug: "philippines",
         name: "Philippines",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical
-        possession: "Medical prescription only",
+        legalStatus: "Illegal", // AUDIT FIX
+        possession: "Life imprisonment for large amounts",
         airport: "Zero tolerance",
-        tourist: "Medical only; death-penalty caution",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        tourist: "WARNING: Severe penalties. Medical bill pending but not law.",
+        description: "Strictly illegal. Harsh anti-drug enforcement campaigns continue.",
         image: "/dest-4.jpg",
-        regions: [{ slug: "manila-region", name: "Manila Region", cities: [{ slug: "manila", name: "Manila", atGlance: ["Mega-city", "Medical only", "Death-penalty caution"] }] }],
+        regions: [{ slug: "manila-region", name: "Manila Region", cities: [{ slug: "manila", name: "Manila", atGlance: ["Mega-city", "Illegal", "Death-penalty caution"] }] }],
       },
       {
         slug: "vietnam",
@@ -1441,8 +1386,8 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "WARNING: Severe penalties. Death penalty for trafficking.",
+        description: "Cannabis illegal. Possession criminalised. Trafficking large amounts leads to death penalty.",
         image: "/dest-5.jpg",
         regions: [{ slug: "hanoi-region", name: "Hanoi Region", cities: [{ slug: "hanoi", name: "Hanoi", atGlance: ["Old quarter", "Illegal", "Severe penalties"] }] }, { slug: "ho-chi-minh-region", name: "Ho Chi Minh Region", cities: [{ slug: "ho-chi-minh-city", name: "Ho Chi Minh City", atGlance: ["Motorbike chaos", "Illegal", "Severe penalties"] }] }],
       },
@@ -1483,10 +1428,10 @@ const WORLD: Continent[] = [
         slug: "china",
         name: "China",
         legalStatus: "Illegal",
-        possession: "Criminal offence",
+        possession: "Detention / Deportation",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "Severe penalties. Random drug tests possible.",
+        description: "Strictly illegal. Trafficking can carry the death penalty. Administrative detention for consumption.",
         image: "/dest-6.jpg",
         regions: [{ slug: "beijing-region", name: "Beijing Region", cities: [{ slug: "beijing", name: "Beijing", atGlance: ["Forbidden City", "Illegal", "Severe penalties"] }] }, { slug: "shanghai-region", name: "Shanghai Region", cities: [{ slug: "shanghai", name: "Shanghai", atGlance: ["Skyline hub", "Illegal", "Severe penalties"] }] }],
       },
@@ -1494,10 +1439,10 @@ const WORLD: Continent[] = [
         slug: "japan",
         name: "Japan",
         legalStatus: "Illegal",
-        possession: "Criminal offence",
+        possession: "Prison (up to 5 years)",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; zero tolerance",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "Strongly discouraged; zero tolerance culture",
+        description: "Cannabis Control Act punishes possession severely. Foreigners are likely to be deported after prison time.",
         image: "/dest-4.jpg",
         regions: [{ slug: "tokyo-region", name: "Tokyo Region", cities: [{ slug: "tokyo", name: "Tokyo", atGlance: ["Neon capital", "Illegal", "Severe penalties"] }] }, { slug: "osaka-region", name: "Osaka Region", cities: [{ slug: "osaka", name: "Osaka", atGlance: ["Food capital", "Illegal", "Severe penalties"] }] }],
       },
@@ -1570,13 +1515,13 @@ const WORLD: Continent[] = [
       {
         slug: "india",
         name: "India",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Mixed",
+        possession: "State dependent (Bhang tolerated)",
         airport: "Zero tolerance",
-        tourist: "Medical only; bhang lassi tolerated in areas",
-        description: "Medical cannabis legal; bhang tolerated in some states.",
+        tourist: "Flower illegal; 'Bhang' (edible) legal in some states.",
+        description: "National law bans flower (ganja) and resin (charas), but leaves/seeds (bhang) are legal in some states for religious reasons.",
         image: "/dest-5.jpg",
-        regions: [{ slug: "delhi-region", name: "Delhi Region", cities: [{ slug: "delhi", name: "Delhi", atGlance: ["Capital chaos", "Medical only", "Bhang lassi"] }] }, { slug: "mumbai-region", name: "Mumbai Region", cities: [{ slug: "mumbai", name: "Mumbai", atGlance: ["Bollywood hub", "Medical only", "Street food"] }] }, { slug: "goa-region", name: "Goa Region", cities: [{ slug: "panaji", name: "Panaji", atGlance: ["Beach parties", "Tolerated bhang", "Medical only"] }] }],
+        regions: [{ slug: "delhi-region", name: "Delhi Region", cities: [{ slug: "delhi", name: "Delhi", atGlance: ["Capital chaos", "Flower illegal", "Bhang lassi tolerated"] }] }, { slug: "goa-region", name: "Goa Region", cities: [{ slug: "panaji", name: "Panaji", atGlance: ["Beach parties", "Police raids common", "Flower illegal"] }] }],
       },
       {
         slug: "pakistan",
@@ -1661,8 +1606,8 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; harsh penalties",
-        description: "Cannabis illegal; possession criminalised.",
+        tourist: "Strongly discouraged; severe penalties",
+        description: "Cannabis illegal; trafficking can lead to death penalty.",
         image: "/dest-4.jpg",
         regions: [{ slug: "tehran-region", name: "Tehran Region", cities: [{ slug: "tehran", name: "Tehran", atGlance: ["Mountain capital", "Illegal", "Severe penalties"] }] }],
       },
@@ -1749,21 +1694,21 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; extreme penalties",
-        description: "Cannabis illegal; severe penalties including death.",
+        tourist: "WARNING: Extreme penalties (Death/Lashes).",
+        description: "Cannabis illegal; severe penalties including death for trafficking and corporal punishment.",
         image: "/dest-5.jpg",
         regions: [{ slug: "riyadh-region", name: "Riyadh Region", cities: [{ slug: "riyadh", name: "Riyadh", atGlance: ["Desert capital", "Illegal", "Extreme penalties"] }] }, { slug: "jeddah-region", name: "Jeddah Region", cities: [{ slug: "jeddah", name: "Jeddah", atGlance: ["Red-Sea port", "Illegal", "Extreme penalties"] }] }],
       },
       {
         slug: "uae",
         name: "United Arab Emirates",
-        legalStatus: "Illegal", // AUDIT FIX: Was Medical
-        possession: "Strict Penalties",
-        airport: "Zero tolerance",
-        tourist: "Medical only; zero-tolerance airport",
-        description: "Medical cannabis legal; recreational use prohibited.",
+        legalStatus: "Illegal", // AUDIT FIX
+        possession: "4+ years prison / Deportation",
+        airport: "Zero tolerance (Sensitive equipment)",
+        tourist: "Strictly illegal. THC in blood stream counts as possession.",
+        description: "Zero tolerance. Laws are strictly enforced. CBD oil is generally illegal. Presence of drugs in blood tests is considered possession.",
         image: "/dest-6.jpg",
-        regions: [{ slug: "dubai-region", name: "Dubai Region", cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Medical only", "Zero-tolerance airport"] }] }, { slug: "abu-dhabi-region", name: "Abu Dhabi Region", cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Oil capital", "Medical only", "Grand mosque"] }] }],
+        regions: [{ slug: "dubai-region", name: "Dubai Region", cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Illegal", "Zero-tolerance airport"] }] }, { slug: "abu-dhabi-region", name: "Abu Dhabi Region", cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Oil capital", "Illegal", "Grand mosque"] }] }],
       },
       {
         slug: "qatar",
@@ -1771,7 +1716,7 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; World-Cup host",
+        tourist: "Strongly discouraged; severe penalties",
         description: "Cannabis illegal; severe penalties.",
         image: "/dest-4.jpg",
         regions: [{ slug: "doha-region", name: "Doha Region", cities: [{ slug: "doha", name: "Doha", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
@@ -1855,20 +1800,20 @@ const WORLD: Continent[] = [
         legalStatus: "Decriminalized",
         possession: "Private use & grow OK",
         airport: "Transport prohibited",
-        tourist: "Private homes only—enjoy safari & wine",
+        tourist: "Private homes only. BUYING is illegal.",
         description:
-          "Private use & cultivation legal; public use prohibited, no commercial sales.",
+          "Constitutional Court ruled private cultivation and use legal. However, buying/selling remains a crime (though 'clubs' exist in grey area).",
         image: "/dest-5.jpg",
         regions: [
           {
             slug: "western-cape",
             name: "Western Cape",
-            cities: [{ slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Wine over weed", "Stunning nature"] }, { slug: "stellenbosch", name: "Stellenbosch", atGlance: ["Wine capital", "Private use", "University town"] }],
+            cities: [{ slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Grey market clubs", "Stunning nature"] }, { slug: "stellenbosch", name: "Stellenbosch", atGlance: ["Wine capital", "Private use", "University town"] }],
           },
           {
             slug: "gauteng",
             name: "Gauteng",
-            cities: [{ slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city, low profile", "Security tight", "Safari hub"] }, { slug: "pretoria", name: "Pretoria", atGlance: ["Jacaranda city", "Private use", "Embassy hub"] }],
+            cities: [{ slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city", "Security tight", "Private use only"] }, { slug: "pretoria", name: "Pretoria", atGlance: ["Jacaranda city", "Private use", "Embassy hub"] }],
           },
           {
             slug: "kwazulu-natal",
@@ -1905,7 +1850,7 @@ const WORLD: Continent[] = [
         legalStatus: "Illegal",
         possession: "Criminal offence",
         airport: "Zero tolerance",
-        tourist: "Strongly discouraged; hash heartland",
+        tourist: "Widely tolerated in Rif, but strictly illegal.",
         description: "Cannabis illegal; Rif Mountains tolerated for local farmers only.",
         image: "/dest-5.jpg",
         regions: [{ slug: "casablanca-region", name: "Casablanca Region", cities: [{ slug: "casablanca", name: "Casablanca", atGlance: ["Commercial capital", "Illegal", "Tolerated Rif only"] }] }, { slug: "marrakech-region", name: "Marrakech Region", cities: [{ slug: "marrakech", name: "Marrakech", atGlance: ["Red city", "Illegal", "Discreet only"] }] }],
@@ -2470,18 +2415,18 @@ const WORLD: Continent[] = [
       {
         slug: "australia",
         name: "Australia",
-        legalStatus: "Mixed", // AUDIT FIX: Was Medical
-        possession: "Medical prescription only (ACT Decrim)",
+        legalStatus: "Mixed",
+        possession: "Medical only (Except ACT)",
         airport: "Zero tolerance",
-        tourist: "Medical only; surf & outback",
+        tourist: "Medical only. ACT (Canberra) allows personal grow/use.",
         description:
-          "Medical cannabis legal; recreational use prohibited (ACT has specific decriminalisation rules).",
+          "Medical cannabis legal nationwide. Recreational prohibited everywhere except the Capital Territory (ACT) where it is decriminalized/legalized for personal use.",
         image: "/dest-4.jpg",
         regions: [
           {
             slug: "sydney-region",
             name: "Sydney Region",
-            cities: [{ slug: "sydney", name: "Sydney", atGlance: ["Harbour capital", "Medical only", "Opera House"] }],
+            cities: [{ slug: "sydney", name: "Sydney", atGlance: ["Medical only", "Strict RBT driving", "Opera House"] }],
           },
           {
             slug: "melbourne-region",
@@ -2503,6 +2448,11 @@ const WORLD: Continent[] = [
             name: "Adelaide Region",
             cities: [{ slug: "adelaide", name: "Adelaide", atGlance: ["Festival city", "Medical only", "Wine region"] }],
           },
+          {
+            slug: "canberra-region", // ADDED for accuracy
+            name: "Australian Capital Territory",
+            cities: [{ slug: "canberra", name: "Canberra", atGlance: ["Personal use legal", "Grow allowed", "No sales"] }],
+          },
         ],
       },
       {
@@ -2511,9 +2461,9 @@ const WORLD: Continent[] = [
         legalStatus: "Medical",
         possession: "Medical prescription only",
         airport: "Zero tolerance",
-        tourist: "Medical only; Middle-earth",
+        tourist: "Medical only; referendum failed.",
         description:
-          "Medical cannabis legal; recreational use prohibited. Referendum failed narrowly.",
+          "Medical cannabis legal; recreational use prohibited after 2020 referendum failed.",
         image: "/dest-6.jpg",
         regions: [
           {
@@ -2817,10 +2767,19 @@ const statusColor = (s: string) => {
       return "bg-amber-500/90 text-white";
     case "Mixed":
       return "bg-purple-500/90 text-white";
+    case "Illegal":
+      return "bg-red-600/90 text-white";
     default:
-      return "bg-red-500/90 text-white";
+      return "bg-zinc-500/90 text-white";
   }
 };
+
+// HELPER: Detect High Risk Countries for visual warnings
+const isHighRisk = (country: Country) => {
+    const riskKeywords = ["death penalty", "caning", "lashes", "severe penalties", "zero tolerance", "extreme penalties"];
+    const combinedText = (country.tourist + country.description + country.airport).toLowerCase();
+    return riskKeywords.some(kw => combinedText.includes(kw));
+}
 
 /* ---------- sub-components ---------- */
 const ContinentIndex = () => {
@@ -2848,7 +2807,7 @@ const ContinentIndex = () => {
             Global Cannabis Guide
           </h1>
           <p className="text-lg text-muted-foreground">
-            Pick a continent to start
+            Travel safe. Know the laws.
           </p>
         </motion.div>
 
@@ -2936,42 +2895,48 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((c) => (
-            <Card
-              key={c.slug}
-              className={cn(
-                "group relative overflow-hidden rounded-2xl border border-white/10",
-                "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
-                "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
-              )}
-              onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
-            >
-              <img
-                src={c.image}
-                alt={c.name}
-                className="h-48 w-full object-cover"
-              />
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold">{c.name}</h3>
-                  <Badge className={`${statusColor(c.legalStatus)} border-none`}>
-                    {c.legalStatus}
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                  {c.description}
-                </p>
-                {c.legalStatus === "Illegal" && (
-                   <div className="flex items-center gap-1 text-red-400 text-xs font-bold mb-3">
-                     <AlertTriangle className="w-3 h-3"/> High Risk
-                   </div>
-                )}
-                <Button size="sm" className="w-full">
-                  View regions
-                </Button>
-              </div>
-            </Card>
-          ))}
+          {filtered.map((c) => {
+            const highRisk = isHighRisk(c);
+            return (
+                <Card
+                  key={c.slug}
+                  className={cn(
+                    "group relative overflow-hidden rounded-2xl border border-white/10",
+                    "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+                    "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+                  )}
+                  onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
+                >
+                  <img
+                    src={c.image}
+                    alt={c.name}
+                    className="h-48 w-full object-cover"
+                  />
+                  <div className="p-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-xl font-bold">{c.name}</h3>
+                      <Badge className={`${statusColor(c.legalStatus)} border-none`}>
+                        {c.legalStatus}
+                      </Badge>
+                    </div>
+                    
+                    {highRisk && (
+                        <div className="flex items-center gap-2 mb-3 bg-red-950/30 text-red-400 p-2 rounded text-xs font-bold border border-red-500/20">
+                            <Skull className="w-4 h-4" />
+                            <span>SEVERE PENALTIES / DEATH RISK</span>
+                        </div>
+                    )}
+
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                      {c.description}
+                    </p>
+                    <Button size="sm" className="w-full">
+                      View details
+                    </Button>
+                  </div>
+                </Card>
+            )
+          })}
         </div>
       </div>
     </>
@@ -2990,6 +2955,8 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
         : country.regions,
     [q, country]
   );
+  
+  const highRisk = isHighRisk(country);
 
   return (
     <>
@@ -3009,16 +2976,38 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
         >
            <div className="flex flex-col gap-2">
              <h1 className="text-4xl md:text-5xl font-bold">{country.name}</h1>
-             <div className="flex gap-2 items-center">
+             <div className="flex gap-2 items-center flex-wrap">
                 <Badge className={`${statusColor(country.legalStatus)} text-sm px-3 py-1`}>
                     {country.legalStatus}
                 </Badge>
-                {country.legalStatus === "Illegal" && (
-                    <Badge variant="destructive" className="animate-pulse">Severe Penalties</Badge>
+                {highRisk && (
+                    <Badge variant="destructive" className="animate-pulse bg-red-600 flex items-center gap-1">
+                        <Skull className="w-3 h-3"/> CRITICAL SAFETY WARNING
+                    </Badge>
                 )}
              </div>
           </div>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl">{country.description}</p>
+          <div className="mt-4 p-4 rounded-lg bg-card border border-white/10 max-w-3xl">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <Info className="w-4 h-4 text-primary"/> Legal Context
+              </h3>
+              <p className="text-muted-foreground">{country.description}</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 max-w-3xl">
+              <div className="bg-white/5 p-3 rounded border border-white/5">
+                  <span className="text-xs text-muted-foreground uppercase font-bold">Possession</span>
+                  <p className="text-sm">{country.possession}</p>
+              </div>
+              <div className="bg-white/5 p-3 rounded border border-white/5">
+                  <span className="text-xs text-muted-foreground uppercase font-bold">Airport</span>
+                  <p className="text-sm">{country.airport}</p>
+              </div>
+              <div className={cn("bg-white/5 p-3 rounded border border-white/5", highRisk ? "border-red-500/30 bg-red-950/10" : "")}>
+                  <span className={cn("text-xs text-muted-foreground uppercase font-bold", highRisk ? "text-red-400" : "")}>Tourist Warning</span>
+                  <p className={cn("text-sm", highRisk ? "text-red-200 font-semibold" : "")}>{country.tourist}</p>
+              </div>
+          </div>
         </motion.div>
 
         <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
@@ -3082,20 +3071,8 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
           className="mb-10"
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-2">{region.name}</h1>
-          <p className="text-lg text-muted-foreground">Choose a city</p>
+          <p className="text-lg text-muted-foreground">Select a city for local details</p>
         </motion.div>
-
-        <div className="sticky top-24 z-10 bg-background/80 backdrop-blur-md rounded-xl border border-white/10 p-4 mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search cities…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c) => (
@@ -3129,6 +3106,8 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
 
 const CityDetail = ({ city, region, country }: { city: City; region: Region; country: Country }) => {
   const nav = useNavigate();
+  const highRisk = isHighRisk(country);
+
   return (
     <>
       <div className="container mx-auto max-w-5xl px-4 pt-32 pb-12">
@@ -3147,9 +3126,12 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
           <Card className={cn("rounded-2xl border border-white/10", "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5 p-6 shadow-lg")}>
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
               <h1 className="text-3xl font-bold">{city.name}</h1>
-              <Badge className={`${statusColor(country.legalStatus)} border-none w-fit`}>
-                {country.legalStatus}
-              </Badge>
+              <div className="flex gap-2">
+                 <Badge className={`${statusColor(country.legalStatus)} border-none w-fit`}>
+                    {country.legalStatus}
+                 </Badge>
+                 {highRisk && <Badge variant="destructive" className="flex items-center gap-1"><Skull className="w-3 h-3"/> High Risk</Badge>}
+              </div>
             </div>
 
             <p className="text-sm text-muted-foreground mb-4">
@@ -3157,25 +3139,25 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm mb-6">
-              <div className="flex items-start gap-2">
-                <Info className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 bg-white/5 p-3 rounded">
+                <Siren className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">Possession</p>
                   <p className="text-muted-foreground">{country.possession}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 bg-white/5 p-3 rounded">
                 <Plane className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">Airport</p>
                   <p className="text-muted-foreground">{country.airport}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2">
-                <Users className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+              <div className={cn("flex items-start gap-2 bg-white/5 p-3 rounded", highRisk ? "bg-red-950/10 border border-red-500/20" : "")}>
+                <Users className={cn("w-4 h-4 shrink-0 mt-0.5", highRisk ? "text-red-400" : "text-green-400")} />
                 <div>
-                  <p className="font-semibold">Tourist tip</p>
-                  <p className="text-muted-foreground">{country.tourist}</p>
+                  <p className={cn("font-semibold", highRisk ? "text-red-400" : "")}>Tourist Warning</p>
+                  <p className={cn("text-muted-foreground", highRisk ? "text-red-200" : "")}>{country.tourist}</p>
                 </div>
               </div>
             </div>
@@ -3188,7 +3170,7 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
                  <p className="text-muted-foreground">{country.description}</p>
             </div>
 
-            <h2 className="text-lg font-semibold mb-2">At a glance</h2>
+            <h2 className="text-lg font-semibold mb-2">City Quick Facts</h2>
             <ul className="list-disc ml-6 text-sm text-muted-foreground space-y-1">
               {city.atGlance.map((g, i) => (
                 <li key={i}>{g}</li>
