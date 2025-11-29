@@ -172,7 +172,7 @@ const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
             {region?.name}
           </h1>
           <p className="text-lg text-muted-foreground">Choose a state</p>

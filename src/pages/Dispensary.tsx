@@ -692,7 +692,7 @@ const Dispensary = () => {
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-12 text-center pt-12 md:pt-20">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                 BudQuest Verified Dispensaries
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground mb-2">

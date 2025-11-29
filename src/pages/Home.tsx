@@ -141,7 +141,7 @@ const SEOHead = () => {
 
 const SectionHeader = ({ title, subtitle, id }: { title: string, subtitle: string, id: string }) => (
   <motion.div variants={FADE_IN} className="text-center mb-12 sm:mb-16">
-    <h2 id={id} className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-white">
+    <h2 id={id} className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
       {title}
     </h2>
     <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
