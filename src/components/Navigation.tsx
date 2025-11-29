@@ -13,17 +13,15 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative">
+            <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden bg-gray-900 dark:bg-transparent group-hover:scale-110 transition-all duration-300">
               <img 
                 src={logo} 
                 alt="BudQuest Logo" 
-                className="h-8 w-8 sm:h-10 sm:w-10 group-hover:scale-110 transition-all duration-300 
-                  dark:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)] 
-                  drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]
-                  dark:brightness-110 brightness-100"
+                className="h-full w-full object-contain
+                  dark:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
               />
               {/* Glow effect for dark mode */}
-              <div className="absolute inset-0 rounded-full bg-accent/20 blur-md opacity-0 dark:opacity-50 group-hover:opacity-70 transition-opacity -z-10" />
+              <div className="absolute inset-0 rounded-lg bg-accent/20 blur-md opacity-0 dark:opacity-50 group-hover:opacity-70 transition-opacity -z-10" />
             </div>
             <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent 
               dark:from-white dark:via-accent dark:to-gold
