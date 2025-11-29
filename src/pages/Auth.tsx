@@ -80,11 +80,9 @@ const Auth = () => {
           } else if (error.message.includes('Email not confirmed')) {
             toast({
               title: 'Email Not Verified',
-              description: 'Please verify your email before logging in.',
+              description: 'Your email is not verified. Please sign up again to receive a verification code.',
               variant: 'destructive',
             });
-            // Redirect to verify page
-            navigate('/verify-email', { state: { email } });
           } else {
             toast({
               title: 'Login Failed',

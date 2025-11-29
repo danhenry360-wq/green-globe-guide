@@ -32,8 +32,8 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Find valid OTP
-    const { data: otpRecord, error: fetchError } = await supabase
+    // Find valid OTP - use maybeSingle() to handle 0 or 1 results gracefully
+    const { data: otpRecords, error: fetchError } = await supabase
       .from("otp_codes")
       .select("*")
       .eq("email", email.toLowerCase())
@@ -41,11 +41,23 @@ const handler = async (req: Request): Promise<Response> => {
       .eq("used", false)
       .gt("expires_at", new Date().toISOString())
       .order("created_at", { ascending: false })
-      .limit(1)
-      .single();
+      .limit(1);
 
-    if (fetchError || !otpRecord) {
-      console.log("OTP verification failed for:", email, "Error:", fetchError?.message);
+    const otpRecord = otpRecords?.[0];
+
+    if (fetchError) {
+      console.error("OTP fetch error for:", email, "Error:", fetchError.message);
+      return new Response(
+        JSON.stringify({ 
+          valid: false, 
+          error: "Verification failed. Please try again." 
+        }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (!otpRecord) {
+      console.log("No valid OTP found for:", email);
       return new Response(
         JSON.stringify({ 
           valid: false, 
