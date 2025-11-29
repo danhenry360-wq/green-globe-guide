@@ -1,4 +1,4 @@
-// Blog.tsx – single-file, drop-in, zero other imports needed
+// Blog.tsx  –  complete, runnable file
 import { useState, useMemo } from "react";
 import {
   Search, ArrowLeft, Calendar, Clock, Share2, Shield, User, Scale,
@@ -6,13 +6,20 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* ----------  DATE UTIL  ---------- */
-const today = new Date();
-const formatDate = (d: Date) =>
-  d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-const POST_DATE = (() => { const t = new Date(today); t.setDate(today.getDate() - 14); return formatDate(t); })();
+/* ----------  tiny shadcn/ui stubs so you don’t need the full lib  ---------- */
+const Badge = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${className}`}>{children}</span>
+);
+const Button = ({ children, onClick, className, variant = "primary", size }: any) => (
+  <button onClick={onClick} className={`inline-flex items-center justify-center rounded-lg transition ${size === "icon" ? "w-10 h-10" : "px-4 py-2"} ${variant === "ghost" ? "hover:bg-white/10" : "bg-white/10 hover:bg-white/20"} ${className}`}>{children}</button>
+);
 
-/* ----------  DATA  ---------- */
+/* ----------  date helper  ---------- */
+const today = new Date();
+const formatDate = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+const POST_DATE = (() => { const t = new Date(today); t.setDate(today.getDate() - 18); return formatDate(t); })();
+
+/* ----------  data  ---------- */
 const BIRMINGHAM_POST = {
   id: "birmingham-cannabis-guide",
   title: "Birmingham Cannabis Guide",
@@ -37,7 +44,7 @@ const BIRMINGHAM_POST = {
   ]
 } as const;
 
-/* ----------  UI – Navigation  ---------- */
+/* ----------  Navigation  ---------- */
 const Navigation = () => (
   <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
     <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -51,7 +58,7 @@ const Navigation = () => (
   </header>
 );
 
-/* ----------  UI – Footer  ---------- */
+/* ----------  Footer  ---------- */
 const Footer = () => (
   <footer className="border-t border-white/10 mt-20">
     <div className="container mx-auto px-4 py-8 text-center text-gray-500 text-sm">
@@ -60,7 +67,7 @@ const Footer = () => (
   </footer>
 );
 
-/* ----------  BLOG INDEX  ---------- */
+/* ----------  Blog Index  ---------- */
 const BlogIndex = ({ onSelect }: { onSelect: (p: typeof BIRMINGHAM_POST) => void }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const visible = useMemo(() => {
@@ -121,7 +128,7 @@ const BlogIndex = ({ onSelect }: { onSelect: (p: typeof BIRMINGHAM_POST) => void
   );
 };
 
-/* ----------  ARTICLE DETAIL  ---------- */
+/* ----------  Article Detail  ---------- */
 const BlogPostDetail = ({ post, onBack }: { post: typeof BIRMINGHAM_POST; onBack: () => void }) => (
   <div className="pt-24 pb-20 md:pt-32 md:pb-24">
     <div className="container mx-auto max-w-4xl px-4">
@@ -185,7 +192,7 @@ const BlogPostDetail = ({ post, onBack }: { post: typeof BIRMINGHAM_POST; onBack
   </div>
 );
 
-/* ----------  MAIN PAGE  ---------- */
+/* ----------  default export  ---------- */
 export default function Blog() {
   const [activePost, setActivePost] = useState<typeof BIRMINGHAM_POST | null>(null);
 
