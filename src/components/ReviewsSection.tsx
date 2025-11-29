@@ -99,7 +99,7 @@ export const ReviewsSection = ({ dispensaryId }: ReviewsSectionProps) => {
         {!showForm && (
           <Button
             onClick={handleWriteReview}
-            className="self-start sm:self-auto bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
+            className="self-end sm:self-auto bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
           >
             Write a Review
           </Button>
