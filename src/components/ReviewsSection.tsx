@@ -92,14 +92,14 @@ export const ReviewsSection = ({ dispensaryId }: ReviewsSectionProps) => {
 
   return (
     <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 p-3 sm:p-4">
+      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4">
         <CardTitle className="text-sm sm:text-xl font-bold text-accent flex items-center gap-1.5 sm:gap-2">
           <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" /> Reviews
         </CardTitle>
         {!showForm && (
           <Button
             onClick={handleWriteReview}
-            className="self-end sm:self-auto bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
+            className="bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
           >
             Write a Review
           </Button>
