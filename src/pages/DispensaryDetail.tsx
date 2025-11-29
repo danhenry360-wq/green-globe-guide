@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2 } from "lucide-react";
 import { ProductsSection } from "@/components/ProductsSection";
 import { ReviewsSection } from "@/components/ReviewsSection";
+import { DispensaryMap } from "@/components/DispensaryMap";
 
 // Types for database dispensary
 interface DbDispensary {
@@ -34,6 +35,8 @@ interface DbDispensary {
   image: string | null;
   website: string | null;
   hours: string | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 // Utility function to find dispensary by ID from static data
@@ -124,6 +127,8 @@ const DispensaryDetail = () => {
           image: staticDispensary.image,
           website: staticDispensary.website,
           hours: null,
+          latitude: null,
+          longitude: null,
         });
       } else {
         setNotFound(true);
@@ -323,9 +328,12 @@ const DispensaryDetail = () => {
                     <CardTitle className="text-xl font-bold text-accent">Location Map</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-64 bg-secondary rounded-lg flex items-center justify-center text-muted-foreground">
-                      [Interactive Map Placeholder]
-                    </div>
+                    <DispensaryMap
+                      latitude={dbDispensary.latitude}
+                      longitude={dbDispensary.longitude}
+                      dispensaryName={dbDispensary.name}
+                      address={dbDispensary.address}
+                    />
                     <p className="text-sm text-muted-foreground mt-3">
                       {dbDispensary.address}
                     </p>
