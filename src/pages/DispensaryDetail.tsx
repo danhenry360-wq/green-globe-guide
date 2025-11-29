@@ -218,7 +218,7 @@ const DispensaryDetail = () => {
                     className="inline-flex items-center gap-3 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-lg font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 flex-shrink-0"
                   >
                     <Globe className="w-5 h-5" />
-                    View Deal
+                    Order Now
                   </a>
                 )}
               </div>

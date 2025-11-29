@@ -133,9 +133,11 @@ const Auth = () => {
           <Card className="w-full max-w-md bg-card/70 backdrop-blur-sm border-accent/30 shadow-xl">
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
-                <div className="p-3 rounded-full bg-accent/20">
-                  <Leaf className="w-8 h-8 text-accent" />
-                </div>
+                <img 
+                  src="/src/assets/green-globe-logo.png" 
+                  alt="BudQuest Logo" 
+                  className="w-20 h-20 object-contain"
+                />
               </div>
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                 {isLogin ? 'Welcome Back' : 'Join BudQuest'}
