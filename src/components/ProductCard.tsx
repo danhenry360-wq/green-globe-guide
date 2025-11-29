@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, Percent } from "lucide-react";
-
 interface Product {
   id: string;
   name: string;
@@ -37,14 +37,19 @@ const getCategoryColor = (category: string | null) => {
   }
 };
 
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1603909223429-69bb7101f420?w=400&h=400&fit=crop';
+
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const [imgError, setImgError] = useState(false);
+  
   return (
     <Card className="group overflow-hidden rounded-xl bg-card/70 backdrop-blur-sm border-accent/20 hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
       <div className="relative h-40 overflow-hidden">
         <img
-          src={product.image || '/dest-california.jpg'}
+          src={imgError ? FALLBACK_IMAGE : (product.image || FALLBACK_IMAGE)}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={() => setImgError(true)}
         />
         {product.is_featured && (
           <Badge className="absolute top-2 left-2 bg-gold text-gold-foreground text-xs">
