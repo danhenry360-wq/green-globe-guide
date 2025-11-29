@@ -19,6 +19,8 @@ import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
+import VerifyEmail from "./pages/VerifyEmail";
+import AdminReviews from "./pages/AdminReviews";
 import NotFound from "./pages/NotFound";
 
 /* ---------- 4-level world routes ---------- */
@@ -44,6 +46,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
 
           {/* USA routes (unchanged) */}
           <Route path="/usa" element={<USAGuide />} />

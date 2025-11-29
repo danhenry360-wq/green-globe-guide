@@ -324,6 +324,9 @@ export type Database = {
           dispensary_id: string
           id: string
           rating: number | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["review_status"]
           title: string | null
           user_id: string
         }
@@ -333,6 +336,9 @@ export type Database = {
           dispensary_id: string
           id?: string
           rating?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["review_status"]
           title?: string | null
           user_id: string
         }
@@ -342,6 +348,9 @@ export type Database = {
           dispensary_id?: string
           id?: string
           rating?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["review_status"]
           title?: string | null
           user_id?: string
         }
@@ -489,6 +498,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "moderator" | "user"
       legal_status: "illegal" | "decriminalized" | "medical" | "recreational"
+      review_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -618,6 +628,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "moderator", "user"],
       legal_status: ["illegal", "decriminalized", "medical", "recreational"],
+      review_status: ["pending", "approved", "rejected"],
     },
   },
 } as const

@@ -77,6 +77,14 @@ const Auth = () => {
               description: 'Invalid email or password. Please try again.',
               variant: 'destructive',
             });
+          } else if (error.message.includes('Email not confirmed')) {
+            toast({
+              title: 'Email Not Verified',
+              description: 'Please verify your email before logging in.',
+              variant: 'destructive',
+            });
+            // Redirect to verify page
+            navigate('/verify-email', { state: { email } });
           } else {
             toast({
               title: 'Login Failed',
@@ -109,10 +117,11 @@ const Auth = () => {
           }
         } else {
           toast({
-            title: 'Account Created!',
-            description: 'Welcome to BudQuest! You are now logged in.',
+            title: 'Verification Code Sent!',
+            description: 'Please check your email for a 6-digit verification code.',
           });
-          navigate('/');
+          // Redirect to verify email page with email in state
+          navigate('/verify-email', { state: { email } });
         }
       }
     } finally {
