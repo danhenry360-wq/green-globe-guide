@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useParams, Navigate, useLocation } from "react-router-dom";
-import { DISPENSARY_DATA } from "@/data/dispensary_data";
-import { Dispensary } from "@/types/data";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,24 +37,6 @@ interface DbDispensary {
   longitude: number | null;
 }
 
-// Utility function to find dispensary by ID from static data
-const findDispensaryById = (id: string): Dispensary | undefined => {
-  for (const countryGroup of DISPENSARY_DATA) {
-    for (const stateGroup of countryGroup.states) {
-      for (const cityGroup of stateGroup.cities) {
-        const dispensary = cityGroup.dispensaries.find(d => d.id === id);
-        if (dispensary) return dispensary;
-      }
-    }
-  }
-  return undefined;
-};
-
-// Utility function to create slug
-const createSlug = (text: string) => {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-};
-
 const DispensaryDetail = () => {
   const { dispensarySlug } = useParams<{ dispensarySlug: string }>();
   const location = useLocation();
@@ -66,12 +46,11 @@ const DispensaryDetail = () => {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  // First, try to fetch from database
+  // Fetch from database only
   useEffect(() => {
     const fetchDispensary = async () => {
       setLoading(true);
       
-      // Try to find by slug in database
       if (dispensarySlug) {
         const { data, error } = await supabase
           .from('dispensaries')
@@ -81,55 +60,9 @@ const DispensaryDetail = () => {
         
         if (!error && data) {
           setDbDispensary(data);
-          setLoading(false);
-          return;
+        } else {
+          setNotFound(true);
         }
-      }
-      
-      // If not in database, check static data
-      let staticDispensary: Dispensary | undefined;
-      
-      if (dispensaryId) {
-        staticDispensary = findDispensaryById(dispensaryId);
-      } else if (dispensarySlug) {
-        for (const countryGroup of DISPENSARY_DATA) {
-          for (const stateGroup of countryGroup.states) {
-            for (const cityGroup of stateGroup.cities) {
-              staticDispensary = cityGroup.dispensaries.find(d => createSlug(d.name) === dispensarySlug);
-              if (staticDispensary) break;
-            }
-            if (staticDispensary) break;
-          }
-          if (staticDispensary) break;
-        }
-      }
-      
-      if (staticDispensary) {
-        // Convert static to db format for consistent rendering
-        setDbDispensary({
-          id: staticDispensary.id,
-          name: staticDispensary.name,
-          slug: createSlug(staticDispensary.name),
-          city: staticDispensary.city,
-          state: staticDispensary.state,
-          country: staticDispensary.country,
-          address: staticDispensary.address,
-          rating: staticDispensary.rating,
-          review_count: staticDispensary.reviewCount,
-          status: staticDispensary.status,
-          is_recreational: staticDispensary.isRecreational,
-          is_medical: staticDispensary.isMedical,
-          has_delivery: staticDispensary.hasDelivery,
-          has_atm: staticDispensary.hasATM,
-          has_parking: staticDispensary.hasParking,
-          policy_highlights: staticDispensary.policyHighlights,
-          description: staticDispensary.description,
-          image: staticDispensary.image,
-          website: staticDispensary.website,
-          hours: null,
-          latitude: null,
-          longitude: null,
-        });
       } else {
         setNotFound(true);
       }
@@ -138,7 +71,7 @@ const DispensaryDetail = () => {
     };
 
     fetchDispensary();
-  }, [dispensarySlug, dispensaryId]);
+  }, [dispensarySlug]);
 
   // Function to generate star icons
   const renderRating = (rating: number) => {

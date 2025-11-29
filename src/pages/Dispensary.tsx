@@ -21,11 +21,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
-import { DISPENSARY_DATA } from "@/data/dispensary_data";
-import { Dispensary as DispensaryType, CountryDispensaries } from "@/types/data";
 import { supabase } from "@/integrations/supabase/client";
-
-const DATA: CountryDispensaries[] = DISPENSARY_DATA;
 
 // Database dispensary type
 interface DbDispensary {
@@ -405,10 +401,36 @@ const createSlug = (text: string) => {
 /* ============================================
    DISPENSARY CARD
 ============================================ */
+interface ProcessedDispensary {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  address: string;
+  rating: number;
+  reviewCount: number;
+  status: string;
+  isRecreational: boolean;
+  isMedical: boolean;
+  hasDelivery: boolean;
+  hasATM: boolean;
+  hasParking: boolean;
+  policyHighlights: string;
+  description: string;
+  image: string;
+  website: string;
+  countryName: string;
+  countryFlag: string;
+  stateObj: string;
+  isFromDb: boolean;
+  slug: string;
+}
+
 const DispensaryCard = ({
   dispensary,
 }: {
-  dispensary: DispensaryType & { countryName?: string; isFromDb?: boolean; slug?: string };
+  dispensary: ProcessedDispensary;
 }) => {
   // Use slug from DB or generate from name
   const dispensarySlug = dispensary.slug || createSlug(dispensary.name);
@@ -528,25 +550,10 @@ const Dispensary = () => {
     fetchDbDispensaries();
   }, []);
 
-  // Process and flatten data from detailed structure + merge with DB
+  // Process database dispensaries only
   const processedData = useMemo(() => {
-    // Static data
-    const staticData = DATA.flatMap((country) =>
-      country.states.flatMap((stateGroup) =>
-        stateGroup.cities.flatMap((cityGroup) =>
-          cityGroup.dispensaries.map((dispensary) => ({
-            ...dispensary,
-            countryName: country.country,
-            countryFlag: country.flagPath,
-            stateObj: stateGroup.stateName,
-            isFromDb: false,
-          }))
-        )
-      )
-    );
-    
-    // Convert DB dispensaries to same format
-    const dbData = dbDispensaries.map((d) => ({
+    // Convert DB dispensaries to display format
+    return dbDispensaries.map((d) => ({
       id: d.id,
       name: d.name,
       city: d.city,
@@ -571,9 +578,6 @@ const Dispensary = () => {
       isFromDb: true,
       slug: d.slug,
     }));
-    
-    // Merge: DB dispensaries first, then static
-    return [...dbData, ...staticData];
   }, [dbDispensaries]);
 
   // Get unique countries and states
