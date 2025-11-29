@@ -55,7 +55,7 @@ const VerifyEmail = () => {
       const { error } = await supabase.auth.verifyOtp({
         email,
         token: otp,
-        type: 'signup',
+        type: 'email', // Use 'email' type for OTP sent via signInWithOtp
       });
 
       if (error) {
@@ -89,9 +89,12 @@ const VerifyEmail = () => {
     setIsResending(true);
 
     try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
+      // Use signInWithOtp to send actual 6-digit code
+      const { error } = await supabase.auth.signInWithOtp({
         email,
+        options: {
+          shouldCreateUser: false,
+        },
       });
 
       if (error) {
