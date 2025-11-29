@@ -55,7 +55,8 @@ export const ReviewForm = ({ dispensaryId, userId, onReviewSubmitted, onCancel }
     } else {
       toast({
         title: 'Review Submitted!',
-        description: 'Thank you for sharing your experience.',
+        description: 'Your review has been submitted and is pending approval. It will be visible once reviewed by our team.',
+        duration: 6000,
       });
       onReviewSubmitted();
     }
