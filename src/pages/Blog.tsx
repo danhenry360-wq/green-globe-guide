@@ -282,40 +282,6 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
   </div>
 );
 
-/* ---------- STATS SECTION ---------- */
-const StatsSection = () => {
-  const stats = [
-    { label: "Total Articles", value: "240+", icon: "📰" },
-    { label: "Monthly Readers", value: "240K", icon: "👥" },
-    { label: "Countries Covered", value: "50+", icon: "🌍" },
-    { label: "Expert Writers", value: "45", icon: "✍️" },
-  ];
-
-  return (
-    <section className="py-12 sm:py-16 bg-gradient-to-r from-accent/5 via-background to-accent/5">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="text-center p-4 sm:p-6"
-            >
-              <div className="text-3xl sm:text-4xl mb-2">{stat.icon}</div>
-              <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
-                {stat.value}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 /* ---------- BLOG COMPONENT ---------- */
 export default function Blog() {
@@ -390,8 +356,6 @@ export default function Blog() {
               </motion.div>
             </section>
 
-            {/* STATS */}
-            <StatsSection />
 
             {/* CATEGORY FILTERS */}
             <section className="py-8 px-4">
