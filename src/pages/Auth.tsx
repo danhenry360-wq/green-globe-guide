@@ -11,7 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
 import { Mail, Lock, User } from 'lucide-react';
-import greenGlobeLogo from '@/assets/green-globe-logo.png';
+import logo from '@/assets/global-canna-pass-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -134,11 +134,15 @@ const Auth = () => {
           <Card className="w-full max-w-md bg-card/70 backdrop-blur-sm border-accent/30 shadow-xl">
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
-                <img 
-                  src={greenGlobeLogo} 
-                  alt="BudQuest Logo" 
-                  className="w-20 h-20 object-contain"
-                />
+                <div className="relative w-20 h-20">
+                  <img 
+                    src={logo} 
+                    alt="BudQuest Logo" 
+                    className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(34,197,94,0.7)]"
+                  />
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 rounded-lg bg-accent/30 blur-lg opacity-60 -z-10" />
+                </div>
               </div>
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                 {isLogin ? 'Welcome Back' : 'Join BudQuest'}
