@@ -278,7 +278,7 @@ const MobileContinentMap = () => {
             <button
               key={continent.slug}
               onClick={() => setSelectedContinent(continent.slug)}
-              className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 transition-all"
+              className="flex flex-col items-center justify-center p-6 bg-card/90 hover:bg-card rounded-xl border-2 border-accent/40 hover:border-accent hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 backdrop-blur-sm"
             >
               <span className="text-4xl mb-3">{continent.emoji}</span>
               <span className="text-base font-semibold text-foreground">{continent.name}</span>
@@ -288,7 +288,7 @@ const MobileContinentMap = () => {
         </div>
         <button
           onClick={() => setSelectedContinent("oceania")}
-          className="flex flex-col items-center justify-center p-6 bg-card/60 hover:bg-card/80 rounded-xl border border-border/50 w-full"
+          className="flex flex-col items-center justify-center p-6 bg-card/90 hover:bg-card rounded-xl border-2 border-accent/40 hover:border-accent hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 backdrop-blur-sm w-full"
         >
           <span className="text-4xl mb-3">🏝️</span>
           <span className="text-base font-semibold text-foreground">Oceania</span>
