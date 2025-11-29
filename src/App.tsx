@@ -18,6 +18,7 @@ import Tours from "./pages/Tours";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 /* ---------- 4-level world routes ---------- */
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/auth" element={<Auth />} />
 
           {/* USA routes (unchanged) */}
           <Route path="/usa" element={<USAGuide />} />
