@@ -116,154 +116,161 @@ const DispensaryDetail = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-20 pb-16 px-3 sm:px-6">
+        <main className="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6">
           <div className="container mx-auto max-w-5xl">
-            {/* Header Section - Mobile Optimized */}
-            <header className="mb-6">
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-3 leading-tight">{dbDispensary.name}</h1>
+            {/* Hero Header - Mobile First */}
+            <header className="mb-5 sm:mb-8">
+              <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2 sm:mb-3 leading-tight">
+                {dbDispensary.name}
+              </h1>
               
-              <div className="flex items-start gap-2 text-sm sm:text-base text-muted-foreground mb-3">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0 mt-0.5" />
-                <span className="leading-tight">{dbDispensary.address}</span>
+              <div className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
+                <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span className="leading-snug">{dbDispensary.address}</span>
               </div>
               
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <div className="flex">{renderRating(dbDispensary.rating || 0)}</div>
-                <span className="text-lg sm:text-xl font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
-                <span className="text-sm sm:text-base text-muted-foreground">({dbDispensary.review_count || 0} Reviews)</span>
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                <div className="flex gap-0.5">{renderRating(dbDispensary.rating || 0)}</div>
+                <span className="text-base sm:text-lg font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground">({dbDispensary.review_count || 0} reviews)</span>
                 {dbDispensary.status && (
-                  <Badge className="bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-bold">
+                  <Badge className="bg-green-600 hover:bg-green-700 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5">
                     {dbDispensary.status}
                   </Badge>
                 )}
               </div>
               
               {dbDispensary.hours && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                  <Clock className="w-4 h-4 text-accent" />
+                <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
                   <span>{dbDispensary.hours}</span>
                 </div>
               )}
               
-              {/* Order Now Button - Full width on mobile */}
+              {/* Order Now Button - Always full width on mobile */}
               {dbDispensary.website && (
                 <a
                   href={dbDispensary.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-base sm:text-lg font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30"
+                  className="block w-full sm:w-auto sm:inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
                 >
-                  <Globe className="w-5 h-5" />
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
                   Order Now
                 </a>
               )}
             </header>
 
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {/* Left Column: Image and Description */}
+            {/* Mobile-First Stacked Layout */}
+            <div className="space-y-4 sm:space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
+              
+              {/* Location Card - First on mobile */}
+              <div className="lg:col-span-1 lg:order-last">
+                <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                  <CardHeader className="p-3 sm:p-4 pb-2">
+                    <CardTitle className="text-sm sm:text-lg font-bold text-accent">Location</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3 sm:p-4 pt-0">
+                    <div className="h-40 sm:h-48 lg:h-56 rounded-md overflow-hidden">
+                      <DispensaryMap
+                        latitude={dbDispensary.latitude}
+                        longitude={dbDispensary.longitude}
+                        dispensaryName={dbDispensary.name}
+                        address={dbDispensary.address}
+                      />
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-muted-foreground mt-2">
+                      {dbDispensary.address}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Main Content Column */}
               <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-                <Card className="overflow-hidden rounded-xl shadow-xl bg-card/70 backdrop-blur-sm border-accent/30">
+                {/* Dispensary Image & Description */}
+                <Card className="overflow-hidden rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
                   <img 
                     src={dbDispensary.image ? `${dbDispensary.image}${dbDispensary.image.includes('?') ? '&' : '?'}v=${Date.now()}` : '/dest-california.jpg'} 
                     alt={dbDispensary.name} 
-                    className="w-full h-48 sm:h-64 lg:h-80 object-cover"
+                    className="w-full h-40 sm:h-56 lg:h-72 object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null; 
                       target.src = "/dest-california.jpg";
                     }}
                   />
-                  <CardContent className="p-4 sm:p-6">
-                    <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">About {dbDispensary.name}</h2>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
+                  <CardContent className="p-3 sm:p-5">
+                    <h2 className="text-base sm:text-xl font-bold text-foreground mb-1.5 sm:mb-2">About {dbDispensary.name}</h2>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
                     {dbDispensary.policy_highlights && (
-                      <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg bg-accent/10 border border-accent/20">
-                        <p className="text-xs sm:text-sm text-foreground font-medium">{dbDispensary.policy_highlights}</p>
+                      <div className="mt-2.5 sm:mt-4 p-2.5 sm:p-3 rounded-md sm:rounded-lg bg-accent/10 border border-accent/20">
+                        <p className="text-[11px] sm:text-xs text-foreground font-medium">{dbDispensary.policy_highlights}</p>
                       </div>
                     )}
                   </CardContent>
                 </Card>
 
-                {/* Vital Information */}
-                <Card className="rounded-xl shadow-lg bg-card/70 backdrop-blur-sm border-accent/30">
-                  <CardHeader className="pb-2 sm:pb-4">
-                    <CardTitle className="text-lg sm:text-2xl font-bold text-accent flex items-center gap-2">
-                      <Info className="w-5 h-5 sm:w-6 sm:h-6" /> Vital Information
+                {/* Vital Information - Compact Grid for Mobile */}
+                <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                  <CardHeader className="p-3 sm:p-4 pb-2">
+                    <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-1.5 sm:gap-2">
+                      <Info className="w-4 h-4 sm:w-5 sm:h-5" /> Vital Information
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-2 sm:gap-4 text-sm sm:text-base text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.is_recreational ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Recreational: {dbDispensary.is_recreational ? 'Yes' : 'No'}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.is_medical ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Medical: {dbDispensary.is_medical ? 'Yes' : 'No'}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Truck className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_delivery ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Delivery: {dbDispensary.has_delivery ? 'Yes' : 'No'}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CreditCard className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_atm ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>ATM: {dbDispensary.has_atm ? 'Yes' : 'No'}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Car className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${dbDispensary.has_parking ? 'text-green-500' : 'text-red-500'}`} />
-                      <span>Parking: {dbDispensary.has_parking ? 'Yes' : 'No'}</span>
-                    </div>
-                    {dbDispensary.website && (
-                      <div className="flex items-center gap-2">
-                        <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
-                        <a href={dbDispensary.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline truncate">
-                          Website
-                        </a>
+                  <CardContent className="p-3 sm:p-4 pt-0">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3 text-[11px] sm:text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <CheckCircle className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${dbDispensary.is_recreational ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>Recreational: {dbDispensary.is_recreational ? 'Yes' : 'No'}</span>
                       </div>
-                    )}
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <CheckCircle className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${dbDispensary.is_medical ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>Medical: {dbDispensary.is_medical ? 'Yes' : 'No'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <Truck className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${dbDispensary.has_delivery ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>Delivery: {dbDispensary.has_delivery ? 'Yes' : 'No'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <CreditCard className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${dbDispensary.has_atm ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>ATM: {dbDispensary.has_atm ? 'Yes' : 'No'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <Car className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${dbDispensary.has_parking ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>Parking: {dbDispensary.has_parking ? 'Yes' : 'No'}</span>
+                      </div>
+                      {dbDispensary.website && (
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                          <a href={dbDispensary.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline truncate">
+                            Website
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
 
-                {/* Reviews Section - Only for database dispensaries */}
+                {/* Reviews Section */}
                 {isDbDispensary && (
                   <ReviewsSection dispensaryId={dbDispensary.id} />
                 )}
 
-                {/* Static Reviews Placeholder - For non-database dispensaries */}
                 {!isDbDispensary && (
-                  <Card className="rounded-xl shadow-lg bg-card/70 backdrop-blur-sm border-accent/30">
-                    <CardHeader>
-                      <CardTitle className="text-2xl font-bold text-accent flex items-center gap-2">
-                        <Star className="w-6 h-6" /> User Reviews
+                  <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                    <CardHeader className="p-3 sm:p-4">
+                      <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-1.5 sm:gap-2">
+                        <Star className="w-4 h-4 sm:w-5 sm:h-5" /> User Reviews
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground mb-4">
+                    <CardContent className="p-3 sm:p-4 pt-0">
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         Reviews are available for verified dispensaries. Check back soon!
                       </p>
                     </CardContent>
                   </Card>
                 )}
-              </div>
-
-              {/* Right Column: Map/Sidebar - Shown first on mobile */}
-              <div className="lg:col-span-1 space-y-4 sm:space-y-6 order-first lg:order-last">
-                <Card className="rounded-xl shadow-lg bg-card/70 backdrop-blur-sm border-accent/30">
-                  <CardHeader className="pb-2 sm:pb-4">
-                    <CardTitle className="text-lg sm:text-xl font-bold text-accent">Location</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-6 pt-0">
-                    <DispensaryMap
-                      latitude={dbDispensary.latitude}
-                      longitude={dbDispensary.longitude}
-                      dispensaryName={dbDispensary.name}
-                      address={dbDispensary.address}
-                    />
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3">
-                      {dbDispensary.address}
-                    </p>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </div>
