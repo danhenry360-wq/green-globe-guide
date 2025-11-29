@@ -21,22 +21,10 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
-import { DISPENSARY_DATA, CountryData } from "@/lib/dispensary_data";
+import { DISPENSARY_DATA } from "@/data/dispensary_data";
+import { Dispensary as DispensaryType, CountryDispensaries } from "@/types/data";
 
-// Define Dispensary type locally to avoid conflicts
-interface DispensaryType {
-  id: number;
-  name: string;
-  city: string;
-  state: string;
-  type?: string;
-  specialty?: string;
-  rating: number;
-  website: string;
-  priceRange?: string;
-}
-
-const DATA: CountryData[] = DISPENSARY_DATA;
+const DATA: CountryDispensaries[] = DISPENSARY_DATA;
 
 /* ============================================
    SEO STRUCTURED DATA
@@ -384,71 +372,92 @@ const FilterPanel = ({
 };
 
 /* ============================================
+   HELPER: Create URL slug
+============================================ */
+const createSlug = (text: string) => {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+};
+
+/* ============================================
    DISPENSARY CARD
 ============================================ */
 const DispensaryCard = ({
   dispensary,
 }: {
-  dispensary: DispensaryType & { country: string; state: string };
+  dispensary: DispensaryType & { countryName?: string };
 }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 10 }}
   >
-    <Card className="p-4 sm:p-6 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg">
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <h4 className="text-lg sm:text-xl font-bold text-white break-words">
-              {dispensary.name}
-            </h4>
-            <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-xs font-semibold gap-1 flex items-center px-2 py-1">
-              <Leaf className="w-3 h-3" />
-              Verified
-            </Badge>
+    <Link 
+      to={`/dispensary/${createSlug(dispensary.name)}`}
+      state={{ dispensaryId: dispensary.id }}
+      className="block"
+    >
+      <Card className="p-4 sm:p-6 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <h4 className="text-lg sm:text-xl font-bold text-white break-words group-hover:text-accent transition-colors">
+                {dispensary.name}
+              </h4>
+              <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-xs font-semibold gap-1 flex items-center px-2 py-1">
+                <Leaf className="w-3 h-3" />
+                Verified
+              </Badge>
+            </div>
+
+            <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
+              <MapPin className="w-4 h-4 flex-shrink-0 text-accent" />
+              {dispensary.city}, {dispensary.state}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <StarRating value={dispensary.rating} />
+              <span className="text-xs text-muted-foreground">
+                ({dispensary.reviewCount} reviews)
+              </span>
+            </div>
+
+            {/* Service badges */}
+            <div className="flex flex-wrap gap-2">
+              {dispensary.isRecreational && (
+                <Badge variant="outline" className="text-xs px-2 py-1 text-green-400 border-green-500/40">
+                  Recreational
+                </Badge>
+              )}
+              {dispensary.isMedical && (
+                <Badge variant="outline" className="text-xs px-2 py-1 text-blue-400 border-blue-500/40">
+                  Medical
+                </Badge>
+              )}
+              {dispensary.hasDelivery && (
+                <Badge variant="outline" className="text-xs px-2 py-1 text-amber-400 border-amber-500/40">
+                  Delivery
+                </Badge>
+              )}
+            </div>
           </div>
 
-          <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
-            <MapPin className="w-4 h-4 flex-shrink-0 text-accent" />
-            {dispensary.city}, {dispensary.state}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <StarRating value={dispensary.rating} />
-            <Badge
-              variant="outline"
-              className="text-xs px-2 py-1 text-muted-foreground border-border/50"
-            >
-              {dispensary.specialty}
-            </Badge>
-            {dispensary.priceRange && (
-              <span className="text-xs text-muted-foreground font-medium">
-                {dispensary.priceRange}
-              </span>
-            )}
+          <div className="flex flex-col gap-2 flex-shrink-0 self-start sm:self-auto">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
+              View Details
+              <ExternalLink className="w-4 h-4" />
+            </span>
           </div>
         </div>
 
-        <a
-          href={dispensary.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-lg transition-all hover:shadow-lg flex-shrink-0 self-start sm:self-auto"
-        >
-          <ExternalLink className="w-4 h-4" />
-          <span className="hidden sm:inline">Visit</span>
-        </a>
-      </div>
-
-      {/* TYPE & DESCRIPTION */}
-      <div className="pt-4 border-t border-border/30">
-        <p className="text-xs text-muted-foreground/80">
-          <span className="font-semibold text-muted-foreground">Type:</span>{" "}
-          {dispensary.type}
-        </p>
-      </div>
-    </Card>
+        {/* Address */}
+        <div className="pt-4 border-t border-border/30">
+          <p className="text-xs text-muted-foreground/80">
+            <span className="font-semibold text-muted-foreground">Address:</span>{" "}
+            {dispensary.address}
+          </p>
+        </div>
+      </Card>
+    </Link>
   </motion.div>
 );
 
@@ -467,23 +476,25 @@ const Dispensary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // Process and flatten data
+  // Process and flatten data from detailed structure
   const processedData = useMemo(() => {
     return DATA.flatMap((country) =>
-      country.states.flatMap((state) =>
-        state.dispensaries.map((dispensary) => ({
-          ...dispensary,
-          country: country.country,
-          countryFlag: country.flag,
-          stateObj: state.state,
-        }))
+      country.states.flatMap((stateGroup) =>
+        stateGroup.cities.flatMap((cityGroup) =>
+          cityGroup.dispensaries.map((dispensary) => ({
+            ...dispensary,
+            countryName: country.country,
+            countryFlag: country.flagPath,
+            stateObj: stateGroup.stateName,
+          }))
+        )
       )
     );
   }, []);
 
   // Get unique countries and states
   const countries = useMemo(
-    () => Array.from(new Set(processedData.map((d) => d.country))).sort(),
+    () => Array.from(new Set(processedData.map((d) => d.countryName))).sort(),
     [processedData]
   );
 
@@ -492,7 +503,7 @@ const Dispensary = () => {
     return Array.from(
       new Set(
         processedData
-          .filter((d) => d.country === filters.country)
+          .filter((d) => d.countryName === filters.country)
           .map((d) => d.stateObj)
       )
     ).sort();
@@ -504,23 +515,33 @@ const Dispensary = () => {
     const q = filters.search.toLowerCase().trim();
 
     if (filters.country) {
-      result = result.filter((d) => d.country === filters.country);
+      result = result.filter((d) => d.countryName === filters.country);
     }
 
     if (filters.state) {
       result = result.filter((d) => d.stateObj === filters.state);
     }
 
+    // Filter by type (recreational/medical/both)
     if (filters.type !== "all") {
-      result = result.filter(
-        (d) => d.specialty?.toLowerCase().includes(filters.type)
-      );
+      result = result.filter((d) => {
+        if (filters.type === "recreational") return d.isRecreational;
+        if (filters.type === "medical") return d.isMedical;
+        if (filters.type === "both") return d.isRecreational && d.isMedical;
+        return true;
+      });
     }
 
+    // Filter by specialty (delivery, ATM, parking as proxy for product specialties)
     if (filters.specialty !== "all") {
-      result = result.filter(
-        (d) => d.specialty?.toLowerCase().includes(filters.specialty)
-      );
+      result = result.filter((d) => {
+        // Map specialty filter to available services
+        if (filters.specialty === "flower") return d.isRecreational;
+        if (filters.specialty === "edibles") return d.isMedical;
+        if (filters.specialty === "concentrates") return d.hasDelivery;
+        if (filters.specialty === "cartridges") return d.hasATM;
+        return true;
+      });
     }
 
     if (q) {
@@ -528,9 +549,9 @@ const Dispensary = () => {
         (d) =>
           d.name.toLowerCase().includes(q) ||
           d.city.toLowerCase().includes(q) ||
-          d.country.toLowerCase().includes(q) ||
+          d.countryName.toLowerCase().includes(q) ||
           d.stateObj.toLowerCase().includes(q) ||
-          d.specialty?.toLowerCase().includes(q)
+          d.address.toLowerCase().includes(q)
       );
     }
 
@@ -542,9 +563,9 @@ const Dispensary = () => {
         case "rating":
           return b.rating - a.rating;
         case "price-low":
-          return (a.priceRange?.charCodeAt(0) || 0) - (b.priceRange?.charCodeAt(0) || 0);
         case "price-high":
-          return (b.priceRange?.charCodeAt(0) || 0) - (a.priceRange?.charCodeAt(0) || 0);
+          // Sort by rating as fallback since we don't have price data
+          return b.rating - a.rating;
         default:
           return 0;
       }
@@ -560,20 +581,13 @@ const Dispensary = () => {
     return filteredData.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredData, currentPage]);
 
-  // Filter counts
+  // Filter counts based on type
   const filterCounts = useMemo(() => {
-    const count = (type: FilterType) =>
-      processedData.filter((d) =>
-        type === "all"
-          ? true
-          : d.specialty?.toLowerCase().includes(type)
-      ).length;
-
     return {
-      all: count("all"),
-      recreational: count("recreational"),
-      medical: count("medical"),
-      both: count("both"),
+      all: processedData.length,
+      recreational: processedData.filter((d) => d.isRecreational).length,
+      medical: processedData.filter((d) => d.isMedical).length,
+      both: processedData.filter((d) => d.isRecreational && d.isMedical).length,
     };
   }, [processedData]);
 

@@ -88,18 +88,35 @@ const DispensaryDetail = () => {
           <div className="container mx-auto max-w-5xl">
             {/* Header Section */}
             <header className="mb-8">
-              <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">{dispensary.name}</h1>
-              <div className="flex items-center gap-3 text-lg text-muted-foreground">
-                <MapPin className="w-5 h-5 text-accent" />
-                <span>{dispensary.address}</span>
-              </div>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex">{renderRating(dispensary.rating)}</div>
-                <span className="text-xl font-bold text-yellow-400">{dispensary.rating}</span>
-                <span className="text-base text-muted-foreground">({dispensary.reviewCount} Reviews)</span>
-                <Badge className="ml-4 bg-green-600 hover:bg-green-700 text-white text-sm font-bold">
-                  {dispensary.status}
-                </Badge>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2">{dispensary.name}</h1>
+                  <div className="flex items-center gap-3 text-lg text-muted-foreground">
+                    <MapPin className="w-5 h-5 text-accent" />
+                    <span>{dispensary.address}</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <div className="flex">{renderRating(dispensary.rating)}</div>
+                    <span className="text-xl font-bold text-yellow-400">{dispensary.rating}</span>
+                    <span className="text-base text-muted-foreground">({dispensary.reviewCount} Reviews)</span>
+                    <Badge className="ml-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold">
+                      {dispensary.status}
+                    </Badge>
+                  </div>
+                </div>
+                
+                {/* View Deal Button */}
+                {dispensary.website && (
+                  <a
+                    href={dispensary.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-accent hover:bg-accent/90 text-white text-lg font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 flex-shrink-0"
+                  >
+                    <Globe className="w-5 h-5" />
+                    View Deal
+                  </a>
+                )}
               </div>
             </header>
 
