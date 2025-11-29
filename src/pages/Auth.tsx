@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
-import { Mail, Lock, User } from 'lucide-react';
-import logo from '@/assets/green-globe-logo.png';
+import { Mail, Lock, User, ShieldCheck } from 'lucide-react';
+import logo from '@/assets/global-canna-pass-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -22,8 +23,9 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [ageVerified, setAgeVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string; displayName?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string; displayName?: string; age?: string }>({});
   
   const { signIn, signUp, isAuthenticated } = useAuth();
   const { toast } = useToast();
@@ -37,7 +39,7 @@ const Auth = () => {
   }, [isAuthenticated, navigate]);
 
   const validateForm = (): boolean => {
-    const newErrors: { email?: string; password?: string; displayName?: string } = {};
+    const newErrors: { email?: string; password?: string; displayName?: string; age?: string } = {};
     
     const emailResult = emailSchema.safeParse(email);
     if (!emailResult.success) {
@@ -53,6 +55,10 @@ const Auth = () => {
       const displayNameResult = displayNameSchema.safeParse(displayName);
       if (!displayNameResult.success) {
         newErrors.displayName = displayNameResult.error.errors[0].message;
+      }
+      
+      if (!ageVerified) {
+        newErrors.age = 'You must confirm you are 21 or older';
       }
     }
     
@@ -231,6 +237,70 @@ const Auth = () => {
                   )}
                 </div>
                 
+                {/* Age Gate - Only show on signup */}
+                {!isLogin && (
+                  <div className="space-y-3">
+                    <div 
+                      className={`relative p-4 rounded-xl border-2 transition-all duration-300 ${
+                        ageVerified 
+                          ? 'border-accent bg-accent/10 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
+                          : errors.age 
+                            ? 'border-destructive bg-destructive/5' 
+                            : 'border-border/50 bg-card/50 hover:border-accent/50'
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="relative mt-0.5">
+                          <Checkbox
+                            id="ageVerification"
+                            checked={ageVerified}
+                            onCheckedChange={(checked) => {
+                              setAgeVerified(checked as boolean);
+                              if (errors.age) {
+                                setErrors(prev => ({ ...prev, age: undefined }));
+                              }
+                            }}
+                            className={`h-6 w-6 rounded-md border-2 transition-all duration-300 ${
+                              ageVerified 
+                                ? 'border-accent bg-accent data-[state=checked]:bg-accent data-[state=checked]:border-accent' 
+                                : 'border-muted-foreground/50 hover:border-accent'
+                            }`}
+                          />
+                          {ageVerified && (
+                            <div className="absolute inset-0 rounded-md bg-accent/50 blur-md -z-10 animate-pulse" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <label 
+                            htmlFor="ageVerification" 
+                            className="flex items-center gap-2 cursor-pointer"
+                          >
+                            <ShieldCheck className={`w-5 h-5 transition-colors ${ageVerified ? 'text-accent' : 'text-muted-foreground'}`} />
+                            <span className={`font-bold text-lg transition-colors ${ageVerified ? 'text-accent' : 'text-foreground'}`}>
+                              21+ Age Verification
+                            </span>
+                          </label>
+                          <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                            I confirm that I am <span className="text-accent font-semibold">21 years of age or older</span> and legally permitted to access cannabis-related content in my jurisdiction.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Decorative 420 elements */}
+                      <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs font-bold text-accent border border-accent/30">
+                        21+
+                      </div>
+                    </div>
+                    
+                    {errors.age && (
+                      <p className="text-sm text-destructive flex items-center gap-2">
+                        <ShieldCheck className="w-4 h-4" />
+                        {errors.age}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
                 <Button
                   type="submit"
                   className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3"
@@ -248,6 +318,7 @@ const Auth = () => {
                     onClick={() => {
                       setIsLogin(!isLogin);
                       setErrors({});
+                      setAgeVerified(false);
                     }}
                     className="ml-2 text-accent hover:underline font-semibold"
                   >
