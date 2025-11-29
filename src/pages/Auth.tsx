@@ -10,7 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
-import { Leaf, Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
+import greenGlobeLogo from '@/assets/green-globe-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -134,7 +135,7 @@ const Auth = () => {
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
                 <img 
-                  src="/src/assets/green-globe-logo.png" 
+                  src={greenGlobeLogo} 
                   alt="BudQuest Logo" 
                   className="w-20 h-20 object-contain"
                 />
