@@ -235,7 +235,7 @@ const DispensaryDetail = () => {
               <div className="lg:col-span-2 space-y-8">
                 <Card className="overflow-hidden rounded-xl shadow-xl bg-card/70 backdrop-blur-sm border-accent/30">
                   <img 
-                    src={dbDispensary.image || '/dest-california.jpg'} 
+                    src={dbDispensary.image ? `${dbDispensary.image}${dbDispensary.image.includes('?') ? '&' : '?'}v=${Date.now()}` : '/dest-california.jpg'} 
                     alt={dbDispensary.name} 
                     className="w-full h-96 object-cover"
                     onError={(e) => {
