@@ -155,7 +155,7 @@ const DispensaryDetail = () => {
                   className="block w-full sm:w-auto sm:inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
                 >
                   <Globe className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
-                  Order Now
+                  Visit
                 </a>
               )}
             </header>
