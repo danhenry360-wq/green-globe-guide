@@ -67,7 +67,7 @@ export const Navigation = () => {
               About
             </Link>
             <Link to="/contact">
-              <Button variant="default" className="bg-accent hover:bg-accent/90">
+              <Button variant="outline" className="border-border hover:bg-muted">
                 Contact Us
               </Button>
             </Link>

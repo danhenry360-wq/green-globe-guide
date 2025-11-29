@@ -218,6 +218,17 @@ const Auth = () => {
                   {errors.password && (
                     <p className="text-sm text-destructive">{errors.password}</p>
                   )}
+                  {isLogin && (
+                    <div className="text-right">
+                      <button
+                        type="button"
+                        onClick={() => navigate('/forgot-password')}
+                        className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                  )}
                 </div>
                 
                 <Button
