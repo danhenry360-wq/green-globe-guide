@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, ArrowLeft, Calendar, Clock, Share2, ArrowRight,
-  Sparkles, Eye, Heart, Tag, Info, AlertCircle
+  Sparkles, Eye, Heart, Tag, Info
 } from "lucide-react";
 
 /* ---------- REUSABLE COMPONENTS ---------- */
@@ -223,7 +223,7 @@ const ArticleCard = ({ post, onClick }: any) => (
 
 /* ---------- ARTICLE DETAIL ---------- */
 const ArticleDetail = ({ post, onBack }: any) => (
-  <div className="pt-24 pb-20 md:pt-32 md:pb-24">
+  <div className="pt-8 pb-20 md:pt-12 md:pb-24">
     <div className="container mx-auto max-w-4xl px-4">
       <div className="flex justify-between items-start mb-8">
         <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground gap-2 p-0 h-auto">
@@ -364,26 +364,8 @@ const StatsSection = () => {
   );
 };
 
-/* ---------- NAVIGATION ---------- */
-const Navigation = () => (
-  <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10">
-    <div className="container mx-auto px-4 py-3 flex items-center justify-between max-w-7xl">
-      <div className="text-2xl font-bold text-accent">🌿</div>
-      <nav className="flex gap-8 text-sm text-gray-300">
-        <a href="#usa" className="hover:text-green-400 transition">USA Guide</a>
-        <a href="#world" className="hover:text-green-400 transition">World Guide</a>
-        <a href="#hotels" className="hover:text-green-400 transition">Hotels</a>
-        <a href="#tours" className="hover:text-green-400 transition">Tours</a>
-        <a href="#dispensary" className="hover:text-green-400 transition">Dispensary</a>
-        <a href="#blog" className="hover:text-green-400 transition text-green-400">Blog</a>
-        <a href="#about" className="hover:text-green-400 transition">About</a>
-      </nav>
-    </div>
-  </header>
-);
-
-
-export default function BlogPage() {
+/* ---------- BLOG COMPONENT ---------- */
+export default function Blog() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeArticle, setActiveArticle] = useState<typeof BLOG_POSTS[0] | null>(null);
@@ -413,11 +395,7 @@ export default function BlogPage() {
         ) : (
           <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* HERO SECTION */}
-            <section
-              className="relative min-h-[50svh] sm:min-h-[60svh] flex items-center justify-center px-4 pt-16 sm:pt-20 pb-12 sm:pb-16 overflow-hidden"
-              role="banner"
-              aria-label="Blog page hero"
-            >
+            <section className="relative py-16 sm:py-24 px-4 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-background to-background pointer-events-none" />
               <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-accent/10 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
 
@@ -432,7 +410,7 @@ export default function BlogPage() {
                   Expert Insights & Global Guides
                 </Badge>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight drop-shadow-2xl mb-3 sm:mb-4 text-foreground">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3 sm:mb-4 text-foreground">
                   Cannabis Travel Guides & News
                 </h1>
 
