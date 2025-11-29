@@ -8,11 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
 import { Mail, Lock, User } from 'lucide-react';
-import logo from '@/assets/global-canna-pass-logo.png';
+import logo from '@/assets/green-globe-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -101,6 +100,7 @@ const Auth = () => {
           navigate('/');
         }
       } else {
+        // Signup flow - sends OTP email
         const { error } = await signUp(email, password, displayName);
         if (error) {
           if (error.message.includes('already registered')) {
@@ -117,12 +117,11 @@ const Auth = () => {
             });
           }
         } else {
-          // Signup successful - redirect to verify email page
+          // OTP sent successfully - redirect to verify email page
           toast({
-            title: 'Verification Email Sent!',
-            description: 'Please check your email and click the verification link.',
+            title: 'Verification Code Sent!',
+            description: 'Please check your email for a 6-digit verification code.',
           });
-          // Redirect to verify email page with email in state
           navigate('/verify-email', { state: { email } });
         }
       }

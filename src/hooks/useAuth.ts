@@ -41,21 +41,106 @@ export const useAuth = () => {
     return { error };
   };
 
+  // Modified signup - creates user and sends OTP via custom edge function
   const signUp = async (email: string, password: string, displayName: string) => {
-    // Redirect to root after email link is clicked (Lovable Cloud manages allowed URLs)
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
+    // First, send OTP via our custom edge function
+    const { data: otpData, error: otpError } = await supabase.functions.invoke('send-otp-email', {
+      body: { email, displayName },
+    });
+
+    if (otpError) {
+      console.error('Error sending OTP:', otpError);
+      return { error: { message: otpError.message || 'Failed to send verification code' } };
+    }
+
+    // Store signup data in sessionStorage for after OTP verification
+    sessionStorage.setItem('pendingSignup', JSON.stringify({
+      email,
+      password,
+      displayName,
+    }));
+
+    return { error: null };
+  };
+
+  // Verify OTP and complete signup
+  const verifyOTP = async (email: string, code: string) => {
+    // Verify the OTP code via edge function
+    const { data, error: verifyError } = await supabase.functions.invoke('verify-otp', {
+      body: { email, code },
+    });
+
+    if (verifyError) {
+      console.error('OTP verification error:', verifyError);
+      return { error: { message: verifyError.message || 'Verification failed' } };
+    }
+
+    if (!data?.valid) {
+      return { error: { message: data?.error || 'Invalid or expired verification code' } };
+    }
+
+    // OTP verified - now complete the actual Supabase signup
+    const pendingData = sessionStorage.getItem('pendingSignup');
+    if (!pendingData) {
+      return { error: { message: 'Signup session expired. Please try again.' } };
+    }
+
+    const { password, displayName } = JSON.parse(pendingData);
+
+    // Create the user account with auto-confirm (since we verified email via OTP)
+    const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: redirectUrl,
         data: {
           display_name: displayName,
+          email_verified: true,
         },
       },
     });
-    return { error };
+
+    if (signUpError) {
+      console.error('Signup error:', signUpError);
+      return { error: signUpError };
+    }
+
+    // Clear pending signup data
+    sessionStorage.removeItem('pendingSignup');
+
+    // Sign in the user immediately
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      console.error('Auto sign-in error:', signInError);
+      // User created but couldn't auto-login - this is still a success
+      return { error: null, needsManualLogin: true };
+    }
+
+    return { error: null };
+  };
+
+  // Resend OTP code
+  const resendOTP = async (email: string) => {
+    const pendingData = sessionStorage.getItem('pendingSignup');
+    let displayName = '';
+    
+    if (pendingData) {
+      const parsed = JSON.parse(pendingData);
+      displayName = parsed.displayName || '';
+    }
+
+    const { error } = await supabase.functions.invoke('send-otp-email', {
+      body: { email, displayName },
+    });
+
+    if (error) {
+      return { error: { message: error.message || 'Failed to resend verification code' } };
+    }
+
+    return { error: null };
   };
 
   const signOut = async () => {
@@ -70,6 +155,8 @@ export const useAuth = () => {
     signIn,
     signUp,
     signOut,
+    verifyOTP,
+    resendOTP,
     isAuthenticated: !!session,
   };
 };
