@@ -103,6 +103,84 @@ export type Database = {
         }
         Relationships: []
       }
+      dispensaries: {
+        Row: {
+          address: string
+          city: string
+          country: string | null
+          created_at: string | null
+          description: string | null
+          has_atm: boolean | null
+          has_delivery: boolean | null
+          has_parking: boolean | null
+          hours: string | null
+          id: string
+          image: string | null
+          is_medical: boolean | null
+          is_recreational: boolean | null
+          latitude: number | null
+          longitude: number | null
+          name: string
+          policy_highlights: string | null
+          rating: number | null
+          review_count: number | null
+          slug: string
+          state: string
+          status: string | null
+          website: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          country?: string | null
+          created_at?: string | null
+          description?: string | null
+          has_atm?: boolean | null
+          has_delivery?: boolean | null
+          has_parking?: boolean | null
+          hours?: string | null
+          id?: string
+          image?: string | null
+          is_medical?: boolean | null
+          is_recreational?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          policy_highlights?: string | null
+          rating?: number | null
+          review_count?: number | null
+          slug: string
+          state: string
+          status?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          country?: string | null
+          created_at?: string | null
+          description?: string | null
+          has_atm?: boolean | null
+          has_delivery?: boolean | null
+          has_parking?: boolean | null
+          hours?: string | null
+          id?: string
+          image?: string | null
+          is_medical?: boolean | null
+          is_recreational?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          policy_highlights?: string | null
+          rating?: number | null
+          review_count?: number | null
+          slug?: string
+          state?: string
+          status?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       hotels: {
         Row: {
           address: string | null
@@ -155,6 +233,124 @@ export type Database = {
             columns: ["city_id"]
             isOneToOne: false
             referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          brand: string | null
+          category: string | null
+          cbd_percentage: number | null
+          created_at: string | null
+          description: string | null
+          dispensary_id: string
+          id: string
+          image: string | null
+          is_featured: boolean | null
+          name: string
+          price: number | null
+          thc_percentage: number | null
+          weight: string | null
+        }
+        Insert: {
+          brand?: string | null
+          category?: string | null
+          cbd_percentage?: number | null
+          created_at?: string | null
+          description?: string | null
+          dispensary_id: string
+          id?: string
+          image?: string | null
+          is_featured?: boolean | null
+          name: string
+          price?: number | null
+          thc_percentage?: number | null
+          weight?: string | null
+        }
+        Update: {
+          brand?: string | null
+          category?: string | null
+          cbd_percentage?: number | null
+          created_at?: string | null
+          description?: string | null
+          dispensary_id?: string
+          id?: string
+          image?: string | null
+          is_featured?: boolean | null
+          name?: string
+          price?: number | null
+          thc_percentage?: number | null
+          weight?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_dispensary_id_fkey"
+            columns: ["dispensary_id"]
+            isOneToOne: false
+            referencedRelation: "dispensaries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          display_name: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          content: string
+          created_at: string | null
+          dispensary_id: string
+          id: string
+          rating: number | null
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          dispensary_id: string
+          id?: string
+          rating?: number | null
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          dispensary_id?: string
+          id?: string
+          rating?: number | null
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_dispensary_id_fkey"
+            columns: ["dispensary_id"]
+            isOneToOne: false
+            referencedRelation: "dispensaries"
             referencedColumns: ["id"]
           },
         ]
@@ -256,14 +452,42 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "moderator" | "user"
       legal_status: "illegal" | "decriminalized" | "medical" | "recreational"
     }
     CompositeTypes: {
@@ -392,6 +616,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "moderator", "user"],
       legal_status: ["illegal", "decriminalized", "medical", "recreational"],
     },
   },
