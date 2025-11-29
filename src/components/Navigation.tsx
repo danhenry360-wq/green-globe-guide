@@ -1,12 +1,24 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { Menu } from "lucide-react";
+import { Menu, User, LogOut } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import logo from "@/assets/global-canna-pass-logo.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, signOut, loading } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
@@ -59,6 +71,34 @@ export const Navigation = () => {
                 Contact Us
               </Button>
             </Link>
+            
+            {/* Auth Section */}
+            {!loading && (
+              isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon" className="rounded-full border-accent/30 hover:border-accent">
+                      <User className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-card border-accent/30">
+                    <DropdownMenuItem className="text-muted-foreground">
+                      {user?.email}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut} className="text-destructive cursor-pointer">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="outline" size="sm" className="border-accent/30 hover:border-accent text-foreground">
+                    Sign In
+                  </Button>
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,30 +114,46 @@ export const Navigation = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 flex flex-col gap-4">
             <ThemeToggle />
-            <Link to="/usa" className="text-sm text-foreground hover:text-accent">
+            <Link to="/usa" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               USA Guide
             </Link>
-            <Link to="/world" className="text-sm text-foreground hover:text-accent">
+            <Link to="/world" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               World Guide
             </Link>
-            <Link to="/hotels" className="text-sm text-foreground hover:text-accent">
+            <Link to="/hotels" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Hotels
             </Link>
-            <Link to="/tours" className="text-sm text-foreground hover:text-accent">
+            <Link to="/tours" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Tours
             </Link>
-            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent">
+            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Dispensary
             </Link>
-            <Link to="/blog" className="text-sm text-foreground hover:text-accent">
+            <Link to="/blog" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Blog
             </Link>
-            <Link to="/about" className="text-sm text-foreground hover:text-accent">
+            <Link to="/about" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               About
             </Link>
-            <Link to="/contact" className="text-sm text-foreground hover:text-accent">
+            <Link to="/contact" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Contact Us
             </Link>
+            
+            {/* Mobile Auth */}
+            {!loading && (
+              isAuthenticated ? (
+                <button 
+                  onClick={handleSignOut}
+                  className="text-sm text-destructive hover:text-destructive/80 text-left"
+                >
+                  Sign Out ({user?.email})
+                </button>
+              ) : (
+                <Link to="/auth" className="text-sm text-accent hover:text-accent/80" onClick={() => setMobileMenuOpen(false)}>
+                  Sign In
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>

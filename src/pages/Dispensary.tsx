@@ -16,15 +16,39 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { DISPENSARY_DATA } from "@/data/dispensary_data";
 import { Dispensary as DispensaryType, CountryDispensaries } from "@/types/data";
+import { supabase } from "@/integrations/supabase/client";
 
 const DATA: CountryDispensaries[] = DISPENSARY_DATA;
+
+// Database dispensary type
+interface DbDispensary {
+  id: string;
+  name: string;
+  slug: string;
+  city: string;
+  state: string;
+  country: string | null;
+  address: string;
+  rating: number | null;
+  review_count: number | null;
+  status: string | null;
+  is_recreational: boolean | null;
+  is_medical: boolean | null;
+  has_delivery: boolean | null;
+  has_atm: boolean | null;
+  has_parking: boolean | null;
+  policy_highlights: string | null;
+  description: string | null;
+  image: string | null;
+  website: string | null;
+}
 
 /* ============================================
    SEO STRUCTURED DATA
@@ -384,66 +408,76 @@ const createSlug = (text: string) => {
 const DispensaryCard = ({
   dispensary,
 }: {
-  dispensary: DispensaryType & { countryName?: string };
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 10 }}
-  >
-    <Link 
-      to={`/dispensary/${createSlug(dispensary.name)}`}
-      state={{ dispensaryId: dispensary.id }}
-      className="block"
+  dispensary: DispensaryType & { countryName?: string; isFromDb?: boolean; slug?: string };
+}) => {
+  // Use slug from DB or generate from name
+  const dispensarySlug = dispensary.slug || createSlug(dispensary.name);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
     >
-      <Card className="p-4 sm:p-6 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <h4 className="text-lg sm:text-xl font-bold text-white break-words group-hover:text-accent transition-colors">
-                {dispensary.name}
-              </h4>
-              <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-xs font-semibold gap-1 flex items-center px-2 py-1">
-                <Leaf className="w-3 h-3" />
-                Verified
-              </Badge>
+      <Link 
+        to={`/dispensary/${dispensarySlug}`}
+        state={{ dispensaryId: dispensary.id }}
+        className="block"
+      >
+        <Card className="p-4 sm:p-6 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <h4 className="text-lg sm:text-xl font-bold text-white break-words group-hover:text-accent transition-colors">
+                  {dispensary.name}
+                </h4>
+                <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-xs font-semibold gap-1 flex items-center px-2 py-1">
+                  <Leaf className="w-3 h-3" />
+                  Verified
+                </Badge>
+                {dispensary.isFromDb && (
+                  <Badge className="bg-gold/20 text-gold border border-gold/40 text-xs font-semibold px-2 py-1">
+                    Featured
+                  </Badge>
+                )}
+              </div>
+
+              <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
+                <MapPin className="w-4 h-4 flex-shrink-0 text-accent" />
+                {dispensary.city}, {dispensary.state}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <StarRating value={dispensary.rating} />
+                <span className="text-xs text-muted-foreground">
+                  ({dispensary.reviewCount} reviews)
+                </span>
+              </div>
+
+              {/* Service badges */}
+              <div className="flex flex-wrap gap-2">
+                {dispensary.isRecreational && (
+                  <Badge variant="outline" className="text-xs px-2 py-1 text-green-400 border-green-500/40">
+                    Recreational
+                  </Badge>
+                )}
+                {dispensary.isMedical && (
+                  <Badge variant="outline" className="text-xs px-2 py-1 text-blue-400 border-blue-500/40">
+                    Medical
+                  </Badge>
+                )}
+                {dispensary.hasDelivery && (
+                  <Badge variant="outline" className="text-xs px-2 py-1 text-amber-400 border-amber-500/40">
+                    Delivery
+                  </Badge>
+                )}
+              </div>
             </div>
 
-            <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
-              <MapPin className="w-4 h-4 flex-shrink-0 text-accent" />
-              {dispensary.city}, {dispensary.state}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <StarRating value={dispensary.rating} />
-              <span className="text-xs text-muted-foreground">
-                ({dispensary.reviewCount} reviews)
-              </span>
-            </div>
-
-            {/* Service badges */}
-            <div className="flex flex-wrap gap-2">
-              {dispensary.isRecreational && (
-                <Badge variant="outline" className="text-xs px-2 py-1 text-green-400 border-green-500/40">
-                  Recreational
-                </Badge>
-              )}
-              {dispensary.isMedical && (
-                <Badge variant="outline" className="text-xs px-2 py-1 text-blue-400 border-blue-500/40">
-                  Medical
-                </Badge>
-              )}
-              {dispensary.hasDelivery && (
-                <Badge variant="outline" className="text-xs px-2 py-1 text-amber-400 border-amber-500/40">
-                  Delivery
-                </Badge>
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 flex-shrink-0 self-start sm:self-auto">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
-              View Details
+            <div className="flex flex-col gap-2 flex-shrink-0 self-start sm:self-auto">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
+                View Details
+              <ExternalLink className="w-4 h-4" />
               <ExternalLink className="w-4 h-4" />
             </span>
           </div>
@@ -459,7 +493,8 @@ const DispensaryCard = ({
       </Card>
     </Link>
   </motion.div>
-);
+  );
+};
 
 /* ============================================
    MAIN DISPENSARY PAGE
@@ -475,10 +510,28 @@ const Dispensary = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [dbDispensaries, setDbDispensaries] = useState<DbDispensary[]>([]);
 
-  // Process and flatten data from detailed structure
+  // Fetch database dispensaries on mount
+  useEffect(() => {
+    const fetchDbDispensaries = async () => {
+      const { data, error } = await supabase
+        .from('dispensaries')
+        .select('*')
+        .order('rating', { ascending: false });
+      
+      if (!error && data) {
+        setDbDispensaries(data);
+      }
+    };
+    
+    fetchDbDispensaries();
+  }, []);
+
+  // Process and flatten data from detailed structure + merge with DB
   const processedData = useMemo(() => {
-    return DATA.flatMap((country) =>
+    // Static data
+    const staticData = DATA.flatMap((country) =>
       country.states.flatMap((stateGroup) =>
         stateGroup.cities.flatMap((cityGroup) =>
           cityGroup.dispensaries.map((dispensary) => ({
@@ -486,11 +539,42 @@ const Dispensary = () => {
             countryName: country.country,
             countryFlag: country.flagPath,
             stateObj: stateGroup.stateName,
+            isFromDb: false,
           }))
         )
       )
     );
-  }, []);
+    
+    // Convert DB dispensaries to same format
+    const dbData = dbDispensaries.map((d) => ({
+      id: d.id,
+      name: d.name,
+      city: d.city,
+      state: d.state,
+      country: d.country || 'USA',
+      address: d.address,
+      rating: d.rating || 0,
+      reviewCount: d.review_count || 0,
+      status: d.status || 'Licensed',
+      isRecreational: d.is_recreational ?? true,
+      isMedical: d.is_medical ?? true,
+      hasDelivery: d.has_delivery ?? false,
+      hasATM: d.has_atm ?? false,
+      hasParking: d.has_parking ?? false,
+      policyHighlights: d.policy_highlights || '',
+      description: d.description || '',
+      image: d.image || '/dest-california.jpg',
+      website: d.website || '',
+      countryName: d.country || 'USA',
+      countryFlag: '🇺🇸',
+      stateObj: d.state,
+      isFromDb: true,
+      slug: d.slug,
+    }));
+    
+    // Merge: DB dispensaries first, then static
+    return [...dbData, ...staticData];
+  }, [dbDispensaries]);
 
   // Get unique countries and states
   const countries = useMemo(
