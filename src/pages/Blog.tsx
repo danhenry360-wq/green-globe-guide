@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -724,11 +725,25 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
 
 /* ---------- BLOG COMPONENT ---------- */
 export default function Blog() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeArticle, setActiveArticle] = useState<typeof BLOG_POSTS[0] | null>(null);
 
   const categories = ["All", "City Guide", "Legal Updates", "Education"];
+
+  // Auto-open article from URL param
+  useEffect(() => {
+    const articleId = searchParams.get("article");
+    if (articleId) {
+      const article = BLOG_POSTS.find(post => post.id === articleId);
+      if (article) {
+        setActiveArticle(article);
+        // Clear the URL param after opening
+        setSearchParams({}, { replace: true });
+      }
+    }
+  }, [searchParams, setSearchParams]);
 
   const filteredPosts = useMemo(() => {
     return BLOG_POSTS.filter((post) => {
