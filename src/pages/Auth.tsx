@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
 import { Mail, Lock, User } from 'lucide-react';
@@ -116,10 +117,25 @@ const Auth = () => {
             });
           }
         } else {
-          toast({
-            title: 'Verification Code Sent!',
-            description: 'Please check your email for a 6-digit verification code.',
+          // Send OTP code via signInWithOtp (this sends actual 6-digit code)
+          const { error: otpError } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+              shouldCreateUser: false, // User already created via signUp
+            },
           });
+          
+          if (otpError) {
+            toast({
+              title: 'Account Created',
+              description: 'Please check your email to verify your account.',
+            });
+          } else {
+            toast({
+              title: 'Verification Code Sent!',
+              description: 'Please check your email for a 6-digit verification code.',
+            });
+          }
           // Redirect to verify email page with email in state
           navigate('/verify-email', { state: { email } });
         }
