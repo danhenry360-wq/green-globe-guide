@@ -42,8 +42,8 @@ export const useAuth = () => {
   };
 
   const signUp = async (email: string, password: string, displayName: string) => {
-    // Redirect to verify-email page after email link is clicked
-    const redirectUrl = `${window.location.origin}/verify-email`;
+    // Redirect to root after email link is clicked (Lovable Cloud manages allowed URLs)
+    const redirectUrl = `${window.location.origin}/`;
     
     const { error } = await supabase.auth.signUp({
       email,
