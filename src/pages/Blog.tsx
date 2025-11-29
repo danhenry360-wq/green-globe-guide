@@ -364,7 +364,25 @@ const StatsSection = () => {
   );
 };
 
-/* ---------- MAIN BLOG PAGE ---------- */
+/* ---------- NAVIGATION ---------- */
+const Navigation = () => (
+  <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10">
+    <div className="container mx-auto px-4 py-3 flex items-center justify-between max-w-7xl">
+      <div className="text-2xl font-bold text-accent">🌿</div>
+      <nav className="flex gap-8 text-sm text-gray-300">
+        <a href="#usa" className="hover:text-green-400 transition">USA Guide</a>
+        <a href="#world" className="hover:text-green-400 transition">World Guide</a>
+        <a href="#hotels" className="hover:text-green-400 transition">Hotels</a>
+        <a href="#tours" className="hover:text-green-400 transition">Tours</a>
+        <a href="#dispensary" className="hover:text-green-400 transition">Dispensary</a>
+        <a href="#blog" className="hover:text-green-400 transition text-green-400">Blog</a>
+        <a href="#about" className="hover:text-green-400 transition">About</a>
+      </nav>
+    </div>
+  </header>
+);
+
+
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
