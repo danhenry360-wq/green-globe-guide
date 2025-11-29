@@ -165,7 +165,7 @@ const MobileContinentMap = () => {
 
   const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string; realRegion?: string }[]> = {
     "north-america": [
-      { name: "United States", status: "Recreational", description: "Varies by state - 24 states recreational", slug: "united-states" },
+      { name: "United States", status: "Mixed", description: "Varies by state - 24 states recreational", slug: "united-states" },
       { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
       { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
@@ -179,14 +179,14 @@ const MobileContinentMap = () => {
       { name: "Germany", status: "Recreational", description: "Legalized recreational use (2024)", slug: "germany" },
       { name: "Spain", status: "Decriminalized", description: "Private social clubs legal", slug: "spain" },
       { name: "Portugal", status: "Decriminalized", description: "Decriminalized all drugs in 2001", slug: "portugal" },
-      { name: "Switzerland", status: "Medical", description: "Medical legal, low-THC (<1%) legal", slug: "switzerland" },
+      { name: "Switzerland", status: "Decriminalized", description: "Low-THC (<1%) legal, high-THC trials", slug: "switzerland" },
       { name: "Malta", status: "Recreational", description: "First EU country to legalize", slug: "malta" },
       { name: "Czech Republic", status: "Decriminalized", description: "Liberal drug laws, widely available", slug: "czech-republic" },
       { name: "Luxembourg", status: "Recreational", description: "Legal to grow and consume at home", slug: "luxembourg" },
     ],
     "asia": [
-      { name: "Thailand", status: "Recreational", description: "Cannabis removed from narcotics list", slug: "thailand" },
-      { name: "India", status: "Decriminalized", description: "Bhang legal, other forms vary by state", slug: "india" },
+      { name: "Thailand", status: "Mixed", description: "Recreational ending 2025, medical only", slug: "thailand" },
+      { name: "India", status: "Mixed", description: "Bhang legal, flower illegal by state", slug: "india" },
       { name: "Japan", status: "Illegal", description: "Strict prohibition (Travel Warning)", slug: "japan" },
       { name: "South Korea", status: "Medical", description: "Strict medical only, illegal for rec", slug: "south-korea" },
     ],
@@ -207,6 +207,7 @@ const MobileContinentMap = () => {
       case "Recreational": return "bg-green-500";
       case "Medical": return "bg-amber-500";
       case "Decriminalized": return "bg-blue-500";
+      case "Mixed": return "bg-purple-500";
       default: return "bg-red-500";
     }
   };
@@ -216,6 +217,7 @@ const MobileContinentMap = () => {
       case "Recreational": return "text-green-400 border-green-500/50";
       case "Medical": return "text-amber-400 border-amber-500/50";
       case "Decriminalized": return "text-blue-400 border-blue-500/50";
+      case "Mixed": return "text-purple-400 border-purple-500/50";
       default: return "text-red-400 border-red-500/50";
     }
   };
