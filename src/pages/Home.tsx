@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, KeyboardEvent, useEffect, useRef, lazy, Suspense, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import {
@@ -16,11 +16,82 @@ import { Badge } from "@/components/ui/badge";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import MapLegend from "@/components/MapLegend";
 
+// Data
+import { USA_STATE_DATA } from "@/lib/usa_state_data";
+
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 // Lazy Load Heavy Components
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
+
+/* ----------  SEARCH DATA  ---------- */
+interface SearchItem {
+  name: string;
+  type: 'state' | 'country' | 'city';
+  status: string;
+  path: string;
+  region?: string;
+}
+
+// World countries for search
+const WORLD_COUNTRIES: SearchItem[] = [
+  // North America
+  { name: "Canada", type: "country", status: "Recreational", path: "/world/north-america/canada", region: "North America" },
+  { name: "United States", type: "country", status: "Mixed", path: "/world/north-america/united-states", region: "North America" },
+  { name: "Mexico", type: "country", status: "Decriminalized", path: "/world/north-america/mexico", region: "North America" },
+  // Central America
+  { name: "Costa Rica", type: "country", status: "Decriminalized", path: "/world/central-america/costa-rica", region: "Central America" },
+  { name: "Belize", type: "country", status: "Decriminalized", path: "/world/central-america/belize", region: "Central America" },
+  { name: "Panama", type: "country", status: "Medical", path: "/world/central-america/panama", region: "Central America" },
+  // Europe
+  { name: "Netherlands", type: "country", status: "Decriminalized", path: "/world/europe/netherlands", region: "Europe" },
+  { name: "Germany", type: "country", status: "Recreational", path: "/world/europe/germany", region: "Europe" },
+  { name: "Spain", type: "country", status: "Decriminalized", path: "/world/europe/spain", region: "Europe" },
+  { name: "Portugal", type: "country", status: "Decriminalized", path: "/world/europe/portugal", region: "Europe" },
+  { name: "Italy", type: "country", status: "Decriminalized", path: "/world/europe/italy", region: "Europe" },
+  { name: "Switzerland", type: "country", status: "Decriminalized", path: "/world/europe/switzerland", region: "Europe" },
+  { name: "Czech Republic", type: "country", status: "Decriminalized", path: "/world/europe/czech-republic", region: "Europe" },
+  { name: "Austria", type: "country", status: "Decriminalized", path: "/world/europe/austria", region: "Europe" },
+  { name: "Malta", type: "country", status: "Recreational", path: "/world/europe/malta", region: "Europe" },
+  { name: "Luxembourg", type: "country", status: "Recreational", path: "/world/europe/luxembourg", region: "Europe" },
+  { name: "United Kingdom", type: "country", status: "Medical", path: "/world/europe/uk", region: "Europe" },
+  // South America
+  { name: "Uruguay", type: "country", status: "Recreational", path: "/world/south-america/uruguay", region: "South America" },
+  { name: "Colombia", type: "country", status: "Medical", path: "/world/south-america/colombia", region: "South America" },
+  { name: "Argentina", type: "country", status: "Medical", path: "/world/south-america/argentina", region: "South America" },
+  { name: "Chile", type: "country", status: "Decriminalized", path: "/world/south-america/chile", region: "South America" },
+  { name: "Peru", type: "country", status: "Medical", path: "/world/south-america/peru", region: "South America" },
+  // Caribbean
+  { name: "Jamaica", type: "country", status: "Decriminalized", path: "/world/caribbean/jamaica", region: "Caribbean" },
+  { name: "St. Vincent", type: "country", status: "Decriminalized", path: "/world/caribbean/st-vincent", region: "Caribbean" },
+  // Asia
+  { name: "Thailand", type: "country", status: "Mixed", path: "/world/asia/thailand", region: "Asia" },
+  { name: "India", type: "country", status: "Mixed", path: "/world/asia/india", region: "Asia" },
+  { name: "Japan", type: "country", status: "Illegal", path: "/world/asia/japan", region: "Asia" },
+  { name: "South Korea", type: "country", status: "Medical", path: "/world/asia/south-korea", region: "Asia" },
+  // Africa
+  { name: "South Africa", type: "country", status: "Decriminalized", path: "/world/africa/south-africa", region: "Africa" },
+  { name: "Morocco", type: "country", status: "Illegal", path: "/world/africa/morocco", region: "Africa" },
+  { name: "Lesotho", type: "country", status: "Medical", path: "/world/africa/lesotho", region: "Africa" },
+  // Oceania
+  { name: "Australia", type: "country", status: "Medical", path: "/world/oceania/australia", region: "Oceania" },
+  { name: "New Zealand", type: "country", status: "Medical", path: "/world/oceania/new-zealand", region: "Oceania" },
+];
+
+// Popular cities for search
+const POPULAR_CITIES: SearchItem[] = [
+  { name: "Amsterdam", type: "city", status: "Decriminalized", path: "/world/europe/netherlands/north-holland/amsterdam", region: "Netherlands" },
+  { name: "Barcelona", type: "city", status: "Decriminalized", path: "/world/europe/spain/catalonia/barcelona", region: "Spain" },
+  { name: "Los Angeles", type: "city", status: "Recreational", path: "/usa/california/los-angeles", region: "California" },
+  { name: "Denver", type: "city", status: "Recreational", path: "/usa/colorado/denver", region: "Colorado" },
+  { name: "San Francisco", type: "city", status: "Recreational", path: "/usa/california/san-francisco", region: "California" },
+  { name: "Toronto", type: "city", status: "Recreational", path: "/world/north-america/canada/ontario/toronto", region: "Canada" },
+  { name: "Vancouver", type: "city", status: "Recreational", path: "/world/north-america/canada/british-columbia/vancouver", region: "Canada" },
+  { name: "Berlin", type: "city", status: "Recreational", path: "/world/europe/germany/berlin-region/berlin", region: "Germany" },
+  { name: "Bangkok", type: "city", status: "Mixed", path: "/world/asia/thailand/bangkok-region/bangkok", region: "Thailand" },
+  { name: "Lisbon", type: "city", status: "Decriminalized", path: "/world/europe/portugal/lisbon-region/lisbon", region: "Portugal" },
+];
 
 /* ----------  TYPES  ---------- */
 interface Destination {
@@ -303,23 +374,114 @@ const MobileContinentMap = () => {
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const navigate = useNavigate();
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = (term?: string) => {
-    const finalTerm = term || searchTerm;
-    if (finalTerm.trim()) {
-      navigate(`/usa?search=${encodeURIComponent(finalTerm.trim())}`);
+  // Build search items from USA states
+  const stateSearchItems = useMemo<SearchItem[]>(() => 
+    USA_STATE_DATA.map(state => ({
+      name: state.name,
+      type: 'state' as const,
+      status: state.status.charAt(0).toUpperCase() + state.status.slice(1),
+      path: `/usa/${state.slug}`,
+      region: 'USA'
+    }))
+  , []);
+
+  // Combine all searchable items
+  const allSearchItems = useMemo(() => [
+    ...stateSearchItems,
+    ...WORLD_COUNTRIES,
+    ...POPULAR_CITIES
+  ], [stateSearchItems]);
+
+  // Filter suggestions based on search term
+  const suggestions = useMemo(() => {
+    if (!searchTerm.trim() || searchTerm.length < 2) return [];
+    const query = searchTerm.toLowerCase();
+    return allSearchItems
+      .filter(item => item.name.toLowerCase().includes(query))
+      .sort((a, b) => {
+        // Prioritize items that start with the query
+        const aStarts = a.name.toLowerCase().startsWith(query);
+        const bStarts = b.name.toLowerCase().startsWith(query);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        return a.name.localeCompare(b.name);
+      })
+      .slice(0, 8);
+  }, [searchTerm, allSearchItems]);
+
+  // Handle click outside to close suggestions
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSelectSuggestion = (item: SearchItem) => {
+    setSearchTerm("");
+    setShowSuggestions(false);
+    navigate(item.path);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) {
+      if (e.key === 'Enter' && searchTerm.trim()) {
+        navigate(`/usa?search=${encodeURIComponent(searchTerm.trim())}`);
+      }
+      return;
+    }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex(prev => (prev < suggestions.length - 1 ? prev + 1 : 0));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex(prev => (prev > 0 ? prev - 1 : suggestions.length - 1));
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
+          handleSelectSuggestion(suggestions[selectedIndex]);
+        } else if (searchTerm.trim()) {
+          navigate(`/usa?search=${encodeURIComponent(searchTerm.trim())}`);
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setSelectedIndex(-1);
+        break;
     }
   };
 
-  useEffect(() => {
-    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
-    if (searchTerm.trim()) {
-      searchTimeoutRef.current = setTimeout(() => handleSearch(searchTerm), 800);
+  const getStatusBadgeColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'recreational': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'medical': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'decriminalized': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'mixed': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      default: return 'bg-red-500/20 text-red-400 border-red-500/30';
     }
-    return () => { if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current); };
-  }, [searchTerm]);
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'state': return '🇺🇸';
+      case 'country': return '🌍';
+      case 'city': return '🏙️';
+      default: return '📍';
+    }
+  };
 
   const scrollToStats = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
@@ -375,25 +537,72 @@ const Home = () => {
             Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 120+ countries with verified, real-time information.
           </p>
 
-          <div className="max-w-3xl mx-auto mt-10">
+          <div className="max-w-3xl mx-auto mt-10" ref={searchRef}>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-gold/40 to-accent/40 blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700 rounded-2xl" />
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-accent z-10 pointer-events-none" />
               <Input
+                ref={inputRef}
                 aria-label="Search destinations"
                 placeholder="Search destinations (e.g., Thailand, California, Amsterdam)..."
                 className="pl-16 pr-32 sm:pr-40 h-16 sm:h-20 text-lg bg-card/80 border-2 border-border/50 focus:border-accent focus:ring-4 focus:ring-accent/20 backdrop-blur-xl rounded-2xl relative z-10 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-accent/20 font-light placeholder:text-muted-foreground/60"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setShowSuggestions(true);
+                  setSelectedIndex(-1);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                onKeyDown={handleKeyDown}
               />
               <Button 
-                onClick={() => handleSearch()} 
+                onClick={() => {
+                  if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+                    handleSelectSuggestion(suggestions[selectedIndex]);
+                  } else if (searchTerm.trim()) {
+                    navigate(`/usa?search=${encodeURIComponent(searchTerm.trim())}`);
+                  }
+                }} 
                 className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20 text-sm sm:text-base"
                 aria-label="Submit search"
               >
                 Search
               </Button>
+
+              {/* Suggestions Dropdown */}
+              {showSuggestions && suggestions.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl border-2 border-border/50 rounded-xl shadow-2xl shadow-black/50 z-50 overflow-hidden"
+                >
+                  {suggestions.map((item, index) => (
+                    <button
+                      key={`${item.type}-${item.name}`}
+                      onClick={() => handleSelectSuggestion(item)}
+                      className={`w-full px-5 py-4 flex items-center gap-4 text-left transition-colors ${
+                        index === selectedIndex 
+                          ? 'bg-accent/20 border-l-2 border-accent' 
+                          : 'hover:bg-white/5 border-l-2 border-transparent'
+                      }`}
+                    >
+                      <span className="text-2xl">{getTypeIcon(item.type)}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-foreground">{item.name}</span>
+                          <Badge className={`text-xs border ${getStatusBadgeColor(item.status)}`}>
+                            {item.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">
+                          {item.type === 'state' ? 'US State' : item.type === 'country' ? item.region : item.region}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                    </button>
+                  ))}
+                </motion.div>
+              )}
             </div>
           </div>
 
