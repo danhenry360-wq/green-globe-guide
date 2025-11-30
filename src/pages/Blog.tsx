@@ -9,12 +9,74 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Search, ArrowLeft, Calendar, Clock, Share2, ArrowRight,
-  Sparkles, Eye, Heart, Tag, Info, TrendingUp, Shield, Users,
-  MapPin, Building2, AlertCircle, Landmark, Scale, Plane
+  Sparkles, Tag, Info, TrendingUp, Shield, Users,
+  MapPin, Building2, AlertCircle, Scale, Plane
 } from "lucide-react";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 const BLOG_POSTS = [
+  {
+    id: "colorado-ski-resorts-cannabis",
+    title: "Colorado Ski Resorts & Cannabis Guide 2025",
+    subtitle: "Explore the best 420-friendly ski resorts, dispensaries near slopes, and tips for combining mountain adventures with cannabis in Colorado.",
+    excerpt: "Explore the best 420-friendly ski resorts, dispensaries near slopes, and tips for combining mountain adventures with cannabis in Colorado.",
+    date: "Nov 30, 2025",
+    readTime: "10 min read",
+    author: "Mike Thompson",
+    avatar: "🎿",
+    category: "Travel Guide",
+    tags: ["Colorado", "Ski", "Dispensaries", "Winter"],
+    image: "/dest-california.jpg",
+    content: {
+      introduction: "Colorado offers a unique combination of world-class skiing and legal recreational cannabis. From Aspen to Breckenridge, this guide covers the best 420-friendly accommodations, dispensaries near popular ski resorts, and essential tips for responsibly enjoying both the slopes and cannabis during your mountain getaway.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. However, consumption is prohibited on ski slopes, in public areas, and at most lodging. Always consume responsibly and never ski while impaired. Laws vary by municipality.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Colorado was the first state to legalize recreational cannabis in 2012. Adults 21+ can possess up to 1 ounce and purchase from licensed dispensaries. However, ski resorts operate on federal land where cannabis remains illegal. Most mountain towns have dispensaries, but consumption areas are limited to private residences.", variant: "default" },
+        { title: "Best Ski Towns with Dispensaries", icon: "MapPin", content: "**Breckenridge** - Multiple dispensaries on Main Street, 420-friendly lodges. **Aspen** - Upscale dispensaries, luxury cannabis experiences. **Telluride** - Boutique shops, craft cannabis focus. **Steamboat Springs** - Local favorites, competitive prices. **Durango** - Gateway to Purgatory, authentic mountain vibe.", variant: "accent" },
+        { title: "Where to Consume", icon: "Building2", content: "Consumption on ski slopes is strictly prohibited and can result in losing your lift pass. Most hotels prohibit smoking. Look for 420-friendly vacation rentals, private condos, or designated consumption spaces. Some dispensaries offer consumption lounges. Always verify policies before booking.", variant: "warning" },
+        { title: "Safety Tips for Skiing", icon: "Users", content: "Never ski while impaired - altitude intensifies effects. Consume only after your ski day ends. Stay hydrated at high altitude. Start with low doses as elevation affects tolerance. Keep cannabis secure and away from minors at family resorts.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Never ski or snowboard while impaired - it's dangerous and illegal",
+        "Altitude intensifies cannabis effects - use less than at sea level",
+        "Keep cannabis in original packaging with proof of purchase",
+        "Don't transport cannabis to neighboring states",
+        "Most lodging prohibits smoking - check policies and use edibles",
+        "Stay hydrated - both altitude and cannabis cause dehydration"
+      ]
+    }
+  },
+  {
+    id: "thailand-cannabis-tourism-2025",
+    title: "Thailand Cannabis Tourism: What Travelers Need to Know",
+    subtitle: "Complete guide to Thailand's evolving cannabis laws, best dispensaries in Bangkok and islands, and cultural tips for cannabis tourists.",
+    excerpt: "Complete guide to Thailand's evolving cannabis laws, best dispensaries in Bangkok and islands, and cultural tips for cannabis tourists.",
+    date: "Nov 30, 2025",
+    readTime: "14 min read",
+    author: "Lisa Chang",
+    avatar: "🇹🇭",
+    category: "International",
+    tags: ["Thailand", "Asia", "Legal", "Travel"],
+    image: "/dest-1.jpg",
+    content: {
+      introduction: "Thailand made history in 2022 by becoming the first Asian country to decriminalize cannabis. Since then, cannabis shops have flourished across Bangkok, Phuket, Chiang Mai, and the islands. This guide covers everything tourists need to know about legally enjoying cannabis in the Land of Smiles, from legal nuances to the best dispensaries and cultural etiquette.",
+      disclaimer: "Thailand's cannabis laws are evolving rapidly and may change. Public consumption and smoking near temples/schools is prohibited. Always verify current regulations before travel. Some restrictions on THC content and edibles may apply.",
+      sections: [
+        { title: "Legal Framework", icon: "Shield", content: "Cannabis was removed from Thailand's narcotics list in June 2022. Adults can purchase and possess cannabis legally. However, regulations continue to evolve - extracts over 0.2% THC face restrictions, and there are ongoing debates about recreational vs. medical use. Stay updated on current laws before your trip.", variant: "default" },
+        { title: "Best Areas for Cannabis", icon: "MapPin", content: "**Bangkok** - Khao San Road has dozens of shops, Sukhumvit for upscale options. **Phuket** - Beach clubs with cannabis menus, Patong dispensaries. **Chiang Mai** - Laid-back scene, wellness-focused shops. **Koh Phangan** - Full Moon Party island, beach dispensaries. **Koh Samui** - Resort-style shops, premium products.", variant: "accent" },
+        { title: "Where to Consume", icon: "Building2", content: "Public smoking is prohibited, especially near temples, schools, and government buildings. Many cannabis cafes offer consumption spaces. Some hotels are 420-friendly - verify before booking. Beach consumption varies by location. Respect Thai culture and consume discreetly.", variant: "warning" },
+        { title: "Cultural Etiquette", icon: "Users", content: "Thai culture values discretion and respect. Don't smoke near Buddhist temples or monks. Avoid ostentatious consumption in conservative areas. The Thai concept of 'sanuk' (fun) applies - enjoy responsibly without causing disturbance. Tipping shop staff is appreciated but not required.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Carry ID and proof of age (20+ for purchase in most shops)",
+        "Avoid transporting cannabis to neighboring countries - severe penalties",
+        "Start with low doses - Thai cannabis can be potent",
+        "Don't drive under the influence - strict DUI laws apply",
+        "Respect local customs - no consumption near temples or schools",
+        "Purchase from licensed shops only - avoid street vendors"
+      ]
+    }
+  },
   {
     id: "amsterdam-coffee-shops",
     title: "Amsterdam Coffee Shops Guide 2025",
@@ -534,9 +596,7 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
             <span className="text-xl">{post.avatar}</span>
             <div className="text-xs">
               <p className="text-foreground font-medium">{post.author}</p>
-              <p className="text-muted-foreground flex items-center gap-1">
-                <Eye className="w-3 h-3" /> {(post.views / 1000).toFixed(1)}k
-              </p>
+              <p className="text-muted-foreground">{post.date}</p>
             </div>
           </div>
           <ArrowRight className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" />
@@ -704,18 +764,15 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
           </Card>
         </motion.section>
 
-        {/* Actions */}
+        {/* Back to Articles */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-10 border-t border-border pt-8 flex flex-col sm:flex-row gap-4"
+          className="mt-10 border-t border-border pt-8"
         >
-          <Button variant="outline" className="gap-2 flex-1 sm:flex-none">
-            <Heart className="w-4 h-4" /> Like ({post.likes.toLocaleString()})
-          </Button>
-          <Button variant="outline" className="gap-2 flex-1 sm:flex-none">
-            <Share2 className="w-4 h-4" /> Share
+          <Button variant="outline" onClick={onBack} className="gap-2">
+            <ArrowLeft className="w-4 h-4" /> Back to All Articles
           </Button>
         </motion.div>
       </div>
@@ -868,7 +925,7 @@ export default function Blog() {
                               <Calendar className="w-4 h-4" /> {filteredPosts[0].date}
                             </span>
                             <span className="flex items-center gap-1">
-                              <Eye className="w-4 h-4" /> {(filteredPosts[0].views / 1000).toFixed(1)}k views
+                              <Clock className="w-4 h-4" /> {filteredPosts[0].readTime}
                             </span>
                           </div>
                         </div>
