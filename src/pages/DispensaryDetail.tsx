@@ -133,9 +133,20 @@ const DispensaryDetail = () => {
                 <div className="flex gap-0.5">{renderRating(dbDispensary.rating || 0)}</div>
                 <span className="text-base sm:text-lg font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
                 <span className="text-xs sm:text-sm text-muted-foreground">({dbDispensary.review_count || 0} reviews)</span>
-                {dbDispensary.status && (
-                  <Badge className="bg-green-600 hover:bg-green-700 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5">
-                    {dbDispensary.status}
+                {dbDispensary.status?.toLowerCase().includes('licensed') && (
+                  <>
+                    <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold px-2 py-0.5 flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      BudQuest Verified
+                    </Badge>
+                    <Badge className="bg-green-600 hover:bg-green-700 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5">
+                      Licensed
+                    </Badge>
+                  </>
+                )}
+                {dbDispensary.status === 'Open' && (
+                  <Badge className="bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] sm:text-xs font-semibold px-2 py-0.5">
+                    Open
                   </Badge>
                 )}
               </div>
