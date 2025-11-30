@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2 } from "lucide-react";
 import { ReviewsSection } from "@/components/ReviewsSection";
+import { DispensaryMap } from "@/components/DispensaryMap";
 // Types for database dispensary
 interface DbDispensary {
   id: string;
@@ -170,17 +171,13 @@ const DispensaryDetail = () => {
                     <CardTitle className="text-sm sm:text-lg font-bold text-accent">Location</CardTitle>
                   </CardHeader>
                   <CardContent className="p-3 sm:p-4 pt-0">
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(dbDispensary.address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block h-40 sm:h-48 lg:h-56 rounded-md overflow-hidden bg-secondary hover:bg-secondary/80 transition-colors"
-                    >
-                      <div className="h-full flex flex-col items-center justify-center text-center p-4">
-                        <MapPin className="w-8 h-8 sm:w-10 sm:h-10 text-accent mb-2" />
-                        <span className="text-xs sm:text-sm text-muted-foreground">Click to open in Google Maps</span>
-                      </div>
-                    </a>
+                    <DispensaryMap
+                      latitude={dbDispensary.latitude}
+                      longitude={dbDispensary.longitude}
+                      address={dbDispensary.address}
+                      name={dbDispensary.name}
+                      className="h-40 sm:h-48 lg:h-56"
+                    />
                     <p className="text-[11px] sm:text-xs text-muted-foreground mt-2">
                       {dbDispensary.address}
                     </p>
