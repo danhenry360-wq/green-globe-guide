@@ -1,20 +1,38 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { Menu, User, LogOut } from "lucide-react";
+import { Menu, User, LogOut, Shield } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import logo from "@/assets/global-canna-pass-logo.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, isAuthenticated, signOut, loading } = useAuth();
+
+  // Check admin role
+  const { data: isAdmin } = useQuery({
+    queryKey: ["user-role", user?.id],
+    queryFn: async () => {
+      if (!user) return false;
+      const { data, error } = await supabase.rpc("has_role", {
+        _user_id: user.id,
+        _role: "admin",
+      });
+      if (error) return false;
+      return data;
+    },
+    enabled: !!user,
+  });
 
   const handleSignOut = async () => {
     await signOut();
@@ -85,6 +103,18 @@ export const Navigation = () => {
                     <DropdownMenuItem className="text-muted-foreground">
                       {user?.email}
                     </DropdownMenuItem>
+                    {isAdmin && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild className="cursor-pointer">
+                          <Link to="/admin" className="flex items-center">
+                            <Shield className="mr-2 h-4 w-4 text-accent" />
+                            Admin Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut} className="text-destructive cursor-pointer">
                       <LogOut className="mr-2 h-4 w-4" />
                       Sign Out
@@ -142,12 +172,24 @@ export const Navigation = () => {
             {/* Mobile Auth */}
             {!loading && (
               isAuthenticated ? (
-                <button 
-                  onClick={handleSignOut}
-                  className="text-sm text-destructive hover:text-destructive/80 text-left"
-                >
-                  Sign Out ({user?.email})
-                </button>
+                <div className="flex flex-col gap-2 pt-2 border-t border-border/50">
+                  {isAdmin && (
+                    <Link 
+                      to="/admin" 
+                      className="text-sm text-accent hover:text-accent/80 flex items-center gap-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Shield className="w-4 h-4" />
+                      Admin Dashboard
+                    </Link>
+                  )}
+                  <button 
+                    onClick={handleSignOut}
+                    className="text-sm text-destructive hover:text-destructive/80 text-left"
+                  >
+                    Sign Out ({user?.email})
+                  </button>
+                </div>
               ) : (
                 <Link to="/auth" className="text-sm text-accent hover:text-accent/80" onClick={() => setMobileMenuOpen(false)}>
                   Sign In
