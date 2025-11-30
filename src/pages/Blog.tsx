@@ -88,9 +88,7 @@ const BLOG_POSTS = [
     avatar: "👩‍✈️",
     category: "City Guide",
     tags: ["Netherlands", "Legal", "Travel", "Coffeeshops"],
-    image: "/blog-amsterdam.jpg",
-    views: 12400,
-    likes: 3200,
+    image: "/blog-amsterdam-new.jpg",
     content: {
       introduction: "Amsterdam has been synonymous with cannabis culture for decades. The city's unique 'tolerance policy' (gedoogbeleid) has made it a mecca for cannabis enthusiasts worldwide. This comprehensive guide covers everything from the best coffee shops to local etiquette, ensuring you have a safe and memorable experience in the Dutch capital.",
       disclaimer: "While cannabis is tolerated in licensed coffee shops, it remains technically illegal in the Netherlands. Laws change frequently. Always verify current regulations before your visit and consume responsibly.",
@@ -166,9 +164,7 @@ const BLOG_POSTS = [
     avatar: "🌴",
     category: "City Guide",
     tags: ["USA", "California", "Dispensaries", "Reviews"],
-    image: "/blog-california.jpg",
-    views: 18900,
-    likes: 5100,
+    image: "/blog-california-new.jpg",
     content: {
       introduction: "California pioneered legal cannabis in the United States, first with medical marijuana in 1996 and then recreational use in 2016. Today, the Golden State boasts the world's largest legal cannabis market with thousands of licensed dispensaries, innovative products, and a thriving cannabis tourism industry. From San Francisco to San Diego, this guide covers everything you need to know.",
       disclaimer: "Cannabis remains federally illegal in the United States. California state laws apply only within state borders. Never transport cannabis across state lines or onto federal property. Laws vary by city and county within California.",
@@ -244,9 +240,7 @@ const BLOG_POSTS = [
     avatar: "🇺🇾",
     category: "Legal Updates",
     tags: ["Uruguay", "Legal", "History", "International"],
-    image: "/blog-uruguay.jpg",
-    views: 15600,
-    likes: 4300,
+    image: "/blog-uruguay-new.jpg",
     content: {
       introduction: "In December 2013, Uruguay became the first country in modern history to fully legalize cannabis from seed to sale. Under President José Mujica, the small South American nation implemented a groundbreaking regulatory model that prioritizes public health over prohibition. While the system has unique restrictions for tourists, understanding Uruguay's approach offers valuable insights into cannabis policy worldwide.",
       disclaimer: "Uruguay's cannabis system is primarily designed for residents. Tourists face significant restrictions on legal access. Laws and regulations continue to evolve. This guide reflects information as of January 2025.",
@@ -322,9 +316,7 @@ const BLOG_POSTS = [
     avatar: "🍁",
     category: "Legal Updates",
     tags: ["Canada", "Legal", "Regulations", "Travel"],
-    image: "/dest-canada-toronto.jpg",
-    views: 14200,
-    likes: 3800,
+    image: "/blog-canada.jpg",
     content: {
       introduction: "Canada made history on October 17, 2018, becoming the second country (after Uruguay) and first G7 nation to legalize recreational cannabis nationwide. The Cannabis Act establishes federal rules, but provinces have significant autonomy in implementation. This creates a patchwork of regulations that travelers must navigate. From British Columbia's private retailers to Quebec's government monopoly, understanding provincial differences is essential.",
       disclaimer: "While cannabis is legal throughout Canada, provincial and territorial regulations vary significantly. This guide covers key differences but cannot address every local bylaw. Always verify current rules for your specific destination. Never transport cannabis across international borders.",
@@ -400,9 +392,7 @@ const BLOG_POSTS = [
     avatar: "🇪🇸",
     category: "City Guide",
     tags: ["Spain", "Legal", "Barcelona", "Culture"],
-    image: "/dest-2.jpg",
-    views: 9800,
-    likes: 2400,
+    image: "/blog-spain.jpg",
     content: {
       introduction: "Spain occupies a fascinating gray zone in global cannabis policy. While not technically legal, private consumption and cultivation are decriminalized, giving rise to the famous 'cannabis social clubs' of Barcelona and beyond. These private, members-only associations operate in a legal loophole that has created Europe's most unique cannabis scene. Understanding how to navigate this system is essential for any cannabis-curious visitor.",
       disclaimer: "Cannabis remains illegal for commercial sale in Spain. Cannabis clubs operate in legal gray areas that vary by region. Catalonia (Barcelona) is most permissive; other regions have cracked down. Tourist access to clubs has become increasingly restricted. Laws can change rapidly.",
@@ -479,8 +469,6 @@ const BLOG_POSTS = [
     category: "Education",
     tags: ["Wellness", "Microdosing", "Health", "Tips"],
     image: "/dest-3.jpg",
-    views: 11300,
-    likes: 2900,
     content: {
       introduction: "Microdosing cannabis involves consuming very small amounts—typically 1-5mg of THC—to achieve subtle therapeutic benefits without significant intoxication. This approach has gained popularity among professionals, creatives, and wellness enthusiasts seeking the benefits of cannabis without impairment. Whether you're new to cannabis or seeking a more functional relationship with the plant, microdosing offers a controlled, intentional approach.",
       disclaimer: "This article is for educational purposes only and does not constitute medical advice. Cannabis affects everyone differently. Consult healthcare providers before using cannabis for medical purposes. Only use cannabis where legal.",
@@ -542,6 +530,42 @@ const BLOG_POSTS = [
         "Stay hydrated and don't skip meals",
         "Avoid mixing with alcohol or other substances",
         "If you feel too high, remember: it will pass, stay calm, hydrate"
+      ]
+    }
+  },
+  {
+    id: "jamaica-ganja-culture",
+    title: "Jamaica: Ganja Culture & Travel Guide 2025",
+    subtitle: "Explore Jamaica's rich cannabis heritage, Rastafarian traditions, and what tourists need to know about ganja on the island.",
+    excerpt: "Explore Jamaica's rich cannabis heritage, Rastafarian traditions, and what tourists need to know about ganja on the island.",
+    date: "Nov 30, 2025",
+    readTime: "11 min read",
+    author: "Marcus Brown",
+    avatar: "🇯🇲",
+    category: "International",
+    tags: ["Jamaica", "Caribbean", "Culture", "Travel"],
+    image: "/blog-jamaica.jpg",
+    content: {
+      introduction: "Jamaica and cannabis are inseparable in popular imagination. The island's Rastafarian movement elevated ganja to a sacrament, and reggae music spread cannabis culture worldwide. In 2015, Jamaica decriminalized small amounts and created a framework for medical use and religious exemptions. While not fully legal, Jamaica offers a unique cannabis experience rooted in deep cultural traditions. This guide covers what travelers need to know.",
+      disclaimer: "Cannabis remains technically illegal in Jamaica for recreational use. Decriminalization applies only to small amounts (2 ounces or less). Tourist access to legal dispensaries requires a medical recommendation. Laws and enforcement vary. Always respect local customs and legal boundaries.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Jamaica's Dangerous Drugs Amendment Act (2015) decriminalized possession of up to 2 ounces (56.6 grams) of cannabis—reduced to a petty offense with a small fine. Rastafarians can use ganja for religious purposes. Medical cannabis is legal with a prescription. Cultivation of up to 5 plants for personal use is permitted. Commercial recreational sales remain illegal, though enforcement is relaxed in tourist areas.", variant: "default" },
+        { title: "Tourist Access", icon: "Users", content: "Tourists can obtain a medical cannabis permit through licensed physicians at herb houses or clinics for around $10-20 USD. This allows purchase from licensed dispensaries. Many resorts have on-site herb houses. Without a permit, you may encounter informal sellers, but this remains technically illegal. Decriminalization means small amounts result in fines, not arrest, but discretion is advised.", variant: "default" },
+        { title: "Where to Consume", icon: "MapPin", content: "Consumption is tolerated in private spaces, many resorts, and areas away from public view. Some licensed herb houses have consumption lounges. Public smoking is technically prohibited but enforcement varies—rural and beach areas are more relaxed than cities. Avoid smoking near schools, churches, or government buildings. Many all-inclusive resorts are cannabis-friendly—ask before booking.", variant: "accent" },
+        { title: "Best Regions", icon: "Building2", content: "**Negril** - Most cannabis-friendly town, Seven Mile Beach, laid-back vibes. **Montego Bay** - Tourist hub with herb houses and resort access. **Ocho Rios** - Cruise port with nearby Rastafarian communities. **Kingston** - Capital city, Bob Marley Museum, authentic culture. **Portland** - Off the beaten path, organic farms, roots culture. **Blue Mountains** - Coffee and ganja farms, eco-tourism.", variant: "default" },
+        { title: "Rastafarian Culture", icon: "Users", content: "For Rastafarians, ganja is the 'wisdom weed' used for meditation and spiritual connection. Visitors can experience authentic Rastafarian culture through community visits, reasoning sessions, and farm tours. Popular experiences include Rastafari Indigenous Village in Montego Bay and Ital (natural) cooking classes. Approach with respect—this is a living religion, not a tourist attraction.", variant: "gold" },
+        { title: "Quality & Varieties", icon: "Scale", content: "Jamaica is famous for landrace sativa strains known for uplifting, creative effects. 'Lamb's Bread' (Bob Marley's favorite) and 'Jamaican Lion' are legendary. Quality from licensed sources is generally good; street quality varies widely. Prices: $3-10 USD per gram depending on source and quality. Hash and concentrates are less common than flower.", variant: "default" },
+        { title: "Transportation & Safety", icon: "Plane", content: "Never attempt to leave Jamaica with cannabis—airport security is strict and penalties are severe. Don't transport cannabis between parishes in large amounts. Be cautious with informal sellers who may overcharge tourists or sell poor quality. Avoid isolated areas when purchasing. Jamaica is generally safe but use normal travel precautions. Driving under the influence is illegal.", variant: "warning" },
+        { title: "Cannabis Tourism Experiences", icon: "MapPin", content: "**Herb house tours** - Visit licensed dispensaries with educational components. **Ganja farm tours** - See cultivation in Blue Mountains or rural areas. **Bob Marley experiences** - Museum in Kingston, birthplace in Nine Mile. **Cooking classes** - Learn to make cannabis-infused Jamaican cuisine. **Wellness retreats** - Yoga and ganja programs in Negril and Ocho Rios.", variant: "accent" }
+      ],
+      safetyTips: [
+        "Obtain a medical permit for legal dispensary access",
+        "Never attempt to leave Jamaica with any cannabis",
+        "Be respectful when visiting Rastafarian communities",
+        "Negotiate prices before purchasing to avoid overcharging",
+        "Stay hydrated—tropical heat plus cannabis can dehydrate",
+        "Don't drive under the influence—roads can be challenging",
+        "Keep consumption discreet in public areas"
       ]
     }
   }
