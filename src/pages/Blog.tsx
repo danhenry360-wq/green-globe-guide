@@ -26,7 +26,7 @@ const BLOG_POSTS = [
     avatar: "🎿",
     category: "Travel Guide",
     tags: ["Colorado", "Ski", "Dispensaries", "Winter"],
-    image: "/dest-california.jpg",
+    image: "/blog-colorado-ski.jpg",
     content: {
       introduction: "Colorado offers a unique combination of world-class skiing and legal recreational cannabis. From Aspen to Breckenridge, this guide covers the best 420-friendly accommodations, dispensaries near popular ski resorts, and essential tips for responsibly enjoying both the slopes and cannabis during your mountain getaway.",
       disclaimer: "Cannabis is legal for adults 21+ in Colorado. However, consumption is prohibited on ski slopes, in public areas, and at most lodging. Always consume responsibly and never ski while impaired. Laws vary by municipality.",
@@ -57,7 +57,7 @@ const BLOG_POSTS = [
     avatar: "🇹🇭",
     category: "International",
     tags: ["Thailand", "Asia", "Legal", "Travel"],
-    image: "/dest-1.jpg",
+    image: "/blog-thailand.jpg",
     content: {
       introduction: "Thailand made history in 2022 by becoming the first Asian country to decriminalize cannabis. Since then, cannabis shops have flourished across Bangkok, Phuket, Chiang Mai, and the islands. This guide covers everything tourists need to know about legally enjoying cannabis in the Land of Smiles, from legal nuances to the best dispensaries and cultural etiquette.",
       disclaimer: "Thailand's cannabis laws are evolving rapidly and may change. Public consumption and smoking near temples/schools is prohibited. Always verify current regulations before travel. Some restrictions on THC content and edibles may apply.",
