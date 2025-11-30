@@ -484,10 +484,15 @@ const DispensaryCard = ({
                   </h4>
                   <div className="flex gap-1.5">
                     {dispensary.status?.toLowerCase().includes('licensed') && (
-                      <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
-                        <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                        Licensed
-                      </Badge>
+                      <>
+                        <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                          <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          BudQuest Verified
+                        </Badge>
+                        <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
+                          Licensed
+                        </Badge>
+                      </>
                     )}
                     {dispensary.status === 'Open' && (
                       <Badge className="bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
