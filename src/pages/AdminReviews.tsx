@@ -77,7 +77,8 @@ const AdminReviews = () => {
   const fetchReviews = async () => {
     setLoading(true);
     
-    const { data, error } = await supabase
+    // Fetch reviews with dispensary data
+    const { data: reviewsData, error: reviewsError } = await supabase
       .from('reviews')
       .select(`
         id,
@@ -88,9 +89,6 @@ const AdminReviews = () => {
         created_at,
         user_id,
         dispensary_id,
-        profiles!reviews_user_id_fkey (
-          display_name
-        ),
         dispensaries (
           name,
           slug
@@ -98,16 +96,29 @@ const AdminReviews = () => {
       `)
       .order('created_at', { ascending: false });
 
-    if (!error && data) {
-      const transformedData = data.map(review => ({
-        ...review,
-        profiles: Array.isArray(review.profiles) ? review.profiles[0] : review.profiles,
-        dispensaries: Array.isArray(review.dispensaries) ? review.dispensaries[0] : review.dispensaries,
-        status: review.status as 'pending' | 'approved' | 'rejected'
-      }));
-      setReviews(transformedData);
+    if (reviewsError || !reviewsData) {
+      console.error('Error fetching reviews:', reviewsError);
+      setLoading(false);
+      return;
     }
+
+    // Get unique user IDs and fetch profiles separately
+    const userIds = [...new Set(reviewsData.map(r => r.user_id))];
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('id, display_name')
+      .in('id', userIds);
+
+    const profilesMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+
+    const transformedData = reviewsData.map(review => ({
+      ...review,
+      profiles: profilesMap.get(review.user_id) || null,
+      dispensaries: Array.isArray(review.dispensaries) ? review.dispensaries[0] : review.dispensaries,
+      status: review.status as 'pending' | 'approved' | 'rejected'
+    }));
     
+    setReviews(transformedData);
     setLoading(false);
   };
 
