@@ -1,7 +1,9 @@
 // lib/usa_state_data.ts
 // Author:  Your-Name
 // Purpose: Centralized, strongly-typed cannabis policy & travel data for all 50 U.S. states + DC
-// Last-updated:  2025-06-25
+// Last-updated:  2025-11-30
+
+export const USA_GUIDE_LAST_UPDATED = '2025-11-30';
 
 export interface CityData {
   name: string;
@@ -380,7 +382,7 @@ export const USA_STATE_DATA: StateData[] = [
     purchase_rules: 'Licensed dispensaries only.',
     penalties: 'Civil fine $100.',
     consumption_rules: 'Private property; not on beaches or boardwalks.',
-    dispensary_guide: 'Recreational sales began 2024.',
+    dispensary_guide: 'Recreational stores operating statewide.',
     travel_rules: 'Do not cross state lines.',
     subtitle: 'The First State: Recreational cannabis is legal.',
     cities: [
@@ -771,14 +773,14 @@ export const USA_STATE_DATA: StateData[] = [
     name: 'Kentucky',
     slug: 'kentucky',
     status: 'medical',
-    possession_limits: 'Per physician order (sales begin 2025)',
+    possession_limits: 'Per physician order',
     age_requirement: '18+ with card',
-    purchase_rules: 'Medical dispensaries (opening 2025).',
+    purchase_rules: 'Medical dispensaries only.',
     penalties: 'Misdemeanor for non-cardholders.',
     consumption_rules: 'Private property; not in vehicles.',
-    dispensary_guide: 'Stores pending; none operational yet.',
+    dispensary_guide: 'Medical dispensaries now operating statewide.',
     travel_rules: 'Do not cross state lines.',
-    subtitle: 'The Bluegrass State: Medical sales pending.',
+    subtitle: 'The Bluegrass State: Medical cannabis available.',
     cities: [
       {
         name: 'Louisville',
@@ -1037,12 +1039,12 @@ export const USA_STATE_DATA: StateData[] = [
     status: 'recreational',
     possession_limits: '2 oz flower | 8 g concentrate',
     age_requirement: '21+',
-    purchase_rules: 'Licensed stores (sales begin 2025).',
+    purchase_rules: 'Licensed stores only.',
     penalties: 'Civil fine ≤ $50.',
     consumption_rules: 'Private property; not in state parks.',
-    dispensary_guide: 'Medical stores open; rec stores pending.',
+    dispensary_guide: 'Recreational stores now operating statewide.',
     travel_rules: 'Do not cross state lines.',
-    subtitle: 'The North Star State: Recreational cannabis is legal (sales pending).',
+    subtitle: 'The North Star State: Recreational cannabis is legal.',
     cities: [
       {
         name: 'Minneapolis',
@@ -1572,12 +1574,12 @@ export const USA_STATE_DATA: StateData[] = [
     status: 'recreational',
     possession_limits: '2.5 oz flower | 15 g concentrate',
     age_requirement: '21+',
-    purchase_rules: 'Licensed stores (sales late 2024).',
+    purchase_rules: 'Licensed stores only.',
     penalties: 'Civil fine ≤ $150.',
     consumption_rules: 'Private property; not in state parks.',
-    dispensary_guide: 'Medical stores open; rec stores pending.',
+    dispensary_guide: 'Recreational stores now operating statewide.',
     travel_rules: 'Do not cross state lines.',
-    subtitle: 'The Buckeye State: Recreational cannabis is legal (sales pending).',
+    subtitle: 'The Buckeye State: Recreational cannabis is legal.',
     cities: [
       {
         name: 'Columbus',
@@ -2077,12 +2079,12 @@ export const USA_STATE_DATA: StateData[] = [
     status: 'recreational',
     possession_limits: '1 oz flower',
     age_requirement: '21+',
-    purchase_rules: 'No retail sales yet (gifting legal).',
+    purchase_rules: 'Retail framework being established (gifting legal).',
     penalties: 'Civil fine ≤ $25.',
     consumption_rules: 'Private property; not in vehicles.',
-    dispensary_guide: 'Medical stores open; rec sales pending 2025.',
+    dispensary_guide: 'Medical stores open; retail sales framework in progress.',
     travel_rules: 'Do not cross state lines.',
-    subtitle: 'The Old Dominion: Recreational cannabis is legal (sales pending).',
+    subtitle: 'The Old Dominion: Recreational cannabis is legal (retail in progress).',
     cities: [
       {
         name: 'Virginia Beach',
