@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { getStatusHexColor } from '@/lib/legal-status-colors';
 
 interface CountryData {
   name: string;
@@ -113,11 +114,11 @@ const countryData: Record<string, CountryData> = {
 };
 
 const statusColors = {
-  recreational: '#22c55e', // green
-  medical: '#eab308', // yellow/amber
-  decriminalized: '#3b82f6', // blue
-  illegal: '#ef4444', // red
-  mixed: '#a855f7', // purple for mixed status
+  recreational: getStatusHexColor('recreational'),
+  medical: getStatusHexColor('medical'),
+  decriminalized: getStatusHexColor('decriminalized'),
+  illegal: getStatusHexColor('illegal'),
+  mixed: getStatusHexColor('mixed'),
 };
 
 interface InteractiveWorldMapProps {

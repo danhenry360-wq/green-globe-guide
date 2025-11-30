@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Globe2 } from 'lucide-react';
+import { getStatusHexColor, getStatusLabel } from '@/lib/legal-status-colors';
 
 interface ContinentData {
   name: string;
@@ -73,17 +74,17 @@ const continents: Record<string, ContinentData> = {
 };
 
 const statusColors = {
-  recreational: '#22c55e',
-  medical: '#eab308',
-  decriminalized: '#3b82f6',
-  illegal: '#ef4444',
+  recreational: getStatusHexColor('recreational'),
+  medical: getStatusHexColor('medical'),
+  decriminalized: getStatusHexColor('decriminalized'),
+  illegal: getStatusHexColor('illegal'),
 };
 
 const statusLabels = {
-  recreational: 'Recreational',
+  recreational: getStatusLabel('recreational'),
   medical: 'Medical Only',
-  decriminalized: 'Decriminalized',
-  illegal: 'Illegal',
+  decriminalized: getStatusLabel('decriminalized'),
+  illegal: getStatusLabel('illegal'),
 };
 
 const ContinentSelector: React.FC = () => {

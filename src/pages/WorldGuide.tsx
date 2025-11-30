@@ -30,6 +30,7 @@ import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { getCountryImage } from "@/data/country_images";
+import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
 
 /* ----------------------------------------------------
    4-LEVEL DATA MODEL
@@ -2784,22 +2785,7 @@ const WORLD: Continent[] = [
 ];
 
 /* ---------- helpers ---------- */
-const statusColor = (s: string) => {
-  switch (s) {
-    case "Recreational":
-      return "bg-green-500/90 text-white";
-    case "Medical":
-      return "bg-blue-500/90 text-white";
-    case "Decriminalized":
-      return "bg-amber-500/90 text-white";
-    case "Mixed":
-      return "bg-purple-500/90 text-white";
-    case "Illegal":
-      return "bg-red-600/90 text-white";
-    default:
-      return "bg-zinc-500/90 text-white";
-  }
-};
+const statusColor = (s: string) => getStatusBadgeClasses(s);
 
 // HELPER: Detect Critical Human Rights Risks (Death/Caning)
 const isDeathPenalty = (country: Country) => {

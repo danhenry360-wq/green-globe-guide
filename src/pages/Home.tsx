@@ -18,6 +18,7 @@ import MapLegend from "@/components/MapLegend";
 
 // Data
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
+import { getStatusDotClass, getStatusOutlineClasses, getStatusBadgeClasses } from "@/lib/legal-status-colors";
 
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
@@ -273,25 +274,9 @@ const MobileContinentMap = () => {
     ],
   };
 
-  const getStatusDot = (status: string) => {
-    switch (status) {
-      case "Recreational": return "bg-green-500";
-      case "Medical": return "bg-amber-500";
-      case "Decriminalized": return "bg-blue-500";
-      case "Mixed": return "bg-purple-500";
-      default: return "bg-red-500";
-    }
-  };
+  const getStatusDot = (status: string) => getStatusDotClass(status);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Recreational": return "text-green-400 border-green-500/50";
-      case "Medical": return "text-amber-400 border-amber-500/50";
-      case "Decriminalized": return "text-blue-400 border-blue-500/50";
-      case "Mixed": return "text-purple-400 border-purple-500/50";
-      default: return "text-red-400 border-red-500/50";
-    }
-  };
+  const getStatusColor = (status: string) => getStatusOutlineClasses(status);
 
   if (selectedContinent) {
     const continent = continentDisplay.find(c => c.slug === selectedContinent);
@@ -464,15 +449,7 @@ const Home = () => {
     }
   };
 
-  const getStatusBadgeColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'recreational': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'medical': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'decriminalized': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'mixed': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      default: return 'bg-red-500/20 text-red-400 border-red-500/30';
-    }
-  };
+  const getStatusBadgeColor = (status: string) => getStatusOutlineClasses(status);
 
   const getTypeIcon = (type: string) => {
     switch (type) {

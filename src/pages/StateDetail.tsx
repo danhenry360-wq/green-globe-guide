@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { Scale, Home, Plane, Car, Info, MapPin } from "lucide-react";
 import CityList from "@/components/CityList";
+import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
 
 const StateDetail = () => {
   const { stateSlug } = useParams<{ stateSlug: string }>();
@@ -28,21 +29,6 @@ const StateDetail = () => {
       </div>
     );
   }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'recreational':
-        return 'bg-accent text-accent-foreground';
-      case 'medical':
-        return 'bg-gold text-foreground';
-      case 'decriminalized':
-        return 'bg-yellow-600 text-foreground';
-      case 'illegal':
-        return 'bg-red-600 text-white';
-      default:
-        return 'bg-muted';
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,7 +54,7 @@ const StateDetail = () => {
                   <p className="text-base md:text-xl text-muted-foreground">{state.subtitle}</p>
                 )}
               </div>
-              <Badge className={`${getStatusColor(state.status)} text-sm md:text-lg px-4 md:px-6 py-2 capitalize flex-shrink-0`}>
+              <Badge className={`${getStatusBadgeClasses(state.status)} text-sm md:text-lg px-4 md:px-6 py-2 capitalize flex-shrink-0`}>
                 {state.status}
               </Badge>
             </div>
@@ -88,7 +74,7 @@ const StateDetail = () => {
                     <span className="w-2 h-2 bg-accent rounded-full mr-2"></span>
                     Legal Status
                   </h4>
-                  <Badge className={`${getStatusColor(state.status)} capitalize`}>
+                  <Badge className={`${getStatusBadgeClasses(state.status)} capitalize`}>
                     {state.status}
                   </Badge>
                 </div>
@@ -125,7 +111,7 @@ const StateDetail = () => {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground mb-1">Legal Status</h4>
-                    <Badge className={`${getStatusColor(state.status)} capitalize`}>
+                    <Badge className={`${getStatusBadgeClasses(state.status)} capitalize`}>
                       {state.status}
                     </Badge>
                   </div>

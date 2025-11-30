@@ -4,27 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { StateData } from "@/lib/usa_state_data";
+import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
 
 interface StateCardProps {
   state: StateData;
 }
 
 const StateCard = ({ state }: StateCardProps) => {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'recreational':
-        return 'bg-accent/90 text-accent-foreground hover:bg-accent';
-      case 'medical':
-        return 'bg-gold/90 text-foreground hover:bg-gold';
-      case 'decriminalized':
-        return 'bg-yellow-600/90 text-foreground hover:bg-yellow-600';
-      case 'illegal':
-        return 'bg-red-600/90 text-white hover:bg-red-600';
-      default:
-        return 'bg-muted';
-    }
-  };
-
   return (
     <Link to={`/usa/${state.slug}`}>
       <motion.div
@@ -46,7 +32,7 @@ const StateCard = ({ state }: StateCardProps) => {
                 </p>
               )}
             </div>
-            <Badge className={`${getStatusColor(state.status)} flex-shrink-0 capitalize`}>
+            <Badge className={`${getStatusBadgeClasses(state.status)} flex-shrink-0 capitalize`}>
               {state.status}
             </Badge>
           </div>
