@@ -15,6 +15,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  CheckCircle,
 } from "lucide-react";
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -22,6 +23,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
 // Database dispensary type
 interface DbDispensary {
@@ -91,7 +93,10 @@ const ITEMS_PER_PAGE = 10;
 import { Skeleton } from "@/components/ui/skeleton";
 
 const DispensaryCardSkeleton = () => (
-  <Card className="p-3 sm:p-5 bg-card/60 border-border/40">
+  <Card className={cn(
+    "p-3 sm:p-5 rounded-2xl border border-white/10",
+    "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
+  )}>
     <div className="flex flex-col gap-3 sm:gap-4">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
         <div className="flex-1 min-w-0">
@@ -163,8 +168,8 @@ const Pagination = ({
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 px-4">
       <p className="text-sm text-muted-foreground">
         Page{" "}
-        <span className="font-bold text-accent">{currentPage}</span> of{" "}
-        <span className="font-bold text-accent">{totalPages}</span>
+        <span className="font-bold text-green-400">{currentPage}</span> of{" "}
+        <span className="font-bold text-green-400">{totalPages}</span>
       </p>
 
       <div className="flex items-center gap-2">
@@ -173,7 +178,7 @@ const Pagination = ({
           disabled={currentPage === 1}
           variant="outline"
           size="sm"
-          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+          className="gap-2 border-white/10 hover:bg-green-400/10 disabled:opacity-50"
         >
           <ChevronLeft className="w-4 h-4" />
           <span className="hidden sm:inline">Previous</span>
@@ -196,8 +201,8 @@ const Pagination = ({
                   onClick={() => onPageChange(page)}
                   className={`w-10 h-10 rounded-lg font-semibold transition-all ${
                     currentPage === page
-                      ? "bg-accent text-white"
-                      : "bg-card/50 text-muted-foreground hover:bg-card/80 hover:text-white border border-border/40"
+                      ? "bg-green-400 text-white"
+                      : "bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10"
                   }`}
                 >
                   {page}
@@ -215,7 +220,7 @@ const Pagination = ({
           disabled={currentPage === totalPages}
           variant="outline"
           size="sm"
-          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+          className="gap-2 border-white/10 hover:bg-green-400/10 disabled:opacity-50"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="w-4 h-4" />
@@ -261,12 +266,12 @@ const FilterPanel = ({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -400, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-border/50 overflow-y-auto md:overflow-visible"
+            className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-white/10 overflow-y-auto md:overflow-visible"
           >
             <div className="p-6 space-y-6">
               <button
                 onClick={onClose}
-                className="md:hidden absolute top-4 right-4 p-2 hover:bg-accent/10 rounded-lg"
+                className="md:hidden absolute top-4 right-4 p-2 hover:bg-green-400/10 rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -286,7 +291,7 @@ const FilterPanel = ({
                     onFilterChange("country", e.target.value);
                     onFilterChange("state", "");
                   }}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
                   <option value="">All Countries</option>
                   {countries.map((country) => (
@@ -306,7 +311,7 @@ const FilterPanel = ({
                   <select
                     value={filters.state}
                     onChange={(e) => onFilterChange("state", e.target.value)}
-                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                    className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                   >
                     <option value="">All States</option>
                     {states.map((state) => (
@@ -332,8 +337,8 @@ const FilterPanel = ({
                       onClick={() => onFilterChange("type", type)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         filters.type === type
-                          ? "bg-accent text-white"
-                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-background border border-border/40"
+                          ? "bg-green-400 text-white"
+                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
                       }`}
                     >
                       <span className="capitalize">
@@ -367,8 +372,8 @@ const FilterPanel = ({
                       onClick={() => onFilterChange("specialty", specialty)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         filters.specialty === specialty
-                          ? "bg-accent text-white"
-                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-background border border-border/40"
+                          ? "bg-green-400 text-white"
+                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
                       }`}
                     >
                       <span className="capitalize">
@@ -387,7 +392,7 @@ const FilterPanel = ({
                 <select
                   value={filters.sort}
                   onChange={(e) => onFilterChange("sort", e.target.value)}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
                   <option value="rating" className="bg-card">
                     Highest Rated
@@ -406,7 +411,7 @@ const FilterPanel = ({
 
               <Button
                 onClick={onClose}
-                className="w-full md:hidden bg-accent hover:bg-accent/90 text-white rounded-xl font-semibold py-3"
+                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3"
               >
                 Apply Filters
               </Button>
@@ -473,20 +478,24 @@ const DispensaryCard = ({
         state={{ dispensaryId: dispensary.id }}
         className="block"
       >
-        <Card className="p-3 sm:p-5 bg-card/60 border-border/40 hover:border-accent/50 hover:bg-card/80 transition-all hover:shadow-lg hover:shadow-accent/10 cursor-pointer group">
+        <Card className={cn(
+          "p-3 sm:p-5 rounded-2xl border border-white/10",
+          "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+          "hover:shadow-lg hover:shadow-green-400/20 transition-all cursor-pointer group"
+        )}>
           <div className="flex flex-col gap-3 sm:gap-4">
             {/* Header with name and badges */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
-                  <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-accent transition-colors leading-tight">
+                  <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-green-400 transition-colors leading-tight">
                     {dispensary.name}
                   </h4>
                   <div className="flex gap-1.5">
                     {dispensary.status?.toLowerCase().includes('licensed') && (
                       <>
-                        <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
-                          <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                        <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                          <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           BudQuest Verified
                         </Badge>
                         <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
@@ -503,7 +512,7 @@ const DispensaryCard = ({
                 </div>
 
                 <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
-                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-accent" />
+                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-green-400" />
                   {dispensary.city}, {dispensary.state}
                 </p>
 
@@ -536,7 +545,7 @@ const DispensaryCard = ({
 
               {/* CTA Button - Full width on mobile */}
               <div className="flex-shrink-0 mt-2 sm:mt-0">
-                <span className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-white text-xs sm:text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
+                <span className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-green-400 hover:bg-green-500 text-white text-xs sm:text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
                   View Details
                   <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </span>
@@ -544,7 +553,7 @@ const DispensaryCard = ({
             </div>
 
             {/* Address */}
-            <div className="pt-2 sm:pt-3 border-t border-border/30">
+            <div className="pt-2 sm:pt-3 border-t border-white/10">
               <p className="text-[10px] sm:text-xs text-muted-foreground/80 leading-relaxed">
                 <span className="font-semibold text-muted-foreground">Address:</span>{" "}
                 {dispensary.address}
@@ -774,7 +783,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
         <Navigation />
 
         {/* MOBILE SEARCH BAR – NOW STATIC AT TOP */}
-        <div className="md:hidden sticky top-0 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/50 shadow-2xl">
+        <div className="md:hidden sticky top-0 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
           <div className="px-4 py-4">
             <div className="flex gap-3 items-stretch">
               <div className="flex-1 relative">
@@ -786,12 +795,12 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                   onChange={(e) =>
                     handleFilterChange("search", e.target.value)
                   }
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                 />
                 {filters.search && (
                   <button
                     onClick={() => handleFilterChange("search", "")}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
                   >
                     <X className="w-5 h-5 text-muted-foreground hover:text-white" />
                   </button>
@@ -802,7 +811,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                 onClick={() => setIsFilterOpen(true)}
                 variant="outline"
                 size="sm"
-                className="gap-2 border-border/50 text-sm px-4 h-11 rounded-xl hover:bg-accent/10"
+                className="gap-2 border-white/10 text-sm px-4 h-11 rounded-xl hover:bg-green-400/10"
               >
                 <Filter className="w-5 h-5" />
                 Filters
@@ -813,7 +822,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                 onChange={(e) =>
                   handleFilterChange("sort", e.target.value as SortType)
                 }
-                className="px-4 py-3 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11"
+                className="px-4 py-3 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-11"
               >
                 <option value="rating" className="bg-card">
                   Highest Rated
@@ -836,7 +845,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-12 text-center pt-12 md:pt-20">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
                 BudQuest Verified Dispensaries
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground mb-2">
@@ -865,7 +874,10 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
                 {/* SEARCH & SORT BAR - DESKTOP ONLY */}
-                <div className="hidden md:block bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 mb-8 shadow-2xl">
+                <div className={cn(
+                  "hidden md:block rounded-2xl border border-white/10 p-4 sm:p-6 mb-8 shadow-2xl",
+                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
+                )}>
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
@@ -876,12 +888,12 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                         onChange={(e) =>
                           handleFilterChange("search", e.target.value)
                         }
-                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                       />
                       {filters.search && (
                         <button
                           onClick={() => handleFilterChange("search", "")}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
                         >
                           <X className="w-5 h-5 text-muted-foreground hover:text-white" />
                         </button>
@@ -893,7 +905,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                       onChange={(e) =>
                         handleFilterChange("sort", e.target.value as SortType)
                       }
-                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-11 sm:h-12"
                     >
                       <option value="rating" className="bg-card">
                         Highest Rated
@@ -912,9 +924,9 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
 
                   {/* ACTIVE FILTERS */}
                   {hasActiveFilters && (
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
+                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
                       {filters.country && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.country}
                           <button
                             onClick={() => handleFilterChange("country", "")}
@@ -925,7 +937,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                         </Badge>
                       )}
                       {filters.state && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.state}
                           <button
                             onClick={() => handleFilterChange("state", "")}
@@ -936,7 +948,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                         </Badge>
                       )}
                       {filters.type !== "all" && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.type}
                           <button
                             onClick={() => handleFilterChange("type", "all")}
@@ -947,7 +959,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                         </Badge>
                       )}
                       {filters.specialty !== "all" && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.specialty}
                           <button
                             onClick={() =>
@@ -995,7 +1007,7 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                       <Button
                         onClick={handleClearFilters}
                         variant="outline"
-                        className="gap-2 border-border/50"
+                        className="gap-2 border-white/10"
                       >
                         <X className="w-4 h-4" />
                         Clear Filters
@@ -1007,18 +1019,18 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
                     <div className="mb-8">
                       <p className="text-sm text-muted-foreground">
                         Showing{" "}
-                        <span className="text-accent font-bold">
+                        <span className="text-green-400 font-bold">
                           {(currentPage - 1) * ITEMS_PER_PAGE + 1}
                         </span>{" "}
                         to{" "}
-                        <span className="text-accent font-bold">
+                        <span className="text-green-400 font-bold">
                           {Math.min(
                             currentPage * ITEMS_PER_PAGE,
                             filteredData.length
                           )}
                         </span>{" "}
                         of{" "}
-                        <span className="text-accent font-bold">
+                        <span className="text-green-400 font-bold">
                           {filteredData.length}
                         </span>{" "}
                         dispensaries
@@ -1089,21 +1101,21 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   to="/usa"
-                  className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors"
+                  className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors"
                 >
                   USA Guide
                 </Link>
                 <span className="text-muted-foreground/40">•</span>
                 <Link
                   to="/hotels"
-                  className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors"
+                  className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors"
                 >
                   Hotels
                 </Link>
                 <span className="text-muted-foreground/40">•</span>
                 <Link
                   to="/world"
-                  className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors"
+                  className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors"
                 >
                   World Guide
                 </Link>

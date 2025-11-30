@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
+import { cn } from "@/lib/utils";
 
 /* ============================================
    SEO STRUCTURED DATA
@@ -71,7 +72,7 @@ const Pagination = ({
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 px-4">
       <p className="text-sm text-muted-foreground">
-        Page <span className="font-bold text-accent">{currentPage}</span> of <span className="font-bold text-accent">{totalPages}</span>
+        Page <span className="font-bold text-green-400">{currentPage}</span> of <span className="font-bold text-green-400">{totalPages}</span>
       </p>
       
       <div className="flex items-center gap-2">
@@ -80,7 +81,7 @@ const Pagination = ({
           disabled={currentPage === 1}
           variant="outline"
           size="sm"
-          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+          className="gap-2 border-white/10 hover:bg-green-400/10 disabled:opacity-50"
         >
           <ChevronLeft className="w-4 h-4" />
           <span className="hidden sm:inline">Previous</span>
@@ -98,8 +99,8 @@ const Pagination = ({
                   onClick={() => onPageChange(page)}
                   className={`w-10 h-10 rounded-lg font-semibold transition-all ${
                     currentPage === page
-                      ? 'bg-accent text-white'
-                      : 'bg-card/50 text-muted-foreground hover:bg-card/80 hover:text-white border border-border/40'
+                      ? 'bg-green-400 text-white'
+                      : 'bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10'
                   }`}
                 >
                   {page}
@@ -115,7 +116,7 @@ const Pagination = ({
           disabled={currentPage === totalPages}
           variant="outline"
           size="sm"
-          className="gap-2 border-border/50 hover:bg-accent/10 disabled:opacity-50"
+          className="gap-2 border-white/10 hover:bg-green-400/10 disabled:opacity-50"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="w-4 h-4" />
@@ -180,13 +181,13 @@ const FilterPanel = ({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -400, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-border/50 overflow-y-auto md:overflow-visible"
+            className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-white/10 overflow-y-auto md:overflow-visible"
           >
             <div className="p-6 space-y-6">
               {/* CLOSE BUTTON (MOBILE) */}
               <button
                 onClick={onClose}
-                className="md:hidden absolute top-4 right-4 p-2 hover:bg-accent/10 rounded-lg transition-colors"
+                className="md:hidden absolute top-4 right-4 p-2 hover:bg-green-400/10 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -204,7 +205,7 @@ const FilterPanel = ({
                     onFilterChange('country', e.target.value);
                     onFilterChange('state', '');
                   }}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
                   <option value="">All Countries</option>
                   {countries.map(country => (
@@ -222,7 +223,7 @@ const FilterPanel = ({
                   <select
                     value={filters.state}
                     onChange={(e) => onFilterChange('state', e.target.value)}
-                    className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                    className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                   >
                     <option value="">All States</option>
                     {states.map(state => (
@@ -244,8 +245,8 @@ const FilterPanel = ({
                       onClick={() => onFilterChange('type', option.value)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         filters.type === option.value
-                          ? 'bg-accent text-white'
-                          : 'bg-background/80 text-muted-foreground hover:text-white hover:bg-background border border-border/40'
+                          ? 'bg-green-400 text-white'
+                          : 'bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10'
                       }`}
                     >
                       {option.label}
@@ -263,7 +264,7 @@ const FilterPanel = ({
                 <select
                   value={filters.sort}
                   onChange={(e) => onFilterChange('sort', e.target.value)}
-                  className="w-full px-3 py-2 bg-background/80 border border-border/40 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                  className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
                   {sortOptions.map(option => (
                     <option key={option.value} value={option.value} className="bg-card">
@@ -276,7 +277,7 @@ const FilterPanel = ({
               {/* APPLY BUTTON (MOBILE) */}
               <Button
                 onClick={onClose}
-                className="w-full md:hidden bg-accent hover:bg-accent/90 text-white rounded-xl font-semibold py-3"
+                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3"
               >
                 Apply Filters
               </Button>
@@ -453,7 +454,7 @@ const Hotels = () => {
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-12 text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
                 Verified 420-Friendly Hotels
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground mb-2">
@@ -480,8 +481,11 @@ const Hotels = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* SEARCH BAR - STATIC NOW */}
-                <div className="mb-8 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl rounded-2xl border border-border/50 p-4 sm:p-6 shadow-2xl">
+                {/* SEARCH BAR */}
+                <div className={cn(
+                  "mb-8 rounded-2xl border border-white/10 p-4 sm:p-6 shadow-2xl",
+                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
+                )}>
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
@@ -490,12 +494,12 @@ const Hotels = () => {
                         placeholder="Search hotels, cities, states..."
                         value={filters.search}
                         onChange={(e) => handleFilterChange('search', e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                       />
                       {filters.search && (
                         <button
                           onClick={() => handleFilterChange('search', '')}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
                         >
                           <X className="w-5 h-5 text-muted-foreground hover:text-white" />
                         </button>
@@ -506,7 +510,7 @@ const Hotels = () => {
                       onClick={() => setIsFilterOpen(true)}
                       variant="outline"
                       size="sm"
-                      className="md:hidden gap-2 border-border/50 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-accent/10"
+                      className="md:hidden gap-2 border-white/10 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-green-400/10"
                     >
                       <Filter className="w-5 h-5" />
                       Filters
@@ -515,7 +519,7 @@ const Hotels = () => {
                     <select
                       value={filters.sort}
                       onChange={(e) => handleFilterChange('sort', e.target.value as SortType)}
-                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-border/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-11 sm:h-12"
+                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-11 sm:h-12"
                     >
                       <option value="rating" className="bg-card">Highest Rated</option>
                       <option value="price-low" className="bg-card">Price: Low to High</option>
@@ -526,9 +530,9 @@ const Hotels = () => {
 
                   {/* ACTIVE FILTERS DISPLAY */}
                   {hasActiveFilters && (
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
+                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
                       {filters.country && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.country}
                           <button onClick={() => handleFilterChange('country', '')} className="hover:opacity-70">
                             <X className="w-3 h-3" />
@@ -536,7 +540,7 @@ const Hotels = () => {
                         </Badge>
                       )}
                       {filters.state && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.state}
                           <button onClick={() => handleFilterChange('state', '')} className="hover:opacity-70">
                             <X className="w-3 h-3" />
@@ -544,7 +548,7 @@ const Hotels = () => {
                         </Badge>
                       )}
                       {filters.type !== 'all' && (
-                        <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
                           {filters.type}
                           <button onClick={() => handleFilterChange('type', 'all')} className="hover:opacity-70">
                             <X className="w-3 h-3" />
@@ -568,7 +572,7 @@ const Hotels = () => {
                     <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">No hotels found</h2>
                     <p className="text-muted-foreground text-sm mb-4">Try adjusting your filters or search terms.</p>
                     {hasActiveFilters && (
-                      <Button onClick={handleClearFilters} variant="outline" className="gap-2 border-border/50">
+                      <Button onClick={handleClearFilters} variant="outline" className="gap-2 border-white/10">
                         <X className="w-4 h-4" />
                         Clear Filters
                       </Button>
@@ -578,11 +582,11 @@ const Hotels = () => {
                   <>
                     <div className="mb-8">
                       <p className="text-sm text-muted-foreground">
-                        Showing <span className="text-accent font-bold">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to{' '}
-                        <span className="text-accent font-bold">
+                        Showing <span className="text-green-400 font-bold">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to{' '}
+                        <span className="text-green-400 font-bold">
                           {Math.min(currentPage * ITEMS_PER_PAGE, filteredData.length)}
                         </span>{' '}
-                        of <span className="text-accent font-bold">{filteredData.length}</span> hotels
+                        of <span className="text-green-400 font-bold">{filteredData.length}</span> hotels
                       </p>
                     </div>
 
@@ -643,11 +647,11 @@ const Hotels = () => {
             {/* INTERNAL LINKS */}
             <nav className="mt-12 text-center">
               <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/usa" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
+                <Link to="/usa" className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors">
                   USA Guide
                 </Link>
                 <span className="text-muted-foreground/40">•</span>
-                <Link to="/world" className="text-accent hover:text-accent/80 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-accent/10 transition-colors">
+                <Link to="/world" className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors">
                   World Guide
                 </Link>
               </div>
