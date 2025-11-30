@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import StateCard from "@/components/StateCard";
-import { USA_STATE_DATA } from "@/lib/usa_state_data";
+import { USA_STATE_DATA, USA_GUIDE_LAST_UPDATED } from "@/lib/usa_state_data";
 import { cn } from "@/lib/utils";
 
 /* ----------------------------------------------------
@@ -148,6 +148,9 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground font-light">
           Pick a region to start exploring
+        </p>
+        <p className="text-xs text-muted-foreground/60 mt-2">
+          Last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </motion.div>
 
