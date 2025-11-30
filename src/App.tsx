@@ -27,6 +27,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AdminReviews from "./pages/AdminReviews";
 import AdminStateLaws from "./pages/AdminStateLaws";
+import AdminDashboard from "./pages/AdminDashboard";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Disclaimer from "./pages/Disclaimer";
@@ -61,6 +62,7 @@ const App = () => (
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminReviews />} />
           <Route path="/admin/state-laws" element={<AdminStateLaws />} />
           <Route path="/terms" element={<Terms />} />
