@@ -57,6 +57,15 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "russia": "https://images.unsplash.com/photo-1513326738677-b964603b136d?w=600&q=80", // Moscow Red Square
   "belarus": "https://images.unsplash.com/photo-1563804446899-96fb5c3b7bf5?w=600&q=80", // Minsk
   "turkey": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80", // Istanbul mosque
+  "cyprus": "https://images.unsplash.com/photo-1597408154392-1c6c5c1b5a46?w=600&q=80", // Cyprus coast
+  "georgia": "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&q=80", // Tbilisi old town
+  "armenia": "https://images.unsplash.com/photo-1602247630892-0ae22c87dda6?w=600&q=80", // Yerevan Armenia
+  "azerbaijan": "https://images.unsplash.com/photo-1589293816812-23ddfcc39be3?w=600&q=80", // Baku flame towers
+  "andorra": "https://images.unsplash.com/photo-1600623471616-8c1966c91ff6?w=600&q=80", // Andorra mountains
+  "monaco": "https://images.unsplash.com/photo-1556445016-45e1d89e4bf3?w=600&q=80", // Monaco harbor
+  "san-marino": "https://images.unsplash.com/photo-1538330090309-c31d5b17d17c?w=600&q=80", // San Marino towers
+  "liechtenstein": "https://images.unsplash.com/photo-1596394723269-6df59fa75b72?w=600&q=80", // Liechtenstein castle
+  "vatican": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=600&q=80", // Vatican St Peters
   
   // SOUTH AMERICA
   "uruguay": "https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=600&q=80", // Montevideo
