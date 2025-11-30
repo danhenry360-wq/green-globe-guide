@@ -22,11 +22,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Edit, Shield, ArrowLeft, Save, Loader2 } from "lucide-react";
+import { Search, Edit, Shield, ArrowLeft, Save, Loader2, History, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
 
@@ -44,6 +50,26 @@ interface StateRecord {
   tourist_notes: string | null;
   last_updated: string | null;
 }
+
+interface ChangelogEntry {
+  id: string;
+  state_id: string;
+  changed_by: string;
+  field_name: string;
+  old_value: string | null;
+  new_value: string | null;
+  created_at: string;
+  profiles?: { display_name: string | null } | null;
+}
+
+const FIELD_LABELS: Record<string, string> = {
+  status: "Legal Status",
+  possession_limits: "Possession Limits",
+  airport_rules: "Airport Rules",
+  driving_rules: "Driving Rules",
+  where_to_consume: "Where to Consume",
+  tourist_notes: "Tourist Notes",
+};
 
 const AdminStateLaws = () => {
   const navigate = useNavigate();
@@ -82,21 +108,87 @@ const AdminStateLaws = () => {
     enabled: !!isAdmin,
   });
 
-  // Update state mutation
+  // Fetch changelog entries
+  const { data: changelog } = useQuery({
+    queryKey: ["state-changelog"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("state_law_changelog")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      
+      // Fetch profile display names for the changed_by user ids
+      const userIds = [...new Set(data.map(d => d.changed_by))];
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, display_name")
+        .in("id", userIds);
+      
+      const profileMap = new Map(profiles?.map(p => [p.id, p.display_name]) || []);
+      
+      return data.map(entry => ({
+        ...entry,
+        profiles: { display_name: profileMap.get(entry.changed_by) || null }
+      })) as ChangelogEntry[];
+    },
+    enabled: !!isAdmin,
+  });
+
+  // Update state mutation with changelog
   const updateStateMutation = useMutation({
     mutationFn: async (stateData: Partial<StateRecord> & { id: string }) => {
       const { id, ...updates } = stateData;
-      const { error } = await supabase
+      
+      // Get current state data for comparison
+      const currentState = states?.find(s => s.id === id);
+      if (!currentState || !user) throw new Error("State not found or user not authenticated");
+
+      // Track changes for changelog
+      const changes: { field_name: string; old_value: string | null; new_value: string | null }[] = [];
+      
+      const fieldsToTrack = ['status', 'possession_limits', 'airport_rules', 'driving_rules', 'where_to_consume', 'tourist_notes'] as const;
+      
+      for (const field of fieldsToTrack) {
+        const oldVal = currentState[field];
+        const newVal = updates[field];
+        if (newVal !== undefined && oldVal !== newVal) {
+          changes.push({
+            field_name: field,
+            old_value: oldVal ?? null,
+            new_value: newVal ?? null,
+          });
+        }
+      }
+
+      // Update the state
+      const { error: updateError } = await supabase
         .from("states")
         .update({
           ...updates,
           last_updated: new Date().toISOString(),
         })
         .eq("id", id);
-      if (error) throw error;
+      if (updateError) throw updateError;
+
+      // Insert changelog entries
+      if (changes.length > 0) {
+        const changelogEntries = changes.map(change => ({
+          state_id: id,
+          changed_by: user.id,
+          ...change,
+        }));
+        
+        const { error: logError } = await supabase
+          .from("state_law_changelog")
+          .insert(changelogEntries);
+        if (logError) throw logError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-states"] });
+      queryClient.invalidateQueries({ queryKey: ["state-changelog"] });
       toast.success("State laws updated successfully");
       setEditingState(null);
     },
@@ -221,6 +313,71 @@ const AdminStateLaws = () => {
             className="pl-10"
           />
         </div>
+
+        {/* Recent Changes Section */}
+        {changelog && changelog.length > 0 && (
+          <div className="mb-8">
+            <Accordion type="single" collapsible>
+              <AccordionItem value="changelog" className="border-border/50">
+                <AccordionTrigger className="hover:no-underline">
+                  <div className="flex items-center gap-2">
+                    <History className="w-5 h-5 text-accent" />
+                    <span className="text-lg font-semibold">Recent Changes</span>
+                    <Badge variant="secondary" className="ml-2">
+                      {changelog.length}
+                    </Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 pt-2">
+                    {changelog.slice(0, 20).map((entry) => {
+                      const state = states?.find(s => s.id === entry.state_id);
+                      return (
+                        <div
+                          key={entry.id}
+                          className="p-3 rounded-lg bg-secondary/30 border border-border/30"
+                        >
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="text-xs">
+                                {state?.name || "Unknown State"}
+                              </Badge>
+                              <span className="text-sm text-accent font-medium">
+                                {FIELD_LABELS[entry.field_name] || entry.field_name}
+                              </span>
+                            </div>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(entry.created_at).toLocaleDateString()} at{" "}
+                              {new Date(entry.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>
+                              <span className="text-muted-foreground">From: </span>
+                              <span className="text-destructive/80">
+                                {entry.old_value || "(empty)"}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">To: </span>
+                              <span className="text-accent">
+                                {entry.new_value || "(empty)"}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
+                            <User className="w-3 h-3" />
+                            {entry.profiles?.display_name || "Admin"}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        )}
 
         {/* States Grid */}
         {statesLoading ? (

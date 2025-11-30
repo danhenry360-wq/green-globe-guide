@@ -11,7 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
-import logo from '@/assets/green-globe-logo.png';
+import logo from '@/assets/global-canna-pass-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 

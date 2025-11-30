@@ -11,7 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
 import { Lock, CheckCircle, AlertCircle } from 'lucide-react';
-import logo from '@/assets/green-globe-logo.png';
+import logo from '@/assets/global-canna-pass-logo.png';
 
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
 

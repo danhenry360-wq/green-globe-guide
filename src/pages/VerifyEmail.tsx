@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { Helmet } from 'react-helmet';
 import { Mail, Loader2, RefreshCw, CheckCircle } from 'lucide-react';
-import logo from '@/assets/green-globe-logo.png';
+import logo from '@/assets/global-canna-pass-logo.png';
 
 const VerifyEmail = () => {
   const [otpCode, setOtpCode] = useState('');

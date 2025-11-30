@@ -391,6 +391,44 @@ export type Database = {
           },
         ]
       }
+      state_law_changelog: {
+        Row: {
+          changed_by: string
+          created_at: string
+          field_name: string
+          id: string
+          new_value: string | null
+          old_value: string | null
+          state_id: string
+        }
+        Insert: {
+          changed_by: string
+          created_at?: string
+          field_name: string
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+          state_id: string
+        }
+        Update: {
+          changed_by?: string
+          created_at?: string
+          field_name?: string
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+          state_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "state_law_changelog_state_id_fkey"
+            columns: ["state_id"]
+            isOneToOne: false
+            referencedRelation: "states"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       states: {
         Row: {
           airport_rules: string | null
