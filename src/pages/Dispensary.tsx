@@ -483,13 +483,15 @@ const DispensaryCard = ({
                     {dispensary.name}
                   </h4>
                   <div className="flex gap-1.5">
-                    <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
-                      <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      Verified
-                    </Badge>
-                    {dispensary.isFromDb && (
-                      <Badge className="bg-gold/20 text-gold border border-gold/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
-                        Featured
+                    {dispensary.status?.toLowerCase().includes('licensed') && (
+                      <Badge className="bg-green-500/20 text-green-300 border border-green-500/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                        <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                        Licensed
+                      </Badge>
+                    )}
+                    {dispensary.status === 'Open' && (
+                      <Badge className="bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
+                        Open
                       </Badge>
                     )}
                   </div>
