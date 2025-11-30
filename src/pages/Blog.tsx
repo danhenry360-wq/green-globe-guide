@@ -16,6 +16,39 @@ import {
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 const BLOG_POSTS = [
   {
+    id: "amsterdam-vs-california-dispensaries",
+    title: "Amsterdam Coffee Shops vs California Dispensaries: A Complete Comparison",
+    subtitle: "Explore the key differences between Amsterdam's iconic coffee shops and California's modern dispensaries - from atmosphere and products to legal frameworks and culture.",
+    excerpt: "A detailed comparison of two of the world's most famous cannabis destinations, examining what makes each experience unique for travelers.",
+    date: "Nov 30, 2025",
+    readTime: "15 min read",
+    author: "David Chen",
+    avatar: "🌍",
+    category: "Comparison",
+    tags: ["Amsterdam", "California", "Dispensaries", "Coffee Shops"],
+    image: "/blog-amsterdam-vs-california.jpg",
+    content: {
+      introduction: "Amsterdam and California represent two distinct philosophies in legal cannabis retail. Amsterdam's coffee shops have operated under a tolerance policy since the 1970s, creating a laid-back, social café culture. California's dispensaries, legal since 2016 for recreation, showcase sleek, tech-forward retail experiences. This guide compares everything from atmosphere and product selection to pricing and cultural norms, helping you decide which cannabis destination suits your travel style.",
+      disclaimer: "Cannabis laws differ significantly between the Netherlands and California. In Amsterdam, possession over 5g remains illegal; in California, adults 21+ can possess up to 28.5g. Neither location permits public consumption. Always verify current laws before traveling.",
+      sections: [
+        { title: "Legal Framework", icon: "Shield", content: "**Amsterdam**: Cannabis is technically illegal but tolerated in licensed coffee shops under the gedoogbeleid (tolerance policy). Shops cannot advertise, sell alcohol, or allow hard drugs. Maximum purchase is 5g per person per day. **California**: Fully legal for adults 21+. Licensed dispensaries are heavily regulated, tested, and taxed. Purchases up to 28.5g flower or 8g concentrates per transaction.", variant: "default" },
+        { title: "Atmosphere & Experience", icon: "Building2", content: "**Amsterdam Coffee Shops**: Cozy, social spaces where you can sit, smoke, and linger. Many have bars serving coffee and snacks. Vintage décor, dim lighting, and relaxed vibes. You're buying an experience, not just a product. **California Dispensaries**: Modern retail stores resembling Apple Stores or pharmacies. Quick transactions, clinical efficiency. Some have lounges, but most are grab-and-go.", variant: "accent" },
+        { title: "Product Selection", icon: "TrendingUp", content: "**Amsterdam**: Primarily flower and hash. Pre-rolls common. Edibles face restrictions. Limited concentrate options. Products are not lab-tested to US standards. **California**: Massive variety - flower, concentrates, edibles, tinctures, topicals, beverages. All products lab-tested with detailed THC/CBD percentages. Cutting-edge extracts and innovative products.", variant: "warning" },
+        { title: "Pricing Comparison", icon: "Scale", content: "**Amsterdam**: Generally €8-15 per gram for quality flower. No additional taxes at point of sale. Hash often €5-12/g. **California**: $30-60+ per eighth (3.5g) before tax. Heavy taxation (25-40% total) significantly increases prices. Premium products can exceed $80/eighth. California is notably more expensive.", variant: "gold" },
+        { title: "Cultural Differences", icon: "Users", content: "**Amsterdam**: Cannabis is part of café culture. Acceptable to spend hours socializing. Sharing joints with strangers is common. Locals are welcoming but appreciate discretion. **California**: Transactional retail culture. Budtenders offer consultations but it's business-focused. Less social, more consumer-oriented. Medical origins still influence professional atmosphere.", variant: "default" },
+        { title: "Consumption Spaces", icon: "MapPin", content: "**Amsterdam**: Consume on-site at coffee shops. Most have comfortable seating areas. Can't take cannabis to other cafes or public spaces. **California**: Most dispensaries are retail-only - no on-site consumption. Some licensed lounges exist but are rare. Must consume in private residences. Hotels generally prohibit use.", variant: "accent" }
+      ],
+      safetyTips: [
+        "Amsterdam: Maximum 5g purchase per day; California: 28.5g flower or 8g concentrates",
+        "Neither location allows public consumption - stick to designated spaces",
+        "California products are lab-tested; Amsterdam products are not",
+        "Don't attempt to transport cannabis across borders from either location",
+        "Amsterdam is cash-only; California accepts cards at many dispensaries",
+        "California has higher prices due to heavy taxation"
+      ]
+    }
+  },
+  {
     id: "colorado-ski-resorts-cannabis",
     title: "Colorado Ski Resorts & Cannabis Guide 2025",
     subtitle: "Explore the best 420-friendly ski resorts, dispensaries near slopes, and tips for combining mountain adventures with cannabis in Colorado.",
