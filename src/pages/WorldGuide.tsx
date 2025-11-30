@@ -23,7 +23,8 @@ import {
   Skull, 
   Siren,
   Gavel,
-  ShieldAlert
+  ShieldAlert,
+  X
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
@@ -2822,36 +2823,147 @@ const isSeverePrison = (country: Country) => {
 }
 
 /* ---------- sub-components ---------- */
-const ContinentIndex = () => {
-  const nav = useNavigate();
-  const [q, setQ] = useState("");
-  const filtered = useMemo(
-    () =>
-      q
-        ? WORLD.filter((c) =>
-            c.name.toLowerCase().includes(q.toLowerCase())
-          )
-        : WORLD,
-    [q]
+// Get all countries flattened from all continents
+const getAllCountries = () => {
+  return WORLD.flatMap(continent => 
+    continent.countries.map(country => ({
+      ...country,
+      continentSlug: continent.slug,
+      continentName: continent.name
+    }))
   );
+};
+
+// Search Results for Countries
+const CountrySearchResults = ({ 
+  query, 
+  onClear 
+}: { 
+  query: string; 
+  onClear: () => void;
+}) => {
+  const nav = useNavigate();
+  const allCountries = useMemo(() => getAllCountries(), []);
+  
+  const filteredCountries = useMemo(() => {
+    return allCountries.filter(c => 
+      c.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [query, allCountries]);
+
+  return (
+    <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
+      <Button
+        variant="ghost"
+        onClick={onClear}
+        className="mb-6 gap-2 pl-0 hover:bg-transparent"
+      >
+        <ArrowLeft className="w-4 h-4" /> Clear search
+      </Button>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-10"
+      >
+        <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+          Search Results
+        </h1>
+        <p className="text-lg text-muted-foreground">
+          {filteredCountries.length} countr{filteredCountries.length !== 1 ? 'ies' : 'y'} found for "{query}"
+        </p>
+      </motion.div>
+
+      {filteredCountries.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCountries.map((c) => {
+            const deathRisk = isDeathPenalty(c);
+            const corporalRisk = isCorporalPunishment(c);
+            const prisonRisk = isSeverePrison(c);
+
+            return (
+              <Card
+                key={`${c.continentSlug}-${c.slug}`}
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border border-white/10",
+                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+                  "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+                )}
+                onClick={() => nav(`/world/${c.continentSlug}/${c.slug}`)}
+              >
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-5">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xl font-bold">{c.name}</h3>
+                    <Badge className={`${statusColor(c.legalStatus)} border-none`}>
+                      {c.legalStatus}
+                    </Badge>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground mb-2">{c.continentName}</p>
+                  
+                  {deathRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-red-950/40 text-red-400 p-2 rounded text-xs font-bold border border-red-500/30 animate-pulse">
+                      <Skull className="w-4 h-4" />
+                      <span>DEATH PENALTY RISK</span>
+                    </div>
+                  )}
+
+                  {!deathRisk && corporalRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-orange-950/40 text-orange-400 p-2 rounded text-xs font-bold border border-orange-500/30">
+                      <Gavel className="w-4 h-4" />
+                      <span>SEVERE PENALTIES / LASHES</span>
+                    </div>
+                  )}
+
+                  {!deathRisk && !corporalRisk && prisonRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-yellow-950/40 text-yellow-400 p-2 rounded text-xs font-bold border border-yellow-500/30">
+                      <ShieldAlert className="w-4 h-4" />
+                      <span>STRICT ENFORCEMENT</span>
+                    </div>
+                  )}
+
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                    {c.description}
+                  </p>
+                  <Button size="sm" className="w-full">
+                    View details
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-20">
+          <div className="w-16 h-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Globe className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">No countries found</h3>
+          <p className="text-muted-foreground">
+            Try a different search term.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ContinentIndex = ({ 
+  searchQuery, 
+  onSearchChange 
+}: { 
+  searchQuery: string; 
+  onSearchChange: (q: string) => void;
+}) => {
+  const nav = useNavigate();
 
   return (
     <>
-      {/* Fixed Search Bar */}
-      <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
-        <div className="container mx-auto max-w-7xl px-4 py-3">
-          <div className="relative max-w-3xl mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search continents…"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        </div>
-      </div>
-
       <div className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -2869,7 +2981,7 @@ const ContinentIndex = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((c) => (
+          {WORLD.map((c) => (
             <motion.div
               key={c.slug}
               whileHover={{ scale: 1.02 }}
@@ -3281,21 +3393,55 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
 const WorldGuide = () => {
   const { continent: cSlug, country: coSlug, region: rSlug, city: ciSlug } = useParams();
   const nav = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const continent = useMemo(() => WORLD.find((c) => c.slug === cSlug), [cSlug]);
   const country = useMemo(() => continent?.countries.find((c) => c.slug === coSlug), [continent, coSlug]);
   const region = useMemo(() => country?.regions.find((r) => r.slug === rSlug), [country, rSlug]);
   const city = useMemo(() => region?.cities.find((c) => c.slug === ciSlug), [region, ciSlug]);
 
+  const isSearching = searchQuery.length >= 2;
+  const isAtContinentLevel = !cSlug;
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      
+      {/* Fixed Search Bar - Only at continent level */}
+      {isAtContinentLevel && (
+        <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
+          <div className="container mx-auto max-w-7xl px-4 py-3">
+            <div className="relative max-w-3xl mx-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search all countries..."
+                className="w-full pl-10 pr-10 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
       {(() => {
+        if (isAtContinentLevel && isSearching) {
+          return <CountrySearchResults query={searchQuery} onClear={() => setSearchQuery("")} />;
+        }
         if (ciSlug && city && region && country) return <CityDetail city={city} region={region} country={country} />;
         if (rSlug && region && country) return <CityIndex continent={continent!} country={country} region={region} />;
         if (coSlug && country) return <RegionIndex continent={continent!} country={country} />;
         if (cSlug && continent) return <CountryIndex continent={continent} />;
-        return <ContinentIndex />;
+        return <ContinentIndex searchQuery={searchQuery} onSearchChange={setSearchQuery} />;
       })()}
       <Footer />
     </div>
