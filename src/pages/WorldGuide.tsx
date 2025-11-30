@@ -502,7 +502,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only via specialist doctor (Private).",
         description: "Medical cannabis legal 2018 but restrictive. Recreational use is illegal (Class B drug).",
-        image: getCountryImage("united-kingdom"),
+        image: getCountryImage("uk"),
         regions: [
           {
             slug: "england",
