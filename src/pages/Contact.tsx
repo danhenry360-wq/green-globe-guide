@@ -148,12 +148,34 @@ const ContactForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    // Simulate API call
-    setSent(true);
-    setTimeout(() => {
+    try {
+      setSent(true);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      // Keep success message visible for 3 seconds
+      setTimeout(() => {
+        setSent(false);
+        setFormData({ name: "", email: "", subject: "", category: "general", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
       setSent(false);
-      setFormData({ name: "", email: "", subject: "", category: "general", message: "" });
-    }, 3000);
+      setErrors({ message: "Failed to send message. Please try again." });
+    }
   };
 
   const handleChange = (
