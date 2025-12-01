@@ -139,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "BudQuest <onboarding@resend.dev>",
+        from: "BudQuest <noreply@budquest.guide>",
         to: [email],
         subject: "Your BudQuest Verification Code",
         html: emailHtml,
