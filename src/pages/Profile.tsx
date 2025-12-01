@@ -4,6 +4,7 @@ import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,7 +21,8 @@ import {
   Loader2,
   ShieldCheck,
   AlertCircle,
-  ExternalLink
+  ExternalLink,
+  Upload
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -58,6 +60,12 @@ const Profile = () => {
   const [isResendingVerification, setIsResendingVerification] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [activeTab, setActiveTab] = useState('all');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editDisplayName, setEditDisplayName] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   
   const { user, isAuthenticated, loading: authLoading, resendOTP } = useAuth();
   const { toast } = useToast();
@@ -183,6 +191,119 @@ const Profile = () => {
     }
   };
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: 'File Too Large',
+          description: 'Avatar must be less than 5MB',
+          variant: 'destructive',
+        });
+        return;
+      }
+      
+      setAvatarFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setAvatarPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleStartEdit = () => {
+    setEditDisplayName(profile?.display_name || '');
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditDisplayName('');
+    setAvatarFile(null);
+    setAvatarPreview(null);
+  };
+
+  const handleSaveProfile = async () => {
+    if (!user) return;
+
+    setIsSaving(true);
+
+    try {
+      let avatarUrl = profile?.avatar_url;
+
+      // Upload avatar if changed
+      if (avatarFile) {
+        setIsUploadingAvatar(true);
+        
+        // Delete old avatar if exists
+        if (profile?.avatar_url) {
+          const oldPath = profile.avatar_url.split('/').pop();
+          if (oldPath) {
+            await supabase.storage
+              .from('avatars')
+              .remove([`${user.id}/${oldPath}`]);
+          }
+        }
+
+        // Upload new avatar
+        const fileExt = avatarFile.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, avatarFile, {
+            cacheControl: '3600',
+            upsert: false
+          });
+
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+
+        avatarUrl = urlData.publicUrl;
+        setIsUploadingAvatar(false);
+      }
+
+      // Update profile
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({
+          display_name: editDisplayName.trim() || null,
+          avatar_url: avatarUrl,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      setProfile({
+        ...profile!,
+        display_name: editDisplayName.trim() || null,
+        avatar_url: avatarUrl || null
+      });
+
+      toast({
+        title: 'Profile Updated',
+        description: 'Your profile has been saved successfully.',
+      });
+
+      handleCancelEdit();
+    } catch (error: any) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: 'Update Failed',
+        description: error.message || 'Failed to update profile.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSaving(false);
+      setIsUploadingAvatar(false);
+    }
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -249,19 +370,94 @@ const Profile = () => {
 
             {/* Account Info Card */}
             <Card className="bg-card/70 backdrop-blur-sm border-accent/20 mb-6">
-              <CardHeader>
-                <CardTitle className="text-xl text-foreground">Account Information</CardTitle>
-                <CardDescription className="text-muted-foreground">Your BudQuest account details</CardDescription>
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <CardTitle className="text-xl text-foreground">Account Information</CardTitle>
+                  <CardDescription className="text-muted-foreground">Your BudQuest account details</CardDescription>
+                </div>
+                {!isEditing && (
+                  <Button
+                    onClick={handleStartEdit}
+                    variant="outline"
+                    size="sm"
+                    className="border-accent/30 text-accent hover:bg-accent/10 w-full sm:w-auto"
+                  >
+                    Edit Profile
+                  </Button>
+                )}
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <User className="w-5 h-5 text-accent mt-0.5" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Display Name</p>
-                    <p className="text-foreground font-medium">{profile?.display_name || 'Not set'}</p>
+              <CardContent className="space-y-6">
+                {/* Avatar Section */}
+                <div className="flex items-start gap-4">
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-full overflow-hidden bg-accent/20 border-2 border-accent/30 flex items-center justify-center">
+                      {avatarPreview || profile?.avatar_url ? (
+                        <img
+                          src={avatarPreview || profile?.avatar_url || ''}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <User className="w-10 h-10 text-accent" />
+                      )}
+                    </div>
+                    {isUploadingAvatar && (
+                      <div className="absolute inset-0 bg-background/80 rounded-full flex items-center justify-center">
+                        <Loader2 className="w-6 h-6 animate-spin text-accent" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    {isEditing ? (
+                      <>
+                        <label htmlFor="avatar-upload" className="cursor-pointer">
+                          <div className="text-sm text-accent hover:text-accent/80 font-medium mb-1">
+                            {avatarFile ? 'Change Photo' : 'Upload Photo'}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            JPG, PNG or WEBP. Max 5MB.
+                          </p>
+                        </label>
+                        <input
+                          id="avatar-upload"
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          onChange={handleAvatarChange}
+                          className="hidden"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm text-muted-foreground mb-1">Profile Picture</p>
+                        <p className="text-xs text-muted-foreground">
+                          {profile?.avatar_url ? 'Avatar set' : 'No avatar uploaded'}
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
 
+                {/* Display Name */}
+                <div className="flex items-start gap-3">
+                  <User className="w-5 h-5 text-accent mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm text-muted-foreground mb-1">Display Name</p>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={editDisplayName}
+                        onChange={(e) => setEditDisplayName(e.target.value)}
+                        placeholder="Enter your display name"
+                        maxLength={50}
+                        className="w-full px-3 py-2 bg-background/50 border border-border/50 rounded-lg text-foreground focus:border-accent focus:ring-1 focus:ring-accent outline-none"
+                      />
+                    ) : (
+                      <p className="text-foreground font-medium">{profile?.display_name || 'Not set'}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Email */}
                 <div className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-accent mt-0.5" />
                   <div className="flex-1">
@@ -270,51 +466,82 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  {emailVerified ? (
-                    <>
-                      <ShieldCheck className="w-5 h-5 text-green-500 mt-0.5" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Email Status</p>
-                        <div className="flex items-center gap-2">
-                          <p className="text-green-500 font-medium">Verified</p>
-                          <CheckCircle className="w-4 h-4 text-green-500" />
+                {/* Edit Actions */}
+                {isEditing && (
+                  <div className="flex gap-3 pt-4 border-t border-border/50">
+                    <Button
+                      onClick={handleSaveProfile}
+                      disabled={isSaving || isUploadingAvatar}
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                    >
+                      {isSaving ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        'Save Changes'
+                      )}
+                    </Button>
+                    <Button
+                      onClick={handleCancelEdit}
+                      variant="outline"
+                      disabled={isSaving || isUploadingAvatar}
+                      className="border-border/50"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                )}
+
+                {/* Email Verification Status */}
+                {!isEditing && (
+                  <div className="flex items-start gap-3 pt-4 border-t border-border/50">
+                    {emailVerified ? (
+                      <>
+                        <ShieldCheck className="w-5 h-5 text-green-500 mt-0.5" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Email Status</p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-green-500 font-medium">Verified</p>
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
-                      <div className="flex-1">
-                        <p className="text-sm text-muted-foreground">Email Status</p>
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-1">
-                          <p className="text-yellow-500 font-medium">Not Verified</p>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleResendVerification}
-                            disabled={isResendingVerification || resendCooldown > 0}
-                            className="border-accent/30 text-accent hover:bg-accent/10"
-                          >
-                            {isResendingVerification ? (
-                              <>
-                                <Loader2 className="w-3 h-3 mr-2 animate-spin" />
-                                Sending...
-                              </>
-                            ) : resendCooldown > 0 ? (
-                              `Resend in ${resendCooldown}s`
-                            ) : (
-                              'Verify Email'
-                            )}
-                          </Button>
+                      </>
+                    ) : (
+                      <>
+                        <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm text-muted-foreground">Email Status</p>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-1">
+                            <p className="text-yellow-500 font-medium">Not Verified</p>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handleResendVerification}
+                              disabled={isResendingVerification || resendCooldown > 0}
+                              className="border-accent/30 text-accent hover:bg-accent/10"
+                            >
+                              {isResendingVerification ? (
+                                <>
+                                  <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+                                  Sending...
+                                </>
+                              ) : resendCooldown > 0 ? (
+                                `Resend in ${resendCooldown}s`
+                              ) : (
+                                'Verify Email'
+                              )}
+                            </Button>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-2">
+                            You must verify your email to submit reviews
+                          </p>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-2">
-                          You must verify your email to submit reviews
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
+                      </>
+                    )}
+                  </div>
+                )}
               </CardContent>
             </Card>
 

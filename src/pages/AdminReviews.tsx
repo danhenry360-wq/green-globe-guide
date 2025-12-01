@@ -142,6 +142,9 @@ const AdminReviews = () => {
   const handleUpdateStatus = async (reviewId: string, newStatus: 'approved' | 'rejected') => {
     setProcessingId(reviewId);
     
+    // Find the review to get user info
+    const review = reviews.find(r => r.id === reviewId);
+    
     const { error } = await supabase
       .from('reviews')
       .update({
@@ -162,6 +165,39 @@ const AdminReviews = () => {
         title: 'Success',
         description: `Review has been ${newStatus}.`,
       });
+      
+      // Send email notification
+      if (review) {
+        try {
+          // Get user email
+          const { data: userData } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('id', review.user_id)
+            .single();
+          
+          if (userData) {
+            const { data: authData } = await supabase.auth.admin.getUserById(review.user_id);
+            
+            if (authData?.user?.email) {
+              await supabase.functions.invoke('notify-review-status', {
+                body: {
+                  reviewId: review.id,
+                  status: newStatus,
+                  userEmail: authData.user.email,
+                  userName: review.profiles?.display_name || 'Valued User',
+                  propertyName: review.dispensaries?.name || review.hotels?.name || 'Property',
+                  propertyType: review.dispensaries ? 'dispensary' : 'rental'
+                }
+              });
+            }
+          }
+        } catch (emailError) {
+          console.error('Failed to send notification email:', emailError);
+          // Don't show error to admin, just log it
+        }
+      }
+      
       fetchReviews();
     }
     
