@@ -19,6 +19,7 @@ import MapLegend from "@/components/MapLegend";
 // Data
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { getStatusDotClass, getStatusOutlineClasses, getStatusBadgeClasses } from "@/lib/legal-status-colors";
+import { BLOG_POSTS } from "@/pages/Blog";
 
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
@@ -708,13 +709,16 @@ const Home = () => {
             subtitle="Expert advice, legal tips, and dispensary guides for your next adventure" 
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {BLOG_DATA.map((post) => (
-              <motion.div key={post.title} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Link to={post.link} aria-label={`Read article: ${post.title}`}>
+            {BLOG_POSTS
+              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+              .slice(0, 3)
+              .map((post) => (
+              <motion.div key={post.id} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
+                <Link to={`/blog/${post.id}`} aria-label={`Read article: ${post.title}`}>
                   <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
                     <img 
                       src={post.image} 
-                      alt={post.imageAlt} 
+                      alt={post.title} 
                       loading="lazy" 
                       width="400"
                       height="224"
@@ -722,7 +726,7 @@ const Home = () => {
                     />
                     <div className="p-8 flex flex-col flex-grow">
                       <h3 className="text-2xl font-bold mb-3 text-white">{post.title}</h3>
-                      <p className="text-gray-400 flex-grow mb-6">{post.summary}</p>
+                      <p className="text-gray-400 flex-grow mb-6">{post.excerpt}</p>
                       <div className="flex items-center gap-2 text-accent"><span>Read Article</span><ArrowRight className="w-4 h-4" /></div>
                     </div>
                   </Card>
