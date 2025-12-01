@@ -80,7 +80,7 @@ const AdminHotels = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [hotelToDelete, setHotelToDelete] = useState<Hotel | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState<string[]>(["", ""]);
 
   // Check admin role
   const { data: isAdmin, isLoading: roleLoading } = useQuery({
@@ -155,7 +155,7 @@ const AdminHotels = () => {
       setDialogOpen(false);
       setIsCreating(false);
       setFormData(emptyHotel);
-      setImageUrl("");
+      setImageUrls(["", ""]);
     },
     onError: (error) => {
       toast.error("Failed to create hotel: " + error.message);
@@ -222,7 +222,11 @@ const AdminHotels = () => {
   const handleEdit = (hotel: Hotel) => {
     setEditingHotel(hotel);
     setFormData(hotel);
-    setImageUrl(hotel.images?.[0] || "");
+    const existingImages = hotel.images || [];
+    setImageUrls([
+      existingImages[0] || "",
+      existingImages[1] || "",
+    ]);
     setIsCreating(false);
     setDialogOpen(true);
   };
@@ -230,13 +234,13 @@ const AdminHotels = () => {
   const handleCreate = () => {
     setEditingHotel(null);
     setFormData(emptyHotel);
-    setImageUrl("");
+    setImageUrls(["", ""]);
     setIsCreating(true);
     setDialogOpen(true);
   };
 
   const handleSave = () => {
-    const images = imageUrl ? [imageUrl] : [];
+    const images = imageUrls.filter(url => url.trim() !== "");
     if (isCreating) {
       const slug = formData.name
         ?.toLowerCase()
@@ -245,6 +249,24 @@ const AdminHotels = () => {
       createMutation.mutate({ ...formData, slug, images });
     } else if (editingHotel) {
       updateMutation.mutate({ id: editingHotel.id, ...formData, images });
+    }
+  };
+
+  const handleImageUrlChange = (index: number, value: string) => {
+    const newUrls = [...imageUrls];
+    newUrls[index] = value;
+    setImageUrls(newUrls);
+  };
+
+  const addImageField = () => {
+    if (imageUrls.length < 5) {
+      setImageUrls([...imageUrls, ""]);
+    }
+  };
+
+  const removeImageField = (index: number) => {
+    if (imageUrls.length > 2) {
+      setImageUrls(imageUrls.filter((_, i) => i !== index));
     }
   };
 
@@ -442,28 +464,64 @@ const AdminHotels = () => {
             </DialogHeader>
 
             <div className="space-y-4 mt-4">
-              {/* Image */}
+              {/* Images (Multiple) */}
               <div>
-                <Label>Image URL</Label>
-                <div className="flex items-center gap-4 mt-2">
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="Preview"
-                      className="w-24 h-24 rounded-lg object-cover"
-                    />
-                  ) : (
-                    <div className="w-24 h-24 rounded-lg bg-secondary/50 flex items-center justify-center">
-                      <ImagePlus className="w-8 h-8 text-muted-foreground" />
-                    </div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label>Rental Images (at least 2 recommended)</Label>
+                  {imageUrls.length < 5 && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={addImageField}
+                      className="gap-1"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Add Image
+                    </Button>
                   )}
                 </div>
-                <Input
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://... or /rentals/image.jpg"
-                  className="mt-2"
-                />
+                
+                <div className="space-y-3">
+                  {imageUrls.map((url, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="flex-shrink-0">
+                        {url ? (
+                          <img
+                            src={url}
+                            alt={`Preview ${index + 1}`}
+                            className="w-20 h-20 rounded-lg object-cover"
+                          />
+                        ) : (
+                          <div className="w-20 h-20 rounded-lg bg-secondary/50 flex items-center justify-center">
+                            <ImagePlus className="w-6 h-6 text-muted-foreground" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <Input
+                          value={url}
+                          onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                          placeholder={`Image ${index + 1} URL (https://... or /rentals/image.jpg)`}
+                        />
+                      </div>
+                      {imageUrls.length > 2 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeImageField(index)}
+                          className="text-destructive hover:text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Add at least 2 images for better presentation. You can add up to 5 images total.
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

@@ -534,7 +534,6 @@ const Hotels = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   // Process and flatten data
   const processedData = useMemo(() => {
@@ -787,7 +786,7 @@ const Hotels = () => {
 
                 {/* RENTAL CARDS */}
                 <div className="space-y-4">
-                  {loading ? (
+                  {dbLoading ? (
                     Array.from({ length: 5 }).map((_, i) => (
                       <RentalCardSkeleton key={i} />
                     ))
