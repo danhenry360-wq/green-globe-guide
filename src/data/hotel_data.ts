@@ -72,7 +72,7 @@ export const HOTEL_DATA: CountryHotels[] = [
             policies: "Smoker-friendly riverfront apartment with full kitchen and balcony. Entire loft in downtown Glenwood Springs with Smart TV, fireplace, and stunning mountain views.",
             website: "https://www.expedia.com/Glenwood-Springs-Hotels-420-Loft-A-Smoker-Friendly-Vacation-In-The-Rocky-Mountains.h25086323.Hotel-Information",
             priceRange: "$$$",
-            affiliateLink: "https://expedia.com/affiliate/w0G2SNm",
+            affiliateLink: "https://expedia.com/affiliate/ZR9wn7Y",
             description: "Experience elevated luxury at the 420 Loft Boutique in downtown Glenwood Springs. This smoker-friendly riverfront apartment features a full kitchen, private balcony with mountain views, Smart TV, fireplace, and all the comforts of home. Perfect for cannabis enthusiasts looking for a premium Rocky Mountain getaway in Colorado's legal recreational market.",
             image: "/rentals/420-loft-glenwood-springs.jpg",
             address: "Downtown Glenwood Springs, CO",
