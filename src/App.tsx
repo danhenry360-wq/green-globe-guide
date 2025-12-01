@@ -28,6 +28,9 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminReviews from "./pages/AdminReviews";
 import AdminStateLaws from "./pages/AdminStateLaws";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminCountryLaws from "./pages/AdminCountryLaws";
+import AdminDispensaries from "./pages/AdminDispensaries";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Disclaimer from "./pages/Disclaimer";
@@ -65,6 +68,9 @@ const App = () => (
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminReviews />} />
           <Route path="/admin/state-laws" element={<AdminStateLaws />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
+          <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
