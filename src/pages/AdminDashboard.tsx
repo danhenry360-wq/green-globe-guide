@@ -17,7 +17,8 @@ import {
   Settings,
   Users,
   Globe,
-  Mail
+  Mail,
+  FileText
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -86,6 +87,13 @@ const adminModules: AdminModule[] = [
     icon: Settings,
     href: "/admin/country-images",
     color: "text-emerald-400",
+  },
+  {
+    title: "Blog Posts",
+    description: "Create and manage blog articles with images and rich content.",
+    icon: FileText,
+    href: "/admin/blog",
+    color: "text-indigo-400",
   },
 ];
 

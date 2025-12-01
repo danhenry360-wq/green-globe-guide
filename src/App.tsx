@@ -8,7 +8,8 @@ import { AuthCallbackHandler } from "./components/AuthCallbackHandler";
 import { AgeGateModal } from "./components/AgeGateModal";
 import CookieConsent from "./components/CookieConsent";
 
-/* ---------- existing pages ---------- */
+/* ---------- pages ---------- */
+import Index from "./pages/Index";
 import Home from "./pages/Home";
 import USAGuide from "./pages/USAGuide";
 import StateDetail from "./pages/StateDetail";
@@ -26,83 +27,93 @@ import Auth from "./pages/Auth";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import AdminReviews from "./pages/AdminReviews";
-import AdminStateLaws from "./pages/AdminStateLaws";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminUsers from "./pages/AdminUsers";
-import AdminCountryLaws from "./pages/AdminCountryLaws";
-import AdminDispensaries from "./pages/AdminDispensaries";
-import AdminHotels from "./pages/AdminHotels";
-import AdminContacts from "./pages/AdminContacts";
-import AdminCountryImages from "./pages/AdminCountryImages";
 import Profile from "./pages/Profile";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 
-/* ---------- 4-level world routes ---------- */
-/* NOTE: WorldGuide.tsx now acts as a catch-all renderer
-   for every depth (continent → country → region → city) */
+/* ---------- admin pages ---------- */
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminReviews from "./pages/AdminReviews";
+import AdminStateLaws from "./pages/AdminStateLaws";
+import AdminCountryLaws from "./pages/AdminCountryLaws";
+import AdminUsers from "./pages/AdminUsers";
+import AdminDispensaries from "./pages/AdminDispensaries";
+import AdminHotels from "./pages/AdminHotels";
+import AdminContacts from "./pages/AdminContacts";
+import AdminCountryImages from "./pages/AdminCountryImages";
+import AdminBlog from "./pages/AdminBlog";
+
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <AuthCallbackHandler />
-        <AgeGateModal />
-        <CookieConsent />
-        <Routes>
-          {/* home & static pages */}
-          <Route path="/" element={<Home />} />
-          <Route path="/hotels" element={<Hotels />} />
-          <Route path="/hotels/:rentalSlug" element={<RentalDetail />} />
-          <Route path="/dispensary" element={<Dispensary />} />
-          <Route path="/dispensary/:dispensarySlug" element={<DispensaryDetail />} />
-          <Route path="/tours" element={<Tours />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/reviews" element={<AdminReviews />} />
-          <Route path="/admin/state-laws" element={<AdminStateLaws />} />
-          <Route path="/admin/users" element={<AdminUsers />} />
-          <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
-          <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
-          <Route path="/admin/hotels" element={<AdminHotels />} />
-          <Route path="/admin/contacts" element={<AdminContacts />} />
-          <Route path="/admin/country-images" element={<AdminCountryImages />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/disclaimer" element={<Disclaimer />} />
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
+            <ScrollToTop />
+            <CookieConsent />
+            <AgeGateModal />
+            <AuthCallbackHandler />
+            <Routes>
+              {/* Main pages */}
+              <Route path="/" element={<Index />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/dispensary" element={<Dispensary />} />
+              <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
+              <Route path="/hotels" element={<Hotels />} />
+              <Route path="/hotels/:slug" element={<RentalDetail />} />
+              <Route path="/tours" element={<Tours />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
 
-          {/* USA routes (unchanged) */}
-          <Route path="/usa" element={<USAGuide />} />
-          <Route path="/usa/:stateSlug" element={<StateDetail />} />
-          <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
+              {/* Auth pages */}
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/profile" element={<Profile />} />
 
-          {/* 4-level world routes – all handled by WorldGuide.tsx */}
-          <Route path="/world" element={<WorldGuide />} />
-          <Route path="/world/:continent" element={<WorldGuide />} />
-          <Route path="/world/:continent/:country" element={<WorldGuide />} />
-          <Route path="/world/:continent/:country/:region" element={<WorldGuide />} />
-          <Route path="/world/:continent/:country/:region/:city" element={<WorldGuide />} />
+              {/* USA routes */}
+              <Route path="/usa" element={<USAGuide />} />
+              <Route path="/usa/:stateSlug" element={<StateDetail />} />
+              <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
-          {/* 404 catch-all */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+              {/* World routes */}
+              <Route path="/world" element={<WorldGuide />} />
+              <Route path="/world/:continent" element={<WorldGuide />} />
+              <Route path="/world/:continent/:country" element={<WorldGuide />} />
+              <Route path="/world/:continent/:country/:region" element={<WorldGuide />} />
+              <Route path="/world/:continent/:country/:region/:city" element={<WorldGuide />} />
+
+              {/* Admin routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/state-laws" element={<AdminStateLaws />} />
+              <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
+              <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
+              <Route path="/admin/hotels" element={<AdminHotels />} />
+              <Route path="/admin/reviews" element={<AdminReviews />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/contacts" element={<AdminContacts />} />
+              <Route path="/admin/country-images" element={<AdminCountryImages />} />
+              <Route path="/admin/blog" element={<AdminBlog />} />
+
+              {/* 404 catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
