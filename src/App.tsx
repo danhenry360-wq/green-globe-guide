@@ -34,6 +34,7 @@ import AdminCountryLaws from "./pages/AdminCountryLaws";
 import AdminDispensaries from "./pages/AdminDispensaries";
 import AdminHotels from "./pages/AdminHotels";
 import AdminContacts from "./pages/AdminContacts";
+import Profile from "./pages/Profile";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Disclaimer from "./pages/Disclaimer";
@@ -69,6 +70,7 @@ const App = () => (
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminReviews />} />
           <Route path="/admin/state-laws" element={<AdminStateLaws />} />

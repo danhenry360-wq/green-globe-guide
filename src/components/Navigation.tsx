@@ -103,6 +103,13 @@ export const Navigation = () => {
                     <DropdownMenuItem className="text-muted-foreground">
                       {user?.email}
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link to="/profile" className="flex items-center">
+                        <User className="mr-2 h-4 w-4 text-accent" />
+                        My Profile
+                      </Link>
+                    </DropdownMenuItem>
                     {isAdmin && (
                       <>
                         <DropdownMenuSeparator />
@@ -178,6 +185,14 @@ export const Navigation = () => {
             {!loading && (
               isAuthenticated ? (
                 <div className="flex flex-col gap-2 pt-2 border-t border-border/50">
+                  <Link 
+                    to="/profile" 
+                    className="text-sm text-accent hover:text-accent/80 flex items-center gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <User className="w-4 h-4" />
+                    My Profile
+                  </Link>
                   {isAdmin && (
                     <Link 
                       to="/admin" 
