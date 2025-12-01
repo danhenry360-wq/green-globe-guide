@@ -22,6 +22,7 @@ interface DatabaseHotel {
   latitude: number | null;
   longitude: number | null;
   images: string[] | null;
+  amenities?: any;
 }
 
 const RentalDetail = () => {
@@ -116,8 +117,16 @@ const RentalDetail = () => {
   const displayCity = rental?.city || "Sacramento";
   const displayRating = rental?.rating || dbHotel?.rating || 4.0;
   const displayPolicies = rental?.policies || dbHotel?.policies || "";
-  const displayPriceRange = rental?.priceRange || "$$";
+  const displayPriceRange = rental?.priceRange || dbHotel?.amenities?.price_range || "$$";
   const displayAddress = rental?.address || dbHotel?.address || "";
+  
+  // Get amenities from database or fall back to rental static data
+  const amenities = dbHotel?.amenities || {
+    smoking: rental?.hasSmoking !== false,
+    vaping: rental?.hasVaping !== false,
+    edibles: rental?.hasEdibles !== false,
+    price_range: displayPriceRange
+  };
 
   return (
     <>
@@ -258,37 +267,37 @@ const RentalDetail = () => {
                 <h2 className="text-xl font-semibold text-foreground mb-4">420 Amenities</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental?.hasSmoking !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Cigarette className={`h-5 w-5 ${rental?.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${amenities.smoking ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Cigarette className={`h-5 w-5 ${amenities.smoking ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Smoking Allowed</p>
-                      <p className={`text-xs ${rental?.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental?.hasSmoking !== false ? 'Yes - Designated Areas' : 'Not Permitted'}
+                      <p className={`text-xs ${amenities.smoking ? 'text-green-400' : 'text-red-400'}`}>
+                        {amenities.smoking ? 'Yes - Designated Areas' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental?.hasVaping !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Wind className={`h-5 w-5 ${rental?.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${amenities.vaping ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Wind className={`h-5 w-5 ${amenities.vaping ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Vaping Allowed</p>
-                      <p className={`text-xs ${rental?.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental?.hasVaping !== false ? 'Yes - In Room' : 'Not Permitted'}
+                      <p className={`text-xs ${amenities.vaping ? 'text-green-400' : 'text-red-400'}`}>
+                        {amenities.vaping ? 'Yes - In Room' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental?.hasEdibles !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Cookie className={`h-5 w-5 ${rental?.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${amenities.edibles ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Cookie className={`h-5 w-5 ${amenities.edibles ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Edibles Friendly</p>
-                      <p className={`text-xs ${rental?.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental?.hasEdibles !== false ? 'Yes - Welcome' : 'Not Permitted'}
+                      <p className={`text-xs ${amenities.edibles ? 'text-green-400' : 'text-red-400'}`}>
+                        {amenities.edibles ? 'Yes - Welcome' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
@@ -299,7 +308,7 @@ const RentalDetail = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Price Range</p>
-                      <p className="text-xs text-gold">{displayPriceRange}</p>
+                      <p className="text-xs text-gold">{amenities.price_range}</p>
                     </div>
                   </div>
                 </div>
