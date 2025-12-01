@@ -12,6 +12,7 @@ import {
   Sparkles, Tag, Info, TrendingUp, Shield, Users,
   MapPin, Building2, AlertCircle, Scale, Plane
 } from "lucide-react";
+import greenGlobeLogo from "@/assets/green-globe-logo.png";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 const BLOG_POSTS = [
@@ -1214,7 +1215,14 @@ export default function Blog() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                   >
-                    <div className="text-5xl mb-4">🌿</div>
+                    <motion.img
+                      src={greenGlobeLogo}
+                      alt="BudQuest Logo"
+                      className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(34,197,94,0.8)]"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                    />
                     <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                       Stay Updated on Cannabis Travel
                     </h2>

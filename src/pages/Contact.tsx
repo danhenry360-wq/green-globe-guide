@@ -12,7 +12,6 @@ import {
   Phone, MapPin, Clock, Globe, Shield, Zap, Users, HeadphonesIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import greenGlobeLogo from "@/assets/green-globe-logo.png";
 
 /* ----------  SEO STRUCTURED DATA  ---------- */
 const CONTACT_STRUCTURED_DATA = {
@@ -466,15 +465,6 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="container mx-auto max-w-4xl text-center relative z-10 px-2"
         >
-          <motion.img
-            src={greenGlobeLogo}
-            alt="BudQuest Logo"
-            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 sm:mb-6 drop-shadow-[0_0_12px_rgba(34,197,94,0.7)]"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          />
-          
           <Badge className="mb-3 sm:mb-4 px-4 py-2 text-xs sm:text-sm font-medium bg-accent/10 text-accent border-accent/30 hover:bg-accent/20 transition-colors w-fit mx-auto">
             <Sparkles className="w-4 h-4 mr-2 inline animate-pulse" />
             Get In Touch
