@@ -613,7 +613,7 @@ const BLOG_POSTS = [
     avatar: "✈️",
     category: "Legal Updates",
     tags: ["TSA", "Airport", "Legal", "Travel"],
-    image: "/blog-california.jpg",
+    image: "/blog-tsa-security.jpg",
     content: {
       introduction: "I learned about TSA and cannabis the hard way. Standing in the TSA line at LAX with an eighth in my carry-on that I'd completely forgotten about, I watched the agent pull it out during the bag check. My heart sank. What followed was confusing, frustrating, and cost me my flight—but surprisingly, didn't result in arrest. That experience taught me something crucial: there's what the law says about cannabis at airports, and then there's what actually happens. The answer isn't simple, and it varies wildly depending on which airport you're flying through. This comprehensive guide breaks down TSA's official cannabis policy, the federal-state law conflict, and most importantly—what really happens at major US airports when cannabis is discovered in 2025.",
       disclaimer: "Cannabis remains illegal under federal law (Schedule I controlled substance). TSA is a federal agency bound by federal law, not state law. This article is informational only and does not constitute legal advice. The safest choice is always to not bring cannabis to airports. Laws and enforcement practices change frequently—always verify current regulations before traveling.",
