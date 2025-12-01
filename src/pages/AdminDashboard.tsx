@@ -80,6 +80,13 @@ const adminModules: AdminModule[] = [
     href: "/admin/contacts",
     color: "text-pink-400",
   },
+  {
+    title: "Country Images",
+    description: "Upload and manage unique images for Asian and European countries.",
+    icon: Settings,
+    href: "/admin/country-images",
+    color: "text-emerald-400",
+  },
 ];
 
 const AdminDashboard = () => {

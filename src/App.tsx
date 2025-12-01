@@ -34,6 +34,7 @@ import AdminCountryLaws from "./pages/AdminCountryLaws";
 import AdminDispensaries from "./pages/AdminDispensaries";
 import AdminHotels from "./pages/AdminHotels";
 import AdminContacts from "./pages/AdminContacts";
+import AdminCountryImages from "./pages/AdminCountryImages";
 import Profile from "./pages/Profile";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -79,6 +80,7 @@ const App = () => (
           <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
           <Route path="/admin/hotels" element={<AdminHotels />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
+          <Route path="/admin/country-images" element={<AdminCountryImages />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
