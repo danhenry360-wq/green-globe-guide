@@ -973,7 +973,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Altiplano",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "/dest-4.jpg",
+        image: getCountryImage("bolivia"),
         regions: [{ slug: "la-paz-region", name: "La Paz Region", cities: [{ slug: "la-paz", name: "La Paz", atGlance: ["High-altitude seat", "Medical only", "Witches’ market"] }] }],
       },
       {
