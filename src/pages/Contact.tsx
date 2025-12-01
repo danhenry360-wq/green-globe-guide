@@ -185,15 +185,15 @@ const ContactForm = () => {
         </motion.div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-5">
         {/* NAME & EMAIL - STACKED ON MOBILE */}
-        <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
-          <div className="space-y-2">
+        <div className="space-y-5 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+          <div className="space-y-2.5">
             <Label
               htmlFor="name"
-              className="text-sm font-semibold text-foreground flex items-center gap-2"
+              className="text-base sm:text-sm font-semibold text-foreground flex items-center gap-2"
             >
-              <Users className="w-4 h-4 text-accent" />
+              <Users className="w-5 h-5 sm:w-4 sm:h-4 text-accent" />
               Your Name
             </Label>
             <Input
@@ -202,7 +202,7 @@ const ContactForm = () => {
               placeholder="John Doe"
               value={formData.name}
               onChange={handleChange}
-              className={`bg-card border-2 transition-all text-base h-11 sm:h-12 ${
+              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
                 errors.name ? "border-red-500" : "border-border focus:border-accent"
               }`}
               required
@@ -212,12 +212,12 @@ const ContactForm = () => {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <Label
               htmlFor="email"
-              className="text-sm font-semibold text-foreground flex items-center gap-2"
+              className="text-base sm:text-sm font-semibold text-foreground flex items-center gap-2"
             >
-              <Mail className="w-4 h-4 text-accent" />
+              <Mail className="w-5 h-5 sm:w-4 sm:h-4 text-accent" />
               Email Address
             </Label>
             <Input
@@ -226,7 +226,7 @@ const ContactForm = () => {
               placeholder="your@email.com"
               value={formData.email}
               onChange={handleChange}
-              className={`bg-card border-2 transition-all text-base h-11 sm:h-12 ${
+              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
                 errors.email ? "border-red-500" : "border-border focus:border-accent"
               }`}
               required
@@ -238,19 +238,19 @@ const ContactForm = () => {
         </div>
 
         {/* CATEGORY SELECTOR */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <Label
             htmlFor="category"
-            className="text-sm font-semibold text-foreground flex items-center gap-2"
+            className="text-base sm:text-sm font-semibold text-foreground flex items-center gap-2"
           >
-            <Zap className="w-4 h-4 text-accent" />
+            <Zap className="w-5 h-5 sm:w-4 sm:h-4 text-accent" />
             Inquiry Type
           </Label>
           <select
             id="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full bg-card border-2 border-border focus:border-accent rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base focus:outline-none transition-all font-medium text-foreground"
+            className="w-full bg-card border-2 border-border focus:border-accent rounded-lg px-4 py-3.5 sm:py-3 text-base focus:outline-none transition-all font-medium text-foreground"
           >
             <option value="general">General Question</option>
             <option value="law-update">Report Outdated Law</option>
@@ -262,12 +262,12 @@ const ContactForm = () => {
         </div>
 
         {/* SUBJECT */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <Label
             htmlFor="subject"
-            className="text-sm font-semibold text-foreground flex items-center gap-2"
+            className="text-base sm:text-sm font-semibold text-foreground flex items-center gap-2"
           >
-            <MessageSquare className="w-4 h-4 text-accent" />
+            <MessageSquare className="w-5 h-5 sm:w-4 sm:h-4 text-accent" />
             Subject
           </Label>
           <Input
@@ -276,7 +276,7 @@ const ContactForm = () => {
             placeholder="Brief topic of your message..."
             value={formData.subject}
             onChange={handleChange}
-            className={`bg-card border-2 transition-all text-base h-11 sm:h-12 ${
+            className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
               errors.subject ? "border-red-500" : "border-border focus:border-accent"
             }`}
             required
@@ -287,12 +287,12 @@ const ContactForm = () => {
         </div>
 
         {/* MESSAGE - EXPANDED ON ALL DEVICES */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <Label
             htmlFor="message"
-            className="text-sm font-semibold text-foreground flex items-center gap-2"
+            className="text-base sm:text-sm font-semibold text-foreground flex items-center gap-2"
           >
-            <HeadphonesIcon className="w-4 h-4 text-accent" />
+            <HeadphonesIcon className="w-5 h-5 sm:w-4 sm:h-4 text-accent" />
             Your Message
           </Label>
           <Textarea
@@ -300,8 +300,8 @@ const ContactForm = () => {
             placeholder="Tell us more details... (minimum 20 characters)"
             value={formData.message}
             onChange={handleChange}
-            rows={5}
-            className={`bg-card border-2 transition-all text-base p-3 sm:p-4 font-medium resize-none ${
+            rows={6}
+            className={`bg-card border-2 transition-all text-base p-4 font-medium resize-none min-h-[160px] ${
               errors.message ? "border-red-500" : "border-border focus:border-accent"
             }`}
             required
@@ -320,7 +320,7 @@ const ContactForm = () => {
         <Button
           type="submit"
           disabled={sent}
-          className="w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 sm:py-4 text-base sm:text-lg gap-2 transition-all disabled:opacity-50"
+          className="w-full bg-foreground hover:bg-foreground/90 text-background font-semibold h-14 sm:h-12 text-base sm:text-lg gap-2 transition-all disabled:opacity-50"
         >
           <Send className="w-5 h-5" />
           Send Message
