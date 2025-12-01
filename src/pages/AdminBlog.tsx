@@ -64,6 +64,10 @@ interface BlogPost {
   status: string;
   published_at: string | null;
   created_at: string;
+  affiliate_link: string | null;
+  affiliate_link_text: string | null;
+  related_dispensary_ids: string[];
+  related_hotel_ids: string[];
 }
 
 const AdminBlog = () => {
@@ -93,7 +97,37 @@ const AdminBlog = () => {
     read_time: "10 min read",
     status: "draft",
     sections: [] as any[],
-    safetyTips: [] as string[]
+    safetyTips: [] as string[],
+    affiliate_link: "",
+    affiliate_link_text: "Book Now",
+    related_dispensaries: [] as string[],
+    related_hotels: [] as string[]
+  });
+
+  // Fetch dispensaries for selection
+  const { data: dispensaries } = useQuery({
+    queryKey: ["all-dispensaries"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dispensaries")
+        .select("id, name, slug")
+        .order("name");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fetch hotels for selection
+  const { data: hotels } = useQuery({
+    queryKey: ["all-hotels"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("hotels")
+        .select("id, name, slug")
+        .order("name");
+      if (error) throw error;
+      return data;
+    },
   });
 
   // Check admin role
@@ -147,7 +181,11 @@ const AdminBlog = () => {
         read_time: data.read_time,
         status: data.status,
         published_at: data.status === 'published' ? new Date().toISOString() : null,
-        created_by: user?.id
+        created_by: user?.id,
+        affiliate_link: data.affiliate_link || null,
+        affiliate_link_text: data.affiliate_link_text || 'Book Now',
+        related_dispensary_ids: data.related_dispensaries || [],
+        related_hotel_ids: data.related_hotels || []
       };
 
       if (editingPost) {
@@ -258,7 +296,11 @@ const AdminBlog = () => {
       read_time: "10 min read",
       status: "draft",
       sections: [],
-      safetyTips: []
+      safetyTips: [],
+      affiliate_link: "",
+      affiliate_link_text: "Book Now",
+      related_dispensaries: [],
+      related_hotels: []
     });
   };
 
@@ -281,7 +323,11 @@ const AdminBlog = () => {
       read_time: post.read_time,
       status: post.status,
       sections: post.content.sections || [],
-      safetyTips: post.content.safetyTips || []
+      safetyTips: post.content.safetyTips || [],
+      affiliate_link: post.affiliate_link || "",
+      affiliate_link_text: post.affiliate_link_text || "Book Now",
+      related_dispensaries: post.related_dispensary_ids || [],
+      related_hotels: post.related_hotel_ids || []
     });
     setImagePreview(post.image_url);
   };
@@ -575,6 +621,78 @@ const AdminBlog = () => {
                             <SelectItem value="published">Published</SelectItem>
                           </SelectContent>
                         </Select>
+                      </div>
+
+                      {/* Affiliate Link */}
+                      <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="affiliateLink">Affiliate Link (Optional)</Label>
+                        <Input
+                          id="affiliateLink"
+                          value={formData.affiliate_link}
+                          onChange={(e) => setFormData(prev => ({ ...prev, affiliate_link: e.target.value }))}
+                          placeholder="https://booking.com/..."
+                        />
+                      </div>
+
+                      {/* Affiliate Link Text */}
+                      <div className="space-y-2">
+                        <Label htmlFor="affiliateLinkText">Affiliate Button Text</Label>
+                        <Input
+                          id="affiliateLinkText"
+                          value={formData.affiliate_link_text}
+                          onChange={(e) => setFormData(prev => ({ ...prev, affiliate_link_text: e.target.value }))}
+                          placeholder="Book Now"
+                        />
+                      </div>
+
+                      {/* Related Dispensaries */}
+                      <div className="space-y-2 md:col-span-2">
+                        <Label>Related Dispensaries (Optional)</Label>
+                        <div className="flex flex-wrap gap-2 p-3 border border-border rounded-md min-h-[42px]">
+                          {dispensaries && dispensaries.map((disp) => (
+                            <label key={disp.id} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={formData.related_dispensaries.includes(disp.id)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setFormData(prev => ({ ...prev, related_dispensaries: [...prev.related_dispensaries, disp.id] }));
+                                  } else {
+                                    setFormData(prev => ({ ...prev, related_dispensaries: prev.related_dispensaries.filter(id => id !== disp.id) }));
+                                  }
+                                }}
+                                className="rounded"
+                              />
+                              <span className="text-sm">{disp.name}</span>
+                            </label>
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground">Dispensaries will show with images and links</p>
+                      </div>
+
+                      {/* Related Hotels */}
+                      <div className="space-y-2 md:col-span-2">
+                        <Label>Related 420 Rentals (Optional)</Label>
+                        <div className="flex flex-wrap gap-2 p-3 border border-border rounded-md min-h-[42px]">
+                          {hotels && hotels.map((hotel) => (
+                            <label key={hotel.id} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={formData.related_hotels.includes(hotel.id)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setFormData(prev => ({ ...prev, related_hotels: [...prev.related_hotels, hotel.id] }));
+                                  } else {
+                                    setFormData(prev => ({ ...prev, related_hotels: prev.related_hotels.filter(id => id !== hotel.id) }));
+                                  }
+                                }}
+                                className="rounded"
+                              />
+                              <span className="text-sm">{hotel.name}</span>
+                            </label>
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground">Hotels will show with images and links</p>
                       </div>
                     </div>
 

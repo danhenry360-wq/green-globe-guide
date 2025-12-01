@@ -58,6 +58,40 @@ const BlogDetail = () => {
     enabled: !!slug,
   });
 
+  // Fetch related dispensaries
+  const { data: relatedDispensaries } = useQuery({
+    queryKey: ["blog-dispensaries", dbPost?.related_dispensary_ids],
+    queryFn: async () => {
+      if (!dbPost?.related_dispensary_ids || dbPost.related_dispensary_ids.length === 0) return [];
+      
+      const { data, error } = await supabase
+        .from("dispensaries")
+        .select("*")
+        .in("id", dbPost.related_dispensary_ids);
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!dbPost?.related_dispensary_ids && dbPost.related_dispensary_ids.length > 0,
+  });
+
+  // Fetch related hotels
+  const { data: relatedHotels } = useQuery({
+    queryKey: ["blog-hotels", dbPost?.related_hotel_ids],
+    queryFn: async () => {
+      if (!dbPost?.related_hotel_ids || dbPost.related_hotel_ids.length === 0) return [];
+      
+      const { data, error } = await supabase
+        .from("hotels")
+        .select("*")
+        .in("id", dbPost.related_hotel_ids);
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!dbPost?.related_hotel_ids && dbPost.related_hotel_ids.length > 0,
+  });
+
   // Check static posts as fallback
   const staticPost = BLOG_POSTS.find(p => p.id === slug);
 
@@ -289,6 +323,125 @@ const BlogDetail = () => {
               </Card>
             )}
           </motion.div>
+
+          {/* Affiliate Link CTA */}
+          {dbPost?.affiliate_link && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="container mx-auto max-w-4xl px-4 mt-8"
+            >
+              <Card className="p-6 bg-gradient-to-br from-gold/10 via-card to-accent/5 border-gold/20 text-center">
+                <h3 className="text-xl font-bold mb-3">Ready to Book Your Trip?</h3>
+                <p className="text-muted-foreground mb-4">
+                  Get the best deals on accommodations and experiences
+                </p>
+                <a href={dbPost.affiliate_link} target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-gold hover:bg-gold/90 text-black font-semibold">
+                    {dbPost.affiliate_link_text || "Book Now"}
+                  </Button>
+                </a>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Related Dispensaries */}
+          {relatedDispensaries && relatedDispensaries.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="container mx-auto max-w-4xl px-4 mt-8"
+            >
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <MapPin className="w-6 h-6 text-accent" />
+                Featured Dispensaries
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {relatedDispensaries.map((disp) => (
+                  <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
+                    <Card className="overflow-hidden bg-gradient-card border-border/50 hover:border-accent/30 transition-all group">
+                      <div className="flex gap-4 p-4">
+                        {disp.image && (
+                          <img
+                            src={disp.image}
+                            alt={disp.name}
+                            className="w-24 h-24 object-cover rounded-lg"
+                          />
+                        )}
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-1 group-hover:text-accent transition-colors">
+                            {disp.name}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {disp.city}, {disp.state}
+                          </p>
+                          {disp.rating && (
+                            <div className="flex items-center gap-1 text-sm">
+                              <span className="text-gold">★</span>
+                              <span>{disp.rating}</span>
+                              {disp.review_count && (
+                                <span className="text-muted-foreground">({disp.review_count})</span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Related Hotels */}
+          {relatedHotels && relatedHotels.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="container mx-auto max-w-4xl px-4 mt-8"
+            >
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <Building2 className="w-6 h-6 text-accent" />
+                420-Friendly Rentals
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {relatedHotels.map((hotel) => (
+                  <Link key={hotel.id} to={`/hotels/${hotel.slug}`}>
+                    <Card className="overflow-hidden bg-gradient-card border-border/50 hover:border-accent/30 transition-all group">
+                      <div className="flex gap-4 p-4">
+                        {hotel.images && hotel.images.length > 0 && (
+                          <img
+                            src={hotel.images[0]}
+                            alt={hotel.name}
+                            className="w-24 h-24 object-cover rounded-lg"
+                          />
+                        )}
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-1 group-hover:text-accent transition-colors">
+                            {hotel.name}
+                          </h4>
+                          {hotel.rating && (
+                            <div className="flex items-center gap-1 text-sm mb-2">
+                              <span className="text-gold">★</span>
+                              <span>{hotel.rating}</span>
+                            </div>
+                          )}
+                          {hotel.is_verified && (
+                            <Badge className="bg-accent/10 text-accent border-accent/20 text-xs">
+                              Verified
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {/* Related Posts CTA */}
           <motion.div
