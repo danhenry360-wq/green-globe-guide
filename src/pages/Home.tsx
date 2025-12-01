@@ -714,7 +714,7 @@ const Home = () => {
               .slice(0, 3)
               .map((post) => (
               <motion.div key={post.id} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Link to={`/blog/${post.id}`} aria-label={`Read article: ${post.title}`}>
+                <Link to="/blog" aria-label={`Read article: ${post.title}`}>
                   <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
                     <img 
                       src={post.image} 

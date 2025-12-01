@@ -220,15 +220,15 @@ const AdminReviews = () => {
         description: 'Failed to delete review.',
         variant: 'destructive',
       });
+      setProcessingId(null);
     } else {
+      await fetchReviews();
       toast({
         title: 'Success',
         description: 'Review has been permanently deleted.',
       });
-      fetchReviews();
+      setProcessingId(null);
     }
-    
-    setProcessingId(null);
   };
 
   const renderStars = (rating: number) => {
