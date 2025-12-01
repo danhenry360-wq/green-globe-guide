@@ -17,6 +17,7 @@ import WorldGuide from "./pages/WorldGuide";
 import Hotels from "./pages/Hotels";
 import Dispensary from "./pages/Dispensary";
 import DispensaryDetail from "./pages/DispensaryDetail";
+import RentalDetail from "./pages/RentalDetail";
 import Tours from "./pages/Tours";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
@@ -55,6 +56,7 @@ const App = () => (
           {/* home & static pages */}
           <Route path="/" element={<Home />} />
           <Route path="/hotels" element={<Hotels />} />
+          <Route path="/hotels/:rentalSlug" element={<RentalDetail />} />
           <Route path="/dispensary" element={<Dispensary />} />
           <Route path="/dispensary/:dispensarySlug" element={<DispensaryDetail />} />
           <Route path="/tours" element={<Tours />} />

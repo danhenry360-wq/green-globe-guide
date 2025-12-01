@@ -88,6 +88,14 @@ export interface Hotel {
   policies: string; // Policy highlights (e.g., "Complimentary smoking lounge")
   website: string; // Booking link
   priceRange: '$$' | '$$$' | '$$$$';
+  // Optional enhanced fields
+  description?: string;
+  image?: string;
+  address?: string;
+  affiliateLink?: string; // For Expedia/booking affiliate links
+  hasSmoking?: boolean;
+  hasVaping?: boolean;
+  hasEdibles?: boolean;
 }
 
 /**
