@@ -566,7 +566,7 @@ const Hotels = () => {
         }))
       )
     );
-  }, []);
+  }, [DATA]);
 
   // Get unique countries and states
   const countries = useMemo(() => 
