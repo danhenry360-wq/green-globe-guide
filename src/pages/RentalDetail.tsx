@@ -117,16 +117,17 @@ const RentalDetail = () => {
   const displayCity = rental?.city || "Sacramento";
   const displayRating = rental?.rating || dbHotel?.rating || 4.0;
   const displayPolicies = rental?.policies || dbHotel?.policies || "";
-  const displayPriceRange = rental?.priceRange || dbHotel?.amenities?.price_range || "$$";
   const displayAddress = rental?.address || dbHotel?.address || "";
   
   // Get amenities from database or fall back to rental static data
-  const amenities = dbHotel?.amenities || {
-    smoking: rental?.hasSmoking !== false,
-    vaping: rental?.hasVaping !== false,
-    edibles: rental?.hasEdibles !== false,
-    price_range: displayPriceRange
+  const amenities = {
+    smoking: dbHotel?.amenities?.smoking ?? rental?.hasSmoking ?? true,
+    vaping: dbHotel?.amenities?.vaping ?? rental?.hasVaping ?? true,
+    edibles: dbHotel?.amenities?.edibles ?? rental?.hasEdibles ?? true,
+    price_range: dbHotel?.amenities?.price_range || rental?.priceRange || "$$"
   };
+  
+  const displayPriceRange = amenities.price_range;
 
   return (
     <>
