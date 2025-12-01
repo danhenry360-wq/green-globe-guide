@@ -111,13 +111,31 @@ const AdminHotels = () => {
     enabled: !!isAdmin,
   });
 
+  // Helper function to call admin-hotels edge function
+  const callAdminHotelsApi = async (action: string, data: Record<string, unknown>) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.access_token) {
+      throw new Error("Not authenticated");
+    }
+
+    const response = await supabase.functions.invoke('admin-hotels', {
+      body: { action, data },
+    });
+
+    if (response.error) {
+      throw new Error(response.error.message || 'Operation failed');
+    }
+
+    return response.data;
+  };
+
   // Create hotel mutation
   const createMutation = useMutation({
     mutationFn: async (hotelData: Partial<Hotel>) => {
       if (!hotelData.name || !hotelData.slug) {
         throw new Error("Required fields missing");
       }
-      const { error } = await supabase.from("hotels").insert([{
+      await callAdminHotelsApi('create', {
         name: hotelData.name,
         slug: hotelData.slug,
         address: hotelData.address,
@@ -129,8 +147,7 @@ const AdminHotels = () => {
         latitude: hotelData.latitude,
         longitude: hotelData.longitude,
         images: hotelData.images,
-      }]);
-      if (error) throw error;
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-hotels"] });
@@ -148,9 +165,7 @@ const AdminHotels = () => {
   // Update hotel mutation
   const updateMutation = useMutation({
     mutationFn: async (hotelData: Partial<Hotel> & { id: string }) => {
-      const { id, ...updates } = hotelData;
-      const { error } = await supabase.from("hotels").update(updates).eq("id", id);
-      if (error) throw error;
+      await callAdminHotelsApi('update', hotelData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-hotels"] });
@@ -166,8 +181,7 @@ const AdminHotels = () => {
   // Delete hotel mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("hotels").delete().eq("id", id);
-      if (error) throw error;
+      await callAdminHotelsApi('delete', { id });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-hotels"] });
@@ -183,11 +197,7 @@ const AdminHotels = () => {
   // Toggle verified status quickly
   const toggleVerified = useMutation({
     mutationFn: async ({ id, is_verified }: { id: string; is_verified: boolean }) => {
-      const { error } = await supabase
-        .from("hotels")
-        .update({ is_verified })
-        .eq("id", id);
-      if (error) throw error;
+      await callAdminHotelsApi('update', { id, is_verified });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-hotels"] });
