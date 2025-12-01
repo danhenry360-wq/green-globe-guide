@@ -32,7 +32,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { 
   Search, Edit, Shield, ArrowLeft, Save, Loader2, Building2, Plus, Trash2, 
-  ImagePlus, Star, CheckCircle, BadgeCheck
+  ImagePlus, Star, CheckCircle, BadgeCheck, Cigarette, Wind, Cookie, DollarSign
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -50,6 +50,7 @@ interface Hotel {
   latitude: number | null;
   longitude: number | null;
   images: string[] | null;
+  amenities?: any;
 }
 
 const emptyHotel: Partial<Hotel> = {
@@ -64,6 +65,12 @@ const emptyHotel: Partial<Hotel> = {
   latitude: null,
   longitude: null,
   images: [],
+  amenities: {
+    smoking: true,
+    vaping: true,
+    edibles: true,
+    price_range: "$$"
+  }
 };
 
 const AdminHotels = () => {
@@ -636,6 +643,84 @@ const AdminHotels = () => {
                     checked={formData.is_420_friendly || false}
                     onCheckedChange={(checked) => setFormData({ ...formData, is_420_friendly: checked })}
                   />
+                </div>
+              </div>
+
+              {/* Amenities Section */}
+              <div className="space-y-4 pt-4 border-t border-border/50">
+                <h3 className="text-sm font-semibold text-foreground">420 Amenities</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-2">
+                      <Cigarette className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <Label className="text-sm">Smoking Allowed</Label>
+                        <p className="text-xs text-muted-foreground">Designated areas</p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={formData.amenities?.smoking ?? true}
+                      onCheckedChange={(checked) => setFormData({ 
+                        ...formData, 
+                        amenities: { ...formData.amenities, smoking: checked } as any
+                      })}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-2">
+                      <Wind className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <Label className="text-sm">Vaping Allowed</Label>
+                        <p className="text-xs text-muted-foreground">In room</p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={formData.amenities?.vaping ?? true}
+                      onCheckedChange={(checked) => setFormData({ 
+                        ...formData, 
+                        amenities: { ...formData.amenities, vaping: checked } as any
+                      })}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-2">
+                      <Cookie className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <Label className="text-sm">Edibles Friendly</Label>
+                        <p className="text-xs text-muted-foreground">Welcome</p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={formData.amenities?.edibles ?? true}
+                      onCheckedChange={(checked) => setFormData({ 
+                        ...formData, 
+                        amenities: { ...formData.amenities, edibles: checked } as any
+                      })}
+                    />
+                  </div>
+
+                  <div className="p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <DollarSign className="w-5 h-5 text-muted-foreground" />
+                      <Label className="text-sm">Price Range</Label>
+                    </div>
+                    <select
+                      value={formData.amenities?.price_range ?? "$$"}
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        amenities: { ...formData.amenities, price_range: e.target.value } as any
+                      })}
+                      className="w-full px-3 py-2 bg-background border border-border/50 rounded-md text-sm"
+                    >
+                      <option value="$">$ - Budget</option>
+                      <option value="$$">$$ - Moderate</option>
+                      <option value="$$$">$$$ - Upscale</option>
+                      <option value="$$$$">$$$$ - Luxury</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
