@@ -501,23 +501,28 @@ const AdminDispensaries = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>Name *</Label>
-                  <Input
-                    value={formData.name || ""}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Dispensary name"
-                  />
+              <div>
+                <Label>Name *</Label>
+                <Input
+                  value={formData.name || ""}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Dispensary name"
+                />
+              </div>
+
+              {/* Verified Badge Toggle */}
+              <div className="flex items-center justify-between p-3 bg-accent/10 rounded-lg border border-accent/20">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-accent" />
+                  <div>
+                    <Label className="text-base">Licensed & Verified</Label>
+                    <p className="text-xs text-muted-foreground">Display verified badge on listing</p>
+                  </div>
                 </div>
-                <div>
-                  <Label>Status</Label>
-                  <Input
-                    value={formData.status || ""}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    placeholder="licensed, pending, etc."
-                  />
-                </div>
+                <Switch
+                  checked={formData.status === "licensed"}
+                  onCheckedChange={(checked) => setFormData({ ...formData, status: checked ? "licensed" : "pending" })}
+                />
               </div>
 
               <div>

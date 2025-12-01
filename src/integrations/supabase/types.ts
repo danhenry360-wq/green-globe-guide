@@ -189,6 +189,7 @@ export type Database = {
           id: string
           images: string[] | null
           is_420_friendly: boolean | null
+          is_verified: boolean | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -204,6 +205,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           is_420_friendly?: boolean | null
+          is_verified?: boolean | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -219,6 +221,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           is_420_friendly?: boolean | null
+          is_verified?: boolean | null
           latitude?: number | null
           longitude?: number | null
           name?: string
