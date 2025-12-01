@@ -1,0 +1,438 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
+import { Helmet } from 'react-helmet';
+import { 
+  User, 
+  Mail, 
+  CheckCircle, 
+  XCircle, 
+  Clock, 
+  Star,
+  Loader2,
+  ShieldCheck,
+  AlertCircle,
+  ExternalLink
+} from 'lucide-react';
+import { format } from 'date-fns';
+
+interface UserProfile {
+  id: string;
+  display_name: string | null;
+  avatar_url: string | null;
+}
+
+interface Review {
+  id: string;
+  rating: number;
+  title: string | null;
+  content: string;
+  status: 'pending' | 'approved' | 'rejected';
+  created_at: string;
+  dispensary_id: string | null;
+  rental_id: string | null;
+  dispensaries: {
+    name: string;
+    slug: string;
+  } | null;
+  hotels: {
+    name: string;
+    slug: string;
+  } | null;
+}
+
+const Profile = () => {
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [isResendingVerification, setIsResendingVerification] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+  const [activeTab, setActiveTab] = useState('all');
+  
+  const { user, isAuthenticated, loading: authLoading, resendOTP } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate('/auth');
+    }
+  }, [authLoading, isAuthenticated, navigate]);
+
+  // Resend cooldown timer
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
+
+  // Fetch user data and reviews
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) return;
+
+      setLoading(true);
+
+      try {
+        // Get user email and verification status
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser) {
+          setUserEmail(authUser.email || '');
+          setEmailVerified(!!authUser.email_confirmed_at);
+        }
+
+        // Fetch profile
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (!profileError && profileData) {
+          setProfile(profileData);
+        }
+
+        // Fetch user's reviews
+        const { data: reviewsData, error: reviewsError } = await supabase
+          .from('reviews')
+          .select(`
+            id,
+            rating,
+            title,
+            content,
+            status,
+            created_at,
+            dispensary_id,
+            rental_id,
+            dispensaries (
+              name,
+              slug
+            ),
+            hotels (
+              name,
+              slug
+            )
+          `)
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (!reviewsError && reviewsData) {
+          const transformedReviews = reviewsData.map(review => ({
+            ...review,
+            dispensaries: Array.isArray(review.dispensaries) ? review.dispensaries[0] : review.dispensaries,
+            hotels: Array.isArray(review.hotels) ? review.hotels[0] : review.hotels,
+            status: review.status as 'pending' | 'approved' | 'rejected'
+          }));
+          setReviews(transformedReviews);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchUserData();
+    }
+  }, [user]);
+
+  const handleResendVerification = async () => {
+    if (!userEmail || resendCooldown > 0 || isResendingVerification) return;
+
+    setIsResendingVerification(true);
+
+    try {
+      const { error } = await resendOTP(userEmail);
+
+      if (error) {
+        toast({
+          title: 'Failed to Send',
+          description: error.message || 'Could not send verification email.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Verification Email Sent!',
+          description: 'Check your inbox for the 6-digit verification code.',
+        });
+        setResendCooldown(60);
+        // Redirect to verify page
+        navigate('/verify-email', { state: { email: userEmail } });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsResendingVerification(false);
+    }
+  };
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? 'fill-gold text-gold' : 'text-muted-foreground/30'
+        }`}
+      />
+    ));
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return <Badge variant="outline" className="border-yellow-500 text-yellow-500"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+      case 'approved':
+        return <Badge variant="outline" className="border-green-500 text-green-500"><CheckCircle className="w-3 h-3 mr-1" />Approved</Badge>;
+      case 'rejected':
+        return <Badge variant="outline" className="border-red-500 text-red-500"><XCircle className="w-3 h-3 mr-1" />Rejected</Badge>;
+      default:
+        return null;
+    }
+  };
+
+  const filteredReviews = activeTab === 'all' 
+    ? reviews 
+    : reviews.filter(review => review.status === activeTab);
+
+  const counts = {
+    all: reviews.length,
+    pending: reviews.filter(r => r.status === 'pending').length,
+    approved: reviews.filter(r => r.status === 'approved').length,
+    rejected: reviews.filter(r => r.status === 'rejected').length,
+  };
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-accent" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>My Profile | BudQuest</title>
+        <meta name="description" content="View your BudQuest profile, review history, and account verification status." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        
+        <main className="pt-24 pb-20 px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Profile Header */}
+            <div className="flex items-center gap-3 mb-8">
+              <User className="w-8 h-8 text-accent" />
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                My Profile
+              </h1>
+            </div>
+
+            {/* Account Info Card */}
+            <Card className="bg-card/70 backdrop-blur-sm border-accent/20 mb-6">
+              <CardHeader>
+                <CardTitle className="text-xl text-foreground">Account Information</CardTitle>
+                <CardDescription className="text-muted-foreground">Your BudQuest account details</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <User className="w-5 h-5 text-accent mt-0.5" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Display Name</p>
+                    <p className="text-foreground font-medium">{profile?.display_name || 'Not set'}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-accent mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm text-muted-foreground">Email Address</p>
+                    <p className="text-foreground font-medium">{userEmail}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  {emailVerified ? (
+                    <>
+                      <ShieldCheck className="w-5 h-5 text-green-500 mt-0.5" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">Email Status</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-green-500 font-medium">Verified</p>
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm text-muted-foreground">Email Status</p>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-1">
+                          <p className="text-yellow-500 font-medium">Not Verified</p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleResendVerification}
+                            disabled={isResendingVerification || resendCooldown > 0}
+                            className="border-accent/30 text-accent hover:bg-accent/10"
+                          >
+                            {isResendingVerification ? (
+                              <>
+                                <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+                                Sending...
+                              </>
+                            ) : resendCooldown > 0 ? (
+                              `Resend in ${resendCooldown}s`
+                            ) : (
+                              'Verify Email'
+                            )}
+                          </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          You must verify your email to submit reviews
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Reviews Section */}
+            <Card className="bg-card/70 backdrop-blur-sm border-accent/20">
+              <CardHeader>
+                <CardTitle className="text-xl text-foreground">My Reviews</CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  View and manage your dispensary and rental reviews
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                  <TabsList className="bg-card/70 border border-accent/20">
+                    <TabsTrigger value="all" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                      All ({counts.all})
+                    </TabsTrigger>
+                    <TabsTrigger value="pending" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                      Pending ({counts.pending})
+                    </TabsTrigger>
+                    <TabsTrigger value="approved" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                      Approved ({counts.approved})
+                    </TabsTrigger>
+                    <TabsTrigger value="rejected" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                      Rejected ({counts.rejected})
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value={activeTab}>
+                    {filteredReviews.length === 0 ? (
+                      <div className="text-center py-12">
+                        <p className="text-muted-foreground mb-4">
+                          {activeTab === 'all' 
+                            ? 'You haven\'t submitted any reviews yet.' 
+                            : `No ${activeTab} reviews found.`}
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                          <Button
+                            onClick={() => navigate('/dispensary')}
+                            className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                          >
+                            Review a Dispensary
+                          </Button>
+                          <Button
+                            onClick={() => navigate('/hotels')}
+                            variant="outline"
+                            className="border-accent/30 text-accent hover:bg-accent/10"
+                          >
+                            Review a Rental
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {filteredReviews.map((review) => {
+                          const propertyName = review.dispensaries?.name || review.hotels?.name || 'Unknown Property';
+                          const propertySlug = review.dispensaries?.slug || review.hotels?.slug;
+                          const propertyType = review.dispensaries ? 'dispensary' : 'hotels';
+                          
+                          return (
+                            <Card key={review.id} className="bg-background/50 border-border/30">
+                              <CardHeader className="pb-2">
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <CardTitle className="text-base text-foreground">
+                                        {propertyName}
+                                      </CardTitle>
+                                      {propertySlug && (
+                                        <Link 
+                                          to={`/${propertyType}/${propertySlug}`}
+                                          className="text-accent hover:text-accent/80"
+                                        >
+                                          <ExternalLink className="w-4 h-4" />
+                                        </Link>
+                                      )}
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">
+                                      {review.dispensaries ? 'Dispensary' : 'Rental'} • {format(new Date(review.created_at), 'MMM d, yyyy')}
+                                    </p>
+                                  </div>
+                                  {getStatusBadge(review.status)}
+                                </div>
+                              </CardHeader>
+                              <CardContent className="space-y-3">
+                                <div className="flex gap-1">{renderStars(review.rating)}</div>
+                                
+                                {review.title && (
+                                  <h4 className="font-semibold text-foreground">{review.title}</h4>
+                                )}
+                                
+                                <p className="text-sm text-muted-foreground">{review.content}</p>
+
+                                {review.status === 'pending' && (
+                                  <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 mt-3">
+                                    <p className="text-xs text-yellow-600 dark:text-yellow-400">
+                                      <Clock className="inline w-3 h-3 mr-1" />
+                                      Your review is awaiting admin approval before it will be published.
+                                    </p>
+                                  </div>
+                                )}
+                              </CardContent>
+                            </Card>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+        
+        <Footer />
+      </div>
+    </>
+  );
+};
+
+export default Profile;
