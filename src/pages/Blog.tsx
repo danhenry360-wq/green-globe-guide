@@ -680,6 +680,103 @@ const BLOG_POSTS = [
         "Book 420-friendly accommodations at your destination through verified platforms like BudQuest."
       ]
     }
+  },
+  {
+    id: "colorado-420-friendly-rentals-2025",
+    title: "Best 420-Friendly Vacation Rentals in Colorado 2025: Kushkations, Airbnb Alternatives & Hidden Gems",
+    subtitle: "Complete comparison of luxury Kushkations properties, Bud & Breakfast platforms, and traditional Airbnb options for cannabis-friendly Colorado getaways.",
+    excerpt: "The ultimate guide to booking 420-friendly vacation rentals in Colorado—from budget-friendly options to luxury mountain chalets that welcome cannabis enthusiasts.",
+    date: "Dec 1, 2025",
+    readTime: "16 min read",
+    author: "Emma Rodriguez",
+    avatar: "🏔️",
+    category: "Travel Guide",
+    tags: ["Colorado", "Rentals", "Accommodations", "420-Friendly"],
+    image: "/blog-colorado-rentals.jpg",
+    content: {
+      introduction: "Colorado isn't just the first state to legalize recreational cannabis—it's become the gold standard for cannabis tourism in North America. But here's the catch: while dispensaries are everywhere, finding legitimate 420-friendly accommodations isn't as simple as it should be. Most hotels ban smoking, Airbnb policies are unclear, and traditional booking sites don't filter for cannabis-friendly properties. That's where specialized platforms like Kushkations, Bud & Breakfast, and boutique spots like Arrowhead Manor come in. This guide breaks down every option—luxury to budget, city to mountains—so you can book with confidence and actually enjoy your cannabis vacation without worrying about fines or awkward conversations with property managers.",
+      disclaimer: "Cannabis consumption is legal for adults 21+ in Colorado. However, public consumption remains illegal, and property owners set their own smoking policies. Always verify cannabis policies directly with hosts before booking. Driving under the influence is strictly illegal. This guide contains affiliate links—we earn commission at no extra cost to you.",
+      sections: [
+        {
+          title: "Why Colorado is #1 for Cannabis Tourism",
+          icon: "TrendingUp",
+          content: "Colorado legalized recreational cannabis in 2014, giving it over a decade of infrastructure development that other states simply don't have. The result? Over 600 licensed dispensaries statewide, a thriving edibles industry, cannabis-friendly tours, and—most importantly for travelers—a growing network of accommodations that explicitly welcome cannabis use. Unlike California where hotel policies are restrictive, or Nevada where Strip properties ban smoking, Colorado has embraced cannabis tourism as an economic driver. Mountain towns like Breckenridge, Telluride, and Aspen cater to wealthy cannabis tourists, while Denver offers urban experiences. The state's natural beauty (Rocky Mountains, national parks, Red Rocks) combined with legal cannabis creates an unmatched vacation experience.",
+          variant: "default"
+        },
+        {
+          title: "Types of 420-Friendly Rentals Available",
+          icon: "Building2",
+          content: "**Premium Luxury Properties (Kushkations)** - 5-star vacation homes with 3-7 bedrooms, game rooms, hot tubs, chef services, and cannabis-infused dining experiences. Indoor smoking allowed. Perfect for groups or high-end couples retreats.\n\n**Mid-Range Vacation Homes (Bud & Breakfast)** - Verified 420-friendly properties ranging from cozy cabins to modern homes. Most allow outdoor smoking, some permit indoor use. Great for families or friend groups on moderate budgets.\n\n**Boutique B&Bs (Arrowhead Manor)** - Small, owner-operated bed & breakfasts with 4-8 rooms. Personalized service, gourmet breakfasts, and cannabis-friendly outdoor spaces. Ideal for romantic getaways.\n\n**Airbnb (Hit or Miss)** - Thousands of listings, but cannabis policies are unclear. Some hosts are 420-friendly, others charge hefty smoking fines. Requires direct host communication.\n\n**Budget Options** - Private rooms in shared homes, smaller cabins, or apartments listed on Bud & Breakfast or Airbnb. Typically $60-120/night.",
+          variant: "accent"
+        },
+        {
+          title: "Kushkations: Luxury 420-Friendly Experiences",
+          icon: "Sparkles",
+          content: "**What They Are**: Kushkations specializes in ultra-luxury vacation rentals exclusively for cannabis enthusiasts. Their properties (7+ currently operating in Colorado) are 5-star homes with 3-7 bedrooms, featuring game rooms, private hot tubs, chef services, and cannabis concierge experiences.\n\n**Price Range**: $200-400+/night depending on property size and season. Peak ski season (December-March) commands highest rates.\n\n**Best For**: Couples seeking upscale romantic retreats, bachelor/bachelorette parties, corporate retreats, or groups celebrating special occasions.\n\n**Standout Features**: Indoor smoking is explicitly allowed (rare in Colorado), some properties offer cannabis-infused private dinners with personal chefs, and concierge services help plan dispensary visits and cannabis tours.\n\n**Pros**: Unmatched luxury, no ambiguity about cannabis policies, unique experiences like infused meals, beautiful mountain locations.\n\n**Cons**: Expensive, limited number of properties (book months ahead for peak season), mostly geared toward groups (solo travelers may find it pricey).\n\n**Booking**: Direct through Kushkations website. Affiliate programs available for travel bloggers/influencers (8-10% commission).",
+          variant: "gold"
+        },
+        {
+          title: "Bud & Breakfast: Global 420-Friendly Platform",
+          icon: "MapPin",
+          content: "**What It Is**: Bud & Breakfast is the world's largest 420-friendly accommodation platform with 1,000+ properties globally, including 50+ in Colorado. Think of it as 'Airbnb for cannabis travelers.'\n\n**Price Range**: $80-300+/night. Wide range from budget private rooms to luxury vacation homes.\n\n**Best For**: All budgets and travel styles. Solo travelers, couples, families, and groups can all find suitable options.\n\n**Standout Features**: Verified 420-friendly policies (hosts explicitly state cannabis rules), global reach (book 420-friendly stays worldwide), varied property types (B&Bs, cabins, apartments, vacation homes).\n\n**Pros**: Transparent cannabis policies, wide selection, various price points, hosts are cannabis-friendly and knowledgeable about local dispensaries.\n\n**Cons**: Outdoor smoking more common than indoor (always verify), platform is smaller than Airbnb so fewer reviews per property, customer service less robust than major platforms.\n\n**Booking**: Through Bud & Breakfast website or app. Affiliate program offers 6-8% commission.",
+          variant: "default"
+        },
+        {
+          title: "Arrowhead Manor: Boutique Mountain B&B",
+          icon: "Users",
+          content: "**What It Is**: Arrowhead Manor is a luxury bed & breakfast near Denver and Red Rocks Amphitheatre (5-minute drive). Eight beautifully appointed rooms with mountain views, private decks, hot tubs, and fireplaces.\n\n**Price Range**: $180-250/night including gourmet breakfast. Special packages for Red Rocks concert-goers.\n\n**Best For**: Romantic getaways, anniversary trips, couples who want personalized service and beautiful mountain scenery.\n\n**Standout Features**: Prime location near Red Rocks (catch concerts and smoke on your private deck afterwards), owner-operated with exceptional hospitality, outdoor cannabis consumption encouraged on private decks and patio areas.\n\n**Pros**: Stunning location, highly rated (4.9+ stars), gourmet breakfasts, intimate boutique experience, close to Denver attractions but feels like mountain retreat.\n\n**Cons**: Limited availability (only 8 rooms), books up months in advance for Red Rocks concert season (May-October), no indoor smoking (outdoor decks only).\n\n**Booking**: Direct through Arrowhead Manor website. Affiliate commission: 8%.",
+          variant: "accent"
+        },
+        {
+          title: "Budget Breakdown: What You Get at Each Price Point",
+          icon: "Scale",
+          content: "**UNDER $100/NIGHT**\n\nWhat to Expect: Private rooms in shared homes (Bud & Breakfast), budget Airbnb listings, smaller independent B&Bs, or apartments. Outdoor smoking only in most cases. Shared common areas.\n\nBest Options: Bud & Breakfast budget listings in Denver suburbs, private rooms near Boulder, smaller mountain town apartments.\n\nTrade-offs: Less privacy, shared spaces, outdoor smoking restrictions, fewer amenities.\n\n**$100-200/NIGHT**\n\nWhat to Expect: Mid-range vacation homes (2-3 bedrooms), entire apartments, smaller cabins, or nicer B&B rooms. Some allow limited indoor smoking. Full kitchens common.\n\nBest Options: Mid-tier Bud & Breakfast properties, smaller Airbnb vacation homes (verify cannabis policy), boutique lodges near ski resorts.\n\nSweet Spot: This is where value peaks. You get privacy, full amenities, and reasonable cannabis policies without luxury pricing.\n\n**$200+/NIGHT**\n\nWhat to Expect: Luxury vacation homes, premium Bud & Breakfast properties, Kushkations experiences, Arrowhead Manor, or high-end Airbnb homes. Indoor smoking often allowed. Hot tubs, game rooms, chef services, and concierge available.\n\nBest Options: Kushkations properties in Breckenridge/Telluride, Arrowhead Manor for couples, luxury Bud & Breakfast mountain homes.\n\nWorth It If: You're celebrating a special occasion, traveling with a group (cost splits), or want a truly memorable upscale experience.",
+          variant: "default"
+        },
+        {
+          title: "Location Guide: Where to Stay in Colorado",
+          icon: "MapPin",
+          content: "**DENVER (Downtown/Urban)**\n\nBest For: City explorers, nightlife, dispensary access, cultural attractions.\n\nOptions: Kushkations urban properties, Bud & Breakfast apartments, Airbnb lofts.\n\nNearest Dispensaries: 20+ within 15 minutes (including Native Roots, LivWell, The Green Solution).\n\nNearby Attractions: 16th Street Mall, Denver Art Museum, Coors Field, RiNo Art District.\n\n**BOULDER (College Town/Nature)**\n\nBest For: Nature lovers, hiking, progressive vibe, organic food scene.\n\nOptions: Bud & Breakfast homes, independent rentals, smaller B&Bs.\n\nNearest Dispensaries: 15+ (Boulder is extremely cannabis-friendly).\n\nNearby Attractions: Flatirons hiking, Pearl Street Mall, Chautauqua Park, CU Boulder campus.\n\n**RED ROCKS/MORRISON (Concert Venue)**\n\nBest For: Music lovers, Red Rocks concert-goers, mountain views close to Denver.\n\nOptions: Arrowhead Manor (5 minutes from Red Rocks!), vacation homes in Morrison.\n\nBest Property: Arrowhead Manor—book rooms 6+ months ahead for concert season.\n\nNearby Attractions: Red Rocks Amphitheatre, hiking trails, mountain biking.\n\n**BRECKENRIDGE/ASPEN (Luxury Ski Towns)**\n\nBest For: Ski vacations, luxury travelers, wealthy cannabis tourists, winter sports.\n\nOptions: Kushkations luxury properties, high-end Bud & Breakfast, upscale Airbnbs.\n\nPrice Expectations: $300-500+/night peak ski season (December-March).\n\nNearby Attractions: World-class skiing, upscale dining, boutique dispensaries, après-ski culture.",
+          variant: "accent"
+        },
+        {
+          title: "Airbnb vs Local 420-Friendly Platforms: Honest Comparison",
+          icon: "AlertCircle",
+          content: "**AIRBNB PROS**\n\n✅ Massive selection (thousands of Colorado properties)\n✅ Established platform with buyer protection\n✅ Easy booking and cancellation policies\n✅ More reviews per property (better vetting)\n\n**AIRBNB CONS**\n\n❌ Cannabis policies are ambiguous (hosts set rules, often unclear)\n❌ Risk of surprise smoking fines ($200-500 common)\n❌ Many hosts explicitly ban cannabis (you have to ask directly)\n❌ Platform doesn't filter for 420-friendly properties\n❌ No cannabis-focused community or expertise\n\n**LOCAL PLATFORMS (Bud & Breakfast, Kushkations) PROS**\n\n✅ Explicit 420-friendly policies (no ambiguity)\n✅ Cannabis-knowledgeable hosts who provide dispensary tips\n✅ No surprise fines or policy violations\n✅ Community of like-minded travelers\n✅ Indoor smoking options more common\n✅ Unique cannabis experiences (infused meals, tours, etc.)\n\n**LOCAL PLATFORMS CONS**\n\n❌ Smaller selection (fewer properties to choose from)\n❌ Sometimes pricier (premium for cannabis-friendly guarantee)\n❌ Less established payment/dispute resolution\n❌ Fewer reviews per property (newer platforms)\n\n**VERDICT**: If you're serious about cannabis tourism and don't want to risk awkward host conversations or fines, local platforms are worth the premium. If budget is tight and you're willing to do legwork (messaging hosts directly about cannabis), Airbnb can work.",
+          variant: "warning"
+        },
+        {
+          title: "How to Choose the Right Rental for Your Trip",
+          icon: "Info",
+          content: "**DECISION TREE**\n\n**Question 1: What's Your Budget?**\n- Under $100/night → Bud & Breakfast budget listings or Airbnb private rooms (verify cannabis policy)\n- $100-200/night → Mid-range Bud & Breakfast, smaller vacation homes, independent B&Bs\n- $200+/night → Kushkations, Arrowhead Manor, luxury Bud & Breakfast properties\n\n**Question 2: What's Your Vibe?**\n- City nightlife and urban exploring → Kushkations Denver properties, Bud & Breakfast downtown apartments\n- Mountain retreat and nature → Arrowhead Manor, Breckenridge/Telluride rentals, Boulder cabins\n- Budget adventure → Bud & Breakfast budget tier, Airbnb with verified 420 policy\n- Luxury/special occasion → Kushkations premium properties, high-end Bud & Breakfast\n\n**Question 3: How Important is Indoor Smoking?**\n- CRITICAL (must smoke indoors) → Kushkations (explicitly allows), verify with other platforms\n- IMPORTANT (prefer indoors) → Arrowhead Manor (outdoor decks), mid-tier Bud & Breakfast (some allow)\n- FLEXIBLE (outdoor okay) → Airbnb verified 420-friendly, most Bud & Breakfast listings\n\n**Question 4: Traveling Solo, Couple, or Group?**\n- Solo → Budget Bud & Breakfast rooms, Airbnb private rooms\n- Couple → Arrowhead Manor, Kushkations smaller properties, boutique B&Bs\n- Group (4-8 people) → Kushkations large homes, Bud & Breakfast vacation homes, split costs for luxury",
+          variant: "gold"
+        },
+        {
+          title: "Money-Saving Booking Strategies",
+          icon: "TrendingUp",
+          content: "**TIP 1: Book Off-Season**\n\nMay-August (after ski season, before fall foliage): Save 20-40% vs peak winter rates. Denver and Boulder are pleasant in summer; mountain towns are less crowded.\n\nSeptember-November (shoulder season): Moderate savings (10-20% off), beautiful fall colors, fewer tourists.\n\n**TIP 2: Multi-Night Discounts**\n\nMost platforms offer discounts for longer stays:\n- 3+ nights: 10-15% off nightly rate\n- 7+ nights: 20-25% off\n- 30+ nights (monthly): Up to 30-40% savings\n\n**TIP 3: Sign Up for Alerts & Newsletters**\n\n- Kushkations email list: Early access to new properties and seasonal deals\n- Bud & Breakfast notifications: Last-minute discounts and flash sales\n- Arrowhead Manor newsletter: Red Rocks concert packages and off-season promotions\n\n**TIP 4: Compare All Platforms**\n\nDon't assume local platforms are always pricier. Sometimes Kushkations has better value than luxury Airbnbs when you factor in included amenities (chef services, concierge). Sometimes Airbnb beats Bud & Breakfast on price if you're okay with outdoor-only smoking.\n\nAlways check: Kushkations → Bud & Breakfast → Airbnb → Hotel comparison sites (Expedia, Booking.com with '420-friendly' search)\n\n**TIP 5: Group Travel = Huge Savings**\n\nA $350/night Kushkations property split between 4 couples = $87.50/couple/night. Suddenly that luxury experience becomes affordable.",
+          variant: "default"
+        },
+        {
+          title: "Safety & Legal Tips for Cannabis Rentals",
+          icon: "Shield",
+          content: "**✅ DO's**\n\n- Verify smoking policy IN WRITING before booking (screenshot or save confirmation)\n- Contact host directly if Airbnb—ask 'Is cannabis consumption allowed indoors/outdoors?'\n- Smoke only in explicitly designated areas (private decks, patios, designated rooms)\n- Keep edibles in original packaging with labels (proves legal purchase)\n- Respect neighbors and keep noise/smoke contained to your property\n- Dispose of cannabis waste properly (don't leave roaches or packaging)\n\n**❌ DON'Ts**\n\n- Don't smoke in 'smoking optional' rooms without explicit cannabis permission (tobacco ≠ cannabis)\n- Don't bring cannabis across state lines (federal crime, even from legal state to legal state)\n- Don't smoke and drive (DUI laws apply, zero tolerance in Colorado)\n- Don't assume Airbnb is 420-friendly without asking (fines are common)\n- Don't consume in hotel rooms that don't explicitly allow it (cleaning fees $200-500)\n- Don't smoke near playgrounds, schools, or public areas (illegal in Colorado)\n\n**LEGAL REMINDERS**\n\n- Colorado allows 1 oz possession for adults 21+\n- Public consumption is illegal (streets, parks, restaurants)\n- Driving under influence = DUI (same as alcohol)\n- Only purchase from licensed dispensaries (verify license on colorado.gov)\n- Keep cannabis in trunk when driving (not passenger area)\n- Never fly with cannabis (federal airports, TSA prohibition)",
+          variant: "warning"
+        }
+      ],
+      safetyTips: [
+        "Always verify cannabis smoking policy IN WRITING before booking any rental property",
+        "Contact Airbnb hosts directly with explicit cannabis questions—don't assume",
+        "Never transport cannabis across state lines, even between legal states (federal crime)",
+        "Don't smoke and drive—Colorado has strict DUI enforcement for cannabis",
+        "Keep cannabis in original dispensary packaging as proof of legal purchase",
+        "Respect neighbors and property—keep smoke and noise contained to avoid complaints",
+        "Budget platforms like Bud & Breakfast often beat Airbnb on value when factoring in clarity of cannabis policies",
+        "Book 3-6 months ahead for peak season (December-March ski season, May-October Red Rocks concerts)",
+        "Split costs with friends for luxury properties—Kushkations becomes affordable when shared",
+        "Compare Kushkations, Bud & Breakfast, and Airbnb for best value—prices vary widely by season"
+      ]
+    }
   }
 ];
 
@@ -692,20 +789,20 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
     className="group cursor-pointer h-full"
   >
     <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 flex flex-col">
-      <div className="h-48 sm:h-52 overflow-hidden relative">
+      <div className="h-48 sm:h-56 overflow-hidden relative">
         <img 
           src={post.image} 
           alt={post.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-        <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground font-semibold">
+        <Badge className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-accent text-accent-foreground font-semibold text-xs">
           {post.category}
         </Badge>
       </div>
 
-      <div className="p-5 sm:p-6 flex-1 flex flex-col">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+      <div className="p-4 sm:p-5 md:p-6 flex-1 flex flex-col">
+        <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground mb-2 sm:mb-3">
           <span className="flex items-center gap-1">
             <Calendar className="w-3 h-3" /> {post.date}
           </span>
@@ -714,12 +811,12 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
           </span>
         </div>
 
-        <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
+        <h3 className="text-base sm:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
           {post.title}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-3 sm:mb-4 flex-1">{post.excerpt}</p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
           {post.tags.slice(0, 2).map((tag: string) => (
             <Badge key={tag} variant="outline" className="text-xs bg-background/50">
               <Tag className="w-2.5 h-2.5 mr-1" /> {tag}
@@ -727,20 +824,18 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
           ))}
         </div>
 
-        <div className="border-t border-border/50 pt-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">{post.avatar}</span>
-            <div className="text-xs">
-              <p className="text-foreground font-medium">{post.author}</p>
-              <p className="text-muted-foreground">{post.date}</p>
-            </div>
-          </div>
-          <ArrowRight className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" />
+        <div className="border-t border-border/50 pt-3 sm:pt-4 flex items-center justify-between">
+          <span className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 sm:gap-2">
+            <span className="text-lg sm:text-xl">{post.avatar}</span>
+            {post.author}
+          </span>
+          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </Card>
   </motion.div>
 );
+
 
 /* ---------- ICON COMPONENT ---------- */
 const IconComponent = ({ name }: { name: string }) => {
@@ -753,6 +848,8 @@ const IconComponent = ({ name }: { name: string }) => {
     Plane: <Plane className="w-5 h-5 text-accent" />,
     AlertCircle: <AlertCircle className="w-5 h-5 text-red-400" />,
     Info: <Info className="w-5 h-5 text-accent" />,
+    TrendingUp: <TrendingUp className="w-5 h-5 text-accent" />,
+    Sparkles: <Sparkles className="w-5 h-5 text-accent" />,
   };
   return icons[name] || <Info className="w-5 h-5 text-accent" />;
 };
@@ -1085,7 +1182,7 @@ export default function Blog() {
                 </div>
 
                 {filteredPosts.length > 0 ? (
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {(activeCategory === "All" && !searchTerm ? filteredPosts.slice(1) : filteredPosts).map((post, i) => (
                       <motion.div
                         key={post.id}
