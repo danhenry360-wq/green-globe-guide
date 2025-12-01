@@ -109,26 +109,26 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "bonaire": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80", // Bonaire diving
   
   // ASIA
-  "thailand": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=600&q=80", // Thai temple
-  "japan": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80", // Tokyo temple
-  "south-korea": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&q=80", // Seoul palace
-  "china": "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=600&q=80", // Great Wall
+  "thailand": "/world-thailand.jpg", // Thai temple
+  "japan": "/world-japan.jpg", // Tokyo temple  
+  "south-korea": "/world-south-korea.jpg", // Seoul palace
+  "china": "/world-china.jpg", // Great Wall
   "hong-kong": "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=600&q=80", // HK skyline
   "macao": "https://images.unsplash.com/photo-1558976825-6b1b04c280e7?w=600&q=80", // Macau casino
   "taiwan": "https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?w=600&q=80", // Taipei 101
-  "india": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80", // Taj Mahal
+  "india": "/world-india.jpg", // Taj Mahal
   "nepal": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80", // Nepal temple
   "sri-lanka": "https://images.unsplash.com/photo-1586423702687-0e29e1a5e577?w=600&q=80", // Sri Lanka temple
   "bangladesh": "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=600&q=80", // Dhaka
   "pakistan": "https://images.unsplash.com/photo-1567605953151-97d4cabc82c4?w=600&q=80", // Lahore mosque
-  "indonesia": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80", // Bali temple
-  "malaysia": "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=600&q=80", // Petronas towers
-  "singapore": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80", // Marina Bay
-  "philippines": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80", // Palawan beach
-  "vietnam": "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=80", // Ha Long Bay
-  "cambodia": "https://images.unsplash.com/photo-1528127269322-539801943592?w=600&q=80", // Angkor Wat
+  "indonesia": "/world-indonesia.jpg", // Bali temple
+  "malaysia": "/world-malaysia.jpg", // Petronas towers
+  "singapore": "/world-singapore.jpg", // Marina Bay
+  "philippines": "/world-philippines.jpg", // Palawan beach
+  "vietnam": "/world-vietnam.jpg", // Ha Long Bay
+  "cambodia": "/world-cambodia.jpg", // Angkor Wat
   "laos": "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=600&q=80", // Laos temple
-  "myanmar": "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=600&q=80", // Bagan temples
+  "myanmar": "/world-myanmar.jpg", // Bagan temples
   "brunei": "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=80", // Sultan mosque
   "timor-leste": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80", // Timor beach
   
