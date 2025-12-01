@@ -351,6 +351,7 @@ export type Database = {
           dispensary_id: string
           id: string
           rating: number | null
+          rental_id: string | null
           reviewed_at: string | null
           reviewed_by: string | null
           status: Database["public"]["Enums"]["review_status"]
@@ -363,6 +364,7 @@ export type Database = {
           dispensary_id: string
           id?: string
           rating?: number | null
+          rental_id?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["review_status"]
@@ -375,6 +377,7 @@ export type Database = {
           dispensary_id?: string
           id?: string
           rating?: number | null
+          rental_id?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["review_status"]
@@ -387,6 +390,13 @@ export type Database = {
             columns: ["dispensary_id"]
             isOneToOne: false
             referencedRelation: "dispensaries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_rental_id_fkey"
+            columns: ["rental_id"]
+            isOneToOne: false
+            referencedRelation: "hotels"
             referencedColumns: ["id"]
           },
         ]
