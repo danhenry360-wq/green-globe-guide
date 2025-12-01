@@ -53,9 +53,8 @@ export const RentalReviewForm = ({ rentalId, userId, onReviewSubmitted, onCancel
           rating,
           title: title.trim() || null,
           content: content.trim(),
-          status: 'pending',
-          dispensary_id: null
-        } as any);
+          status: 'pending'
+        });
 
       if (error) throw error;
 

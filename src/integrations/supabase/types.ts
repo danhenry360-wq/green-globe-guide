@@ -387,7 +387,7 @@ export type Database = {
         Row: {
           content: string
           created_at: string | null
-          dispensary_id: string
+          dispensary_id: string | null
           id: string
           rating: number | null
           rental_id: string | null
@@ -400,7 +400,7 @@ export type Database = {
         Insert: {
           content: string
           created_at?: string | null
-          dispensary_id: string
+          dispensary_id?: string | null
           id?: string
           rating?: number | null
           rental_id?: string | null
@@ -413,7 +413,7 @@ export type Database = {
         Update: {
           content?: string
           created_at?: string | null
-          dispensary_id?: string
+          dispensary_id?: string | null
           id?: string
           rating?: number | null
           rental_id?: string | null
