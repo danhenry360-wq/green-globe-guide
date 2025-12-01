@@ -1,17 +1,52 @@
-import { useParams, useLocation, Navigate, Link } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { MapPin, Star, ExternalLink, CheckCircle2, Cigarette, Wind, Cookie, DollarSign, ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { RentalReviewsSection } from "@/components/RentalReviewsSection";
 import { HOTEL_DATA } from "@/data/hotel_data";
 import { Hotel } from "@/types/data";
+import { supabase } from "@/integrations/supabase/client";
+
+interface DatabaseHotel {
+  id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  is_420_friendly: boolean | null;
+  rating: number | null;
+  policies: string | null;
+  website: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  images: string[] | null;
+}
 
 const RentalDetail = () => {
   const { rentalSlug } = useParams<{ rentalSlug: string }>();
-  const location = useLocation();
+  const [dbHotel, setDbHotel] = useState<DatabaseHotel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Try to get rental data from navigation state first, then search in static data
-  const stateRental = location.state?.rentalData as Hotel | undefined;
+  // Fetch hotel from database first
+  useEffect(() => {
+    const fetchHotel = async () => {
+      if (!rentalSlug) return;
+      
+      const { data, error } = await supabase
+        .from('hotels')
+        .select('*')
+        .eq('slug', rentalSlug)
+        .maybeSingle();
+      
+      if (!error && data) {
+        setDbHotel(data);
+      }
+      setIsLoading(false);
+    };
+    
+    fetchHotel();
+  }, [rentalSlug]);
   
   // Search in static data by creating slug from name
   const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -26,7 +61,8 @@ const RentalDetail = () => {
     )
   ).find(hotel => createSlug(hotel.name) === rentalSlug);
 
-  const rental = stateRental || staticRental;
+  // Combine database and static data
+  const rental = staticRental;
 
   const renderRating = (rating: number) => {
     const stars = [];
@@ -45,42 +81,64 @@ const RentalDetail = () => {
     return stars;
   };
 
-  if (!rental) {
+  if (isLoading) {
+    return (
+      <>
+        <Navigation />
+        <main className="min-h-screen bg-background pt-20">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center justify-center py-16">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!rental && !dbHotel) {
     return <Navigate to="/hotels" replace />;
   }
 
-  const countryName = (rental as any).countryName || "USA";
-  const stateName = (rental as any).stateName || rental.state;
-  const affiliateLink = rental.affiliateLink || rental.website || "https://expedia.com/affiliate/w0G2SNm";
-  const description = rental.description || `${rental.name} is a premium 420-friendly accommodation offering a welcoming environment for cannabis enthusiasts. Located in ${rental.city}, ${stateName}, this property provides a comfortable and judgment-free stay for travelers.`;
-  const image = rental.image || "/dest-california.jpg";
+  const countryName = rental ? (rental as any).countryName || "USA" : "USA";
+  const stateName = rental ? (rental as any).stateName || rental.state : "CA";
+  const affiliateLink = rental?.affiliateLink || rental?.website || "https://expedia.com/affiliate/w0G2SNm";
+  const description = rental?.description || dbHotel?.policies || `${rental?.name || dbHotel?.name} is a premium 420-friendly accommodation offering a welcoming environment for cannabis enthusiasts.`;
+  const image = rental?.image || (dbHotel?.images?.[0]) || "/dest-california.jpg";
+  const displayName = rental?.name || dbHotel?.name || "";
+  const displayCity = rental?.city || "Sacramento";
+  const displayRating = rental?.rating || dbHotel?.rating || 4.0;
+  const displayPolicies = rental?.policies || dbHotel?.policies || "";
+  const displayPriceRange = rental?.priceRange || "$$";
+  const displayAddress = rental?.address || dbHotel?.address || "";
 
   return (
     <>
       <Helmet>
-        <title>{rental.name} - 420-Friendly Rental | BudQuest</title>
-        <meta name="description" content={`Book ${rental.name} in ${rental.city}, ${stateName}. ${rental.policies}. Verified 420-friendly accommodation.`} />
-        <meta property="og:title" content={`${rental.name} - 420-Friendly Rental`} />
-        <meta property="og:description" content={`Verified 420-friendly rental in ${rental.city}. ${rental.policies}`} />
+        <title>{displayName} - 420-Friendly Rental | BudQuest</title>
+        <meta name="description" content={`Book ${displayName} in ${displayCity}, ${stateName}. ${displayPolicies}. Verified 420-friendly accommodation.`} />
+        <meta property="og:title" content={`${displayName} - 420-Friendly Rental`} />
+        <meta property="og:description" content={`Verified 420-friendly rental in ${displayCity}. ${displayPolicies}`} />
         <meta property="og:type" content="website" />
         <link rel="canonical" href={`https://budquest.com/hotels/${rentalSlug}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LodgingBusiness",
-            "name": rental.name,
+            "name": displayName,
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": rental.city,
+              "addressLocality": displayCity,
               "addressRegion": stateName,
               "addressCountry": countryName
             },
             "aggregateRating": {
               "@type": "AggregateRating",
-              "ratingValue": rental.rating,
+              "ratingValue": displayRating,
               "bestRating": 5
             },
-            "priceRange": rental.priceRange
+            "priceRange": displayPriceRange
           })}
         </script>
       </Helmet>
@@ -103,19 +161,19 @@ const RentalDetail = () => {
         <section className="container mx-auto px-4 pb-8">
           <div className="max-w-4xl">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-4">
-              {rental.name}
+              {displayName}
             </h1>
             
             <div className="flex flex-wrap items-center gap-4 mb-4">
               <div className="flex items-center gap-1 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-accent" />
-                <span>{rental.city}, {stateName}</span>
+                <span>{displayCity}, {stateName}</span>
                 {countryName !== "USA" && <span className="text-muted-foreground/60">• {countryName}</span>}
               </div>
               
               <div className="flex items-center gap-1">
-                {renderRating(rental.rating)}
-                <span className="ml-1 text-sm text-muted-foreground">({rental.rating})</span>
+                {renderRating(displayRating)}
+                <span className="ml-1 text-sm text-muted-foreground">({displayRating})</span>
               </div>
             </div>
 
@@ -126,7 +184,7 @@ const RentalDetail = () => {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gold/20 text-gold border border-gold/30">
                 <DollarSign className="h-3.5 w-3.5" />
-                {rental.priceRange}
+                {displayPriceRange}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
                 420-Friendly
@@ -156,7 +214,7 @@ const RentalDetail = () => {
                 <div className="aspect-video w-full overflow-hidden">
                   <img
                     src={image}
-                    alt={rental.name}
+                    alt={displayName}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "/dest-california.jpg";
@@ -165,17 +223,27 @@ const RentalDetail = () => {
                 </div>
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-4">
-                    About {rental.name}
+                    About {displayName}
                   </h2>
                   <p className="text-muted-foreground leading-relaxed mb-4">
                     {description}
                   </p>
                   
+                  {/* Address */}
+                  {displayAddress && (
+                    <div className="flex items-start gap-2 mb-4">
+                      <MapPin className="h-4 w-4 text-accent mt-1" />
+                      <span className="text-sm text-muted-foreground">{displayAddress}</span>
+                    </div>
+                  )}
+                  
                   {/* Policy Highlights */}
-                  <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
-                    <h3 className="text-sm font-semibold text-accent mb-2">Policy Highlights</h3>
-                    <p className="text-sm text-muted-foreground">{rental.policies}</p>
-                  </div>
+                  {displayPolicies && (
+                    <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
+                      <h3 className="text-sm font-semibold text-accent mb-2">Policy Highlights</h3>
+                      <p className="text-sm text-muted-foreground">{displayPolicies}</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -184,37 +252,37 @@ const RentalDetail = () => {
                 <h2 className="text-xl font-semibold text-foreground mb-4">420 Amenities</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental.hasSmoking !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Cigarette className={`h-5 w-5 ${rental.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${rental?.hasSmoking !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Cigarette className={`h-5 w-5 ${rental?.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Smoking Allowed</p>
-                      <p className={`text-xs ${rental.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental.hasSmoking !== false ? 'Yes - Designated Areas' : 'Not Permitted'}
+                      <p className={`text-xs ${rental?.hasSmoking !== false ? 'text-green-400' : 'text-red-400'}`}>
+                        {rental?.hasSmoking !== false ? 'Yes - Designated Areas' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental.hasVaping !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Wind className={`h-5 w-5 ${rental.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${rental?.hasVaping !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Wind className={`h-5 w-5 ${rental?.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Vaping Allowed</p>
-                      <p className={`text-xs ${rental.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental.hasVaping !== false ? 'Yes - In Room' : 'Not Permitted'}
+                      <p className={`text-xs ${rental?.hasVaping !== false ? 'text-green-400' : 'text-red-400'}`}>
+                        {rental?.hasVaping !== false ? 'Yes - In Room' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <div className={`p-2 rounded-full ${rental.hasEdibles !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-                      <Cookie className={`h-5 w-5 ${rental.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`} />
+                    <div className={`p-2 rounded-full ${rental?.hasEdibles !== false ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                      <Cookie className={`h-5 w-5 ${rental?.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`} />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Edibles Friendly</p>
-                      <p className={`text-xs ${rental.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`}>
-                        {rental.hasEdibles !== false ? 'Yes - Welcome' : 'Not Permitted'}
+                      <p className={`text-xs ${rental?.hasEdibles !== false ? 'text-green-400' : 'text-red-400'}`}>
+                        {rental?.hasEdibles !== false ? 'Yes - Welcome' : 'Not Permitted'}
                       </p>
                     </div>
                   </div>
@@ -225,11 +293,16 @@ const RentalDetail = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Price Range</p>
-                      <p className="text-xs text-gold">{rental.priceRange}</p>
+                      <p className="text-xs text-gold">{displayPriceRange}</p>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Reviews Section - Only show if hotel exists in database */}
+              {dbHotel && (
+                <RentalReviewsSection rentalId={dbHotel.id} />
+              )}
             </div>
 
             {/* Sidebar - Right Side */}
@@ -241,8 +314,11 @@ const RentalDetail = () => {
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-accent mt-0.5" />
                     <div>
-                      <p className="text-foreground font-medium">{rental.city}, {stateName}</p>
+                      <p className="text-foreground font-medium">{displayCity}, {stateName}</p>
                       <p className="text-sm text-muted-foreground">{countryName}</p>
+                      {displayAddress && (
+                        <p className="text-sm text-muted-foreground mt-1">{displayAddress}</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -255,12 +331,12 @@ const RentalDetail = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Rating</span>
                     <div className="flex items-center gap-1">
-                      {renderRating(rental.rating)}
+                      {renderRating(displayRating)}
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Price Range</span>
-                    <span className="text-gold font-semibold">{rental.priceRange}</span>
+                    <span className="text-gold font-semibold">{displayPriceRange}</span>
                   </div>
                   <div className="pt-4 border-t border-border/50">
                     <a
