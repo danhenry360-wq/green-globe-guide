@@ -480,13 +480,13 @@ const Hotels = () => {
     },
   });
 
-  // Merge database hotels with static data
+  // Fetch ONLY database hotels (no static data)
   const DATA: CountryHotels[] = useMemo(() => {
-    if (!dbHotels || dbHotels.length === 0) return HOTEL_DATA;
+    if (!dbHotels || dbHotels.length === 0) return [];
     
     // Convert DB hotels to the format expected by the component
     const dbHotelsFormatted: Hotel[] = dbHotels.map((hotel, index) => ({
-      id: 9000 + index, // Generate numeric ID starting from 9000 to avoid conflicts
+      id: 9000 + index, // Generate numeric ID starting from 9000
       name: hotel.name,
       city: hotel.address?.split(',')[0]?.trim() || 'Unknown',
       state: hotel.address?.split(',')[1]?.trim() || 'Unknown',
@@ -525,8 +525,8 @@ const Hotels = () => {
       })),
     }));
 
-    // Merge with static data
-    return [...dbData, ...HOTEL_DATA];
+    // Return ONLY database hotels
+    return dbData;
   }, [dbHotels]);
 
   const [filters, setFilters] = useState<FilterState>({
