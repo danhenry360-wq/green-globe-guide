@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.track-affiliate-conversion]
 verify_jwt = false
+
+[functions.generate-bulk-blog]
+verify_jwt = true

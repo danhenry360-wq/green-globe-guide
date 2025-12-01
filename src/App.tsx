@@ -45,6 +45,7 @@ import AdminContacts from "./pages/AdminContacts";
 import AdminCountryImages from "./pages/AdminCountryImages";
 import AdminBlog from "./pages/AdminBlog";
 import AdminRevenue from "./pages/AdminRevenue";
+import AdminBulkBlog from "./pages/AdminBulkBlog";
 import BlogDetail from "./pages/BlogDetail";
 
 const queryClient = new QueryClient();
@@ -109,6 +110,7 @@ function App() {
               <Route path="/admin/contacts" element={<AdminContacts />} />
               <Route path="/admin/country-images" element={<AdminCountryImages />} />
               <Route path="/admin/blog" element={<AdminBlog />} />
+              <Route path="/admin/bulk-blog" element={<AdminBulkBlog />} />
 
               {/* 404 catch-all */}
               <Route path="*" element={<NotFound />} />
