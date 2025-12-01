@@ -74,12 +74,12 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "colombia": "https://images.unsplash.com/photo-1533699224246-a1e9a5bc8bfb?w=600&q=80", // Cartagena
   "brazil": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80", // Rio Christ statue
   "peru": "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&q=80", // Machu Picchu
-  "ecuador": "https://images.unsplash.com/photo-1570442296287-6e8ba16d0b2e?w=600&q=80", // Ecuador highlands
+  "ecuador": "/world-ecuador.jpg", // Ecuador highlands
   "bolivia": "https://images.unsplash.com/photo-1591133524085-f1a61c1f47ac?w=600&q=80", // Salt flats
   "paraguay": "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=600&q=80", // Asuncion
-  "venezuela": "https://images.unsplash.com/photo-1568291607791-6a26c2de9e08?w=600&q=80", // Angel Falls
-  "guyana": "https://images.unsplash.com/photo-1593882898826-89a4e9c2a54a?w=600&q=80", // Guyana jungle
-  "suriname": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80", // Paramaribo
+  "venezuela": "/world-venezuela.jpg", // Angel Falls
+  "guyana": "/world-guyana.jpg", // Guyana jungle
+  "suriname": "/world-suriname.jpg", // Paramaribo
   "french-guiana": "https://images.unsplash.com/photo-1604761490413-ee1c76db3c12?w=600&q=80", // Space center
   
   // CARIBBEAN
