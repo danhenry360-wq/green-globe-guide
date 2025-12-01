@@ -46,10 +46,17 @@ const adminModules: AdminModule[] = [
   },
   {
     title: "Dispensaries",
-    description: "Add, edit, and manage dispensary listings with images and details.",
+    description: "Add, edit, and manage dispensary listings with verified badges.",
     icon: MapPin,
     href: "/admin/dispensaries",
     color: "text-purple-400",
+  },
+  {
+    title: "Hotels",
+    description: "Manage 420-friendly hotel listings with verified badges.",
+    icon: Building2,
+    href: "/admin/hotels",
+    color: "text-amber-400",
   },
   {
     title: "Review Moderation",
@@ -63,16 +70,6 @@ const adminModules: AdminModule[] = [
     description: "View users and manage admin roles.",
     icon: Users,
     href: "/admin/users",
-    color: "text-amber-400",
-  },
-];
-
-const upcomingModules: AdminModule[] = [
-  {
-    title: "Hotels",
-    description: "Manage 420-friendly hotel listings.",
-    icon: Building2,
-    href: "#",
     color: "text-amber-400",
   },
 ];
@@ -257,35 +254,6 @@ const AdminDashboard = () => {
                         <CardTitle className="text-lg">{module.title}</CardTitle>
                       </div>
                       <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>{module.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Upcoming Modules */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h2 className="text-xl font-semibold mb-4 text-muted-foreground">Coming Soon</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {upcomingModules.map((module) => (
-                <Card
-                  key={module.title}
-                  className="bg-secondary/20 border-border/30 opacity-60"
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg bg-secondary/30 ${module.color}`}>
-                        <module.icon className="w-5 h-5" />
-                      </div>
-                      <CardTitle className="text-lg text-muted-foreground">{module.title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
