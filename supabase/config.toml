@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.submit-contact]
 verify_jwt = false
+
+[functions.track-affiliate-click]
+verify_jwt = false
+
+[functions.track-affiliate-conversion]
+verify_jwt = false
