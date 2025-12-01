@@ -37,68 +37,74 @@ export const ReviewsSection = ({ dispensaryId }: ReviewsSectionProps) => {
   const fetchReviews = async () => {
     setLoading(true);
     
-    // Fetch approved reviews (visible to everyone)
-    const { data: approvedData, error: approvedError } = await supabase
-      .from('reviews')
-      .select(`
-        id,
-        rating,
-        title,
-        content,
-        created_at,
-        user_id,
-        status,
-        profiles!reviews_user_id_fkey (
-          display_name
-        )
-      `)
-      .eq('dispensary_id', dispensaryId)
-      .eq('status', 'approved')
-      .order('created_at', { ascending: false });
-    
-    if (!approvedError && approvedData) {
-      const transformedData = approvedData.map(review => ({
-        ...review,
-        status: review.status as 'pending' | 'approved' | 'rejected',
-        profiles: Array.isArray(review.profiles) ? review.profiles[0] : review.profiles
-      }));
-      setReviews(transformedData);
-    }
-
-    // If user is logged in, also fetch their pending reviews for this dispensary
-    if (user) {
-      const { data: pendingData, error: pendingError } = await supabase
+    try {
+      // Fetch approved reviews (visible to everyone)
+      const { data: approvedData, error: approvedError } = await supabase
         .from('reviews')
-        .select(`
-          id,
-          rating,
-          title,
-          content,
-          created_at,
-          user_id,
-          status,
-          profiles!reviews_user_id_fkey (
-            display_name
-          )
-        `)
+        .select('id, rating, title, content, created_at, user_id, status')
         .eq('dispensary_id', dispensaryId)
-        .eq('user_id', user.id)
-        .eq('status', 'pending')
+        .eq('status', 'approved')
         .order('created_at', { ascending: false });
 
-      if (!pendingError && pendingData) {
-        const transformedPending = pendingData.map(review => ({
-          ...review,
-          status: review.status as 'pending' | 'approved' | 'rejected',
-          profiles: Array.isArray(review.profiles) ? review.profiles[0] : review.profiles
-        }));
-        setUserPendingReviews(transformedPending);
+      if (approvedError) throw approvedError;
+      
+      // Fetch profiles for approved reviews
+      const approvedUserIds = approvedData?.map(r => r.user_id) || [];
+      let approvedProfilesMap: Record<string, { display_name: string | null }> = {};
+      
+      if (approvedUserIds.length > 0) {
+        const { data: profiles } = await supabase
+          .from('profiles')
+          .select('id, display_name')
+          .in('id', approvedUserIds);
+        
+        profiles?.forEach(p => {
+          approvedProfilesMap[p.id] = { display_name: p.display_name };
+        });
       }
-    } else {
-      setUserPendingReviews([]);
+      
+      const approvedWithProfiles = approvedData?.map(r => ({
+        ...r,
+        status: r.status as 'pending' | 'approved' | 'rejected',
+        profiles: approvedProfilesMap[r.user_id] || null
+      })) || [];
+      
+      setReviews(approvedWithProfiles);
+
+      // If user is logged in, also fetch their pending reviews for this dispensary
+      if (user) {
+        const { data: pendingData, error: pendingError } = await supabase
+          .from('reviews')
+          .select('id, rating, title, content, created_at, user_id, status')
+          .eq('dispensary_id', dispensaryId)
+          .eq('user_id', user.id)
+          .eq('status', 'pending')
+          .order('created_at', { ascending: false });
+
+        if (pendingError) throw pendingError;
+        
+        // Get profile for current user
+        const { data: userProfile } = await supabase
+          .from('profiles')
+          .select('id, display_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        
+        const pendingWithProfiles = pendingData?.map(r => ({
+          ...r,
+          status: r.status as 'pending' | 'approved' | 'rejected',
+          profiles: userProfile || null
+        })) || [];
+        
+        setUserPendingReviews(pendingWithProfiles);
+      } else {
+        setUserPendingReviews([]);
+      }
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   useEffect(() => {
