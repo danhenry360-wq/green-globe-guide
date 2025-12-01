@@ -12,7 +12,7 @@ import {
   Sparkles, Tag, Info, TrendingUp, Shield, Users,
   MapPin, Building2, AlertCircle, Scale, Plane
 } from "lucide-react";
-import greenGlobeLogo from "@/assets/green-globe-logo.png";
+import greenGlobeLogo from "@/assets/budquest-logo.png";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 const BLOG_POSTS = [
@@ -1037,7 +1037,8 @@ export default function Blog() {
   }, [searchParams, setSearchParams]);
 
   const filteredPosts = useMemo(() => {
-    return BLOG_POSTS.filter((post) => {
+    // First filter posts based on search and category
+    const filtered = BLOG_POSTS.filter((post) => {
       const matchesSearch =
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -1046,6 +1047,13 @@ export default function Blog() {
       const matchesCategory = activeCategory === "All" || post.category === activeCategory;
 
       return matchesSearch && matchesCategory;
+    });
+
+    // Then sort by date (newest first)
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime(); // Descending order (newest first)
     });
   }, [searchTerm, activeCategory]);
 
