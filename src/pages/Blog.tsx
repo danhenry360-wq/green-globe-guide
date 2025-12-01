@@ -1020,8 +1020,10 @@ export default function Blog() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeArticle, setActiveArticle] = useState<typeof BLOG_POSTS[0] | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const categories = ["All", "City Guide", "Legal Updates", "Education"];
+  const POSTS_PER_PAGE = 9;
 
   // Auto-open article from URL param
   useEffect(() => {
@@ -1056,6 +1058,23 @@ export default function Blog() {
       return dateB.getTime() - dateA.getTime(); // Descending order (newest first)
     });
   }, [searchTerm, activeCategory]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, activeCategory]);
+
+  // Calculate pagination values
+  const postsToShow = activeCategory === "All" && !searchTerm ? filteredPosts.slice(1) : filteredPosts;
+  const totalPages = Math.ceil(postsToShow.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const currentPosts = postsToShow.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -1191,19 +1210,86 @@ export default function Blog() {
                 </div>
 
                 {filteredPosts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {(activeCategory === "All" && !searchTerm ? filteredPosts.slice(1) : filteredPosts).map((post, i) => (
-                      <motion.div
-                        key={post.id}
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                      {currentPosts.map((post, i) => (
+                        <motion.div
+                          key={post.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                        >
+                          <ArticleCard post={post} onClick={() => setActiveArticle(post)} />
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* PAGINATION */}
+                    {totalPages > 1 && (
+                      <motion.div 
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="flex items-center justify-center gap-2 mt-12"
                       >
-                        <ArticleCard post={post} onClick={() => setActiveArticle(post)} />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          disabled={currentPage === 1}
+                          className="rounded-full px-4"
+                        >
+                          Previous
+                        </Button>
+
+                        <div className="flex items-center gap-1">
+                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                            // Show first page, last page, current page, and pages around current
+                            const showPage = 
+                              page === 1 || 
+                              page === totalPages || 
+                              (page >= currentPage - 1 && page <= currentPage + 1);
+                            
+                            const showEllipsis = 
+                              (page === currentPage - 2 && currentPage > 3) ||
+                              (page === currentPage + 2 && currentPage < totalPages - 2);
+
+                            if (showEllipsis) {
+                              return <span key={page} className="px-2 text-muted-foreground">...</span>;
+                            }
+
+                            if (!showPage) return null;
+
+                            return (
+                              <Button
+                                key={page}
+                                variant={currentPage === page ? "default" : "outline"}
+                                size="sm"
+                                onClick={() => handlePageChange(page)}
+                                className={`rounded-full w-10 h-10 p-0 ${
+                                  currentPage === page 
+                                    ? "bg-accent text-accent-foreground" 
+                                    : "hover:border-accent/50"
+                                }`}
+                              >
+                                {page}
+                              </Button>
+                            );
+                          })}
+                        </div>
+
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                          className="rounded-full px-4"
+                        >
+                          Next
+                        </Button>
                       </motion.div>
-                    ))}
-                  </div>
+                    )}
+                  </>
                 ) : (
                   <div className="text-center py-16">
                     <div className="text-6xl mb-4">🔍</div>
