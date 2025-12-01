@@ -44,6 +44,7 @@ import AdminHotels from "./pages/AdminHotels";
 import AdminContacts from "./pages/AdminContacts";
 import AdminCountryImages from "./pages/AdminCountryImages";
 import AdminBlog from "./pages/AdminBlog";
+import BlogDetail from "./pages/BlogDetail";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
               <Route path="/hotels" element={<Hotels />} />

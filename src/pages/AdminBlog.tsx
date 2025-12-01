@@ -28,6 +28,8 @@ import {
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { toast } from "sonner";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -496,12 +498,20 @@ const AdminBlog = () => {
                       {/* Introduction */}
                       <div className="space-y-2 md:col-span-2">
                         <Label htmlFor="introduction">Introduction</Label>
-                        <Textarea
-                          id="introduction"
+                        <ReactQuill
                           value={formData.introduction}
-                          onChange={(e) => setFormData(prev => ({ ...prev, introduction: e.target.value }))}
-                          placeholder="Opening paragraph"
-                          rows={4}
+                          onChange={(value) => setFormData(prev => ({ ...prev, introduction: value }))}
+                          className="bg-background rounded-md"
+                          theme="snow"
+                          modules={{
+                            toolbar: [
+                              [{ 'header': [1, 2, 3, false] }],
+                              ['bold', 'italic', 'underline', 'strike'],
+                              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                              ['link'],
+                              ['clean']
+                            ]
+                          }}
                         />
                       </div>
 
