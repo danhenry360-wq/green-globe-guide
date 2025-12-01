@@ -30,17 +30,23 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
   const [userPendingReviews, setUserPendingReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{ id: string } | null>(null);
+  const [currentUser, setCurrentUser] = useState<{ id: string; emailVerified: boolean } | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      setCurrentUser(user ? { id: user.id } : null);
+      setCurrentUser(user ? { 
+        id: user.id, 
+        emailVerified: !!user.email_confirmed_at 
+      } : null);
     };
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setCurrentUser(session?.user ? { id: session.user.id } : null);
+      setCurrentUser(session?.user ? { 
+        id: session.user.id,
+        emailVerified: !!session.user.email_confirmed_at
+      } : null);
     });
 
     return () => subscription.unsubscribe();
@@ -166,12 +172,28 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
           </div>
         ) : showReviewForm && currentUser ? (
-          <RentalReviewForm
-            rentalId={rentalId}
-            userId={currentUser.id}
-            onReviewSubmitted={handleReviewSubmitted}
-            onCancel={() => setShowReviewForm(false)}
-          />
+          currentUser.emailVerified ? (
+            <RentalReviewForm
+              rentalId={rentalId}
+              userId={currentUser.id}
+              onReviewSubmitted={handleReviewSubmitted}
+              onCancel={() => setShowReviewForm(false)}
+            />
+          ) : (
+            <div className="text-center py-8 px-4 bg-gold/5 border border-gold/30 rounded-lg">
+              <p className="text-sm sm:text-base text-foreground font-semibold mb-2">Email Verification Required</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+                Please verify your email address before submitting a review. Check your inbox for the 6-digit verification code.
+              </p>
+              <Button
+                onClick={() => setShowReviewForm(false)}
+                variant="outline"
+                className="border-accent/30 text-accent hover:bg-accent/10"
+              >
+                Close
+              </Button>
+            </div>
+          )
         ) : reviews.length === 0 && userPendingReviews.length === 0 ? (
           <div className="text-center py-8 px-4">
             <p className="text-sm sm:text-base text-muted-foreground mb-4">No reviews yet. Be the first to share your experience!</p>
