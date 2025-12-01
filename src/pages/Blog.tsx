@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -10,9 +10,11 @@ import { Input } from "@/components/ui/input";
 import {
   Search, ArrowLeft, Calendar, Clock, Share2, ArrowRight,
   Sparkles, Tag, Info, TrendingUp, Shield, Users,
-  MapPin, Building2, AlertCircle, Scale, Plane
+  MapPin, Building2, AlertCircle, Scale, Plane, Loader2
 } from "lucide-react";
 import greenGlobeLogo from "@/assets/global-canna-pass-logo.png";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
@@ -1286,45 +1288,46 @@ export default function Blog() {
             {filteredPosts.length > 0 && activeCategory === "All" && !searchTerm && (
               <section className="py-8 px-4">
                 <div className="container mx-auto">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    onClick={() => setActiveArticle(filteredPosts[0])}
-                    className="cursor-pointer group"
-                  >
-                    <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all">
-                      <div className="grid md:grid-cols-2 gap-0">
-                        <div className="h-64 md:h-80 overflow-hidden relative">
-                          <img 
-                            src={filteredPosts[0].image} 
-                            alt={filteredPosts[0].title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/50 md:block hidden" />
-                        </div>
-                        <div className="p-6 sm:p-8 flex flex-col justify-center">
-                          <Badge className="w-fit mb-4 bg-accent/10 text-accent border-accent/30">
-                            <TrendingUp className="w-3 h-3 mr-1" /> Featured
-                          </Badge>
-                          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors">
-                            {filteredPosts[0].title}
-                          </h2>
-                          <p className="text-muted-foreground mb-4 line-clamp-2">
-                            {filteredPosts[0].excerpt}
-                          </p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4" /> {filteredPosts[0].date}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" /> {filteredPosts[0].readTime}
-                            </span>
+                  <Link to={`/blog/${filteredPosts[0].id}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      className="cursor-pointer group"
+                    >
+                      <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all">
+                        <div className="grid md:grid-cols-2 gap-0">
+                          <div className="h-64 md:h-80 overflow-hidden relative">
+                            <img 
+                              src={filteredPosts[0].image} 
+                              alt={filteredPosts[0].title}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/50 md:block hidden" />
+                          </div>
+                          <div className="p-6 sm:p-8 flex flex-col justify-center">
+                            <Badge className="w-fit mb-4 bg-accent/10 text-accent border-accent/30">
+                              <TrendingUp className="w-3 h-3 mr-1" /> Featured
+                            </Badge>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors">
+                              {filteredPosts[0].title}
+                            </h2>
+                            <p className="text-muted-foreground mb-4 line-clamp-2">
+                              {filteredPosts[0].excerpt}
+                            </p>
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="w-4 h-4" /> {filteredPosts[0].date}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-4 h-4" /> {filteredPosts[0].readTime}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Card>
-                  </motion.div>
+                      </Card>
+                    </motion.div>
+                  </Link>
                 </div>
               </section>
             )}
