@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       blog_posts: {
         Row: {
+          affiliate_link: string | null
+          affiliate_link_text: string | null
           author_avatar: string | null
           author_name: string
           category: string
@@ -27,6 +29,8 @@ export type Database = {
           image_url: string
           published_at: string | null
           read_time: string | null
+          related_dispensary_ids: string[] | null
+          related_hotel_ids: string[] | null
           slug: string
           status: string
           subtitle: string | null
@@ -35,6 +39,8 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          affiliate_link?: string | null
+          affiliate_link_text?: string | null
           author_avatar?: string | null
           author_name?: string
           category: string
@@ -46,6 +52,8 @@ export type Database = {
           image_url: string
           published_at?: string | null
           read_time?: string | null
+          related_dispensary_ids?: string[] | null
+          related_hotel_ids?: string[] | null
           slug: string
           status?: string
           subtitle?: string | null
@@ -54,6 +62,8 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          affiliate_link?: string | null
+          affiliate_link_text?: string | null
           author_avatar?: string | null
           author_name?: string
           category?: string
@@ -65,6 +75,8 @@ export type Database = {
           image_url?: string
           published_at?: string | null
           read_time?: string | null
+          related_dispensary_ids?: string[] | null
+          related_hotel_ids?: string[] | null
           slug?: string
           status?: string
           subtitle?: string | null
