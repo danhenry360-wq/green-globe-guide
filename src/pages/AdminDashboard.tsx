@@ -19,7 +19,9 @@ import {
   Globe,
   Mail,
   FileText,
-  DollarSign
+  DollarSign,
+  Sparkles,
+  Image
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -83,18 +85,25 @@ const adminModules: AdminModule[] = [
     color: "text-pink-400",
   },
   {
-    title: "Country Images",
-    description: "Upload and manage unique images for Asian and European countries.",
-    icon: Settings,
-    href: "/admin/country-images",
-    color: "text-emerald-400",
-  },
-  {
     title: "Blog Posts",
     description: "Create and manage blog articles with images and rich content.",
     icon: FileText,
     href: "/admin/blog",
     color: "text-indigo-400",
+  },
+  {
+    title: "AI Bulk Generator",
+    description: "Generate multiple destination guides at once using AI.",
+    icon: Sparkles,
+    href: "/admin/bulk-blog",
+    color: "text-violet-400",
+  },
+  {
+    title: "Country Images",
+    description: "Upload and manage unique images for Asian and European countries.",
+    icon: Image,
+    href: "/admin/country-images",
+    color: "text-emerald-400",
   },
   {
     title: "Revenue Dashboard",
