@@ -52,6 +52,66 @@ export type Database = {
           },
         ]
       }
+      affiliate_conversions: {
+        Row: {
+          blog_post_id: string
+          booking_amount: number | null
+          booking_id: string | null
+          click_id: string | null
+          commission_amount: number | null
+          commission_rate: number | null
+          converted_at: string
+          customer_email: string | null
+          id: string
+          platform: string
+          status: string
+          webhook_data: Json | null
+        }
+        Insert: {
+          blog_post_id: string
+          booking_amount?: number | null
+          booking_id?: string | null
+          click_id?: string | null
+          commission_amount?: number | null
+          commission_rate?: number | null
+          converted_at?: string
+          customer_email?: string | null
+          id?: string
+          platform: string
+          status?: string
+          webhook_data?: Json | null
+        }
+        Update: {
+          blog_post_id?: string
+          booking_amount?: number | null
+          booking_id?: string | null
+          click_id?: string | null
+          commission_amount?: number | null
+          commission_rate?: number | null
+          converted_at?: string
+          customer_email?: string | null
+          id?: string
+          platform?: string
+          status?: string
+          webhook_data?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "affiliate_conversions_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "affiliate_conversions_click_id_fkey"
+            columns: ["click_id"]
+            isOneToOne: false
+            referencedRelation: "affiliate_clicks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           affiliate_link: string | null
