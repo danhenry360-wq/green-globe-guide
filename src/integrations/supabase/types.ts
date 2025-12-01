@@ -52,6 +52,42 @@ export type Database = {
           },
         ]
       }
+      contact_submissions: {
+        Row: {
+          category: string
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          responded_at: string | null
+          status: string | null
+          subject: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          responded_at?: string | null
+          status?: string | null
+          subject: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          responded_at?: string | null
+          status?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
       countries: {
         Row: {
           age_limit: number | null
