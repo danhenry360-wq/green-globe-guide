@@ -437,16 +437,12 @@ const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
                 </div>
               </div>
 
-              {/* Book Now Button */}
-              <a
-                href={rental.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
+              {/* View Details Button */}
+              <button
                 className="inline-flex items-center justify-center gap-1 text-sm font-medium text-white bg-green-400 hover:bg-green-500 transition-colors px-4 py-2 rounded-lg shrink-0"
               >
-                Book <ExternalLink className="w-4 h-4" />
-              </a>
+                View Details
+              </button>
             </div>
 
             {/* Policy Section */}
