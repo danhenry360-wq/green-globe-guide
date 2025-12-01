@@ -12,7 +12,7 @@ import {
   Sparkles, Tag, Info, TrendingUp, Shield, Users,
   MapPin, Building2, AlertCircle, Scale, Plane
 } from "lucide-react";
-import greenGlobeLogo from "@/assets/budquest-logo.png";
+import greenGlobeLogo from "@/assets/global-canna-pass-logo.png";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
