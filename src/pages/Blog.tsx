@@ -15,7 +15,7 @@ import {
 import greenGlobeLogo from "@/assets/budquest-logo.png";
 
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
-const BLOG_POSTS = [
+export const BLOG_POSTS = [
   {
     id: "amsterdam-vs-california-dispensaries",
     title: "Amsterdam Coffee Shops vs California Dispensaries: A Complete Comparison",
