@@ -19,6 +19,7 @@ import {
   MessageSquare,
   User,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -165,6 +166,16 @@ const AdminContacts = () => {
       <Navigation />
 
       <div className="container mx-auto px-4 pt-24 pb-16">
+        {/* Back Navigation */}
+        <Button
+          variant="ghost"
+          onClick={() => navigate("/admin")}
+          className="mb-4 gap-2 text-muted-foreground hover:text-accent"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Button>
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">

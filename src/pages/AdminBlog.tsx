@@ -23,7 +23,8 @@ import {
   Calendar,
   Tag,
   Save,
-  X
+  X,
+  ArrowLeft
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -392,6 +393,16 @@ const AdminBlog = () => {
         <Navigation />
 
         <div className="container mx-auto max-w-7xl px-4 pt-24 pb-12">
+          {/* Back Navigation */}
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/admin")}
+            className="mb-4 gap-2 text-muted-foreground hover:text-accent"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </Button>
+
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
