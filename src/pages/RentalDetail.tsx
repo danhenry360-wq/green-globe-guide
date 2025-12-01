@@ -52,7 +52,7 @@ const RentalDetail = () => {
   // Search in static data by creating slug from name
   const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   
-  const staticRental = HOTEL_DATA.flatMap(country => 
+  const allStaticRentals = HOTEL_DATA.flatMap(country => 
     country.states.flatMap(state => 
       state.hotels.map(hotel => ({
         ...hotel,
@@ -60,10 +60,15 @@ const RentalDetail = () => {
         stateName: state.stateName
       }))
     )
-  ).find(hotel => createSlug(hotel.name) === rentalSlug);
-
-  // Prefer database data over static data
-  const rental = staticRental;
+  );
+  
+  // Try matching by URL slug first
+  let rental = allStaticRentals.find(hotel => createSlug(hotel.name) === rentalSlug);
+  
+  // If database hotel exists but no static match by slug, try matching by name
+  if (dbHotel && !rental) {
+    rental = allStaticRentals.find(hotel => createSlug(hotel.name) === createSlug(dbHotel.name));
+  }
 
   const renderRating = (rating: number) => {
     const stars = [];
