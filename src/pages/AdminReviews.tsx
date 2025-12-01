@@ -12,7 +12,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
-import { Star, Check, X, Loader2, Shield, Clock, CheckCircle, XCircle, Trash2, Filter, BarChart3, TrendingUp, Users, MessageSquare } from 'lucide-react';
+import { 
+  Star, Check, X, Loader2, Shield, Clock, CheckCircle, XCircle, Trash2, Filter, BarChart3, TrendingUp, Users, MessageSquare, ArrowLeft 
+} from 'lucide-react';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 
 interface Review {
@@ -386,6 +388,16 @@ const AdminReviews = () => {
         
         <main className="pt-24 pb-20 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
+            {/* Back Navigation */}
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/admin")}
+              className="mb-4 gap-2 text-muted-foreground hover:text-accent"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <Shield className="w-8 h-8 text-accent" />
