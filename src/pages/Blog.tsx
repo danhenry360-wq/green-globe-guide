@@ -1070,11 +1070,33 @@ export default function Blog() {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
   const currentPosts = postsToShow.slice(startIndex, endIndex);
+  const totalResults = postsToShow.length;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 400, behavior: 'smooth' });
   };
+
+  // Keyboard navigation for pages
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input or if article detail is open
+      if (activeArticle) return;
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+
+      if (e.key === 'ArrowLeft' && currentPage > 1) {
+        e.preventDefault();
+        handlePageChange(currentPage - 1);
+      } else if (e.key === 'ArrowRight' && currentPage < totalPages) {
+        e.preventDefault();
+        handlePageChange(currentPage + 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage, totalPages, activeArticle]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -1200,13 +1222,25 @@ export default function Blog() {
             {/* ARTICLES GRID */}
             <section className="py-8 sm:py-12 px-4">
               <div className="container mx-auto">
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
                     {activeCategory === "All" ? "Latest Articles" : activeCategory}
                   </h2>
-                  <span className="text-muted-foreground text-sm">
-                    {filteredPosts.length} article{filteredPosts.length !== 1 ? "s" : ""}
-                  </span>
+                  <div className="flex flex-col items-start sm:items-end gap-1">
+                    <span className="text-muted-foreground text-sm">
+                      {totalResults > 0 && (
+                        <>
+                          Showing {startIndex + 1}-{Math.min(endIndex, totalResults)} of {totalResults} article{totalResults !== 1 ? "s" : ""}
+                        </>
+                      )}
+                      {totalResults === 0 && "No articles"}
+                    </span>
+                    {totalPages > 1 && (
+                      <span className="text-xs text-muted-foreground/70">
+                        Use ← → keys to navigate pages
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {filteredPosts.length > 0 ? (
