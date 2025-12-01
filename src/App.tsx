@@ -33,6 +33,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminCountryLaws from "./pages/AdminCountryLaws";
 import AdminDispensaries from "./pages/AdminDispensaries";
 import AdminHotels from "./pages/AdminHotels";
+import AdminContacts from "./pages/AdminContacts";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Disclaimer from "./pages/Disclaimer";
@@ -75,6 +76,7 @@ const App = () => (
           <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
           <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
           <Route path="/admin/hotels" element={<AdminHotels />} />
+          <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/disclaimer" element={<Disclaimer />} />

@@ -16,7 +16,8 @@ import {
   ArrowRight,
   Settings,
   Users,
-  Globe
+  Globe,
+  Mail
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -71,6 +72,13 @@ const adminModules: AdminModule[] = [
     icon: Users,
     href: "/admin/users",
     color: "text-amber-400",
+  },
+  {
+    title: "Contact Submissions",
+    description: "View and respond to contact form submissions from users.",
+    icon: Mail,
+    href: "/admin/contacts",
+    color: "text-pink-400",
   },
 ];
 

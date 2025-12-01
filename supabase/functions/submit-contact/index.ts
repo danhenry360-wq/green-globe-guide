@@ -55,6 +55,28 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
+    // Rate limiting: Check submissions from this email in the last hour
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { data: recentSubmissions, error: checkError } = await supabaseAdmin
+      .from("contact_submissions")
+      .select("id")
+      .eq("email", email.toLowerCase())
+      .gte("created_at", oneHourAgo);
+
+    if (checkError) {
+      console.error("Error checking rate limit:", checkError);
+    }
+
+    if (recentSubmissions && recentSubmissions.length >= 3) {
+      console.log(`Rate limit exceeded for email: ${email}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Too many submissions. Please wait an hour before submitting again." 
+        }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     // Insert contact submission into database
     const { data: submission, error: dbError } = await supabaseAdmin
       .from("contact_submissions")
