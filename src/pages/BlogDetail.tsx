@@ -337,7 +337,20 @@ const BlogDetail = () => {
                 <p className="text-muted-foreground mb-4">
                   Get the best deals on accommodations and experiences
                 </p>
-                <a href={dbPost.affiliate_link} target="_blank" rel="noopener noreferrer">
+                <a 
+                  href={dbPost.affiliate_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={async () => {
+                    try {
+                      await supabase.functions.invoke('track-affiliate-click', {
+                        body: { blog_post_id: dbPost.id }
+                      });
+                    } catch (error) {
+                      console.error('Error tracking click:', error);
+                    }
+                  }}
+                >
                   <Button size="lg" className="bg-gold hover:bg-gold/90 text-black font-semibold">
                     {dbPost.affiliate_link_text || "Book Now"}
                   </Button>

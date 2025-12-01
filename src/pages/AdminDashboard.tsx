@@ -18,7 +18,8 @@ import {
   Users,
   Globe,
   Mail,
-  FileText
+  FileText,
+  DollarSign
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -94,6 +95,13 @@ const adminModules: AdminModule[] = [
     icon: FileText,
     href: "/admin/blog",
     color: "text-indigo-400",
+  },
+  {
+    title: "Revenue Dashboard",
+    description: "Track affiliate link performance and conversion rates.",
+    icon: DollarSign,
+    href: "/admin/revenue",
+    color: "text-gold",
   },
 ];
 
