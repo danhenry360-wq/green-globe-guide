@@ -149,13 +149,13 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
 
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-accent/20">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl font-semibold text-foreground">Guest Reviews</CardTitle>
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <CardTitle className="text-lg sm:text-xl font-semibold text-foreground">Guest Reviews</CardTitle>
         <Button
           onClick={handleWriteReview}
           variant="outline"
           size="sm"
-          className="border-accent/30 text-accent hover:bg-accent/10"
+          className="w-full sm:w-auto border-accent/30 text-accent hover:bg-accent/10"
         >
           Write a Review
         </Button>
@@ -173,11 +173,11 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
             onCancel={() => setShowReviewForm(false)}
           />
         ) : reviews.length === 0 && userPendingReviews.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground mb-4">No reviews yet. Be the first to share your experience!</p>
+          <div className="text-center py-8 px-4">
+            <p className="text-sm sm:text-base text-muted-foreground mb-4">No reviews yet. Be the first to share your experience!</p>
             <Button
               onClick={handleWriteReview}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground"
+              className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground"
             >
               Write the First Review
             </Button>
@@ -188,41 +188,41 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
             {userPendingReviews.map((review) => (
               <div
                 key={review.id}
-                className="border border-gold/30 bg-gold/5 rounded-lg p-4"
+                className="border border-gold/30 bg-gold/5 rounded-lg p-3 sm:p-4"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <div className="flex-shrink-0">
                     {review.profiles?.avatar_url ? (
                       <img
                         src={review.profiles.avatar_url}
                         alt="User"
-                        className="h-10 w-10 rounded-full object-cover"
+                        className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center">
-                        <User className="h-5 w-5 text-accent" />
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-accent/20 flex items-center justify-center">
+                        <User className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-foreground">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                      <span className="font-medium text-sm sm:text-base text-foreground truncate">
                         {review.profiles?.display_name || 'Anonymous'}
                       </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-gold/20 text-gold">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-gold/20 text-gold self-start">
                         Pending Approval
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <div className="flex">{renderStars(review.rating)}</div>
                       <span className="text-xs text-muted-foreground">
                         {review.created_at && new Date(review.created_at).toLocaleDateString()}
                       </span>
                     </div>
                     {review.title && (
-                      <h4 className="font-medium text-foreground mb-1">{review.title}</h4>
+                      <h4 className="font-medium text-sm sm:text-base text-foreground mb-1">{review.title}</h4>
                     )}
-                    <p className="text-sm text-muted-foreground">{review.content}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground break-words">{review.content}</p>
                   </div>
                 </div>
               </div>
@@ -232,38 +232,38 @@ export const RentalReviewsSection = ({ rentalId }: RentalReviewsSectionProps) =>
             {reviews.map((review) => (
               <div
                 key={review.id}
-                className="border border-border/30 rounded-lg p-4"
+                className="border border-border/30 rounded-lg p-3 sm:p-4"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <div className="flex-shrink-0">
                     {review.profiles?.avatar_url ? (
                       <img
                         src={review.profiles.avatar_url}
                         alt="User"
-                        className="h-10 w-10 rounded-full object-cover"
+                        className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center">
-                        <User className="h-5 w-5 text-accent" />
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-accent/20 flex items-center justify-center">
+                        <User className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-foreground">
+                      <span className="font-medium text-sm sm:text-base text-foreground truncate">
                         {review.profiles?.display_name || 'Anonymous'}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <div className="flex">{renderStars(review.rating)}</div>
                       <span className="text-xs text-muted-foreground">
                         {review.created_at && new Date(review.created_at).toLocaleDateString()}
                       </span>
                     </div>
                     {review.title && (
-                      <h4 className="font-medium text-foreground mb-1">{review.title}</h4>
+                      <h4 className="font-medium text-sm sm:text-base text-foreground mb-1">{review.title}</h4>
                     )}
-                    <p className="text-sm text-muted-foreground">{review.content}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground break-words">{review.content}</p>
                   </div>
                 </div>
               </div>
