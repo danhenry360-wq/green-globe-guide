@@ -19,13 +19,15 @@ import {
 } from "lucide-react";
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 /* ============================================
    SEO STRUCTURED DATA
@@ -465,7 +467,67 @@ const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
    MAIN 420 RENTALS PAGE
 ============================================ */
 const Hotels = () => {
-  const DATA: CountryHotels[] = HOTEL_DATA;
+  // Fetch hotels from database
+  const { data: dbHotels, isLoading: dbLoading } = useQuery({
+    queryKey: ['hotels'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('hotels')
+        .select('*')
+        .order('name');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Merge database hotels with static data
+  const DATA: CountryHotels[] = useMemo(() => {
+    if (!dbHotels || dbHotels.length === 0) return HOTEL_DATA;
+    
+    // Convert DB hotels to the format expected by the component
+    const dbHotelsFormatted: Hotel[] = dbHotels.map((hotel, index) => ({
+      id: 9000 + index, // Generate numeric ID starting from 9000 to avoid conflicts
+      name: hotel.name,
+      city: hotel.address?.split(',')[0]?.trim() || 'Unknown',
+      state: hotel.address?.split(',')[1]?.trim() || 'Unknown',
+      rating: Number(hotel.rating) || 4.5,
+      policies: hotel.policies || '',
+      website: hotel.website || '#',
+      priceRange: '$$$' as const,
+      affiliateLink: hotel.website || '#',
+      description: hotel.policies || '',
+      hasSmoking: hotel.is_420_friendly || false,
+      hasVaping: hotel.is_420_friendly || false,
+      hasEdibles: hotel.is_420_friendly || false,
+    }));
+
+    // Group by country and state
+    const hotelsByCountryState = dbHotelsFormatted.reduce((acc, hotel) => {
+      const country = 'USA'; // Default for now
+      const state = hotel.state;
+      
+      if (!acc[country]) acc[country] = {};
+      if (!acc[country][state]) acc[country][state] = [];
+      acc[country][state].push(hotel);
+      
+      return acc;
+    }, {} as Record<string, Record<string, Hotel[]>>);
+
+    // Convert to CountryHotels format
+    const dbData: CountryHotels[] = Object.entries(hotelsByCountryState).map(([country, states]) => ({
+      country,
+      slug: country.toLowerCase(),
+      flagPath: '/flags/usa.png',
+      states: Object.entries(states).map(([stateName, hotels]) => ({
+        stateName,
+        slug: stateName.toLowerCase().replace(/\s+/g, '-'),
+        hotels,
+      })),
+    }));
+
+    // Merge with static data
+    return [...dbData, ...HOTEL_DATA];
+  }, [dbHotels]);
 
   const [filters, setFilters] = useState<FilterState>({
     country: '',
