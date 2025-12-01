@@ -386,70 +386,77 @@ interface ProcessedRental {
   hasEdibles: boolean;
 }
 
+// Helper function to create URL-friendly slugs
+const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
 const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
+  const slug = createSlug(rental.name);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
     >
-      <Card className={cn(
-        "p-3 sm:p-5 rounded-2xl border border-white/10",
-        "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
-        "hover:shadow-lg hover:shadow-green-400/20 transition-all group"
-      )}>
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {/* Header with name and badges */}
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
-                <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-green-400 transition-colors leading-tight">
-                  {rental.name}
-                </h4>
-                <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
-                  <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                  BudQuest Verified
-                </Badge>
-              </div>
-              
-              {/* Location */}
-              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
-                <MapPin className="w-3 h-3 text-green-400 flex-shrink-0" />
-                <span className="truncate">{rental.city}, {rental.stateName} ({rental.country})</span>
-              </p>
+      <Link to={`/hotels/${slug}`}>
+        <Card className={cn(
+          "p-3 sm:p-5 rounded-2xl border border-white/10",
+          "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+          "hover:shadow-lg hover:shadow-green-400/20 transition-all group cursor-pointer"
+        )}>
+          <div className="flex flex-col gap-3 sm:gap-4">
+            {/* Header with name and badges */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
+                  <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-green-400 transition-colors leading-tight">
+                    {rental.name}
+                  </h4>
+                  <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                    <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                    BudQuest Verified
+                  </Badge>
+                </div>
+                
+                {/* Location */}
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
+                  <MapPin className="w-3 h-3 text-green-400 flex-shrink-0" />
+                  <span className="truncate">{rental.city}, {rental.stateName} ({rental.country})</span>
+                </p>
 
-              {/* Rating and Price */}
-              <div className="flex items-center gap-3 sm:gap-4">
-                <StarRating value={rental.rating} />
-                {rental.priceRange && (
-                  <span className="text-xs sm:text-sm text-green-400 font-semibold">
-                    {rental.priceRange}
-                  </span>
-                )}
+                {/* Rating and Price */}
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <StarRating value={rental.rating} />
+                  {rental.priceRange && (
+                    <span className="text-xs sm:text-sm text-green-400 font-semibold">
+                      {rental.priceRange}
+                    </span>
+                  )}
+                </div>
               </div>
+
+              {/* Book Now Button */}
+              <a
+                href={rental.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center justify-center gap-1 text-sm font-medium text-white bg-green-400 hover:bg-green-500 transition-colors px-4 py-2 rounded-lg shrink-0"
+              >
+                Book <ExternalLink className="w-4 h-4" />
+              </a>
             </div>
 
-            {/* Visit Button */}
-            <a
-              href={rental.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center justify-center gap-1 text-sm font-medium text-white bg-green-400 hover:bg-green-500 transition-colors px-4 py-2 rounded-lg shrink-0"
-            >
-              Visit <ExternalLink className="w-4 h-4" />
-            </a>
+            {/* Policy Section */}
+            <div className="pt-3 border-t border-white/10">
+              <p className="text-[10px] sm:text-xs font-medium text-green-400/80 mb-1">420-Friendly Policy Highlights:</p>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                {rental.policies}
+              </p>
+            </div>
           </div>
-
-          {/* Policy Section */}
-          <div className="pt-3 border-t border-white/10">
-            <p className="text-[10px] sm:text-xs font-medium text-green-400/80 mb-1">420-Friendly Policy Highlights:</p>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
-              {rental.policies}
-            </p>
-          </div>
-        </div>
-      </Card>
+        </Card>
+      </Link>
     </motion.div>
   );
 };
