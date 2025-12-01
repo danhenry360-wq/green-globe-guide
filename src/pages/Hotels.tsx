@@ -3,8 +3,20 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, MapPin, Search, Building, Info, Filter, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { HotelCard } from "@/components/HotelCard";
+import {
+  ChevronDown,
+  MapPin,
+  ExternalLink,
+  Search,
+  Building,
+  Info,
+  Filter,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle,
+  Star,
+} from "lucide-react";
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
 import { useMemo, useState, useCallback } from "react";
@@ -13,20 +25,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /* ============================================
    SEO STRUCTURED DATA
 ============================================ */
-const generateStructuredData = (hotelCount: number) => ({
+const generateStructuredData = (rentalCount: number) => ({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "BudQuest Verified 420-Friendly Hotels | Book Cannabis-Friendly Accommodations Worldwide",
-  description: "Discover and book BudQuest-verified 420-friendly hotels across USA, Canada, Netherlands, and worldwide.",
+  name: "BudQuest Verified 420 Rentals | Book Cannabis-Friendly Accommodations Worldwide",
+  description: "Discover and book BudQuest-verified 420-friendly rentals across USA, Canada, Netherlands, and worldwide.",
   url: "https://budquest.com/hotels",
   mainEntity: {
     "@type": "ItemList",
-    name: "420-Friendly Hotels Collection",
-    numberOfItems: hotelCount,
+    name: "420-Friendly Rentals Collection",
+    numberOfItems: rentalCount,
   },
   publisher: {
     "@type": "Organization",
@@ -48,33 +61,86 @@ interface FilterState {
   search: string;
 }
 
+const ITEMS_PER_PAGE = 10;
+
+/* ============================================
+   HELPER COMPONENTS
+============================================ */
+const RentalCardSkeleton = () => (
+  <Card className={cn(
+    "p-3 sm:p-5 rounded-2xl border border-white/10",
+    "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
+  )}>
+    <div className="flex flex-col gap-3 sm:gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start gap-2 mb-2">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-5 w-24" />
+          </div>
+          <Skeleton className="h-4 w-36 mb-3" />
+          <div className="flex items-center gap-2 mb-3">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-16" />
+          </div>
+        </div>
+        <Skeleton className="h-10 w-20" />
+      </div>
+      <div className="pt-3 border-t border-white/10">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-3/4 mt-2" />
+      </div>
+    </div>
+  </Card>
+);
+
+const StarRating = ({ value }: { value: number }) => (
+  <div className="flex items-center gap-0.5 sm:gap-1">
+    {[1, 2, 3, 4, 5].map((i) => (
+      <Star
+        key={i}
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${
+          i <= Math.round(value)
+            ? "fill-yellow-400 text-yellow-400"
+            : "text-gray-600"
+        }`}
+      />
+    ))}
+    <span className="text-[10px] sm:text-xs text-muted-foreground ml-0.5 sm:ml-1 font-medium">
+      {value.toFixed(1)}
+    </span>
+  </div>
+);
+
 /* ============================================
    PAGINATION COMPONENT
 ============================================ */
-const Pagination = ({ 
-  currentPage, 
-  totalPages, 
-  onPageChange 
-}: { 
-  currentPage: number; 
-  totalPages: number; 
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: {
+  currentPage: number;
+  totalPages: number;
   onPageChange: (page: number) => void;
 }) => {
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const visiblePages = pages.filter(p => 
-    p === 1 || 
-    p === totalPages || 
-    (p >= currentPage - 1 && p <= currentPage + 1)
+  const visiblePages = pages.filter(
+    (p) =>
+      p === 1 ||
+      p === totalPages ||
+      (p >= currentPage - 1 && p <= currentPage + 1)
   );
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 px-4">
       <p className="text-sm text-muted-foreground">
-        Page <span className="font-bold text-green-400">{currentPage}</span> of <span className="font-bold text-green-400">{totalPages}</span>
+        Page <span className="font-bold text-green-400">{currentPage}</span> of{" "}
+        <span className="font-bold text-green-400">{totalPages}</span>
       </p>
-      
+
       <div className="flex items-center gap-2">
         <Button
           onClick={() => onPageChange(currentPage - 1)}
@@ -89,23 +155,30 @@ const Pagination = ({
 
         <div className="flex gap-1">
           {visiblePages.map((page, idx) => {
-            const isPrevEllipsis = idx > 0 && visiblePages[idx - 1] !== page - 1;
-            const isNextEllipsis = idx < visiblePages.length - 1 && visiblePages[idx + 1] !== page + 1;
+            const isPrevEllipsis =
+              idx > 0 && visiblePages[idx - 1] !== page - 1;
+            const isNextEllipsis =
+              idx < visiblePages.length - 1 &&
+              visiblePages[idx + 1] !== page + 1;
 
             return (
               <div key={page}>
-                {isPrevEllipsis && <span className="px-2 text-muted-foreground">...</span>}
+                {isPrevEllipsis && (
+                  <span className="px-2 text-muted-foreground">...</span>
+                )}
                 <button
                   onClick={() => onPageChange(page)}
                   className={`w-10 h-10 rounded-lg font-semibold transition-all ${
                     currentPage === page
-                      ? 'bg-green-400 text-white'
-                      : 'bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10'
+                      ? "bg-green-400 text-white"
+                      : "bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10"
                   }`}
                 >
                   {page}
                 </button>
-                {isNextEllipsis && <span className="px-2 text-muted-foreground">...</span>}
+                {isNextEllipsis && (
+                  <span className="px-2 text-muted-foreground">...</span>
+                )}
               </div>
             );
           })}
@@ -136,7 +209,7 @@ const FilterPanel = ({
   states,
   filterCounts,
   isOpen,
-  onClose
+  onClose,
 }: {
   filters: FilterState;
   onFilterChange: (key: keyof FilterState, value: string) => void;
@@ -147,12 +220,12 @@ const FilterPanel = ({
   onClose: () => void;
 }) => {
   const filterOptions = [
-    { value: 'all' as FilterType, label: 'All Hotels' },
+    { value: 'all' as FilterType, label: 'All Rentals' },
     { value: 'premium' as FilterType, label: 'Premium' },
     { value: 'budget' as FilterType, label: 'Budget' },
-    { value: 'smoking' as FilterType, label: 'Smoking' },
-    { value: 'vaping' as FilterType, label: 'Vaping' },
-    { value: 'edibles' as FilterType, label: 'Edibles' },
+    { value: 'smoking' as FilterType, label: 'Smoking Allowed' },
+    { value: 'vaping' as FilterType, label: 'Vaping Allowed' },
+    { value: 'edibles' as FilterType, label: 'Edibles Friendly' },
   ];
 
   const sortOptions = [
@@ -166,7 +239,6 @@ const FilterPanel = ({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* MOBILE BACKDROP */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -174,8 +246,6 @@ const FilterPanel = ({
             onClick={onClose}
             className="fixed inset-0 bg-black/50 z-40 md:hidden"
           />
-          
-          {/* FILTER PANEL */}
           <motion.div
             initial={{ x: -400, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -184,10 +254,9 @@ const FilterPanel = ({
             className="fixed md:static left-0 top-0 h-full md:h-auto z-50 w-80 md:w-64 bg-card/95 backdrop-blur-xl border-r md:border-r-0 border-white/10 overflow-y-auto md:overflow-visible"
           >
             <div className="p-6 space-y-6">
-              {/* CLOSE BUTTON (MOBILE) */}
               <button
                 onClick={onClose}
-                className="md:hidden absolute top-4 right-4 p-2 hover:bg-green-400/10 rounded-lg transition-colors"
+                className="md:hidden absolute top-4 right-4 p-2 hover:bg-green-400/10 rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -198,17 +267,19 @@ const FilterPanel = ({
 
               {/* COUNTRY FILTER */}
               <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-3">Country</label>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">
+                  Country
+                </label>
                 <select
                   value={filters.country}
                   onChange={(e) => {
-                    onFilterChange('country', e.target.value);
-                    onFilterChange('state', '');
+                    onFilterChange("country", e.target.value);
+                    onFilterChange("state", "");
                   }}
                   className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
                   <option value="">All Countries</option>
-                  {countries.map(country => (
+                  {countries.map((country) => (
                     <option key={country} value={country} className="bg-card">
                       {country}
                     </option>
@@ -219,14 +290,16 @@ const FilterPanel = ({
               {/* STATE FILTER */}
               {filters.country && (
                 <div>
-                  <label className="block text-sm font-semibold text-muted-foreground mb-3">State/Province</label>
+                  <label className="block text-sm font-semibold text-muted-foreground mb-3">
+                    State/Province
+                  </label>
                   <select
                     value={filters.state}
-                    onChange={(e) => onFilterChange('state', e.target.value)}
+                    onChange={(e) => onFilterChange("state", e.target.value)}
                     className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                   >
                     <option value="">All States</option>
-                    {states.map(state => (
+                    {states.map((state) => (
                       <option key={state} value={state} className="bg-card">
                         {state}
                       </option>
@@ -237,16 +310,18 @@ const FilterPanel = ({
 
               {/* TYPE FILTER */}
               <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-3">Type</label>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">
+                  Type
+                </label>
                 <div className="space-y-2">
-                  {filterOptions.map(option => (
+                  {filterOptions.map((option) => (
                     <button
                       key={option.value}
-                      onClick={() => onFilterChange('type', option.value)}
+                      onClick={() => onFilterChange("type", option.value)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         filters.type === option.value
-                          ? 'bg-green-400 text-white'
-                          : 'bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10'
+                          ? "bg-green-400 text-white"
+                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
                       }`}
                     >
                       {option.label}
@@ -260,13 +335,15 @@ const FilterPanel = ({
 
               {/* SORT */}
               <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-3">Sort By</label>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">
+                  Sort By
+                </label>
                 <select
                   value={filters.sort}
-                  onChange={(e) => onFilterChange('sort', e.target.value)}
+                  onChange={(e) => onFilterChange("sort", e.target.value)}
                   className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 >
-                  {sortOptions.map(option => (
+                  {sortOptions.map((option) => (
                     <option key={option.value} value={option.value} className="bg-card">
                       {option.label}
                     </option>
@@ -274,7 +351,6 @@ const FilterPanel = ({
                 </select>
               </div>
 
-              {/* APPLY BUTTON (MOBILE) */}
               <Button
                 onClick={onClose}
                 className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3"
@@ -290,11 +366,99 @@ const FilterPanel = ({
 };
 
 /* ============================================
-   MAIN HOTELS PAGE
+   RENTAL CARD COMPONENT
+============================================ */
+interface ProcessedRental {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  countryFlag: string;
+  stateName: string;
+  rating: number;
+  priceRange: string;
+  policies: string;
+  website: string;
+  isBudget: boolean;
+  isPremium: boolean;
+  hasSmoking: boolean;
+  hasVaping: boolean;
+  hasEdibles: boolean;
+}
+
+const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+    >
+      <Card className={cn(
+        "p-3 sm:p-5 rounded-2xl border border-white/10",
+        "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+        "hover:shadow-lg hover:shadow-green-400/20 transition-all group"
+      )}>
+        <div className="flex flex-col gap-3 sm:gap-4">
+          {/* Header with name and badges */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
+                <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-green-400 transition-colors leading-tight">
+                  {rental.name}
+                </h4>
+                <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                  <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                  BudQuest Verified
+                </Badge>
+              </div>
+              
+              {/* Location */}
+              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
+                <MapPin className="w-3 h-3 text-green-400 flex-shrink-0" />
+                <span className="truncate">{rental.city}, {rental.stateName} ({rental.country})</span>
+              </p>
+
+              {/* Rating and Price */}
+              <div className="flex items-center gap-3 sm:gap-4">
+                <StarRating value={rental.rating} />
+                {rental.priceRange && (
+                  <span className="text-xs sm:text-sm text-green-400 font-semibold">
+                    {rental.priceRange}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Visit Button */}
+            <a
+              href={rental.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center justify-center gap-1 text-sm font-medium text-white bg-green-400 hover:bg-green-500 transition-colors px-4 py-2 rounded-lg shrink-0"
+            >
+              Visit <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Policy Section */}
+          <div className="pt-3 border-t border-white/10">
+            <p className="text-[10px] sm:text-xs font-medium text-green-400/80 mb-1">420-Friendly Policy Highlights:</p>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+              {rental.policies}
+            </p>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+};
+
+/* ============================================
+   MAIN 420 RENTALS PAGE
 ============================================ */
 const Hotels = () => {
   const DATA: CountryHotels[] = HOTEL_DATA;
-  const ITEMS_PER_PAGE = 12;
 
   const [filters, setFilters] = useState<FilterState>({
     country: '',
@@ -305,16 +469,23 @@ const Hotels = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Process and flatten data
   const processedData = useMemo(() => {
     return DATA.flatMap(country => 
       country.states.flatMap(state => 
         state.hotels.map(hotel => ({
-          ...hotel,
+          id: String(hotel.id || `${country.country}-${state.stateName}-${hotel.name}`),
+          name: hotel.name,
+          city: hotel.city,
           country: country.country,
           countryFlag: country.flagPath,
           stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
+          rating: hotel.rating,
+          priceRange: hotel.priceRange,
+          policies: hotel.policies || '',
+          website: hotel.website,
           isBudget: hotel.priceRange === '$$',
           isPremium: hotel.priceRange === '$$$$',
           hasSmoking: hotel.policies?.toLowerCase().includes('smoking') || 
@@ -385,8 +556,8 @@ const Hotels = () => {
       );
     }
 
-    // Sort - use priceRange for sorting
-    const priceOrder = { '$$': 1, '$$$': 2, '$$$$': 3 };
+    // Sort
+    const priceOrder: Record<string, number> = { '$$': 1, '$$$': 2, '$$$$': 3 };
     result.sort((a, b) => {
       switch (filters.sort) {
         case 'name': return a.name.localeCompare(b.name);
@@ -440,9 +611,9 @@ const Hotels = () => {
   return (
     <>
       <Helmet>
-        <title>BudQuest Verified 420-Friendly Hotels | Book Cannabis-Friendly Stays</title>
-        <meta name="description" content="Discover BudQuest-verified 420-friendly hotels worldwide. Browse cannabis-friendly accommodations by country, state, and city." />
-        <meta name="keywords" content="420 friendly hotels, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels" />
+        <title>BudQuest Verified 420 Rentals | Book Cannabis-Friendly Stays</title>
+        <meta name="description" content="Discover BudQuest-verified 420-friendly rentals worldwide. Browse cannabis-friendly accommodations by country, state, and city." />
+        <meta name="keywords" content="420 friendly rentals, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels, 420 rentals" />
         <link rel="canonical" href="https://budquest.com/hotels" />
         <script type="application/ld+json">{JSON.stringify(generateStructuredData(filteredData.length))}</script>
       </Helmet>
@@ -450,18 +621,45 @@ const Hotels = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        <main className="pt-24 pb-20 px-4 sm:px-6">
+        {/* Mobile Search Bar - Fixed */}
+        <div className="md:hidden fixed top-16 left-0 right-0 z-30 bg-background/95 backdrop-blur-lg border-b border-white/10 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                value={filters.search}
+                onChange={(e) => handleFilterChange("search", e.target.value)}
+                placeholder="Search rentals..."
+                className="w-full pl-9 pr-4 py-2 bg-card/80 border border-white/10 rounded-lg text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              />
+            </div>
+            <Button
+              onClick={() => setIsFilterOpen(true)}
+              variant="outline"
+              size="icon"
+              className="border-white/10 hover:bg-green-400/10 relative"
+            >
+              <Filter className="w-4 h-4" />
+              {hasActiveFilters && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full" />
+              )}
+            </Button>
+          </div>
+        </div>
+
+        <main className="pt-32 md:pt-24 pb-20 px-4 sm:px-6">
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
-            <section className="max-w-4xl mx-auto mb-12 text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
-                Verified 420-Friendly Hotels
+            <section className="max-w-4xl mx-auto mb-8 sm:mb-12 text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
+                Verified 420 Rentals
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground mb-2">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2">
                 Discover cannabis-friendly accommodations worldwide
               </p>
-              <p className="text-sm sm:text-base text-muted-foreground/80">
-                {processedData.length} verified hotels • Policies checked • Premium experience
+              <p className="text-xs sm:text-sm text-muted-foreground/80">
+                {processedData.length} verified rentals • Policies checked • Premium experience
               </p>
             </section>
 
@@ -479,183 +677,104 @@ const Hotels = () => {
                 />
               </div>
 
+              {/* FILTER PANEL - MOBILE */}
+              <FilterPanel
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                countries={countries}
+                states={states}
+                filterCounts={filterCounts}
+                isOpen={isFilterOpen}
+                onClose={() => setIsFilterOpen(false)}
+              />
+
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* SEARCH BAR */}
-                <div className={cn(
-                  "mb-8 rounded-2xl border border-white/10 p-4 sm:p-6 shadow-2xl",
-                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
-                )}>
-                  <div className="flex flex-col sm:flex-row gap-3 items-stretch">
-                    <div className="flex-1 relative">
-                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
-                      <input
-                        type="text"
-                        placeholder="Search hotels, cities, states..."
-                        value={filters.search}
-                        onChange={(e) => handleFilterChange('search', e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
-                      />
-                      {filters.search && (
-                        <button
-                          onClick={() => handleFilterChange('search', '')}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
-                        >
-                          <X className="w-5 h-5 text-muted-foreground hover:text-white" />
-                        </button>
-                      )}
-                    </div>
-
-                    <Button
-                      onClick={() => setIsFilterOpen(true)}
-                      variant="outline"
-                      size="sm"
-                      className="md:hidden gap-2 border-white/10 text-sm px-4 h-11 sm:h-12 rounded-xl hover:bg-green-400/10"
-                    >
-                      <Filter className="w-5 h-5" />
-                      Filters
-                    </Button>
-
-                    <select
-                      value={filters.sort}
-                      onChange={(e) => handleFilterChange('sort', e.target.value as SortType)}
-                      className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-11 sm:h-12"
-                    >
-                      <option value="rating" className="bg-card">Highest Rated</option>
-                      <option value="price-low" className="bg-card">Price: Low to High</option>
-                      <option value="price-high" className="bg-card">Price: High to Low</option>
-                      <option value="name" className="bg-card">Alphabetical</option>
-                    </select>
+                {/* Desktop Search */}
+                <div className="hidden md:flex items-center gap-4 mb-6">
+                  <div className="relative flex-1 max-w-md">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <input
+                      type="text"
+                      value={filters.search}
+                      onChange={(e) => handleFilterChange("search", e.target.value)}
+                      placeholder="Search rentals by name, city, or policy..."
+                      className="w-full pl-9 pr-4 py-2 bg-card/80 border border-white/10 rounded-lg text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-green-400/40"
+                    />
                   </div>
-
-                  {/* ACTIVE FILTERS DISPLAY */}
                   {hasActiveFilters && (
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
-                      {filters.country && (
-                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
-                          {filters.country}
-                          <button onClick={() => handleFilterChange('country', '')} className="hover:opacity-70">
-                            <X className="w-3 h-3" />
-                          </button>
-                        </Badge>
-                      )}
-                      {filters.state && (
-                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
-                          {filters.state}
-                          <button onClick={() => handleFilterChange('state', '')} className="hover:opacity-70">
-                            <X className="w-3 h-3" />
-                          </button>
-                        </Badge>
-                      )}
-                      {filters.type !== 'all' && (
-                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
-                          {filters.type}
-                          <button onClick={() => handleFilterChange('type', 'all')} className="hover:opacity-70">
-                            <X className="w-3 h-3" />
-                          </button>
-                        </Badge>
-                      )}
-                      <button
-                        onClick={handleClearFilters}
-                        className="text-red-400 hover:text-red-300 text-xs font-semibold px-3 py-1 rounded-lg hover:bg-red-950/20 transition-colors"
-                      >
-                        Clear All
-                      </button>
-                    </div>
+                    <Button
+                      onClick={handleClearFilters}
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-white"
+                    >
+                      Clear filters
+                    </Button>
                   )}
                 </div>
 
-                {/* RESULTS */}
-                {filteredData.length === 0 ? (
-                  <div className="text-center py-16">
-                    <Building className="w-16 h-16 mx-auto mb-6 text-muted-foreground/40" />
-                    <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">No hotels found</h2>
-                    <p className="text-muted-foreground text-sm mb-4">Try adjusting your filters or search terms.</p>
-                    {hasActiveFilters && (
-                      <Button onClick={handleClearFilters} variant="outline" className="gap-2 border-white/10">
-                        <X className="w-4 h-4" />
-                        Clear Filters
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <>
-                    <div className="mb-8">
-                      <p className="text-sm text-muted-foreground">
-                        Showing <span className="text-green-400 font-bold">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to{' '}
-                        <span className="text-green-400 font-bold">
-                          {Math.min(currentPage * ITEMS_PER_PAGE, filteredData.length)}
-                        </span>{' '}
-                        of <span className="text-green-400 font-bold">{filteredData.length}</span> hotels
+                {/* Results count */}
+                <p className="text-sm text-muted-foreground mb-4">
+                  Showing <span className="font-bold text-green-400">{filteredData.length}</span> rentals
+                  {hasActiveFilters && " (filtered)"}
+                </p>
+
+                {/* RENTAL CARDS */}
+                <div className="space-y-4">
+                  {loading ? (
+                    Array.from({ length: 5 }).map((_, i) => (
+                      <RentalCardSkeleton key={i} />
+                    ))
+                  ) : paginatedData.length === 0 ? (
+                    <Card className="p-8 text-center border-white/10 bg-card/50">
+                      <Building className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-lg font-semibold text-white mb-2">No rentals found</p>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Try adjusting your filters or search terms
                       </p>
-                    </div>
-
-                    {/* HOTEL CARDS GRID */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-12">
-                      {paginatedData.map((hotel, idx) => (
-                        <motion.div
-                          key={hotel.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <HotelCard hotel={hotel} />
-                        </motion.div>
+                      <Button
+                        onClick={handleClearFilters}
+                        variant="outline"
+                        className="border-green-400/40 text-green-400 hover:bg-green-400/10"
+                      >
+                        Clear all filters
+                      </Button>
+                    </Card>
+                  ) : (
+                    <AnimatePresence mode="popLayout">
+                      {paginatedData.map((rental) => (
+                        <RentalCard key={rental.id} rental={rental} />
                       ))}
-                    </div>
+                    </AnimatePresence>
+                  )}
+                </div>
 
-                    {/* PAGINATION */}
-                    <Pagination
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={(page) => {
-                        setCurrentPage(page);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                    />
-                  </>
-                )}
+                {/* PAGINATION */}
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
               </div>
             </div>
 
-            {/* FILTER PANEL - MOBILE */}
-            <FilterPanel
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              countries={countries}
-              states={states}
-              filterCounts={filterCounts}
-              isOpen={isFilterOpen}
-              onClose={() => setIsFilterOpen(false)}
-            />
-
-            {/* DISCLAIMER */}
-            <section className="mt-20" aria-label="Legal information">
-              <Card className="p-6 sm:p-8 bg-gradient-to-r from-red-950/20 to-red-900/10 border border-red-500/30 rounded-2xl">
-                <div className="flex items-start gap-4">
-                  <Info className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
+            {/* LEGAL DISCLAIMER */}
+            <section className="mt-16 max-w-3xl mx-auto">
+              <Card className="p-6 bg-yellow-500/5 border-yellow-500/20">
+                <div className="flex gap-3">
+                  <Info className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-lg font-bold text-red-300 mb-2">Legal Disclaimer</h3>
-                    <p className="text-sm text-red-200/90 leading-relaxed">
-                      BudQuest is an informational resource only. Always verify current local laws and confirm hotel policies before booking.
+                    <h3 className="font-semibold text-yellow-500 mb-2">Important Notice</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Cannabis laws vary by location. Always verify local regulations before consuming.
+                      BudQuest verifies rental policies but cannot guarantee legal compliance in all jurisdictions.
+                      Use responsibly and respect property rules.
                     </p>
                   </div>
                 </div>
               </Card>
             </section>
-
-            {/* INTERNAL LINKS */}
-            <nav className="mt-12 text-center">
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/usa" className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors">
-                  USA Guide
-                </Link>
-                <span className="text-muted-foreground/40">•</span>
-                <Link to="/world" className="text-green-400 hover:text-green-300 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-green-400/10 transition-colors">
-                  World Guide
-                </Link>
-              </div>
-            </nav>
           </div>
         </main>
 

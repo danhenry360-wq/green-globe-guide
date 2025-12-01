@@ -10,7 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
-import { Star, Check, X, Loader2, Shield, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Star, Check, X, Loader2, Shield, Clock, CheckCircle, XCircle, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Review {
@@ -157,6 +157,33 @@ const AdminReviews = () => {
     setProcessingId(null);
   };
 
+  const handleDeleteReview = async (reviewId: string) => {
+    if (!confirm('Are you sure you want to permanently delete this review? This action cannot be undone.')) return;
+    
+    setProcessingId(reviewId);
+    
+    const { error } = await supabase
+      .from('reviews')
+      .delete()
+      .eq('id', reviewId);
+
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete review.',
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Success',
+        description: 'Review has been permanently deleted.',
+      });
+      fetchReviews();
+    }
+    
+    setProcessingId(null);
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -294,6 +321,27 @@ const AdminReviews = () => {
                                   <>
                                     <X className="w-4 h-4 mr-2" />
                                     Reject
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                          )}
+                          
+                          {/* Delete button for approved/rejected reviews */}
+                          {(review.status === 'approved' || review.status === 'rejected') && (
+                            <div className="flex gap-3 pt-2">
+                              <Button
+                                onClick={() => handleDeleteReview(review.id)}
+                                disabled={processingId === review.id}
+                                variant="outline"
+                                className="border-red-500 text-red-500 hover:bg-red-500/10"
+                              >
+                                {processingId === review.id ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <>
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    Delete Permanently
                                   </>
                                 )}
                               </Button>

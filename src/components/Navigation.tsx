@@ -70,7 +70,7 @@ export const Navigation = () => {
               World Guide
             </Link>
             <Link to="/hotels" className="text-sm text-foreground hover:text-accent transition-colors">
-              Hotels
+              420 Rentals
             </Link>
             <Link to="/tours" className="text-sm text-foreground hover:text-accent transition-colors">
               Tours
@@ -151,7 +151,7 @@ export const Navigation = () => {
               World Guide
             </Link>
             <Link to="/hotels" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
-              Hotels
+              420 Rentals
             </Link>
             <Link to="/tours" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Tours
