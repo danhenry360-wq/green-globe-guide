@@ -21,11 +21,16 @@ interface Review {
   status: 'pending' | 'approved' | 'rejected';
   created_at: string;
   user_id: string;
-  dispensary_id: string;
+  dispensary_id: string | null;
+  rental_id: string | null;
   profiles: {
     display_name: string | null;
   } | null;
   dispensaries: {
+    name: string;
+    slug: string;
+  } | null;
+  hotels: {
     name: string;
     slug: string;
   } | null;
@@ -77,7 +82,7 @@ const AdminReviews = () => {
   const fetchReviews = async () => {
     setLoading(true);
     
-    // Fetch reviews with dispensary data
+    // Fetch reviews with dispensary and rental data
     const { data: reviewsData, error: reviewsError } = await supabase
       .from('reviews')
       .select(`
@@ -89,7 +94,12 @@ const AdminReviews = () => {
         created_at,
         user_id,
         dispensary_id,
+        rental_id,
         dispensaries (
+          name,
+          slug
+        ),
+        hotels (
           name,
           slug
         )
@@ -115,6 +125,7 @@ const AdminReviews = () => {
       ...review,
       profiles: profilesMap.get(review.user_id) || null,
       dispensaries: Array.isArray(review.dispensaries) ? review.dispensaries[0] : review.dispensaries,
+      hotels: Array.isArray(review.hotels) ? review.hotels[0] : review.hotels,
       status: review.status as 'pending' | 'approved' | 'rejected'
     }));
     
@@ -275,8 +286,11 @@ const AdminReviews = () => {
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <div>
                               <CardTitle className="text-lg text-foreground">
-                                {review.dispensaries?.name || 'Unknown Dispensary'}
+                                {review.dispensaries?.name || review.hotels?.name || 'Unknown Property'}
                               </CardTitle>
+                              <p className="text-xs text-muted-foreground mb-1">
+                                {review.dispensaries ? 'Dispensary Review' : 'Rental Review'}
+                              </p>
                               <p className="text-sm text-muted-foreground">
                                 By {review.profiles?.display_name || 'Anonymous'} • {format(new Date(review.created_at), 'MMM d, yyyy h:mm a')}
                               </p>

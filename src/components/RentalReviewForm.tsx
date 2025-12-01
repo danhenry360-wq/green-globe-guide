@@ -36,6 +36,15 @@ export const RentalReviewForm = ({ rentalId, userId, onReviewSubmitted, onCancel
     setIsSubmitting(true);
 
     try {
+      // Check if user's email is verified
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user?.email_confirmed_at) {
+        toast.error("Please verify your email before submitting a review. Check your inbox for the verification code.");
+        setIsSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase
         .from('reviews')
         .insert({
@@ -50,7 +59,7 @@ export const RentalReviewForm = ({ rentalId, userId, onReviewSubmitted, onCancel
 
       if (error) throw error;
 
-      toast.success("Review submitted! It will be visible after approval.");
+      toast.success("Review submitted! It will be visible after admin approval.");
       onReviewSubmitted();
     } catch (error: any) {
       console.error('Error submitting review:', error);
