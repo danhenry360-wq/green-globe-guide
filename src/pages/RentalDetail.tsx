@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { MapPin, Star, ExternalLink, CheckCircle2, Cigarette, Wind, Cookie, DollarSign, ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Card } from "@/components/ui/card";
 import { RentalReviewsSection } from "@/components/RentalReviewsSection";
 import { HOTEL_DATA } from "@/data/hotel_data";
 import { Hotel } from "@/types/data";
@@ -61,7 +62,7 @@ const RentalDetail = () => {
     )
   ).find(hotel => createSlug(hotel.name) === rentalSlug);
 
-  // Combine database and static data
+  // Prefer database data over static data
   const rental = staticRental;
 
   const renderRating = (rating: number) => {
@@ -299,9 +300,21 @@ const RentalDetail = () => {
                 </div>
               </div>
 
-              {/* Reviews Section - Only show if hotel exists in database */}
-              {dbHotel && (
+              {/* Reviews Section */}
+              {dbHotel ? (
                 <RentalReviewsSection rentalId={dbHotel.id} />
+              ) : (
+                <Card className="bg-card/70 backdrop-blur-sm border-accent/20 p-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-4">Guest Reviews</h2>
+                  <div className="text-center py-8 px-4">
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Reviews are not yet available for this rental. Check back soon!
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      This rental is pending verification in our database.
+                    </p>
+                  </div>
+                </Card>
               )}
             </div>
 
