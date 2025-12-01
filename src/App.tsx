@@ -44,6 +44,7 @@ import AdminHotels from "./pages/AdminHotels";
 import AdminContacts from "./pages/AdminContacts";
 import AdminCountryImages from "./pages/AdminCountryImages";
 import AdminBlog from "./pages/AdminBlog";
+import AdminRevenue from "./pages/AdminRevenue";
 import BlogDetail from "./pages/BlogDetail";
 
 const queryClient = new QueryClient();
@@ -100,9 +101,10 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/state-laws" element={<AdminStateLaws />} />
               <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
-              <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
-              <Route path="/admin/hotels" element={<AdminHotels />} />
-              <Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
+          <Route path="/admin/hotels" element={<AdminHotels />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route path="/admin/revenue" element={<AdminRevenue />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/contacts" element={<AdminContacts />} />
               <Route path="/admin/country-images" element={<AdminCountryImages />} />
