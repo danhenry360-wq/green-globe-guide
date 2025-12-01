@@ -788,6 +788,7 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
     transition={{ type: "spring", stiffness: 300 }}
     onClick={onClick}
     className="group cursor-pointer h-full"
+    data-article-id={post.id}
   >
     <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 flex flex-col">
       <div className="h-48 sm:h-56 overflow-hidden relative">
@@ -865,6 +866,31 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
       default: return "bg-card/50";
     }
   };
+
+  // Find related articles based on shared tags and category
+  const relatedArticles = useMemo(() => {
+    return BLOG_POSTS
+      .filter(article => article.id !== post.id) // Exclude current article
+      .map(article => {
+        // Calculate relevance score
+        let score = 0;
+        
+        // Same category gets high score
+        if (article.category === post.category) {
+          score += 10;
+        }
+        
+        // Shared tags get points
+        const sharedTags = article.tags.filter(tag => post.tags.includes(tag));
+        score += sharedTags.length * 5;
+        
+        return { article, score };
+      })
+      .filter(item => item.score > 0) // Only include articles with some relation
+      .sort((a, b) => b.score - a.score) // Sort by relevance
+      .slice(0, 3) // Take top 3
+      .map(item => item.article);
+  }, [post]);
 
   return (
     <div className="pt-24 pb-20">
@@ -998,12 +1024,96 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
           </Card>
         </motion.section>
 
+        {/* Related Articles */}
+        {relatedArticles.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-12 border-t border-border pt-10"
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <Sparkles className="w-6 h-6 text-accent" />
+              <h2 className="text-2xl md:text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Related Articles
+                </span>
+              </h2>
+            </div>
+            <p className="text-muted-foreground mb-6">Continue exploring cannabis travel guides and tips</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedArticles.map((relatedPost, index) => (
+                <motion.div
+                  key={relatedPost.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.65 + index * 0.1 }}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Small delay to allow scroll before content change
+                    setTimeout(() => onBack(), 100);
+                    setTimeout(() => {
+                      const articleCard = document.querySelector(`[data-article-id="${relatedPost.id}"]`);
+                      if (articleCard) {
+                        (articleCard as HTMLElement).click();
+                      }
+                    }, 150);
+                  }}
+                  className="cursor-pointer group"
+                >
+                  <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-xl hover:shadow-accent/10">
+                    <div className="h-40 overflow-hidden relative">
+                      <img 
+                        src={relatedPost.image} 
+                        alt={relatedPost.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                      <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground font-semibold text-xs">
+                        {relatedPost.category}
+                      </Badge>
+                    </div>
+
+                    <div className="p-4 flex flex-col">
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" /> {relatedPost.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {relatedPost.readTime}
+                        </span>
+                      </div>
+
+                      <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
+                        {relatedPost.title}
+                      </h3>
+                      
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-3 flex-1">
+                        {relatedPost.excerpt}
+                      </p>
+
+                      <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span className="text-base">{relatedPost.avatar}</span>
+                          {relatedPost.author}
+                        </span>
+                        <ArrowRight className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Back to Articles */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-10 border-t border-border pt-8"
+          transition={{ delay: 0.7 }}
+          className="mt-10"
         >
           <Button variant="outline" onClick={onBack} className="gap-2">
             <ArrowLeft className="w-4 h-4" /> Back to All Articles
