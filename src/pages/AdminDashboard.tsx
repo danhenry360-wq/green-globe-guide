@@ -14,7 +14,9 @@ import {
   MapPin, 
   Building2,
   ArrowRight,
-  Settings
+  Settings,
+  Users,
+  Globe
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -36,22 +38,36 @@ const adminModules: AdminModule[] = [
     color: "text-green-400",
   },
   {
+    title: "Country Laws",
+    description: "Update legal statuses for international destinations in the World Guide.",
+    icon: Globe,
+    href: "/admin/country-laws",
+    color: "text-cyan-400",
+  },
+  {
+    title: "Dispensaries",
+    description: "Add, edit, and manage dispensary listings with images and details.",
+    icon: MapPin,
+    href: "/admin/dispensaries",
+    color: "text-purple-400",
+  },
+  {
     title: "Review Moderation",
     description: "Approve, reject, or manage user-submitted dispensary reviews.",
     icon: MessageSquare,
     href: "/admin/reviews",
     color: "text-blue-400",
   },
+  {
+    title: "User Management",
+    description: "View users and manage admin roles.",
+    icon: Users,
+    href: "/admin/users",
+    color: "text-amber-400",
+  },
 ];
 
 const upcomingModules: AdminModule[] = [
-  {
-    title: "Dispensaries",
-    description: "Add, edit, and manage dispensary listings.",
-    icon: MapPin,
-    href: "#",
-    color: "text-purple-400",
-  },
   {
     title: "Hotels",
     description: "Manage 420-friendly hotel listings.",
@@ -84,15 +100,19 @@ const AdminDashboard = () => {
   const { data: stats } = useQuery({
     queryKey: ["admin-stats"],
     queryFn: async () => {
-      const [statesRes, reviewsRes, dispensariesRes] = await Promise.all([
+      const [statesRes, countriesRes, reviewsRes, dispensariesRes, usersRes] = await Promise.all([
         supabase.from("states").select("id", { count: "exact", head: true }),
+        supabase.from("countries").select("id", { count: "exact", head: true }),
         supabase.from("reviews").select("id", { count: "exact", head: true }).eq("status", "pending"),
         supabase.from("dispensaries").select("id", { count: "exact", head: true }),
+        supabase.from("profiles").select("id", { count: "exact", head: true }),
       ]);
       return {
         states: statesRes.count || 0,
+        countries: countriesRes.count || 0,
         pendingReviews: reviewsRes.count || 0,
         dispensaries: dispensariesRes.count || 0,
+        users: usersRes.count || 0,
       };
     },
     enabled: !!isAdmin,
@@ -179,12 +199,24 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
+              className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8"
             >
               <Card className="bg-gradient-card border-border/50">
                 <CardContent className="pt-6">
                   <div className="text-3xl font-bold text-accent">{stats.states}</div>
-                  <p className="text-sm text-muted-foreground">States in Database</p>
+                  <p className="text-sm text-muted-foreground">States</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-card border-border/50">
+                <CardContent className="pt-6">
+                  <div className="text-3xl font-bold text-cyan-400">{stats.countries}</div>
+                  <p className="text-sm text-muted-foreground">Countries</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-card border-border/50">
+                <CardContent className="pt-6">
+                  <div className="text-3xl font-bold text-purple-400">{stats.dispensaries}</div>
+                  <p className="text-sm text-muted-foreground">Dispensaries</p>
                 </CardContent>
               </Card>
               <Card className="bg-gradient-card border-border/50">
@@ -195,8 +227,8 @@ const AdminDashboard = () => {
               </Card>
               <Card className="bg-gradient-card border-border/50">
                 <CardContent className="pt-6">
-                  <div className="text-3xl font-bold text-blue-400">{stats.dispensaries}</div>
-                  <p className="text-sm text-muted-foreground">Dispensaries</p>
+                  <div className="text-3xl font-bold text-blue-400">{stats.users}</div>
+                  <p className="text-sm text-muted-foreground">Users</p>
                 </CardContent>
               </Card>
             </motion.div>
