@@ -389,7 +389,7 @@ const Profile = () => {
               <CardContent className="space-y-6">
                 {/* Avatar Section */}
                 <div className="flex items-start gap-4">
-                  <div className="relative">
+                  <div className="relative group">
                     <div className="w-20 h-20 rounded-full overflow-hidden bg-accent/20 border-2 border-accent/30 flex items-center justify-center">
                       {avatarPreview || profile?.avatar_url ? (
                         <img
@@ -406,17 +406,20 @@ const Profile = () => {
                         <Loader2 className="w-6 h-6 animate-spin text-accent" />
                       </div>
                     )}
+                    {!isEditing && (
+                      <div className="absolute inset-0 bg-background/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer" onClick={handleStartEdit}>
+                        <Upload className="w-6 h-6 text-accent" />
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1">
                     {isEditing ? (
                       <>
-                        <label htmlFor="avatar-upload" className="cursor-pointer">
-                          <div className="text-sm text-accent hover:text-accent/80 font-medium mb-1">
+                        <label htmlFor="avatar-upload" className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-colors">
+                          <Upload className="w-4 h-4 text-accent" />
+                          <span className="text-sm text-accent font-medium">
                             {avatarFile ? 'Change Photo' : 'Upload Photo'}
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            JPG, PNG or WEBP. Max 5MB.
-                          </p>
+                          </span>
                         </label>
                         <input
                           id="avatar-upload"
@@ -425,13 +428,23 @@ const Profile = () => {
                           onChange={handleAvatarChange}
                           className="hidden"
                         />
+                        <p className="text-xs text-muted-foreground mt-2">
+                          JPG, PNG or WEBP. Max 5MB.
+                        </p>
                       </>
                     ) : (
                       <>
-                        <p className="text-sm text-muted-foreground mb-1">Profile Picture</p>
-                        <p className="text-xs text-muted-foreground">
-                          {profile?.avatar_url ? 'Avatar set' : 'No avatar uploaded'}
+                        <p className="text-sm font-medium text-foreground mb-1">Profile Picture</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          {profile?.avatar_url ? 'Avatar uploaded' : 'No avatar yet'}
                         </p>
+                        <button
+                          onClick={handleStartEdit}
+                          className="text-xs text-accent hover:text-accent/80 font-medium inline-flex items-center gap-1"
+                        >
+                          <Upload className="w-3 h-3" />
+                          Click "Edit Profile" to upload
+                        </button>
                       </>
                     )}
                   </div>
