@@ -58,7 +58,7 @@ const AdminContacts = () => {
   });
 
   useEffect(() => {
-    if (!checkingAdmin && !isAdmin) {
+    if (!checkingAdmin && isAdmin === false) {
       toast.error("Access denied. Admin privileges required.");
       navigate("/");
     }
