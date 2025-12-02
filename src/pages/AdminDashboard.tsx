@@ -113,6 +113,13 @@ const adminModules: AdminModule[] = [
     href: "/admin/revenue",
     color: "text-gold",
   },
+  {
+    title: "Rental Images",
+    description: "View, organize, and delete uploaded rental property images.",
+    icon: Settings,
+    href: "/admin/images",
+    color: "text-orange-400",
+  },
 ];
 
 const AdminDashboard = () => {
