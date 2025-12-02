@@ -15,7 +15,7 @@ import {
   MapPin, Star, CheckCircle, AlertTriangle, 
   Plane, Home, Building, Cannabis, Car, Clock, Shield, 
   Mail, ArrowRight, Bed, Store, Mountain,
-  Info, Ban
+  Info, Ban, ChevronRight
 } from "lucide-react";
 
 // Types
@@ -270,8 +270,32 @@ const ColoradoHub = () => {
       <Navigation />
       
       <main className="min-h-screen bg-background">
+        {/* Breadcrumb Navigation */}
+        <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 text-sm text-muted-foreground" itemScope itemType="https://schema.org/BreadcrumbList">
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <Link to="/" className="hover:text-accent transition-colors" itemProp="item">
+                <span itemProp="name">Home</span>
+              </Link>
+              <meta itemProp="position" content="1" />
+            </li>
+            <ChevronRight className="w-4 h-4" />
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <Link to="/usa" className="hover:text-accent transition-colors" itemProp="item">
+                <span itemProp="name">USA Guide</span>
+              </Link>
+              <meta itemProp="position" content="2" />
+            </li>
+            <ChevronRight className="w-4 h-4" />
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <span className="text-foreground font-medium" itemProp="name">Colorado</span>
+              <meta itemProp="position" content="3" />
+            </li>
+          </ol>
+        </nav>
+
         {/* HERO SECTION */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/5 via-background to-background" />
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z' fill='%2322c55e' fill-opacity='0.4'/%3E%3C/svg%3E\")", backgroundSize: "60px 60px" }} />
