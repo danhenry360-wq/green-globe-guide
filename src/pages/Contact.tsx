@@ -12,6 +12,7 @@ import {
   Phone, MapPin, Clock, Globe, Shield, Zap, Users, HeadphonesIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 /* ----------  SEO STRUCTURED DATA  ---------- */
 const CONTACT_STRUCTURED_DATA = {
@@ -150,19 +151,12 @@ const ContactForm = () => {
     try {
       setSent(true);
 
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-contact`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke("submit-contact", {
+        body: formData,
+      });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
+      if (error) {
+        throw error;
       }
 
       // Keep success message visible for 3 seconds
