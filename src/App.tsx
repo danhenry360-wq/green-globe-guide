@@ -46,6 +46,7 @@ import AdminCountryImages from "./pages/AdminCountryImages";
 import AdminBlog from "./pages/AdminBlog";
 import AdminRevenue from "./pages/AdminRevenue";
 import AdminBulkBlog from "./pages/AdminBulkBlog";
+import AdminImageGallery from "./pages/AdminImageGallery";
 import BlogDetail from "./pages/BlogDetail";
 
 const queryClient = new QueryClient();
@@ -105,12 +106,13 @@ function App() {
           <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
           <Route path="/admin/hotels" element={<AdminHotels />} />
           <Route path="/admin/reviews" element={<AdminReviews />} />
-          <Route path="/admin/revenue" element={<AdminRevenue />} />
+              <Route path="/admin/revenue" element={<AdminRevenue />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/contacts" element={<AdminContacts />} />
               <Route path="/admin/country-images" element={<AdminCountryImages />} />
               <Route path="/admin/blog" element={<AdminBlog />} />
               <Route path="/admin/bulk-blog" element={<AdminBulkBlog />} />
+              <Route path="/admin/images" element={<AdminImageGallery />} />
 
               {/* 404 catch-all */}
               <Route path="*" element={<NotFound />} />
