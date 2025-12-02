@@ -322,9 +322,11 @@ export type Database = {
           hours: string | null
           id: string
           image: string | null
+          images: string[] | null
           is_medical: boolean | null
           is_recreational: boolean | null
           latitude: number | null
+          license_number: string | null
           longitude: number | null
           name: string
           policy_highlights: string | null
@@ -347,9 +349,11 @@ export type Database = {
           hours?: string | null
           id?: string
           image?: string | null
+          images?: string[] | null
           is_medical?: boolean | null
           is_recreational?: boolean | null
           latitude?: number | null
+          license_number?: string | null
           longitude?: number | null
           name: string
           policy_highlights?: string | null
@@ -372,9 +376,11 @@ export type Database = {
           hours?: string | null
           id?: string
           image?: string | null
+          images?: string[] | null
           is_medical?: boolean | null
           is_recreational?: boolean | null
           latitude?: number | null
+          license_number?: string | null
           longitude?: number | null
           name?: string
           policy_highlights?: string | null
