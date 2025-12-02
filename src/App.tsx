@@ -12,6 +12,7 @@ import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import USAGuide from "./pages/USAGuide";
+import ColoradoHub from "./pages/ColoradoHub";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -89,6 +90,7 @@ function App() {
 
               {/* USA routes */}
               <Route path="/usa" element={<USAGuide />} />
+              <Route path="/usa/colorado" element={<ColoradoHub />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
