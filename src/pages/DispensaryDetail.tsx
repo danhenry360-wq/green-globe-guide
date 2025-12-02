@@ -36,7 +36,7 @@ interface DbDispensary {
 }
 
 const DispensaryDetail = () => {
-  const { dispensarySlug } = useParams<{ dispensarySlug: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
   const dispensaryId = location.state?.dispensaryId;
 
@@ -49,11 +49,11 @@ const DispensaryDetail = () => {
     const fetchDispensary = async () => {
       setLoading(true);
       
-      if (dispensarySlug) {
+      if (slug) {
         const { data, error } = await supabase
           .from('dispensaries')
           .select('*')
-          .eq('slug', dispensarySlug)
+          .eq('slug', slug)
           .maybeSingle();
         
         if (!error && data) {
@@ -69,7 +69,7 @@ const DispensaryDetail = () => {
     };
 
     fetchDispensary();
-  }, [dispensarySlug]);
+  }, [slug]);
 
   // Function to generate star icons - mobile optimized
   const renderRating = (rating: number) => {
