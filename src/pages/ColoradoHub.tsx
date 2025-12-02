@@ -17,6 +17,7 @@ import {
   Mail, ArrowRight, Bed, Store, Mountain,
   Info, Ban, ChevronRight
 } from "lucide-react";
+import coloradoHeroImage from "@/assets/colorado-hub-hero.jpg";
 
 // Types
 interface Dispensary {
@@ -296,9 +297,15 @@ const ColoradoHub = () => {
 
         {/* HERO SECTION */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/5 via-background to-background" />
-          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z' fill='%2322c55e' fill-opacity='0.4'/%3E%3C/svg%3E\")", backgroundSize: "60px 60px" }} />
+          {/* Hero Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src={coloradoHeroImage} 
+              alt="Colorado Rocky Mountains at sunset" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
+          </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
