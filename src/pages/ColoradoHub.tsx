@@ -71,11 +71,12 @@ const ColoradoHub = () => {
       
       if (dispData) setDispensaries(dispData);
 
-      // Fetch rentals
+      // Fetch Colorado rentals only
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
+        .ilike('address', '%Colorado%')
         .limit(3);
       
       if (rentalData) setRentals(rentalData);
