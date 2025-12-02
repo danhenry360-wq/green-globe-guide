@@ -114,8 +114,9 @@ const ColoradoHub = () => {
   };
 
   const stats = [
-    { icon: Store, label: "Dispensaries", value: "20+" },
-    { icon: Bed, label: "420-Friendly Rentals", value: "20+" },
+    { icon: Cannabis, label: "Age Requirement", value: "21+" },
+    { icon: Store, label: "Licensed Dispensaries", value: "500+" },
+    { icon: Shield, label: "Possession Limit", value: "1 oz" },
     { icon: Mountain, label: "Cities Covered", value: "10+" },
   ];
 
