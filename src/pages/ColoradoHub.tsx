@@ -1,0 +1,797 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { 
+  MapPin, Star, Users, Globe, CheckCircle, AlertTriangle, 
+  Plane, Home, Building, Cannabis, Car, Clock, Shield, 
+  Mail, ArrowRight, ExternalLink, Bed, Store, Mountain,
+  Info, Ban, Coffee
+} from "lucide-react";
+
+// Types
+interface Dispensary {
+  id: string;
+  name: string;
+  slug: string;
+  city: string;
+  state: string;
+  rating: number;
+  image: string | null;
+  is_recreational: boolean;
+  is_medical: boolean;
+}
+
+interface Rental {
+  id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  rating: number | null;
+  images: string[] | null;
+  amenities: unknown;
+}
+
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  image_url: string;
+  category: string;
+}
+
+const ColoradoHub = () => {
+  const [email, setEmail] = useState("");
+  const [footerEmail, setFooterEmail] = useState("");
+  const [dispensaries, setDispensaries] = useState<Dispensary[]>([]);
+  const [rentals, setRentals] = useState<Rental[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch Colorado dispensaries
+      const { data: dispData } = await supabase
+        .from('dispensaries')
+        .select('*')
+        .eq('state', 'Colorado')
+        .order('rating', { ascending: false })
+        .limit(4);
+      
+      if (dispData) setDispensaries(dispData);
+
+      // Fetch rentals
+      const { data: rentalData } = await supabase
+        .from('hotels')
+        .select('*')
+        .eq('is_420_friendly', true)
+        .limit(3);
+      
+      if (rentalData) setRentals(rentalData);
+
+      // Fetch Colorado-related blog posts
+      const { data: blogData } = await supabase
+        .from('blog_posts')
+        .select('id, title, slug, excerpt, image_url, category')
+        .eq('status', 'published')
+        .ilike('title', '%colorado%')
+        .order('published_at', { ascending: false })
+        .limit(3);
+      
+      if (blogData) setBlogPosts(blogData);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const handleEmailSignup = (emailValue: string, source: string) => {
+    if (!emailValue || !emailValue.includes('@')) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    toast({
+      title: "Thanks for signing up!",
+      description: "You'll be first to know when we launch.",
+    });
+    
+    if (source === 'hero') setEmail("");
+    else setFooterEmail("");
+  };
+
+  const stats = [
+    { icon: CheckCircle, label: "Recreational Legal", value: "Since 2012" },
+    { icon: Store, label: "Dispensaries", value: "500+" },
+    { icon: Bed, label: "420-Friendly Rentals", value: "20+" },
+    { icon: Mountain, label: "Cities Covered", value: "10+" },
+  ];
+
+  const cities = [
+    { name: "Denver", slug: "denver", description: "The Mile High City - Colorado's cannabis capital with the most dispensaries and 420-friendly accommodations." },
+    { name: "Boulder", slug: "boulder", description: "Progressive college town known for craft cannabis, outdoor recreation, and relaxed atmosphere." },
+    { name: "Colorado Springs", slug: "colorado-springs", description: "Gateway to the mountains with growing cannabis scene and stunning natural beauty." },
+    { name: "Aspen", slug: "aspen", description: "Luxury ski destination with high-end dispensaries and upscale 420-friendly lodging." },
+  ];
+
+  const consumptionRules = [
+    { icon: Home, title: "Private Residences", description: "Legal to consume on private property with owner's permission. This is the safest and most common option.", allowed: true },
+    { icon: Building, title: "Hotel Balconies", description: "Some 420-friendly hotels allow consumption on private balconies. Always verify with the property first.", allowed: true },
+    { icon: Ban, title: "Public Spaces", description: "Illegal to consume in public including parks, sidewalks, restaurants, and bars. $100+ fines apply.", allowed: false },
+  ];
+
+  const travelTips = [
+    { 
+      title: "Packing & Transport", 
+      content: "Cannabis must remain in Colorado - you cannot legally transport it across state lines, even to other legal states. Store purchases in your trunk during travel within Colorado. Keep original dispensary packaging for proof of legal purchase."
+    },
+    { 
+      title: "Airport Safety", 
+      content: "Denver International Airport (DIA) is federal property. TSA can and will confiscate cannabis products. Amnesty boxes are available before security, but the safest approach is to consume or dispose of products before heading to the airport."
+    },
+    { 
+      title: "Dispensary Etiquette", 
+      content: "Bring valid government ID (21+). Most dispensaries are cash-only, though many have ATMs. Ask budtenders for recommendations - they're knowledgeable. First-time visitor discounts are common."
+    },
+    { 
+      title: "Best Time to Visit", 
+      content: "Spring and fall offer mild weather and smaller crowds. Ski season (November-April) is great for mountain town visits. 4/20 celebrations in Denver are legendary but expect crowds. Summer offers perfect conditions for outdoor activities."
+    },
+  ];
+
+  return (
+    <>
+      <Helmet>
+        <title>Colorado Cannabis Travel Guide 2024 | BudQuest - Legal Info, Dispensaries & 420-Friendly Stays</title>
+        <meta name="description" content="Complete Colorado cannabis travel guide with verified 420-friendly hotels, top dispensaries, legal information, and travel tips. Your trusted resource for cannabis tourism in Colorado." />
+        <meta name="keywords" content="Colorado cannabis travel, 420-friendly hotels Colorado, Denver dispensaries, Colorado marijuana laws, cannabis tourism" />
+      </Helmet>
+
+      <Navigation />
+      
+      <main className="min-h-screen bg-background">
+        {/* HERO SECTION */}
+        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/5 via-background to-background" />
+          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z' fill='%2322c55e' fill-opacity='0.4'/%3E%3C/svg%3E\")", backgroundSize: "60px 60px" }} />
+          
+          <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
+                <Cannabis className="w-4 h-4 mr-2" />
+                Colorado Cannabis Travel
+              </Badge>
+              
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Your Complete Colorado Cannabis Travel Guide
+                </span>
+              </h1>
+              
+              <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Legal info, verified 420-friendly stays, dispensaries, and travel tips - everything you need for the perfect cannabis vacation.
+              </p>
+
+              {/* Email Signup */}
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-card/50 border-border/50 h-12"
+                />
+                <Button 
+                  onClick={() => handleEmailSignup(email, 'hero')}
+                  className="h-12 px-6 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                >
+                  Get Early Access
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-accent" />
+                  <span>500+ members</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-accent" />
+                  <span>120+ countries</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-accent" />
+                  <span>Verified information</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* QUICK STATS SECTION */}
+        <section className="py-16 bg-card/30 border-y border-border/30">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="bg-card/50 border-border/30 text-center p-4 md:p-6 hover:border-accent/50 transition-colors">
+                    <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent" />
+                    <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* COLORADO LEGAL STATUS SECTION */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Colorado Cannabis Laws
+                </span>
+              </h2>
+              <p className="text-muted-foreground">What You Need to Know Before You Visit</p>
+            </motion.div>
+
+            <Card className="bg-card/50 border-border/30 overflow-hidden">
+              <CardHeader className="bg-accent/10 border-b border-border/30">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <CardTitle className="text-xl">Legal Status</CardTitle>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-sm px-4 py-1">
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Recreational Legal
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                        <Cannabis className="w-5 h-5 text-accent" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Possession Limit</h4>
+                        <p className="text-sm text-muted-foreground">Up to 1 ounce (28g) for adults 21+</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                        <Home className="w-5 h-5 text-accent" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Where to Consume</h4>
+                        <p className="text-sm text-muted-foreground">Private property only with owner's permission</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                        <Shield className="w-5 h-5 text-accent" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Age Requirement</h4>
+                        <p className="text-sm text-muted-foreground">Must be 21+ with valid government ID</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
+                        <Car className="w-5 h-5 text-destructive" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Transport Rules</h4>
+                        <p className="text-sm text-muted-foreground">Cannot take across state lines - even to legal states</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
+                        <Plane className="w-5 h-5 text-destructive" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Airport Rules</h4>
+                        <p className="text-sm text-muted-foreground">Federal jurisdiction - DO NOT bring to airport</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                        <Clock className="w-5 h-5 text-accent" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">Store Hours</h4>
+                        <p className="text-sm text-muted-foreground">8 AM - 12 AM (varies by municipality)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Warning Box */}
+                <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                  <div className="flex gap-3">
+                    <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-amber-400 mb-1">Federal vs State Law</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Cannabis remains illegal under federal law. Federal properties (airports, national parks, federal buildings) 
+                        are governed by federal law where cannabis possession is prohibited. Always verify local rules before consuming.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* FEATURED 420-FRIENDLY RENTALS */}
+        <section className="py-20 bg-card/30">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Verified 420-Friendly Accommodations
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Handpicked stays where cannabis is welcome</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              {rentals.length > 0 ? rentals.map((rental, index) => (
+                <motion.div
+                  key={rental.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Link to={`/hotels/${rental.slug}`}>
+                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
+                      <div className="aspect-video relative overflow-hidden">
+                        <img 
+                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
+                          alt={rental.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <Badge className="absolute top-3 right-3 bg-accent/90 text-accent-foreground">
+                          420-Friendly
+                        </Badge>
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
+                          {rental.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3">{rental.address || "Colorado"}</p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 text-gold fill-gold" />
+                            <span className="text-sm font-medium">{rental.rating || "4.5"}</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">{(rental.amenities as { price_range?: string } | null)?.price_range || "$$"}</span>
+                        </div>
+                        {rental.amenities && (
+                          <div className="flex gap-2 mt-3">
+                            {(rental.amenities as { smoking?: boolean }).smoking && <Badge variant="outline" className="text-xs">Smoking</Badge>}
+                            {(rental.amenities as { vaping?: boolean }).vaping && <Badge variant="outline" className="text-xs">Vaping</Badge>}
+                            {(rental.amenities as { edibles?: boolean }).edibles && <Badge variant="outline" className="text-xs">Edibles</Badge>}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              )) : (
+                // Fallback cards
+                [1, 2, 3].map((i) => (
+                  <Card key={i} className="bg-card/50 border-border/30 overflow-hidden">
+                    <div className="aspect-video bg-muted animate-pulse" />
+                    <CardContent className="p-4">
+                      <div className="h-5 bg-muted rounded animate-pulse mb-2" />
+                      <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+
+            <div className="text-center">
+              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
+                <Link to="/hotels">
+                  Browse All Colorado Rentals
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* COLORADO CITIES SECTION */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Explore Colorado's Cannabis Destinations
+                </span>
+              </h2>
+              <p className="text-muted-foreground">City-by-city guides for cannabis travelers</p>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {cities.map((city, index) => (
+                <motion.div
+                  key={city.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Link to={`/usa/colorado/${city.slug}`}>
+                    <Card className="bg-card/50 border-border/30 h-full hover:border-accent/50 transition-all group">
+                      <CardContent className="p-6">
+                        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
+                          <MapPin className="w-6 h-6 text-accent" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
+                          {city.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {city.description}
+                        </p>
+                        <span className="text-accent text-sm font-medium inline-flex items-center">
+                          Full Guide <ArrowRight className="w-4 h-4 ml-1" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TOP DISPENSARIES SECTION */}
+        <section className="py-20 bg-card/30">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Verified Colorado Dispensaries
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Top-rated dispensaries across the state</p>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {dispensaries.length > 0 ? dispensaries.map((dispensary, index) => (
+                <motion.div
+                  key={dispensary.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Link to={`/dispensary/${dispensary.slug}`}>
+                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
+                      <div className="aspect-video relative overflow-hidden">
+                        <img 
+                          src={dispensary.image || "/dispensaries/native-roots-denver.png"} 
+                          alt={dispensary.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1 group-hover:text-accent transition-colors line-clamp-1">
+                          {dispensary.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-2">{dispensary.city}, {dispensary.state}</p>
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 text-gold fill-gold" />
+                            <span className="text-sm font-medium">{dispensary.rating}</span>
+                          </div>
+                          <div className="flex gap-1">
+                            {dispensary.is_recreational && <Badge variant="outline" className="text-xs text-green-400 border-green-400/30">Rec</Badge>}
+                            {dispensary.is_medical && <Badge variant="outline" className="text-xs text-blue-400 border-blue-400/30">Med</Badge>}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              )) : (
+                // Fallback loading cards
+                [1, 2, 3, 4].map((i) => (
+                  <Card key={i} className="bg-card/50 border-border/30 overflow-hidden">
+                    <div className="aspect-video bg-muted animate-pulse" />
+                    <CardContent className="p-4">
+                      <div className="h-5 bg-muted rounded animate-pulse mb-2" />
+                      <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+
+            <div className="text-center">
+              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
+                <Link to="/dispensary">
+                  Show All Dispensaries
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* CONSUMPTION RULES SECTION */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Where Can You Actually Smoke?
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Understanding Colorado's consumption laws</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {consumptionRules.map((rule, index) => (
+                <motion.div
+                  key={rule.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className={`bg-card/50 h-full ${rule.allowed ? 'border-green-500/30' : 'border-destructive/30'}`}>
+                    <CardContent className="p-6 text-center">
+                      <div className={`w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center ${rule.allowed ? 'bg-green-500/10' : 'bg-destructive/10'}`}>
+                        <rule.icon className={`w-7 h-7 ${rule.allowed ? 'text-green-400' : 'text-destructive'}`} />
+                      </div>
+                      <div className="mb-2">
+                        <Badge className={rule.allowed ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-destructive/20 text-destructive border-destructive/30'}>
+                          {rule.allowed ? 'Allowed' : 'Prohibited'}
+                        </Badge>
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">{rule.title}</h3>
+                      <p className="text-sm text-muted-foreground">{rule.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TRAVEL TIPS SECTION */}
+        <section className="py-20 bg-card/30">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Colorado Cannabis Travel Tips
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Essential information for first-time visitors</p>
+            </motion.div>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {travelTips.map((tip, index) => (
+                <motion.div
+                  key={tip.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <AccordionItem value={`item-${index}`} className="bg-card/50 border border-border/30 rounded-lg overflow-hidden px-0">
+                    <AccordionTrigger className="px-6 hover:no-underline hover:bg-accent/5">
+                      <div className="flex items-center gap-3 text-left">
+                        <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                          <Info className="w-4 h-4 text-accent" />
+                        </div>
+                        <span className="font-semibold">{tip.title}</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-4">
+                      <p className="text-muted-foreground pl-11">{tip.content}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        {/* PARTNER SHOWCASE */}
+        <section className="py-16">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-sm text-muted-foreground mb-6">Trusted Partners</p>
+            <div className="flex flex-wrap justify-center gap-8 opacity-60">
+              <span className="text-lg font-semibold text-muted-foreground">Colorado Cannabis Tours</span>
+              <span className="text-lg font-semibold text-muted-foreground">Bud & Breakfast</span>
+              <span className="text-lg font-semibold text-muted-foreground">Kushkations</span>
+              <span className="text-lg font-semibold text-muted-foreground">Arrowhead Manor</span>
+            </div>
+          </div>
+        </section>
+
+        {/* BLOG POSTS SECTION */}
+        <section className="py-20 bg-card/30">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Latest Colorado Travel Guides
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Tips and insights for your cannabis trip</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              {blogPosts.length > 0 ? blogPosts.map((post, index) => (
+                <motion.div
+                  key={post.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Link to={`/blog/${post.slug}`}>
+                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
+                      <div className="aspect-video relative overflow-hidden">
+                        <img 
+                          src={post.image_url} 
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <Badge className="absolute top-3 left-3 bg-background/80">{post.category}</Badge>
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              )) : (
+                <div className="col-span-3 text-center py-12">
+                  <p className="text-muted-foreground">No Colorado-specific articles yet. Check back soon!</p>
+                  <Button asChild variant="outline" className="mt-4">
+                    <Link to="/blog">Browse All Articles</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {blogPosts.length > 0 && (
+              <div className="text-center">
+                <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
+                  <Link to="/blog">
+                    View All Articles
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* EMAIL CAPTURE FOOTER */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <Card className="bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/30 max-w-2xl mx-auto">
+              <CardContent className="p-8 md:p-12 text-center">
+                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                  <Mail className="w-8 h-8 text-accent" />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Be First to Access BudQuest
+                </h2>
+                <p className="text-muted-foreground mb-6">
+                  Get early access to exclusive guides, deals, and travel tips.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={footerEmail}
+                    onChange={(e) => setFooterEmail(e.target.value)}
+                    className="bg-background/50 border-border/50 h-12"
+                  />
+                  <Button 
+                    onClick={() => handleEmailSignup(footerEmail, 'footer')}
+                    className="h-12 px-6 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap"
+                  >
+                    Get Early Access
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground mt-4">
+                  Free guides • Early access • No spam
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </>
+  );
+};
+
+export default ColoradoHub;
