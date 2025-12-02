@@ -114,7 +114,6 @@ const ColoradoHub = () => {
   };
 
   const stats = [
-    { icon: CheckCircle, label: "Recreational Legal", value: "Since 2012" },
     { icon: Store, label: "Dispensaries", value: "20+" },
     { icon: Bed, label: "420-Friendly Rentals", value: "20+" },
     { icon: Mountain, label: "Cities Covered", value: "10+" },
