@@ -154,12 +154,119 @@ const ColoradoHub = () => {
     },
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "TravelGuide",
+    "name": "Colorado Cannabis Travel Guide 2025",
+    "description": "Complete guide to cannabis travel in Colorado including legal information, 420-friendly accommodations, dispensaries, and travel tips.",
+    "url": "https://budquest.guide/usa/colorado",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BudQuest",
+      "url": "https://budquest.guide"
+    },
+    "about": {
+      "@type": "Place",
+      "name": "Colorado",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "CO",
+        "addressCountry": "US"
+      }
+    },
+    "mentions": [
+      {
+        "@type": "City",
+        "name": "Denver, Colorado"
+      },
+      {
+        "@type": "City", 
+        "name": "Boulder, Colorado"
+      },
+      {
+        "@type": "City",
+        "name": "Colorado Springs, Colorado"
+      }
+    ],
+    "dateModified": new Date().toISOString().split('T')[0],
+    "inLanguage": "en-US"
+  };
+
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is cannabis legal in Colorado?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, recreational cannabis is legal in Colorado for adults 21 and older. You can possess up to 1 ounce (28 grams) and purchase from licensed dispensaries with valid government ID."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where can I consume cannabis in Colorado?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cannabis consumption is only legal on private property with the owner's permission. Public consumption including parks, sidewalks, and restaurants is illegal and can result in fines of $100 or more."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I bring cannabis to Denver International Airport?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Denver International Airport is federal property where cannabis possession is prohibited. TSA will confiscate any cannabis products found. Amnesty boxes are available before security checkpoints."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I take cannabis from Colorado to another state?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Transporting cannabis across state lines is a federal crime, even between states where cannabis is legal. All cannabis purchased in Colorado must remain within state borders."
+        }
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
-        <title>Colorado Cannabis Travel Guide 2024 | BudQuest - Legal Info, Dispensaries & 420-Friendly Stays</title>
-        <meta name="description" content="Complete Colorado cannabis travel guide with verified 420-friendly hotels, top dispensaries, legal information, and travel tips. Your trusted resource for cannabis tourism in Colorado." />
-        <meta name="keywords" content="Colorado cannabis travel, 420-friendly hotels Colorado, Denver dispensaries, Colorado marijuana laws, cannabis tourism" />
+        <title>Colorado Cannabis Travel Guide 2025 | Legal Info, Dispensaries & 420 Hotels | BudQuest</title>
+        <meta name="description" content="Plan your Colorado cannabis vacation with BudQuest's complete 2025 guide. Find 420-friendly hotels, top Denver dispensaries, marijuana laws, possession limits, and expert travel tips." />
+        <meta name="keywords" content="Colorado cannabis travel, 420-friendly hotels Colorado, Denver dispensaries, Colorado marijuana laws 2025, cannabis tourism Colorado, weed legal Colorado, Boulder dispensaries, Colorado Springs cannabis" />
+        <link rel="canonical" href="https://budquest.guide/usa/colorado" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Colorado Cannabis Travel Guide 2025 | BudQuest" />
+        <meta property="og:description" content="Your complete guide to cannabis travel in Colorado. Find 420-friendly stays, top dispensaries, legal info, and travel tips." />
+        <meta property="og:url" content="https://budquest.guide/usa/colorado" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://budquest.guide/dest-2.jpg" />
+        <meta property="og:site_name" content="BudQuest" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Colorado Cannabis Travel Guide 2025 | BudQuest" />
+        <meta name="twitter:description" content="Complete Colorado cannabis travel guide with 420-friendly hotels, dispensaries, and legal information." />
+        <meta name="twitter:image" content="https://budquest.guide/dest-2.jpg" />
+        
+        {/* Additional SEO */}
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="BudQuest" />
+        <meta name="geo.region" content="US-CO" />
+        <meta name="geo.placename" content="Colorado" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqStructuredData)}
+        </script>
       </Helmet>
 
       <Navigation />
