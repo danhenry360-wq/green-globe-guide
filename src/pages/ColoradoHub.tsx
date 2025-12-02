@@ -331,16 +331,16 @@ const ColoradoHub = () => {
               {/* Quick Navigation CTA */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                  <Link to="#dispensaries">
+                  <a href="#dispensaries">
                     <Store className="w-5 h-5 mr-2" />
                     Find Dispensaries
-                  </Link>
+                  </a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <Link to="#rentals">
+                  <a href="#rentals">
                     <Bed className="w-5 h-5 mr-2" />
                     420-Friendly Stays
-                  </Link>
+                  </a>
                 </Button>
               </div>
 
