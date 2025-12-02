@@ -12,10 +12,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { 
-  MapPin, Star, Users, Globe, CheckCircle, AlertTriangle, 
+  MapPin, Star, CheckCircle, AlertTriangle, 
   Plane, Home, Building, Cannabis, Car, Clock, Shield, 
-  Mail, ArrowRight, ExternalLink, Bed, Store, Mountain,
-  Info, Ban, Coffee
+  Mail, ArrowRight, Bed, Store, Mountain,
+  Info, Ban
 } from "lucide-react";
 
 // Types
@@ -51,7 +51,6 @@ interface BlogPost {
 }
 
 const ColoradoHub = () => {
-  const [email, setEmail] = useState("");
   const [footerEmail, setFooterEmail] = useState("");
   const [dispensaries, setDispensaries] = useState<Dispensary[]>([]);
   const [rentals, setRentals] = useState<Rental[]>([]);
@@ -61,23 +60,22 @@ const ColoradoHub = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Colorado dispensaries
+      // Fetch ALL Colorado dispensaries (no limit - auto-updates when new ones added)
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
-        .order('rating', { ascending: false })
-        .limit(4);
+        .order('rating', { ascending: false });
       
       if (dispData) setDispensaries(dispData);
 
-      // Fetch Colorado rentals only
+      // Fetch ALL Colorado rentals (no limit - auto-updates when new ones added)
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
         .ilike('address', '%Colorado%')
-        .limit(3);
+        .order('rating', { ascending: false });
       
       if (rentalData) setRentals(rentalData);
 
@@ -88,7 +86,7 @@ const ColoradoHub = () => {
         .eq('status', 'published')
         .ilike('title', '%colorado%')
         .order('published_at', { ascending: false })
-        .limit(3);
+        .limit(6);
       
       if (blogData) setBlogPosts(blogData);
       setLoading(false);
@@ -97,8 +95,8 @@ const ColoradoHub = () => {
     fetchData();
   }, []);
 
-  const handleEmailSignup = (emailValue: string, source: string) => {
-    if (!emailValue || !emailValue.includes('@')) {
+  const handleNewsletterSignup = () => {
+    if (!footerEmail || !footerEmail.includes('@')) {
       toast({
         title: "Invalid Email",
         description: "Please enter a valid email address.",
@@ -108,17 +106,16 @@ const ColoradoHub = () => {
     }
     
     toast({
-      title: "Thanks for signing up!",
-      description: "You'll be first to know when we launch.",
+      title: "Welcome to the BudQuest community!",
+      description: "You'll receive exclusive Colorado travel tips and deals.",
     });
     
-    if (source === 'hero') setEmail("");
-    else setFooterEmail("");
+    setFooterEmail("");
   };
 
   const stats = [
     { icon: CheckCircle, label: "Recreational Legal", value: "Since 2012" },
-    { icon: Store, label: "Dispensaries", value: "500+" },
+    { icon: Store, label: "Dispensaries", value: "20+" },
     { icon: Bed, label: "420-Friendly Rentals", value: "20+" },
     { icon: Mountain, label: "Cities Covered", value: "10+" },
   ];
@@ -274,7 +271,7 @@ const ColoradoHub = () => {
       
       <main className="min-h-screen bg-background">
         {/* HERO SECTION */}
-        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/5 via-background to-background" />
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z' fill='%2322c55e' fill-opacity='0.4'/%3E%3C/svg%3E\")", backgroundSize: "60px 60px" }} />
@@ -287,7 +284,7 @@ const ColoradoHub = () => {
             >
               <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
                 <Cannabis className="w-4 h-4 mr-2" />
-                Colorado Cannabis Travel
+                Colorado Cannabis Travel Guide 2025
               </Badge>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
@@ -296,41 +293,39 @@ const ColoradoHub = () => {
                 </span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Legal info, verified 420-friendly stays, dispensaries, and travel tips - everything you need for the perfect cannabis vacation.
+              <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                Colorado was the first state to legalize recreational cannabis in 2012. Discover verified <Link to="/hotels" className="text-accent hover:underline">420-friendly accommodations</Link>, top-rated <Link to="/dispensary" className="text-accent hover:underline">dispensaries</Link>, current marijuana laws, possession limits, and expert travel tips for your cannabis vacation.
               </p>
 
-              {/* Email Signup */}
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-card/50 border-border/50 h-12"
-                />
-                <Button 
-                  onClick={() => handleEmailSignup(email, 'hero')}
-                  className="h-12 px-6 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-                >
-                  Get Early Access
-                  <ArrowRight className="w-4 h-4 ml-2" />
+              {/* Quick Navigation CTA */}
+              <div className="flex flex-wrap justify-center gap-4 mb-8">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                  <Link to="#dispensaries">
+                    <Store className="w-5 h-5 mr-2" />
+                    Find Dispensaries
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+                  <Link to="#rentals">
+                    <Bed className="w-5 h-5 mr-2" />
+                    420-Friendly Stays
+                  </Link>
                 </Button>
               </div>
 
               {/* Trust Badges */}
               <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-accent" />
-                  <span>500+ members</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-accent" />
-                  <span>120+ countries</span>
+                  <CheckCircle className="w-4 h-4 text-accent" />
+                  <span>Recreational since 2012</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4 text-accent" />
                   <span>Verified information</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-accent" />
+                  <span>Updated December 2024</span>
                 </div>
               </div>
             </motion.div>
@@ -473,7 +468,7 @@ const ColoradoHub = () => {
         </section>
 
         {/* FEATURED 420-FRIENDLY RENTALS */}
-        <section className="py-20 bg-card/30">
+        <section id="rentals" className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -483,13 +478,16 @@ const ColoradoHub = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Verified 420-Friendly Accommodations
+                  420-Friendly Colorado Accommodations
                 </span>
               </h2>
-              <p className="text-muted-foreground">Handpicked stays where cannabis is welcome</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Finding cannabis-friendly lodging in Colorado is essential since public consumption is illegal. 
+                These verified properties allow on-site consumption, giving you a legal place to enjoy your purchases.
+              </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {rentals.length > 0 ? rentals.map((rental, index) => (
                 <motion.div
                   key={rental.id}
@@ -503,7 +501,7 @@ const ColoradoHub = () => {
                       <div className="aspect-video relative overflow-hidden">
                         <img 
                           src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
-                          alt={rental.name}
+                          alt={`${rental.name} - 420 friendly accommodation in Colorado`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         <Badge className="absolute top-3 right-3 bg-accent/90 text-accent-foreground">
@@ -550,7 +548,7 @@ const ColoradoHub = () => {
             <div className="text-center">
               <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
                 <Link to="/hotels">
-                  Browse All Colorado Rentals
+                  View All 420-Friendly Rentals
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -609,7 +607,7 @@ const ColoradoHub = () => {
         </section>
 
         {/* TOP DISPENSARIES SECTION */}
-        <section className="py-20 bg-card/30">
+        <section id="dispensaries" className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -619,10 +617,14 @@ const ColoradoHub = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Verified Colorado Dispensaries
+                  Licensed Colorado Dispensaries
                 </span>
               </h2>
-              <p className="text-muted-foreground">Top-rated dispensaries across the state</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Colorado has over 500 licensed dispensaries. Browse our curated selection of top-rated recreational 
+                and medical dispensaries across <Link to="/usa/colorado/denver" className="text-accent hover:underline">Denver</Link>, 
+                <Link to="/usa/colorado/boulder" className="text-accent hover:underline"> Boulder</Link>, and beyond.
+              </p>
             </motion.div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -639,7 +641,7 @@ const ColoradoHub = () => {
                       <div className="aspect-video relative overflow-hidden">
                         <img 
                           src={dispensary.image || "/dispensaries/native-roots-denver.png"} 
-                          alt={dispensary.name}
+                          alt={`${dispensary.name} dispensary in ${dispensary.city}, Colorado`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
@@ -679,7 +681,7 @@ const ColoradoHub = () => {
             <div className="text-center">
               <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
                 <Link to="/dispensary">
-                  Show All Dispensaries
+                  Browse All Dispensaries
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -859,19 +861,20 @@ const ColoradoHub = () => {
           </div>
         </section>
 
-        {/* EMAIL CAPTURE FOOTER */}
+        {/* NEWSLETTER SECTION */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <Card className="bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/30 max-w-2xl mx-auto">
+            <Card className="bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/30 max-w-3xl mx-auto">
               <CardContent className="p-8 md:p-12 text-center">
                 <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
                   <Mail className="w-8 h-8 text-accent" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Be First to Access BudQuest
+                  Colorado Cannabis Travel Newsletter
                 </h2>
-                <p className="text-muted-foreground mb-6">
-                  Get early access to exclusive guides, deals, and travel tips.
+                <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+                  Get exclusive Colorado travel tips, new dispensary openings, 420-friendly rental deals, 
+                  and law updates delivered to your inbox. Join thousands of cannabis travelers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <Input
@@ -882,15 +885,28 @@ const ColoradoHub = () => {
                     className="bg-background/50 border-border/50 h-12"
                   />
                   <Button 
-                    onClick={() => handleEmailSignup(footerEmail, 'footer')}
+                    onClick={handleNewsletterSignup}
                     className="h-12 px-6 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap"
                   >
-                    Get Early Access
+                    Subscribe
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-4">
-                  Free guides • Early access • No spam
+                  Weekly updates • Exclusive deals • Unsubscribe anytime
                 </p>
+                
+                {/* Internal Links */}
+                <div className="mt-8 pt-6 border-t border-border/30">
+                  <p className="text-sm text-muted-foreground mb-3">Explore more cannabis travel guides:</p>
+                  <div className="flex flex-wrap justify-center gap-4 text-sm">
+                    <Link to="/usa" className="text-accent hover:underline">USA Guide</Link>
+                    <Link to="/world" className="text-accent hover:underline">World Guide</Link>
+                    <Link to="/blog" className="text-accent hover:underline">Travel Blog</Link>
+                    <Link to="/dispensary" className="text-accent hover:underline">All Dispensaries</Link>
+                    <Link to="/hotels" className="text-accent hover:underline">420 Rentals</Link>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
