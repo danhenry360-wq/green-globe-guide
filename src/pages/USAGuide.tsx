@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { 
   Search, ArrowLeft, X,
-  Mountain, Sun, Wheat, Building2, ChevronRight, Map 
+  Mountain, Sun, Wheat, Building2, ChevronRight, Map, Star, ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -152,6 +153,43 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         <p className="text-xs text-muted-foreground/60 mt-2">
           Last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
+      </motion.div>
+
+      {/* Featured State Hub */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="mb-10"
+      >
+        <Link to="/usa/colorado">
+          <Card className="relative overflow-hidden rounded-2xl border-accent/30 bg-gradient-to-r from-accent/10 via-card to-accent/5 hover:border-accent/50 transition-all group">
+            <div className="absolute inset-0 bg-[url('/dest-2.jpg')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity" />
+            <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center shrink-0">
+                  <Star className="w-7 h-7 text-accent" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Badge className="bg-accent/20 text-accent border-accent/30 text-xs">Featured Hub</Badge>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">Recreational</Badge>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-accent transition-colors">
+                    Colorado Cannabis Travel Hub
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Complete guide with legal info, 420-friendly stays, dispensaries, and travel tips
+                  </p>
+                </div>
+              </div>
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground shrink-0">
+                Explore Colorado
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </Card>
+        </Link>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
