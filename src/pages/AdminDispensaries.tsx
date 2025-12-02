@@ -48,6 +48,7 @@ interface Dispensary {
   country: string | null;
   description: string | null;
   image: string | null;
+  images: string[] | null;
   website: string | null;
   hours: string | null;
   status: string | null;
@@ -61,6 +62,7 @@ interface Dispensary {
   latitude: number | null;
   longitude: number | null;
   policy_highlights: string | null;
+  license_number: string | null;
 }
 
 const emptyDispensary: Partial<Dispensary> = {
@@ -72,22 +74,24 @@ const emptyDispensary: Partial<Dispensary> = {
   country: "USA",
   description: "",
   image: "",
+  images: [],
   website: "",
   hours: "",
   status: "licensed",
+  rating: 0,
   is_recreational: true,
   is_medical: true,
   has_delivery: false,
   has_atm: false,
   has_parking: false,
   policy_highlights: "",
+  license_number: "",
 };
 
 const AdminDispensaries = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [searchQuery, setSearchQuery] = useState("");
   const [editingDispensary, setEditingDispensary] = useState<Dispensary | null>(null);
@@ -97,6 +101,8 @@ const AdminDispensaries = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [dispensaryToDelete, setDispensaryToDelete] = useState<Dispensary | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingImageIndex, setUploadingImageIndex] = useState<number | null>(null);
+  const multiFileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // Check admin role
   const { data: isAdmin, isLoading: roleLoading } = useQuery({
@@ -141,10 +147,12 @@ const AdminDispensaries = () => {
         state: dispensaryData.state,
         country: dispensaryData.country,
         description: dispensaryData.description,
-        image: dispensaryData.image,
+        image: dispensaryData.images?.[0] || dispensaryData.image,
+        images: dispensaryData.images,
         website: dispensaryData.website,
         hours: dispensaryData.hours,
         status: dispensaryData.status,
+        rating: dispensaryData.rating,
         is_recreational: dispensaryData.is_recreational,
         is_medical: dispensaryData.is_medical,
         has_delivery: dispensaryData.has_delivery,
@@ -153,6 +161,7 @@ const AdminDispensaries = () => {
         latitude: dispensaryData.latitude,
         longitude: dispensaryData.longitude,
         policy_highlights: dispensaryData.policy_highlights,
+        license_number: dispensaryData.license_number,
       }]);
       if (error) throw error;
     },
@@ -203,12 +212,12 @@ const AdminDispensaries = () => {
     },
   });
 
-  // Handle image upload
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle image upload for multiple images
+  const handleMultiImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploadingImage(true);
+    setUploadingImageIndex(index);
     try {
       const fileExt = file.name.split(".").pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -224,12 +233,32 @@ const AdminDispensaries = () => {
         .from("dispensary-images")
         .getPublicUrl(filePath);
 
-      setFormData({ ...formData, image: publicUrl.publicUrl });
+      const newImages = [...(formData.images || [])];
+      newImages[index] = publicUrl.publicUrl;
+      setFormData({ ...formData, images: newImages, image: newImages[0] || "" });
       toast.success("Image uploaded successfully");
     } catch (error: any) {
       toast.error("Failed to upload image: " + error.message);
     } finally {
-      setUploadingImage(false);
+      setUploadingImageIndex(null);
+    }
+  };
+
+  const handleImageUrlChange = (url: string, index: number) => {
+    const newImages = [...(formData.images || [])];
+    newImages[index] = url;
+    setFormData({ ...formData, images: newImages, image: newImages[0] || "" });
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = (formData.images || []).filter((_, i) => i !== index);
+    setFormData({ ...formData, images: newImages, image: newImages[0] || "" });
+  };
+
+  const addImageSlot = () => {
+    const currentImages = formData.images || [];
+    if (currentImages.length < 5) {
+      setFormData({ ...formData, images: [...currentImages, ""] });
     }
   };
 
@@ -453,52 +482,111 @@ const AdminDispensaries = () => {
             </DialogHeader>
 
             <div className="space-y-4 mt-4">
-              {/* Image Upload */}
+              {/* Multiple Images Upload */}
               <div>
-                <Label>Image</Label>
-                <div className="flex items-center gap-4 mt-2">
-                  {formData.image ? (
-                    <img
-                      src={formData.image}
-                      alt="Preview"
-                      className="w-24 h-24 rounded-lg object-cover"
-                    />
-                  ) : (
-                    <div className="w-24 h-24 rounded-lg bg-secondary/50 flex items-center justify-center">
-                      <ImagePlus className="w-8 h-8 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleImageUpload}
-                      accept="image/*"
-                      className="hidden"
-                    />
-                    <Button
-                      variant="outline"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={uploadingImage}
-                    >
-                      {uploadingImage ? (
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      ) : (
-                        <ImagePlus className="w-4 h-4 mr-2" />
-                      )}
-                      Upload Image
+                <div className="flex items-center justify-between mb-2">
+                  <Label>Images (up to 5)</Label>
+                  {(formData.images?.length || 0) < 5 && (
+                    <Button variant="outline" size="sm" onClick={addImageSlot}>
+                      <Plus className="w-4 h-4 mr-1" /> Add Image
                     </Button>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Or paste image URL below
-                    </p>
-                  </div>
+                  )}
                 </div>
+                <div className="space-y-3">
+                  {(formData.images?.length ? formData.images : [""]).map((img, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg">
+                      {img ? (
+                        <img src={img} alt={`Preview ${index + 1}`} className="w-16 h-16 rounded-lg object-cover" />
+                      ) : (
+                        <div className="w-16 h-16 rounded-lg bg-secondary/50 flex items-center justify-center">
+                          <ImagePlus className="w-6 h-6 text-muted-foreground" />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <Input
+                          value={img || ""}
+                          onChange={(e) => handleImageUrlChange(e.target.value, index)}
+                          placeholder="Image URL or upload"
+                          className="mb-2"
+                        />
+                        <div className="flex gap-2">
+                          <input
+                            type="file"
+                            ref={(el) => (multiFileInputRefs.current[index] = el)}
+                            onChange={(e) => handleMultiImageUpload(e, index)}
+                            accept="image/*"
+                            className="hidden"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => multiFileInputRefs.current[index]?.click()}
+                            disabled={uploadingImageIndex === index}
+                          >
+                            {uploadingImageIndex === index ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <ImagePlus className="w-4 h-4" />
+                            )}
+                          </Button>
+                          {(formData.images?.length || 0) > 1 && (
+                            <Button variant="outline" size="sm" onClick={() => removeImage(index)}>
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          )}
+              </div>
+
+              {/* Star Rating */}
+              <div>
+                <Label>Rating (0-5 stars)</Label>
+                <div className="flex items-center gap-2 mt-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, rating: star })}
+                      className="focus:outline-none"
+                    >
+                      <Star
+                        className={`w-8 h-8 transition-colors ${
+                          (formData.rating || 0) >= star
+                            ? "text-amber-400 fill-amber-400"
+                            : "text-muted-foreground hover:text-amber-400/50"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    {formData.rating || 0} / 5
+                  </span>
+                  {(formData.rating || 0) > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setFormData({ ...formData, rating: 0 })}
+                      className="text-xs"
+                    >
+                      Clear
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* License Number */}
+              <div>
+                <Label>License Number</Label>
                 <Input
-                  value={formData.image || ""}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="https://... or /dispensaries/image.jpg"
-                  className="mt-2"
+                  value={formData.license_number || ""}
+                  onChange={(e) => setFormData({ ...formData, license_number: e.target.value })}
+                  placeholder="e.g., C10-0000000-LIC"
                 />
+                <p className="text-xs text-muted-foreground mt-1">State cannabis license number</p>
+              </div>
+                      </div>
+                      {index === 0 && <Badge className="bg-accent/20 text-accent">Primary</Badge>}
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div>
