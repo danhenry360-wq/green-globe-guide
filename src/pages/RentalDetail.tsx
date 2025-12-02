@@ -23,6 +23,12 @@ interface DatabaseHotel {
   longitude: number | null;
   images: string[] | null;
   amenities?: any;
+  cities?: {
+    name: string;
+    states?: {
+      name: string;
+    } | null;
+  } | null;
 }
 
 const RentalDetail = () => {
@@ -37,7 +43,7 @@ const RentalDetail = () => {
       
       const { data, error } = await supabase
         .from('hotels')
-        .select('*')
+        .select('*, cities(name, states(name))')
         .eq('slug', rentalSlug)
         .maybeSingle();
       
@@ -109,12 +115,12 @@ const RentalDetail = () => {
   }
 
   const countryName = rental ? (rental as any).countryName || "USA" : "USA";
-  const stateName = rental ? (rental as any).stateName || rental.state : "CA";
+  const stateName = rental ? (rental as any).stateName || rental.state : (dbHotel?.cities?.states?.name || "");
   const affiliateLink = rental?.affiliateLink || rental?.website || "https://expedia.com/affiliate/w0G2SNm";
   const description = rental?.description || dbHotel?.policies || `${rental?.name || dbHotel?.name} is a premium 420-friendly accommodation offering a welcoming environment for cannabis enthusiasts.`;
   const images = dbHotel?.images || (rental?.image ? [rental.image] : ["/dest-california.jpg"]);
   const displayName = rental?.name || dbHotel?.name || "";
-  const displayCity = rental?.city || "Sacramento";
+  const displayCity = rental?.city || dbHotel?.cities?.name || "";
   const displayRating = rental?.rating || dbHotel?.rating || 4.0;
   const displayPolicies = rental?.policies || dbHotel?.policies || "";
   const displayAddress = rental?.address || dbHotel?.address || "";
