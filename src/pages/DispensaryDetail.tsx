@@ -6,9 +6,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2 } from "lucide-react";
+import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { DispensaryMap } from "@/components/DispensaryMap";
+
 // Types for database dispensary
 interface DbDispensary {
   id: string;
@@ -29,10 +30,12 @@ interface DbDispensary {
   policy_highlights: string | null;
   description: string | null;
   image: string | null;
+  images: string[] | null;
   website: string | null;
   hours: string | null;
   latitude: number | null;
   longitude: number | null;
+  license_number: string | null;
 }
 
 const DispensaryDetail = () => {
@@ -43,6 +46,7 @@ const DispensaryDetail = () => {
   const [dbDispensary, setDbDispensary] = useState<DbDispensary | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Fetch from database only
   useEffect(() => {
@@ -198,18 +202,80 @@ const DispensaryDetail = () => {
 
               {/* Main Content Column */}
               <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-                {/* Dispensary Image & Description */}
+                {/* Dispensary Image Gallery & Description */}
                 <Card className="overflow-hidden rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-                  <img 
-                    src={dbDispensary.image ? `${dbDispensary.image}${dbDispensary.image.includes('?') ? '&' : '?'}v=${Date.now()}` : '/dest-california.jpg'} 
-                    alt={dbDispensary.name} 
-                    className="w-full h-40 sm:h-56 lg:h-72 object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null; 
-                      target.src = "/dest-california.jpg";
-                    }}
-                  />
+                  {/* Image Gallery */}
+                  {(() => {
+                    const allImages = dbDispensary.images?.filter(img => img) || (dbDispensary.image ? [dbDispensary.image] : ['/dest-california.jpg']);
+                    const hasMultipleImages = allImages.length > 1;
+                    
+                    return (
+                      <div className="relative">
+                        <img 
+                          src={`${allImages[currentImageIndex]}${allImages[currentImageIndex].includes('?') ? '&' : '?'}v=${Date.now()}`} 
+                          alt={`${dbDispensary.name} - Image ${currentImageIndex + 1}`} 
+                          className="w-full h-40 sm:h-56 lg:h-72 object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null; 
+                            target.src = "/dest-california.jpg";
+                          }}
+                        />
+                        
+                        {/* Navigation Arrows */}
+                        {hasMultipleImages && (
+                          <>
+                            <button
+                              onClick={() => setCurrentImageIndex(prev => prev === 0 ? allImages.length - 1 : prev - 1)}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                              aria-label="Previous image"
+                            >
+                              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </button>
+                            <button
+                              onClick={() => setCurrentImageIndex(prev => prev === allImages.length - 1 ? 0 : prev + 1)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </button>
+                            
+                            {/* Image Counter */}
+                            <div className="absolute bottom-2 right-2 px-2 py-1 rounded-md bg-black/60 text-white text-xs font-medium">
+                              {currentImageIndex + 1} / {allImages.length}
+                            </div>
+                          </>
+                        )}
+                        
+                        {/* Thumbnail Strip */}
+                        {hasMultipleImages && (
+                          <div className="absolute bottom-2 left-2 flex gap-1.5">
+                            {allImages.map((img, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentImageIndex(idx)}
+                                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all ${
+                                  idx === currentImageIndex ? 'border-accent' : 'border-white/30 hover:border-white/60'
+                                }`}
+                              >
+                                <img 
+                                  src={img} 
+                                  alt={`Thumbnail ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.onerror = null; 
+                                    target.src = "/dest-california.jpg";
+                                  }}
+                                />
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+                  
                   <CardContent className="p-3 sm:p-5">
                     <h2 className="text-base sm:text-xl font-bold text-foreground mb-1.5 sm:mb-2">About {dbDispensary.name}</h2>
                     <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
@@ -259,6 +325,19 @@ const DispensaryDetail = () => {
                         </div>
                       )}
                     </div>
+                    
+                    {/* License Number */}
+                    {dbDispensary.license_number && (
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border/50">
+                        <div className="flex items-center gap-2 text-xs sm:text-sm">
+                          <FileText className="w-4 h-4 text-accent flex-shrink-0" />
+                          <span className="text-muted-foreground">License Number:</span>
+                          <span className="font-mono text-foreground bg-secondary/50 px-2 py-0.5 rounded">
+                            {dbDispensary.license_number}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
