@@ -26,7 +26,7 @@ interface DatabaseHotel {
 }
 
 const RentalDetail = () => {
-  const { rentalSlug } = useParams<{ rentalSlug: string }>();
+  const { slug: rentalSlug } = useParams<{ slug: string }>();
   const [dbHotel, setDbHotel] = useState<DatabaseHotel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
