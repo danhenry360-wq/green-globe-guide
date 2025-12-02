@@ -112,7 +112,7 @@ const RentalDetail = () => {
   const stateName = rental ? (rental as any).stateName || rental.state : "CA";
   const affiliateLink = rental?.affiliateLink || rental?.website || "https://expedia.com/affiliate/w0G2SNm";
   const description = rental?.description || dbHotel?.policies || `${rental?.name || dbHotel?.name} is a premium 420-friendly accommodation offering a welcoming environment for cannabis enthusiasts.`;
-  const image = rental?.image || (dbHotel?.images?.[0]) || "/dest-california.jpg";
+  const images = dbHotel?.images || (rental?.image ? [rental.image] : ["/dest-california.jpg"]);
   const displayName = rental?.name || dbHotel?.name || "";
   const displayCity = rental?.city || "Sacramento";
   const displayRating = rental?.rating || dbHotel?.rating || 4.0;
@@ -225,17 +225,21 @@ const RentalDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Content - Left Side */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Image & Description Card */}
+              {/* Image Gallery Card */}
               <div className="bg-card/70 backdrop-blur-sm rounded-xl border border-accent/20 overflow-hidden">
-                <div className="aspect-video w-full overflow-hidden">
-                  <img
-                    src={image}
-                    alt={displayName}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "/dest-california.jpg";
-                    }}
-                  />
+                <div className="grid grid-cols-1 gap-1">
+                  {images.map((img, idx) => (
+                    <div key={idx} className="aspect-video w-full overflow-hidden">
+                      <img
+                        src={img}
+                        alt={`${displayName} - Image ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "/dest-california.jpg";
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-4">
