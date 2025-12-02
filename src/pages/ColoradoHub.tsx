@@ -282,8 +282,8 @@ const ColoradoHub = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
-                <Cannabis className="w-4 h-4 mr-2" />
+              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30 inline-flex items-center whitespace-nowrap">
+                <Cannabis className="w-4 h-4 mr-2 flex-shrink-0" />
                 Colorado Cannabis Travel Guide 2025
               </Badge>
               
