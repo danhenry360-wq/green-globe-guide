@@ -1,7 +1,7 @@
 import { useParams, Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { MapPin, Star, ExternalLink, CheckCircle2, Cigarette, Wind, Cookie, DollarSign, ArrowLeft } from "lucide-react";
+import { MapPin, Star, ExternalLink, CheckCircle2, Cigarette, Wind, Cookie, DollarSign, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -35,6 +35,7 @@ const RentalDetail = () => {
   const { slug: rentalSlug } = useParams<{ slug: string }>();
   const [dbHotel, setDbHotel] = useState<DatabaseHotel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   // Fetch hotel from database first
   useEffect(() => {
@@ -233,20 +234,68 @@ const RentalDetail = () => {
             <div className="lg:col-span-2 space-y-6">
               {/* Image Gallery Card */}
               <div className="bg-card/70 backdrop-blur-sm rounded-xl border border-accent/20 overflow-hidden">
-                <div className="grid grid-cols-1 gap-1">
-                  {images.map((img, idx) => (
-                    <div key={idx} className="aspect-video w-full overflow-hidden">
-                      <img
-                        src={img}
-                        alt={`${displayName} - Image ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = "/dest-california.jpg";
-                        }}
-                      />
+                {/* Main Image with Navigation */}
+                <div className="relative aspect-video w-full overflow-hidden">
+                  <img
+                    src={images[currentImageIndex] || "/dest-california.jpg"}
+                    alt={`${displayName} - Image ${currentImageIndex + 1}`}
+                    className="w-full h-full object-cover transition-all duration-300"
+                    onError={(e) => {
+                      e.currentTarget.src = "/dest-california.jpg";
+                    }}
+                  />
+                  
+                  {/* Navigation Arrows */}
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 hover:bg-background text-foreground transition-colors"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 hover:bg-background text-foreground transition-colors"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </>
+                  )}
+                  
+                  {/* Image Counter */}
+                  {images.length > 1 && (
+                    <div className="absolute bottom-3 right-3 px-2 py-1 rounded-md bg-background/80 text-xs text-foreground">
+                      {currentImageIndex + 1} / {images.length}
                     </div>
-                  ))}
+                  )}
                 </div>
+                
+                {/* Thumbnail Strip */}
+                {images.length > 1 && (
+                  <div className="flex gap-1 p-2 bg-background/50 overflow-x-auto">
+                    {images.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentImageIndex(idx)}
+                        className={`flex-shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-colors ${
+                          idx === currentImageIndex ? 'border-accent' : 'border-transparent hover:border-accent/50'
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`Thumbnail ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = "/dest-california.jpg";
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-4">
                     About {displayName}
