@@ -18,8 +18,8 @@ import {
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
-  ExternalLink, Compass
+  AlertTriangle, Ban, Mail, Download, GraduationCap,
+  ExternalLink, Compass, Tent, Utensils
 } from "lucide-react";
 
 interface Dispensary {
@@ -46,7 +46,7 @@ interface Rental {
   website: string | null;
 }
 
-const DenverGuide = () => {
+const BoulderGuide = () => {
   const [dispensaries, setDispensaries] = useState<Dispensary[]>([]);
   const [rentals, setRentals] = useState<Rental[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +59,6 @@ const DenverGuide = () => {
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
-        .ilike('city', '%Denver%')
         .order('rating', { ascending: false })
         .limit(3);
       
@@ -69,7 +68,6 @@ const DenverGuide = () => {
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .or('address.ilike.%Denver%,address.ilike.%Colorado%')
         .order('rating', { ascending: false })
         .limit(3);
       
@@ -84,7 +82,6 @@ const DenverGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    // Simulate submission
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast.success("Guide sent! Check your inbox.");
     setEmail("");
@@ -107,9 +104,9 @@ const DenverGuide = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TravelGuide",
-    "name": "Denver Cannabis Travel Guide 2025",
-    "description": "Complete guide to cannabis travel in Denver, Colorado including dispensaries, 420-friendly hotels, marijuana laws, and expert travel tips.",
-    "url": "https://budquest.guide/denver",
+    "name": "Boulder Cannabis Travel Guide 2025",
+    "description": "Complete guide to cannabis travel in Boulder, Colorado including dispensaries, 420-friendly hotels, marijuana laws, and outdoor adventure tips.",
+    "url": "https://budquest.guide/boulder",
     "publisher": {
       "@type": "Organization",
       "name": "BudQuest",
@@ -117,10 +114,10 @@ const DenverGuide = () => {
     },
     "about": {
       "@type": "City",
-      "name": "Denver",
+      "name": "Boulder",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Denver",
+        "addressLocality": "Boulder",
         "addressRegion": "CO",
         "addressCountry": "US"
       }
@@ -135,34 +132,34 @@ const DenverGuide = () => {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Is cannabis legal in Denver?",
+        "name": "Is cannabis legal in Boulder?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, recreational cannabis is legal in Denver for adults 21 and older. You can possess up to 1 ounce and purchase from licensed dispensaries."
+          "text": "Yes, recreational cannabis is legal in Boulder for adults 21 and older. You can possess up to 1 ounce and purchase from licensed dispensaries."
         }
       },
       {
         "@type": "Question",
-        "name": "Where can I consume cannabis in Denver?",
+        "name": "Where can I consume cannabis in Boulder?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Cannabis consumption is only legal on private property with owner's permission. Public consumption is illegal and can result in fines."
+          "text": "Cannabis consumption is only legal on private property with owner's permission. Public consumption, including on hiking trails, is illegal."
         }
       },
       {
         "@type": "Question",
-        "name": "Can I bring cannabis to Denver International Airport?",
+        "name": "How far is Boulder from Denver International Airport?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. DIA is federal property where cannabis is prohibited. TSA will confiscate any cannabis found. Amnesty boxes are available before security."
+          "text": "Boulder is approximately 45 minutes from Denver International Airport (DIA). The Flatiron Flyer bus provides direct service."
         }
       },
       {
         "@type": "Question",
-        "name": "What is the best time to visit Denver for cannabis tourism?",
+        "name": "What makes Boulder unique for cannabis travelers?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Spring (April-May) and Fall (September-October) offer ideal weather with fewer crowds. Summer is great for outdoor activities, while winter attracts ski enthusiasts."
+          "text": "Boulder combines world-class outdoor recreation with progressive cannabis culture. The college town atmosphere, stunning Flatirons backdrop, and health-conscious community create a unique cannabis travel experience."
         }
       }
     ]
@@ -174,42 +171,42 @@ const DenverGuide = () => {
       name: "Spring",
       months: "March - May",
       icon: Flower2,
-      temp: "45-65°F",
+      temp: "40-65°F",
       highlights: [
-        "420 Festival celebrations (April 20)",
-        "Mild weather for walking tours",
-        "Cherry Creek Arts Festival prep",
-        "Lower hotel rates before summer rush"
+        "420 celebrations throughout town",
+        "Wildflower season begins in foothills",
+        "Boulder Creek Festival (May)",
+        "Fewer tourists on trails"
       ],
-      tip: "Book dispensary tours early for 4/20 week - the city's busiest cannabis period."
+      tip: "April 20th is huge in Boulder - book accommodations early and expect busy dispensaries."
     },
     {
       id: "summer",
       name: "Summer", 
       months: "June - August",
       icon: Sun,
-      temp: "70-90°F",
+      temp: "65-88°F",
       highlights: [
-        "Perfect patio weather for 420-friendly stays",
-        "Red Rocks concerts and outdoor events",
-        "Longest daylight hours for exploring",
-        "Peak tourism - book accommodations early"
+        "Perfect hiking and outdoor weather",
+        "Colorado Shakespeare Festival",
+        "Farmers' markets in full swing",
+        "Peak patio season for 420-friendly stays"
       ],
-      tip: "Afternoon thunderstorms are common - plan indoor activities for late afternoon."
+      tip: "Afternoon thunderstorms are daily - hike early, consume later."
     },
     {
       id: "fall",
       name: "Fall",
       months: "September - November",
       icon: Leaf,
-      temp: "40-70°F",
+      temp: "35-70°F",
       highlights: [
-        "Beautiful fall foliage in the mountains",
-        "Great Divide brewing events",
-        "Fewer tourists, better dispensary deals",
-        "Perfect hiking weather"
+        "Golden aspen leaves in the mountains",
+        "CU football game atmosphere",
+        "Perfect temperatures for hiking",
+        "Harvest season specials at dispensaries"
       ],
-      tip: "October offers the best balance of weather, crowds, and prices."
+      tip: "September and early October offer the best weather and fewer crowds."
     },
     {
       id: "winter",
@@ -218,153 +215,153 @@ const DenverGuide = () => {
       icon: Snowflake,
       temp: "20-45°F",
       highlights: [
-        "Ski season in full swing (1 hour to slopes)",
-        "Indoor cannabis lounges more appealing",
-        "Holiday cannabis gift specials",
-        "New Year's Eve celebrations downtown"
+        "Easy access to ski resorts (1 hour)",
+        "Cozy dispensary shopping",
+        "Holiday specials and deals",
+        "300+ days of sunshine means mild winters"
       ],
-      tip: "Combine a ski trip with Denver's dispensaries - many offer tourist discounts."
+      tip: "Boulder stays warmer than the mountains - great base for ski trips."
     }
   ];
 
   const attractions = [
     {
-      name: "Denver Art Museum",
-      icon: Palette,
-      description: "World-class art in a stunning architectural landmark. Perfect for a mellow afternoon exploring creative works from around the globe.",
-      cannabisTip: "Visit after a light edible - the architecture and exhibits create an immersive experience. No consumption on premises.",
-      address: "100 W 14th Ave Pkwy"
+      name: "Flatirons & Chautauqua Park",
+      icon: Mountain,
+      description: "Boulder's iconic rock formations with miles of hiking trails. The most photographed spot in Colorado.",
+      cannabisTip: "No consumption on trails (public land). Enjoy your session before arriving for an enhanced nature experience.",
+      address: "900 Baseline Rd"
     },
     {
-      name: "16th Street Mall",
+      name: "Pearl Street Mall",
       icon: Building2,
-      description: "Mile-long pedestrian promenade with shops, restaurants, and free shuttle. The heart of downtown Denver's energy.",
-      cannabisTip: "Great for people-watching and food exploration. Multiple dispensaries within walking distance.",
-      address: "16th Street, Downtown"
+      description: "Historic pedestrian mall with local shops, restaurants, and street performers. The heart of Boulder.",
+      cannabisTip: "Window shop and people-watch. Multiple dispensaries within walking distance. No public consumption.",
+      address: "Pearl Street, Downtown"
     },
     {
-      name: "South Platte River Trail",
+      name: "Boulder Creek Path",
       icon: TreePine,
-      description: "30+ miles of scenic trails perfect for biking, walking, or jogging along the river through the city.",
-      cannabisTip: "No public consumption allowed. Best enjoyed before or after, not during your session.",
-      address: "Confluence Park"
+      description: "16-mile paved path following Boulder Creek through town. Perfect for biking, walking, or running.",
+      cannabisTip: "Great for a mellow afternoon stroll. Tube the creek in summer (sober). No public consumption.",
+      address: "Central Boulder"
     },
     {
-      name: "Denver Craft Breweries",
+      name: "Craft Breweries",
       icon: Beer,
-      description: "200+ craft breweries make Denver a beer lover's paradise. Great American Beer Festival host city.",
-      cannabisTip: "Don't mix cannabis and alcohol excessively. Many breweries are in cannabis-friendly neighborhoods.",
-      address: "RiNo, LoDo, South Broadway"
+      description: "30+ craft breweries including Avery, Upslope, and Boulder Beer. Colorado's craft beer hub.",
+      cannabisTip: "Don't mix heavily - choose one or the other. Many breweries are in dispensary-adjacent areas.",
+      address: "Throughout Boulder"
     },
     {
-      name: "Red Rocks Amphitheatre",
-      icon: Music,
-      description: "Iconic outdoor venue with stunning natural red rock formations. World-famous concert experience.",
-      cannabisTip: "Cannabis is prohibited on-site (federal land). Consume responsibly before arrival. Uber recommended.",
-      address: "18300 W Alameda Pkwy, Morrison"
+      name: "University of Colorado Campus",
+      icon: GraduationCap,
+      description: "Beautiful campus with stunning mountain views. Explore the architecture and college town vibes.",
+      cannabisTip: "Cannabis is prohibited on campus (federal funding). Admire from Pearl Street instead.",
+      address: "1600 Broadway"
     },
     {
-      name: "Denver Museum of Nature & Science",
-      icon: Camera,
-      description: "Interactive exhibits, planetarium, and IMAX theater in beautiful City Park.",
-      cannabisTip: "The planetarium shows are incredible. Space exploration exhibits pair well with a creative mindset.",
-      address: "2001 Colorado Blvd"
+      name: "Eldorado Canyon State Park",
+      icon: Tent,
+      description: "World-class rock climbing, hiking, and nature just 8 miles from downtown Boulder.",
+      cannabisTip: "State park - no cannabis consumption anywhere. Enjoy beforehand at your lodging.",
+      address: "9 Kneale Rd, Eldorado Springs"
     }
   ];
 
   const transportOptions = [
     {
-      name: "RTD Public Transit",
+      name: "RTD Flatiron Flyer",
       icon: Bus,
-      description: "Light rail, bus, and commuter rail covering metro Denver. A-Line connects airport to downtown (37 min, $10.50).",
-      tip: "Day passes available. Clean and efficient for getting around central Denver."
+      description: "Direct bus service from Denver/DIA to Boulder. FF1 runs frequently from Union Station.",
+      tip: "Best option from Denver. ~45 min from Union Station, ~1 hour from DIA."
     },
     {
       name: "Rideshare (Uber/Lyft)",
       icon: Car,
-      description: "Widely available throughout Denver. Best option late night or for dispensary runs.",
-      tip: "Never drive after consuming. Rideshare is the cannabis traveler's best friend."
+      description: "Available throughout Boulder. Essential for dispensary runs and late-night travel.",
+      tip: "Never drive after consuming. Budget $15-25 for trips around Boulder."
     },
     {
-      name: "B-cycle Bike Share",
+      name: "B-cycle & Biking",
       icon: Bike,
-      description: "130+ stations with 700+ bikes. Denver is very bike-friendly with dedicated lanes.",
-      tip: "Great for short trips in good weather. Don't ride impaired - same DUI laws as driving."
+      description: "Boulder is one of America's most bike-friendly cities. 300+ miles of bike lanes and paths.",
+      tip: "Rent a bike for the full Boulder experience. Don't ride impaired."
     },
     {
       name: "Walking",
       icon: MapPinned,
-      description: "Downtown, RiNo, and South Broadway are highly walkable with dispensaries and attractions close together.",
-      tip: "Most neighborhoods are safe. Stick to well-lit areas at night."
+      description: "Downtown Boulder and Pearl Street are extremely walkable. Most attractions within 1-2 miles.",
+      tip: "Boulder is compact - you can walk almost everywhere in the central area."
     }
   ];
 
   const neighborhoods = [
     { 
-      name: "RiNo (River North)", 
-      desc: "Art district with trendy dispensaries, street art, and creative vibes. Denver's coolest neighborhood.",
+      name: "Downtown/Pearl Street", 
+      desc: "Heart of Boulder with shops, restaurants, and easy dispensary access. Most walkable area.",
+      safety: "very-safe",
+      walkable: true
+    },
+    { 
+      name: "The Hill", 
+      desc: "College neighborhood near CU. Young, energetic vibe with affordable eats and cannabis culture.",
       safety: "safe",
       walkable: true
     },
     { 
-      name: "LoDo (Lower Downtown)", 
-      desc: "Historic district near Union Station with upscale dining, sports venues, and nightlife.",
+      name: "North Boulder", 
+      desc: "Quieter residential area with great restaurants on North Broadway. Local feel.",
+      safety: "very-safe",
+      walkable: true
+    },
+    { 
+      name: "East Boulder", 
+      desc: "More suburban with some dispensaries and hotels. Good for those with cars.",
       safety: "safe",
-      walkable: true
+      walkable: false
     },
     { 
-      name: "Capitol Hill", 
-      desc: "Diverse, eclectic neighborhood with great nightlife, restaurants, and dispensary options.",
-      safety: "safe",
-      walkable: true
+      name: "Gunbarrel", 
+      desc: "Suburb northeast of Boulder. Some 420-friendly accommodations available.",
+      safety: "very-safe",
+      walkable: false
     },
     { 
-      name: "South Broadway (SoBo)", 
-      desc: "Vintage shops, dive bars, and strong cannabis culture. Authentic Denver experience.",
-      safety: "safe",
-      walkable: true
-    },
-    { 
-      name: "Five Points", 
-      desc: "Historic jazz district experiencing revitalization. Growing food and cannabis scene.",
-      safety: "mostly-safe",
-      walkable: true
-    },
-    { 
-      name: "Cherry Creek", 
-      desc: "Upscale shopping and dining. More expensive but very safe and well-maintained.",
+      name: "South Boulder", 
+      desc: "Near Chautauqua Park and the Flatirons. Great for outdoor enthusiasts.",
       safety: "very-safe",
       walkable: true
     }
   ];
 
   const relatedGuides = [
-    { name: "Boulder", slug: "/boulder", desc: "College town vibes with mountain access", distance: "30 min" },
-    { name: "Colorado Springs", slug: "/usa/colorado", desc: "Gateway to Pikes Peak", distance: "1 hour" },
-    { name: "Aspen", slug: "/usa/colorado", desc: "Luxury ski resort cannabis scene", distance: "3.5 hours" },
+    { name: "Denver", slug: "/denver", desc: "Colorado's capital and cannabis hub", distance: "30 min" },
+    { name: "Colorado Springs", slug: "/usa/colorado", desc: "Gateway to Pikes Peak", distance: "1.5 hours" },
+    { name: "Estes Park", slug: "/usa/colorado", desc: "Rocky Mountain gateway", distance: "45 min" },
   ];
 
   return (
     <>
       <Helmet>
-        <title>Denver Cannabis Travel Guide 2025 | Dispensaries, 420 Hotels & Laws | BudQuest</title>
-        <meta name="description" content="Plan your Denver cannabis trip with our 2025 guide. Find top-rated dispensaries, 420-friendly hotels, marijuana laws, possession limits, and expert tips for the Mile High City." />
-        <meta name="keywords" content="Denver cannabis, Denver dispensaries, 420-friendly hotels Denver, Denver marijuana laws 2025, Mile High City cannabis, Denver weed tourism, Colorado cannabis Denver, Denver 420 travel" />
-        <link rel="canonical" href="https://budquest.guide/denver" />
+        <title>Boulder Cannabis Travel Guide 2025 | Dispensaries, 420 Hotels & Outdoor Adventures | BudQuest</title>
+        <meta name="description" content="Plan your Boulder cannabis trip with our 2025 guide. Find dispensaries, 420-friendly hotels, hiking trails, and marijuana laws for Colorado's outdoor paradise." />
+        <meta name="keywords" content="Boulder cannabis, Boulder dispensaries, 420-friendly hotels Boulder, Boulder marijuana laws 2025, Boulder weed tourism, Colorado cannabis Boulder, Flatirons cannabis, Boulder 420 travel" />
+        <link rel="canonical" href="https://budquest.guide/boulder" />
         
-        <meta property="og:title" content="Denver Cannabis Travel Guide 2025 | BudQuest" />
-        <meta property="og:description" content="Your complete guide to cannabis in Denver. Find dispensaries, 420-friendly stays, and travel tips." />
-        <meta property="og:url" content="https://budquest.guide/denver" />
+        <meta property="og:title" content="Boulder Cannabis Travel Guide 2025 | BudQuest" />
+        <meta property="og:description" content="Your complete guide to cannabis in Boulder. Find dispensaries, 420-friendly stays, hiking trails, and travel tips." />
+        <meta property="og:url" content="https://budquest.guide/boulder" />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://budquest.guide/dest-2.jpg" />
+        <meta property="og:image" content="https://budquest.guide/dest-colorado.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Denver Cannabis Travel Guide 2025 | BudQuest" />
-        <meta name="twitter:description" content="Complete Denver cannabis guide with dispensaries, hotels, and legal info." />
+        <meta name="twitter:title" content="Boulder Cannabis Travel Guide 2025 | BudQuest" />
+        <meta name="twitter:description" content="Complete Boulder cannabis guide with dispensaries, hotels, and outdoor activities." />
         
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
-        <meta name="geo.placename" content="Denver" />
+        <meta name="geo.placename" content="Boulder" />
         
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
@@ -382,19 +379,15 @@ const DenverGuide = () => {
             <ChevronRight className="w-4 h-4" />
             <li><Link to="/usa/colorado" className="hover:text-accent transition-colors">Colorado</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li className="text-foreground font-medium">Denver</li>
+            <li className="text-foreground font-medium">Boulder</li>
           </ol>
         </nav>
 
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-2.jpg" 
-              alt="Denver Colorado skyline with Rocky Mountains" 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
+            <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-gold/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
@@ -404,18 +397,18 @@ const DenverGuide = () => {
               transition={{ duration: 0.8 }}
             >
               <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
-                <Cannabis className="w-4 h-4 mr-2" />
-                The Mile High City
+                <Mountain className="w-4 h-4 mr-2" />
+                The Adventure Capital
               </Badge>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Denver Cannabis Travel Guide 2025
+                  Boulder Cannabis Travel Guide 2025
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Colorado's capital and America's cannabis epicenter. Home to 200+ dispensaries, world-class 420-friendly accommodations, and the most vibrant cannabis culture in the nation.
+                Where stunning mountain scenery meets progressive cannabis culture. Boulder offers the perfect blend of outdoor adventure, college town energy, and world-class dispensaries.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -430,16 +423,16 @@ const DenverGuide = () => {
           </div>
         </section>
 
-        {/* Quick Facts - Enhanced */}
+        {/* Quick Facts */}
         <section className="py-12 bg-card/30 border-y border-border/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
                 { icon: Cannabis, label: "Age Requirement", value: "21+" },
-                { icon: Store, label: "Dispensaries", value: "200+" },
+                { icon: Store, label: "Dispensaries", value: "25+" },
                 { icon: Shield, label: "Possession Limit", value: "1 oz" },
-                { icon: Home, label: "420 Hotels", value: "50+" },
-                { icon: Plane, label: "From DIA", value: "20 min" },
+                { icon: Mountain, label: "Elevation", value: "5,430 ft" },
+                { icon: Plane, label: "From DIA", value: "45 min" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -469,15 +462,15 @@ const DenverGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Best Time to Visit Denver
+                  Best Time to Visit Boulder
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Denver enjoys 300+ days of sunshine annually. Each season offers unique experiences for cannabis travelers.
+                Boulder enjoys 300+ days of sunshine with distinct seasons. Each offers unique experiences for cannabis travelers.
               </p>
             </motion.div>
 
-            <Tabs defaultValue="spring" className="w-full">
+            <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
                   <TabsTrigger 
@@ -540,7 +533,7 @@ const DenverGuide = () => {
           </div>
         </section>
 
-        {/* What to Do in Denver */}
+        {/* What to Do in Boulder */}
         <section className="py-16 bg-card/30">
           <div className="container mx-auto px-4 max-w-6xl">
             <motion.div
@@ -551,11 +544,11 @@ const DenverGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  What to Do in Denver
+                  What to Do in Boulder
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Beyond the dispensaries, Denver offers world-class attractions perfect for cannabis enthusiasts.
+                Boulder blends outdoor adventure with cultural experiences - perfect for cannabis enthusiasts.
               </p>
             </motion.div>
 
@@ -602,11 +595,11 @@ const DenverGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Denver Cannabis Laws & Consumption Rules
+                  Boulder Cannabis Laws & Consumption Rules
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Know the rules before you go. Denver has specific regulations cannabis travelers must follow.
+                Boulder follows Colorado state law with some local considerations for outdoor enthusiasts.
               </p>
             </motion.div>
             
@@ -626,9 +619,9 @@ const DenverGuide = () => {
                   <div className="p-2 rounded-full bg-amber-500/20">
                     <AlertCircle className="w-5 h-5 text-amber-400" />
                   </div>
-                  <h3 className="font-semibold text-foreground">DUI Laws</h3>
+                  <h3 className="font-semibold text-foreground">Outdoor Spaces</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">Driving under the influence is a serious offense. 5 nanograms THC/ml blood is the legal limit. Use rideshare instead.</p>
+                <p className="text-sm text-muted-foreground">Cannabis is prohibited on all hiking trails, parks, and open spaces - even though they feel private. Fines apply.</p>
               </Card>
             </div>
 
@@ -641,9 +634,9 @@ const DenverGuide = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   { place: "Private Residences", note: "With property owner's permission" },
-                  { place: "420-Friendly Hotels", note: "Designated smoking areas only" },
-                  { place: "Private Patios/Balconies", note: "If allowed by property rules" },
-                  { place: "Licensed Consumption Lounges", note: "Limited locations available" },
+                  { place: "420-Friendly Lodging", note: "Designated areas only" },
+                  { place: "Private Backyards/Patios", note: "If allowed by property" },
+                  { place: "Some Private Events", note: "Verify beforehand" },
                 ].map((item) => (
                   <div key={item.place} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -664,12 +657,12 @@ const DenverGuide = () => {
               </h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { place: "Public Streets & Sidewalks", fine: "$100+ fine" },
-                  { place: "Parks & Open Spaces", fine: "$100+ fine" },
-                  { place: "Restaurants & Bars", fine: "Prohibited" },
-                  { place: "Hotel Lobbies/Common Areas", fine: "Prohibited" },
-                  { place: "Ski Resorts (Federal Land)", fine: "Federal offense" },
-                  { place: "Concert Venues", fine: "Ejection + fine" },
+                  { place: "Hiking Trails & Trailheads", fine: "$100+ fine" },
+                  { place: "Chautauqua & Open Space", fine: "$100+ fine" },
+                  { place: "Pearl Street Mall", fine: "Prohibited" },
+                  { place: "CU Campus", fine: "Federal offense" },
+                  { place: "Boulder Creek Path", fine: "Prohibited" },
+                  { place: "Any Public Space", fine: "$100+ fine" },
                 ].map((item) => (
                   <div key={item.place} className="flex items-start gap-2">
                     <Ban className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
@@ -682,30 +675,30 @@ const DenverGuide = () => {
               </div>
             </Card>
 
-            {/* Critical Warning */}
-            <Card className="p-6 bg-red-500/10 border-red-500/30">
+            {/* Outdoor Warning */}
+            <Card className="p-6 bg-amber-500/10 border-amber-500/30">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-red-500/20 flex-shrink-0">
-                  <AlertTriangle className="w-6 h-6 text-red-400" />
+                <div className="p-3 rounded-full bg-amber-500/20 flex-shrink-0">
+                  <Mountain className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-red-400 mb-2">Airport Warning - DIA</h3>
+                  <h3 className="font-bold text-lg text-amber-400 mb-2">Outdoor Recreation Warning</h3>
                   <p className="text-muted-foreground mb-3">
-                    Denver International Airport is <strong className="text-foreground">federal property</strong> where cannabis is strictly prohibited. 
-                    TSA will confiscate any cannabis found during screening.
+                    Boulder's outdoor spaces are <strong className="text-foreground">public land</strong> where cannabis consumption is strictly prohibited - 
+                    this includes all hiking trails, trailheads, parks, and open spaces.
                   </p>
                   <ul className="text-sm text-muted-foreground space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-accent" />
-                      Amnesty boxes available before security checkpoints
+                      Consume at your lodging before hiking
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-accent" />
-                      Consume everything before arriving at the airport
+                      Edibles are a discreet option for nature days
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-accent" />
-                      Never attempt to fly with cannabis products
+                      Rangers do enforce consumption laws on trails
                     </li>
                   </ul>
                 </div>
@@ -714,7 +707,7 @@ const DenverGuide = () => {
           </div>
         </section>
 
-        {/* Getting Around Denver */}
+        {/* Getting Around Boulder */}
         <section className="py-16 bg-card/30">
           <div className="container mx-auto px-4 max-w-6xl">
             <motion.div
@@ -725,11 +718,11 @@ const DenverGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Getting Around Denver
+                  Getting Around Boulder
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Transportation options for cannabis travelers. Remember: never drive impaired.
+                Boulder is compact and bike-friendly. Here's how to get around responsibly.
               </p>
             </motion.div>
 
@@ -755,7 +748,7 @@ const DenverGuide = () => {
               ))}
             </div>
 
-            {/* Safe Neighborhoods */}
+            {/* Neighborhoods */}
             <h3 className="text-2xl font-bold text-center mb-6">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                 Best Neighborhoods for Cannabis Travelers
@@ -770,11 +763,10 @@ const DenverGuide = () => {
                       variant="outline" 
                       className={`text-xs ${
                         hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                        'border-amber-500/50 text-amber-400'
+                        'border-accent/50 text-accent'
                       }`}
                     >
-                      {hood.walkable && "🚶 Walkable"}
+                      {hood.walkable ? "🚶 Walkable" : "🚗 Car needed"}
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">{hood.desc}</p>
@@ -790,7 +782,7 @@ const DenverGuide = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Top Denver Dispensaries
+                  Colorado Dispensaries
                 </span>
               </h2>
               <Link to="/dispensary" className="text-accent hover:underline flex items-center gap-1">
@@ -840,7 +832,7 @@ const DenverGuide = () => {
             ) : (
               <Card className="p-8 text-center bg-card/50">
                 <Building2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground">No dispensaries found for Denver. Check back soon!</p>
+                <p className="text-muted-foreground">No dispensaries found. Check back soon!</p>
               </Card>
             )}
           </div>
@@ -920,11 +912,11 @@ const DenverGuide = () => {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Get the Denver Cannabis Travel Guide
+                  Get the Boulder Cannabis Travel Guide
                 </span>
               </h2>
               <p className="text-muted-foreground mb-8">
-                Free PDF with insider tips, neighborhood guides, dispensary map, and local recommendations.
+                Free PDF with hiking trails, dispensary map, local tips, and outdoor adventure recommendations.
               </p>
               
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
@@ -983,7 +975,7 @@ const DenverGuide = () => {
                       <h3 className="font-bold text-foreground mb-1">{guide.name}</h3>
                       <p className="text-sm text-muted-foreground mb-2">{guide.desc}</p>
                       <Badge variant="outline" className="border-accent/30 text-accent text-xs">
-                        {guide.distance} from Denver
+                        {guide.distance} from Boulder
                       </Badge>
                     </Card>
                   </Link>
@@ -1009,4 +1001,4 @@ const DenverGuide = () => {
   );
 };
 
-export default DenverGuide;
+export default BoulderGuide;
