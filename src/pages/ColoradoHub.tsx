@@ -61,22 +61,24 @@ const ColoradoHub = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch ALL Colorado dispensaries (no limit - auto-updates when new ones added)
+      // Fetch top 4 Colorado dispensaries
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
-        .order('rating', { ascending: false });
+        .order('rating', { ascending: false })
+        .limit(4);
       
       if (dispData) setDispensaries(dispData);
 
-      // Fetch ALL Colorado rentals (no limit - auto-updates when new ones added)
+      // Fetch top 4 Colorado rentals
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
         .ilike('address', '%Colorado%')
-        .order('rating', { ascending: false });
+        .order('rating', { ascending: false })
+        .limit(4);
       
       if (rentalData) setRentals(rentalData);
 
