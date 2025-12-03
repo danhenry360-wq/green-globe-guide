@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import USAGuide from "./pages/USAGuide";
 import ColoradoHub from "./pages/ColoradoHub";
 import DenverGuide from "./pages/DenverGuide";
+import BoulderGuide from "./pages/BoulderGuide";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -93,6 +94,7 @@ function App() {
               <Route path="/usa" element={<USAGuide />} />
               <Route path="/usa/colorado" element={<ColoradoHub />} />
               <Route path="/denver" element={<DenverGuide />} />
+              <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
