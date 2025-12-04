@@ -84,9 +84,25 @@ const DenverGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success("Guide sent! Check your inbox.");
+    
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email, source_page: 'denver-guide' });
+      
+      if (error) {
+        if (error.code === '23505') {
+          toast.success("You're already subscribed!");
+        } else {
+          throw error;
+        }
+      } else {
+        toast.success("Guide sent! Check your inbox.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    }
+    
     setEmail("");
     setSubmitting(false);
   };
