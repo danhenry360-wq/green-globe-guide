@@ -386,6 +386,7 @@ interface ProcessedRental {
   hasSmoking: boolean;
   hasVaping: boolean;
   hasEdibles: boolean;
+  isVerified: boolean;
 }
 
 // Helper function to create URL-friendly slugs
@@ -414,10 +415,12 @@ const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
                   <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-green-400 transition-colors leading-tight">
                     {rental.name}
                   </h4>
-                  <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
-                    <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    BudQuest Verified
-                  </Badge>
+                  {rental.isVerified && (
+                    <Badge className="bg-green-400/20 text-green-400 border border-green-400/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                      <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      BudQuest Verified
+                    </Badge>
+                  )}
                 </div>
                 
                 {/* Location */}
@@ -558,6 +561,7 @@ const Hotels = () => {
                     hotel.policies?.toLowerCase().includes('consumption') || false,
           hasEdibles: hotel.policies?.toLowerCase().includes('edible') ||
                      hotel.policies?.toLowerCase().includes('welcome kit') || false,
+          isVerified: false, // No hotels show verified badge by default
         }))
       )
     );

@@ -615,7 +615,7 @@ const ColoradoHub = () => {
                   transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Link to={city.slug === 'denver' ? '/denver' : `/usa/colorado/${city.slug}`}>
+                  <Link to={city.slug === 'denver' ? '/denver' : city.slug === 'boulder' ? '/boulder' : city.slug === 'aspen' ? '/aspen' : `/usa/colorado/${city.slug}`}>
                     <Card className="bg-card/50 border-border/30 h-full hover:border-accent/50 transition-all group">
                       <CardContent className="p-6">
                         <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">

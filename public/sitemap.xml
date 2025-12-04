@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages -->
+  <url>
+    <loc>https://budquest.guide/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- USA Guide Pages -->
+  <url>
+    <loc>https://budquest.guide/usa</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/usa/colorado</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/denver</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/boulder</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/aspen</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- World Guide -->
+  <url>
+    <loc>https://budquest.guide/world</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Directory Pages -->
+  <url>
+    <loc>https://budquest.guide/dispensary</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/hotels</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/tours</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://budquest.guide/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/disclaimer</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

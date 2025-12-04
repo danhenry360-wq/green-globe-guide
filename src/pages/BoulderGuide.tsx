@@ -55,21 +55,25 @@ const BoulderGuide = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // Fetch only Boulder dispensaries
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
+        .eq('city', 'Boulder')
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
-        .limit(3);
+        .limit(4);
       
       if (dispData) setDispensaries(dispData);
 
+      // Fetch only Boulder rentals (check address contains Boulder)
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
+        .ilike('address', '%Boulder%')
         .order('rating', { ascending: false })
-        .limit(3);
+        .limit(4);
       
       if (rentalData) setRentals(rentalData);
       setLoading(false);
@@ -82,8 +86,25 @@ const BoulderGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success("Guide sent! Check your inbox.");
+    
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email, source_page: 'boulder-guide' });
+      
+      if (error) {
+        if (error.code === '23505') {
+          toast.success("You're already subscribed!");
+        } else {
+          throw error;
+        }
+      } else {
+        toast.success("Guide sent! Check your inbox.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    }
+    
     setEmail("");
     setSubmitting(false);
   };

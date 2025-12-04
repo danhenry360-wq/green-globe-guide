@@ -7,11 +7,28 @@ import logo from "@/assets/global-canna-pass-logo.png";
 
 const AGE_VERIFIED_KEY = "budquest-age-verified";
 
+// Bot user agents to allow through without age gate
+const BOT_USER_AGENTS = [
+  'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider',
+  'yandexbot', 'sogou', 'exabot', 'facebot', 'facebookexternalhit',
+  'ia_archiver', 'twitterbot', 'linkedinbot', 'pinterest', 'semrushbot',
+  'ahrefsbot', 'mj12bot', 'dotbot', 'petalbot'
+];
+
+const isBot = () => {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent.toLowerCase();
+  return BOT_USER_AGENTS.some(bot => ua.includes(bot));
+};
+
 export function AgeGateModal() {
   const [showModal, setShowModal] = useState(false);
   const [ageVerified, setAgeVerified] = useState(false);
 
   useEffect(() => {
+    // Allow bots through without age gate for SEO crawling
+    if (isBot()) return;
+    
     const verified = localStorage.getItem(AGE_VERIFIED_KEY);
     if (verified !== "true") {
       setShowModal(true);
