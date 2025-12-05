@@ -16,6 +16,8 @@ import ColoradoHub from "./pages/ColoradoHub";
 import DenverGuide from "./pages/DenverGuide";
 import BoulderGuide from "./pages/BoulderGuide";
 import AspenGuide from "./pages/AspenGuide";
+import ColoradoSpringsGuide from "./pages/ColoradoSpringsGuide";
+import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -97,6 +99,8 @@ function App() {
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
+              <Route path="/colorado-springs" element={<ColoradoSpringsGuide />} />
+              <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
