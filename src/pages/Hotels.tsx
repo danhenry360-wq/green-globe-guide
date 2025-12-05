@@ -392,8 +392,13 @@ interface ProcessedRental {
 // Helper function to create URL-friendly slugs
 const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-const RentalCard = ({ rental }: { rental: ProcessedRental }) => {
-  const slug = createSlug(rental.name);
+interface ProcessedRentalWithSlug extends ProcessedRental {
+  slug?: string;
+}
+
+const RentalCard = ({ rental }: { rental: ProcessedRentalWithSlug }) => {
+  // Use database slug if available, otherwise generate from name
+  const slug = rental.slug || createSlug(rental.name);
   
   return (
     <motion.div
@@ -484,21 +489,29 @@ const Hotels = () => {
     if (!dbHotels || dbHotels.length === 0) return [];
     
     // Convert DB hotels to the format expected by the component
-    const dbHotelsFormatted: Hotel[] = dbHotels.map((hotel, index) => ({
-      id: 9000 + index, // Generate numeric ID starting from 9000
-      name: hotel.name,
-      city: hotel.address?.split(',')[0]?.trim() || 'Unknown',
-      state: hotel.address?.split(',')[1]?.trim() || 'Unknown',
-      rating: Number(hotel.rating) || 4.5,
-      policies: hotel.policies || '',
-      website: hotel.website || '#',
-      priceRange: '$$$' as const,
-      affiliateLink: hotel.website || '#',
-      description: hotel.policies || '',
-      hasSmoking: hotel.is_420_friendly || false,
-      hasVaping: hotel.is_420_friendly || false,
-      hasEdibles: hotel.is_420_friendly || false,
-    }));
+    const dbHotelsFormatted: (Hotel & { isVerified?: boolean; slug?: string; amenitiesData?: any })[] = dbHotels.map((hotel, index) => {
+      const amenities = hotel.amenities as { smoking?: boolean; vaping?: boolean; edibles?: boolean; price_range?: string } | null;
+      const priceRange = amenities?.price_range || '$$';
+      const validPriceRange = ['$$', '$$$', '$$$$'].includes(priceRange) ? priceRange as '$$' | '$$$' | '$$$$' : '$$';
+      return {
+        id: 9000 + index,
+        name: hotel.name,
+        city: hotel.address?.split(',')[0]?.trim() || 'Unknown',
+        state: hotel.address?.split(',')[1]?.trim() || 'Unknown',
+        rating: Number(hotel.rating) || 4.5,
+        policies: hotel.policies || '',
+        website: hotel.website || '#',
+        priceRange: validPriceRange,
+        affiliateLink: hotel.website || '#',
+        description: hotel.policies || '',
+        hasSmoking: amenities?.smoking ?? false,
+        hasVaping: amenities?.vaping ?? false,
+        hasEdibles: amenities?.edibles ?? false,
+        isVerified: hotel.is_verified ?? false,
+        slug: hotel.slug,
+        amenitiesData: amenities,
+      };
+    });
 
     // Group by country and state
     const hotelsByCountryState = dbHotelsFormatted.reduce((acc, hotel) => {
@@ -542,27 +555,28 @@ const Hotels = () => {
   const processedData = useMemo(() => {
     return DATA.flatMap(country => 
       country.states.flatMap(state => 
-        state.hotels.map(hotel => ({
-          id: String(hotel.id || `${country.country}-${state.stateName}-${hotel.name}`),
-          name: hotel.name,
-          city: hotel.city,
-          country: country.country,
-          countryFlag: country.flagPath,
-          stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
-          rating: hotel.rating,
-          priceRange: hotel.priceRange,
-          policies: hotel.policies || '',
-          website: hotel.website,
-          isBudget: hotel.priceRange === '$$',
-          isPremium: hotel.priceRange === '$$$$',
-          hasSmoking: hotel.policies?.toLowerCase().includes('smoking') || 
-                     hotel.policies?.toLowerCase().includes('balcony') || false,
-          hasVaping: hotel.policies?.toLowerCase().includes('vaping') ||
-                    hotel.policies?.toLowerCase().includes('consumption') || false,
-          hasEdibles: hotel.policies?.toLowerCase().includes('edible') ||
-                     hotel.policies?.toLowerCase().includes('welcome kit') || false,
-          isVerified: false, // No hotels show verified badge by default
-        }))
+        state.hotels.map(hotel => {
+          const hotelAny = hotel as any;
+          return {
+            id: String(hotel.id || `${country.country}-${state.stateName}-${hotel.name}`),
+            name: hotel.name,
+            city: hotel.city,
+            country: country.country,
+            countryFlag: country.flagPath,
+            stateName: state.stateName.replace(/\s*\(.*\)$/, ''),
+            rating: hotel.rating,
+            priceRange: hotel.priceRange,
+            policies: hotel.policies || '',
+            website: hotel.website,
+            slug: hotelAny.slug,
+            isBudget: hotel.priceRange === '$$',
+            isPremium: hotel.priceRange === '$$$$' || hotel.priceRange === '$$$',
+            hasSmoking: hotelAny.hasSmoking ?? hotel.hasSmoking ?? false,
+            hasVaping: hotelAny.hasVaping ?? hotel.hasVaping ?? false,
+            hasEdibles: hotelAny.hasEdibles ?? hotel.hasEdibles ?? false,
+            isVerified: hotelAny.isVerified ?? false,
+          };
+        })
       )
     );
   }, [DATA]);
