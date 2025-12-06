@@ -117,7 +117,7 @@ const RentalDetail = () => {
 
   const countryName = rental ? (rental as any).countryName || "USA" : "USA";
   const stateName = rental ? (rental as any).stateName || rental.state : (dbHotel?.cities?.states?.name || "");
-  const affiliateLink = rental?.affiliateLink || rental?.website || "https://expedia.com/affiliate/w0G2SNm";
+  const affiliateLink = dbHotel?.website || rental?.affiliateLink || rental?.website || "#";
   const description = rental?.description || dbHotel?.policies || `${rental?.name || dbHotel?.name} is a premium 420-friendly accommodation offering a welcoming environment for cannabis enthusiasts.`;
   const images = dbHotel?.images || (rental?.image ? [rental.image] : ["/dest-california.jpg"]);
   const displayName = rental?.name || dbHotel?.name || "";
@@ -432,11 +432,11 @@ const RentalDetail = () => {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                     >
-                      Book on Expedia
+                      Book Now
                       <ExternalLink className="h-4 w-4" />
                     </a>
                     <p className="text-xs text-muted-foreground text-center mt-2">
-                      Secure booking through Expedia
+                      Secure booking
                     </p>
                   </div>
                 </div>

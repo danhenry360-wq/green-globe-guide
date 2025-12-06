@@ -780,6 +780,48 @@ export const BLOG_POSTS = [
         "Compare Kushkations, Bud & Breakfast, and Airbnb for best value—prices vary widely by season"
       ]
     }
+  },
+  {
+    id: "cannabis-dispensaries-denver",
+    title: "Cannabis Dispensaries in Denver: Complete Guide 2025",
+    subtitle: "Your complete guide to Denver's best cannabis shops, products, and shopping tips",
+    excerpt: "Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws. Plan your Denver cannabis trip.",
+    date: "Dec 4, 2025",
+    readTime: "15 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Denver", "Dispensaries", "Shopping", "Guide"],
+    image: "/dest-2.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-denver",
+    content: {
+      introduction: "Denver is the cannabis capital of America with over 500 licensed dispensaries.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-rentals-denver",
+    title: "Best 420-Friendly Rentals in Denver: Complete Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly accommodation for your Denver trip",
+    excerpt: "Discover Denver's top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado adventure.",
+    date: "Dec 4, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏠",
+    category: "Accommodation",
+    tags: ["Denver", "Hotels", "420-Friendly", "Rentals"],
+    image: "/dest-2.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-denver",
+    content: {
+      introduction: "Denver offers excellent 420-friendly accommodations for cannabis travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
   }
 ];
 

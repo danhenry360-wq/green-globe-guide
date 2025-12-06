@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://budquest.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://budquest.com/usa</loc><priority>0.9</priority></url>
+  <url><loc>https://budquest.com/usa/colorado</loc><priority>0.9</priority></url>
+  <url><loc>https://budquest.com/denver</loc><priority>0.9</priority></url>
+  <url><loc>https://budquest.com/boulder</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/aspen</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/colorado-springs</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/world</loc><priority>0.9</priority></url>
+  <url><loc>https://budquest.com/dispensary</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/hotels</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/blog</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/blog/cannabis-dispensaries-denver</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/blog/best-420-rentals-denver</loc><priority>0.8</priority></url>
+  <url><loc>https://budquest.com/about</loc><priority>0.6</priority></url>
+  <url><loc>https://budquest.com/contact</loc><priority>0.6</priority></url>
+  <url><loc>https://budquest.com/terms</loc><priority>0.4</priority></url>
+  <url><loc>https://budquest.com/privacy</loc><priority>0.4</priority></url>
+</urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
     <loc>https://budquest.guide/</loc>
