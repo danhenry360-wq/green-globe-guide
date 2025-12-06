@@ -53,8 +53,45 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  
+  <!-- Blog Posts -->
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-denver</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/420-friendly-rentals-denver</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/cannabis-dispensaries-boulder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/420-friendly-rentals-boulder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/cannabis-dispensaries-aspen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/420-friendly-rentals-aspen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/cannabis-dispensaries-colorado-springs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/420-friendly-rentals-colorado-springs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
