@@ -18,6 +18,7 @@ import BoulderGuide from "./pages/BoulderGuide";
 import AspenGuide from "./pages/AspenGuide";
 import ColoradoSpringsGuide from "./pages/ColoradoSpringsGuide";
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
+import BlogDenverRentals from "./pages/BlogDenverRentals";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -101,6 +102,7 @@ function App() {
               <Route path="/aspen" element={<AspenGuide />} />
               <Route path="/colorado-springs" element={<ColoradoSpringsGuide />} />
               <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
+              <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 

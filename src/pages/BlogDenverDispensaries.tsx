@@ -13,19 +13,8 @@ import { motion } from "framer-motion";
 const BlogDenverDispensaries = () => {
   const dispensaries = [
     {
-      name: "The Lodge Cannabis",
-      rating: 4.8,
-      bestFor: "Premium Selection",
-      location: "Multiple Denver locations",
-      description: "Known for their extensive menu and knowledgeable staff. The Lodge offers one of Denver's most curated selections of flower, concentrates, and edibles.",
-      expects: ["Award-winning strains", "Experienced budtenders", "Clean, modern atmosphere", "Loyalty program"],
-      pricing: "$$ - $$$",
-      delivery: true,
-      parking: true,
-      tip: "Ask about their daily specials - they rotate frequently with significant discounts."
-    },
-    {
-      name: "Cookies",
+      name: "Cookies SF",
+      slug: "cookies-sf",
       rating: 4.9,
       bestFor: "Exclusive Strains",
       location: "Downtown Denver",
@@ -37,19 +26,8 @@ const BlogDenverDispensaries = () => {
       tip: "Follow their social media for limited strain drops - they sell out fast."
     },
     {
-      name: "The Green Solution",
-      rating: 4.6,
-      bestFor: "Budget-Friendly",
-      location: "Multiple Denver locations",
-      description: "One of Colorado's largest chains with competitive pricing and consistent quality. Great for first-time visitors looking for value.",
-      expects: ["Consistent pricing", "Wide selection", "Quick service", "Student discounts"],
-      pricing: "$$ ",
-      delivery: true,
-      parking: true,
-      tip: "Sign up for their rewards program - first-time discounts are substantial."
-    },
-    {
       name: "Native Roots",
+      slug: "native-roots-denver",
       rating: 4.7,
       bestFor: "Tourist-Friendly",
       location: "Multiple Denver locations including DIA area",
@@ -61,19 +39,8 @@ const BlogDenverDispensaries = () => {
       tip: "Their Rino location is perfect for combining with brewery visits."
     },
     {
-      name: "Denver Relief",
-      rating: 4.5,
-      bestFor: "Medical Focus",
-      location: "Baker neighborhood",
-      description: "One of Denver's original dispensaries with deep roots in the medical cannabis community. Known for compassionate care and quality.",
-      expects: ["Medical expertise", "Veteran discounts", "Quality concentrates", "Personal service"],
-      pricing: "$$",
-      delivery: false,
-      parking: true,
-      tip: "Great for those with specific medical needs - staff is highly knowledgeable."
-    },
-    {
-      name: "Lightshade Labs",
+      name: "Lightshade Rec & Med Dispensary",
+      slug: "lightshade-denver",
       rating: 4.6,
       bestFor: "Edibles Selection",
       location: "Multiple Denver locations",
@@ -86,6 +53,7 @@ const BlogDenverDispensaries = () => {
     },
     {
       name: "Emerald Fields",
+      slug: "emerald-fields",
       rating: 4.7,
       bestFor: "Craft Cannabis",
       location: "Glendale (Denver metro)",
@@ -97,23 +65,64 @@ const BlogDenverDispensaries = () => {
       tip: "Tell them your flavor preferences - they'll match you with perfect terpene profiles."
     },
     {
-      name: "Vital Health Cannabis",
+      name: "Best Buds Dispensary RiNo",
+      slug: "best-buds-dispensary-rino",
+      rating: 4.5,
+      bestFor: "RiNo District",
+      location: "River North Art District",
+      description: "Located in Denver's trendy RiNo district, this dispensary offers a curated selection perfect for exploring the area's breweries and art galleries.",
+      expects: ["Craft-grown flower", "Great location", "Friendly staff", "Quality products"],
+      pricing: "$$",
+      delivery: false,
+      parking: true,
+      tip: "Perfect for combining with a RiNo brewery tour."
+    },
+    {
+      name: "Best Buds Highland",
+      slug: "best-buds-highland",
+      rating: 4.5,
+      bestFor: "Highland Neighborhood",
+      location: "Highland, Denver",
+      description: "Serving the Highland neighborhood with quality cannabis products and excellent customer service.",
+      expects: ["Quality selection", "Friendly staff", "Neighborhood favorite", "Competitive prices"],
+      pricing: "$$",
+      delivery: false,
+      parking: true,
+      tip: "Great neighborhood dispensary with local favorites."
+    },
+    {
+      name: "Alternative Medicine on Capitol Hill",
+      slug: "alternative-medicine-on-capitol-hill-amch-dispensary",
+      rating: 4.6,
+      bestFor: "Medical Focus",
+      location: "Capitol Hill, Denver",
+      description: "One of Denver's original dispensaries with deep roots in the medical cannabis community. Known for compassionate care and quality.",
+      expects: ["Medical expertise", "Veteran discounts", "Quality concentrates", "Personal service"],
+      pricing: "$$",
+      delivery: false,
+      parking: true,
+      tip: "Great for those with specific medical needs - staff is highly knowledgeable."
+    },
+    {
+      name: "Ascend Cannabis Co",
+      slug: "ascend-cannabis-co",
       rating: 4.4,
-      bestFor: "Concentrates",
-      location: "Multiple Denver locations",
-      description: "Specializing in high-quality concentrates and extracts. Great selection of live resin, rosin, and diamonds.",
-      expects: ["Premium concentrates", "Diverse extraction methods", "Competitive pricing", "Knowledgeable staff"],
+      bestFor: "Quality Products",
+      location: "Denver",
+      description: "Offering a wide selection of quality cannabis products with knowledgeable staff to guide your experience.",
+      expects: ["Wide selection", "Knowledgeable staff", "Quality products", "Good prices"],
       pricing: "$$",
       delivery: true,
       parking: true,
-      tip: "Their live resin selection rotates frequently - ask what's fresh."
+      tip: "Ask about their daily specials for the best deals."
     },
     {
-      name: "The Source",
+      name: "C.R.E.A.M Dispensary",
+      slug: "c-r-e-a-m-recreational-medical-marijuana-dispensary",
       rating: 4.5,
       bestFor: "Consistent Quality",
-      location: "Multiple locations",
-      description: "Reliable dispensary chain known for consistent product quality and straightforward shopping experience.",
+      location: "Denver",
+      description: "Reliable dispensary known for consistent product quality and straightforward shopping experience.",
       expects: ["Consistent inventory", "Fair pricing", "Quick transactions", "No-pressure sales"],
       pricing: "$$",
       delivery: true,
@@ -121,16 +130,17 @@ const BlogDenverDispensaries = () => {
       tip: "Great for repeat purchases - you'll find the same products each visit."
     },
     {
-      name: "Spot 420",
+      name: "Buku Loud Dispensary",
+      slug: "buku-loud-recreational-and-medical-marijuana-dispensary",
       rating: 4.3,
-      bestFor: "Late Night",
-      location: "Various Denver locations",
-      description: "One of the few dispensaries with extended hours. Perfect for late arrivals or spontaneous evening purchases.",
-      expects: ["Extended hours", "Quick service", "Solid selection", "Convenient locations"],
+      bestFor: "Value Selection",
+      location: "Denver",
+      description: "Offering recreational and medical marijuana with a focus on value and variety.",
+      expects: ["Good prices", "Wide selection", "Both rec and med", "Convenient location"],
       pricing: "$$",
       delivery: false,
       parking: true,
-      tip: "Check their hours - some locations open until 10 PM or later."
+      tip: "Check their specials for great deals on quality products."
     },
   ];
 
@@ -410,7 +420,9 @@ const BlogDenverDispensaries = () => {
                         <div>
                           <div className="flex items-center gap-3 mb-2">
                             <span className="text-2xl font-bold text-accent">#{index + 1}</span>
-                            <h3 className="text-xl font-bold text-foreground">{disp.name}</h3>
+                            <Link to={`/dispensary/${disp.slug}`} className="hover:text-accent transition-colors">
+                              <h3 className="text-xl font-bold text-foreground hover:text-accent">{disp.name}</h3>
+                            </Link>
                           </div>
                           <div className="flex flex-wrap items-center gap-3">
                             <div className="flex items-center gap-1">
@@ -454,9 +466,18 @@ const BlogDenverDispensaries = () => {
                         </span>
                       </div>
                       
-                      <div className="bg-accent/10 border border-accent/20 rounded-lg p-3">
-                        <p className="text-xs text-accent font-medium mb-1">Pro Tip</p>
-                        <p className="text-sm text-muted-foreground">{disp.tip}</p>
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex-1 bg-accent/10 border border-accent/20 rounded-lg p-3">
+                          <p className="text-xs text-accent font-medium mb-1">Pro Tip</p>
+                          <p className="text-sm text-muted-foreground">{disp.tip}</p>
+                        </div>
+                        <Link 
+                          to={`/dispensary/${disp.slug}`}
+                          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm shrink-0"
+                        >
+                          View Dispensary
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
                       </div>
                     </Card>
                   </motion.div>
