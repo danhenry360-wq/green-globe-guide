@@ -23,23 +23,23 @@ const ColoradoSpringsGuide = () => {
   const [rentals, setRentals] = useState<any[]>([]);
 
   useEffect(() => {
-    // Fetch Colorado Springs dispensaries
+    // Fetch Colorado Springs dispensaries only
     const fetchDispensaries = async () => {
       const { data } = await supabase
         .from('dispensaries')
         .select('*')
-        .ilike('city', '%Colorado Springs%')
-        .limit(6);
+        .or('city.ilike.%Colorado Springs%,city.eq.Colorado Springs')
+        .order('rating', { ascending: false });
       if (data) setDispensaries(data);
     };
 
-    // Fetch Colorado Springs rentals
+    // Fetch Colorado Springs and Manitou Springs rentals only
     const fetchRentals = async () => {
       const { data } = await supabase
         .from('hotels')
         .select('*')
-        .or('address.ilike.%Colorado Springs%,address.ilike.%Manitou Springs%')
-        .limit(6);
+        .or('address.ilike.%Colorado Springs%,address.ilike.%Manitou%')
+        .order('rating', { ascending: false });
       if (data) setRentals(data);
     };
 

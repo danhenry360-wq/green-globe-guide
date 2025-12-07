@@ -822,6 +822,27 @@ export const BLOG_POSTS = [
       sections: [],
       safetyTips: []
     }
+  },
+  {
+    id: "cannabis-dispensaries-boulder",
+    title: "Cannabis Dispensaries in Boulder: Complete Guide 2025",
+    subtitle: "Your complete guide to Boulder's craft cannabis scene and best dispensaries",
+    excerpt: "Discover Boulder's best cannabis dispensaries. Complete guide to top shops, craft products, shopping tips, and local laws. Plan your Boulder cannabis experience.",
+    date: "Dec 4, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Boulder", "Dispensaries", "Shopping", "Guide"],
+    image: "/dest-colorado.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-boulder",
+    content: {
+      introduction: "Boulder offers a unique craft cannabis experience reflecting the city's health-conscious culture.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
   }
 ];
 
