@@ -824,6 +824,27 @@ export const BLOG_POSTS = [
     }
   },
   {
+    id: "420-rentals-boulder",
+    title: "Best 420-Friendly Rentals in Boulder: Complete Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly mountain retreat near the iconic Flatirons",
+    excerpt: "Discover Boulder's top 420-friendly hotels, vacation rentals, and mountain lodges. Book verified cannabis-welcoming accommodations near the Flatirons.",
+    date: "Dec 4, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Boulder", "Hotels", "420-Friendly", "Rentals", "Mountain"],
+    image: "/dest-colorado.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-boulder",
+    content: {
+      introduction: "Boulder offers stunning mountain lodges and vacation rentals for cannabis travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "cannabis-dispensaries-boulder",
     title: "Cannabis Dispensaries in Boulder: Complete Guide 2025",
     subtitle: "Your complete guide to Boulder's craft cannabis scene and best dispensaries",
