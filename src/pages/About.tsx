@@ -102,7 +102,7 @@ const About = () => {
   const stats = [
     { label: "Countries", end: 120, icon: MapPin, suffix: "+" },
     { label: "Monthly Updates", end: 1200, icon: Calendar, suffix: "+" },
-    { label: "Legal Resources", end: 4800, icon: Scale, suffix: "+" },
+    { label: "Legal Resources", end: 50, icon: Scale, suffix: "+" },
     { label: "Happy Travelers", end: 3000, icon: Leaf, suffix: "k+" },
   ];
 
