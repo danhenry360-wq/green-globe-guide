@@ -35,10 +35,11 @@ const BlogBoulderRentals = () => {
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .or('address.ilike.%Boulder%,address.ilike.%boulder%')
+        .ilike('address', '%Boulder%')
         .order('rating', { ascending: false });
       
       console.log('Boulder rentals fetch:', { data, error });
+      if (error) console.error('Boulder rentals error:', error);
       if (data) setRentals(data);
       setLoading(false);
     };

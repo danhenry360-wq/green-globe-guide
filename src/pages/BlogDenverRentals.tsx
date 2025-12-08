@@ -34,10 +34,11 @@ const BlogDenverRentals = () => {
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .or('address.ilike.%Denver%,address.ilike.%denver%')
+        .ilike('address', '%Denver%')
         .order('rating', { ascending: false });
       
       console.log('Denver rentals fetch:', { data, error });
+      if (error) console.error('Denver rentals error:', error);
       if (data) setRentals(data);
       setLoading(false);
     };

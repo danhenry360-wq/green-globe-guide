@@ -37,6 +37,7 @@ const BlogBoulderDispensaries = () => {
         .order('rating', { ascending: false });
       
       console.log('Boulder dispensaries fetch:', { data, error });
+      if (error) console.error('Boulder dispensaries error:', error);
       if (data) setDispensaries(data);
       setLoading(false);
     };

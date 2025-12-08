@@ -79,6 +79,11 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
+              {/* Specific blog pages must come BEFORE the generic /blog/:slug route */}
+              <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
+              <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
+              <Route path="/blog/cannabis-dispensaries-boulder" element={<BlogBoulderDispensaries />} />
+              <Route path="/blog/best-420-rentals-boulder" element={<BlogBoulderRentals />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
@@ -103,10 +108,6 @@ function App() {
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
               <Route path="/colorado-springs" element={<ColoradoSpringsGuide />} />
-              <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
-              <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
-              <Route path="/blog/cannabis-dispensaries-boulder" element={<BlogBoulderDispensaries />} />
-              <Route path="/blog/best-420-rentals-boulder" element={<BlogBoulderRentals />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
