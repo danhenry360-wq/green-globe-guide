@@ -24,8 +24,8 @@ const CONTACT_STRUCTURED_DATA = {
   mainEntity: {
     "@type": "Organization",
     name: "BudQuest",
-    url: "https://budquest.com",
-    logo: "https://budquest.com/logo.png",
+    url: "https://budquest.guide",
+    logo: "https://budquest.guide/logo.png",
     description: "Global cannabis travel guide with legal status, 420-friendly hotels, and travel regulations",
     contactPoint: [
       {
@@ -141,7 +141,7 @@ const ContactForm = () => {
     if (!formData.message.trim()) newErrors.message = "Message required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  };e
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -355,7 +355,7 @@ const Contact = () => {
   const stats = [
     { label: "Countries Covered", end: 120, icon: Globe },
     { label: "Monthly Updates", end: 1200, icon: Zap },
-    { label: "Legal Resources", end: 4800, icon: Shield },
+    { label: "Legal Resources", end: 50, icon: Shield },
     { label: "Travelers Helped", end: 3000, icon: Users },
   ];
 
