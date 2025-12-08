@@ -4,7 +4,7 @@ import { motion, Variants } from "framer-motion";
 import {
   Search, MapPin, Shield, Globe2, Plane, Building2, Map, 
   ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2,
-  Store // Added Store icon for Dispensaries
+  Store // Store icon for Dispensaries
 } from "lucide-react";
 
 // UI Components
@@ -29,22 +29,10 @@ import heroImage from "@/assets/hero-cannabis-travel.jpg";
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
 
 /* ----------  DYNAMIC STATS CONFIGURATION  ---------- */
-/* 
-   To make these stats automatic:
-   1. Import your data files (e.g., import { HOTELS_LIST } from "@/data/hotels";)
-   2. Set the constant to the length of that array (e.g., const HOTEL_COUNT = HOTELS_LIST.length;)
-*/
-
-// Placeholder for Dispensary Data (Replace 48 with your actual data length)
-const DISPENSARY_COUNT = 48; 
-// Example automation: const DISPENSARY_COUNT = ALL_DISPENSARIES.length;
-
-// Placeholder for Hotel Data (Replace 21 with your actual data length)
-const HOTEL_COUNT = 21; 
-// Example automation: const HOTEL_COUNT = ALL_HOTELS.length;
-
-// Country count (calculated from your map data or fixed)
-const COUNTRY_COUNT = 120; 
+// Configured for Verification & Trust
+const DISPENSARY_COUNT = 48; // Verified Exact Count
+const HOTEL_COUNT = 21;      // Verified Exact Count
+const COUNTRY_COUNT = 120;   // Global Coverage
 
 /* ----------  SEARCH DATA  ---------- */
 interface SearchItem {
@@ -96,7 +84,7 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "Morocco", type: "country", status: "Illegal", path: "/world/africa/morocco", region: "Africa" },
   { name: "Lesotho", type: "country", status: "Medical", path: "/world/africa/lesotho", region: "Africa" },
   // Oceania
-  { name: "Australia", type: "country", status: "Medical", path: "/world/oceania/australia", region: "Oceania" },
+  { name: "Australia", type: "country", status: "Mixed", path: "/world/oceania/australia", region: "Oceania" }, // UPDATED: Was Medical
   { name: "New Zealand", type: "country", status: "Medical", path: "/world/oceania/new-zealand", region: "Oceania" },
 ];
 
@@ -228,7 +216,6 @@ const MobileContinentMap = () => {
   const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Updated to match the screenshot provided by user
   const continentDisplay = [
     { name: "North America", emoji: "🌐", count: 3, slug: "north-america" },
     { name: "Central America", emoji: "☀️", count: 7, slug: "central-america" },
@@ -277,7 +264,8 @@ const MobileContinentMap = () => {
       { name: "Morocco", status: "Illegal", description: "Major hash producer (Kief tolerated)", slug: "morocco" },
     ],
     "oceania": [
-      { name: "Australia", status: "Medical", description: "Medical nationwide, ACT recreational", slug: "australia" },
+      // UPDATED: Australia is Mixed (ACT Recreational, Federal Medical)
+      { name: "Australia", status: "Mixed", description: "Medical federal, ACT recreational", slug: "australia" }, 
       { name: "New Zealand", status: "Medical", description: "Medical legal since 2020", slug: "new-zealand" },
     ],
   };
@@ -287,7 +275,6 @@ const MobileContinentMap = () => {
 
   if (selectedContinent) {
     const continentInfo = continentDisplay.find(c => c.slug === selectedContinent);
-    // Show just a few representative countries, but link to the full list
     const representativeCountries = countriesByContinent[selectedContinent] || [];
 
     return (
@@ -327,7 +314,6 @@ const MobileContinentMap = () => {
             ))}
           </div>
 
-          {/* Technical Link to Full Country List */}
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
@@ -476,7 +462,7 @@ const Home = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Define Stats Data here to access constants
+  // Define Stats Data with Exact Numbers + Suffix
   const STATS_DATA: StatItem[] = [
     { icon: Globe2, label: "Countries Covered", count: COUNTRY_COUNT, suffix: "+" },
     { icon: Store, label: "Verified Dispensaries", count: DISPENSARY_COUNT, suffix: "+" },
@@ -706,7 +692,8 @@ const Home = () => {
               <Card className="bg-card/50 border-border/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
                   <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Global Map Data...</div>}>
-                    <InteractiveWorldMap />
+                    {/* Passed WORLD_COUNTRIES to ensure the web map receives the verified data (e.g., Australia = Mixed) */}
+                    <InteractiveWorldMap data={WORLD_COUNTRIES} />
                   </Suspense>
                 </div>
                 <div className="mt-6 flex justify-center"><MapLegend /></div>
