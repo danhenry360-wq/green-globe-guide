@@ -19,7 +19,7 @@ const Privacy = () => {
           </h1>
           
           <p className="text-muted-foreground mb-8">
-            Last Updated: November 29, 2025
+            Last Updated: December 8, 2025
           </p>
 
           <div className="prose prose-invert max-w-none space-y-8">
@@ -182,7 +182,7 @@ const Privacy = () => {
               </p>
               <p className="text-muted-foreground mt-2">
                 <strong className="text-foreground">BudQuest</strong><br />
-                Email: privacy@budquest.com
+                Email: legal@budquest.guide
               </p>
             </section>
           </div>
