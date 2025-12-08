@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import {
   Search, MapPin, Shield, Globe2, Plane, Building2, Map, 
-  ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2
+  ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2,
+  Store // Added Store icon for Dispensaries
 } from "lucide-react";
 
 // UI Components
@@ -26,6 +27,24 @@ import heroImage from "@/assets/hero-cannabis-travel.jpg";
 
 // Lazy Load Heavy Components
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
+
+/* ----------  DYNAMIC STATS CONFIGURATION  ---------- */
+/* 
+   To make these stats automatic:
+   1. Import your data files (e.g., import { HOTELS_LIST } from "@/data/hotels";)
+   2. Set the constant to the length of that array (e.g., const HOTEL_COUNT = HOTELS_LIST.length;)
+*/
+
+// Placeholder for Dispensary Data (Replace 48 with your actual data length)
+const DISPENSARY_COUNT = 48; 
+// Example automation: const DISPENSARY_COUNT = ALL_DISPENSARIES.length;
+
+// Placeholder for Hotel Data (Replace 21 with your actual data length)
+const HOTEL_COUNT = 21; 
+// Example automation: const HOTEL_COUNT = ALL_HOTELS.length;
+
+// Country count (calculated from your map data or fixed)
+const COUNTRY_COUNT = 120; 
 
 /* ----------  SEARCH DATA  ---------- */
 interface SearchItem {
@@ -457,6 +476,14 @@ const Home = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Define Stats Data here to access constants
+  const STATS_DATA: StatItem[] = [
+    { icon: Globe2, label: "Countries Covered", count: COUNTRY_COUNT, suffix: "+" },
+    { icon: Store, label: "Verified Dispensaries", count: DISPENSARY_COUNT, suffix: "+" },
+    { icon: Building2, label: "420-Friendly Hotels", count: HOTEL_COUNT, suffix: "+" },
+    { icon: Shield, label: "Data Accuracy", count: 94, suffix: "%" },
+  ];
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <SEOHead />
@@ -758,13 +785,6 @@ const FEATURED_DESTINATIONS: Destination[] = [
   { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Canada legal weed travel guide Toronto", color: "bg-green-500/90", link: "/world/north-america/canada" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay cannabis club travel", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
   { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
-];
-
-const STATS_DATA: StatItem[] = [
-  { icon: Globe2, label: "Countries Covered", count: 120, suffix: "+" },
-  { icon: MapPin, label: "Verified Destinations", count: 500, suffix: "+" },
-  { icon: Building2, label: "420-Friendly Hotels", count: 300, suffix: "+" },
-  { icon: Shield, label: "Data Accuracy", count: 94, suffix: "%" },
 ];
 
 const BLOG_DATA: BlogItem[] = [
