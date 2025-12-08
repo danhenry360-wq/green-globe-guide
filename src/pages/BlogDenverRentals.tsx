@@ -30,13 +30,14 @@ const BlogDenverRentals = () => {
 
   useEffect(() => {
     const fetchRentals = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .ilike('address', '%Denver%')
+        .or('address.ilike.%Denver%,address.ilike.%denver%')
         .order('rating', { ascending: false });
       
+      console.log('Denver rentals fetch:', { data, error });
       if (data) setRentals(data);
       setLoading(false);
     };
@@ -330,7 +331,10 @@ const BlogDenverRentals = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">Loading rentals...</p>
+                <div className="text-center py-8 bg-card/40 rounded-lg border border-accent/20">
+                  <p className="text-muted-foreground mb-2">No 420-friendly rentals found in Denver yet.</p>
+                  <p className="text-sm text-muted-foreground">Check back soon as we add more verified properties!</p>
+                </div>
               )}
             </div>
           </div>

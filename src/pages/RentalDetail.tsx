@@ -158,8 +158,9 @@ const RentalDetail = () => {
             },
             "aggregateRating": {
               "@type": "AggregateRating",
-              "ratingValue": displayRating,
-              "bestRating": 5
+              "ratingValue": displayRating > 5 ? (displayRating / 2).toFixed(1) : displayRating,
+              "bestRating": 5,
+              "ratingCount": 1
             },
             "priceRange": displayPriceRange
           })}

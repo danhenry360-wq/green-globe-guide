@@ -31,13 +31,14 @@ const BlogBoulderRentals = () => {
 
   useEffect(() => {
     const fetchRentals = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .ilike('address', '%Boulder%')
+        .or('address.ilike.%Boulder%,address.ilike.%boulder%')
         .order('rating', { ascending: false });
       
+      console.log('Boulder rentals fetch:', { data, error });
       if (data) setRentals(data);
       setLoading(false);
     };
