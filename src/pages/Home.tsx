@@ -127,13 +127,10 @@ const STAGGER: Variants = { animate: { transition: { staggerChildren: 0.15 } } }
 
 /* ----------  SUB-COMPONENTS  ---------- */
 
-// SEO Component (No-Dependency Version)
+// SEO Component
 const SEOHead = () => {
   useEffect(() => {
-    // 1. Set Title
     document.title = "BudQuest | The Ultimate Global Cannabis Travel Guide";
-    
-    // Helper to inject/update meta tags
     const updateMeta = (name: string, content: string, attribute: 'name' | 'property' = 'name') => {
       let element = document.querySelector(`meta[${attribute}="${name}"]`);
       if (!element) {
@@ -148,11 +145,9 @@ const SEOHead = () => {
     const url = "https://budquest.com";
     const image = "https://budquest.com/og-social-share.jpg";
 
-    // Standard SEO
     updateMeta("description", description);
     updateMeta("keywords", "cannabis travel, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest");
     
-    // Canonical Link
     let canonical = document.querySelector("link[rel='canonical']");
     if (!canonical) {
       canonical = document.createElement("link");
@@ -161,21 +156,12 @@ const SEOHead = () => {
     }
     canonical.setAttribute("href", url);
 
-    // Open Graph / Facebook
     updateMeta("og:type", "website", "property");
     updateMeta("og:url", url, "property");
     updateMeta("og:title", "BudQuest | Global Cannabis Travel Guide", "property");
     updateMeta("og:description", "Discover legal cannabis destinations, verified laws, and 420-friendly stays worldwide.", "property");
     updateMeta("og:image", image, "property");
-    updateMeta("og:site_name", "BudQuest", "property");
 
-    // Twitter Card
-    updateMeta("twitter:card", "summary_large_image", "name");
-    updateMeta("twitter:title", "BudQuest | Global Cannabis Travel Guide", "name");
-    updateMeta("twitter:description", description, "name");
-    updateMeta("twitter:image", image, "name");
-
-    // 2. Structured Data (JSON-LD)
     const scriptId = "seo-structured-data";
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
@@ -198,17 +184,12 @@ const SEOHead = () => {
           "@type": "Organization",
           "name": "BudQuest",
           "url": url,
-          "logo": "https://budquest.com/logo.png",
-          "sameAs": [
-            "https://twitter.com/budquest",
-            "https://instagram.com/budquest"
-          ]
+          "logo": "https://budquest.com/logo.png"
         }
       ]);
       document.head.appendChild(script);
     }
   }, []);
-
   return null;
 };
 
@@ -228,12 +209,16 @@ const MobileContinentMap = () => {
   const [selectedContinent, setSelectedContinent] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // Updated to match the screenshot provided by user
   const continentDisplay = [
-    { name: "Americas", emoji: "🌎", count: 8, slug: "north-america" },
-    { name: "Europe", emoji: "🇪🇺", count: 8, slug: "europe" },
-    { name: "Asia", emoji: "🌏", count: 4, slug: "asia" },
-    { name: "Africa", emoji: "🌍", count: 4, slug: "africa" },
-    { name: "Oceania", emoji: "🏝️", count: 2, slug: "oceania" },
+    { name: "North America", emoji: "🌐", count: 3, slug: "north-america" },
+    { name: "Central America", emoji: "☀️", count: 7, slug: "central-america" },
+    { name: "Europe", emoji: "🏔️", count: 44, slug: "europe" },
+    { name: "South America", emoji: "🌴", count: 13, slug: "south-america" },
+    { name: "Caribbean", emoji: "🌊", count: 26, slug: "caribbean" },
+    { name: "Asia", emoji: "⛰️", count: 41, slug: "asia" },
+    { name: "Africa", emoji: "📍", count: 54, slug: "africa" },
+    { name: "Oceania", emoji: "≈", count: 25, slug: "oceania" },
   ];
 
   const countriesByContinent: Record<string, { name: string; status: string; description: string; slug: string; realRegion?: string }[]> = {
@@ -241,33 +226,36 @@ const MobileContinentMap = () => {
       { name: "United States", status: "Mixed", description: "Varies by state - 24 states recreational", slug: "united-states" },
       { name: "Canada", status: "Recreational", description: "Fully legal nationwide since 2018", slug: "canada" },
       { name: "Mexico", status: "Decriminalized", description: "Decriminalized for personal use", slug: "mexico" },
-      { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
+    ],
+    "central-america": [
       { name: "Costa Rica", status: "Decriminalized", description: "Personal use largely tolerated", slug: "costa-rica" },
-      { name: "Uruguay", status: "Recreational", description: "Fully legal (South America)", slug: "uruguay", realRegion: "south-america" },
-      { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia", realRegion: "south-america" },
-      { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina", realRegion: "south-america" },
+      { name: "Panama", status: "Medical", description: "Medical legalization in process", slug: "panama" },
+      { name: "Belize", status: "Decriminalized", description: "Possession up to 10g decriminalized", slug: "belize" },
+    ],
+    "south-america": [
+      { name: "Uruguay", status: "Recreational", description: "Fully legal for residents", slug: "uruguay" },
+      { name: "Colombia", status: "Medical", description: "Medical legal, Decriminalized <20g", slug: "colombia" },
+      { name: "Argentina", status: "Medical", description: "REPROCANN program for medical use", slug: "argentina" },
+    ],
+    "caribbean": [
+      { name: "Jamaica", status: "Decriminalized", description: "Medical and religious use legal", slug: "jamaica" },
+      { name: "St. Vincent", status: "Decriminalized", description: "Medical cannabis industry active", slug: "st-vincent" },
     ],
     "europe": [
       { name: "Netherlands", status: "Decriminalized", description: "Tolerated in coffee shops", slug: "netherlands" },
       { name: "Germany", status: "Recreational", description: "Legalized recreational use (2024)", slug: "germany" },
       { name: "Spain", status: "Decriminalized", description: "Private social clubs legal", slug: "spain" },
       { name: "Portugal", status: "Decriminalized", description: "Decriminalized all drugs in 2001", slug: "portugal" },
-      { name: "Switzerland", status: "Decriminalized", description: "Low-THC (<1%) legal, high-THC trials", slug: "switzerland" },
       { name: "Malta", status: "Recreational", description: "First EU country to legalize", slug: "malta" },
-      { name: "Czech Republic", status: "Decriminalized", description: "Liberal drug laws, widely available", slug: "czech-republic" },
-      { name: "Luxembourg", status: "Recreational", description: "Legal to grow and consume at home", slug: "luxembourg" },
     ],
     "asia": [
       { name: "Thailand", status: "Mixed", description: "Recreational ending 2025, medical only", slug: "thailand" },
       { name: "India", status: "Mixed", description: "Bhang legal, flower illegal by state", slug: "india" },
       { name: "Japan", status: "Illegal", description: "Strict prohibition (Travel Warning)", slug: "japan" },
-      { name: "South Korea", status: "Medical", description: "Strict medical only, illegal for rec", slug: "south-korea" },
     ],
     "africa": [
       { name: "South Africa", status: "Decriminalized", description: "Private cultivation and use legal", slug: "south-africa" },
       { name: "Morocco", status: "Illegal", description: "Major hash producer (Kief tolerated)", slug: "morocco" },
-      { name: "Lesotho", status: "Medical", description: "First African medical license", slug: "lesotho" },
-      { name: "Malawi", status: "Medical", description: "Cultivation for medical/export legal", slug: "malawi" },
     ],
     "oceania": [
       { name: "Australia", status: "Medical", description: "Medical nationwide, ACT recreational", slug: "australia" },
@@ -276,35 +264,32 @@ const MobileContinentMap = () => {
   };
 
   const getStatusDot = (status: string) => getStatusDotClass(status);
-
   const getStatusColor = (status: string) => getStatusOutlineClasses(status);
 
   if (selectedContinent) {
-    const continent = continentDisplay.find(c => c.slug === selectedContinent);
-    const countries = countriesByContinent[selectedContinent] || [];
+    const continentInfo = continentDisplay.find(c => c.slug === selectedContinent);
+    // Show just a few representative countries, but link to the full list
+    const representativeCountries = countriesByContinent[selectedContinent] || [];
 
     return (
       <div className="block md:hidden">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-3xl">{continent?.emoji}</span>
-            <h3 className="text-xl font-bold text-foreground">{continent?.name}</h3>
+            <span className="text-3xl">{continentInfo?.emoji}</span>
+            <h3 className="text-xl font-bold text-foreground">{continentInfo?.name}</h3>
             <Button variant="outline" size="sm" onClick={() => setSelectedContinent(null)} className="ml-auto">
               ← Back
             </Button>
           </div>
 
           <div className="space-y-3">
-            {countries.map((country, index) => (
+            {representativeCountries.map((country, index) => (
               <motion.div
                 key={country.slug}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * index }}
-                onClick={() => {
-                  const targetRegion = country.realRegion || selectedContinent;
-                  navigate(`/world/${targetRegion}/${country.slug}`);
-                }}
+                onClick={() => navigate(`/world/${selectedContinent}/${country.slug}`)}
                 className="p-4 bg-card/60 rounded-xl border border-border/50 hover:border-accent/50 cursor-pointer"
               >
                 <div className="flex items-start gap-3">
@@ -322,6 +307,22 @@ const MobileContinentMap = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Technical Link to Full Country List */}
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ delay: 0.3 }}
+            className="mt-6 pt-2"
+          >
+            <Button 
+              onClick={() => navigate(`/world/${selectedContinent}`)}
+              className="w-full h-12 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/20 flex items-center justify-center gap-2 text-base font-medium"
+            >
+              View all {continentInfo?.count} countries in {continentInfo?.name} 
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     );
@@ -330,27 +331,20 @@ const MobileContinentMap = () => {
   return (
     <div className="block md:hidden">
       <motion.div variants={FADE_IN} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          {continentDisplay.slice(0, 4).map((continent) => (
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+          {continentDisplay.map((continent) => (
             <button
               key={continent.slug}
               onClick={() => setSelectedContinent(continent.slug)}
-              className="flex flex-col items-center justify-center p-6 bg-card/90 hover:bg-card rounded-xl border-2 border-accent/40 hover:border-accent hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 backdrop-blur-sm"
+              className="flex flex-col items-center justify-center p-6 bg-card/90 hover:bg-card rounded-xl border-2 border-accent/40 hover:border-accent hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 backdrop-blur-sm text-center"
             >
-              <span className="text-4xl mb-3">{continent.emoji}</span>
+              <span className="text-3xl mb-3">{continent.emoji}</span>
               <span className="text-base font-semibold text-foreground">{continent.name}</span>
               <span className="text-sm text-muted-foreground">{continent.count} countries</span>
+              <ArrowRight className="w-4 h-4 text-accent/50 mt-2" />
             </button>
           ))}
         </div>
-        <button
-          onClick={() => setSelectedContinent("oceania")}
-          className="flex flex-col items-center justify-center p-6 bg-card/90 hover:bg-card rounded-xl border-2 border-accent/40 hover:border-accent hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 backdrop-blur-sm w-full"
-        >
-          <span className="text-4xl mb-3">🏝️</span>
-          <span className="text-base font-semibold text-foreground">Oceania</span>
-          <span className="text-sm text-muted-foreground">2 countries</span>
-        </button>
       </motion.div>
     </div>
   );
@@ -391,7 +385,6 @@ const Home = () => {
     return allSearchItems
       .filter(item => item.name.toLowerCase().includes(query))
       .sort((a, b) => {
-        // Prioritize items that start with the query
         const aStarts = a.name.toLowerCase().startsWith(query);
         const bStarts = b.name.toLowerCase().startsWith(query);
         if (aStarts && !bStarts) return -1;
@@ -401,7 +394,6 @@ const Home = () => {
       .slice(0, 8);
   }, [searchTerm, allSearchItems]);
 
-  // Handle click outside to close suggestions
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
@@ -469,7 +461,6 @@ const Home = () => {
     <div className="min-h-screen bg-background overflow-x-hidden selection:bg-accent/30">
       <SEOHead />
       <Navigation />
-      {/* Skip link for Accessibility/SEO */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-accent focus:text-white focus:p-2 focus:rounded">
         Skip to main content
       </a>
@@ -500,7 +491,6 @@ const Home = () => {
             Global Cannabis Travel Intelligence
           </Badge>
 
-          {/* H1 Optimized for Keywords while maintaining design */}
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
             <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
               BudQuest
@@ -547,7 +537,6 @@ const Home = () => {
                 Search
               </Button>
 
-              {/* Suggestions Dropdown */}
               {showSuggestions && suggestions.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
