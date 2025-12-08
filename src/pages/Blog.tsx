@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -1212,6 +1212,7 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
 
 /* ---------- BLOG COMPONENT ---------- */
 export default function Blog() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
@@ -1372,7 +1373,7 @@ export default function Blog() {
             {filteredPosts.length > 0 && activeCategory === "All" && !searchTerm && (
               <section className="py-8 px-4">
                 <div className="container mx-auto">
-                  <Link to={`/blog/${filteredPosts[0].id}`}>
+                  <Link to={filteredPosts[0].isExternalPage && filteredPosts[0].externalUrl ? filteredPosts[0].externalUrl : `/blog/${filteredPosts[0].id}`}>
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -1450,7 +1451,13 @@ export default function Blog() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                          <ArticleCard post={post} onClick={() => setActiveArticle(post)} />
+                          <ArticleCard post={post} onClick={() => {
+                            if (post.isExternalPage && post.externalUrl) {
+                              navigate(post.externalUrl);
+                            } else {
+                              setActiveArticle(post);
+                            }
+                          }} />
                         </motion.div>
                       ))}
                     </div>

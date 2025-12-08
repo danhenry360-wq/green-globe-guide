@@ -118,6 +118,13 @@ const BlogDetail = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  // Redirect to external page if this is an external blog post
+  useEffect(() => {
+    if (staticPost && staticPost.isExternalPage && staticPost.externalUrl) {
+      navigate(staticPost.externalUrl, { replace: true });
+    }
+  }, [staticPost, navigate]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
