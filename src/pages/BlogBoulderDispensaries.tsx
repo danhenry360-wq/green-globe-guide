@@ -30,12 +30,13 @@ const BlogBoulderDispensaries = () => {
 
   useEffect(() => {
     const fetchDispensaries = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('dispensaries')
         .select('*')
-        .or('city.ilike.%Boulder%,city.eq.Boulder')
+        .ilike('city', '%Boulder%')
         .order('rating', { ascending: false });
       
+      console.log('Boulder dispensaries fetch:', { data, error });
       if (data) setDispensaries(data);
       setLoading(false);
     };
@@ -340,7 +341,10 @@ const BlogBoulderDispensaries = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">No Boulder dispensaries found in database.</p>
+                <div className="text-center py-8 bg-card/40 rounded-lg border border-accent/20">
+                  <p className="text-muted-foreground mb-2">No Boulder dispensaries found in the database.</p>
+                  <p className="text-sm text-muted-foreground">Check back soon as we add more verified dispensaries!</p>
+                </div>
               )}
             </div>
           </div>
