@@ -432,10 +432,10 @@ const BlogDenverRentals = () => {
         {/* CTA */}
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-8 max-w-4xl mx-auto text-center">
+            <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-8 max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-4">Ready to Plan Your Denver Trip?</h2>
               <p className="text-muted-foreground mb-6">Explore our complete Denver cannabis travel guide for dispensaries, attractions, and more.</p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/denver" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg">
                   Denver Travel Guide <ArrowRight className="h-4 w-4" />
                 </Link>

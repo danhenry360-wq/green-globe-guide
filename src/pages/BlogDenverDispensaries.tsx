@@ -733,10 +733,10 @@ const BlogDenverDispensaries = () => {
                 </ul>
               </Card>
               
-              <div className="text-center">
+              <div>
                 <p className="text-muted-foreground mb-4">Ready to explore Denver's cannabis scene?</p>
                 <Link to="/denver">
-                  <button className="px-8 py-4 bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-lg flex items-center gap-2 mx-auto">
+                  <button className="px-8 py-4 bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-lg flex items-center gap-2">
                     Explore Denver Cannabis Travel Guide <ArrowRight className="h-5 w-5" />
                   </button>
                 </Link>
