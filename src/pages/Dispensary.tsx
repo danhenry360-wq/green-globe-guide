@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -24,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Database dispensary type
 interface DbDispensary {
@@ -90,7 +92,6 @@ const ITEMS_PER_PAGE = 10;
 /* ============================================
    HELPER COMPONENTS
 ============================================ */
-import { Skeleton } from "@/components/ui/skeleton";
 
 const DispensaryCardSkeleton = () => (
   <Card className={cn(
@@ -1074,26 +1075,28 @@ const [isFilterOpen, setIsFilterOpen] = useState(false);
               onClose={() => setIsFilterOpen(false)}
             />
 
-            {/* DISCLAIMER */}
-            <section className="mt-20" aria-label="Legal information">
-              <Card className="p-6 sm:p-8 bg-gradient-to-r from-red-950/20 to-red-900/10 border border-red-500/30 rounded-2xl">
-                <div className="flex items-start gap-4">
-                  <Info className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h3 className="text-lg font-bold text-red-300 mb-2">
-                      Legal Disclaimer
-                    </h3>
-                    <p className="text-sm text-red-200/90 leading-relaxed">
-                      BudQuest is an informational resource only. We do not
-                      provide legal advice. Always verify current local laws and
-                      confirm dispensary policies before purchasing cannabis.
-                      International transport of cannabis remains illegal. Users
-                      are responsible for ensuring compliance with applicable
-                      laws.
-                    </p>
+            {/* LEGAL DISCLAIMER */}
+            <section className="mt-12 md:mt-16 px-0 mb-8">
+              <div className="max-w-3xl mx-auto">
+                <Card className="relative overflow-hidden border-yellow-500/20 bg-yellow-500/5">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500/50" />
+                  
+                  <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
+                    <div className="p-2 rounded-full bg-yellow-500/10 shrink-0">
+                      <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-yellow-500 leading-none mt-1">
+                        Legal Disclaimer
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed text-left">
+                        BudQuest is an informational resource only. We do not provide legal advice. Always verify current local laws and confirm dispensary policies before purchasing cannabis. International transport of cannabis remains illegal. Users are responsible for ensuring compliance with applicable laws.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </div>
             </section>
 
             {/* INTERNAL LINKS */}
