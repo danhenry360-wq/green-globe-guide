@@ -906,6 +906,48 @@ export const BLOG_POSTS = [
       sections: [],
       safetyTips: []
     }
+  },
+  {
+    id: "cannabis-dispensaries-colorado-springs",
+    title: "Cannabis Dispensaries in Colorado Springs: Medical Guide 2025",
+    subtitle: "A guide for medical cardholders to the best dispensaries and products in Colorado Springs.",
+    excerpt: "Your essential guide to medical cannabis dispensaries in Colorado Springs. Find top shops, products, and important legal information for cardholders.",
+    date: "Dec 8, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Colorado Springs", "Dispensaries", "Medical", "Guide"],
+    image: "/dest-colorado-springs.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-colorado-springs",
+    content: {
+      introduction: "Colorado Springs is unique among Colorado's major cities: recreational cannabis sales are prohibited. The city only allows medical marijuana dispensaries to operate.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-rentals-colorado-springs",
+    title: "Best 420-Friendly Rentals in Colorado Springs: Guide 2025",
+    subtitle: "Find verified cannabis-friendly accommodation for your trip to the Pikes Peak region.",
+    excerpt: "Discover Colorado Springs' top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your trip.",
+    date: "Dec 8, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Colorado Springs", "Rentals", "Hotels", "420-Friendly"],
+    image: "/dest-colorado-springs.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-colorado-springs",
+    content: {
+      introduction: "While the city has a unique stance on cannabis (medical-only sales), there are still verified 420-friendly accommodation options available for travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
   }
 ];
 
