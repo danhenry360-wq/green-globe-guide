@@ -141,7 +141,7 @@ const ContactForm = () => {
     if (!formData.message.trim()) newErrors.message = "Message required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };e
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
