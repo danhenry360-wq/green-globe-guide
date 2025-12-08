@@ -55,7 +55,7 @@ const ABOUT_STRUCTURED_DATA = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",
-    email: "support@budquest.com",
+    email: "support@budquest.guide",
   },
   sameAs: [
     "https://twitter.com/budquest",
@@ -103,7 +103,7 @@ const About = () => {
     { label: "Countries", end: 120, icon: MapPin, suffix: "+" },
     { label: "Monthly Updates", end: 1200, icon: Calendar, suffix: "+" },
     { label: "Legal Resources", end: 4800, icon: Scale, suffix: "+" },
-    { label: "Happy Travelers", end: 500000, icon: Leaf, suffix: "k+" },
+    { label: "Happy Travelers", end: 3000, icon: Leaf, suffix: "k+" },
   ];
 
   const steps = [
