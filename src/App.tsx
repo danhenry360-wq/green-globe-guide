@@ -22,6 +22,7 @@ import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
 import BlogBoulderRentals from "./pages/BlogBoulderRentals";
 import BlogAspenDispensaries from "./pages/BlogAspenDispensaries";
+import BlogAspenRentals from "./pages/BlogAspenRentals";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -86,6 +87,7 @@ function App() {
               <Route path="/blog/cannabis-dispensaries-boulder" element={<BlogBoulderDispensaries />} />
               <Route path="/blog/best-420-rentals-boulder" element={<BlogBoulderRentals />} />
               <Route path="/blog/cannabis-dispensaries-aspen" element={<BlogAspenDispensaries />} />
+              <Route path="/blog/best-420-rentals-aspen" element={<BlogAspenRentals />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />

@@ -885,6 +885,27 @@ export const BLOG_POSTS = [
       sections: [],
       safetyTips: []
     }
+  },
+  {
+    id: "best-420-rentals-aspen",
+    title: "Best 420-Friendly Rentals in Aspen: Luxury Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly luxury accommodation for your Aspen mountain adventure.",
+    excerpt: "Discover Aspen's top 420-friendly luxury hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado mountain getaway.",
+    date: "Dec 8, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Aspen", "Rentals", "Hotels", "Luxury", "420-Friendly"],
+    image: "/dest-aspen.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-aspen",
+    content: {
+      introduction: "Aspen's 420-friendly accommodation scene is high-end, private, and offers an unparalleled experience for the discerning cannabis traveler.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
   }
 ];
 
