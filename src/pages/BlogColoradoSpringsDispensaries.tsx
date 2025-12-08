@@ -101,18 +101,18 @@ const BlogColoradoSpringsDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>Cannabis Dispensaries in Colorado Springs: Medical Guide 2025 | BudQuest</title>
-        <meta name="description" content="Your essential guide to medical cannabis dispensaries in Colorado Springs. Find top shops, products, and important legal information for cardholders." />
+        <title>Cannabis Dispensaries in Colorado Springs: Complete Guide 2025 | BudQuest</title>
+        <meta name="description" content="Your essential guide to cannabis dispensaries in Colorado Springs. Find top shops, products, and important legal information for both recreational and medical users." />
         <meta name="keywords" content="Colorado Springs dispensaries, medical cannabis Colorado Springs, weed shops Colorado Springs, Colorado Springs 420" />
         <link rel="canonical" href="https://budquest.com/blog/cannabis-dispensaries-colorado-springs" />
-        <meta property="og:title" content="Cannabis Dispensaries in Colorado Springs: Medical Guide 2025" />
-        <meta property="og:description" content="Find the best medical dispensaries in Colorado Springs, Colorado." />
+        <meta property="og:title" content="Cannabis Dispensaries in Colorado Springs: Complete Guide 2025" />
+        <meta property="og:description" content="Find the best dispensaries in Colorado Springs, Colorado." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Cannabis Dispensaries in Colorado Springs: Medical Guide 2025",
+            "headline": "Cannabis Dispensaries in Colorado Springs: Complete Guide 2025",
             "author": { "@type": "Organization", "name": "BudQuest" },
             "datePublished": "2025-12-08"
           })}
@@ -137,7 +137,7 @@ const BlogColoradoSpringsDispensaries = () => {
 
             <div className="max-w-4xl">
               <div className="flex items-center gap-4 mb-6">
-                <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm">Medical Only</span>
+                <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Recreational & Medical</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Calendar className="h-4 w-4" /> December 8, 2025
                 </span>
@@ -147,15 +147,15 @@ const BlogColoradoSpringsDispensaries = () => {
               </div>
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-foreground via-accent to-red-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
                   Cannabis Dispensaries in Colorado Springs:
                 </span>
                 <br />
-                <span className="text-foreground/90">Medical Guide 2025</span>
+                <span className="text-foreground/90">Complete Guide 2025</span>
               </h1>
 
               <p className="text-lg text-muted-foreground mb-6">
-                A guide for medical cardholders to the best dispensaries and products in Colorado Springs.
+                A guide to the best dispensaries and products in Colorado Springs for both recreational and medical users.
               </p>
 
               <div className="flex items-center gap-3">
@@ -327,12 +327,12 @@ const BlogColoradoSpringsDispensaries = () => {
                 <div className="flex items-start gap-4">
                   <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice: Medical Only</h3>
+                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice: Recreational & Medical</h3>
                     <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                      <li>**Sales Type:** Only **Medical Marijuana** is sold in Colorado Springs. Recreational sales are banned.</li>
-                      <li>**Requirement:** You must present a valid Colorado Medical Marijuana Card and a government-issued ID to purchase.</li>
+                      
+                      <li>**Requirement:** Recreational users need a valid government-issued ID (21+). Medical users need a valid Colorado Medical Marijuana Card and ID.</li>},{find:
                       <li>**Public Consumption:** Public consumption is strictly illegal.</li>
-                      <li>**Recreational Option:** Recreational users must travel to nearby cities like Manitou Springs or Pueblo.</li>
+                      <li>**Possession Limits:** Non-residents can purchase up to 1 ounce of flower, 8 grams of concentrate, or 800mg of edibles per transaction.</li>}],path:
                     </ul>
                   </div>
                 </div>

@@ -76,8 +76,8 @@ const BlogColoradoSpringsRentals = () => {
       content: "Many rentals only allow consumption on private outdoor spaces (balconies, patios). Ensure your rental has one if you plan to smoke."
     },
     {
-      title: "Medical vs. Recreational",
-      content: "Remember, you can only purchase medical cannabis in the city. If you are a recreational user, you must purchase outside the city limits."
+      title: "Know Before You Go",
+      content: "Both recreational and medical cannabis are available in the city. However, always check if a specific dispensary serves recreational customers before visiting."
     },
     {
       title: "Check Location",
@@ -95,7 +95,7 @@ const BlogColoradoSpringsRentals = () => {
 
   const faqs = [
     { q: "Can I smoke cannabis in my hotel room?", a: "Generally no. Most hotels prohibit smoking of any kind. Look for properties that specifically allow it on balconies or patios." },
-    { q: "Where can I buy recreational cannabis near Colorado Springs?", a: "The closest recreational dispensaries are in Manitou Springs or Pueblo." },
+    { q: "Where can I buy recreational cannabis in Colorado Springs?", a: "Recreational dispensaries are now open within Colorado Springs. Check our dispensary guide for the latest listings." },
     { q: "Is it safe to consume cannabis in Colorado Springs?", a: "Yes, as long as you are 21+ and consume in a private, 420-friendly location. Public consumption is illegal." },
     { q: "Are there many 420-friendly rentals?", a: "The selection is smaller than in Denver, but there are verified vacation rentals and B&Bs that cater to cannabis travelers." },
   ];
@@ -103,7 +103,7 @@ const BlogColoradoSpringsRentals = () => {
   const neighborhoods = [
     {
       name: "Old Colorado City",
-      description: "Historic district with unique shops, restaurants, and a charming atmosphere. Close to Manitou Springs (recreational sales).",
+      description: "Historic district with unique shops, restaurants, and a charming atmosphere. Now with local recreational dispensaries nearby.",
       rentals: "B&Bs, historic vacation homes",
       vibe: "Historic, charming, convenient"
     },
@@ -115,7 +115,7 @@ const BlogColoradoSpringsRentals = () => {
     },
     {
       name: "Manitou Springs Area",
-      description: "Just west of Colorado Springs, this area is known for its natural springs and is the closest place for recreational cannabis purchases.",
+      description: "Just west of Colorado Springs, this area is known for its natural springs and has a high concentration of recreational dispensaries.",
       rentals: "Cabins, vacation homes",
       vibe: "Nature, relaxed, recreational access"
     },
@@ -199,10 +199,10 @@ const BlogColoradoSpringsRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl prose prose-invert">
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Colorado Springs is a beautiful city known for its natural landmarks like Pikes Peak and Garden of the Gods. While the city has a unique stance on cannabis (medical-only sales), there are still verified 420-friendly accommodation options available for travelers.
+                Colorado Springs is a beautiful city known for its natural landmarks like Pikes Peak and Garden of the Gods. With both recreational and medical cannabis now available, Colorado Springs offers a growing number of 420-friendly accommodation options for travelers.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                This guide focuses on finding private vacation rentals and B&Bs that explicitly allow cannabis consumption, which is crucial given the city's conservative policies. We'll help you navigate the best places to stay and provide essential booking tips.
+                This guide focuses on finding private vacation rentals and B&Bs that explicitly allow cannabis consumption, helping you find the perfect place to relax and enjoy your purchases legally. We'll help you navigate the best places to stay and provide essential booking tips.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 Remember to book a verified 420-friendly property to avoid issues, as most traditional hotels strictly prohibit cannabis use and enforce hefty cleaning fees.
@@ -403,11 +403,10 @@ const BlogColoradoSpringsRentals = () => {
                 <div className="flex items-start gap-4">
                   <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice: Medical Only Sales</h3>
+                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice: Recreational & Medical</h3>
                     <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                      <li>**Sales Type:** Only **Medical Marijuana** is sold in Colorado Springs. Recreational sales are banned.</li>
+                      <li>**Sales Type:** Both **Recreational (21+)** and **Medical** cannabis are sold in Colorado Springs.</li>
                       <li>**Public Consumption:** Public consumption is strictly illegal.</li>
-                      <li>**Recreational Option:** Recreational users must travel to nearby cities like Manitou Springs or Pueblo.</li>
                       <li>**Possession Limits:** Non-residents can possess up to 1 ounce of flower.</li>
                     </ul>
                   </div>
