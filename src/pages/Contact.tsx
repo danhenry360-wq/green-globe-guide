@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import {
   Mail, MessageSquare, AlertCircle, Sparkles, CheckCircle, Send,
-  Phone, MapPin, Clock, Globe, Shield, Zap, Users, HeadphonesIcon,
+  MapPin, Clock, Globe, Shield, Zap, Users, HeadphonesIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -30,16 +30,15 @@ const CONTACT_STRUCTURED_DATA = {
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: "+1-800-BUDQUEST",
         contactType: "customer service",
-        email: "support@budquest.com",
+        email: "support@budquest.guide",
         availableLanguage: ["en"],
         areaServed: "Worldwide",
       },
       {
         "@type": "ContactPoint",
         contactType: "report outdated information",
-        email: "updates@budquest.com",
+        email: "updates@budquest.guide",
       },
     ],
     address: {
@@ -357,7 +356,7 @@ const Contact = () => {
     { label: "Countries Covered", end: 120, icon: Globe },
     { label: "Monthly Updates", end: 1200, icon: Zap },
     { label: "Legal Resources", end: 4800, icon: Shield },
-    { label: "Travelers Helped", end: 500000, icon: Users },
+    { label: "Travelers Helped", end: 3000, icon: Users },
   ];
 
   const contactChannels = [
@@ -365,22 +364,15 @@ const Contact = () => {
       icon: Mail,
       title: "Email Support",
       desc: "General questions and inquiries",
-      contact: "support@budquest.com",
+      contact: "support@budquest.guide",
       response: "24 hours",
     },
     {
       icon: AlertCircle,
       title: "Report Outdated Info",
       desc: "Report incorrect laws or data",
-      contact: "updates@budquest.com",
+      contact: "updates@budquest.guide",
       response: "12 hours",
-    },
-    {
-      icon: Phone,
-      title: "Phone Support",
-      desc: "Urgent travel cannabis questions",
-      contact: "+1-800-BUDQUEST",
-      response: "Business hours",
     },
   ];
 
@@ -395,7 +387,7 @@ const Contact = () => {
     },
     {
       q: "Can I report outdated information?",
-      a: "Absolutely! Email updates@budquest.com with details. We verify and update within 12 hours if accurate.",
+      a: "Absolutely! Email updates@budquest.guide with details. We verify and update within 12 hours if accurate.",
     },
     {
       q: "Do you provide hotel recommendations?",
@@ -518,13 +510,13 @@ const Contact = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="container mx-auto max-w-6xl"
+          className="container mx-auto max-w-4xl"
         >
           <h2 id="contact-channels-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">
             How to Reach Us
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-12 sm:mb-16">
             {contactChannels.map((channel, i) => (
               <motion.div
                 key={channel.title}
@@ -533,18 +525,20 @@ const Contact = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className="p-5 sm:p-6 bg-gradient-to-br from-card to-card/50 border-border/50 hover:border-accent/30 transition-all group h-full">
-                  <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                      <channel.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-foreground text-sm sm:text-base">{channel.title}</h3>
-                      <p className="text-xs text-muted-foreground">{channel.desc}</p>
+                <Card className="p-5 sm:p-6 bg-gradient-to-br from-card to-card/50 border-border/50 hover:border-accent/30 transition-all group h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                        <channel.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-foreground text-sm sm:text-base">{channel.title}</h3>
+                        <p className="text-xs text-muted-foreground">{channel.desc}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-2 text-sm">
-                    <p className="font-mono text-accent break-all">{channel.contact}</p>
+                  <div className="space-y-2 text-sm mt-2">
+                    <p className="font-mono text-accent break-all text-base">{channel.contact}</p>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Clock className="w-4 h-4" />
                       <span>Response: {channel.response}</span>
