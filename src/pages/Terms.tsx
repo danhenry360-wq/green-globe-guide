@@ -124,7 +124,7 @@ const Terms = () => {
               </p>
               <p className="text-muted-foreground mt-2">
                 <strong className="text-foreground">BudQuest</strong><br />
-                Email: legal@budquest.com
+                Email: legal@budquest.guide
               </p>
             </section>
           </div>
