@@ -19,7 +19,7 @@ const Terms = () => {
           </h1>
           
           <p className="text-muted-foreground mb-8">
-            Last Updated: November 29, 2025
+            Last Updated: December 8, 2025
           </p>
 
           <div className="prose prose-invert max-w-none space-y-8">
