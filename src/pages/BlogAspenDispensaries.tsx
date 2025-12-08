@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { 
   MapPin, Star, Clock, Calendar, User, ChevronRight, 
-  CheckCircle2, Cannabis, Leaf, DollarSign, Car, CreditCard,
+  CheckCircle2, Cannabis, Leaf, DollarSign, Car, CreditCard, AlertTriangle,
   ArrowRight, ExternalLink
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
