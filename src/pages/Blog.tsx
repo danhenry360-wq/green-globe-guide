@@ -864,6 +864,27 @@ export const BLOG_POSTS = [
       sections: [],
       safetyTips: []
     }
+  },
+  {
+    id: "cannabis-dispensaries-aspen",
+    title: "Best Cannabis Dispensaries in Aspen: Complete Guide 2025",
+    subtitle: "Your guide to the best high-end cannabis shops in the luxury mountain town of Aspen, Colorado.",
+    excerpt: "Discover Aspen's top cannabis dispensaries. Find premium flower, concentrates, and edibles for your luxury Colorado mountain getaway.",
+    date: "Dec 8, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Aspen", "Dispensaries", "Luxury", "Guide"],
+    image: "/dest-aspen.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-aspen",
+    content: {
+      introduction: "Aspen's cannabis scene offers a curated, boutique experience, focusing on premium products and personalized service.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
   }
 ];
 

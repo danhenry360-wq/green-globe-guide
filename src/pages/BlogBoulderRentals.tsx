@@ -639,7 +639,7 @@ const BlogBoulderRentals = () => {
                     <p className="text-sm text-muted-foreground mt-1">Complete guide to Boulder cannabis shops</p>
                   </Card>
                 </Link>
-                <Link to="/colorado" className="group">
+                <Link to="/usa/colorado" className="group">
                   <Card className="bg-card/60 border-accent/20 p-4 hover:border-accent/50 transition-colors h-full">
                     <h4 className="font-semibold text-foreground group-hover:text-accent transition-colors">Colorado Cannabis Hub</h4>
                     <p className="text-sm text-muted-foreground mt-1">Complete Colorado cannabis travel guide</p>
