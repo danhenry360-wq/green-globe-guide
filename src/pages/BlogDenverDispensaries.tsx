@@ -285,8 +285,18 @@ const BlogDenverDispensaries = () => {
       <Navigation />
 
       <main className="min-h-screen bg-background pt-20">
-        {/* Hero */}
-        <section className="relative py-16 overflow-hidden">
+        {/* Hero Image */}
+        <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
+          <img 
+            src="/blog-denver-dispensaries.jpg" 
+            alt="Cannabis dispensary storefront in Denver, Colorado" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </section>
+
+        {/* Hero Content */}
+        <section className="relative py-8 overflow-hidden -mt-20">
           <div className="absolute inset-0 bg-gradient-to-b from-accent/10 to-transparent" />
           <div className="container mx-auto px-4 relative z-10">
             {/* Breadcrumbs */}

@@ -693,7 +693,7 @@ const Home = () => {
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
                   <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Global Map Data...</div>}>
                     {/* Passed WORLD_COUNTRIES to ensure the web map receives the verified data (e.g., Australia = Mixed) */}
-                    <InteractiveWorldMap data={WORLD_COUNTRIES} />
+                    <InteractiveWorldMap />
                   </Suspense>
                 </div>
                 <div className="mt-6 flex justify-center"><MapLegend /></div>
