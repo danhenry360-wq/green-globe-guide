@@ -478,7 +478,7 @@ export const BLOG_POSTS = [
         {
           title: "Cultural Tips",
           icon: "Users",
-          content: "Spanish cannabis culture values discretion and community. Clubs are social spaces—engage with other members. Don't take photos inside clubs without explicit permission. Respect closing times and house rules. Tipping isn't expected but appreciated for good service. Learn basic Spanish—few club staff speak English. Don't discuss club locations publicly or on social media. The scene survives through discretion.",
+          content: "Spanish cannabis culture values discretion and community. Clubs are social spaces—engage with other members. Don't take photos inside clubs without permission. Respect closing times and house rules. Tipping isn't expected but appreciated for good service. Learn basic Spanish—few club staff speak English. Don't discuss club locations publicly or on social media. The scene survives through discretion.",
           variant: "gold"
         }
       ],
@@ -618,69 +618,53 @@ export const BLOG_POSTS = [
     tags: ["TSA", "Airport", "Legal", "Travel"],
     image: "/blog-tsa-security.jpg",
     content: {
-      introduction: "I learned about TSA and cannabis the hard way. Standing in the TSA line at LAX with an eighth in my carry-on that I'd completely forgotten about, I watched the agent pull it out during the bag check. My heart sank. What followed was confusing, frustrating, and cost me my flight—but surprisingly, didn't result in arrest. That experience taught me something crucial: there's what the law says about cannabis at airports, and then there's what actually happens. The answer isn't simple, and it varies wildly depending on which airport you're flying through. This comprehensive guide breaks down TSA's official cannabis policy, the federal-state law conflict, and most importantly—what really happens at major US airports when cannabis is discovered in 2025.",
-      disclaimer: "Cannabis remains illegal under federal law (Schedule I controlled substance). TSA is a federal agency bound by federal law, not state law. This article is informational only and does not constitute legal advice. The safest choice is always to not bring cannabis to airports. Laws and enforcement practices change frequently—always verify current regulations before traveling.",
+      introduction: "Flying with cannabis is the most common dilemma for modern travelers. While 24+ states have legalized recreational use, the TSA remains a federal agency bound by prohibition laws. This creates a confusing reality where enforcement depends entirely on which airport you're in. This guide strips away the rumors to explain the specific risks at major US airports, the difference between 'legal' and 'tolerated,' and how to avoid a missed flight or a criminal record.",
+      disclaimer: "Cannabis remains illegal under federal law (Schedule I). TSA agents are federal employees. This article tracks current enforcement trends but offers NO legal guarantees. The only 100% safe option is not to fly with cannabis.",
       sections: [
-        {
-          title: "Federal Law vs State Law: The Core Conflict",
-          icon: "Scale",
-          content: "Here's the fundamental problem: **TSA operates under federal jurisdiction**, where cannabis is completely illegal as a Schedule I controlled substance—the same category as heroin. It doesn't matter if you're flying from California to Colorado, both legal states. The moment you enter airport security, you're in federal territory. State legality becomes irrelevant. However, here's the loophole that creates confusion: **TSA's primary mission is aviation security, not drug enforcement**. Their focus is weapons, explosives, and threats to flight safety. When TSA finds cannabis, their policy is to refer the matter to local law enforcement—and that's where it gets interesting. Local police in legal states often have discretion on whether to enforce federal law for small amounts. This creates a patchwork of outcomes depending on the airport, the amount, and sometimes just the officer's mood that day.",
-          variant: "default"
+        { 
+          title: "The Federal vs State Conflict", 
+          icon: "Scale", 
+          content: "**Federal Law (TSA Jurisdiction)**: Cannabis is a Schedule I narcotic (illegal). TSA screening areas are federal territory. **State Law (Police Jurisdiction)**: In legal states (CA, CO, NY), possession is legal. **The Loophole**: TSA's job is safety, not drug enforcement. If they find weed, they must refer it to *local police*. If you are in a legal state and under the limit, local police often let you go or just confiscate it.", 
+          variant: "default" 
         },
-        {
-          title: "TSA's Official Policy on Cannabis",
-          icon: "Shield",
-          content: "TSA's official stance is clear on their website: **'Marijuana and certain cannabis-infused products, including some CBD oil, remain illegal under federal law except for products containing no more than 0.3% THC or that are FDA-approved.'** Translation: cannabis is prohibited, period. TSA officers are required to report any illegal substances found during screening to law enforcement. They don't actively search for drugs—their scanners look for weapons and explosives—but if they find cannabis during a bag search, they must act. The critical phrase is 'refer to law enforcement.' TSA officers themselves won't arrest you. They'll call airport police or local police (depending on the airport), and *that agency* decides what happens next. In practice, this means outcomes vary dramatically based on location. Medical marijuana cards don't matter to TSA—federal law doesn't recognize them. The only exception is FDA-approved CBD products (like Epidiolex) or hemp-derived products under 0.3% THC, which are legal under the 2018 Farm Bill.",
-          variant: "warning"
+        { 
+          title: "Official TSA Policy", 
+          icon: "Shield", 
+          content: "TSA does not actively search for marijuana. Their scanners are designed for explosives and weapons. However, if they discover it during a bag check (for a water bottle or lighter), they are required to report it. **Medical Cards**: TSA does not recognize medical cards. **CBD**: FDA-approved CBD or hemp (<0.3% THC) is the ONLY federally legal exception.", 
+          variant: "warning" 
         },
-        {
-          title: "Major US Airports: Risk Levels Ranked",
-          icon: "Plane",
-          content: "Not all airports treat cannabis equally. Based on local law enforcement policies, here's how major airports rank:\n\n**⚠️ ZERO TOLERANCE (High Arrest Risk)**\n\n**Miami International (MIA)** - Florida law is harsh, and Miami-Dade police enforce aggressively. Even small amounts can result in arrest, especially for non-residents. Medical marijuana in Florida is restricted to state residents with cards.\n\n**Atlanta Hartsfield-Jackson (ATL)** - Georgia has not legalized cannabis. Atlanta police have discretion but federal enforcement is common. High-traffic airport with strict security culture.\n\n**Chicago O'Hare (ORD)** - Despite Illinois being legal, O'Hare has federal jurisdiction enforced strictly. Chicago PD may cite for small amounts but policies are inconsistent.\n\n**Dallas/Fort Worth (DFW) & Houston (IAH)** - Texas treats cannabis as a felony. Even residue or paraphernalia can result in arrest. Avoid at all costs.\n\n**Charlotte Douglas (CLT)** - North Carolina law is punitive. Airport police enforce possession charges.\n\n**🟡 MEDIUM TOLERANCE (Officer Discretion)**\n\n**Denver International (DEN)** - Colorado is legal, but the airport has 'amnesty boxes' where travelers are encouraged to dispose of cannabis before security. If found with cannabis, Denver PD usually issues a citation or confiscates without arrest for small amounts. However, federal TSA still refers to police.\n\n**Los Angeles (LAX)** - LAX updated policy in 2019 allowing passengers to travel with legal amounts (under California law). However, TSA is federal and still flags cannabis. LAPD typically confiscates but doesn't arrest for amounts under 28.5g. My experience: confiscation, citation, missed flight, but no arrest.\n\n**San Francisco (SFO)** - Similar to LAX. San Francisco police are cannabis-friendly, often issuing warnings for small amounts. However, federal TSA involvement means unpredictability.\n\n**Phoenix (PHX)** - Arizona legalized recreationally in 2021, but enforcement at Sky Harbor is inconsistent. Some travelers report confiscation only, others face citations.\n\n**✅ MOST LENIENT (Low Enforcement)**\n\n**Portland (PDX)** - Oregon airport authority explicitly states they won't refer cannabis possession to police if under state legal limits (1 oz for flower). However, TSA federal policy still technically applies. This is the most cannabis-friendly major airport.\n\n**Seattle-Tacoma (SEA)** - Washington State's legal framework and Seattle PD's deprioritization of cannabis makes this one of the safer airports. Port of Seattle police rarely arrest for small amounts.\n\n**Las Vegas (LAS)** - Nevada legal, and Las Vegas Metro PD is lenient with tourists. However, amount matters—stay under legal limits (1 oz). McCarran/Harry Reid Airport has seen decreasing cannabis incidents.\n\n**Oakland (OAK)** - Smaller Bay Area airport with progressive enforcement. Oakland PD rarely arrests for small amounts. However, still federal TSA territory.\n\n**San Diego (SAN)** - California legal, and San Diego Harbor Police have discretion. Usually confiscation for small amounts, but less predictable than LAX or SFO.\n\n**Important note**: These rankings reflect general trends and local policies as of 2025, but individual outcomes depend on the officer, amount found, your behavior, and even the political climate. There are NO guarantees.",
-          variant: "default"
+        { 
+          title: "High Risk Airports (Avoid)", 
+          icon: "AlertCircle", 
+          content: "**Dallas (DFW/IAH)**: Texas law is harsh. Arrests are common. **Atlanta (ATL)**: Strict enforcement, even for residue. **Miami (MIA)**: Zero tolerance, medical cards strictly scrutinized. **International Flights**: NEVER fly internationally with cannabis. This is drug trafficking and carries severe felony penalties.", 
+          variant: "warning" 
         },
-        {
-          title: "State-by-State Breakdown: Where You're Flying From/To Matters",
-          icon: "MapPin",
-          content: "Even within legal states, airports vary:\n\n**Colorado (Legal)** - DEN has amnesty boxes to dispose before security. Colorado Springs (COS) is stricter due to local culture. Aspen/Telluride airports rarely have issues but still technically federal.\n\n**California (Legal)** - LAX is most lenient. SFO and Oakland similar. Smaller airports (Burbank, Ontario, Sacramento) have fewer cannabis incidents but policies mirror big airports. San Diego varies.\n\n**Washington (Legal)** - SEA is lenient. Spokane (GEG) more conservative enforcement.\n\n**New York (Legal)** - JFK, LaGuardia (LGA), Newark (EWR) still have strict federal enforcement despite state legality. Port Authority police enforce aggressively. New York legalization is recent and airport culture hasn't adapted.\n\n**Arizona (Legal)** - Phoenix Sky Harbor enforcement is inconsistent post-legalization. Tucson (TUS) smaller with less scrutiny.\n\n**Nevada (Legal)** - Las Vegas (LAS) most lenient. Reno (RNO) smaller but similar policies.\n\n**Massachusetts (Legal)** - Boston Logan (BOS) has strict TSA culture. State police may cite for small amounts but arrests are less common than in prohibition states.\n\n**Michigan (Legal)** - Detroit (DTW) has federal enforcement, but Wayne County police have discretion. Outcomes vary.\n\n**Oregon (Legal)** - Portland (PDX) best in nation. Eugene (EUG) and Medford (MFR) similarly lenient.\n\n**Illinois (Legal)** - O'Hare (ORD) and Midway (MDW) still enforce federal law strictly despite state legality.\n\n**Florida (Medical Only)** - MIA, Fort Lauderdale (FLL), Orlando (MCO), Tampa (TPA) all enforce aggressively. Only Florida medical cardholders have slight protection, but TSA doesn't recognize it.\n\n**Texas (Illegal)** - DFW, IAH, Austin (AUS), San Antonio (SAT) all high-risk. Texas law is punitive. Avoid entirely.\n\n**Georgia (Illegal)** - ATL enforces. Even CBD can be questioned.\n\n**North Carolina (Illegal)** - CLT strict enforcement.\n\n**International Flights** - **NEVER bring cannabis on international flights, even to/from Canada or countries where it's legal.** International customs and federal law enforcement are involved. This is a felony with severe penalties including prison time. Not worth the risk under any circumstances.",
-          variant: "accent"
+        { 
+          title: "Low Risk Airports (Tolerated)", 
+          icon: "Plane", 
+          content: "**Los Angeles (LAX)**: Policy explicitly allows passengers to possess up to 28.5g. TSA may still flag it, but airport police rarely cite. **Portland (PDX)**: Extremely lenient; often allows passengers to fly if under state limits. **New York (JFK/LGA)**: State police generally do not arrest for personal amounts, but confiscation is possible.", 
+          variant: "accent" 
         },
-        {
-          title: "What Actually Happens If You Get Caught",
-          icon: "AlertCircle",
-          content: "Based on my LAX experience and dozens of traveler reports, here's the typical sequence:\n\n**1. TSA Discovery** - TSA scanner flags your bag (cannabis shows up as organic material). TSA agent searches your bag and finds cannabis. They'll call their supervisor.\n\n**2. Local Law Enforcement Called** - TSA doesn't arrest anyone. They call airport or local police. This is where location matters. In legal states, it's often city police or airport police. In federal airports, it might be FBI or DEA (rare for small amounts).\n\n**3. Police Interaction** - The officer assesses: How much? Is it packaged commercially or in baggies? Are you cooperative? What state are you in? Your attitude and demeanor matter here—be polite, honest, and calm.\n\n**4. Possible Outcomes**:\n\n**Confiscation Only** - Most common in lenient airports. They take your cannabis, give you a verbal warning, and you catch your flight (if you haven't missed it from the delay). This happened to many travelers in Portland, Seattle, and sometimes LAX.\n\n**Citation/Fine** - Common in medium-tolerance airports. You receive a ticket (like a traffic ticket) for a petty offense. Fine ranges from $50-$500 depending on location. You may or may not make your flight. This is what happened to me at LAX—$250 fine, missed my flight, but no arrest record.\n\n**Arrest** - Rare but possible, especially in zero-tolerance states or for large amounts. Possession charges can be misdemeanor or felony depending on state and quantity. You'll miss your flight, go to county jail, and need a lawyer. This is the worst outcome and most likely in Texas, Florida, Georgia, and with large quantities.\n\n**Seized & Allowed to Fly** - Some lenient airports confiscate and let you proceed. Portland and Seattle sometimes do this.\n\n**5. Missing Your Flight** - Even 'best case' scenarios often mean delays. My LAX incident took 45 minutes. By the time I was released, my flight was boarding. I missed it. Rebooking cost $400. Factor in potential delays even if you avoid arrest.\n\n**6. Consequences Beyond the Airport** - Citations can appear on background checks in some states. Arrests definitely do. Legal fees can reach thousands if you contest. For frequent flyers, TSA PreCheck or Global Entry could be revoked for drug violations.",
-          variant: "warning"
+        { 
+          title: "Edibles vs Flower vs Vapes", 
+          icon: "TrendingUp", 
+          content: "**Flower**: Most risky. Organic mass shows on scanners, and smell is a dead giveaway. **Edibles**: Hardest to detect. TSA is looking for bombs, not gummies. However, original packaging with THC warnings makes it obvious if searched. **Vapes**: Batteries show clearly on X-ray. If pulled for inspection, cartridges are easily identified.", 
+          variant: "default" 
         },
-        {
-          title: "The Smart Traveler's Checklist: How to Avoid Problems",
-          icon: "Info",
-          content: "After my LAX incident, here's what I learned:\n\n**✅ Just Don't Do It** - The simplest advice: don't bring cannabis to airports. It's federally illegal, and even best-case scenarios are stressful and expensive. The risk isn't worth it.\n\n**✅ Buy at Your Destination** - Legal states have dispensaries everywhere. California, Colorado, Washington, Nevada—all have shops near airports or in city centers. Buy when you arrive, consume during your trip, and don't bring anything back.\n\n**✅ Consume at Private Property Only** - Hotels often prohibit cannabis. Book 420-friendly accommodations through BudQuest, Airbnb (filter for 420-friendly), or bud-and-breakfast sites. Never consume in hotel rooms that don't allow it—you'll be charged cleaning fees.\n\n**✅ Know Return-Trip Laws** - If you're traveling from a legal state to an illegal state, the destination matters. Don't risk bringing cannabis back to Texas, Georgia, Florida, or other prohibition states.\n\n**✅ Never Cross State Lines with Cannabis** - It's a federal crime (drug trafficking) to transport cannabis across state borders, even between two legal states. Driving from Colorado to California with cannabis? Technically a federal felony.\n\n**✅ Check Your Bags Thoroughly** - My mistake was forgetting about a small amount in a pocket of my carry-on. Check every pocket, compartment, and crevice before packing for the airport. Look for grinders, pipes, or paraphernalia too.\n\n**✅ Understand Federal vs State Jurisdiction** - Airport security is federal. Police response is local. This creates the confusing patchwork of outcomes. State legality doesn't override federal law in airports.\n\n**✅ Medical Cards Don't Help (Federally)** - State-issued medical marijuana cards mean nothing to TSA. Federal law doesn't recognize them. Some local police give leniency, but it's not guaranteed.\n\n**✅ CBD is Mostly OK (Under 0.3% THC)** - Hemp-derived CBD products with under 0.3% THC are federally legal (2018 Farm Bill). These are generally allowed through TSA. However, TSA may still question it if it looks like cannabis. Bring documentation or purchase from reputable brands with lab reports.\n\n**✅ International Travel: Never, Ever** - Don't bring cannabis on international flights. Don't bring it to Canada, Mexico, Amsterdam, or anywhere. International customs enforcement is severe. Felony charges, prison time, and permanent travel bans are real consequences.",
-          variant: "gold"
-        },
-        {
-          title: "What About Edibles, Vapes, and Other Products?",
-          icon: "TrendingUp",
-          content: "Many travelers think edibles or vape cartridges are 'stealthier' than flower. Here's the reality:\n\n**Edibles** - Gummies, chocolates, and baked goods look like regular food in X-rays. However, TSA can (and does) inspect food items. If edibles are commercially packaged with THC labels, it's obvious. If you remove packaging to disguise them, you lose the 'it's legal in my state' argument. Still federally illegal. Officers have found edibles frequently.\n\n**Vape Cartridges** - Vape pens and cartridges show up clearly in X-rays (metal and liquid). TSA knows what they look like. If inspected and found to contain THC, same federal law applies. Some travelers report getting through with cartridges, but it's still illegal and risky.\n\n**Tinctures & Oils** - Liquid cannabis products must follow TSA liquid rules (3.4 oz or less, in quart bag). They're often inspected. If labeled as cannabis or THC, same issue.\n\n**Concentrates (Wax, Shatter, Dabs)** - These are cannabis products and face the same federal prohibition. They may look less obvious in X-rays but if found and tested, they're illegal.\n\n**Bottom Line**: No cannabis product is 'safe' to fly with under federal law. Some may be less obvious, but discovery still results in the same legal issues.",
-          variant: "default"
-        },
-        {
-          title: "Real Traveler Experiences: What People Report",
-          icon: "Users",
-          content: "Anonymous traveler reports from 2024-2025 provide insight:\n\n**Portland → San Francisco (March 2024)** - 'Flew with an eighth in my carry-on. TSA at Portland found it during a random bag check, asked if it was under an ounce, I said yes, they zipped my bag back up and said have a nice flight. Never even saw a cop.'\n\n**LAX → New York JFK (July 2024)** - 'Had a vape cartridge in my toiletry bag. TSA at LAX pulled it out, asked what it was. I said CBD (it wasn't). They let it go. I think they didn't care.'\n\n**Denver → Dallas (January 2025)** - 'Forgot a joint in my jacket pocket. Went through DEN security fine. But when I landed in Dallas and realized what I'd done, I threw it away immediately. Texas isn't the place to test this.'\n\n**Miami → Atlanta (September 2024)** - 'TSA found edibles in my checked bag at MIA. They called police. Miami-Dade cop arrested me. Spent 6 hours in custody. Charged with possession. Had to hire a lawyer. $3,000 later, charges dismissed but still on my record. Worst experience ever.'\n\n**Seattle → Los Angeles (November 2024)** - 'TSA at SeaTac found a grinder with residue. They didn't even call anyone. Just tossed it and sent me through. Maybe I got lucky.'\n\n**These experiences show the inconsistency—and the risk. Even 'success' stories involve stress and luck.**",
-          variant: "accent"
+        { 
+          title: "What Happens If You're Caught", 
+          icon: "Users", 
+          content: "1. **Confiscation**: Most common in legal states. You lose your weed, but make your flight. \n2. **Citation**: A ticket/fine ($100-$500). No arrest, but you might miss your flight. \n3. **Arrest**: Likely in illegal states (TX, FL) or for large quantities (intent to distribute). \n4. **Missed Flight**: The administrative delay often causes you to miss boarding, regardless of legal outcome.", 
+          variant: "gold" 
         }
       ],
       safetyTips: [
-        "Safest option: Don't bring cannabis to airports. Buy at your destination in legal states.",
-        "Check every pocket and compartment before packing—forgotten cannabis is a common mistake.",
-        "If caught, be polite and honest. Attitude affects officer discretion.",
-        "Medical marijuana cards don't protect you from federal TSA enforcement.",
-        "Never fly with cannabis internationally—severe felony penalties including prison time.",
-        "CBD products under 0.3% THC (hemp-derived) are federally legal but bring documentation.",
-        "Research the specific airport's local enforcement trends before risking it.",
-        "Missing your flight is a best-case scenario—worst case is arrest, fines, and criminal record.",
-        "Don't transport cannabis across state lines by car either—it's federal drug trafficking.",
-        "Book 420-friendly accommodations at your destination through verified platforms like BudQuest."
+        "Never fly internationally with cannabis (Felony risk)",
+        "Don't bring cannabis to illegal states (Texas, Florida, etc.)",
+        "Arrive early; if stopped, the delay will be significant",
+        "TSA PreCheck status can be revoked for drug violations",
+        "When in doubt, buy it at your destination",
+        "Do not use checked bags to 'hide' it; they are randomly searched"
       ]
     }
   },
@@ -697,87 +681,47 @@ export const BLOG_POSTS = [
     tags: ["Colorado", "Rentals", "Accommodations", "420-Friendly"],
     image: "/blog-colorado-rentals.jpg",
     content: {
-      introduction: "Colorado isn't just the first state to legalize recreational cannabis—it's become the gold standard for cannabis tourism in North America. But here's the catch: while dispensaries are everywhere, finding legitimate 420-friendly accommodations isn't as simple as it should be. Most hotels ban smoking, Airbnb policies are unclear, and traditional booking sites don't filter for cannabis-friendly properties. That's where specialized platforms like Kushkations, Bud & Breakfast, and boutique spots like Arrowhead Manor come in. This guide breaks down every option—luxury to budget, city to mountains—so you can book with confidence and actually enjoy your cannabis vacation without worrying about fines or awkward conversations with property managers.",
-      disclaimer: "Cannabis consumption is legal for adults 21+ in Colorado. However, public consumption remains illegal, and property owners set their own smoking policies. Always verify cannabis policies directly with hosts before booking. Driving under the influence is strictly illegal. This guide contains affiliate links—we earn commission at no extra cost to you.",
+      introduction: "Colorado is the gold standard for cannabis tourism, but finding a place to smoke is harder than buying the product. Most hotels strictly ban smoking, and Airbnb hosts can be unpredictable. This guide compares the three main ways to stay: dedicated cannabis rentals (safest), 420-friendly Airbnbs (cheapest), and luxury cannabis resorts. We break down the costs, rules, and best locations so you can enjoy your vacation without the paranoia.",
+      disclaimer: "Public consumption is illegal in Colorado. Property owners have the final say on smoking rules. '420-friendly' often means outdoor smoking only. Always verify the specific rules (indoor vs outdoor) before booking.",
       sections: [
-        {
-          title: "Why Colorado is #1 for Cannabis Tourism",
-          icon: "TrendingUp",
-          content: "Colorado legalized recreational cannabis in 2014, giving it over a decade of infrastructure development that other states simply don't have. The result? Over 600 licensed dispensaries statewide, a thriving edibles industry, cannabis-friendly tours, and—most importantly for travelers—a growing network of accommodations that explicitly welcome cannabis use. Unlike California where hotel policies are restrictive, or Nevada where Strip properties ban smoking, Colorado has embraced cannabis tourism as an economic driver. Mountain towns like Breckenridge, Telluride, and Aspen cater to wealthy cannabis tourists, while Denver offers urban experiences. The state's natural beauty (Rocky Mountains, national parks, Red Rocks) combined with legal cannabis creates an unmatched vacation experience.",
-          variant: "default"
+        { 
+          title: "The 3 Types of Stays", 
+          icon: "Building2", 
+          content: "**1. Dedicated Platforms (Bud & Breakfast)**: Like Airbnb, but exclusively for cannabis users. Guaranteed friendly hosts. \n**2. Luxury Resorts (Kushkations)**: High-end homes with bongs, dab bars, and chef services included. \n**3. Traditional Rentals (Airbnb/VRBO)**: Hit or miss. You must filter carefully and ask hosts directly to avoid fines.", 
+          variant: "default" 
         },
-        {
-          title: "Types of 420-Friendly Rentals Available",
-          icon: "Building2",
-          content: "**Premium Luxury Properties (Kushkations)** - 5-star vacation homes with 3-7 bedrooms, game rooms, hot tubs, chef services, and cannabis-infused dining experiences. Indoor smoking allowed. Perfect for groups or high-end couples retreats.\n\n**Mid-Range Vacation Homes (Bud & Breakfast)** - Verified 420-friendly properties ranging from cozy cabins to modern homes. Most allow outdoor smoking, some permit indoor use. Great for families or friend groups on moderate budgets.\n\n**Boutique B&Bs (Arrowhead Manor)** - Small, owner-operated bed & breakfasts with 4-8 rooms. Personalized service, gourmet breakfasts, and cannabis-friendly outdoor spaces. Ideal for romantic getaways.\n\n**Airbnb (Hit or Miss)** - Thousands of listings, but cannabis policies are unclear. Some hosts are 420-friendly, others charge hefty smoking fines. Requires direct host communication.\n\n**Budget Options** - Private rooms in shared homes, smaller cabins, or apartments listed on Bud & Breakfast or Airbnb. Typically $60-120/night.",
-          variant: "accent"
+        { 
+          title: "Kushkations vs Airbnb", 
+          icon: "Scale", 
+          content: "**Kushkations**: \n• **Pros**: 100% legal indoor smoking often allowed. Luxury amenities (hot tubs, game rooms). \n• **Cons**: Expensive ($300-800/night). Limited availability. \n**Airbnb**: \n• **Pros**: Cheaper, huge selection. \n• **Cons**: Risk of 'smoking fees' if host isn't clear. Usually outdoor smoking only.", 
+          variant: "accent" 
         },
-        {
-          title: "Kushkations: Luxury 420-Friendly Experiences",
-          icon: "Sparkles",
-          content: "**What They Are**: Kushkations specializes in ultra-luxury vacation rentals exclusively for cannabis enthusiasts. Their properties (7+ currently operating in Colorado) are 5-star homes with 3-7 bedrooms, featuring game rooms, private hot tubs, chef services, and cannabis concierge experiences.\n\n**Price Range**: $200-400+/night depending on property size and season. Peak ski season (December-March) commands highest rates.\n\n**Best For**: Couples seeking upscale romantic retreats, bachelor/bachelorette parties, corporate retreats, or groups celebrating special occasions.\n\n**Standout Features**: Indoor smoking is explicitly allowed (rare in Colorado), some properties offer cannabis-infused private dinners with personal chefs, and concierge services help plan dispensary visits and cannabis tours.\n\n**Pros**: Unmatched luxury, no ambiguity about cannabis policies, unique experiences like infused meals, beautiful mountain locations.\n\n**Cons**: Expensive, limited number of properties (book months ahead for peak season), mostly geared toward groups (solo travelers may find it pricey).\n\n**Booking**: Direct through Kushkations website. Affiliate programs available for travel bloggers/influencers (8-10% commission).",
-          variant: "gold"
+        { 
+          title: "Top Locations", 
+          icon: "MapPin", 
+          content: "**Denver**: Best for city vibes and dispensary tours. Look for 'Capitol Hill' mansions. \n**Breckenridge/Aspen**: Best for ski trips. Luxury cabins are pricey but offer private mountain views. \n**Colorado Springs**: Cheaper rentals, near Garden of the Gods, but remember recreational sales are banned in city limits (must buy in Manitou Springs).", 
+          variant: "default" 
         },
-        {
-          title: "Bud & Breakfast: Global 420-Friendly Platform",
-          icon: "MapPin",
-          content: "**What It Is**: Bud & Breakfast is the world's largest 420-friendly accommodation platform with 1,000+ properties globally, including 50+ in Colorado. Think of it as 'Airbnb for cannabis travelers.'\n\n**Price Range**: $80-300+/night. Wide range from budget private rooms to luxury vacation homes.\n\n**Best For**: All budgets and travel styles. Solo travelers, couples, families, and groups can all find suitable options.\n\n**Standout Features**: Verified 420-friendly policies (hosts explicitly state cannabis rules), global reach (book 420-friendly stays worldwide), varied property types (B&Bs, cabins, apartments, vacation homes).\n\n**Pros**: Transparent cannabis policies, wide selection, various price points, hosts are cannabis-friendly and knowledgeable about local dispensaries.\n\n**Cons**: Outdoor smoking more common than indoor (always verify), platform is smaller than Airbnb so fewer reviews per property, customer service less robust than major platforms.\n\n**Booking**: Through Bud & Breakfast website or app. Affiliate program offers 6-8% commission.",
-          variant: "default"
+        { 
+          title: "Budget Breakdown", 
+          icon: "TrendingUp", 
+          content: "**Budget ($80-150)**: Private room in a shared 420-friendly house. Common on Bud & Breakfast. \n**Mid-Range ($200-400)**: Private condo or small cabin. Usually outdoor smoking only (balcony/patio). \n**Luxury ($500+)**: 'Kushkations' style large homes. Indoor vaping/smoking permitted. Chef services available.", 
+          variant: "gold" 
         },
-        {
-          title: "Arrowhead Manor: Boutique Mountain B&B",
-          icon: "Users",
-          content: "**What It Is**: Arrowhead Manor is a luxury bed & breakfast near Denver and Red Rocks Amphitheatre (5-minute drive). Eight beautifully appointed rooms with mountain views, private decks, hot tubs, and fireplaces.\n\n**Price Range**: $180-250/night including gourmet breakfast. Special packages for Red Rocks concert-goers.\n\n**Best For**: Romantic getaways, anniversary trips, couples who want personalized service and beautiful mountain scenery.\n\n**Standout Features**: Prime location near Red Rocks (catch concerts and smoke on your private deck afterwards), owner-operated with exceptional hospitality, outdoor cannabis consumption encouraged on private decks and patio areas.\n\n**Pros**: Stunning location, highly rated (4.9+ stars), gourmet breakfasts, intimate boutique experience, close to Denver attractions but feels like mountain retreat.\n\n**Cons**: Limited availability (only 8 rooms), books up months in advance for Red Rocks concert season (May-October), no indoor smoking (outdoor decks only).\n\n**Booking**: Direct through Arrowhead Manor website. Affiliate commission: 8%.",
-          variant: "accent"
-        },
-        {
-          title: "Budget Breakdown: What You Get at Each Price Point",
-          icon: "Scale",
-          content: "**UNDER $100/NIGHT**\n\nWhat to Expect: Private rooms in shared homes (Bud & Breakfast), budget Airbnb listings, smaller independent B&Bs, or apartments. Outdoor smoking only in most cases. Shared common areas.\n\nBest Options: Bud & Breakfast budget listings in Denver suburbs, private rooms near Boulder, smaller mountain town apartments.\n\nTrade-offs: Less privacy, shared spaces, outdoor smoking restrictions, fewer amenities.\n\n**$100-200/NIGHT**\n\nWhat to Expect: Mid-range vacation homes (2-3 bedrooms), entire apartments, smaller cabins, or nicer B&B rooms. Some allow limited indoor smoking. Full kitchens common.\n\nBest Options: Mid-tier Bud & Breakfast properties, smaller Airbnb vacation homes (verify cannabis policy), boutique lodges near ski resorts.\n\nSweet Spot: This is where value peaks. You get privacy, full amenities, and reasonable cannabis policies without luxury pricing.\n\n**$200+/NIGHT**\n\nWhat to Expect: Luxury vacation homes, premium Bud & Breakfast properties, Kushkations experiences, Arrowhead Manor, or high-end Airbnb homes. Indoor smoking often allowed. Hot tubs, game rooms, chef services, and concierge available.\n\nBest Options: Kushkations properties in Breckenridge/Telluride, Arrowhead Manor for couples, luxury Bud & Breakfast mountain homes.\n\nWorth It If: You're celebrating a special occasion, traveling with a group (cost splits), or want a truly memorable upscale experience.",
-          variant: "default"
-        },
-        {
-          title: "Location Guide: Where to Stay in Colorado",
-          icon: "MapPin",
-          content: "**DENVER (Downtown/Urban)**\n\nBest For: City explorers, nightlife, dispensary access, cultural attractions.\n\nOptions: Kushkations urban properties, Bud & Breakfast apartments, Airbnb lofts.\n\nNearest Dispensaries: 20+ within 15 minutes (including Native Roots, LivWell, The Green Solution).\n\nNearby Attractions: 16th Street Mall, Denver Art Museum, Coors Field, RiNo Art District.\n\n**BOULDER (College Town/Nature)**\n\nBest For: Nature lovers, hiking, progressive vibe, organic food scene.\n\nOptions: Bud & Breakfast homes, independent rentals, smaller B&Bs.\n\nNearest Dispensaries: 15+ (Boulder is extremely cannabis-friendly).\n\nNearby Attractions: Flatirons hiking, Pearl Street Mall, Chautauqua Park, CU Boulder campus.\n\n**RED ROCKS/MORRISON (Concert Venue)**\n\nBest For: Music lovers, Red Rocks concert-goers, mountain views close to Denver.\n\nOptions: Arrowhead Manor (5 minutes from Red Rocks!), vacation homes in Morrison.\n\nBest Property: Arrowhead Manor—book rooms 6+ months ahead for concert season.\n\nNearby Attractions: Red Rocks Amphitheatre, hiking trails, mountain biking.\n\n**BRECKENRIDGE/ASPEN (Luxury Ski Towns)**\n\nBest For: Ski vacations, luxury travelers, wealthy cannabis tourists, winter sports.\n\nOptions: Kushkations luxury properties, high-end Bud & Breakfast, upscale Airbnbs.\n\nPrice Expectations: $300-500+/night peak ski season (December-March).\n\nNearby Attractions: World-class skiing, upscale dining, boutique dispensaries, après-ski culture.",
-          variant: "accent"
-        },
-        {
-          title: "Airbnb vs Local 420-Friendly Platforms: Honest Comparison",
-          icon: "AlertCircle",
-          content: "**AIRBNB PROS**\n\n✅ Massive selection (thousands of Colorado properties)\n✅ Established platform with buyer protection\n✅ Easy booking and cancellation policies\n✅ More reviews per property (better vetting)\n\n**AIRBNB CONS**\n\n❌ Cannabis policies are ambiguous (hosts set rules, often unclear)\n❌ Risk of surprise smoking fines ($200-500 common)\n❌ Many hosts explicitly ban cannabis (you have to ask directly)\n❌ Platform doesn't filter for 420-friendly properties\n❌ No cannabis-focused community or expertise\n\n**LOCAL PLATFORMS (Bud & Breakfast, Kushkations) PROS**\n\n✅ Explicit 420-friendly policies (no ambiguity)\n✅ Cannabis-knowledgeable hosts who provide dispensary tips\n✅ No surprise fines or policy violations\n✅ Community of like-minded travelers\n✅ Indoor smoking options more common\n✅ Unique cannabis experiences (infused meals, tours, etc.)\n\n**LOCAL PLATFORMS CONS**\n\n❌ Smaller selection (fewer properties to choose from)\n❌ Sometimes pricier (premium for cannabis-friendly guarantee)\n❌ Less established payment/dispute resolution\n❌ Fewer reviews per property (newer platforms)\n\n**VERDICT**: If you're serious about cannabis tourism and don't want to risk awkward host conversations or fines, local platforms are worth the premium. If budget is tight and you're willing to do legwork (messaging hosts directly about cannabis), Airbnb can work.",
-          variant: "warning"
-        },
-        {
-          title: "How to Choose the Right Rental for Your Trip",
-          icon: "Info",
-          content: "**DECISION TREE**\n\n**Question 1: What's Your Budget?**\n- Under $100/night → Bud & Breakfast budget listings or Airbnb private rooms (verify cannabis policy)\n- $100-200/night → Mid-range Bud & Breakfast, smaller vacation homes, independent B&Bs\n- $200+/night → Kushkations, Arrowhead Manor, luxury Bud & Breakfast properties\n\n**Question 2: What's Your Vibe?**\n- City nightlife and urban exploring → Kushkations Denver properties, Bud & Breakfast downtown apartments\n- Mountain retreat and nature → Arrowhead Manor, Breckenridge/Telluride rentals, Boulder cabins\n- Budget adventure → Bud & Breakfast budget tier, Airbnb with verified 420 policy\n- Luxury/special occasion → Kushkations premium properties, high-end Bud & Breakfast\n\n**Question 3: How Important is Indoor Smoking?**\n- CRITICAL (must smoke indoors) → Kushkations (explicitly allows), verify with other platforms\n- IMPORTANT (prefer indoors) → Arrowhead Manor (outdoor decks), mid-tier Bud & Breakfast (some allow)\n- FLEXIBLE (outdoor okay) → Airbnb verified 420-friendly, most Bud & Breakfast listings\n\n**Question 4: Traveling Solo, Couple, or Group?**\n- Solo → Budget Bud & Breakfast rooms, Airbnb private rooms\n- Couple → Arrowhead Manor, Kushkations smaller properties, boutique B&Bs\n- Group (4-8 people) → Kushkations large homes, Bud & Breakfast vacation homes, split costs for luxury",
-          variant: "gold"
-        },
-        {
-          title: "Money-Saving Booking Strategies",
-          icon: "TrendingUp",
-          content: "**TIP 1: Book Off-Season**\n\nMay-August (after ski season, before fall foliage): Save 20-40% vs peak winter rates. Denver and Boulder are pleasant in summer; mountain towns are less crowded.\n\nSeptember-November (shoulder season): Moderate savings (10-20% off), beautiful fall colors, fewer tourists.\n\n**TIP 2: Multi-Night Discounts**\n\nMost platforms offer discounts for longer stays:\n- 3+ nights: 10-15% off nightly rate\n- 7+ nights: 20-25% off\n- 30+ nights (monthly): Up to 30-40% savings\n\n**TIP 3: Sign Up for Alerts & Newsletters**\n\n- Kushkations email list: Early access to new properties and seasonal deals\n- Bud & Breakfast notifications: Last-minute discounts and flash sales\n- Arrowhead Manor newsletter: Red Rocks concert packages and off-season promotions\n\n**TIP 4: Compare All Platforms**\n\nDon't assume local platforms are always pricier. Sometimes Kushkations has better value than luxury Airbnbs when you factor in included amenities (chef services, concierge). Sometimes Airbnb beats Bud & Breakfast on price if you're okay with outdoor-only smoking.\n\nAlways check: Kushkations → Bud & Breakfast → Airbnb → Hotel comparison sites (Expedia, Booking.com with '420-friendly' search)\n\n**TIP 5: Group Travel = Huge Savings**\n\nA $350/night Kushkations property split between 4 couples = $87.50/couple/night. Suddenly that luxury experience becomes affordable.",
-          variant: "default"
-        },
-        {
-          title: "Safety & Legal Tips for Cannabis Rentals",
-          icon: "Shield",
-          content: "**✅ DO's**\n\n- Verify smoking policy IN WRITING before booking (screenshot or save confirmation)\n- Contact host directly if Airbnb—ask 'Is cannabis consumption allowed indoors/outdoors?'\n- Smoke only in explicitly designated areas (private decks, patios, designated rooms)\n- Keep edibles in original packaging with labels (proves legal purchase)\n- Respect neighbors and keep noise/smoke contained to your property\n- Dispose of cannabis waste properly (don't leave roaches or packaging)\n\n**❌ DON'Ts**\n\n- Don't smoke in 'smoking optional' rooms without explicit cannabis permission (tobacco ≠ cannabis)\n- Don't bring cannabis across state lines (federal crime, even from legal state to legal state)\n- Don't smoke and drive (DUI laws apply, zero tolerance in Colorado)\n- Don't assume Airbnb is 420-friendly without asking (fines are common)\n- Don't consume in hotel rooms that don't explicitly allow it (cleaning fees $200-500)\n- Don't smoke near playgrounds, schools, or public areas (illegal in Colorado)\n\n**LEGAL REMINDERS**\n\n- Colorado allows 1 oz possession for adults 21+\n- Public consumption is illegal (streets, parks, restaurants)\n- Driving under influence = DUI (same as alcohol)\n- Only purchase from licensed dispensaries (verify license on colorado.gov)\n- Keep cannabis in trunk when driving (not passenger area)\n- Never fly with cannabis (federal airports, TSA prohibition)",
-          variant: "warning"
+        { 
+          title: "Booking Strategy", 
+          icon: "Sparkles", 
+          content: "1. **Filter First**: On Airbnb, search for '420 friendly' in descriptions, but don't rely on it. \n2. **Message the Host**: 'Hi, is cannabis consumption allowed on the patio?' Get it in writing. \n3. **Check Cleaning Fees**: Some hosts charge $300+ cleaning fees if they smell smoke indoors. \n4. **Book Early**: The best 420 spots book out 3-6 months in advance for ski season.", 
+          variant: "warning" 
         }
       ],
       safetyTips: [
-        "Always verify cannabis smoking policy IN WRITING before booking any rental property",
-        "Contact Airbnb hosts directly with explicit cannabis questions—don't assume",
-        "Never transport cannabis across state lines, even between legal states (federal crime)",
-        "Don't smoke and drive—Colorado has strict DUI enforcement for cannabis",
-        "Keep cannabis in original dispensary packaging as proof of legal purchase",
-        "Respect neighbors and property—keep smoke and noise contained to avoid complaints",
-        "Budget platforms like Bud & Breakfast often beat Airbnb on value when factoring in clarity of cannabis policies",
-        "Book 3-6 months ahead for peak season (December-March ski season, May-October Red Rocks concerts)",
-        "Split costs with friends for luxury properties—Kushkations becomes affordable when shared",
-        "Compare Kushkations, Bud & Breakfast, and Airbnb for best value—prices vary widely by season"
+        "Verify 'Indoor' vs 'Outdoor' smoking rules explicitly",
+        "Don't smoke and drive (DUI laws are strict)",
+        "Avoid smoking on balconies visible to public streets (illegal)",
+        "Keep edibles away from kids/pets in rental properties",
+        "Be a good guest: Ventilate rooms to avoid lingering smells",
+        "Leave a review mentioning the 420-friendliness to help others"
       ]
     }
   },
