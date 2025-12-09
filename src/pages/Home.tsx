@@ -32,7 +32,7 @@ const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"
 // Configured for Verification & Trust
 const DISPENSARY_COUNT = 48; // Verified Exact Count
 const HOTEL_COUNT = 21;      // Verified Exact Count
-const COUNTRY_COUNT = 120;   // Global Coverage
+const COUNTRY_COUNT = 150;   // Global Coverage (Updated)
 
 /* ----------  SEARCH DATA  ---------- */
 interface SearchItem {
@@ -43,17 +43,19 @@ interface SearchItem {
   region?: string;
 }
 
-// World countries for search
+// EXPANDED World countries for search
 const WORLD_COUNTRIES: SearchItem[] = [
-  // North America
+  // --- North America ---
   { name: "Canada", type: "country", status: "Recreational", path: "/world/north-america/canada", region: "North America" },
   { name: "United States", type: "country", status: "Mixed", path: "/world/north-america/united-states", region: "North America" },
   { name: "Mexico", type: "country", status: "Decriminalized", path: "/world/north-america/mexico", region: "North America" },
-  // Central America
+  
+  // --- Central America ---
   { name: "Costa Rica", type: "country", status: "Decriminalized", path: "/world/central-america/costa-rica", region: "Central America" },
   { name: "Belize", type: "country", status: "Decriminalized", path: "/world/central-america/belize", region: "Central America" },
   { name: "Panama", type: "country", status: "Medical", path: "/world/central-america/panama", region: "Central America" },
-  // Europe
+  
+  // --- Europe ---
   { name: "Netherlands", type: "country", status: "Decriminalized", path: "/world/europe/netherlands", region: "Europe" },
   { name: "Germany", type: "country", status: "Recreational", path: "/world/europe/germany", region: "Europe" },
   { name: "Spain", type: "country", status: "Decriminalized", path: "/world/europe/spain", region: "Europe" },
@@ -62,33 +64,60 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "Switzerland", type: "country", status: "Decriminalized", path: "/world/europe/switzerland", region: "Europe" },
   { name: "Czech Republic", type: "country", status: "Decriminalized", path: "/world/europe/czech-republic", region: "Europe" },
   { name: "Austria", type: "country", status: "Decriminalized", path: "/world/europe/austria", region: "Europe" },
+  { name: "Belgium", type: "country", status: "Decriminalized", path: "/world/europe/belgium", region: "Europe" },
   { name: "Malta", type: "country", status: "Recreational", path: "/world/europe/malta", region: "Europe" },
   { name: "Luxembourg", type: "country", status: "Recreational", path: "/world/europe/luxembourg", region: "Europe" },
   { name: "United Kingdom", type: "country", status: "Medical", path: "/world/europe/uk", region: "Europe" },
-  // South America
+  { name: "France", type: "country", status: "Medical", path: "/world/europe/france", region: "Europe" },
+  { name: "Croatia", type: "country", status: "Medical", path: "/world/europe/croatia", region: "Europe" },
+  { name: "Greece", type: "country", status: "Medical", path: "/world/europe/greece", region: "Europe" },
+  { name: "Poland", type: "country", status: "Medical", path: "/world/europe/poland", region: "Europe" },
+  { name: "Denmark", type: "country", status: "Medical", path: "/world/europe/denmark", region: "Europe" },
+  { name: "Norway", type: "country", status: "Medical", path: "/world/europe/norway", region: "Europe" },
+  { name: "Georgia", type: "country", status: "Recreational", path: "/world/europe/georgia", region: "Europe" }, // Use legal, sale illegal
+  
+  // --- South America ---
   { name: "Uruguay", type: "country", status: "Recreational", path: "/world/south-america/uruguay", region: "South America" },
   { name: "Colombia", type: "country", status: "Medical", path: "/world/south-america/colombia", region: "South America" },
   { name: "Argentina", type: "country", status: "Medical", path: "/world/south-america/argentina", region: "South America" },
   { name: "Chile", type: "country", status: "Decriminalized", path: "/world/south-america/chile", region: "South America" },
   { name: "Peru", type: "country", status: "Medical", path: "/world/south-america/peru", region: "South America" },
-  // Caribbean
+  { name: "Brazil", type: "country", status: "Decriminalized", path: "/world/south-america/brazil", region: "South America" },
+  { name: "Ecuador", type: "country", status: "Decriminalized", path: "/world/south-america/ecuador", region: "South America" },
+  { name: "Paraguay", type: "country", status: "Medical", path: "/world/south-america/paraguay", region: "South America" },
+  
+  // --- Caribbean ---
   { name: "Jamaica", type: "country", status: "Decriminalized", path: "/world/caribbean/jamaica", region: "Caribbean" },
   { name: "St. Vincent", type: "country", status: "Decriminalized", path: "/world/caribbean/st-vincent", region: "Caribbean" },
-  // Asia
+  { name: "Antigua and Barbuda", type: "country", status: "Recreational", path: "/world/caribbean/antigua", region: "Caribbean" },
+  { name: "Saint Lucia", type: "country", status: "Decriminalized", path: "/world/caribbean/saint-lucia", region: "Caribbean" },
+  { name: "Dominica", type: "country", status: "Decriminalized", path: "/world/caribbean/dominica", region: "Caribbean" },
+  { name: "Barbados", type: "country", status: "Medical", path: "/world/caribbean/barbados", region: "Caribbean" },
+  { name: "Puerto Rico", type: "country", status: "Medical", path: "/world/caribbean/puerto-rico", region: "Caribbean" },
+  { name: "Trinidad and Tobago", type: "country", status: "Decriminalized", path: "/world/caribbean/trinidad", region: "Caribbean" },
+
+  // --- Asia ---
   { name: "Thailand", type: "country", status: "Mixed", path: "/world/asia/thailand", region: "Asia" },
   { name: "India", type: "country", status: "Mixed", path: "/world/asia/india", region: "Asia" },
   { name: "Japan", type: "country", status: "Illegal", path: "/world/asia/japan", region: "Asia" },
   { name: "South Korea", type: "country", status: "Medical", path: "/world/asia/south-korea", region: "Asia" },
-  // Africa
+  { name: "Israel", type: "country", status: "Medical", path: "/world/asia/israel", region: "Asia" }, // Major medical hub
+  { name: "Lebanon", type: "country", status: "Medical", path: "/world/asia/lebanon", region: "Asia" },
+  
+  // --- Africa ---
   { name: "South Africa", type: "country", status: "Decriminalized", path: "/world/africa/south-africa", region: "Africa" },
   { name: "Morocco", type: "country", status: "Illegal", path: "/world/africa/morocco", region: "Africa" },
   { name: "Lesotho", type: "country", status: "Medical", path: "/world/africa/lesotho", region: "Africa" },
-  // Oceania
-  { name: "Australia", type: "country", status: "Mixed", path: "/world/oceania/australia", region: "Oceania" }, // UPDATED: Was Medical
+  { name: "Zimbabwe", type: "country", status: "Medical", path: "/world/africa/zimbabwe", region: "Africa" },
+  { name: "Rwanda", type: "country", status: "Medical", path: "/world/africa/rwanda", region: "Africa" },
+  
+  // --- Oceania ---
+  { name: "Australia", type: "country", status: "Mixed", path: "/world/oceania/australia", region: "Oceania" }, 
   { name: "New Zealand", type: "country", status: "Medical", path: "/world/oceania/new-zealand", region: "Oceania" },
+  { name: "Guam", type: "country", status: "Recreational", path: "/world/oceania/guam", region: "Oceania" },
 ];
 
-// Popular cities for search
+// EXPANDED Popular cities for search
 const POPULAR_CITIES: SearchItem[] = [
   { name: "Amsterdam", type: "city", status: "Decriminalized", path: "/world/europe/netherlands/north-holland/amsterdam", region: "Netherlands" },
   { name: "Barcelona", type: "city", status: "Decriminalized", path: "/world/europe/spain/catalonia/barcelona", region: "Spain" },
@@ -98,8 +127,14 @@ const POPULAR_CITIES: SearchItem[] = [
   { name: "Toronto", type: "city", status: "Recreational", path: "/world/north-america/canada/ontario/toronto", region: "Canada" },
   { name: "Vancouver", type: "city", status: "Recreational", path: "/world/north-america/canada/british-columbia/vancouver", region: "Canada" },
   { name: "Berlin", type: "city", status: "Recreational", path: "/world/europe/germany/berlin-region/berlin", region: "Germany" },
+  { name: "Munich", type: "city", status: "Recreational", path: "/world/europe/germany/bavaria/munich", region: "Germany" },
   { name: "Bangkok", type: "city", status: "Mixed", path: "/world/asia/thailand/bangkok-region/bangkok", region: "Thailand" },
+  { name: "Chiang Mai", type: "city", status: "Mixed", path: "/world/asia/thailand/chiang-mai", region: "Thailand" },
   { name: "Lisbon", type: "city", status: "Decriminalized", path: "/world/europe/portugal/lisbon-region/lisbon", region: "Portugal" },
+  { name: "Prague", type: "city", status: "Decriminalized", path: "/world/europe/czech-republic/prague", region: "Czech Republic" },
+  { name: "Cape Town", type: "city", status: "Decriminalized", path: "/world/africa/south-africa/western-cape/cape-town", region: "South Africa" },
+  { name: "Tel Aviv", type: "city", status: "Medical", path: "/world/asia/israel/tel-aviv", region: "Israel" },
+  { name: "Canberra", type: "city", status: "Recreational", path: "/world/oceania/australia/act/canberra", region: "Australia" },
 ];
 
 /* ----------  TYPES  ---------- */
@@ -120,12 +155,14 @@ interface StatItem {
   suffix: string;
 }
 
+// Blog Type Definition
 interface BlogItem {
+  id: string;
   title: string;
-  summary: string;
+  summary: string; // Used for fallback data
   image: string;
   imageAlt: string;
-  link: string;
+  link?: string; // Optional legacy link
 }
 
 /* ----------  ANIMATION VARIANTS  ---------- */
@@ -148,7 +185,7 @@ const SEOHead = () => {
       element.setAttribute("content", content);
     };
 
-    const description = "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 120+ countries.";
+    const description = "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 150+ countries.";
     const url = "https://budquest.com";
     const image = "https://budquest.com/og-social-share.jpg";
 
@@ -515,7 +552,7 @@ const Home = () => {
           </p>
 
           <p className="text-[clamp(0.95rem,2vw,1.3rem)] text-muted-foreground/80 font-normal mt-3 max-w-4xl mx-auto leading-relaxed">
-            Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 120+ countries with verified, real-time information.
+            Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 150+ countries with verified, real-time information.
           </p>
 
           <div className="max-w-3xl mx-auto mt-10" ref={searchRef}>
@@ -692,7 +729,6 @@ const Home = () => {
               <Card className="bg-card/50 border-border/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
                   <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Global Map Data...</div>}>
-                    {/* Passed WORLD_COUNTRIES to ensure the web map receives the verified data (e.g., Australia = Mixed) */}
                     <InteractiveWorldMap />
                   </Suspense>
                 </div>
@@ -717,7 +753,7 @@ const Home = () => {
               .slice(0, 3)
               .map((post) => (
               <motion.div key={post.id} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Link to="/blog" aria-label={`Read article: ${post.title}`}>
+                <Link to={`/blog/${post.id}`} aria-label={`Read article: ${post.title}`}>
                   <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
                     <img 
                       src={post.image} 
@@ -772,12 +808,6 @@ const FEATURED_DESTINATIONS: Destination[] = [
   { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Canada legal weed travel guide Toronto", color: "bg-green-500/90", link: "/world/north-america/canada" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay cannabis club travel", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
   { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
-];
-
-const BLOG_DATA: BlogItem[] = [
-  { title: "Amsterdam Coffee Shops Guide 2025", summary: "Discover the best cannabis coffee shops, local etiquette, and legal tips.", image: "/blog-amsterdam.jpg", imageAlt: "Amsterdam coffee shop interior", link: "/blog?article=amsterdam-coffee-shops" },
-  { title: "California Cannabis Travel Handbook", summary: "Complete guide to California dispensaries and regulations.", image: "/blog-california.jpg", imageAlt: "California dispensary storefront", link: "/blog?article=california-cannabis" },
-  { title: "Uruguay: The First Legal Cannabis Nation", summary: "Deep dive into Uruguay's pioneering legalization model.", image: "/blog-uruguay.jpg", imageAlt: "Uruguay legal cannabis guide", link: "/blog?article=uruguay-legalization" },
 ];
 
 export default Home;
