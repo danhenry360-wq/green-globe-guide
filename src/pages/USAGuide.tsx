@@ -22,32 +22,32 @@ const REGIONS = [
   {
     id: 'West', 
     name: 'The West',
-    // SEO Update: Added "Cannabis Hubs" and "Legal Weed" context
-    description: 'Pacific Coast, Rockies & Legal Weed Hubs',
+    // SEO Update: Mentioning "Hubs" (for CO) and general culture without promising dispensaries everywhere
+    description: 'Pacific Coast Culture & Rockies Cannabis Hubs',
     count: '13 states',
     icon: Mountain, 
   },
   {
     id: 'Midwest',
     name: 'The Midwest',
-    // SEO Update: Added "Emerging Markets" to target industry/growth search intent
-    description: 'Great Lakes, Plains & Emerging Cannabis Markets',
+    // SEO Update: Focus on "Markets" and "Regulations"
+    description: 'Great Lakes & Emerging Legal Markets',
     count: '12 states',
     icon: Wheat, 
   },
   {
     id: 'South',
     name: 'The South',
-    // SEO Update: Added "Medical Marijuana" & "CBD" for specific southern search intent
-    description: 'Deep South, Medical Marijuana & CBD Laws',
+    // SEO Update: Accurate reflection of the region (Medical/Strict)
+    description: 'Medical Programs & State Regulations',
     count: '17 jurisdictions',
     icon: Sun, 
   },
   {
     id: 'Northeast',
     name: 'The Northeast',
-    // SEO Update: Added "Adult-Use" and "Dispensaries"
-    description: 'New England Adult-Use & Urban Dispensaries',
+    // SEO Update: Focus on the rapid legalization here
+    description: 'New England Adult-Use & Legalization',
     count: '9 states',
     icon: Building2, 
   }
@@ -128,9 +128,9 @@ const SearchResults = ({
           <div className="w-16 h-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <Map className="w-8 h-8 text-muted-foreground" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">No legal states found</h3>
+          <h3 className="text-xl font-semibold mb-2">No states found</h3>
           <p className="text-muted-foreground">
-            We couldn't find a state matching "{query}". Try searching for a specific state name.
+            We couldn't find a state matching "{query}". Try searching for a specific state name to check its legal status.
           </p>
         </div>
       )}
@@ -147,23 +147,23 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 text-center"
       >
-        {/* SEO Update: H1 optimized for "Travel Guide" and "Laws" */}
+        {/* SEO Update: H1 focuses on "Laws" and "Guides" generally */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
           <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-            USA Cannabis Travel Guide
+            USA Cannabis Law & Travel Guide
           </span>
         </h1>
-        {/* SEO Update: Paragraph optimized with keywords: recreational, medical, 420-friendly, dispensaries */}
+        
+        {/* SEO Update: Integrity maintained. Promoting "Laws" generally, and "Tourism" only where applicable. */}
         <p className="text-base sm:text-lg text-muted-foreground font-light max-w-2xl mx-auto">
-          Navigate the map of legal weed in America. Select a region to discover <strong>recreational dispensaries</strong>, 
-          <strong>medical marijuana laws</strong>, and <strong>420-friendly vacations</strong>.
+          Explore the legal map of America. Check <strong>state cannabis laws</strong>, possession limits, and discover our detailed <strong>Travel Hubs</strong> for 420 friendly vacations.
         </p>
         <p className="text-xs text-muted-foreground/60 mt-4">
-          State regulations last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          Regulations last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </motion.div>
 
-      {/* Featured State Hub */}
+      {/* Featured State Hub - COLORADO ONLY (Full Hub Status) */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -172,7 +172,6 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
       >
         <Link to="/usa/colorado" aria-label="Visit Colorado Cannabis Travel Hub">
           <Card className="relative overflow-hidden rounded-2xl border-accent/30 bg-gradient-to-r from-accent/10 via-card to-accent/5 hover:border-accent/50 transition-all group">
-            {/* SEO Update: Added aria-label to background image div */}
             <div 
               className="absolute inset-0 bg-[url('/dest-2.jpg')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity" 
               role="img"
@@ -192,13 +191,13 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
                     Colorado Cannabis Travel Hub
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {/* SEO Update: Keyword enrichment */}
-                    The ultimate guide to <strong>legal weed laws</strong>, top-rated <strong>dispensaries</strong>, and <strong>cannabis lodging</strong> in the Rockies.
+                    {/* SEO Update: Specific "Hub" keywords applied only here */}
+                    Full guide to 4 cities, top-rated <strong>dispensaries</strong>, and <strong>420 friendly stays</strong> in the Rockies.
                   </p>
                 </div>
               </div>
               <Button className="bg-accent hover:bg-accent/90 text-accent-foreground shrink-0">
-                Explore Colorado Weed Maps
+                Explore Colorado
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -262,10 +261,11 @@ const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void
         className="mb-8"
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-          {region?.name} Cannabis Laws
+          {region?.name} Cannabis Guides
         </h1>
+        {/* SEO Update: Broad text that covers both detailed hubs and basic law guides */}
         <p className="text-lg text-muted-foreground">
-          Select a state to view <strong>marijuana legalization status</strong>, limits, and local guides.
+          Select a state to view <strong>legalization status</strong>, possession limits, and <strong>420 friendly options</strong> where available.
         </p>
       </motion.div>
 
@@ -305,7 +305,7 @@ const USAGuide = () => {
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search states, laws, or dispensaries..."
+              placeholder="Search states, laws, or hubs..."
               aria-label="Search for cannabis laws by state"
               className="w-full pl-10 pr-10 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
