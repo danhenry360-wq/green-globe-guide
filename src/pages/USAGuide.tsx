@@ -38,7 +38,7 @@ const REGIONS = [
   {
     id: 'South',
     name: 'The South',
-    // SEO Update: Accurate reflection of the region (Medical/Strict)
+    // SEO Update: Accurate reflection of the region (Medical/Strict/Illegal)
     description: 'Medical Programs & State Regulations',
     count: '17 jurisdictions',
     icon: Sun, 
@@ -147,16 +147,16 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 text-center"
       >
-        {/* SEO Update: H1 focuses on "Laws" and "Guides" generally */}
+        {/* SEO Update: H1 optimized for broad appeal */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
           <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
             USA Cannabis Law & Travel Guide
           </span>
         </h1>
         
-        {/* SEO Update: Integrity maintained. Promoting "Laws" generally, and "Tourism" only where applicable. */}
+        {/* SEO Update: Accurate for all states (legal/illegal) */}
         <p className="text-base sm:text-lg text-muted-foreground font-light max-w-2xl mx-auto">
-          Explore the legal map of America. Check <strong>state cannabis laws</strong>, possession limits, and discover our detailed <strong>Travel Hubs</strong> for 420 friendly vacations.
+          Explore the complete <strong>USA cannabis map</strong>. Check specific <strong>state laws</strong> and <strong>legalization status</strong> everywhere, or discover our detailed <strong>Travel Hubs</strong> for 420 friendly vacations.
         </p>
         <p className="text-xs text-muted-foreground/60 mt-4">
           Regulations last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
