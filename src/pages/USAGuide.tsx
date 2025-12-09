@@ -22,28 +22,32 @@ const REGIONS = [
   {
     id: 'West', 
     name: 'The West',
-    description: 'Pacific Coast, Rockies & Desert',
+    // SEO Update: Added "Cannabis Hubs" and "Legal Weed" context
+    description: 'Pacific Coast, Rockies & Legal Weed Hubs',
     count: '13 states',
     icon: Mountain, 
   },
   {
     id: 'Midwest',
     name: 'The Midwest',
-    description: 'Great Lakes & Great Plains',
+    // SEO Update: Added "Emerging Markets" to target industry/growth search intent
+    description: 'Great Lakes, Plains & Emerging Cannabis Markets',
     count: '12 states',
     icon: Wheat, 
   },
   {
     id: 'South',
     name: 'The South',
-    description: 'Deep South, Texas & Florida',
+    // SEO Update: Added "Medical Marijuana" & "CBD" for specific southern search intent
+    description: 'Deep South, Medical Marijuana & CBD Laws',
     count: '17 jurisdictions',
     icon: Sun, 
   },
   {
     id: 'Northeast',
     name: 'The Northeast',
-    description: 'New England & Mid-Atlantic',
+    // SEO Update: Added "Adult-Use" and "Dispensaries"
+    description: 'New England Adult-Use & Urban Dispensaries',
     count: '9 states',
     icon: Building2, 
   }
@@ -89,6 +93,7 @@ const SearchResults = ({
         variant="ghost"
         onClick={onClear}
         className="mb-6 gap-2 pl-0 hover:bg-transparent"
+        aria-label="Clear search results"
       >
         <X className="w-4 h-4" /> Clear search
       </Button>
@@ -99,10 +104,10 @@ const SearchResults = ({
         className="mb-8"
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-          Search Results
+          Cannabis Search Results
         </h1>
         <p className="text-lg text-muted-foreground">
-          {filteredStates.length} state{filteredStates.length !== 1 ? 's' : ''} found for "{query}"
+          {filteredStates.length} state{filteredStates.length !== 1 ? 's' : ''} found matching "{query}"
         </p>
       </motion.div>
 
@@ -123,9 +128,9 @@ const SearchResults = ({
           <div className="w-16 h-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <Map className="w-8 h-8 text-muted-foreground" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">No states found</h3>
+          <h3 className="text-xl font-semibold mb-2">No legal states found</h3>
           <p className="text-muted-foreground">
-            Try a different search term.
+            We couldn't find a state matching "{query}". Try searching for a specific state name.
           </p>
         </div>
       )}
@@ -142,16 +147,19 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 text-center"
       >
+        {/* SEO Update: H1 optimized for "Travel Guide" and "Laws" */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
           <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-            USA Cannabis Guide
+            USA Cannabis Travel Guide
           </span>
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground font-light">
-          Pick a region to start exploring
+        {/* SEO Update: Paragraph optimized with keywords: recreational, medical, 420-friendly, dispensaries */}
+        <p className="text-base sm:text-lg text-muted-foreground font-light max-w-2xl mx-auto">
+          Navigate the map of legal weed in America. Select a region to discover <strong>recreational dispensaries</strong>, 
+          <strong>medical marijuana laws</strong>, and <strong>420-friendly vacations</strong>.
         </p>
-        <p className="text-xs text-muted-foreground/60 mt-2">
-          Last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        <p className="text-xs text-muted-foreground/60 mt-4">
+          State regulations last verified: {new Date(USA_GUIDE_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </motion.div>
 
@@ -162,9 +170,14 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
         transition={{ delay: 0.1 }}
         className="mb-10"
       >
-        <Link to="/usa/colorado">
+        <Link to="/usa/colorado" aria-label="Visit Colorado Cannabis Travel Hub">
           <Card className="relative overflow-hidden rounded-2xl border-accent/30 bg-gradient-to-r from-accent/10 via-card to-accent/5 hover:border-accent/50 transition-all group">
-            <div className="absolute inset-0 bg-[url('/dest-2.jpg')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity" />
+            {/* SEO Update: Added aria-label to background image div */}
+            <div 
+              className="absolute inset-0 bg-[url('/dest-2.jpg')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity" 
+              role="img"
+              aria-label="Scenic Colorado mountains representing cannabis tourism"
+            />
             <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center shrink-0">
@@ -173,18 +186,19 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <Badge className="bg-accent/20 text-accent border-accent/30 text-xs">Featured Hub</Badge>
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">Recreational</Badge>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">Recreational Legal</Badge>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-accent transition-colors">
                     Colorado Cannabis Travel Hub
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Complete guide with legal info, 420-friendly stays, dispensaries, and travel tips
+                    {/* SEO Update: Keyword enrichment */}
+                    The ultimate guide to <strong>legal weed laws</strong>, top-rated <strong>dispensaries</strong>, and <strong>cannabis lodging</strong> in the Rockies.
                   </p>
                 </div>
               </div>
               <Button className="bg-accent hover:bg-accent/90 text-accent-foreground shrink-0">
-                Explore Colorado
+                Explore Colorado Weed Maps
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -203,12 +217,14 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
               "p-6 shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
             )}
             onClick={() => onSelect(region.id)}
+            role="button"
+            aria-label={`Browse cannabis laws in ${region.name}`}
           >
             <div className="flex items-center gap-4 mb-4">
               <region.icon className="w-8 h-8 text-green-400" />
-              <h3 className="text-2xl font-bold">{region.name}</h3>
+              <h2 className="text-2xl font-bold">{region.name}</h2>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground font-semibold">
               {region.count}
             </p>
             <p className="text-sm font-medium mt-2 text-muted-foreground/80">
@@ -246,9 +262,11 @@ const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void
         className="mb-8"
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-          {region?.name}
+          {region?.name} Cannabis Laws
         </h1>
-        <p className="text-lg text-muted-foreground">Choose a state</p>
+        <p className="text-lg text-muted-foreground">
+          Select a state to view <strong>marijuana legalization status</strong>, limits, and local guides.
+        </p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -283,16 +301,18 @@ const USAGuide = () => {
       <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
         <div className="container mx-auto max-w-7xl px-4 py-3">
           <div className="relative max-w-3xl mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search all states..."
+              placeholder="Search states, laws, or dispensaries..."
+              aria-label="Search for cannabis laws by state"
               className="w-full pl-10 pr-10 py-3 rounded-lg bg-card border border-white/10 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 <X className="w-5 h-5" />
