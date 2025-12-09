@@ -792,7 +792,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Cannabis Guides",
     tags: ["Denver", "Dispensaries", "Shopping", "Guide"],
-    image: "/dest-2.jpg",
+    image: "/blog-denver-dispensaries.jpg",
     isExternalPage: true,
     externalUrl: "/blog/cannabis-dispensaries-denver",
     content: {
@@ -813,7 +813,7 @@ export const BLOG_POSTS = [
     avatar: "🏠",
     category: "Accommodation",
     tags: ["Denver", "Hotels", "420-Friendly", "Rentals"],
-    image: "/dest-2.jpg",
+    image: "/blog-denver-rentals.jpg",
     isExternalPage: true,
     externalUrl: "/blog/best-420-rentals-denver",
     content: {
@@ -834,7 +834,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Accommodation",
     tags: ["Boulder", "Hotels", "420-Friendly", "Rentals", "Mountain"],
-    image: "/dest-colorado.jpg",
+    image: "/blog-boulder-rentals.jpg",
     isExternalPage: true,
     externalUrl: "/blog/best-420-rentals-boulder",
     content: {
@@ -855,7 +855,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Cannabis Guides",
     tags: ["Boulder", "Dispensaries", "Shopping", "Guide"],
-    image: "/dest-colorado.jpg",
+    image: "/blog-boulder-dispensaries.jpg",
     isExternalPage: true,
     externalUrl: "/blog/cannabis-dispensaries-boulder",
     content: {
@@ -876,7 +876,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Cannabis Guides",
     tags: ["Aspen", "Dispensaries", "Luxury", "Guide"],
-    image: "/dest-aspen.jpg",
+    image: "/blog-aspen-dispensaries.jpg",
     isExternalPage: true,
     externalUrl: "/blog/cannabis-dispensaries-aspen",
     content: {
@@ -897,7 +897,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Accommodation",
     tags: ["Aspen", "Rentals", "Hotels", "Luxury", "420-Friendly"],
-    image: "/dest-aspen.jpg",
+    image: "/blog-aspen-rentals.jpg",
     isExternalPage: true,
     externalUrl: "/blog/best-420-rentals-aspen",
     content: {
@@ -918,7 +918,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Cannabis Guides",
     tags: ["Colorado Springs", "Dispensaries", "Medical", "Guide"],
-    image: "/dest-colorado-springs.jpg",
+    image: "/blog-colorado-springs-dispensaries.jpg",
     isExternalPage: true,
     externalUrl: "/blog/cannabis-dispensaries-colorado-springs",
     content: {
@@ -939,7 +939,7 @@ export const BLOG_POSTS = [
     avatar: "🏔️",
     category: "Accommodation",
     tags: ["Colorado Springs", "Rentals", "Hotels", "420-Friendly"],
-    image: "/dest-colorado-springs.jpg",
+    image: "/blog-colorado-springs-rentals.jpg",
     isExternalPage: true,
     externalUrl: "/blog/best-420-rentals-colorado-springs",
     content: {

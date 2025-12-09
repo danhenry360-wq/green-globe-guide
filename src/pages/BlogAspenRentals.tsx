@@ -408,21 +408,64 @@ const BlogAspenRentals = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6">Aspen Cannabis Laws & Etiquette</h2>
-              <Card className="bg-card/60 border-red-500/20 p-6">
-                <div className="flex items-start gap-4">
-                  <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice</h3>
-                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                      <li>**Age Limit:** You must be 21 or older to purchase or consume recreational cannabis.</li>
-                      <li>**Public Consumption:** Public consumption (smoking, vaping, or eating edibles) is strictly illegal in Aspen and all of Colorado. This includes ski slopes, parks, and sidewalks.</li>
-                      <li>**Federal Land:** All national parks, national forests, and ski slopes (which operate on federal land) are federal jurisdiction, where cannabis is illegal.</li>
-                      <li>**Possession Limits:** Non-residents can purchase up to 1 ounce of flower, 8 grams of concentrate, or 800mg of edibles per transaction.</li>
-                    </ul>
+              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Regulations</h2>
+              
+              <div className="space-y-4">
+                <Card className="bg-card/60 border-accent/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Age & Purchase Requirements</h3>
+                      <p className="text-muted-foreground">Adults 21+ with valid government-issued ID may purchase recreational cannabis. Non-residents may purchase up to 1 ounce (28g) of flower, 8 grams of concentrate, or 800mg of edibles per transaction.</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+
+                <Card className="bg-card/60 border-amber-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-amber-500/20">
+                      <AlertTriangle className="h-5 w-5 text-amber-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Where Consumption Is Prohibited</h3>
+                      <p className="text-muted-foreground mb-3">Public consumption is illegal throughout Colorado, including:</p>
+                      <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm">
+                        <li>Ski slopes and lift areas (federal land)</li>
+                        <li>Streets, sidewalks, and public parks</li>
+                        <li>National forests and federal property</li>
+                        <li>Vehicles (driver or passenger)</li>
+                        <li>Most hotel rooms without explicit permission</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-card/60 border-red-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-red-500/20">
+                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Penalties & Enforcement</h3>
+                      <p className="text-muted-foreground">Public consumption fines range $100–$999. DUI laws apply—impaired driving is strictly enforced with potential license suspension and criminal charges. Never transport cannabis across state lines.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-accent/10 to-gold/5 border-accent/30 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Legal Consumption Options</h3>
+                      <p className="text-muted-foreground">Consume legally at private residences (with owner permission), verified 420-friendly rentals, or licensed consumption lounges. Booking through BudQuest ensures your accommodation explicitly welcomes cannabis use.</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
