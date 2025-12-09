@@ -81,7 +81,7 @@ const countryData: Record<string, CountryData> = {
   'Japan': { name: 'Japan', status: 'illegal', description: 'Strict prohibition - Travel Warning', slug: 'japan', region: 'asia', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80' },
   'SouthKorea': { name: 'South Korea', status: 'medical', description: 'Strict medical only', slug: 'south-korea', region: 'asia', image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=400&q=80' },
   'China': { name: 'China', status: 'illegal', description: 'Zero tolerance, severe penalties', slug: 'china', region: 'asia', image: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=400&q=80' },
-  'India': { name: 'India', status: 'decriminalized', description: 'Bhang legal, varies by state', slug: 'india', region: 'asia', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80' },
+  'India': { name: 'India', status: 'mixed', description: 'Bhang legal, varies by state - complex laws', slug: 'india', region: 'asia', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80' },
   'Indonesia': { name: 'Indonesia', status: 'illegal', description: 'Death penalty possible, avoid', slug: 'indonesia', region: 'asia', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80' },
   'Malaysia': { name: 'Malaysia', status: 'illegal', description: 'Death penalty, mandatory sentences', slug: 'malaysia', region: 'asia', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=400&q=80' },
   'Singapore': { name: 'Singapore', status: 'illegal', description: 'Death penalty, zero tolerance', slug: 'singapore', region: 'asia', image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=400&q=80' },
@@ -106,7 +106,7 @@ const countryData: Record<string, CountryData> = {
   'Ghana': { name: 'Ghana', status: 'illegal', description: 'Illegal, narcotics law applies', slug: 'ghana', region: 'africa', image: 'https://images.unsplash.com/photo-1598890777032-6b7f7cc6a0a3?w=400&q=80' },
   
   // OCEANIA
-  'Australia': { name: 'Australia', status: 'medical', description: 'Medical nationwide, ACT recreational', slug: 'australia', region: 'oceania', image: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80' },
+  'Australia': { name: 'Australia', status: 'mixed', description: 'Medical nationwide, ACT recreational - varies by state', slug: 'australia', region: 'oceania', image: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80' },
   'NewZealand': { name: 'New Zealand', status: 'medical', description: 'Medical legal since 2020', slug: 'new-zealand', region: 'oceania', image: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=400&q=80' },
   'Fiji': { name: 'Fiji', status: 'illegal', description: 'Strictly illegal, island paradise', slug: 'fiji', region: 'oceania', image: 'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?w=400&q=80' },
   'Samoa': { name: 'Samoa', status: 'medical', description: 'Medical cannabis legal since 2023', slug: 'samoa', region: 'oceania', image: 'https://images.unsplash.com/photo-1579023154615-c3e3e39c4e50?w=400&q=80' },
