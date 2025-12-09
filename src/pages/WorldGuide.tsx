@@ -63,7 +63,7 @@ interface Continent {
 }
 
 /* ----------------------------------------------------
-   FULL WORLD DATA (AUDITED) 
+   FULL WORLD DATA (AUDITED & FIXED) 
 ----------------------------------------------------- */
 const WORLD: Continent[] = [
   {
@@ -116,7 +116,7 @@ const WORLD: Continent[] = [
         airport: "Federal prohibition (TSA) - Do not cross state lines",
         tourist: "Check state laws; interstate transport is a Federal Crime",
         description:
-          "Federally illegal. ~24 states allow recreational use, but crossing state lines (even between two legal states) is a federal felony.",
+          "Federally illegal. Over 24 states (including CA, NY, OH, MN) allow recreational use. Crossing state lines with cannabis is a federal felony.",
         image: getCountryImage("united-states"),
         regions: [
           {
@@ -923,11 +923,11 @@ const WORLD: Continent[] = [
       {
         slug: "brazil",
         name: "Brazil",
-        legalStatus: "Illegal", // AUDIT FIX: Decrim but selling dangerous
+        legalStatus: "Decriminalized", 
         possession: "Decriminalized (40g)",
         airport: "Zero tolerance",
         tourist: "Personal use decriminalized, but strictly NO selling.",
-        description: "Supreme Court decriminalized possession of 40g in 2024. However, police discretion is high and selling is a felony.",
+        description: "Supreme Court decriminalized possession of ~40g in June 2024. However, police discretion is high and selling remains a serious felony.",
         image: getCountryImage("brazil"),
         regions: [{ slug: "rio-de-janeiro-region", name: "Rio de Janeiro Region", cities: [{ slug: "rio-de-janeiro", name: "Rio de Janeiro", atGlance: ["Carnival capital", "Decriminalized personal", "Christ statue"] }] }, { slug: "sao-paulo-region", name: "São Paulo Region", cities: [{ slug: "sao-paulo", name: "São Paulo", atGlance: ["Mega-city", "Medical only", "Street art"] }] }],
       },
@@ -1034,7 +1034,7 @@ const WORLD: Continent[] = [
         airport: "Do not transport",
         tourist: "Enjoy reggae & beaches; herb is secondary",
         description: "Decriminalised 2015; medical & Rasta sacramental use legal. Public use frowned upon.",
-        image: "",
+        image: getCountryImage("jamaica"),
         regions: [
           {
             slug: "kingston-region",
@@ -1061,7 +1061,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; rum & beaches",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("barbados"),
         regions: [{ slug: "bridgetown-region", name: "Bridgetown Region", cities: [{ slug: "bridgetown", name: "Bridgetown", atGlance: ["Rum capital", "Medical only", "Crop-Over festival"] }] }],
       },
       {
@@ -1072,7 +1072,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Enjoy carnival; small fines",
         description: "Decriminalised 2019; medical cannabis legal.",
-        image: "",
+        image: getCountryImage("trinidad-tobago"),
         regions: [{ slug: "port-of-spain-region", name: "Port of Spain Region", cities: [{ slug: "port-of-spain", name: "Port of Spain", atGlance: ["Carnival capital", "Small fines", "Medical clinics"] }] }],
       },
       {
@@ -1083,7 +1083,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; island paradise",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("bahamas"),
         regions: [{ slug: "nassau-region", name: "Nassau Region", cities: [{ slug: "nassau", name: "Nassau", atGlance: ["Island capital", "Illegal", "Paradise beaches"] }] }],
       },
       {
@@ -1094,7 +1094,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; socialist island",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("cuba"),
         regions: [{ slug: "havana-region", name: "Havana Region", cities: [{ slug: "havana", name: "Havana", atGlance: ["Vintage cars", "Illegal", "Salsa & cigars"] }] }],
       },
       {
@@ -1105,7 +1105,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; resort island",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("dominican-republic"),
         regions: [{ slug: "santo-domingo-region", name: "Santo Domingo Region", cities: [{ slug: "santo-domingo", name: "Santo Domingo", atGlance: ["Colonial capital", "Illegal", "Resort beaches"] }] }],
       },
       {
@@ -1116,7 +1116,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; crisis zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("haiti"),
         regions: [{ slug: "port-au-prince-region", name: "Port-au-Prince Region", cities: [{ slug: "port-au-prince", name: "Port-au-Prince", atGlance: ["Crisis capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1127,19 +1127,19 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; US territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("puerto-rico"),
         regions: [{ slug: "san-juan-region", name: "San Juan Region", cities: [{ slug: "san-juan", name: "San Juan", atGlance: ["US island", "Medical only", "Beach vibes"] }] }],
       },
       {
         slug: "us-virgin-islands",
         name: "US Virgin Islands",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
-        airport: "Zero tolerance",
-        tourist: "Medical only; US territory",
-        description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
-        regions: [{ slug: "charlotte-amalie-region", name: "Charlotte Amalie Region", cities: [{ slug: "charlotte-amalie", name: "Charlotte Amalie", atGlance: ["Tax-free port", "Medical only", "Caribbean US"] }] }],
+        legalStatus: "Recreational",
+        possession: "Up to 2 oz",
+        airport: "Zero tolerance (Federal Law)",
+        tourist: "Recreational legal since 2023. Dispensary rollout is slow.",
+        description: "Signed into law in 2023 (Act 8680). Adults 21+ can possess up to 2 oz. Public smoking is still fined.",
+        image: getCountryImage("us-virgin-islands"),
+        regions: [{ slug: "charlotte-amalie-region", name: "Charlotte Amalie Region", cities: [{ slug: "charlotte-amalie", name: "Charlotte Amalie", atGlance: ["Tax-free port", "Rec legal", "Caribbean US"] }] }],
       },
       {
         slug: "british-virgin-islands",
@@ -1149,7 +1149,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; UK territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("british-virgin-islands"),
         regions: [{ slug: "road-town-region", name: "Road Town Region", cities: [{ slug: "road-town", name: "Road Town", atGlance: ["Yacht hub", "Medical only", "UK Caribbean"] }] }],
       },
       {
@@ -1160,7 +1160,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; tiny UK island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("anguilla"),
         regions: [{ slug: "the-valley-region", name: "The Valley Region", cities: [{ slug: "the-valley", name: "The Valley", atGlance: ["Tiny capital", "Medical only", "Peaceful beaches"] }] }],
       },
       {
@@ -1171,7 +1171,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; dual-nation island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("st-maarten"),
         regions: [{ slug: "philipsburg-region", name: "Philipsburg Region", cities: [{ slug: "philipsburg", name: "Philipsburg", atGlance: ["Dual-nation capital", "Medical only", "Duty-free"] }] }],
       },
       {
@@ -1182,19 +1182,19 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; twin-island nation",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("st-kitts-nevis"),
         regions: [{ slug: "basseterre-region", name: "Basseterre Region", cities: [{ slug: "basseterre", name: "Basseterre", atGlance: ["Twin capital", "Medical only", "Beach cricket"] }] }],
       },
       {
         slug: "antigua-barbuda",
         name: "Antigua & Barbuda",
-        legalStatus: "Medical",
-        possession: "Medical prescription only",
+        legalStatus: "Decriminalized",
+        possession: "15 g (Personal use)",
         airport: "Zero tolerance",
-        tourist: "Medical only; 365 beaches",
-        description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
-        regions: [{ slug: "st-johns-region", name: "St John’s Region", cities: [{ slug: "st-johns", name: "St John’s", atGlance: ["365 beaches", "Medical only", "Sailing hub"] }] }],
+        tourist: "Decriminalized for personal use (15g). 4 plants allowed per home.",
+        description: "The Misuse of Drugs Act amendment decriminalized possession of up to 15 grams for personal use. Public consumption is still frowned upon.",
+        image: "/dest-5.jpg",
+        regions: [{ slug: "st-johns-region", name: "St John’s Region", cities: [{ slug: "st-johns", name: "St John’s", atGlance: ["365 beaches", "Decriminalized", "Sailing hub"] }] }],
       },
       {
         slug: "dominica",
@@ -1204,7 +1204,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; nature island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("dominica"),
         regions: [{ slug: "roseau-region", name: "Roseau Region", cities: [{ slug: "roseau", name: "Roseau", atGlance: ["Nature capital", "Medical only", "Whale watching"] }] }],
       },
       {
@@ -1215,7 +1215,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; spice island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "st-georges-region", name: "St George’s Region", cities: [{ slug: "st-georges", name: "St George’s", atGlance: ["Spice capital", "Medical only", "Port lagoon"] }] }],
       },
       {
@@ -1226,7 +1226,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; piton peaks",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("st-lucia"),
         regions: [{ slug: "castries-region", name: "Castries Region", cities: [{ slug: "castries", name: "Castries", atGlance: ["Piton backdrop", "Medical only", "Cruise port"] }] }],
       },
       {
@@ -1237,7 +1237,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; yacht paradise",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "kingstown-region", name: "Kingstown Region", cities: [{ slug: "kingstown", name: "Kingstown", atGlance: ["Yacht hub", "Medical only", "Volcano views"] }] }],
       },
       {
@@ -1248,7 +1248,7 @@ const WORLD: Continent[] = [
         airport: "Import prohibited",
         tourist: "Residents only; tourists cannot buy",
         description: "Legalised 2022; no commercial sales yet.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "hamilton-region", name: "Hamilton Region", cities: [{ slug: "hamilton", name: "Hamilton", atGlance: ["Atlantic isle", "Home grow only", "Pastel houses"] }] }],
       },
       {
@@ -1259,7 +1259,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; offshore finance",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "george-town-region", name: "George Town Region", cities: [{ slug: "george-town", name: "George Town", atGlance: ["Offshore hub", "Medical only", "Seven-mile beach"] }] }],
       },
       {
@@ -1270,7 +1270,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; luxury resorts",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "cockburn-town-region", name: "Cockburn Town Region", cities: [{ slug: "cockburn-town", name: "Cockburn Town", atGlance: ["Luxury capital", "Medical only", "Grace Bay"] }] }],
       },
       {
@@ -1281,7 +1281,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Dutch-Caribbean",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "oranjestad-region", name: "Oranjestad Region", cities: [{ slug: "oranjestad", name: "Oranjestad", atGlance: ["Dutch-Caribbean", "Illegal", "Eagle beach"] }] }],
       },
       {
@@ -1292,7 +1292,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Dutch-Caribbean",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "willemstad-region", name: "Willemstad Region", cities: [{ slug: "willemstad", name: "Willemstad", atGlance: ["Coloured capital", "Medical only", "Dutch-Caribbean"] }] }],
       },
       {
@@ -1303,7 +1303,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; dive paradise",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "kralendijk-region", name: "Kralendijk Region", cities: [{ slug: "kralendijk", name: "Kralendijk", atGlance: ["Dive capital", "Medical only", "Salt pans"] }] }],
       },
       {
@@ -1314,7 +1314,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; quiet volcano",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "oranjestad-eustatius-region", name: "Oranjestad Region", cities: [{ slug: "oranjestad-eustatius", name: "Oranjestad", atGlance: ["Volcano views", "Medical only", "Quiet island"] }] }],
       },
       {
@@ -1325,7 +1325,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; shortest runway",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "the-bottom-region", name: "The Bottom Region", cities: [{ slug: "the-bottom", name: "The Bottom", atGlance: ["Shortest runway", "Medical only", "Mountain village"] }] }],
       },
     ],
@@ -1344,7 +1344,7 @@ const WORLD: Continent[] = [
         tourist: "WARNING: Recreational era ending. Medical script required.",
         description:
           "Decriminalized in 2022, but regulations are tightening significantly in 2025 to ban recreational use. Tourists should act with caution.",
-        image: "",
+        image: getCountryImage("thailand"),
         regions: [
           {
             slug: "bangkok-region",
@@ -1371,7 +1371,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Death penalty risk)",
         tourist: "WARNING: Mandatory death penalty for trafficking. Drug tests at entry.",
         description: "Possession is a serious crime punishable by caning. Trafficking >500g cannabis carries the mandatory death penalty.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "singapore-island", name: "Singapore Island", cities: [{ slug: "singapore", name: "Singapore", atGlance: ["Garden city", "Illegal", "Death-penalty risk"] }] }],
       },
       {
@@ -1382,7 +1382,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Trafficking carries death penalty risk.",
         description: "Strictly illegal. While mandatory death penalty was abolished in 2023, it remains a discretionary punishment for trafficking.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1393,7 +1393,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Death penalty risk for trafficking)",
         tourist: "WARNING: Severe penalties (Bali included). Do not buy.",
         description: "Strictly illegal. Constitutional Court rejected medical use. Police frequently target tourists in Bali.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "jakarta-region", name: "Jakarta Region", cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Illegal", "Death-penalty caution"] }] }, { slug: "bali-region", name: "Bali Region", cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Island hub", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1404,7 +1404,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Medical bill pending but not law.",
         description: "Strictly illegal. Harsh anti-drug enforcement campaigns continue.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "manila-region", name: "Manila Region", cities: [{ slug: "manila", name: "Manila", atGlance: ["Mega-city", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1415,7 +1415,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Death penalty for trafficking.",
         description: "Cannabis illegal. Possession criminalised. Trafficking large amounts leads to death penalty.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "hanoi-region", name: "Hanoi Region", cities: [{ slug: "hanoi", name: "Hanoi", atGlance: ["Old quarter", "Illegal", "Severe penalties"] }] }, { slug: "ho-chi-minh-region", name: "Ho Chi Minh Region", cities: [{ slug: "ho-chi-minh-city", name: "Ho Chi Minh City", atGlance: ["Motorbike chaos", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1426,7 +1426,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; backpacker caution",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "vientiane-region", name: "Vientiane Region", cities: [{ slug: "vientiane", name: "Vientiane", atGlance: ["Mekong capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1437,7 +1437,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; backpacker caution",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "phnom-penh-region", name: "Phnom Penh Region", cities: [{ slug: "phnom-penh", name: "Phnom Penh", atGlance: ["River capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1448,7 +1448,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; civil-war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "yangon-region", name: "Yangon Region", cities: [{ slug: "yangon", name: "Yangon", atGlance: ["Shwedagon pagoda", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1459,7 +1459,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Severe penalties. Random drug tests possible.",
         description: "Strictly illegal. Trafficking can carry the death penalty. Administrative detention for consumption.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "beijing-region", name: "Beijing Region", cities: [{ slug: "beijing", name: "Beijing", atGlance: ["Forbidden City", "Illegal", "Severe penalties"] }] }, { slug: "shanghai-region", name: "Shanghai Region", cities: [{ slug: "shanghai", name: "Shanghai", atGlance: ["Skyline hub", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1470,7 +1470,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; zero tolerance culture",
         description: "Cannabis Control Act punishes possession severely. Foreigners are likely to be deported after prison time.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "tokyo-region", name: "Tokyo Region", cities: [{ slug: "tokyo", name: "Tokyo", atGlance: ["Neon capital", "Illegal", "Severe penalties"] }] }, { slug: "osaka-region", name: "Osaka Region", cities: [{ slug: "osaka", name: "Osaka", atGlance: ["Food capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1481,7 +1481,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; K-culture",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "seoul-region", name: "Seoul Region", cities: [{ slug: "seoul", name: "Seoul", atGlance: ["K-pop capital", "Medical only", "No public use"] }] }],
       },
       {
@@ -1492,7 +1492,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; unknown regime",
         description: "Cannabis illegal; regime opaque.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "pyongyang-region", name: "Pyongyang Region", cities: [{ slug: "pyongyang", name: "Pyongyang", atGlance: ["Regime capital", "Illegal", "Unknown penalties"] }] }],
       },
       {
@@ -1503,7 +1503,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; vast steppe",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "ulaanbaatar-region", name: "Ulaanbaatar Region", cities: [{ slug: "ulaanbaatar", name: "Ulaanbaatar", atGlance: ["Steppe capital", "Illegal", "Yurt districts"] }] }],
       },
       {
@@ -1514,7 +1514,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "taipei-region", name: "Taipei Region", cities: [{ slug: "taipei", name: "Taipei", atGlance: ["Night-market capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1525,7 +1525,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "hong-kong-island", name: "Hong Kong Island", cities: [{ slug: "hong-kong", name: "Hong Kong", atGlance: ["Skyline harbour", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1536,7 +1536,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; casino city",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "macau-peninsula", name: "Macau Peninsula", cities: [{ slug: "macau", name: "Macau", atGlance: ["Casino capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1547,7 +1547,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Flower illegal; 'Bhang' (edible) legal in some states.",
         description: "National law bans flower (ganja) and resin (charas), but leaves/seeds (bhang) are legal in some states for religious reasons.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "delhi-region", name: "Delhi Region", cities: [{ slug: "delhi", name: "Delhi", atGlance: ["Capital chaos", "Flower illegal", "Bhang lassi tolerated"] }] }, { slug: "goa-region", name: "Goa Region", cities: [{ slug: "panaji", name: "Panaji", atGlance: ["Beach parties", "Police raids common", "Flower illegal"] }] }],
       },
       {
@@ -1558,7 +1558,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "islamabad-region", name: "Islamabad Region", cities: [{ slug: "islamabad", name: "Islamabad", atGlance: ["Planned capital", "Illegal", "Severe penalties"] }] }, { slug: "karachi-region", name: "Karachi Region", cities: [{ slug: "karachi", name: "Karachi", atGlance: ["Coastal mega-city", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1569,7 +1569,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "dhaka-region", name: "Dhaka Region", cities: [{ slug: "dhaka", name: "Dhaka", atGlance: ["Mega-delta capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1580,7 +1580,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Ceylon tea",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "colombo-region", name: "Colombo Region", cities: [{ slug: "colombo", name: "Colombo", atGlance: ["Port capital", "Medical only", "Ceylon tea"] }] }],
       },
       {
@@ -1591,7 +1591,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; hash history",
         description: "Cannabis illegal; historical hashish tolerated in pilgrim areas only.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "kathmandu-region", name: "Kathmandu Region", cities: [{ slug: "kathmandu", name: "Kathmandu", atGlance: ["Temple capital", "Illegal", "Hash history"] }] }],
       },
       {
@@ -1602,7 +1602,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Himalayan kingdom",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "thimphu-region", name: "Thimphu Region", cities: [{ slug: "thimphu", name: "Thimphu", atGlance: ["Mountain capital", "Illegal", "Gross-national happiness"] }] }],
       },
       {
@@ -1613,7 +1613,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; resort islands",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "male-region", name: "Malé Region", cities: [{ slug: "male", name: "Malé", atGlance: ["Coral capital", "Illegal", "Resort islands"] }] }],
       },
       {
@@ -1624,7 +1624,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; production region but prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "kabul-region", name: "Kabul Region", cities: [{ slug: "kabul", name: "Kabul", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1635,7 +1635,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; severe penalties",
         description: "Cannabis illegal; trafficking can lead to death penalty.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "tehran-region", name: "Tehran Region", cities: [{ slug: "tehran", name: "Tehran", atGlance: ["Mountain capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1646,7 +1646,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "baghdad-region", name: "Baghdad Region", cities: [{ slug: "baghdad", name: "Baghdad", atGlance: ["Tigris capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1657,7 +1657,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "damascus-region", name: "Damascus Region", cities: [{ slug: "damascus", name: "Damascus", atGlance: ["Ancient capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1668,7 +1668,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Bekaa hash history",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "beirut-region", name: "Beirut Region", cities: [{ slug: "beirut", name: "Beirut", atGlance: ["Party capital", "Medical only", "Bekaa hash history"] }] }],
       },
       {
@@ -1679,7 +1679,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; high-tech research",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [
           {
             slug: "tel-aviv-region",
@@ -1701,7 +1701,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "ramallah-region", name: "Ramallah Region", cities: [{ slug: "ramallah", name: "Ramallah", atGlance: ["De-facto capital", "Illegal", "Conflict zone"] }] }],
       },
       {
@@ -1712,7 +1712,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Petra wonder",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "amman-region", name: "Amman Region", cities: [{ slug: "amman", name: "Amman", atGlance: ["Hilly capital", "Medical only", "Petra gateway"] }] }],
       },
       {
@@ -1723,7 +1723,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Extreme penalties (Death/Lashes).",
         description: "Cannabis illegal; severe penalties including death for trafficking and corporal punishment.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "riyadh-region", name: "Riyadh Region", cities: [{ slug: "riyadh", name: "Riyadh", atGlance: ["Desert capital", "Illegal", "Extreme penalties"] }] }, { slug: "jeddah-region", name: "Jeddah Region", cities: [{ slug: "jeddah", name: "Jeddah", atGlance: ["Red-Sea port", "Illegal", "Extreme penalties"] }] }],
       },
       {
@@ -1734,7 +1734,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Sensitive equipment)",
         tourist: "Strictly illegal. THC in blood stream counts as possession.",
         description: "Zero tolerance. Laws are strictly enforced. CBD oil is generally illegal. Presence of drugs in blood tests is considered possession.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "dubai-region", name: "Dubai Region", cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Illegal", "Zero-tolerance airport"] }] }, { slug: "abu-dhabi-region", name: "Abu Dhabi Region", cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Oil capital", "Illegal", "Grand mosque"] }] }],
       },
       {
@@ -1745,7 +1745,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; severe penalties",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "doha-region", name: "Doha Region", cities: [{ slug: "doha", name: "Doha", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1756,7 +1756,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "kuwait-city-region", name: "Kuwait City Region", cities: [{ slug: "kuwait-city", name: "Kuwait City", atGlance: ["Oil capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1767,7 +1767,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; island kingdom",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "manama-region", name: "Manama Region", cities: [{ slug: "manama", name: "Manama", atGlance: ["Island capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1778,7 +1778,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; desert sultanate",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "muscat-region", name: "Muscat Region", cities: [{ slug: "muscat", name: "Muscat", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1789,7 +1789,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "sanaa-region", name: "Sana’a Region", cities: [{ slug: "sanaa", name: "Sana’a", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1800,7 +1800,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; death-penalty risk",
         description: "Cannabis illegal; severe penalties including death.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "bandar-seri-begawan-region", name: "Bandar Seri Begawan Region", cities: [{ slug: "bandar-seri-begawan", name: "Bandar Seri Begawan", atGlance: ["Sultanate capital", "Illegal", "Death-penalty risk"] }] }],
       },
       {
@@ -1811,7 +1811,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; developing nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "dili-region", name: "Dili Region", cities: [{ slug: "dili", name: "Dili", atGlance: ["Coastal capital", "Illegal", "Developing"] }] }],
       },
     ],
@@ -1830,7 +1830,7 @@ const WORLD: Continent[] = [
         tourist: "Private homes only. BUYING is illegal.",
         description:
           "Constitutional Court ruled private cultivation and use legal. However, buying/selling remains a crime (though 'clubs' exist in grey area).",
-        image: "",
+        image: getCountryImage("south-africa"),
         regions: [
           {
             slug: "western-cape",
@@ -1857,7 +1857,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Victoria Falls",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "harare-region", name: "Harare Region", cities: [{ slug: "harare", name: "Harare", atGlance: ["Garden capital", "Medical only", "Victoria Falls gateway"] }] }],
       },
       {
@@ -1868,7 +1868,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; mountain kingdom",
         description: "First African nation to legalise medical cannabis; exports allowed.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "maseru-region", name: "Maseru Region", cities: [{ slug: "maseru", name: "Maseru", atGlance: ["Mountain capital", "Medical only", "Highest pub"] }] }],
       },
       {
@@ -1879,7 +1879,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Widely tolerated in Rif, but strictly illegal.",
         description: "Cannabis illegal; Rif Mountains tolerated for local farmers only.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "casablanca-region", name: "Casablanca Region", cities: [{ slug: "casablanca", name: "Casablanca", atGlance: ["Commercial capital", "Illegal", "Tolerated Rif only"] }] }, { slug: "marrakech-region", name: "Marrakech Region", cities: [{ slug: "marrakech", name: "Marrakech", atGlance: ["Red city", "Illegal", "Discreet only"] }] }],
       },
       {
@@ -1890,7 +1890,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; gold-coast history",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "accra-region", name: "Accra Region", cities: [{ slug: "accra", name: "Accra", atGlance: ["Coastal capital", "Medical only", "Gold-coast vibes"] }] }],
       },
       {
@@ -1901,7 +1901,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "lagos-region", name: "Lagos Region", cities: [{ slug: "lagos", name: "Lagos", atGlance: ["Mega-city", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1912,7 +1912,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "cairo-region", name: "Cairo Region", cities: [{ slug: "cairo", name: "Cairo", atGlance: ["Pyramid views", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1923,7 +1923,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; coffee over cannabis",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "addis-ababa-region", name: "Addis Ababa Region", cities: [{ slug: "addis-ababa", name: "Addis Ababa", atGlance: ["Coffee capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1934,7 +1934,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; safari over smoke",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "nairobi-region", name: "Nairobi Region", cities: [{ slug: "nairobi", name: "Nairobi", atGlance: ["Safari capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1945,7 +1945,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; gorilla trekking",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "kampala-region", name: "Kampala Region", cities: [{ slug: "kampala", name: "Kampala", atGlance: ["Lake capital", "Medical only", "Gorilla gateway"] }] }],
       },
       {
@@ -1956,7 +1956,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Zanzibar beaches",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "dar-es-salaam-region", name: "Dar es Salaam Region", cities: [{ slug: "dar-es-salaam", name: "Dar es Salaam", atGlance: ["Port capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1967,7 +1967,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Victoria Falls",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "lusaka-region", name: "Lusaka Region", cities: [{ slug: "lusaka", name: "Lusaka", atGlance: ["High-altitude capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1978,7 +1978,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Okavango Delta",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "gaborone-region", name: "Gaborone Region", cities: [{ slug: "gaborone", name: "Gaborone", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1989,7 +1989,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; desert vastness",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "windhoek-region", name: "Windhoek Region", cities: [{ slug: "windhoek", name: "Windhoek", atGlance: ["Desert capital", "Illegal", "German beer"] }] }],
       },
       {
@@ -2000,7 +2000,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; oil-rich",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "luanda-region", name: "Luanda Region", cities: [{ slug: "luanda", name: "Luanda", atGlance: ["Oil capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2011,7 +2011,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Indian-Ocean beaches",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "maputo-region", name: "Maputo Region", cities: [{ slug: "maputo", name: "Maputo", atGlance: ["Indian-Ocean port", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2022,7 +2022,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Lake Malawi",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "lilongwe-region", name: "Lilongwe Region", cities: [{ slug: "lilongwe", name: "Lilongwe", atGlance: ["Lake capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2033,7 +2033,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; gorilla trekking",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "kigali-region", name: "Kigali Region", cities: [{ slug: "kigali", name: "Kigali", atGlance: ["Clean capital", "Illegal", "Gorilla gateway"] }] }],
       },
       {
@@ -2044,7 +2044,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; crisis zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "bujumbura-region", name: "Bujumbura Region", cities: [{ slug: "bujumbura", name: "Bujumbura", atGlance: ["Lake capital", "Illegal", "Crisis zone"] }] }],
       },
       {
@@ -2055,7 +2055,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; military hub",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "djibouti-city-region", name: "Djibouti City Region", cities: [{ slug: "djibouti-city", name: "Djibouti City", atGlance: ["Military port", "Illegal", "Desert heat"] }] }],
       },
       {
@@ -2066,7 +2066,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; closed nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "asmara-region", name: "Asmara Region", cities: [{ slug: "asmara", name: "Asmara", atGlance: ["Art-deco capital", "Illegal", "Closed nation"] }] }],
       },
       {
@@ -2077,7 +2077,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "mogadishu-region", name: "Mogadishu Region", cities: [{ slug: "mogadishu", name: "Mogadishu", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -2088,7 +2088,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "khartoum-region", name: "Khartoum Region", cities: [{ slug: "khartoum", name: "Khartoum", atGlance: ["Nile confluence", "Illegal", "Conflict zone"] }] }],
       },
       {
@@ -2099,7 +2099,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "tripoli-region", name: "Tripoli Region", cities: [{ slug: "tripoli", name: "Tripoli", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -2110,7 +2110,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Mediterranean",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "tunis-region", name: "Tunis Region", cities: [{ slug: "tunis", name: "Tunis", atGlance: ["Medina capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2121,7 +2121,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Sahara desert",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "algiers-region", name: "Algiers Region", cities: [{ slug: "algiers", name: "Algiers", atGlance: ["White capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2132,7 +2132,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Sahara vast",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "nouakchott-region", name: "Nouakchott Region", cities: [{ slug: "nouakchott", name: "Nouakchott", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2143,7 +2143,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "bamako-region", name: "Bamako Region", cities: [{ slug: "bamako", name: "Bamako", atGlance: ["Niger capital", "Illegal", "Conflict zone"] }] }],
       },
       {
@@ -2154,7 +2154,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; crisis zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "ouagadougou-region", name: "Ouagadougou Region", cities: [{ slug: "ouagadougou", name: "Ouagadougou", atGlance: ["Crisis capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -2165,7 +2165,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Sahara-Sahel",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "niamey-region", name: "Niamey Region", cities: [{ slug: "niamey", name: "Niamey", atGlance: ["Sahel capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2176,7 +2176,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; desert vast",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "ndjamena-region", name: "N’Djamena Region", cities: [{ slug: "ndjamena", name: "N’Djamena", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2187,7 +2187,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "bangui-region", name: "Bangui Region", cities: [{ slug: "bangui", name: "Bangui", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -2198,7 +2198,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; bilingual nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "yaounde-region", name: "Yaoundé Region", cities: [{ slug: "yaounde", name: "Yaoundé", atGlance: ["Bilingual capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2209,7 +2209,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; oil-rich",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "malabo-region", name: "Malabo Region", cities: [{ slug: "malabo", name: "Malabo", atGlance: ["Island capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2220,7 +2220,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; rainforest",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "libreville-region", name: "Libreville Region", cities: [{ slug: "libreville", name: "Libreville", atGlance: ["Rainforest capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2231,7 +2231,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; rainforest",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "brazzaville-region", name: "Brazzaville Region", cities: [{ slug: "brazzaville", name: "Brazzaville", atGlance: ["Congo capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2242,7 +2242,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "kinshasa-region", name: "Kinshasa Region", cities: [{ slug: "kinshasa", name: "Kinshasa", atGlance: ["Mega-river capital", "Illegal", "Conflict zone"] }] }],
       },
       {
@@ -2253,7 +2253,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; voodoo heartland",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "porto-novo-region", name: "Porto-Novo Region", cities: [{ slug: "porto-novo", name: "Porto-Novo", atGlance: ["Voodoo capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2264,7 +2264,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; narrow nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "lome-region", name: "Lomé Region", cities: [{ slug: "lome", name: "Lomé", atGlance: ["Beach capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2275,7 +2275,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; cocoa coast",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "abidjan-region", name: "Abidjan Region", cities: [{ slug: "abidjan", name: "Abidjan", atGlance: ["Cocoa capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2286,7 +2286,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war recovery",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "monrovia-region", name: "Monrovia Region", cities: [{ slug: "monrovia", name: "Monrovia", atGlance: ["War-recovery capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2297,7 +2297,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; diamond coast",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "freetown-region", name: "Freetown Region", cities: [{ slug: "freetown", name: "Freetown", atGlance: ["Diamond capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2308,7 +2308,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; bauxite rich",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "conakry-region", name: "Conakry Region", cities: [{ slug: "conakry", name: "Conakry", atGlance: ["Peninsula capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2319,7 +2319,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; cashew coast",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "bissau-region", name: "Bissau Region", cities: [{ slug: "bissau", name: "Bissau", atGlance: ["Cashew capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2330,7 +2330,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; river nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "banjul-region", name: "Banjul Region", cities: [{ slug: "banjul", name: "Banjul", atGlance: ["River capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2341,7 +2341,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; teranga hospitality",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "dakar-region", name: "Dakar Region", cities: [{ slug: "dakar", name: "Dakar", atGlance: ["Teranga capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2352,7 +2352,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Atlantic islands",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "praia-region", name: "Praia Region", cities: [{ slug: "praia", name: "Praia", atGlance: ["Atlantic capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2363,7 +2363,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; chocolate islands",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "sao-tome-region", name: "São Tomé Region", cities: [{ slug: "sao-tome", name: "São Tomé", atGlance: ["Chocolate capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2374,7 +2374,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; granite islands",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "victoria-region", name: "Victoria Region", cities: [{ slug: "victoria-seychelles", name: "Victoria", atGlance: ["Tiny capital", "Medical only", "Paradise"] }] }],
       },
       {
@@ -2385,7 +2385,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; island paradise",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "port-louis-region", name: "Port Louis Region", cities: [{ slug: "port-louis", name: "Port Louis", atGlance: ["Port capital", "Medical only", "Multicultural"] }] }],
       },
       {
@@ -2396,7 +2396,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; perfume islands",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "moroni-region", name: "Moroni Region", cities: [{ slug: "moroni", name: "Moroni", atGlance: ["Perfume capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -2407,7 +2407,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; lemur island",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "antananarivo-region", name: "Antananarivo Region", cities: [{ slug: "antananarivo", name: "Antananarivo", atGlance: ["Hill capital", "Illegal", "Lemurs"] }] }],
       },
       {
@@ -2418,7 +2418,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; French island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "saint-denis-region", name: "Saint-Denis Region", cities: [{ slug: "saint-denis-reunion", name: "Saint-Denis", atGlance: ["Volcano capital", "Medical only", "French island"] }] }],
       },
       {
@@ -2429,7 +2429,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; French island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "mamoudzou-region", name: "Mamoudzou Region", cities: [{ slug: "mamoudzou", name: "Mamoudzou", atGlance: ["Lagoon capital", "Medical only", "French island"] }] }],
       },
     ],
@@ -2448,7 +2448,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only. ACT (Canberra) allows personal grow/use.",
         description:
           "Medical cannabis legal nationwide. Recreational prohibited everywhere except the Capital Territory (ACT) where it is decriminalized/legalized for personal use.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [
           {
             slug: "sydney-region",
@@ -2491,7 +2491,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only; referendum failed.",
         description:
           "Medical cannabis legal; recreational use prohibited after 2020 referendum failed.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [
           {
             slug: "auckland-region",
@@ -2519,7 +2519,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only; coral islands",
         description:
           "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "suva-region", name: "Suva Region", cities: [{ slug: "suva", name: "Suva", atGlance: ["Coral capital", "Medical only", "Island vibes"] }] }],
       },
       {
@@ -2531,7 +2531,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only; jungle nation",
         description:
           "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "port-moresby-region", name: "Port Moresby Region", cities: [{ slug: "port-moresby", name: "Port Moresby", atGlance: ["Jungle capital", "Medical only", "High crime"] }] }],
       },
       {
@@ -2543,7 +2543,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only; Polynesian culture",
         description:
           "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "apia-region", name: "Apia Region", cities: [{ slug: "apia", name: "Apia", atGlance: ["Polynesian capital", "Medical only", "Island vibes"] }] }],
       },
       {
@@ -2555,7 +2555,7 @@ const WORLD: Continent[] = [
         tourist: "Medical only; kingdom island",
         description:
           "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "nukualofa-region", name: "Nukuʻalofa Region", cities: [{ slug: "nukualofa", name: "Nukuʻalofa", atGlance: ["Kingdom capital", "Medical only", "Polynesian"] }] }],
       },
       {
@@ -2567,7 +2567,7 @@ const WORLD: Continent[] = [
         tourist: "Dispensaries on O‘ahu, Maui, Big Island; bring ID",
         description:
           "Recreational cannabis legal since 2020; home grow allowed.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [
           {
             slug: "oahu",
@@ -2589,7 +2589,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; WWII history",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "honiara-region", name: "Honiara Region", cities: [{ slug: "honiara", name: "Honiara", atGlance: ["WWII capital", "Medical only", "Pacific history"] }] }],
       },
       {
@@ -2600,7 +2600,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; volcano nation",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "port-vila-region", name: "Port Vila Region", cities: [{ slug: "port-vila", name: "Port Vila", atGlance: ["Volcano capital", "Medical only", "Pacific vibes"] }] }],
       },
       {
@@ -2611,7 +2611,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; equatorial islands",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "tarawa-region", name: "Tarawa Region", cities: [{ slug: "tarawa", name: "Tarawa", atGlance: ["Equatorial capital", "Medical only", "Remote"] }] }],
       },
       {
@@ -2622,7 +2622,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; sinking islands",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "funafuti-region", name: "Funafuti Region", cities: [{ slug: "funafuti", name: "Funafuti", atGlance: ["Sinking capital", "Medical only", "Remote"] }] }],
       },
       {
@@ -2633,7 +2633,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; phosphate island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "yaren-region", name: "Yaren Region", cities: [{ slug: "yaren", name: "Yaren", atGlance: ["Phosphate capital", "Medical only", "Smallest republic"] }] }],
       },
       {
@@ -2644,7 +2644,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; dive paradise",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "ngerulmud-region", name: "Ngerulmud Region", cities: [{ slug: "ngerulmud", name: "Ngerulmud", atGlance: ["Jungle capital", "Medical only", "Dive paradise"] }] }],
       },
       {
@@ -2655,7 +2655,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; atoll nation",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "majuro-region", name: "Majuro Region", cities: [{ slug: "majuro", name: "Majuro", atGlance: ["Atoll capital", "Medical only", "US territory"] }] }],
       },
       {
@@ -2666,7 +2666,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Pacific islands",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "palikir-region", name: "Palikir Region", cities: [{ slug: "palikir", name: "Palikir", atGlance: ["Pacific capital", "Medical only", "US territory"] }] }],
       },
       {
@@ -2677,7 +2677,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; French Pacific",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "noumea-region", name: "Nouméa Region", cities: [{ slug: "noumea", name: "Nouméa", atGlance: ["French Pacific", "Medical only", "Coral lagoon"] }] }],
       },
       {
@@ -2688,7 +2688,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Tahiti pearls",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "papeete-region", name: "Papeete Region", cities: [{ slug: "papeete", name: "Papeete", atGlance: ["Tahiti capital", "Medical only", "Pearl lagoon"] }] }],
       },
       {
@@ -2699,7 +2699,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; French Pacific",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "mata-utu-region", name: "Mata-Utu Region", cities: [{ slug: "mata-utu", name: "Mata-Utu", atGlance: ["French Pacific", "Medical only", "Remote"] }] }],
       },
       {
@@ -2710,7 +2710,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Australian territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "kingston-norfolk-region", name: "Kingston Norfolk Region", cities: [{ slug: "kingston-norfolk", name: "Kingston", atGlance: ["Pine capital", "Medical only", "Australian"] }] }],
       },
       {
@@ -2721,7 +2721,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Australian territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "west-island-region", name: "West Island Region", cities: [{ slug: "west-island", name: "West Island", atGlance: ["Coconut capital", "Medical only", "Australian"] }] }],
       },
       {
@@ -2732,7 +2732,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Australian territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "flying-fish-cove-region", name: "Flying Fish Cove Region", cities: [{ slug: "flying-fish-cove", name: "Flying Fish Cove", atGlance: ["Crab capital", "Medical only", "Australian"] }] }],
       },
       {
@@ -2743,7 +2743,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; UK territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "adamstown-region", name: "Adamstown Region", cities: [{ slug: "adamstown", name: "Adamstown", atGlance: ["Remote capital", "Medical only", "UK territory"] }] }],
       },
       {
@@ -2754,7 +2754,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; NZ territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-5.jpg",
         regions: [{ slug: "tokelau-atoll-region", name: "Tokelau Atoll Region", cities: [{ slug: "tokelau-atoll", name: "Tokelau Atoll", atGlance: ["Remote atoll", "Medical only", "NZ territory"] }] }],
       },
       {
@@ -2765,7 +2765,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; coral island",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-4.jpg",
         regions: [{ slug: "alofi-region", name: "Alofi Region", cities: [{ slug: "alofi", name: "Alofi", atGlance: ["Coral capital", "Medical only", "NZ territory"] }] }],
       },
       {
@@ -2776,7 +2776,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; NZ territory",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: "/dest-6.jpg",
         regions: [{ slug: "avarua-region", name: "Avarua Region", cities: [{ slug: "avarua", name: "Avarua", atGlance: ["Lagoon capital", "Medical only", "NZ territory"] }] }],
       },
     ],
