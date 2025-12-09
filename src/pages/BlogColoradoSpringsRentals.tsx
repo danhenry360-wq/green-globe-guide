@@ -408,20 +408,55 @@ const BlogColoradoSpringsRentals = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Springs Cannabis Laws & Etiquette</h2>
-              <Card className="bg-card/60 border-red-500/20 p-6">
+              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Springs Cannabis Laws & Regulations</h2>
+              
+              <Card className="bg-amber-500/10 border-amber-500/30 p-6 mb-4">
                 <div className="flex items-start gap-4">
-                  <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0" />
+                  <AlertTriangle className="h-6 w-6 text-amber-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice: Recreational & Medical</h3>
-                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                      <li>**Sales Type:** Both **Recreational (21+)** and **Medical** cannabis are sold in Colorado Springs.</li>
-                      <li>**Public Consumption:** Public consumption is strictly illegal.</li>
-                      <li>**Possession Limits:** Non-residents can possess up to 1 ounce of flower.</li>
-                    </ul>
+                    <h3 className="text-lg font-semibold text-amber-500 mb-2">Important: Medical Only City</h3>
+                    <p className="text-muted-foreground">Colorado Springs has banned recreational cannabis sales. Only medical marijuana dispensaries operate within city limits. Purchase recreational cannabis in nearby Manitou Springs before returning to your 420-friendly accommodation.</p>
                   </div>
                 </div>
               </Card>
+
+              <div className="space-y-4">
+                <Card className="bg-card/60 border-accent/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Possession Is Legal</h3>
+                      <p className="text-muted-foreground">Adults 21+ may legally possess up to 2 ounces of cannabis in Colorado Springs, even though recreational sales are prohibited. Purchase legally in Manitou Springs or Denver and bring it back to your accommodation.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-card/60 border-red-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-red-500/20">
+                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Consumption Restrictions</h3>
+                      <p className="text-muted-foreground">Public consumption is strictly illegal in Colorado Springs. This includes Garden of the Gods, Pikes Peak, parks, streets, and vehicles. Consume only in private residences or verified 420-friendly accommodations.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-accent/10 to-gold/5 border-accent/30 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Nearby Recreational Options</h3>
+                      <p className="text-muted-foreground">Manitou Springs (10 minutes from downtown) has multiple recreational dispensaries. Stock up there before exploring Colorado Springs' amazing attractions like Garden of the Gods and Pikes Peak.</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         </section>

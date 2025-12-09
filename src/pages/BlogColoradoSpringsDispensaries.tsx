@@ -331,20 +331,67 @@ const BlogColoradoSpringsDispensaries = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Etiquette</h2>
-              <Card className="bg-card/60 border-red-500/20 p-6">
+              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Springs Cannabis Laws & Regulations</h2>
+              
+              <Card className="bg-amber-500/10 border-amber-500/30 p-6 mb-4">
                 <div className="flex items-start gap-4">
-                  <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0" />
+                  <AlertTriangle className="h-6 w-6 text-amber-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-bold text-red-500 mb-2">Important Legal Notice</h3>
-                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                      <li>**Requirement:** Recreational users must be 21+ with a valid government-issued ID. Medical users need a valid Medical Marijuana Card.</li>
-                      <li>**Public Consumption:** Public consumption is strictly illegal. Use cannabis in private residences or designated 420-friendly lodging.</li>
-                      <li>**Possession Limits:** Adults 21+ can legally possess up to 2 ounces of marijuana.</li>
-                    </ul>
+                    <h3 className="text-lg font-semibold text-amber-500 mb-2">Important: Medical Only City</h3>
+                    <p className="text-muted-foreground">Colorado Springs has banned recreational cannabis sales. Only medical marijuana dispensaries operate within city limits. Recreational users should purchase in neighboring Manitou Springs or travel to Denver.</p>
                   </div>
                 </div>
               </Card>
+
+              <div className="space-y-4">
+                <Card className="bg-card/60 border-accent/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Medical Card Requirements</h3>
+                      <p className="text-muted-foreground">A valid Colorado Medical Marijuana Card is required for dispensary purchases. Out-of-state medical cards are accepted at some dispensaries—call ahead to confirm.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-card/60 border-accent/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Possession Limits</h3>
+                      <p className="text-muted-foreground">Adults 21+ may legally possess up to 2 ounces of cannabis in Colorado, regardless of where it was purchased. Medical patients may possess higher amounts as determined by their physician.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-card/60 border-red-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-red-500/20">
+                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Consumption Restrictions</h3>
+                      <p className="text-muted-foreground">Public consumption is strictly illegal. This includes parks, streets, vehicles, and Garden of the Gods. Consume only in private residences or verified 420-friendly accommodations.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-accent/10 to-gold/5 border-accent/30 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Recreational Alternative</h3>
+                      <p className="text-muted-foreground">Manitou Springs (10 minutes from downtown) has recreational dispensaries. Purchase there and return to enjoy in your 420-friendly Colorado Springs accommodation.</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
