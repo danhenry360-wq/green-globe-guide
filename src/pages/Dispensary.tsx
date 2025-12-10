@@ -784,11 +784,11 @@ const Dispensary = () => {
         <Navigation />
 
         {/* MOBILE SEARCH BAR – STATIC / STICKY 
-            FIX: Added 'mt-14' to clear the fixed navigation bar
-            FIX: Added 'sticky top-[58px]' so it sticks just under the navigation bar
-            FIX: Added 'bg-background' to ensure it's not transparent
+            FIX 1: Added 'mt-16' to clear the fixed navigation bar initially.
+            FIX 2: Added 'sticky top-16' (approx 64px) so it sticks just under the navigation bar.
+            FIX 3: Added 'bg-background' and 'z-40' to ensure content passes under it visually.
         */}
-        <div className="md:hidden sticky top-[58px] z-40 bg-background border-b border-white/10 shadow-2xl mt-14">
+        <div className="md:hidden sticky top-16 z-40 bg-background border-b border-white/10 shadow-md mt-16">
           <div className="px-4 py-4">
             <div className="flex gap-3 items-stretch">
               <div className="flex-1 relative">
