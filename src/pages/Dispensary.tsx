@@ -783,63 +783,64 @@ const Dispensary = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        {/* MOBILE STATIC SEARCH BAR & FILTERS */}
-        <div className="md:hidden sticky top-0 z-50 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-          <div className="px-4 py-3">
-            <div className="flex flex-col gap-3">
-              {/* Search Input */}
-              <div className="relative w-full">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+        {/* MOBILE SEARCH BAR – STATIC AT TOP (Single Row Layout) */}
+        <div className="md:hidden sticky top-0 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+          <div className="px-4 py-4">
+            <div className="flex gap-3 items-stretch">
+              <div className="flex-1 relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Search dispensaries..."
+                  placeholder="Search..."
                   value={filters.search}
                   onChange={(e) =>
                     handleFilterChange("search", e.target.value)
                   }
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-sm placeholder:text-muted-foreground/60 transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                 />
                 {filters.search && (
                   <button
                     onClick={() => handleFilterChange("search", "")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-full transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
                   >
-                    <X className="w-4 h-4 text-muted-foreground hover:text-white" />
+                    <X className="w-5 h-5 text-muted-foreground hover:text-white" />
                   </button>
                 )}
               </div>
 
-              {/* Filters & Sort Row */}
-              <div className="flex gap-2 items-stretch">
-                <Button
-                  onClick={() => setIsFilterOpen(true)}
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 gap-2 border-white/10 text-sm h-10 rounded-xl hover:bg-green-400/10 bg-card/50"
-                >
-                  <Filter className="w-4 h-4" />
-                  Filters
-                </Button>
+              <Button
+                onClick={() => setIsFilterOpen(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2 border-white/10 text-sm px-4 h-12 rounded-xl hover:bg-green-400/10"
+              >
+                <Filter className="w-5 h-5" />
+                <span className="sr-only">Filters</span>
+              </Button>
 
-                <div className="relative flex-1">
-                  <select
-                    value={filters.sort}
-                    onChange={(e) =>
-                      handleFilterChange("sort", e.target.value as SortType)
-                    }
-                    className="w-full px-4 py-2 rounded-xl bg-card/50 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-10 appearance-none"
-                  >
-                    <option value="rating" className="bg-card">Highest Rated</option>
-                    <option value="name" className="bg-card">Alphabetical</option>
-                    <option value="price-low" className="bg-card">Price: Low to High</option>
-                    <option value="price-high" className="bg-card">Price: High to Low</option>
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                </div>
-              </div>
+              <select
+                value={filters.sort}
+                onChange={(e) =>
+                  handleFilterChange("sort", e.target.value as SortType)
+                }
+                className="px-4 py-3 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-12 w-12"
+              >
+                <option value="rating" className="bg-card">
+                  Highest Rated
+                </option>
+                <option value="name" className="bg-card">
+                  Alphabetical
+                </option>
+                <option value="price-low" className="bg-card">
+                  Price: Low to High
+                </option>
+                <option value="price-high" className="bg-card">
+                  Price: High to Low
+                </option>
+              </select>
             </div>
             
-            {/* Active Filters Preview (Mobile) */}
+            {/* Optional: Show active filter pills below the search bar if filters are active */}
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mt-3 pb-1 overflow-x-auto no-scrollbar">
                 {filters.country && (
@@ -856,7 +857,7 @@ const Dispensary = () => {
                   onClick={handleClearFilters}
                   className="text-red-400 text-[10px] font-semibold whitespace-nowrap px-2"
                 >
-                  Clear All
+                  Clear
                 </button>
               </div>
             )}
