@@ -783,8 +783,12 @@ const Dispensary = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        {/* MOBILE SEARCH BAR – STATIC AT TOP (Single Row Layout) */}
-        <div className="md:hidden sticky top-0 z-40 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+        {/* MOBILE SEARCH BAR – STATIC / STICKY 
+            FIX: Added 'mt-14' to clear the fixed navigation bar
+            FIX: Added 'sticky top-[58px]' so it sticks just under the navigation bar
+            FIX: Added 'bg-background' to ensure it's not transparent
+        */}
+        <div className="md:hidden sticky top-[58px] z-40 bg-background border-b border-white/10 shadow-2xl mt-14">
           <div className="px-4 py-4">
             <div className="flex gap-3 items-stretch">
               <div className="flex-1 relative">
@@ -840,7 +844,7 @@ const Dispensary = () => {
               </select>
             </div>
             
-            {/* Optional: Show active filter pills below the search bar if filters are active */}
+            {/* Active Filters Preview */}
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mt-3 pb-1 overflow-x-auto no-scrollbar">
                 {filters.country && (
