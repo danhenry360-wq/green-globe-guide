@@ -675,7 +675,6 @@ const ColoradoConsumptionGuide = () => {
                   Never consume on federal land (federal crime). You are solely responsible for following all laws.
                 </p>
                 <p className="text-sm text-muted-foreground font-medium">
-                  If you can't follow these guidelines safely, don't consume in your rental. Period.
                 </p>
               </CardContent>
             </Card>
