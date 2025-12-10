@@ -13,6 +13,7 @@ import Index from "./pages/Index";
 import Home from "./pages/Home";
 import USAGuide from "./pages/USAGuide";
 import ColoradoHub from "./pages/ColoradoHub";
+import ColoradoConsumptionGuide from "./pages/ColoradoConsumptionGuide";
 import DenverGuide from "./pages/DenverGuide";
 import BoulderGuide from "./pages/BoulderGuide";
 import AspenGuide from "./pages/AspenGuide";
@@ -112,6 +113,7 @@ function App() {
               {/* USA routes */}
               <Route path="/usa" element={<USAGuide />} />
               <Route path="/usa/colorado" element={<ColoradoHub />} />
+              <Route path="/colorado/consumption-guide" element={<ColoradoConsumptionGuide />} />
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
@@ -130,9 +132,9 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/state-laws" element={<AdminStateLaws />} />
               <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
-          <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
-          <Route path="/admin/hotels" element={<AdminHotels />} />
-          <Route path="/admin/reviews" element={<AdminReviews />} />
+              <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
+              <Route path="/admin/hotels" element={<AdminHotels />} />
+              <Route path="/admin/reviews" element={<AdminReviews />} />
               <Route path="/admin/revenue" element={<AdminRevenue />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/contacts" element={<AdminContacts />} />
