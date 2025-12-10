@@ -98,7 +98,7 @@ const ColoradoHub = () => {
     fetchData();
   }, []);
 
-  const handleNewsletterSignup = () => {
+  const handleNewsletterSignup = async () => {
     if (!footerEmail || !footerEmail.includes('@')) {
       toast({
         title: "Invalid Email",
@@ -108,12 +108,36 @@ const ColoradoHub = () => {
       return;
     }
     
-    toast({
-      title: "Welcome to the BudQuest community!",
-      description: "You'll receive exclusive Colorado travel tips and deals.",
-    });
-    
-    setFooterEmail("");
+    try {
+      const { error } = await supabase.from('newsletter_subscribers').insert({
+        email: footerEmail,
+        source_page: '/usa/colorado'
+      });
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Already Subscribed",
+            description: "This email is already on our list!",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Welcome to the BudQuest community!",
+          description: "You'll receive exclusive Colorado travel tips and deals.",
+        });
+      }
+      setFooterEmail("");
+    } catch (error) {
+      console.error("Newsletter signup error:", error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    }
   };
 
   const stats = [
