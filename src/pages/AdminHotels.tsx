@@ -230,10 +230,12 @@ const AdminHotels = () => {
     setEditingHotel(hotel);
     setFormData(hotel);
     const existingImages = hotel.images || [];
-    setImageUrls([
-      existingImages[0] || "",
-      existingImages[1] || "",
-    ]);
+    // Preserve all existing images (up to 5), or provide 2 empty slots minimum
+    const urls: string[] = [];
+    for (let i = 0; i < Math.max(existingImages.length, 2); i++) {
+      urls.push(existingImages[i] || "");
+    }
+    setImageUrls(urls);
     setIsCreating(false);
     setDialogOpen(true);
   };

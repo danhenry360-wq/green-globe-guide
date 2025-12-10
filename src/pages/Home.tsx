@@ -17,10 +17,11 @@ import { Badge } from "@/components/ui/badge";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import MapLegend from "@/components/MapLegend";
 
-// Data
+// Data & Supabase
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
 import { getStatusDotClass, getStatusOutlineClasses, getStatusBadgeClasses } from "@/lib/legal-status-colors";
 import { BLOG_POSTS } from "@/pages/Blog";
+import { supabase } from "@/integrations/supabase/client";
 
 // Assets
 import heroImage from "@/assets/hero-cannabis-travel.jpg";
@@ -28,10 +29,9 @@ import heroImage from "@/assets/hero-cannabis-travel.jpg";
 // Lazy Load Heavy Components
 const InteractiveWorldMap = lazy(() => import("@/components/InteractiveWorldMap"));
 
+
 /* ----------  DYNAMIC STATS CONFIGURATION  ---------- */
-// Configured for Verification & Trust
-const DISPENSARY_COUNT = 48; // Verified Exact Count
-const HOTEL_COUNT = 21;      // Verified Exact Count
+// Dynamic counts will be fetched from database
 const COUNTRY_COUNT = 150;   // Global Coverage (Updated)
 
 /* ----------  SEARCH DATA  ---------- */
@@ -398,9 +398,24 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [dispensaryCount, setDispensaryCount] = useState(48);
+  const [hotelCount, setHotelCount] = useState(31);
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch dynamic counts from database
+  useEffect(() => {
+    const fetchCounts = async () => {
+      const [dispResult, hotelResult] = await Promise.all([
+        supabase.from('dispensaries').select('id', { count: 'exact', head: true }),
+        supabase.from('hotels').select('id', { count: 'exact', head: true })
+      ]);
+      if (dispResult.count) setDispensaryCount(dispResult.count);
+      if (hotelResult.count) setHotelCount(hotelResult.count);
+    };
+    fetchCounts();
+  }, []);
 
   // Build search items from USA states
   const stateSearchItems = useMemo<SearchItem[]>(() => 
@@ -499,11 +514,11 @@ const Home = () => {
     document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Define Stats Data with Exact Numbers + Suffix
+  // Define Stats Data with dynamic counts from database
   const STATS_DATA: StatItem[] = [
     { icon: Globe2, label: "Countries Covered", count: COUNTRY_COUNT, suffix: "+" },
-    { icon: Store, label: "Verified Dispensaries", count: DISPENSARY_COUNT, suffix: "+" },
-    { icon: Building2, label: "420-Friendly Hotels", count: HOTEL_COUNT, suffix: "+" },
+    { icon: Store, label: "Verified Dispensaries", count: dispensaryCount, suffix: "+" },
+    { icon: Building2, label: "420-Friendly Hotels", count: hotelCount, suffix: "+" },
     { icon: Shield, label: "Data Accuracy", count: 94, suffix: "%" },
   ];
 
