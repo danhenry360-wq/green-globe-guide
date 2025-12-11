@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { z } from 'zod';
-import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Mail, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import logo from '@/assets/global-canna-pass-logo.png';
 
 const emailSchema = z.string().email('Please enter a valid email address');
@@ -18,7 +18,7 @@ const emailSchema = z.string().email('Please enter a valid email address');
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
   const [error, setError] = useState('');
   
   const { toast } = useToast();
@@ -37,29 +37,37 @@ const ForgotPassword = () => {
     setIsLoading(true);
     
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+      const { data, error: fnError } = await supabase.functions.invoke('send-password-reset-otp', {
+        body: { email },
       });
       
-      if (error) {
+      if (fnError) {
         toast({
           title: 'Error',
-          description: error.message,
+          description: fnError.message || 'Failed to send reset code',
           variant: 'destructive',
         });
       } else {
-        setEmailSent(true);
+        setCodeSent(true);
+        // Store email in sessionStorage for the reset page
+        sessionStorage.setItem('passwordResetEmail', email);
         toast({
-          title: 'Email Sent!',
-          description: 'Check your inbox for the password reset link.',
+          title: 'Code Sent!',
+          description: 'Check your email for the 6-digit reset code.',
         });
       }
+    } catch (err) {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (emailSent) {
+  if (codeSent) {
     return (
       <>
         <Helmet>
@@ -81,11 +89,17 @@ const ForgotPassword = () => {
                 </div>
                 <h2 className="text-2xl font-bold text-foreground mb-2">Check Your Email</h2>
                 <p className="text-muted-foreground mb-6">
-                  We've sent a password reset link to <span className="text-foreground font-medium">{email}</span>
+                  We've sent a 6-digit code to <span className="text-foreground font-medium">{email}</span>
                 </p>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Click the link in the email to reset your password. If you don't see it, check your spam folder.
+                  Enter the code on the next page to reset your password. The code expires in 15 minutes.
                 </p>
+                <Button
+                  onClick={() => navigate('/reset-password', { state: { email } })}
+                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold mb-4"
+                >
+                  Enter Reset Code
+                </Button>
                 <Button
                   onClick={() => navigate('/auth')}
                   variant="outline"
@@ -131,7 +145,7 @@ const ForgotPassword = () => {
                 Forgot Password?
               </CardTitle>
               <CardDescription className="text-muted-foreground">
-                Enter your email and we'll send you a reset link
+                Enter your email and we'll send you a 6-digit reset code
               </CardDescription>
             </CardHeader>
             
@@ -160,7 +174,14 @@ const ForgotPassword = () => {
                   className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Sending...' : 'Send Reset Link'}
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Reset Code'
+                  )}
                 </Button>
               </form>
               
