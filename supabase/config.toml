@@ -23,3 +23,9 @@ verify_jwt = false
 
 [functions.generate-bulk-blog]
 verify_jwt = true
+
+[functions.send-password-reset-otp]
+verify_jwt = false
+
+[functions.verify-password-reset-otp]
+verify_jwt = false

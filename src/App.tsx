@@ -14,6 +14,8 @@ import Home from "./pages/Home";
 import USAGuide from "./pages/USAGuide";
 import ColoradoHub from "./pages/ColoradoHub";
 import ColoradoConsumptionGuide from "./pages/ColoradoConsumptionGuide";
+import FederalLandWarning from "./pages/FederalLandWarning";
+import AltitudeGuide from "./pages/AltitudeGuide";
 import DenverGuide from "./pages/DenverGuide";
 import BoulderGuide from "./pages/BoulderGuide";
 import AspenGuide from "./pages/AspenGuide";
@@ -114,6 +116,8 @@ function App() {
               <Route path="/usa" element={<USAGuide />} />
               <Route path="/usa/colorado" element={<ColoradoHub />} />
               <Route path="/colorado/consumption-guide" element={<ColoradoConsumptionGuide />} />
+              <Route path="/colorado/federal-land-warning" element={<FederalLandWarning />} />
+              <Route path="/colorado/altitude-guide" element={<AltitudeGuide />} />
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
