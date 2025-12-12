@@ -152,6 +152,9 @@ const ColoradoHub = () => {
     { name: "Boulder", slug: "boulder", description: "Progressive college town known for craft cannabis, outdoor recreation, and relaxed atmosphere." },
     { name: "Colorado Springs", slug: "colorado-springs", description: "Gateway to the mountains with growing cannabis scene and stunning natural beauty." },
     { name: "Aspen", slug: "aspen", description: "Luxury ski destination with high-end dispensaries and upscale 420-friendly lodging." },
+    { name: "Fort Collins", slug: "fort-collins", description: "Craft beer capital meets cannabis culture with Old Town charm and mountain access." },
+    { name: "Aurora", slug: "aurora", description: "Denver's diverse neighbor near DIA with great dispensaries and international cuisine." },
+    { name: "Thornton", slug: "thornton", description: "Budget-friendly northern suburb with easy access to Denver's cannabis scene." },
   ];
 
   const consumptionRules = [

@@ -69,7 +69,7 @@ const DenverGuide = () => {
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
-        .or('address.ilike.%Denver%,address.ilike.%Colorado%')
+        .ilike('address', '%Denver%')
         .order('rating', { ascending: false })
         .limit(3);
       

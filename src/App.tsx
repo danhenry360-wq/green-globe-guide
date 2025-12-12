@@ -20,6 +20,9 @@ import DenverGuide from "./pages/DenverGuide";
 import BoulderGuide from "./pages/BoulderGuide";
 import AspenGuide from "./pages/AspenGuide";
 import ColoradoSpringsGuide from "./pages/ColoradoSpringsGuide";
+import FortCollinsGuide from "./pages/FortCollinsGuide";
+import ThorntonGuide from "./pages/ThorntonGuide";
+import AuroraGuide from "./pages/AuroraGuide";
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
@@ -122,6 +125,9 @@ function App() {
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
               <Route path="/colorado-springs" element={<ColoradoSpringsGuide />} />
+              <Route path="/fort-collins" element={<FortCollinsGuide />} />
+              <Route path="/thornton" element={<ThorntonGuide />} />
+              <Route path="/aurora" element={<AuroraGuide />} />
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 

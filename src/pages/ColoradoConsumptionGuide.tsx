@@ -734,10 +734,12 @@ const ColoradoConsumptionGuide = () => {
             <h3 className="text-lg font-semibold mb-4 text-center">Related Guides</h3>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/usa/colorado" className="text-accent hover:underline">Colorado Hub</Link>
+              <Link to="/colorado/federal-land-warning" className="text-accent hover:underline">Federal Land Warning</Link>
+              <Link to="/colorado/altitude-guide" className="text-accent hover:underline">Altitude Guide</Link>
               <Link to="/denver" className="text-accent hover:underline">Denver Guide</Link>
               <Link to="/boulder" className="text-accent hover:underline">Boulder Guide</Link>
-              <Link to="/aspen" className="text-accent hover:underline">Aspen Guide</Link>
-              <Link to="/colorado-springs" className="text-accent hover:underline">Colorado Springs</Link>
+              <Link to="/fort-collins" className="text-accent hover:underline">Fort Collins</Link>
+              <Link to="/aurora" className="text-accent hover:underline">Aurora</Link>
               <Link to="/blog" className="text-accent hover:underline">Travel Blog</Link>
             </div>
           </div>
