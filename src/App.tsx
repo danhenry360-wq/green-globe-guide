@@ -89,7 +89,8 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
-              {/* Specific blog pages must come BEFORE the generic /blog/:slug route */}
+              
+              {/* Blog Routes */}
               <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
               <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
               <Route path="/blog/cannabis-dispensaries-boulder" element={<BlogBoulderDispensaries />} />
@@ -99,6 +100,8 @@ function App() {
               <Route path="/blog/cannabis-dispensaries-colorado-springs" element={<BlogColoradoSpringsDispensaries />} />
               <Route path="/blog/best-420-rentals-colorado-springs" element={<BlogColoradoSpringsRentals />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
+
+              {/* Directory Routes */}
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
               <Route path="/hotels" element={<Hotels />} />
@@ -121,6 +124,8 @@ function App() {
               <Route path="/colorado/consumption-guide" element={<ColoradoConsumptionGuide />} />
               <Route path="/colorado/federal-land-warning" element={<FederalLandWarning />} />
               <Route path="/colorado/altitude-guide" element={<AltitudeGuide />} />
+              
+              {/* Custom City Guides - Short Paths */}
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
@@ -128,6 +133,17 @@ function App() {
               <Route path="/fort-collins" element={<FortCollinsGuide />} />
               <Route path="/thornton" element={<ThorntonGuide />} />
               <Route path="/aurora" element={<AuroraGuide />} />
+
+              {/* Custom City Guides - Nested Paths (Fixes your issue!) */}
+              <Route path="/usa/colorado/fort-collins" element={<FortCollinsGuide />} />
+              <Route path="/usa/colorado/denver" element={<DenverGuide />} />
+              <Route path="/usa/colorado/boulder" element={<BoulderGuide />} />
+              <Route path="/usa/colorado/aspen" element={<AspenGuide />} />
+              <Route path="/usa/colorado/colorado-springs" element={<ColoradoSpringsGuide />} />
+              <Route path="/usa/colorado/thornton" element={<ThorntonGuide />} />
+              <Route path="/usa/colorado/aurora" element={<AuroraGuide />} />
+
+              {/* Dynamic Fallbacks */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
