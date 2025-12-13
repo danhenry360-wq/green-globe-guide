@@ -155,6 +155,9 @@ const ColoradoHub = () => {
     { name: "Fort Collins", slug: "fort-collins", description: "Craft beer capital meets cannabis culture with Old Town charm and mountain access." },
     { name: "Aurora", slug: "aurora", description: "Denver's diverse neighbor near DIA with great dispensaries and international cuisine." },
     { name: "Thornton", slug: "thornton", description: "Budget-friendly northern suburb with easy access to Denver's cannabis scene." },
+    { name: "Lakewood", slug: "lakewood", description: "West Denver suburb with mountain access, diverse dispensaries, and Red Rocks Amphitheatre nearby." },
+    { name: "Pueblo", slug: "pueblo", description: "Southern Colorado's cannabis oasis with affordable prices and historic downtown charm." },
+    { name: "Longmont", slug: "longmont", description: "Boulder County gem with craft breweries, farm-to-table dining, and quality dispensaries." },
   ];
 
   const consumptionRules = [
