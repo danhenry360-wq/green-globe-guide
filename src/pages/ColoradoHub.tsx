@@ -195,11 +195,11 @@ const ColoradoHub = () => {
   const travelTips = [
     { 
       title: "Packing & Transport", 
-      content: "Cannabis must remain in Colorado - you cannot legally transport it across state lines. Store purchases in your trunk."
+      content: "Cannabis must remain in Colorado - you cannot legally transport it across state lines. Store purchases in your trunk while driving."
     },
     { 
       title: "Airport Safety", 
-      content: "DIA is federal property. Do not bring cannabis to the airport. Amnesty boxes are available at entry."
+      content: "DIA is federal property. Do not bring cannabis to the airport. Amnesty boxes are available at entry for disposal."
     },
     { 
       title: "Dispensary Etiquette", 
@@ -207,7 +207,7 @@ const ColoradoHub = () => {
     },
     { 
       title: "Best Time to Visit", 
-      content: "Spring and fall offer mild weather and smaller crowds. Ski season (Nov-April) is great for mountains."
+      content: "Spring and fall offer mild weather and smaller crowds. Winter is perfect for skiing, summer for hiking."
     },
   ];
 
@@ -224,7 +224,7 @@ const ColoradoHub = () => {
     <>
       <Helmet>
         <title>Colorado Cannabis Travel Guide 2025 | BudQuest</title>
-        <meta name="description" content="Explore Colorado cannabis destinations. Denver, Boulder, Mountain towns, and more." />
+        <meta name="description" content="Explore Colorado cannabis destinations. Denver, Boulder, Mountain towns, and more. Find dispensaries, laws, and 420-friendly stays." />
         <link rel="canonical" href="https://budquest.guide/usa/colorado" />
       </Helmet>
 
@@ -238,23 +238,23 @@ const ColoradoHub = () => {
             <ChevronRight className="w-4 h-4" />
             <li><Link to="/usa" className="hover:text-accent">USA Guide</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li className="text-foreground">Colorado</li>
+            <li className="text-foreground font-medium">Colorado</li>
           </ol>
         </nav>
 
         {/* HERO SECTION */}
         <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img src={coloradoHeroImage} alt="Colorado" className="w-full h-full object-cover" />
+            <img src={coloradoHeroImage} alt="Colorado Mountains" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
           </div>
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
+              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30 backdrop-blur-sm">
                 <Cannabis className="w-4 h-4 mr-2" /> Colorado Cannabis Guide 2025
               </Badge>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white">
-                Explore Colorful Colorado
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
+                Explore <span className="bg-gradient-to-r from-white via-accent to-gold bg-clip-text text-transparent">Colorful Colorado</span>
               </h1>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90"><a href="#cities">Explore Cities</a></Button>
@@ -282,8 +282,12 @@ const ColoradoHub = () => {
         <section id="cities" className="py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold mb-4">Cannabis Destinations</h2>
-              <p className="text-muted-foreground">Find your perfect 420-friendly city.</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Cannabis Destinations
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Find your perfect 420-friendly city in the Centennial State.</p>
             </div>
 
             {/* Search and Filters */}
@@ -292,7 +296,7 @@ const ColoradoHub = () => {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input 
                   placeholder="Search cities (e.g. 'Aspen', 'Denver')..." 
-                  className="pl-10 h-12 text-lg bg-card/50"
+                  className="pl-10 h-12 text-lg bg-card/50 border-accent/20 focus:border-accent"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -304,7 +308,7 @@ const ColoradoHub = () => {
                     key={region}
                     variant={selectedRegion === region ? "default" : "outline"}
                     onClick={() => setSelectedRegion(region)}
-                    className="whitespace-nowrap rounded-full"
+                    className="whitespace-nowrap rounded-full transition-all hover:border-accent"
                     size="sm"
                   >
                     {region}
@@ -313,7 +317,7 @@ const ColoradoHub = () => {
               </div>
             </div>
 
-            {/* City Grid */}
+            {/* City Grid - Mobile Optimized */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
@@ -330,7 +334,7 @@ const ColoradoHub = () => {
                             <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                               <MapPin className="w-4 h-4 md:w-5 md:h-5 text-accent" />
                             </div>
-                            <Badge variant="outline" className="text-[10px] md:text-xs">{city.region}</Badge>
+                            <Badge variant="outline" className="text-[10px] md:text-xs border-accent/30 text-accent bg-accent/5">{city.region}</Badge>
                           </div>
                           
                           <h3 className="text-sm md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors line-clamp-1">
@@ -359,11 +363,21 @@ const ColoradoHub = () => {
         {/* DISPENSARIES - UPDATED FOR MOBILE */}
         <section id="dispensaries" className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Dispensaries</h2>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Featured Dispensaries
+                </span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Explore top-rated locations across the state.
+              </p>
+            </div>
+
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {dispensaries.map((d) => (
                 <Link key={d.id} to={`/dispensary/${d.slug}`}>
-                  <Card className="h-full hover:border-accent/50 transition-all">
+                  <Card className="h-full hover:border-accent/50 transition-all border-border/40 bg-card/50">
                     <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
                       <img 
                         src={d.image || "/dispensaries/native-roots-denver.png"} 
@@ -372,10 +386,11 @@ const ColoradoHub = () => {
                       />
                     </div>
                     <CardContent className="p-3 md:p-4">
-                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-1">{d.name}</h3>
-                      <div className="flex flex-wrap items-center gap-1 text-xs md:text-sm text-muted-foreground">
-                        <span className="flex items-center"><Star className="w-3 h-3 text-yellow-500 fill-yellow-500 mr-0.5" /> {d.rating}</span>
-                        <span className="hidden md:inline">•</span>
+                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-2 group-hover:text-accent transition-colors">{d.name}</h3>
+                      <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-muted-foreground">
+                        <span className="flex items-center bg-accent/10 px-1.5 py-0.5 rounded text-accent font-medium">
+                          <Star className="w-3 h-3 fill-accent text-accent mr-1" /> {d.rating}
+                        </span>
                         <span className="line-clamp-1">{d.city}</span>
                       </div>
                     </CardContent>
@@ -384,7 +399,9 @@ const ColoradoHub = () => {
               ))}
             </div>
             <div className="text-center mt-8">
-              <Button asChild variant="outline"><Link to="/dispensary">View All Dispensaries</Link></Button>
+              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
+                <Link to="/dispensary">View All Dispensaries</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -392,23 +409,37 @@ const ColoradoHub = () => {
         {/* RENTALS - UPDATED FOR MOBILE */}
         <section id="rentals" className="py-20">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">420-Friendly Stays</h2>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  420-Friendly Stays
+                </span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Verified accommodations where consumption is allowed.
+              </p>
+            </div>
+
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {rentals.map((r) => (
                 <Link key={r.id} to={`/hotels/${r.slug}`}>
-                  <Card className="h-full hover:border-accent/50 transition-all">
+                  <Card className="h-full hover:border-accent/50 transition-all border-border/40 bg-card/50">
                     <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
                       <img 
                         src={r.images?.[0] || "/dest-colorado-ski.jpg"} 
                         alt={r.name} 
                         className="w-full h-full object-cover"
                       />
-                      <Badge className="absolute top-2 right-2 bg-green-500 text-white text-[10px] px-1.5 py-0.5 md:text-xs md:px-2.5 md:py-0.5">420 Friendly</Badge>
+                      <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-[10px] px-2 py-0.5 shadow-sm border-none">
+                        420 Friendly
+                      </Badge>
                     </div>
                     <CardContent className="p-3 md:p-4">
-                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-1">{r.name}</h3>
+                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-2 group-hover:text-accent transition-colors">{r.name}</h3>
                       <div className="flex items-center gap-1 text-xs md:text-sm text-muted-foreground">
-                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {r.rating}
+                        <span className="flex items-center bg-yellow-500/10 px-1.5 py-0.5 rounded text-yellow-600 font-medium">
+                          <Star className="w-3 h-3 fill-yellow-500 text-yellow-500 mr-1" /> {r.rating || "4.5"}
+                        </span>
                       </div>
                     </CardContent>
                   </Card>
@@ -416,7 +447,9 @@ const ColoradoHub = () => {
               ))}
             </div>
             <div className="text-center mt-8">
-              <Button asChild variant="outline"><Link to="/hotels">View All Rentals</Link></Button>
+              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
+                <Link to="/hotels">View All Rentals</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -425,13 +458,19 @@ const ColoradoHub = () => {
         <section className="py-20 bg-card/30">
           <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-2xl font-bold mb-6">Consumption Rules</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Consumption Rules
+                </span>
+              </h2>
               <div className="space-y-4">
                 {consumptionRules.map((rule) => (
-                  <Card key={rule.title} className="p-4 flex gap-4 items-start">
-                    <rule.icon className={`w-6 h-6 shrink-0 ${rule.allowed ? 'text-green-500' : 'text-red-500'}`} />
+                  <Card key={rule.title} className="p-4 flex gap-4 items-start border-border/40 hover:border-accent/30 transition-colors">
+                    <div className={`p-2 rounded-lg ${rule.allowed ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                      <rule.icon className={`w-5 h-5 ${rule.allowed ? 'text-green-500' : 'text-red-500'}`} />
+                    </div>
                     <div>
-                      <h3 className="font-bold">{rule.title}</h3>
+                      <h3 className="font-bold text-foreground">{rule.title}</h3>
                       <p className="text-sm text-muted-foreground">{rule.description}</p>
                     </div>
                   </Card>
@@ -439,12 +478,20 @@ const ColoradoHub = () => {
               </div>
             </div>
             <div>
-              <h2 className="text-2xl font-bold mb-6">Travel Tips</h2>
-              <Accordion type="single" collapsible>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Travel Tips
+                </span>
+              </h2>
+              <Accordion type="single" collapsible className="w-full">
                 {travelTips.map((tip, i) => (
-                  <AccordionItem key={i} value={`tip-${i}`}>
-                    <AccordionTrigger>{tip.title}</AccordionTrigger>
-                    <AccordionContent>{tip.content}</AccordionContent>
+                  <AccordionItem key={i} value={`tip-${i}`} className="border-border/40">
+                    <AccordionTrigger className="hover:text-accent transition-colors text-left">
+                      {tip.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {tip.content}
+                    </AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -455,13 +502,18 @@ const ColoradoHub = () => {
         {/* NEWSLETTER */}
         <section className="py-20">
           <div className="container mx-auto px-4 max-w-2xl text-center">
-            <Card className="p-8 bg-accent/5 border-accent/20">
+            <Card className="p-8 bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/20">
               <Mail className="w-10 h-10 text-accent mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Join the Cannabis Travel Club</h2>
               <p className="text-muted-foreground mb-6">Get weekly guides, deals, and legal updates.</p>
               <div className="flex flex-col sm:flex-row gap-2">
-                <Input placeholder="Enter email" value={footerEmail} onChange={(e) => setFooterEmail(e.target.value)} />
-                <Button onClick={handleNewsletterSignup}>Subscribe</Button>
+                <Input 
+                  placeholder="Enter email" 
+                  value={footerEmail} 
+                  onChange={(e) => setFooterEmail(e.target.value)} 
+                  className="bg-background/50 border-accent/20 focus:border-accent"
+                />
+                <Button onClick={handleNewsletterSignup} className="bg-accent hover:bg-accent/90">Subscribe</Button>
               </div>
             </Card>
           </div>
