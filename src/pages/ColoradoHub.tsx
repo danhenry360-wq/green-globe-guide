@@ -144,7 +144,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "20+" },
+    { icon: Mountain, label: "Cities Covered", value: "25+" },
   ];
 
   const cities = [
@@ -171,6 +171,8 @@ const ColoradoHub = () => {
     { name: "Fort Morgan", slug: "fort-morgan", description: "Plains hub near Log Lane Village's 'Green Mile', offering easy I-76 access." },
     { name: "Montrose", slug: "montrose", description: "Outdoor adventure hub and gateway to the Black Canyon of the Gunnison." },
     { name: "Littleton", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational dispensaries." },
+    { name: "Englewood", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway and the historic Gothic Theatre." },
+    { name: "Red Rocks", slug: "red-rocks", description: "The world's best music venue. Learn consumption rules and where to stay in Morrison." },
   ];
 
   const consumptionRules = [
@@ -272,7 +274,7 @@ const ColoradoHub = () => {
     'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
     'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
-    'fort-morgan', 'montrose', 'littleton'
+    'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks'
   ];
 
   return (
