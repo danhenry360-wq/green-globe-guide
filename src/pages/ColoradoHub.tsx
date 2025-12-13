@@ -144,7 +144,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "25+" },
+    { icon: Mountain, label: "Cities Covered", value: "29+" },
   ];
 
   const cities = [
@@ -173,6 +173,10 @@ const ColoradoHub = () => {
     { name: "Littleton", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational dispensaries." },
     { name: "Englewood", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway and the historic Gothic Theatre." },
     { name: "Red Rocks", slug: "red-rocks", description: "The world's best music venue. Learn consumption rules and where to stay in Morrison." },
+    { name: "Glenwood Springs", slug: "glenwood-springs", description: "World-famous hot springs, vapor caves, and hanging lakes. The ultimate relaxation spot." },
+    { name: "Telluride", slug: "telluride", description: "Festival capital in a box canyon. Luxury cannabis, free gondola rides, and stunning views." },
+    { name: "Pagosa Springs", slug: "pagosa-springs", description: "Deepest hot springs in the world and Wolf Creek ski area. A San Juan mountain gem." },
+    { name: "Silverton", slug: "silverton", description: "High-altitude mining town adventure. Rugged, remote, and historic." },
   ];
 
   const consumptionRules = [
@@ -274,7 +278,8 @@ const ColoradoHub = () => {
     'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
     'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
-    'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks'
+    'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
+    'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton'
   ];
 
   return (
