@@ -144,7 +144,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "10+" },
+    { icon: Mountain, label: "Cities Covered", value: "15+" },
   ];
 
   const cities = [
@@ -158,6 +158,11 @@ const ColoradoHub = () => {
     { name: "Lakewood", slug: "lakewood", description: "West Denver suburb with mountain access, diverse dispensaries, and Red Rocks Amphitheatre nearby." },
     { name: "Pueblo", slug: "pueblo", description: "Southern Colorado's cannabis oasis with affordable prices and historic downtown charm." },
     { name: "Longmont", slug: "longmont", description: "Boulder County gem with craft breweries, farm-to-table dining, and quality dispensaries." },
+    { name: "Loveland", slug: "loveland", description: "The Sweetheart City - Art, sculpture parks, and the gateway to Estes Park." },
+    { name: "Estes Park", slug: "estes-park", description: "Gateway to Rocky Mountain National Park with 420-friendly cabins and stunning views." },
+    { name: "Greeley", slug: "greeley", description: "Northern Colorado hub featuring Garden City's famous 'Green Mile' of dispensaries." },
+    { name: "Castle Rock", slug: "castle-rock", description: "Outlet shopping destination between Denver and The Springs, near Sedalia dispensaries." },
+    { name: "Broomfield", slug: "broomfield", description: "The tech corridor perfectly situated between Denver and Boulder with premier shopping." },
   ];
 
   const consumptionRules = [
@@ -206,18 +211,9 @@ const ColoradoHub = () => {
       }
     },
     "mentions": [
-      {
-        "@type": "City",
-        "name": "Denver, Colorado"
-      },
-      {
-        "@type": "City", 
-        "name": "Boulder, Colorado"
-      },
-      {
-        "@type": "City",
-        "name": "Colorado Springs, Colorado"
-      }
+      { "@type": "City", "name": "Denver, Colorado" },
+      { "@type": "City", "name": "Boulder, Colorado" },
+      { "@type": "City", "name": "Colorado Springs, Colorado" }
     ],
     "dateModified": new Date().toISOString().split('T')[0],
     "inLanguage": "en-US"
@@ -261,6 +257,13 @@ const ColoradoHub = () => {
       }
     ]
   };
+
+  // List of slugs that have custom root pages (e.g. /denver) to simplify routing logic
+  const customCitySlugs = [
+    'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
+    'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
+    'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield'
+  ];
 
   return (
     <>
@@ -645,7 +648,9 @@ const ColoradoHub = () => {
                   transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Link to={city.slug === 'denver' ? '/denver' : city.slug === 'boulder' ? '/boulder' : city.slug === 'aspen' ? '/aspen' : city.slug === 'colorado-springs' ? '/colorado-springs' : `/usa/colorado/${city.slug}`}>
+                  <Link 
+                    to={customCitySlugs.includes(city.slug) ? `/${city.slug}` : `/usa/colorado/${city.slug}`}
+                  >
                     <Card className="bg-card/50 border-border/30 h-full hover:border-accent/50 transition-all group">
                       <CardContent className="p-6">
                         <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
@@ -685,8 +690,8 @@ const ColoradoHub = () => {
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Colorado has over 500 licensed dispensaries. Browse our curated selection of top-rated recreational 
-                and medical dispensaries across <Link to="/usa/colorado/denver" className="text-accent hover:underline">Denver</Link>, 
-                <Link to="/usa/colorado/boulder" className="text-accent hover:underline"> Boulder</Link>, and beyond.
+                and medical dispensaries across <Link to="/denver" className="text-accent hover:underline">Denver</Link>, 
+                <Link to="/boulder" className="text-accent hover:underline"> Boulder</Link>, and beyond.
               </p>
             </motion.div>
 
