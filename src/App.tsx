@@ -45,7 +45,8 @@ import GlenwoodSpringsGuide from "./pages/GlenwoodSpringsGuide";
 import TellurideGuide from "./pages/TellurideGuide";
 import PagosaSpringsGuide from "./pages/PagosaSpringsGuide";
 import SilvertonGuide from "./pages/SilvertonGuide";
-import OurayGuide from "./pages/OurayGuide"; // Added
+import OurayGuide from "./pages/OurayGuide";
+import BreckenridgeGuide from "./pages/BreckenridgeGuide"; // Added
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -180,6 +181,7 @@ function App() {
               <Route path="/pagosa-springs" element={<PagosaSpringsGuide />} />
               <Route path="/silverton" element={<SilvertonGuide />} />
               <Route path="/ouray" element={<OurayGuide />} />
+              <Route path="/breckenridge" element={<BreckenridgeGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -212,6 +214,7 @@ function App() {
               <Route path="/usa/colorado/pagosa-springs" element={<Navigate to="/pagosa-springs" replace />} />
               <Route path="/usa/colorado/silverton" element={<Navigate to="/silverton" replace />} />
               <Route path="/usa/colorado/ouray" element={<Navigate to="/ouray" replace />} />
+              <Route path="/usa/colorado/breckenridge" element={<Navigate to="/breckenridge" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
