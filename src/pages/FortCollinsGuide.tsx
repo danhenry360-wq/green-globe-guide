@@ -45,7 +45,6 @@ interface Rental {
   rating: number | null;
   images: string[] | null;
   website: string | null;
-  description: string | null;
 }
 
 const FortCollinsGuide = () => {

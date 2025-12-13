@@ -43,6 +43,7 @@ interface Rental {
   rating: number | null;
   images: string[] | null;
   website: string | null;
+  amenities?: unknown;
 }
 
 const ThorntonGuide = () => {
