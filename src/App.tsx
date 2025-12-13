@@ -39,6 +39,9 @@ import DurangoGuide from "./pages/DurangoGuide";
 import FortMorganGuide from "./pages/FortMorganGuide";
 import MontroseGuide from "./pages/MontroseGuide";
 import LittletonGuide from "./pages/LittletonGuide";
+import EnglewoodGuide from "./pages/EnglewoodGuide";
+import RedRocksGuide from "./pages/RedRocksGuide";
+
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
@@ -105,6 +108,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
+              
               {/* Specific blog pages must come BEFORE the generic /blog/:slug route */}
               <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
               <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
@@ -164,6 +168,8 @@ function App() {
               <Route path="/fort-morgan" element={<FortMorganGuide />} />
               <Route path="/montrose" element={<MontroseGuide />} />
               <Route path="/littleton" element={<LittletonGuide />} />
+              <Route path="/englewood" element={<EnglewoodGuide />} />
+              <Route path="/red-rocks" element={<RedRocksGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -189,6 +195,8 @@ function App() {
               <Route path="/usa/colorado/fort-morgan" element={<Navigate to="/fort-morgan" replace />} />
               <Route path="/usa/colorado/montrose" element={<Navigate to="/montrose" replace />} />
               <Route path="/usa/colorado/littleton" element={<Navigate to="/littleton" replace />} />
+              <Route path="/usa/colorado/englewood" element={<Navigate to="/englewood" replace />} />
+              <Route path="/usa/colorado/red-rocks" element={<Navigate to="/red-rocks" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
