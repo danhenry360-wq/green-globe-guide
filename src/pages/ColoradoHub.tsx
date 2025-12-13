@@ -15,7 +15,7 @@ import {
   MapPin, Star, CheckCircle, AlertTriangle, 
   Plane, Home, Building, Cannabis, Car, Clock, Shield, 
   Mail, ArrowRight, Bed, Store, Mountain,
-  Info, Ban, ChevronRight, Search, Scale, ShoppingBag, Leaf, Gavel
+  Info, Ban, ChevronRight, Search, ShoppingBag, Leaf
 } from "lucide-react";
 import coloradoHeroImage from "@/assets/colorado-hub-hero.jpg";
 
@@ -66,6 +66,7 @@ const ColoradoHub = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // Fetch top 4 Colorado dispensaries
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
@@ -75,6 +76,7 @@ const ColoradoHub = () => {
       
       if (dispData) setDispensaries(dispData);
 
+      // Fetch top 4 Colorado rentals
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
@@ -85,6 +87,7 @@ const ColoradoHub = () => {
       
       if (rentalData) setRentals(rentalData);
 
+      // Fetch Colorado-related blog posts
       const { data: blogData } = await supabase
         .from('blog_posts')
         .select('id, title, slug, excerpt, image_url, category')
@@ -146,42 +149,50 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "29+" },
+    { icon: Mountain, label: "Cities Covered", value: "30+" },
   ];
 
   const cities = [
-    { name: "Denver", region: "Metro", slug: "denver", description: "The Mile High City - Colorado's cannabis capital with the most dispensaries." },
-    { name: "Boulder", region: "Front Range", slug: "boulder", description: "Progressive college town known for craft cannabis and outdoor recreation." },
-    { name: "Colorado Springs", region: "Front Range", slug: "colorado-springs", description: "Gateway to Pikes Peak. Note: Medical sales mostly, rec nearby in Manitou." },
+    { name: "Denver", region: "Metro", slug: "denver", description: "The Mile High City - Colorado's cannabis capital with the most dispensaries and 420-friendly accommodations." },
+    { name: "Boulder", region: "Front Range", slug: "boulder", description: "Progressive college town known for craft cannabis, outdoor recreation, and relaxed atmosphere." },
+    { name: "Colorado Springs", region: "Front Range", slug: "colorado-springs", description: "Gateway to the mountains with growing cannabis scene and stunning natural beauty." },
     { name: "Aspen", region: "Mountains", slug: "aspen", description: "Luxury ski destination with high-end dispensaries and upscale 420-friendly lodging." },
-    { name: "Fort Collins", region: "Front Range", slug: "fort-collins", description: "Craft beer capital meets cannabis culture with Old Town charm." },
-    { name: "Aurora", region: "Metro", slug: "aurora", description: "Diverse neighbor near DIA with extended dispensary hours." },
-    { name: "Thornton", region: "Metro", slug: "thornton", description: "Budget-friendly northern suburb with easy access to Denver." },
-    { name: "Lakewood", region: "Metro", slug: "lakewood", description: "West Denver suburb with mountain access and diverse dispensaries." },
-    { name: "Pueblo", region: "Front Range", slug: "pueblo", description: "Southern Colorado's cannabis oasis known for affordable prices." },
-    { name: "Longmont", region: "Front Range", slug: "longmont", description: "Boulder County gem with craft breweries and farm-to-table vibes." },
+    { name: "Breckenridge", region: "Mountains", slug: "breckenridge", description: "Historic mining town with world-class skiing and the 'Green Light District'." },
+    { name: "Fort Collins", region: "Front Range", slug: "fort-collins", description: "Craft beer capital meets cannabis culture with Old Town charm and mountain access." },
+    { name: "Aurora", region: "Metro", slug: "aurora", description: "Denver's diverse neighbor near DIA with great dispensaries and international cuisine." },
+    { name: "Thornton", region: "Metro", slug: "thornton", description: "Budget-friendly northern suburb with easy access to Denver's cannabis scene." },
+    { name: "Lakewood", region: "Metro", slug: "lakewood", description: "West Denver suburb with mountain access, diverse dispensaries, and Red Rocks Amphitheatre nearby." },
+    { name: "Pueblo", region: "Front Range", slug: "pueblo", description: "Southern Colorado's cannabis oasis with affordable prices and historic downtown charm." },
+    { name: "Longmont", region: "Front Range", slug: "longmont", description: "Boulder County gem with craft breweries, farm-to-table dining, and quality dispensaries." },
     { name: "Loveland", region: "Front Range", slug: "loveland", description: "The Sweetheart City - Art, sculpture parks, and the gateway to Estes Park." },
-    { name: "Estes Park", region: "Mountains", slug: "estes-park", description: "Gateway to Rocky Mountain National Park. Strict federal land rules apply." },
-    { name: "Greeley", region: "Front Range", slug: "greeley", description: "Home to Garden City's famous 'Green Mile' of dispensaries." },
-    { name: "Castle Rock", region: "Front Range", slug: "castle-rock", description: "Outlet shopping destination. Rec sales restricted, shop in nearby Sedalia." },
-    { name: "Broomfield", region: "Metro", slug: "broomfield", description: "The tech corridor perfectly situated between Denver and Boulder." },
-    { name: "Westminster", region: "Metro", slug: "westminster", description: "Scenic views, the Butterfly Pavilion, and easy access to Boulder." },
-    { name: "Arvada", region: "Metro", slug: "arvada", description: "Historic Olde Town charm meets modern cannabis culture on the G-Line." },
-    { name: "Centennial", region: "Metro", slug: "centennial", description: "South Metro hub featuring Topgolf and premier shopping destinations." },
-    { name: "Grand Junction", region: "Western Slope", slug: "grand-junction", description: "Wine country meets weed country. Explore the Colorado National Monument." },
-    { name: "Durango", region: "Western Slope", slug: "durango", description: "Historic railroad town with Southwest vibes and river adventures." },
-    { name: "Fort Morgan", region: "Plains", slug: "fort-morgan", description: "Plains hub near Log Lane Village's 'Green Mile' on I-76." },
-    { name: "Montrose", region: "Western Slope", slug: "montrose", description: "Gateway to the Black Canyon and affordable Western Slope basecamp." },
-    { name: "Littleton", region: "Metro", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational shops." },
-    { name: "Englewood", region: "Metro", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway and the Gothic Theatre." },
-    { name: "Red Rocks", region: "Metro", slug: "red-rocks", description: "World's best music venue. Learn specific consumption rules for Morrison." },
-    { name: "Glenwood Springs", region: "Mountains", slug: "glenwood-springs", description: "Hot springs, vapor caves, and hanging lakes. The ultimate relaxation spot." },
+    { name: "Estes Park", region: "Mountains", slug: "estes-park", description: "Gateway to Rocky Mountain National Park with 420-friendly cabins and stunning views." },
+    { name: "Greeley", region: "Front Range", slug: "greeley", description: "Northern Colorado hub featuring Garden City's famous 'Green Mile' of dispensaries." },
+    { name: "Castle Rock", region: "Front Range", slug: "castle-rock", description: "Outlet shopping destination between Denver and The Springs, near Sedalia dispensaries." },
+    { name: "Broomfield", region: "Metro", slug: "broomfield", description: "The tech corridor perfectly situated between Denver and Boulder with premier shopping." },
+    { name: "Westminster", region: "Metro", slug: "westminster", description: "The Butterfly City - Scenic views, the Butterfly Pavilion, and easy access to Boulder and Denver." },
+    { name: "Arvada", region: "Metro", slug: "arvada", description: "Historic Olde Town charm meets modern cannabis culture, connected by the G-Line commuter rail." },
+    { name: "Centennial", region: "Metro", slug: "centennial", description: "South Metro hub featuring Topgolf, Cherry Creek State Park, and premier shopping destinations." },
+    { name: "Grand Junction", region: "Western Slope", slug: "grand-junction", description: "Wine country meets weed country on the Western Slope. Explore the Colorado National Monument." },
+    { name: "Durango", region: "Western Slope", slug: "durango", description: "Historic railroad town with Southwest vibes, river adventures, and a thriving cannabis scene." },
+    { name: "Fort Morgan", region: "Plains", slug: "fort-morgan", description: "Plains hub near Log Lane Village's 'Green Mile', offering easy I-76 access." },
+    { name: "Montrose", region: "Western Slope", slug: "montrose", description: "Outdoor adventure hub and gateway to the Black Canyon of the Gunnison." },
+    { name: "Littleton", region: "Metro", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational dispensaries." },
+    { name: "Englewood", region: "Metro", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway and the historic Gothic Theatre." },
+    { name: "Red Rocks", region: "Metro", slug: "red-rocks", description: "The world's best music venue. Learn consumption rules and where to stay in Morrison." },
+    { name: "Glenwood Springs", region: "Mountains", slug: "glenwood-springs", description: "World-famous hot springs, vapor caves, and hanging lakes. The ultimate relaxation spot." },
     { name: "Telluride", region: "Mountains", slug: "telluride", description: "Festival capital in a box canyon. Luxury cannabis and free gondola rides." },
     { name: "Pagosa Springs", region: "Mountains", slug: "pagosa-springs", description: "Deepest hot springs in the world and Wolf Creek ski area." },
     { name: "Silverton", region: "Mountains", slug: "silverton", description: "High-altitude mining town adventure. Rugged, remote, and historic." },
   ];
 
-  const customCitySlugs = cities.map(c => c.slug);
+  const customCitySlugs = [
+    'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
+    'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
+    'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
+    'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
+    'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
+    'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge'
+  ];
 
   // Detailed Law Data
   const legalDetails = [
@@ -240,6 +251,12 @@ const ColoradoHub = () => {
       title: "Last Call", 
       content: "Dispensaries have strict closing times (usually 10 PM or midnight, depending on the city). They cannot complete a sale 1 minute past closing."
     },
+  ];
+
+  const consumptionRules = [
+    { icon: Home, title: "Private Residences", description: "Legal to consume on private property with owner's permission.", allowed: true },
+    { icon: Building, title: "Hotel Balconies", description: "Only if explicitly allowed by the property rules.", allowed: true },
+    { icon: Ban, title: "Public Spaces", description: "Illegal in parks, sidewalks, bars, and restaurants.", allowed: false },
   ];
 
   // Filtering Logic
@@ -349,7 +366,7 @@ const ColoradoHub = () => {
               </div>
             </div>
 
-            {/* City Grid */}
+            {/* City Grid - Mobile Optimized */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
@@ -524,31 +541,53 @@ const ColoradoHub = () => {
           </div>
         </section>
 
-        {/* TIPS */}
+        {/* RULES & TIPS */}
         <section className="py-20">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Travel Tips
-              </span>
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {travelTips.map((tip, i) => (
-                <AccordionItem key={i} value={`tip-${i}`} className="border-border/40">
-                  <AccordionTrigger className="hover:text-accent transition-colors text-left text-lg font-medium">
-                    {tip.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base">
-                    {tip.content}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Consumption Rules
+                </span>
+              </h2>
+              <div className="space-y-4">
+                {consumptionRules.map((rule) => (
+                  <Card key={rule.title} className="p-4 flex gap-4 items-start border-border/40 hover:border-accent/30 transition-colors">
+                    <div className={`p-2 rounded-lg ${rule.allowed ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                      <rule.icon className={`w-5 h-5 ${rule.allowed ? 'text-green-500' : 'text-red-500'}`} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-foreground">{rule.title}</h3>
+                      <p className="text-sm text-muted-foreground">{rule.description}</p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Travel Tips
+                </span>
+              </h2>
+              <Accordion type="single" collapsible className="w-full">
+                {travelTips.map((tip, i) => (
+                  <AccordionItem key={i} value={`tip-${i}`} className="border-border/40">
+                    <AccordionTrigger className="hover:text-accent transition-colors text-left text-lg font-medium">
+                      {tip.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-base">
+                      {tip.content}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </section>
 
         {/* NEWSLETTER */}
-        <section className="py-20">
+        <section className="py-20 bg-card/30">
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <Card className="p-8 bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/20">
               <Mail className="w-10 h-10 text-accent mx-auto mb-4" />
