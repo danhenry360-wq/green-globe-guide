@@ -310,7 +310,7 @@ const GrandJunctionGuide = () => {
   const relatedGuides = [
     { name: "Aspen", slug: "/aspen", desc: "Luxury Mountain Town", distance: "2 hrs" },
     { name: "Montrose", slug: "/montrose", desc: "Black Canyon Gateway", distance: "1 hr" },
-    { name: "Moab, UT", slug: "/world", desc: "Arches National Park", distance: "1.5 hrs" },
+    { name: "Glenwood Springs", slug: "/usa/colorado", desc: "Hot Springs & Caves", distance: "1.5 hrs" },
   ];
 
   return (
