@@ -144,7 +144,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "15+" },
+    { icon: Mountain, label: "Cities Covered", value: "18+" },
   ];
 
   const cities = [
@@ -163,6 +163,9 @@ const ColoradoHub = () => {
     { name: "Greeley", slug: "greeley", description: "Northern Colorado hub featuring Garden City's famous 'Green Mile' of dispensaries." },
     { name: "Castle Rock", slug: "castle-rock", description: "Outlet shopping destination between Denver and The Springs, near Sedalia dispensaries." },
     { name: "Broomfield", slug: "broomfield", description: "The tech corridor perfectly situated between Denver and Boulder with premier shopping." },
+    { name: "Westminster", slug: "westminster", description: "The Butterfly City - Scenic views, the Butterfly Pavilion, and easy access to Boulder and Denver." },
+    { name: "Arvada", slug: "arvada", description: "Historic Olde Town charm meets modern cannabis culture, connected by the G-Line commuter rail." },
+    { name: "Centennial", slug: "centennial", description: "South Metro hub featuring Topgolf, Cherry Creek State Park, and premier shopping destinations." },
   ];
 
   const consumptionRules = [
@@ -262,7 +265,8 @@ const ColoradoHub = () => {
   const customCitySlugs = [
     'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
     'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
-    'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield'
+    'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
+    'westminster', 'arvada', 'centennial'
   ];
 
   return (
