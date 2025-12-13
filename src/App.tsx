@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { AuthCallbackHandler } from "./components/AuthCallbackHandler";
 import { AgeGateModal } from "./components/AgeGateModal";
@@ -23,8 +23,6 @@ import ColoradoSpringsGuide from "./pages/ColoradoSpringsGuide";
 import FortCollinsGuide from "./pages/FortCollinsGuide";
 import ThorntonGuide from "./pages/ThorntonGuide";
 import AuroraGuide from "./pages/AuroraGuide";
-
-/* --- NEW PAGES ADDED HERE --- */
 import LakewoodGuide from "./pages/LakewoodGuide";
 import LongmontGuide from "./pages/LongmontGuide";
 import PuebloGuide from "./pages/PuebloGuide";
@@ -33,8 +31,9 @@ import EstesParkGuide from "./pages/EstesParkGuide";
 import GreeleyGuide from "./pages/GreeleyGuide";
 import CastleRockGuide from "./pages/CastleRockGuide";
 import BroomfieldGuide from "./pages/BroomfieldGuide";
-/* ---------------------------- */
-
+import WestminsterGuide from "./pages/WestminsterGuide";
+import ArvadaGuide from "./pages/ArvadaGuide";
+import CentennialGuide from "./pages/CentennialGuide";
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
@@ -101,8 +100,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
-              
-              {/* Blog Routes */}
+              {/* Specific blog pages must come BEFORE the generic /blog/:slug route */}
               <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
               <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
               <Route path="/blog/cannabis-dispensaries-boulder" element={<BlogBoulderDispensaries />} />
@@ -112,8 +110,6 @@ function App() {
               <Route path="/blog/cannabis-dispensaries-colorado-springs" element={<BlogColoradoSpringsDispensaries />} />
               <Route path="/blog/best-420-rentals-colorado-springs" element={<BlogColoradoSpringsRentals />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
-
-              {/* Directory Routes */}
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
               <Route path="/hotels" element={<Hotels />} />
@@ -133,11 +129,13 @@ function App() {
               {/* USA routes */}
               <Route path="/usa" element={<USAGuide />} />
               <Route path="/usa/colorado" element={<ColoradoHub />} />
+
+              {/* Colorado guides - Special pages */}
               <Route path="/colorado/consumption-guide" element={<ColoradoConsumptionGuide />} />
               <Route path="/colorado/federal-land-warning" element={<FederalLandWarning />} />
               <Route path="/colorado/altitude-guide" element={<AltitudeGuide />} />
-              
-              {/* Custom City Guides - Short Paths */}
+
+              {/* City Guides - SHORT PATHS ONLY (No duplicates) */}
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
@@ -145,8 +143,6 @@ function App() {
               <Route path="/fort-collins" element={<FortCollinsGuide />} />
               <Route path="/thornton" element={<ThorntonGuide />} />
               <Route path="/aurora" element={<AuroraGuide />} />
-              
-              {/* --- NEW SHORT PATHS --- */}
               <Route path="/lakewood" element={<LakewoodGuide />} />
               <Route path="/longmont" element={<LongmontGuide />} />
               <Route path="/pueblo" element={<PuebloGuide />} />
@@ -155,27 +151,31 @@ function App() {
               <Route path="/greeley" element={<GreeleyGuide />} />
               <Route path="/castle-rock" element={<CastleRockGuide />} />
               <Route path="/broomfield" element={<BroomfieldGuide />} />
+              <Route path="/westminster" element={<WestminsterGuide />} />
+              <Route path="/arvada" element={<ArvadaGuide />} />
+              <Route path="/centennial" element={<CentennialGuide />} />
 
-              {/* Custom City Guides - Nested Paths */}
-              <Route path="/usa/colorado/fort-collins" element={<FortCollinsGuide />} />
-              <Route path="/usa/colorado/denver" element={<DenverGuide />} />
-              <Route path="/usa/colorado/boulder" element={<BoulderGuide />} />
-              <Route path="/usa/colorado/aspen" element={<AspenGuide />} />
-              <Route path="/usa/colorado/colorado-springs" element={<ColoradoSpringsGuide />} />
-              <Route path="/usa/colorado/thornton" element={<ThorntonGuide />} />
-              <Route path="/usa/colorado/aurora" element={<AuroraGuide />} />
+              {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
+              <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
+              <Route path="/usa/colorado/boulder" element={<Navigate to="/boulder" replace />} />
+              <Route path="/usa/colorado/aspen" element={<Navigate to="/aspen" replace />} />
+              <Route path="/usa/colorado/colorado-springs" element={<Navigate to="/colorado-springs" replace />} />
+              <Route path="/usa/colorado/fort-collins" element={<Navigate to="/fort-collins" replace />} />
+              <Route path="/usa/colorado/thornton" element={<Navigate to="/thornton" replace />} />
+              <Route path="/usa/colorado/aurora" element={<Navigate to="/aurora" replace />} />
+              <Route path="/usa/colorado/lakewood" element={<Navigate to="/lakewood" replace />} />
+              <Route path="/usa/colorado/longmont" element={<Navigate to="/longmont" replace />} />
+              <Route path="/usa/colorado/pueblo" element={<Navigate to="/pueblo" replace />} />
+              <Route path="/usa/colorado/loveland" element={<Navigate to="/loveland" replace />} />
+              <Route path="/usa/colorado/estes-park" element={<Navigate to="/estes-park" replace />} />
+              <Route path="/usa/colorado/greeley" element={<Navigate to="/greeley" replace />} />
+              <Route path="/usa/colorado/castle-rock" element={<Navigate to="/castle-rock" replace />} />
+              <Route path="/usa/colorado/broomfield" element={<Navigate to="/broomfield" replace />} />
+              <Route path="/usa/colorado/westminster" element={<Navigate to="/westminster" replace />} />
+              <Route path="/usa/colorado/arvada" element={<Navigate to="/arvada" replace />} />
+              <Route path="/usa/colorado/centennial" element={<Navigate to="/centennial" replace />} />
 
-              {/* --- NEW NESTED PATHS --- */}
-              <Route path="/usa/colorado/lakewood" element={<LakewoodGuide />} />
-              <Route path="/usa/colorado/longmont" element={<LongmontGuide />} />
-              <Route path="/usa/colorado/pueblo" element={<PuebloGuide />} />
-              <Route path="/usa/colorado/loveland" element={<LovelandGuide />} />
-              <Route path="/usa/colorado/estes-park" element={<EstesParkGuide />} />
-              <Route path="/usa/colorado/greeley" element={<GreeleyGuide />} />
-              <Route path="/usa/colorado/castle-rock" element={<CastleRockGuide />} />
-              <Route path="/usa/colorado/broomfield" element={<BroomfieldGuide />} />
-
-              {/* Dynamic Fallbacks */}
+              {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
 
