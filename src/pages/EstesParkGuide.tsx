@@ -56,19 +56,18 @@ const EstesParkGuide = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Estes Park has historically restricted dispensaries inside town limits.
-      // This query looks for any that might have opened or are in the immediate vicinity (Lyons/Larimer County).
+      // Fetch Dispensaries (Targeting nearby Lyons/Boulder as Estes limits sales)
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
-        .or('city.ilike.%Estes Park%,city.ilike.%Lyons%') // Includes nearby Lyons which has dispensaries
+        .or('city.ilike.%Estes Park%,city.ilike.%Lyons%')
         .order('rating', { ascending: false })
         .limit(3);
       
       if (dispData) setDispensaries(dispData);
 
-      // Fetch hotels/rentals in Estes Park
+      // Fetch Rentals (Hotels table) filtering for Estes Park addresses
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
@@ -271,27 +270,6 @@ const EstesParkGuide = () => {
       icon: Bus,
       description: "Connects Denver Union Station/Boulder to Estes Park on weekends/summer.",
       tip: "Great if you don't want to drive mountain roads."
-    }
-  ];
-
-  const neighborhoods = [
-    { 
-      name: "Downtown", 
-      desc: "The heart of the action. Walkable to shops, dining, and the Riverwalk.",
-      safety: "very-safe",
-      walkable: true
-    },
-    { 
-      name: "Fall River Road", 
-      desc: "Lined with condos and cabins along the river. scenic and quiet.",
-      safety: "very-safe",
-      walkable: false
-    },
-    { 
-      name: "Mary's Lake", 
-      desc: "Slightly south of town, offers great views and a quieter vibe.",
-      safety: "very-safe",
-      walkable: false
     }
   ];
 
@@ -620,6 +598,65 @@ const EstesParkGuide = () => {
               <Card className="p-8 text-center bg-card/50">
                 <Store className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">No specific dispensaries found. We recommend stopping in <strong>Lyons</strong> on Highway 36.</p>
+              </Card>
+            )}
+          </div>
+        </section>
+
+        {/* Rentals Section - Added Missing Section Here */}
+        <section id="rentals" className="py-16 bg-card/30">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  420-Friendly Cabins & Hotels
+                </span>
+              </h2>
+              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+              </div>
+            ) : rentals.length > 0 ? (
+              <div className="grid md:grid-cols-3 gap-6">
+                {rentals.map((rental) => (
+                  <Link key={rental.id} to={`/hotels/${rental.slug}`}>
+                    <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                      <div className="aspect-video relative">
+                        <img 
+                          src={rental.images?.[0] || "/dest-california.jpg"} 
+                          alt={rental.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-xs">
+                          420 Friendly
+                        </Badge>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{rental.name}</h3>
+                        {rental.address && (
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                            <MapPin className="w-3 h-3" />
+                            <span className="truncate">{rental.address}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">
+                          {renderRating(rental.rating || 4)}
+                          <span className="text-sm text-muted-foreground ml-1">({rental.rating || 4.0})</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <Card className="p-8 text-center bg-card/50">
+                <Bed className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">No 420-friendly rentals found in Estes Park right now. Check back soon!</p>
               </Card>
             )}
           </div>
