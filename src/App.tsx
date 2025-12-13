@@ -28,6 +28,7 @@ import AuroraGuide from "./pages/AuroraGuide";
 import LakewoodGuide from "./pages/LakewoodGuide";
 import LongmontGuide from "./pages/LongmontGuide";
 import PuebloGuide from "./pages/PuebloGuide";
+import LovelandGuide from "./pages/LovelandGuide";
 /* ---------------------------- */
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
@@ -145,6 +146,7 @@ function App() {
               <Route path="/lakewood" element={<LakewoodGuide />} />
               <Route path="/longmont" element={<LongmontGuide />} />
               <Route path="/pueblo" element={<PuebloGuide />} />
+              <Route path="/loveland" element={<LovelandGuide />} />
 
               {/* Custom City Guides - Nested Paths */}
               <Route path="/usa/colorado/fort-collins" element={<FortCollinsGuide />} />
@@ -159,6 +161,7 @@ function App() {
               <Route path="/usa/colorado/lakewood" element={<LakewoodGuide />} />
               <Route path="/usa/colorado/longmont" element={<LongmontGuide />} />
               <Route path="/usa/colorado/pueblo" element={<PuebloGuide />} />
+              <Route path="/usa/colorado/loveland" element={<LovelandGuide />} />
 
               {/* Dynamic Fallbacks */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
