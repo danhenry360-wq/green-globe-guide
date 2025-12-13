@@ -30,6 +30,7 @@ import LongmontGuide from "./pages/LongmontGuide";
 import PuebloGuide from "./pages/PuebloGuide";
 import LovelandGuide from "./pages/LovelandGuide";
 import EstesParkGuide from "./pages/EstesParkGuide";
+import GreeleyGuide from "./pages/GreeleyGuide";
 /* ---------------------------- */
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
@@ -149,6 +150,7 @@ function App() {
               <Route path="/pueblo" element={<PuebloGuide />} />
               <Route path="/loveland" element={<LovelandGuide />} />
               <Route path="/estes-park" element={<EstesParkGuide />} />
+              <Route path="/greeley" element={<GreeleyGuide />} />
 
               {/* Custom City Guides - Nested Paths */}
               <Route path="/usa/colorado/fort-collins" element={<FortCollinsGuide />} />
@@ -165,6 +167,7 @@ function App() {
               <Route path="/usa/colorado/pueblo" element={<PuebloGuide />} />
               <Route path="/usa/colorado/loveland" element={<LovelandGuide />} />
               <Route path="/usa/colorado/estes-park" element={<EstesParkGuide />} />
+              <Route path="/usa/colorado/greeley" element={<GreeleyGuide />} />
 
               {/* Dynamic Fallbacks */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
