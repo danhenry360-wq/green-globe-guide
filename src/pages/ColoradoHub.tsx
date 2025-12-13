@@ -15,7 +15,7 @@ import {
   MapPin, Star, CheckCircle, AlertTriangle, 
   Plane, Home, Building, Cannabis, Car, Clock, Shield, 
   Mail, ArrowRight, Bed, Store, Mountain,
-  Info, Ban, ChevronRight
+  Info, Ban, ChevronRight, Search, Filter
 } from "lucide-react";
 import coloradoHeroImage from "@/assets/colorado-hub-hero.jpg";
 
@@ -57,21 +57,23 @@ const ColoradoHub = () => {
   const [rentals, setRentals] = useState<Rental[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // New State for Search & Filtering
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("All");
+
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch top 4 Colorado dispensaries
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
         .limit(4);
-      
       if (dispData) setDispensaries(dispData);
 
-      // Fetch top 4 Colorado rentals
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
@@ -79,10 +81,8 @@ const ColoradoHub = () => {
         .ilike('address', '%Colorado%')
         .order('rating', { ascending: false })
         .limit(4);
-      
       if (rentalData) setRentals(rentalData);
 
-      // Fetch Colorado-related blog posts
       const { data: blogData } = await supabase
         .from('blog_posts')
         .select('id, title, slug, excerpt, image_url, category')
@@ -90,53 +90,24 @@ const ColoradoHub = () => {
         .ilike('title', '%colorado%')
         .order('published_at', { ascending: false })
         .limit(6);
-      
       if (blogData) setBlogPosts(blogData);
       setLoading(false);
     };
-
     fetchData();
   }, []);
 
   const handleNewsletterSignup = async () => {
     if (!footerEmail || !footerEmail.includes('@')) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive"
-      });
+      toast({ title: "Invalid Email", description: "Please enter a valid email.", variant: "destructive" });
       return;
     }
-    
     try {
-      const { error } = await supabase.from('newsletter_subscribers').insert({
-        email: footerEmail,
-        source_page: '/usa/colorado'
-      });
-
-      if (error) {
-        if (error.code === '23505') {
-          toast({
-            title: "Already Subscribed",
-            description: "This email is already on our list!",
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        toast({
-          title: "Welcome to the BudQuest community!",
-          description: "You'll receive exclusive Colorado travel tips and deals.",
-        });
-      }
+      const { error } = await supabase.from('newsletter_subscribers').insert({ email: footerEmail, source_page: '/usa/colorado' });
+      if (error) throw error;
+      toast({ title: "Subscribed!", description: "Welcome to the BudQuest community." });
       setFooterEmail("");
     } catch (error) {
-      console.error("Newsletter signup error:", error);
-      toast({
-        title: "Subscription Failed",
-        description: "Please try again later.",
-        variant: "destructive"
-      });
+      toast({ title: "Error", description: "Could not subscribe.", variant: "destructive" });
     }
   };
 
@@ -147,857 +118,301 @@ const ColoradoHub = () => {
     { icon: Mountain, label: "Cities Covered", value: "29+" },
   ];
 
+  // Added 'region' property to help organization
   const cities = [
-    { name: "Denver", slug: "denver", description: "The Mile High City - Colorado's cannabis capital with the most dispensaries and 420-friendly accommodations." },
-    { name: "Boulder", slug: "boulder", description: "Progressive college town known for craft cannabis, outdoor recreation, and relaxed atmosphere." },
-    { name: "Colorado Springs", slug: "colorado-springs", description: "Gateway to the mountains with growing cannabis scene and stunning natural beauty." },
-    { name: "Aspen", slug: "aspen", description: "Luxury ski destination with high-end dispensaries and upscale 420-friendly lodging." },
-    { name: "Fort Collins", slug: "fort-collins", description: "Craft beer capital meets cannabis culture with Old Town charm and mountain access." },
-    { name: "Aurora", slug: "aurora", description: "Denver's diverse neighbor near DIA with great dispensaries and international cuisine." },
-    { name: "Thornton", slug: "thornton", description: "Budget-friendly northern suburb with easy access to Denver's cannabis scene." },
-    { name: "Lakewood", slug: "lakewood", description: "West Denver suburb with mountain access, diverse dispensaries, and Red Rocks Amphitheatre nearby." },
-    { name: "Pueblo", slug: "pueblo", description: "Southern Colorado's cannabis oasis with affordable prices and historic downtown charm." },
-    { name: "Longmont", slug: "longmont", description: "Boulder County gem with craft breweries, farm-to-table dining, and quality dispensaries." },
-    { name: "Loveland", slug: "loveland", description: "The Sweetheart City - Art, sculpture parks, and the gateway to Estes Park." },
-    { name: "Estes Park", slug: "estes-park", description: "Gateway to Rocky Mountain National Park with 420-friendly cabins and stunning views." },
-    { name: "Greeley", slug: "greeley", description: "Northern Colorado hub featuring Garden City's famous 'Green Mile' of dispensaries." },
-    { name: "Castle Rock", slug: "castle-rock", description: "Outlet shopping destination between Denver and The Springs, near Sedalia dispensaries." },
-    { name: "Broomfield", slug: "broomfield", description: "The tech corridor perfectly situated between Denver and Boulder with premier shopping." },
-    { name: "Westminster", slug: "westminster", description: "The Butterfly City - Scenic views, the Butterfly Pavilion, and easy access to Boulder and Denver." },
-    { name: "Arvada", slug: "arvada", description: "Historic Olde Town charm meets modern cannabis culture, connected by the G-Line commuter rail." },
-    { name: "Centennial", slug: "centennial", description: "South Metro hub featuring Topgolf, Cherry Creek State Park, and premier shopping destinations." },
-    { name: "Grand Junction", slug: "grand-junction", description: "Wine country meets weed country on the Western Slope. Explore the Colorado National Monument." },
-    { name: "Durango", slug: "durango", description: "Historic railroad town with Southwest vibes, river adventures, and a thriving cannabis scene." },
-    { name: "Fort Morgan", slug: "fort-morgan", description: "Plains hub near Log Lane Village's 'Green Mile', offering easy I-76 access." },
-    { name: "Montrose", slug: "montrose", description: "Outdoor adventure hub and gateway to the Black Canyon of the Gunnison." },
-    { name: "Littleton", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational dispensaries." },
-    { name: "Englewood", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway and the historic Gothic Theatre." },
-    { name: "Red Rocks", slug: "red-rocks", description: "The world's best music venue. Learn consumption rules and where to stay in Morrison." },
-    { name: "Glenwood Springs", slug: "glenwood-springs", description: "World-famous hot springs, vapor caves, and hanging lakes. The ultimate relaxation spot." },
-    { name: "Telluride", slug: "telluride", description: "Festival capital in a box canyon. Luxury cannabis, free gondola rides, and stunning views." },
-    { name: "Pagosa Springs", slug: "pagosa-springs", description: "Deepest hot springs in the world and Wolf Creek ski area. A San Juan mountain gem." },
-    { name: "Silverton", slug: "silverton", description: "High-altitude mining town adventure. Rugged, remote, and historic." },
+    { name: "Denver", region: "Metro", slug: "denver", description: "The Mile High City - Colorado's cannabis capital." },
+    { name: "Boulder", region: "Front Range", slug: "boulder", description: "Progressive college town known for craft cannabis." },
+    { name: "Colorado Springs", region: "Front Range", slug: "colorado-springs", description: "Gateway to Pikes Peak and Garden of the Gods." },
+    { name: "Aspen", region: "Mountains", slug: "aspen", description: "Luxury ski destination with high-end dispensaries." },
+    { name: "Fort Collins", region: "Front Range", slug: "fort-collins", description: "Craft beer capital meets cannabis culture." },
+    { name: "Aurora", region: "Metro", slug: "aurora", description: "Diverse neighbor near DIA with great dispensaries." },
+    { name: "Thornton", region: "Metro", slug: "thornton", description: "Budget-friendly northern suburb." },
+    { name: "Lakewood", region: "Metro", slug: "lakewood", description: "West Denver suburb near Red Rocks." },
+    { name: "Pueblo", region: "Front Range", slug: "pueblo", description: "Southern cannabis oasis with affordable prices." },
+    { name: "Longmont", region: "Front Range", slug: "longmont", description: "Boulder County gem with craft breweries." },
+    { name: "Loveland", region: "Front Range", slug: "loveland", description: "The Sweetheart City - Gateway to Estes Park." },
+    { name: "Estes Park", region: "Mountains", slug: "estes-park", description: "Gateway to Rocky Mountain National Park." },
+    { name: "Greeley", region: "Front Range", slug: "greeley", description: "Home to Garden City's famous 'Green Mile'." },
+    { name: "Castle Rock", region: "Front Range", slug: "castle-rock", description: "Outlet shopping destination between Denver and Springs." },
+    { name: "Broomfield", region: "Metro", slug: "broomfield", description: "Tech corridor between Denver and Boulder." },
+    { name: "Westminster", region: "Metro", slug: "westminster", description: "Scenic views and the Butterfly Pavilion." },
+    { name: "Arvada", region: "Metro", slug: "arvada", description: "Historic Olde Town charm with G-Line access." },
+    { name: "Centennial", region: "Metro", slug: "centennial", description: "South Metro hub featuring Topgolf." },
+    { name: "Grand Junction", region: "Western Slope", slug: "grand-junction", description: "Wine country meets weed country." },
+    { name: "Durango", region: "Western Slope", slug: "durango", description: "Historic railroad town with Southwest vibes." },
+    { name: "Fort Morgan", region: "Plains", slug: "fort-morgan", description: "Plains hub near Log Lane Village." },
+    { name: "Montrose", region: "Western Slope", slug: "montrose", description: "Gateway to the Black Canyon." },
+    { name: "Littleton", region: "Metro", slug: "littleton", description: "Historic downtown charm." },
+    { name: "Englewood", region: "Metro", slug: "englewood", description: "Home to the 'Green Mile' on South Broadway." },
+    { name: "Red Rocks", region: "Metro", slug: "red-rocks", description: "World's best music venue. Morrison guide." },
+    { name: "Glenwood Springs", region: "Mountains", slug: "glenwood-springs", description: "Hot springs, vapor caves, and relaxation." },
+    { name: "Telluride", region: "Mountains", slug: "telluride", description: "Festival capital in a box canyon." },
+    { name: "Pagosa Springs", region: "Mountains", slug: "pagosa-springs", description: "Deepest hot springs in the world." },
+    { name: "Silverton", region: "Mountains", slug: "silverton", description: "High-altitude mining town adventure." },
   ];
 
+  const customCitySlugs = cities.map(c => c.slug);
+
   const consumptionRules = [
-    { icon: Home, title: "Private Residences", description: "Legal to consume on private property with owner's permission. This is the safest and most common option.", allowed: true },
-    { icon: Building, title: "Hotel Balconies", description: "Some 420-friendly hotels allow consumption on private balconies. Always verify with the property first.", allowed: true },
-    { icon: Ban, title: "Public Spaces", description: "Illegal to consume in public including parks, sidewalks, restaurants, and bars. $100+ fines apply.", allowed: false },
+    { icon: Home, title: "Private Residences", description: "Legal with owner's permission.", allowed: true },
+    { icon: Building, title: "Hotel Balconies", description: "If allowed by property rules.", allowed: true },
+    { icon: Ban, title: "Public Spaces", description: "Illegal in parks & sidewalks.", allowed: false },
   ];
 
   const travelTips = [
-    { 
-      title: "Packing & Transport", 
-      content: "Cannabis must remain in Colorado - you cannot legally transport it across state lines, even to other legal states. Store purchases in your trunk during travel within Colorado. Keep original dispensary packaging for proof of legal purchase."
-    },
-    { 
-      title: "Airport Safety", 
-      content: "Denver International Airport (DIA) is federal property. TSA can and will confiscate cannabis products. Amnesty boxes are available before security, but the safest approach is to consume or dispose of products before heading to the airport."
-    },
-    { 
-      title: "Dispensary Etiquette", 
-      content: "Bring valid government ID (21+). Most dispensaries are cash-only, though many have ATMs. Ask budtenders for recommendations - they're knowledgeable. First-time visitor discounts are common."
-    },
-    { 
-      title: "Best Time to Visit", 
-      content: "Spring and fall offer mild weather and smaller crowds. Ski season (November-April) is great for mountain town visits. 4/20 celebrations in Denver are legendary but expect crowds. Summer offers perfect conditions for outdoor activities."
-    },
+    { title: "Packing & Transport", content: "Cannabis must remain in Colorado. Keep it in the trunk while driving." },
+    { title: "Airport Safety", content: "DIA is federal property. Do not bring cannabis to the airport." },
+    { title: "Dispensary Etiquette", content: "Bring valid ID (21+). Cash is king." },
+    { title: "Best Time to Visit", content: "Spring/Fall for fewer crowds. Winter for skiing." },
   ];
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "TravelGuide",
-    "name": "Colorado Cannabis Travel Guide 2025",
-    "description": "Complete guide to cannabis travel in Colorado including legal information, 420-friendly accommodations, dispensaries, and travel tips.",
-    "url": "https://budquest.guide/usa/colorado",
-    "publisher": {
-      "@type": "Organization",
-      "name": "BudQuest",
-      "url": "https://budquest.guide"
-    },
-    "about": {
-      "@type": "Place",
-      "name": "Colorado",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "CO",
-        "addressCountry": "US"
-      }
-    },
-    "mentions": [
-      { "@type": "City", "name": "Denver, Colorado" },
-      { "@type": "City", "name": "Boulder, Colorado" },
-      { "@type": "City", "name": "Colorado Springs, Colorado" }
-    ],
-    "dateModified": new Date().toISOString().split('T')[0],
-    "inLanguage": "en-US"
-  };
+  // Filtering Logic
+  const filteredCities = cities.filter(city => {
+    const matchesSearch = city.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRegion = selectedRegion === "All" || city.region === selectedRegion;
+    return matchesSearch && matchesRegion;
+  });
 
-  const faqStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is cannabis legal in Colorado?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, recreational cannabis is legal in Colorado for adults 21 and older. You can possess up to 1 ounce (28 grams) and purchase from licensed dispensaries with valid government ID."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where can I consume cannabis in Colorado?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Cannabis consumption is only legal on private property with the owner's permission. Public consumption including parks, sidewalks, and restaurants is illegal and can result in fines of $100 or more."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I bring cannabis to Denver International Airport?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Denver International Airport is federal property where cannabis possession is prohibited. TSA will confiscate any cannabis products found. Amnesty boxes are available before security checkpoints."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I take cannabis from Colorado to another state?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Transporting cannabis across state lines is a federal crime, even between states where cannabis is legal. All cannabis purchased in Colorado must remain within state borders."
-        }
-      }
-    ]
-  };
-
-  // List of slugs that have custom root pages (e.g. /denver) to simplify routing logic
-  const customCitySlugs = [
-    'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
-    'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
-    'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
-    'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
-    'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
-    'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton'
-  ];
+  const regionTabs = ["All", "Metro", "Mountains", "Front Range", "Western Slope"];
 
   return (
     <>
       <Helmet>
-        <title>Colorado Cannabis Travel Guide 2025 | Legal Info, Dispensaries & 420 Hotels | BudQuest</title>
-        <meta name="description" content="Plan your Colorado cannabis vacation with BudQuest's complete 2025 guide. Find 420-friendly hotels, top Denver dispensaries, marijuana laws, possession limits, and expert travel tips." />
-        <meta name="keywords" content="Colorado cannabis travel, 420-friendly hotels Colorado, Denver dispensaries, Colorado marijuana laws 2025, cannabis tourism Colorado, weed legal Colorado, Boulder dispensaries, Colorado Springs cannabis" />
+        <title>Colorado Cannabis Travel Guide 2025 | BudQuest</title>
+        <meta name="description" content="Explore Colorado cannabis destinations. Denver, Boulder, Mountain towns, and more." />
         <link rel="canonical" href="https://budquest.guide/usa/colorado" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Colorado Cannabis Travel Guide 2025 | BudQuest" />
-        <meta property="og:description" content="Your complete guide to cannabis travel in Colorado. Find 420-friendly stays, top dispensaries, legal info, and travel tips." />
-        <meta property="og:url" content="https://budquest.guide/usa/colorado" />
-        <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://budquest.guide/dest-2.jpg" />
-        <meta property="og:site_name" content="BudQuest" />
-        <meta property="og:locale" content="en_US" />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Colorado Cannabis Travel Guide 2025 | BudQuest" />
-        <meta name="twitter:description" content="Complete Colorado cannabis travel guide with 420-friendly hotels, dispensaries, and legal information." />
-        <meta name="twitter:image" content="https://budquest.guide/dest-2.jpg" />
-        
-        {/* Additional SEO */}
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="BudQuest" />
-        <meta name="geo.region" content="US-CO" />
-        <meta name="geo.placename" content="Colorado" />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(faqStructuredData)}
-        </script>
       </Helmet>
 
       <Navigation />
       
       <main className="min-h-screen bg-background">
-        {/* Breadcrumb Navigation */}
-        <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-2 text-sm text-muted-foreground" itemScope itemType="https://schema.org/BreadcrumbList">
-            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link to="/" className="hover:text-accent transition-colors" itemProp="item">
-                <span itemProp="name">Home</span>
-              </Link>
-              <meta itemProp="position" content="1" />
-            </li>
+        <nav className="container mx-auto px-4 pt-20 pb-4">
+          <ol className="flex items-center gap-2 text-sm text-muted-foreground">
+            <li><Link to="/" className="hover:text-accent">Home</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link to="/usa" className="hover:text-accent transition-colors" itemProp="item">
-                <span itemProp="name">USA Guide</span>
-              </Link>
-              <meta itemProp="position" content="2" />
-            </li>
+            <li><Link to="/usa" className="hover:text-accent">USA Guide</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <span className="text-foreground font-medium" itemProp="name">Colorado</span>
-              <meta itemProp="position" content="3" />
-            </li>
+            <li className="text-foreground">Colorado</li>
           </ol>
         </nav>
 
         {/* HERO SECTION */}
-        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-          {/* Hero Background Image */}
+        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src={coloradoHeroImage} 
-              alt="Colorado Rocky Mountains at sunset" 
-              className="w-full h-full object-cover"
-            />
+            <img src={coloradoHeroImage} alt="Colorado" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
           </div>
-          
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30 inline-flex items-center whitespace-nowrap">
-                <Cannabis className="w-4 h-4 mr-2 flex-shrink-0" />
-                Colorado Cannabis Travel Guide 2025
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
+                <Cannabis className="w-4 h-4 mr-2" /> Colorado Cannabis Guide 2025
               </Badge>
-              
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Your Complete Colorado Cannabis Travel Guide
-                </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white">
+                Explore Colorful Colorado
               </h1>
-              
-              <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-                Colorado was the first state to legalize recreational cannabis in 2012. Discover verified <Link to="/hotels" className="text-accent hover:underline">420-friendly accommodations</Link>, top-rated <Link to="/dispensary" className="text-accent hover:underline">dispensaries</Link>, current marijuana laws, possession limits, and expert travel tips for your cannabis vacation.
-              </p>
-
-              {/* Quick Navigation CTA */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                  <a href="#dispensaries">
-                    <Store className="w-5 h-5 mr-2" />
-                    Find Dispensaries
-                  </a>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <a href="#rentals">
-                    <Bed className="w-5 h-5 mr-2" />
-                    420-Friendly Stays
-                  </a>
-                </Button>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent" />
-                  <span>Recreational since 2012</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-accent" />
-                  <span>Verified information</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-accent" />
-                  <span>Updated December 2024</span>
-                </div>
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90"><a href="#cities">Explore Cities</a></Button>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* QUICK STATS SECTION */}
-        <section className="py-16 bg-card/30 border-y border-border/30">
+        {/* STATS */}
+        <section className="py-12 bg-card/30 border-y border-border/30">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="bg-card/50 border-border/30 text-center p-4 md:p-6 hover:border-accent/50 transition-colors">
-                    <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent" />
-                    <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </Card>
-                </motion.div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {stats.map((stat) => (
+                <Card key={stat.label} className="bg-card/50 border-border/30 text-center p-4">
+                  <stat.icon className="w-8 h-8 mx-auto mb-2 text-accent" />
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </Card>
               ))}
             </div>
           </div>
         </section>
 
-        {/* COLORADO LEGAL STATUS SECTION */}
-        <section className="py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Colorado Cannabis Laws
-                </span>
-              </h2>
-              <p className="text-muted-foreground">What You Need to Know Before You Visit</p>
-            </motion.div>
-
-            <Card className="bg-card/50 border-border/30 overflow-hidden">
-              <CardHeader className="bg-accent/10 border-b border-border/30">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <CardTitle className="text-xl">Legal Status</CardTitle>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-sm px-4 py-1">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    Recreational Legal
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                        <Cannabis className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Possession Limit</h4>
-                        <p className="text-sm text-muted-foreground">Up to 1 ounce (28g) for adults 21+</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                        <Home className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Where to Consume</h4>
-                        <p className="text-sm text-muted-foreground">Private property only with owner's permission</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                        <Shield className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Age Requirement</h4>
-                        <p className="text-sm text-muted-foreground">Must be 21+ with valid government ID</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
-                        <Car className="w-5 h-5 text-destructive" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Transport Rules</h4>
-                        <p className="text-sm text-muted-foreground">Cannot take across state lines - even to legal states</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
-                        <Plane className="w-5 h-5 text-destructive" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Airport Rules</h4>
-                        <p className="text-sm text-muted-foreground">Federal jurisdiction - DO NOT bring to airport</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                        <Clock className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">Store Hours</h4>
-                        <p className="text-sm text-muted-foreground">8 AM - 12 AM (varies by municipality)</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Warning Box */}
-                <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                  <div className="flex gap-3">
-                    <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-semibold text-amber-400 mb-1">Federal vs State Law</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Cannabis remains illegal under federal law. Federal properties (airports, national parks, federal buildings) 
-                        are governed by federal law where cannabis possession is prohibited. Always verify local rules before consuming.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* FEATURED 420-FRIENDLY RENTALS */}
-        <section id="rentals" className="py-20 bg-card/30">
+        {/* CITY GUIDES WITH SEARCH AND FILTER */}
+        <section id="cities" className="py-20">
           <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  420-Friendly Colorado Accommodations
-                </span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Finding cannabis-friendly lodging in Colorado is essential since public consumption is illegal. 
-                These verified properties allow on-site consumption, giving you a legal place to enjoy your purchases.
-              </p>
-            </motion.div>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-4">Cannabis Destinations</h2>
+              <p className="text-muted-foreground">Find your perfect 420-friendly city.</p>
+            </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {rentals.length > 0 ? rentals.map((rental, index) => (
-                <motion.div
-                  key={rental.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Link to={`/hotels/${rental.slug}`}>
-                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
-                      <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
-                          alt={`${rental.name} - 420 friendly accommodation in Colorado`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <Badge className="absolute top-3 right-3 bg-accent/90 text-accent-foreground">
-                          420-Friendly
-                        </Badge>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
-                          {rental.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-3">{rental.address || "Colorado"}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-gold fill-gold" />
-                            <span className="text-sm font-medium">{rental.rating || "4.5"}</span>
+            {/* Search and Filters */}
+            <div className="max-w-4xl mx-auto mb-10 space-y-6">
+              {/* Search Bar */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <Input 
+                  placeholder="Search cities (e.g. 'Aspen', 'Denver')..." 
+                  className="pl-10 h-12 text-lg bg-card/50"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
+              {/* Regional Tabs (Scrollable on mobile) */}
+              <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                {regionTabs.map(region => (
+                  <Button
+                    key={region}
+                    variant={selectedRegion === region ? "default" : "outline"}
+                    onClick={() => setSelectedRegion(region)}
+                    className="whitespace-nowrap rounded-full"
+                    size="sm"
+                  >
+                    {region}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* City Grid - 2 columns on mobile, 4 on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {filteredCities.length > 0 ? (
+                filteredCities.map((city) => (
+                  <motion.div
+                    key={city.slug}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    <Link to={customCitySlugs.includes(city.slug) ? `/${city.slug}` : `/usa/colorado/${city.slug}`}>
+                      <Card className="h-full bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 group">
+                        <CardContent className="p-4 md:p-6 flex flex-col h-full">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                              <MapPin className="w-5 h-5 text-accent" />
+                            </div>
+                            <Badge variant="outline" className="text-[10px] md:text-xs">{city.region}</Badge>
                           </div>
-                          <span className="text-sm text-muted-foreground">{(rental.amenities as { price_range?: string } | null)?.price_range || "$$"}</span>
-                        </div>
-                        {rental.amenities && (
-                          <div className="flex gap-2 mt-3">
-                            {(rental.amenities as { smoking?: boolean }).smoking && <Badge variant="outline" className="text-xs">Smoking</Badge>}
-                            {(rental.amenities as { vaping?: boolean }).vaping && <Badge variant="outline" className="text-xs">Vaping</Badge>}
-                            {(rental.amenities as { edibles?: boolean }).edibles && <Badge variant="outline" className="text-xs">Edibles</Badge>}
+                          
+                          <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+                            {city.name}
+                          </h3>
+                          <p className="text-xs md:text-sm text-muted-foreground line-clamp-3 mb-4 flex-grow">
+                            {city.description}
+                          </p>
+                          <div className="text-accent text-xs font-medium flex items-center mt-auto">
+                            View Guide <ArrowRight className="w-3 h-3 ml-1" />
                           </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
-              )) : (
-                // Fallback cards
-                [1, 2, 3].map((i) => (
-                  <Card key={i} className="bg-card/50 border-border/30 overflow-hidden">
-                    <div className="aspect-video bg-muted animate-pulse" />
-                    <CardContent className="p-4">
-                      <div className="h-5 bg-muted rounded animate-pulse mb-2" />
-                      <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
-                    </CardContent>
-                  </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </motion.div>
                 ))
+              ) : (
+                <div className="col-span-full text-center py-10 text-muted-foreground">
+                  No cities found matching your search.
+                </div>
               )}
             </div>
-
-            <div className="text-center">
-              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
-                <Link to="/hotels">
-                  View All 420-Friendly Rentals
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-            </div>
           </div>
         </section>
 
-        {/* COLORADO CITIES SECTION */}
-        <section className="py-20">
+        {/* DISPENSARIES */}
+        <section className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Explore Colorado's Cannabis Destinations
-                </span>
-              </h2>
-              <p className="text-muted-foreground">City-by-city guides for cannabis travelers</p>
-            </motion.div>
-
+            <h2 className="text-3xl font-bold mb-8 text-center">Featured Dispensaries</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {cities.map((city, index) => (
-                <motion.div
-                  key={city.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Link 
-                    to={customCitySlugs.includes(city.slug) ? `/${city.slug}` : `/usa/colorado/${city.slug}`}
-                  >
-                    <Card className="bg-card/50 border-border/30 h-full hover:border-accent/50 transition-all group">
-                      <CardContent className="p-6">
-                        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-                          <MapPin className="w-6 h-6 text-accent" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
-                          {city.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          {city.description}
-                        </p>
-                        <span className="text-accent text-sm font-medium inline-flex items-center">
-                          Full Guide <ArrowRight className="w-4 h-4 ml-1" />
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* TOP DISPENSARIES SECTION */}
-        <section id="dispensaries" className="py-20 bg-card/30">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Licensed Colorado Dispensaries
-                </span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Colorado has over 500 licensed dispensaries. Browse our curated selection of top-rated recreational 
-                and medical dispensaries across <Link to="/denver" className="text-accent hover:underline">Denver</Link>, 
-                <Link to="/boulder" className="text-accent hover:underline"> Boulder</Link>, and beyond.
-              </p>
-            </motion.div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {dispensaries.length > 0 ? dispensaries.map((dispensary, index) => (
-                <motion.div
-                  key={dispensary.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Link to={`/dispensary/${dispensary.slug}`}>
-                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
-                      <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={dispensary.image || "/dispensaries/native-roots-denver.png"} 
-                          alt={`${dispensary.name} dispensary in ${dispensary.city}, Colorado`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-1 group-hover:text-accent transition-colors line-clamp-1">
-                          {dispensary.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-2">{dispensary.city}, {dispensary.state}</p>
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-gold fill-gold" />
-                            <span className="text-sm font-medium">{dispensary.rating}</span>
-                          </div>
-                          <div className="flex gap-1">
-                            {dispensary.is_recreational && <Badge variant="outline" className="text-xs text-green-400 border-green-400/30">Rec</Badge>}
-                            {dispensary.is_medical && <Badge variant="outline" className="text-xs text-blue-400 border-blue-400/30">Med</Badge>}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
-              )) : (
-                // Fallback loading cards
-                [1, 2, 3, 4].map((i) => (
-                  <Card key={i} className="bg-card/50 border-border/30 overflow-hidden">
-                    <div className="aspect-video bg-muted animate-pulse" />
+              {dispensaries.map((d) => (
+                <Link key={d.id} to={`/dispensary/${d.slug}`}>
+                  <Card className="h-full hover:border-accent/50 transition-all">
+                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
+                      <img src={d.image || "/dispensaries/native-roots-denver.png"} alt={d.name} className="w-full h-full object-cover"/>
+                    </div>
                     <CardContent className="p-4">
-                      <div className="h-5 bg-muted rounded animate-pulse mb-2" />
-                      <div className="h-4 bg-muted rounded animate-pulse w-2/3" />
+                      <h3 className="font-bold truncate">{d.name}</h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {d.rating} • {d.city}
+                      </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
-            </div>
-
-            <div className="text-center">
-              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
-                <Link to="/dispensary">
-                  Browse All Dispensaries
-                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
-              </Button>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Button asChild variant="outline"><Link to="/dispensary">View All Dispensaries</Link></Button>
             </div>
           </div>
         </section>
 
-        {/* CONSUMPTION RULES SECTION */}
+        {/* RENTALS */}
         <section className="py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Where Can You Actually Smoke?
-                </span>
-              </h2>
-              <p className="text-muted-foreground">Understanding Colorado's consumption laws</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {consumptionRules.map((rule, index) => (
-                <motion.div
-                  key={rule.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className={`bg-card/50 h-full ${rule.allowed ? 'border-green-500/30' : 'border-destructive/30'}`}>
-                    <CardContent className="p-6 text-center">
-                      <div className={`w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center ${rule.allowed ? 'bg-green-500/10' : 'bg-destructive/10'}`}>
-                        <rule.icon className={`w-7 h-7 ${rule.allowed ? 'text-green-400' : 'text-destructive'}`} />
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">420-Friendly Stays</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {rentals.map((r) => (
+                <Link key={r.id} to={`/hotels/${r.slug}`}>
+                  <Card className="h-full hover:border-accent/50 transition-all">
+                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
+                      <img src={r.images?.[0] || "/dest-colorado-ski.jpg"} alt={r.name} className="w-full h-full object-cover"/>
+                      <Badge className="absolute top-2 right-2 bg-green-500 text-white">420 Friendly</Badge>
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="font-bold truncate">{r.name}</h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {r.rating}
                       </div>
-                      <div className="mb-2">
-                        <Badge className={rule.allowed ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-destructive/20 text-destructive border-destructive/30'}>
-                          {rule.allowed ? 'Allowed' : 'Prohibited'}
-                        </Badge>
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{rule.title}</h3>
-                      <p className="text-sm text-muted-foreground">{rule.description}</p>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* TRAVEL TIPS SECTION */}
-        <section className="py-20 bg-card/30">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Colorado Cannabis Travel Tips
-                </span>
-              </h2>
-              <p className="text-muted-foreground">Essential information for first-time visitors</p>
-            </motion.div>
-
-            <Accordion type="single" collapsible className="space-y-4">
-              {travelTips.map((tip, index) => (
-                <motion.div
-                  key={tip.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <AccordionItem value={`item-${index}`} className="bg-card/50 border border-border/30 rounded-lg overflow-hidden px-0">
-                    <AccordionTrigger className="px-6 hover:no-underline hover:bg-accent/5">
-                      <div className="flex items-center gap-3 text-left">
-                        <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                          <Info className="w-4 h-4 text-accent" />
-                        </div>
-                        <span className="font-semibold">{tip.title}</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-6 pb-4">
-                      <p className="text-muted-foreground pl-11">{tip.content}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                </motion.div>
-              ))}
-            </Accordion>
-          </div>
-        </section>
-
-        {/* PARTNER SHOWCASE */}
-        <section className="py-16">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm text-muted-foreground mb-6">Trusted Partners</p>
-            <div className="flex flex-wrap justify-center gap-8 opacity-60">
-              <span className="text-lg font-semibold text-muted-foreground">Colorado Cannabis Tours</span>
-              <span className="text-lg font-semibold text-muted-foreground">Bud & Breakfast</span>
-              <span className="text-lg font-semibold text-muted-foreground">Kushkations</span>
-              <span className="text-lg font-semibold text-muted-foreground">Arrowhead Manor</span>
+            <div className="text-center mt-8">
+              <Button asChild variant="outline"><Link to="/hotels">View All Rentals</Link></Button>
             </div>
           </div>
         </section>
 
-        {/* BLOG POSTS SECTION */}
+        {/* RULES & TIPS */}
         <section className="py-20 bg-card/30">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Latest Colorado Travel Guides
-                </span>
-              </h2>
-              <p className="text-muted-foreground">Tips and insights for your cannabis trip</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              {blogPosts.length > 0 ? blogPosts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Link to={`/blog/${post.slug}`}>
-                    <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
-                      <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={post.image_url} 
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <Badge className="absolute top-3 left-3 bg-background/80">{post.category}</Badge>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
-              )) : (
-                <div className="col-span-3 text-center py-12">
-                  <p className="text-muted-foreground">No Colorado-specific articles yet. Check back soon!</p>
-                  <Button asChild variant="outline" className="mt-4">
-                    <Link to="/blog">Browse All Articles</Link>
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            {blogPosts.length > 0 && (
-              <div className="text-center">
-                <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <Link to="/blog">
-                    View All Articles
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
+          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Consumption Rules</h2>
+              <div className="space-y-4">
+                {consumptionRules.map((rule) => (
+                  <Card key={rule.title} className="p-4 flex gap-4 items-start">
+                    <rule.icon className={`w-6 h-6 shrink-0 ${rule.allowed ? 'text-green-500' : 'text-red-500'}`} />
+                    <div>
+                      <h3 className="font-bold">{rule.title}</h3>
+                      <p className="text-sm text-muted-foreground">{rule.description}</p>
+                    </div>
+                  </Card>
+                ))}
               </div>
-            )}
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Travel Tips</h2>
+              <Accordion type="single" collapsible>
+                {travelTips.map((tip, i) => (
+                  <AccordionItem key={i} value={`tip-${i}`}>
+                    <AccordionTrigger>{tip.title}</AccordionTrigger>
+                    <AccordionContent>{tip.content}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </section>
 
-        {/* NEWSLETTER SECTION */}
+        {/* NEWSLETTER */}
         <section className="py-20">
-          <div className="container mx-auto px-4">
-            <Card className="bg-gradient-to-br from-accent/10 via-card to-accent/5 border-accent/30 max-w-3xl mx-auto">
-              <CardContent className="p-8 md:p-12 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
-                  <Mail className="w-8 h-8 text-accent" />
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Colorado Cannabis Travel Newsletter
-                </h2>
-                <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-                  Get exclusive Colorado travel tips, new dispensary openings, 420-friendly rental deals, 
-                  and law updates delivered to your inbox. Join thousands of cannabis travelers.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={footerEmail}
-                    onChange={(e) => setFooterEmail(e.target.value)}
-                    className="bg-background/50 border-border/50 h-12"
-                  />
-                  <Button 
-                    onClick={handleNewsletterSignup}
-                    className="h-12 px-6 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap"
-                  >
-                    Subscribe
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-4">
-                  Weekly updates • Exclusive deals • Unsubscribe anytime
-                </p>
-                
-                {/* Internal Links */}
-                <div className="mt-8 pt-6 border-t border-border/30">
-                  <p className="text-sm text-muted-foreground mb-3">Explore more cannabis travel guides:</p>
-                  <div className="flex flex-wrap justify-center gap-4 text-sm">
-                    <Link to="/usa" className="text-accent hover:underline">USA Guide</Link>
-                    <Link to="/world" className="text-accent hover:underline">World Guide</Link>
-                    <Link to="/blog" className="text-accent hover:underline">Travel Blog</Link>
-                    <Link to="/dispensary" className="text-accent hover:underline">All Dispensaries</Link>
-                    <Link to="/hotels" className="text-accent hover:underline">420 Rentals</Link>
-                  </div>
-                </div>
-              </CardContent>
+          <div className="container mx-auto px-4 max-w-2xl text-center">
+            <Card className="p-8 bg-accent/5 border-accent/20">
+              <Mail className="w-10 h-10 text-accent mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-2">Join the Cannabis Travel Club</h2>
+              <p className="text-muted-foreground mb-6">Get weekly guides, deals, and legal updates.</p>
+              <div className="flex gap-2">
+                <Input placeholder="Enter email" value={footerEmail} onChange={(e) => setFooterEmail(e.target.value)} />
+                <Button onClick={handleNewsletterSignup}>Subscribe</Button>
+              </div>
             </Card>
           </div>
         </section>
       </main>
-
       <Footer />
     </>
   );
