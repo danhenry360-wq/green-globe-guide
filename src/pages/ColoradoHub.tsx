@@ -15,7 +15,7 @@ import {
   MapPin, Star, CheckCircle, AlertTriangle, 
   Plane, Home, Building, Cannabis, Car, Clock, Shield, 
   Mail, ArrowRight, Bed, Store, Mountain,
-  Info, Ban, ChevronRight, Search, Filter
+  Info, Ban, ChevronRight, Search
 } from "lucide-react";
 import coloradoHeroImage from "@/assets/colorado-hub-hero.jpg";
 
@@ -58,7 +58,7 @@ const ColoradoHub = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // New State for Search & Filtering
+  // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("All");
 
@@ -66,14 +66,17 @@ const ColoradoHub = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // Fetch top 4 Colorado dispensaries
       const { data: dispData } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
         .limit(4);
+      
       if (dispData) setDispensaries(dispData);
 
+      // Fetch top 4 Colorado rentals
       const { data: rentalData } = await supabase
         .from('hotels')
         .select('*')
@@ -81,8 +84,10 @@ const ColoradoHub = () => {
         .ilike('address', '%Colorado%')
         .order('rating', { ascending: false })
         .limit(4);
+      
       if (rentalData) setRentals(rentalData);
 
+      // Fetch Colorado-related blog posts
       const { data: blogData } = await supabase
         .from('blog_posts')
         .select('id, title, slug, excerpt, image_url, category')
@@ -90,24 +95,53 @@ const ColoradoHub = () => {
         .ilike('title', '%colorado%')
         .order('published_at', { ascending: false })
         .limit(6);
+      
       if (blogData) setBlogPosts(blogData);
       setLoading(false);
     };
+
     fetchData();
   }, []);
 
   const handleNewsletterSignup = async () => {
     if (!footerEmail || !footerEmail.includes('@')) {
-      toast({ title: "Invalid Email", description: "Please enter a valid email.", variant: "destructive" });
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
       return;
     }
+    
     try {
-      const { error } = await supabase.from('newsletter_subscribers').insert({ email: footerEmail, source_page: '/usa/colorado' });
-      if (error) throw error;
-      toast({ title: "Subscribed!", description: "Welcome to the BudQuest community." });
+      const { error } = await supabase.from('newsletter_subscribers').insert({
+        email: footerEmail,
+        source_page: '/usa/colorado'
+      });
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Already Subscribed",
+            description: "This email is already on our list!",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Welcome to the BudQuest community!",
+          description: "You'll receive exclusive Colorado travel tips and deals.",
+        });
+      }
       setFooterEmail("");
     } catch (error) {
-      toast({ title: "Error", description: "Could not subscribe.", variant: "destructive" });
+      console.error("Newsletter signup error:", error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -118,7 +152,6 @@ const ColoradoHub = () => {
     { icon: Mountain, label: "Cities Covered", value: "29+" },
   ];
 
-  // Added 'region' property to help organization
   const cities = [
     { name: "Denver", region: "Metro", slug: "denver", description: "The Mile High City - Colorado's cannabis capital." },
     { name: "Boulder", region: "Front Range", slug: "boulder", description: "Progressive college town known for craft cannabis." },
@@ -154,16 +187,28 @@ const ColoradoHub = () => {
   const customCitySlugs = cities.map(c => c.slug);
 
   const consumptionRules = [
-    { icon: Home, title: "Private Residences", description: "Legal with owner's permission.", allowed: true },
-    { icon: Building, title: "Hotel Balconies", description: "If allowed by property rules.", allowed: true },
-    { icon: Ban, title: "Public Spaces", description: "Illegal in parks & sidewalks.", allowed: false },
+    { icon: Home, title: "Private Residences", description: "Legal to consume on private property with owner's permission.", allowed: true },
+    { icon: Building, title: "Hotel Balconies", description: "Only if explicitly allowed by the property rules.", allowed: true },
+    { icon: Ban, title: "Public Spaces", description: "Illegal in parks, sidewalks, bars, and restaurants.", allowed: false },
   ];
 
   const travelTips = [
-    { title: "Packing & Transport", content: "Cannabis must remain in Colorado. Keep it in the trunk while driving." },
-    { title: "Airport Safety", content: "DIA is federal property. Do not bring cannabis to the airport." },
-    { title: "Dispensary Etiquette", content: "Bring valid ID (21+). Cash is king." },
-    { title: "Best Time to Visit", content: "Spring/Fall for fewer crowds. Winter for skiing." },
+    { 
+      title: "Packing & Transport", 
+      content: "Cannabis must remain in Colorado - you cannot legally transport it across state lines. Store purchases in your trunk."
+    },
+    { 
+      title: "Airport Safety", 
+      content: "DIA is federal property. Do not bring cannabis to the airport. Amnesty boxes are available at entry."
+    },
+    { 
+      title: "Dispensary Etiquette", 
+      content: "Bring valid government ID (21+). Most dispensaries are cash-only, though many have ATMs on site."
+    },
+    { 
+      title: "Best Time to Visit", 
+      content: "Spring and fall offer mild weather and smaller crowds. Ski season (Nov-April) is great for mountains."
+    },
   ];
 
   // Filtering Logic
@@ -186,6 +231,7 @@ const ColoradoHub = () => {
       <Navigation />
       
       <main className="min-h-screen bg-background">
+        {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
             <li><Link to="/" className="hover:text-accent">Home</Link></li>
@@ -242,7 +288,6 @@ const ColoradoHub = () => {
 
             {/* Search and Filters */}
             <div className="max-w-4xl mx-auto mb-10 space-y-6">
-              {/* Search Bar */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input 
@@ -253,7 +298,6 @@ const ColoradoHub = () => {
                 />
               </div>
 
-              {/* Regional Tabs (Scrollable on mobile) */}
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 {regionTabs.map(region => (
                   <Button
@@ -269,8 +313,8 @@ const ColoradoHub = () => {
               </div>
             </div>
 
-            {/* City Grid - 2 columns on mobile, 4 on desktop */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {/* City Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
                   <motion.div
@@ -283,13 +327,13 @@ const ColoradoHub = () => {
                       <Card className="h-full bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 group">
                         <CardContent className="p-4 md:p-6 flex flex-col h-full">
                           <div className="flex items-start justify-between mb-3">
-                            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                              <MapPin className="w-5 h-5 text-accent" />
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                              <MapPin className="w-4 h-4 md:w-5 md:h-5 text-accent" />
                             </div>
                             <Badge variant="outline" className="text-[10px] md:text-xs">{city.region}</Badge>
                           </div>
                           
-                          <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+                          <h3 className="text-sm md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors line-clamp-1">
                             {city.name}
                           </h3>
                           <p className="text-xs md:text-sm text-muted-foreground line-clamp-3 mb-4 flex-grow">
@@ -312,21 +356,27 @@ const ColoradoHub = () => {
           </div>
         </section>
 
-        {/* DISPENSARIES */}
-        <section className="py-20 bg-card/30">
+        {/* DISPENSARIES - UPDATED FOR MOBILE */}
+        <section id="dispensaries" className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Featured Dispensaries</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Dispensaries</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {dispensaries.map((d) => (
                 <Link key={d.id} to={`/dispensary/${d.slug}`}>
                   <Card className="h-full hover:border-accent/50 transition-all">
-                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
-                      <img src={d.image || "/dispensaries/native-roots-denver.png"} alt={d.name} className="w-full h-full object-cover"/>
+                    <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
+                      <img 
+                        src={d.image || "/dispensaries/native-roots-denver.png"} 
+                        alt={d.name} 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-bold truncate">{d.name}</h3>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {d.rating} • {d.city}
+                    <CardContent className="p-3 md:p-4">
+                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-1">{d.name}</h3>
+                      <div className="flex flex-wrap items-center gap-1 text-xs md:text-sm text-muted-foreground">
+                        <span className="flex items-center"><Star className="w-3 h-3 text-yellow-500 fill-yellow-500 mr-0.5" /> {d.rating}</span>
+                        <span className="hidden md:inline">•</span>
+                        <span className="line-clamp-1">{d.city}</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -339,21 +389,25 @@ const ColoradoHub = () => {
           </div>
         </section>
 
-        {/* RENTALS */}
-        <section className="py-20">
+        {/* RENTALS - UPDATED FOR MOBILE */}
+        <section id="rentals" className="py-20">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">420-Friendly Stays</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">420-Friendly Stays</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {rentals.map((r) => (
                 <Link key={r.id} to={`/hotels/${r.slug}`}>
                   <Card className="h-full hover:border-accent/50 transition-all">
-                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
-                      <img src={r.images?.[0] || "/dest-colorado-ski.jpg"} alt={r.name} className="w-full h-full object-cover"/>
-                      <Badge className="absolute top-2 right-2 bg-green-500 text-white">420 Friendly</Badge>
+                    <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
+                      <img 
+                        src={r.images?.[0] || "/dest-colorado-ski.jpg"} 
+                        alt={r.name} 
+                        className="w-full h-full object-cover"
+                      />
+                      <Badge className="absolute top-2 right-2 bg-green-500 text-white text-[10px] px-1.5 py-0.5 md:text-xs md:px-2.5 md:py-0.5">420 Friendly</Badge>
                     </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-bold truncate">{r.name}</h3>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <CardContent className="p-3 md:p-4">
+                      <h3 className="font-bold text-sm md:text-base line-clamp-2 leading-tight mb-1">{r.name}</h3>
+                      <div className="flex items-center gap-1 text-xs md:text-sm text-muted-foreground">
                         <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {r.rating}
                       </div>
                     </CardContent>
@@ -405,7 +459,7 @@ const ColoradoHub = () => {
               <Mail className="w-10 h-10 text-accent mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Join the Cannabis Travel Club</h2>
               <p className="text-muted-foreground mb-6">Get weekly guides, deals, and legal updates.</p>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Input placeholder="Enter email" value={footerEmail} onChange={(e) => setFooterEmail(e.target.value)} />
                 <Button onClick={handleNewsletterSignup}>Subscribe</Button>
               </div>
