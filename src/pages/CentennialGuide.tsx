@@ -19,7 +19,7 @@ import {
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
   AlertTriangle, Ban, Mail, Download, 
-  Compass, ShoppingBag
+  Compass, ShoppingBag, TrainFront
 } from "lucide-react";
 
 interface Dispensary {
@@ -246,7 +246,7 @@ const CentennialGuide = () => {
     {
       name: "Pindustry",
       icon: Beer,
-      description: " entertainment venue with bowling, arcade games, and live music.",
+      description: "Entertainment venue with bowling, arcade games, and live music.",
       cannabisTip: "Loud, fun atmosphere. Perfect for a night out with friends.",
       address: "7939 E Arapahoe Rd"
     }
