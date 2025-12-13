@@ -144,7 +144,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "18+" },
+    { icon: Mountain, label: "Cities Covered", value: "20+" },
   ];
 
   const cities = [
@@ -166,6 +166,11 @@ const ColoradoHub = () => {
     { name: "Westminster", slug: "westminster", description: "The Butterfly City - Scenic views, the Butterfly Pavilion, and easy access to Boulder and Denver." },
     { name: "Arvada", slug: "arvada", description: "Historic Olde Town charm meets modern cannabis culture, connected by the G-Line commuter rail." },
     { name: "Centennial", slug: "centennial", description: "South Metro hub featuring Topgolf, Cherry Creek State Park, and premier shopping destinations." },
+    { name: "Grand Junction", slug: "grand-junction", description: "Wine country meets weed country on the Western Slope. Explore the Colorado National Monument." },
+    { name: "Durango", slug: "durango", description: "Historic railroad town with Southwest vibes, river adventures, and a thriving cannabis scene." },
+    { name: "Fort Morgan", slug: "fort-morgan", description: "Plains hub near Log Lane Village's 'Green Mile', offering easy I-76 access." },
+    { name: "Montrose", slug: "montrose", description: "Outdoor adventure hub and gateway to the Black Canyon of the Gunnison." },
+    { name: "Littleton", slug: "littleton", description: "Historic downtown charm with easy access to nearby recreational dispensaries." },
   ];
 
   const consumptionRules = [
@@ -266,7 +271,8 @@ const ColoradoHub = () => {
     'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
     'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
     'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
-    'westminster', 'arvada', 'centennial'
+    'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
+    'fort-morgan', 'montrose', 'littleton'
   ];
 
   return (
