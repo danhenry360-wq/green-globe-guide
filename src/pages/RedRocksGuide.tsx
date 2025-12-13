@@ -19,7 +19,7 @@ import {
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
   AlertTriangle, Ban, Mail, Download, 
-  Compass, Bone
+  Compass, Bone, Waves
 } from "lucide-react";
 
 interface Dispensary {
