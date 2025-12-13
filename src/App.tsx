@@ -23,6 +23,13 @@ import ColoradoSpringsGuide from "./pages/ColoradoSpringsGuide";
 import FortCollinsGuide from "./pages/FortCollinsGuide";
 import ThorntonGuide from "./pages/ThorntonGuide";
 import AuroraGuide from "./pages/AuroraGuide";
+
+/* --- NEW PAGES ADDED HERE --- */
+import LakewoodGuide from "./pages/LakewoodGuide";
+import LongmontGuide from "./pages/LongmontGuide";
+import PuebloGuide from "./pages/PuebloGuide";
+/* ---------------------------- */
+
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
@@ -133,8 +140,13 @@ function App() {
               <Route path="/fort-collins" element={<FortCollinsGuide />} />
               <Route path="/thornton" element={<ThorntonGuide />} />
               <Route path="/aurora" element={<AuroraGuide />} />
+              
+              {/* --- NEW SHORT PATHS --- */}
+              <Route path="/lakewood" element={<LakewoodGuide />} />
+              <Route path="/longmont" element={<LongmontGuide />} />
+              <Route path="/pueblo" element={<PuebloGuide />} />
 
-              {/* Custom City Guides - Nested Paths (Fixes your issue!) */}
+              {/* Custom City Guides - Nested Paths */}
               <Route path="/usa/colorado/fort-collins" element={<FortCollinsGuide />} />
               <Route path="/usa/colorado/denver" element={<DenverGuide />} />
               <Route path="/usa/colorado/boulder" element={<BoulderGuide />} />
@@ -142,6 +154,11 @@ function App() {
               <Route path="/usa/colorado/colorado-springs" element={<ColoradoSpringsGuide />} />
               <Route path="/usa/colorado/thornton" element={<ThorntonGuide />} />
               <Route path="/usa/colorado/aurora" element={<AuroraGuide />} />
+
+              {/* --- NEW NESTED PATHS --- */}
+              <Route path="/usa/colorado/lakewood" element={<LakewoodGuide />} />
+              <Route path="/usa/colorado/longmont" element={<LongmontGuide />} />
+              <Route path="/usa/colorado/pueblo" element={<PuebloGuide />} />
 
               {/* Dynamic Fallbacks */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
