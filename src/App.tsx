@@ -46,7 +46,10 @@ import TellurideGuide from "./pages/TellurideGuide";
 import PagosaSpringsGuide from "./pages/PagosaSpringsGuide";
 import SilvertonGuide from "./pages/SilvertonGuide";
 import OurayGuide from "./pages/OurayGuide";
-import BreckenridgeGuide from "./pages/BreckenridgeGuide"; // Added
+import BreckenridgeGuide from "./pages/BreckenridgeGuide";
+import CommerceCityGuide from "./pages/CommerceCityGuide";
+import FederalHeightsGuide from "./pages/FederalHeightsGuide";
+import NorthglennGuide from "./pages/NorthglennGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -182,6 +185,9 @@ function App() {
               <Route path="/silverton" element={<SilvertonGuide />} />
               <Route path="/ouray" element={<OurayGuide />} />
               <Route path="/breckenridge" element={<BreckenridgeGuide />} />
+              <Route path="/commerce-city" element={<CommerceCityGuide />} />
+              <Route path="/federal-heights" element={<FederalHeightsGuide />} />
+              <Route path="/northglenn" element={<NorthglennGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
