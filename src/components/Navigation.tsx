@@ -84,14 +84,6 @@ export const Navigation = () => {
             <Link to="/blog" className="text-sm text-foreground hover:text-accent transition-colors">
               Blog
             </Link>
-            <Link to="/about" className="text-sm text-foreground hover:text-accent transition-colors">
-              About
-            </Link>
-            <Link to="/contact">
-              <Button variant="outline" className="border-border hover:bg-muted">
-                Contact Us
-              </Button>
-            </Link>
             
             {/* Auth Section */}
             {!loading && (
@@ -179,12 +171,6 @@ export const Navigation = () => {
             </Link>
             <Link to="/blog" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Blog
-            </Link>
-            <Link to="/about" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
-              About
-            </Link>
-            <Link to="/contact" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
-              Contact Us
             </Link>
             
             {/* Mobile Auth */}
