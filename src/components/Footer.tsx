@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { MapPin, Scale, Info, Globe2, Plane, Building2, BookOpen, Mail, Users } from "lucide-react";
+import { MapPin, Scale, Info, Globe2, Plane, Building2, BookOpen, Mail, Users, Mountain } from "lucide-react";
 
 export const Footer = () => {
   return (
     <footer className="border-t border-gray-800 bg-black mt-20 text-white">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
           {/* Column 1: Navigation */}
           <div>
             <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
@@ -27,7 +27,34 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2: Company */}
+          {/* Column 2: Colorado Cities */}
+          <div>
+            <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
+              <Mountain className="w-5 h-5 mr-2" /> Colorado
+            </h4>
+            <div className="flex flex-col gap-3">
+              <Link to="/denver" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Denver
+              </Link>
+              <Link to="/boulder" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Boulder
+              </Link>
+              <Link to="/aspen" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Aspen
+              </Link>
+              <Link to="/colorado-springs" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Colorado Springs
+              </Link>
+              <Link to="/aurora" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Aurora
+              </Link>
+              <Link to="/fort-collins" className="text-sm text-gray-400 hover:text-green-400 transition-colors">
+                Fort Collins
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 3: Company */}
           <div>
             <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
               <Users className="w-5 h-5 mr-2" /> Company
@@ -45,7 +72,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Column 3: Legal */}
+          {/* Column 4: Legal */}
           <div>
             <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
               <Scale className="w-5 h-5 mr-2" /> Legal
@@ -63,7 +90,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Column 4: About */}
+          {/* Column 5: About */}
           <div>
             <h4 className="text-lg font-bold text-green-500 mb-6 flex items-center">
               <Info className="w-5 h-5 mr-2" /> About BudQuest
