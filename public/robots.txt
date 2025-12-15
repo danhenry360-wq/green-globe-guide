@@ -4,8 +4,8 @@
 User-agent: *
 Allow: /
 
-# Dynamic Sitemap (auto-updated from database)
-Sitemap: https://wtwruzxvkzlihisqvzlz.supabase.co/functions/v1/generate-sitemap
+# Sitemap - on your domain for Google Search Console
+Sitemap: https://budquest.guide/sitemap.xml
 
 # Specific bot permissions
 User-agent: Googlebot
