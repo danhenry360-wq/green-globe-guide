@@ -149,7 +149,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "35+" },
+    { icon: Mountain, label: "Cities Covered", value: "41+" },
   ];
 
   const cities = [
@@ -188,6 +188,11 @@ const ColoradoHub = () => {
     { name: "Northglenn", region: "Metro", slug: "northglenn", description: "North of Denver with family-friendly atmosphere, quality dispensaries, and easy highway access." },
     { name: "Commerce City", region: "Metro", slug: "commerce-city", description: "Industrial area northeast of Denver with affordable dispensaries and I-76 access to the plains." },
     { name: "Ouray", region: "Mountains", slug: "ouray", description: "San Juan Mountains alpine village with epic hiking, ice climbing, and secluded 420-friendly stays." },
+    { name: "Vail", region: "Mountains", slug: "vail", description: "America's premier ski resort with luxury cannabis dispensaries and upscale 420-friendly mountain lodging." },
+    { name: "Steamboat Springs", region: "Mountains", slug: "steamboat-springs", description: "World-class ski resort featuring natural hot springs, outdoor recreation, and cannabis culture combined." },
+    { name: "Leadville", region: "Mountains", slug: "leadville", description: "The highest elevation incorporated city in North America (10,152 ft). Extreme altitude cannabis adventure and historic mining town." },
+    { name: "Manitou Springs", region: "Front Range", slug: "manitou-springs", description: "Artistic mountain community with natural mineral springs, galleries, and creative 420-friendly atmosphere near Colorado Springs." },
+    { name: "Central City", region: "Mountains", slug: "central-city", description: "Historic Gold Rush mining town with casinos, mountain scenery, and unique cannabis tourism experience near Denver." },
   ];
 
   const customCitySlugs = [
@@ -197,7 +202,8 @@ const ColoradoHub = () => {
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
     'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
     'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge',
-    'federal-heights', 'northglenn', 'commerce-city', 'ouray'
+    'federal-heights', 'northglenn', 'commerce-city', 'ouray', 'vail',
+    'steamboat-springs', 'leadville', 'manitou-springs', 'central-city'
   ];
 
   // Detailed Law Data

@@ -50,6 +50,11 @@ import BreckenridgeGuide from "./pages/BreckenridgeGuide";
 import CommerceCityGuide from "./pages/CommerceCityGuide";
 import FederalHeightsGuide from "./pages/FederalHeightsGuide";
 import NorthglennGuide from "./pages/NorthglennGuide";
+import VailGuide from "./pages/VailGuide";
+import SteamboatSpringsGuide from "./pages/SteamboatSpringsGuide";
+import LeadvilleGuide from "./pages/LeadvilleGuide";
+import ManitouSpringsGuide from "./pages/ManitouSpringsGuide";
+import CentralCityGuide from "./pages/CentralCityGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -188,6 +193,11 @@ function App() {
               <Route path="/commerce-city" element={<CommerceCityGuide />} />
               <Route path="/federal-heights" element={<FederalHeightsGuide />} />
               <Route path="/northglenn" element={<NorthglennGuide />} />
+              <Route path="/vail" element={<VailGuide />} />
+              <Route path="/steamboat-springs" element={<SteamboatSpringsGuide />} />
+              <Route path="/leadville" element={<LeadvilleGuide />} />
+              <Route path="/manitou-springs" element={<ManitouSpringsGuide />} />
+              <Route path="/central-city" element={<CentralCityGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -225,6 +235,13 @@ function App() {
               <Route path="/usa/colorado/federal-heights" element={<Navigate to="/federal-heights" replace />} />
               <Route path="/usa/colorado/northglenn" element={<Navigate to="/northglenn" replace />} />
               <Route path="/usa/colorado/commerce-city" element={<Navigate to="/commerce-city" replace />} />
+
+              {/* New Regional Guides */}
+              <Route path="/usa/colorado/vail" element={<Navigate to="/vail" replace />} />
+              <Route path="/usa/colorado/steamboat-springs" element={<Navigate to="/steamboat-springs" replace />} />
+              <Route path="/usa/colorado/leadville" element={<Navigate to="/leadville" replace />} />
+              <Route path="/usa/colorado/manitou-springs" element={<Navigate to="/manitou-springs" replace />} />
+              <Route path="/usa/colorado/central-city" element={<Navigate to="/central-city" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
