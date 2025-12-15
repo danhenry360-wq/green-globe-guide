@@ -69,6 +69,18 @@ const STATIC_ROUTES = [
   { path: '/colorado/federal-heights', priority: '0.8', changefreq: 'weekly' },
   { path: '/colorado/northglenn', priority: '0.8', changefreq: 'weekly' },
   
+  // New Regional Colorado City Guides (short paths)
+  { path: '/georgetown', priority: '0.8', changefreq: 'weekly' },
+  { path: '/idaho-springs', priority: '0.8', changefreq: 'weekly' },
+  { path: '/nederland', priority: '0.8', changefreq: 'weekly' },
+  { path: '/ward', priority: '0.8', changefreq: 'weekly' },
+  { path: '/winter-park', priority: '0.8', changefreq: 'weekly' },
+  { path: '/walden', priority: '0.8', changefreq: 'weekly' },
+  { path: '/delta', priority: '0.8', changefreq: 'weekly' },
+  { path: '/paonia', priority: '0.8', changefreq: 'weekly' },
+  { path: '/ridgway', priority: '0.8', changefreq: 'weekly' },
+  { path: '/lake-city', priority: '0.8', changefreq: 'weekly' },
+  
   // Static Blog Posts
   { path: '/blog/denver-dispensaries', priority: '0.7', changefreq: 'monthly' },
   { path: '/blog/denver-rentals', priority: '0.7', changefreq: 'monthly' },
