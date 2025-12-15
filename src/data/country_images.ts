@@ -6,7 +6,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "canada": "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80", // Canadian Rockies
   "united-states": "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80", // NYC Skyline
   "mexico": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=600&q=80", // Mexico City
-  
+
   // CENTRAL AMERICA
   "costa-rica": "https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=600&q=80", // Costa Rica rainforest
   "panama": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80", // Panama City skyline
@@ -15,7 +15,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "el-salvador": "https://images.unsplash.com/photo-1612362954221-c8b8f6b3c30c?w=600&q=80", // El Salvador coast
   "honduras": "https://images.unsplash.com/photo-1572176596507-d0a9c1b79c40?w=600&q=80", // Honduras island
   "nicaragua": "https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=600&q=80", // Nicaragua church
-  
+
   // EUROPE
   "netherlands": "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=600&q=80", // Amsterdam canals
   "germany": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80", // Brandenburg Gate
@@ -66,7 +66,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "san-marino": "https://images.unsplash.com/photo-1538330090309-c31d5b17d17c?w=600&q=80", // San Marino towers
   "liechtenstein": "https://images.unsplash.com/photo-1596394723269-6df59fa75b72?w=600&q=80", // Liechtenstein castle
   "vatican": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=600&q=80", // Vatican St Peters
-  
+
   // SOUTH AMERICA
   "uruguay": "https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=600&q=80", // Montevideo
   "argentina": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=600&q=80", // Buenos Aires
@@ -74,14 +74,14 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "colombia": "https://images.unsplash.com/photo-1533699224246-a1e9a5bc8bfb?w=600&q=80", // Cartagena
   "brazil": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80", // Rio Christ statue
   "peru": "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&q=80", // Machu Picchu
-  "ecuador": "/world-ecuador.jpg", // Ecuador highlands
+  "ecuador": "https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=600&q=80", // Quito basilica
   "bolivia": "https://images.unsplash.com/photo-1591133524085-f1a61c1f47ac?w=600&q=80", // Salt flats
   "paraguay": "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=600&q=80", // Asuncion
-  "venezuela": "/world-venezuela.jpg", // Angel Falls
-  "guyana": "/world-guyana.jpg", // Guyana jungle
-  "suriname": "/world-suriname.jpg", // Paramaribo
+  "venezuela": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=600&q=80", // Angel Falls
+  "guyana": "https://images.unsplash.com/photo-1598881034666-5e2a9e2e4c8d?w=600&q=80", // Kaieteur Falls
+  "suriname": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&q=80", // Paramaribo colonial
   "french-guiana": "https://images.unsplash.com/photo-1604761490413-ee1c76db3c12?w=600&q=80", // Space center
-  
+
   // CARIBBEAN
   "jamaica": "https://images.unsplash.com/photo-1580995583564-3f47c0ab6d9e?w=600&q=80", // Jamaica beach
   "barbados": "https://images.unsplash.com/photo-1590521219881-ca9f9afa6724?w=600&q=80", // Barbados coast
@@ -107,7 +107,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "aruba": "https://images.unsplash.com/photo-1589395937772-f67057e233d8?w=600&q=80", // Aruba beach
   "curacao": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80", // Curacao colorful
   "bonaire": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80", // Bonaire diving
-  
+
   // ASIA
   "thailand": "/world-thailand.jpg", // Thai temple
   "japan": "/world-japan.jpg", // Tokyo temple  
@@ -152,7 +152,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "saudi-arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80", // Mecca clock
   "oman": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Oman landscape
   "yemen": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?w=600&q=80", // Yemen landscape
-  
+
   // AFRICA
   "south-africa": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80", // Cape Town
   "morocco": "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&q=80", // Marrakech
@@ -183,7 +183,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "madagascar": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=600&q=80", // Madagascar baobab
   "mauritius": "https://images.unsplash.com/photo-1589991047127-8e56dbd2f6e5?w=600&q=80", // Mauritius beach
   "seychelles": "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=600&q=80", // Seychelles rocks
-  
+
   // OCEANIA
   "australia": "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&q=80", // Sydney Opera
   "new-zealand": "https://images.unsplash.com/photo-1469521669194-babb45599def?w=600&q=80", // NZ mountains
@@ -205,7 +205,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "cook-islands": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80", // Cook Islands
   "niue": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80", // Niue
   "tokelau": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80", // Tokelau
-  
+
   // Default fallback
   "default": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80", // Earth from space
 };
