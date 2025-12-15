@@ -1679,7 +1679,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; high-tech research",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("israel"),
         regions: [
           {
             slug: "tel-aviv-region",
@@ -1701,7 +1701,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("palestine"),
         regions: [{ slug: "ramallah-region", name: "Ramallah Region", cities: [{ slug: "ramallah", name: "Ramallah", atGlance: ["De-facto capital", "Illegal", "Conflict zone"] }] }],
       },
       {
@@ -1712,7 +1712,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Petra wonder",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("jordan"),
         regions: [{ slug: "amman-region", name: "Amman Region", cities: [{ slug: "amman", name: "Amman", atGlance: ["Hilly capital", "Medical only", "Petra gateway"] }] }],
       },
       {
@@ -1723,7 +1723,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Extreme penalties (Death/Lashes).",
         description: "Cannabis illegal; severe penalties including death for trafficking and corporal punishment.",
-        image: "",
+        image: getCountryImage("saudi-arabia"),
         regions: [{ slug: "riyadh-region", name: "Riyadh Region", cities: [{ slug: "riyadh", name: "Riyadh", atGlance: ["Desert capital", "Illegal", "Extreme penalties"] }] }, { slug: "jeddah-region", name: "Jeddah Region", cities: [{ slug: "jeddah", name: "Jeddah", atGlance: ["Red-Sea port", "Illegal", "Extreme penalties"] }] }],
       },
       {
@@ -1734,7 +1734,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Sensitive equipment)",
         tourist: "Strictly illegal. THC in blood stream counts as possession.",
         description: "Zero tolerance. Laws are strictly enforced. CBD oil is generally illegal. Presence of drugs in blood tests is considered possession.",
-        image: "",
+        image: getCountryImage("uae"),
         regions: [{ slug: "dubai-region", name: "Dubai Region", cities: [{ slug: "dubai", name: "Dubai", atGlance: ["Futuristic city", "Illegal", "Zero-tolerance airport"] }] }, { slug: "abu-dhabi-region", name: "Abu Dhabi Region", cities: [{ slug: "abu-dhabi", name: "Abu Dhabi", atGlance: ["Oil capital", "Illegal", "Grand mosque"] }] }],
       },
       {
@@ -1745,7 +1745,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; severe penalties",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: getCountryImage("qatar"),
         regions: [{ slug: "doha-region", name: "Doha Region", cities: [{ slug: "doha", name: "Doha", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1756,7 +1756,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: getCountryImage("kuwait"),
         regions: [{ slug: "kuwait-city-region", name: "Kuwait City Region", cities: [{ slug: "kuwait-city", name: "Kuwait City", atGlance: ["Oil capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1767,7 +1767,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; island kingdom",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: getCountryImage("bahrain"),
         regions: [{ slug: "manama-region", name: "Manama Region", cities: [{ slug: "manama", name: "Manama", atGlance: ["Island capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1778,7 +1778,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; desert sultanate",
         description: "Cannabis illegal; severe penalties.",
-        image: "",
+        image: getCountryImage("oman"),
         regions: [{ slug: "muscat-region", name: "Muscat Region", cities: [{ slug: "muscat", name: "Muscat", atGlance: ["Desert capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1789,7 +1789,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("yemen"),
         regions: [{ slug: "sanaa-region", name: "Sana’a Region", cities: [{ slug: "sanaa", name: "Sana’a", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1800,7 +1800,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; death-penalty risk",
         description: "Cannabis illegal; severe penalties including death.",
-        image: "",
+        image: getCountryImage("brunei"),
         regions: [{ slug: "bandar-seri-begawan-region", name: "Bandar Seri Begawan Region", cities: [{ slug: "bandar-seri-begawan", name: "Bandar Seri Begawan", atGlance: ["Sultanate capital", "Illegal", "Death-penalty risk"] }] }],
       },
       {
@@ -1811,7 +1811,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; developing nation",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("timor-leste"),
         regions: [{ slug: "dili-region", name: "Dili Region", cities: [{ slug: "dili", name: "Dili", atGlance: ["Coastal capital", "Illegal", "Developing"] }] }],
       },
     ],
