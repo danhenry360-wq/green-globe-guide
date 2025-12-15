@@ -145,13 +145,6 @@ const ColoradoHub = () => {
     }
   };
 
-  const stats = [
-    { icon: Cannabis, label: "Age Requirement", value: "21+" },
-    { icon: Store, label: "Licensed Dispensaries", value: "500+" },
-    { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: `${cities.length}` },
-  ];
-
   const cities = [
     { name: "Denver", region: "Metro", slug: "denver", description: "The Mile High City - Colorado's cannabis capital with the most dispensaries and 420-friendly accommodations." },
     { name: "Boulder", region: "Front Range", slug: "boulder", description: "Progressive college town known for craft cannabis, outdoor recreation, and relaxed atmosphere." },
@@ -207,6 +200,15 @@ const ColoradoHub = () => {
     { name: "Trinidad", region: "Southern Border", slug: "trinidad", description: "The 'Weed Capital' of the Southwest. Historic border town with a massive concentration of dispensaries and Victorian architecture." },
     { name: "Salida", region: "Mountains", slug: "salida", description: "The Heart of the Rockies. Whitewater rafting, hot springs, and a creative downtown district. A true adventure town." },
   ];
+
+  const stats = [
+    { icon: Cannabis, label: "Age Requirement", value: "21+" },
+    { icon: Store, label: "Licensed Dispensaries", value: "500+" },
+    { icon: Shield, label: "Possession Limit", value: "1 oz" },
+    { icon: Mountain, label: "Cities Covered", value: `${cities.length}` },
+  ];
+
+
 
   const customCitySlugs = [
     'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins',
