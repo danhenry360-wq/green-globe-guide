@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
@@ -16,7 +17,7 @@ import {
     ArrowRight, Bed, Store, ChevronRight,
     Sun, Leaf, Flower2, Snowflake,
     Mountain, Tent, Palmtree, Waves, Droplets,
-    Mail
+    Mail, CheckCircle, Ban, Clock, MapPinned, Info
 } from "lucide-react";
 
 interface Dispensary {
@@ -144,6 +145,93 @@ const SalidaGuide = () => {
         "dateModified": new Date().toISOString().split('T')[0],
         "inLanguage": "en-US"
     };
+
+
+    const seasons = [
+        {
+            id: "spring",
+            name: "Spring",
+            months: "March - May",
+            icon: Flower2,
+            temp: "45-65°F",
+            highlights: [
+                "Bluegrass on the Arkansas",
+                "Whitewater season begins (Late May)",
+                "Mountain biking trails open",
+                "Bloom at the Riverwalk"
+            ],
+            tip: "Water levels are highest in late spring. Perfect for adrenaline junkies."
+        },
+        {
+            id: "summer",
+            name: "Summer",
+            months: "June - August",
+            icon: Sun,
+            temp: "75-85°F",
+            highlights: [
+                "FIBArk (First in Boating on the Arkansas)",
+                "River surfing",
+                "Camping in San Isabel National Forest",
+                "Art Walk"
+            ],
+            tip: "Salida is 'The Banana Belt' - warmer than other mountain towns."
+        },
+        {
+            id: "fall",
+            name: "Fall",
+            months: "September - November",
+            icon: Leaf,
+            temp: "50-70°F",
+            highlights: [
+                "Golden Aspens on Monarch Pass",
+                "Bike Fest",
+                "Low river floating",
+                "Harvest festivals"
+            ],
+            tip: "The colors on Marshall Pass are world-class in late September."
+        },
+        {
+            id: "winter",
+            name: "Winter",
+            months: "December - February",
+            icon: Snowflake,
+            temp: "20-45°F",
+            highlights: [
+                "Skiing at Monarch Mountain",
+                "Natural Hot Springs soaking",
+                "Christmas Mountain lighting",
+                "Holiday shopping on F Street"
+            ],
+            tip: "After skiing, nothing beats a soak at Mt. Princeton Hot Springs."
+        }
+    ];
+
+    const transportOptions = [
+        {
+            name: "Car (Best)",
+            icon: Store, // Use generic if car not available
+            description: "You'll want a car to reach trailheads, hot springs, and Monarch Mountain.",
+            tip: "4WD is recommended for exploring forest service roads."
+        },
+        {
+            name: "Bustang Check",
+            icon: MapPinned,
+            description: "Bustang Outrider services Salida from Pueblo and Gunnison.",
+            tip: "Reliable but limited schedule."
+        },
+        {
+            name: "Bike",
+            icon: Compass,
+            description: "Salida is extremely bike-friendly with trails right from downtown.",
+            tip: "You can bike to dispensaries and breweries easily."
+        }
+    ];
+
+    const relatedGuides = [
+        { name: "Buena Vista", slug: "/buena-vista", desc: "Rafting & Collegiate Peaks", distance: "30 min" },
+        { name: "Canon City", slug: "/canon-city", desc: "Royal Gorge", distance: "1 hr" },
+        { name: "Colorado Springs", slug: "/colorado-springs", desc: "Front Range Hub", distance: "2 hrs" },
+    ];
 
     const attractions = [
         {
@@ -285,8 +373,81 @@ const SalidaGuide = () => {
                     </div>
                 </section>
 
-                {/* Attractions */}
+                {/* Best Time to Visit */}
                 <section className="py-16">
+                    <div className="container mx-auto px-4 max-w-6xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-10"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                                    Best Time to Visit Salida
+                                </span>
+                            </h2>
+                        </motion.div>
+
+                        <Tabs defaultValue="summer" className="w-full">
+                            <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
+                                {seasons.map((season) => (
+                                    <TabsTrigger
+                                        key={season.id}
+                                        value={season.id}
+                                        className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                                    >
+                                        <season.icon className="w-4 h-4 mr-2 hidden sm:inline" />
+                                        {season.name}
+                                    </TabsTrigger>
+                                ))}
+                            </TabsList>
+
+                            {seasons.map((season) => (
+                                <TabsContent key={season.id} value={season.id}>
+                                    <Card className="bg-card/50 border-border/30 p-6 md:p-8">
+                                        <div className="flex flex-col md:flex-row gap-6">
+                                            <div className="md:w-1/3">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <div className="p-3 rounded-xl bg-accent/20">
+                                                        <season.icon className="w-8 h-8 text-accent" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-xl font-bold text-foreground">{season.name}</h3>
+                                                        <p className="text-sm text-muted-foreground">{season.months}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-lg font-medium text-foreground mb-4">
+                                                    <Clock className="w-5 h-5 text-accent" />
+                                                    {season.temp}
+                                                </div>
+                                            </div>
+                                            <div className="md:w-2/3">
+                                                <h4 className="font-semibold text-foreground mb-3">Season Highlights</h4>
+                                                <ul className="space-y-2 mb-4">
+                                                    {season.highlights.map((highlight, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                                                            <CheckCircle className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                                                            {highlight}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <div className="p-4 rounded-lg bg-accent/10 border border-accent/20">
+                                                    <p className="text-sm text-foreground">
+                                                        <strong className="text-accent">Local Tip:</strong> {season.tip}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </TabsContent>
+                            ))}
+                        </Tabs>
+                    </div>
+                </section>
+
+                {/* Attractions */}
+                <section className="py-16 bg-card/30">
                     <div className="container mx-auto px-4 max-w-6xl">
                         <div className="text-center mb-10">
                             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -320,6 +481,97 @@ const SalidaGuide = () => {
                                 </motion.div>
                             ))}
                         </div>
+                    </div>
+                </section>
+
+                {/* Legal Info */}
+                <section className="py-16">
+                    <div className="container mx-auto px-4 max-w-5xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-10"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                                    Salida Local Rules
+                                </span>
+                            </h2>
+                        </motion.div>
+
+                        <div className="grid md:grid-cols-2 gap-6 mb-8">
+                            <Card className="p-6 bg-card/50 border-border/30">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="p-2 rounded-full bg-green-500/20">
+                                        <Info className="w-5 h-5 text-green-400" />
+                                    </div>
+                                    <h3 className="font-semibold text-foreground">Federal Land Warning</h3>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                    Salida is surrounded by National Forest. Possession is ILLEGAL on federal land (ski areas, river headwaters, designated campgrounds).
+                                </p>
+                            </Card>
+
+                            <Card className="p-6 bg-card/50 border-border/30">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="p-2 rounded-full bg-amber-500/20">
+                                        <Waves className="w-5 h-5 text-amber-400" />
+                                    </div>
+                                    <h3 className="font-semibold text-foreground">River Rules</h3>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                    Public consumption on the river or in parks is prohibited. Rangers do patrol the Arkansas Headwaters Recreation Area.
+                                </p>
+                            </Card>
+                        </div>
+
+                        {/* Where You CAN Consume */}
+                        <Card className="p-6 bg-green-500/5 border-green-500/20 mb-6">
+                            <h3 className="font-bold text-lg text-green-400 mb-4 flex items-center gap-2">
+                                <CheckCircle className="w-5 h-5" />
+                                Where You CAN Consume
+                            </h3>
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                {[
+                                    { place: "Private Airbnb/Cables", note: "With owner's permission" },
+                                    { place: "Private Property", note: "Out of public view" },
+                                    { place: "Designated Events", note: "With permit (rare)" },
+                                ].map((item) => (
+                                    <div key={item.place} className="flex items-start gap-2">
+                                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                        <div>
+                                            <span className="text-foreground font-medium">{item.place}</span>
+                                            <span className="text-muted-foreground text-sm"> — {item.note}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+
+                        {/* Where You CANNOT Consume */}
+                        <Card className="p-6 bg-red-500/5 border-red-500/20 mb-6">
+                            <h3 className="font-bold text-lg text-red-400 mb-4 flex items-center gap-2">
+                                <Ban className="w-5 h-5" />
+                                Where You CANNOT Consume
+                            </h3>
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                {[
+                                    { place: "Monarch Mountain", fine: "Loss of Pass / Fed Ticket" },
+                                    { place: "Riverside Park", fine: "Civil Citation" },
+                                    { place: "In Vehicles", fine: "DUI / Open Container" },
+                                    { place: "Dispensaries", fine: "State Law" },
+                                ].map((item) => (
+                                    <div key={item.place} className="flex items-start gap-2">
+                                        <Ban className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                                        <div>
+                                            <span className="text-foreground font-medium">{item.place}</span>
+                                            <span className="text-red-400 text-sm font-medium"> — {item.fine}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
                     </div>
                 </section>
 
@@ -357,6 +609,64 @@ const SalidaGuide = () => {
                     </div>
                 </section>
 
+                {/* Rentals Section */}
+                <section id="rentals" className="py-16">
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center justify-between mb-8">
+                            <h2 className="text-3xl font-bold">
+                                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                                    420-Friendly Stays
+                                </span>
+                            </h2>
+                            <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+                                View All <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </div>
+
+                        {loading ? (
+                            <div className="flex justify-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+                            </div>
+                        ) : rentals.length > 0 ? (
+                            <div className="grid md:grid-cols-3 gap-6">
+                                {rentals.map((rental) => (
+                                    <Link key={rental.id} to={`/hotels/${rental.slug}`}>
+                                        <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                                            <div className="aspect-video relative">
+                                                <img
+                                                    src={rental.images?.[0] || "/placeholder.png"}
+                                                    alt={rental.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-xs">
+                                                    420 Friendly
+                                                </Badge>
+                                            </div>
+                                            <div className="p-4">
+                                                <h3 className="font-semibold text-foreground mb-1">{rental.name}</h3>
+                                                {rental.address && (
+                                                    <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                                                        <MapPin className="w-3 h-3" />
+                                                        <span className="truncate">{rental.address}</span>
+                                                    </div>
+                                                )}
+                                                <div className="flex items-center gap-1">
+                                                    {renderRating(rental.rating || 4)}
+                                                </div>
+                                            </div>
+                                        </Card>
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <Card className="p-8 text-center bg-card/50">
+                                <Bed className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                                <p className="text-muted-foreground">No specific 420-friendly rentals found in Salida yet. Check nearby listings.</p>
+                            </Card>
+                        )}
+                    </div>
+                </section>
+
                 {/* Email */}
                 <section className="py-20 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-gold/10" />
@@ -377,6 +687,47 @@ const SalidaGuide = () => {
                                 <Mail className="w-4 h-4 ml-2" />
                             </Button>
                         </form>
+                    </div>
+                </section>
+
+                {/* Related Guides */}
+                <section className="py-16 bg-card/30">
+                    <div className="container mx-auto px-4 max-w-4xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-10"
+                        >
+                            <h2 className="text-3xl font-bold mb-4">
+                                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                                    More Colorado Destinations
+                                </span>
+                            </h2>
+                        </motion.div>
+
+                        <div className="grid md:grid-cols-3 gap-6 mb-8">
+                            {relatedGuides.map((guide, index) => (
+                                <motion.div
+                                    key={guide.name}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
+                                    <Link to={guide.slug}>
+                                        <Card className="p-6 bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 text-center h-full">
+                                            <Compass className="w-8 h-8 text-accent mx-auto mb-3" />
+                                            <h3 className="font-bold text-foreground mb-1">{guide.name}</h3>
+                                            <p className="text-sm text-muted-foreground mb-2">{guide.desc}</p>
+                                            <Badge variant="outline" className="border-accent/30 text-accent text-xs">
+                                                {guide.distance} from Salida
+                                            </Badge>
+                                        </Card>
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
