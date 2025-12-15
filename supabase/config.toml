@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.verify-password-reset-otp]
 verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
