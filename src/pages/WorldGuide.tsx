@@ -1426,7 +1426,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; backpacker caution",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("laos"),
         regions: [{ slug: "vientiane-region", name: "Vientiane Region", cities: [{ slug: "vientiane", name: "Vientiane", atGlance: ["Mekong capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1492,7 +1492,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; unknown regime",
         description: "Cannabis illegal; regime opaque.",
-        image: "",
+        image: getCountryImage("north-korea"),
         regions: [{ slug: "pyongyang-region", name: "Pyongyang Region", cities: [{ slug: "pyongyang", name: "Pyongyang", atGlance: ["Regime capital", "Illegal", "Unknown penalties"] }] }],
       },
       {
@@ -1503,7 +1503,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; vast steppe",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("mongolia"),
         regions: [{ slug: "ulaanbaatar-region", name: "Ulaanbaatar Region", cities: [{ slug: "ulaanbaatar", name: "Ulaanbaatar", atGlance: ["Steppe capital", "Illegal", "Yurt districts"] }] }],
       },
       {
@@ -1514,7 +1514,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("taiwan"),
         regions: [{ slug: "taipei-region", name: "Taipei Region", cities: [{ slug: "taipei", name: "Taipei", atGlance: ["Night-market capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1525,7 +1525,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("hong-kong"),
         regions: [{ slug: "hong-kong-island", name: "Hong Kong Island", cities: [{ slug: "hong-kong", name: "Hong Kong", atGlance: ["Skyline harbour", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1536,7 +1536,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; casino city",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("macau"),
         regions: [{ slug: "macau-peninsula", name: "Macau Peninsula", cities: [{ slug: "macau", name: "Macau", atGlance: ["Casino capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1558,7 +1558,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("pakistan"),
         regions: [{ slug: "islamabad-region", name: "Islamabad Region", cities: [{ slug: "islamabad", name: "Islamabad", atGlance: ["Planned capital", "Illegal", "Severe penalties"] }] }, { slug: "karachi-region", name: "Karachi Region", cities: [{ slug: "karachi", name: "Karachi", atGlance: ["Coastal mega-city", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1569,7 +1569,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; harsh penalties",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("bangladesh"),
         regions: [{ slug: "dhaka-region", name: "Dhaka Region", cities: [{ slug: "dhaka", name: "Dhaka", atGlance: ["Mega-delta capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1580,7 +1580,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Ceylon tea",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("sri-lanka"),
         regions: [{ slug: "colombo-region", name: "Colombo Region", cities: [{ slug: "colombo", name: "Colombo", atGlance: ["Port capital", "Medical only", "Ceylon tea"] }] }],
       },
       {
@@ -1591,7 +1591,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; hash history",
         description: "Cannabis illegal; historical hashish tolerated in pilgrim areas only.",
-        image: "",
+        image: getCountryImage("nepal"),
         regions: [{ slug: "kathmandu-region", name: "Kathmandu Region", cities: [{ slug: "kathmandu", name: "Kathmandu", atGlance: ["Temple capital", "Illegal", "Hash history"] }] }],
       },
       {
@@ -1602,7 +1602,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; Himalayan kingdom",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("bhutan"),
         regions: [{ slug: "thimphu-region", name: "Thimphu Region", cities: [{ slug: "thimphu", name: "Thimphu", atGlance: ["Mountain capital", "Illegal", "Gross-national happiness"] }] }],
       },
       {
@@ -1613,7 +1613,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; resort islands",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("maldives"),
         regions: [{ slug: "male-region", name: "Malé Region", cities: [{ slug: "male", name: "Malé", atGlance: ["Coral capital", "Illegal", "Resort islands"] }] }],
       },
       {
@@ -1624,7 +1624,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; production region but prohibited.",
-        image: "",
+        image: getCountryImage("afghanistan"),
         regions: [{ slug: "kabul-region", name: "Kabul Region", cities: [{ slug: "kabul", name: "Kabul", atGlance: ["War-torn capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1635,7 +1635,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; severe penalties",
         description: "Cannabis illegal; trafficking can lead to death penalty.",
-        image: "",
+        image: getCountryImage("iran"),
         regions: [{ slug: "tehran-region", name: "Tehran Region", cities: [{ slug: "tehran", name: "Tehran", atGlance: ["Mountain capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1646,7 +1646,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; conflict zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("iraq"),
         regions: [{ slug: "baghdad-region", name: "Baghdad Region", cities: [{ slug: "baghdad", name: "Baghdad", atGlance: ["Tigris capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1657,7 +1657,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("syria"),
         regions: [{ slug: "damascus-region", name: "Damascus Region", cities: [{ slug: "damascus", name: "Damascus", atGlance: ["Ancient capital", "Illegal", "Avoid travel"] }] }],
       },
       {
@@ -1668,7 +1668,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; Bekaa hash history",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("lebanon"),
         regions: [{ slug: "beirut-region", name: "Beirut Region", cities: [{ slug: "beirut", name: "Beirut", atGlance: ["Party capital", "Medical only", "Bekaa hash history"] }] }],
       },
       {
