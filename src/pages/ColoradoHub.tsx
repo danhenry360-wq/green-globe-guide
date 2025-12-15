@@ -193,6 +193,7 @@ const ColoradoHub = () => {
     { name: "Leadville", region: "Mountains", slug: "leadville", description: "The highest elevation incorporated city in North America (10,152 ft). Extreme altitude cannabis adventure and historic mining town." },
     { name: "Manitou Springs", region: "Front Range", slug: "manitou-springs", description: "Artistic mountain community with natural mineral springs, galleries, and creative 420-friendly atmosphere near Colorado Springs." },
     { name: "Central City", region: "Mountains", slug: "central-city", description: "Historic Gold Rush mining town with casinos, mountain scenery, and unique cannabis tourism experience near Denver." },
+    { name: "Black Hawk", region: "Mountains", slug: "black-hawk", description: "Sister gaming town to Central City with historic casinos, Gold Rush heritage, and responsible gaming cannabis culture." },
   ];
 
   const customCitySlugs = [
@@ -203,7 +204,7 @@ const ColoradoHub = () => {
     'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
     'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge',
     'federal-heights', 'northglenn', 'commerce-city', 'ouray', 'vail',
-    'steamboat-springs', 'leadville', 'manitou-springs', 'central-city'
+    'steamboat-springs', 'leadville', 'manitou-springs', 'central-city', 'black-hawk'
   ];
 
   // Detailed Law Data
