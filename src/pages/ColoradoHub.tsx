@@ -11,9 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  MapPin, Star, CheckCircle, AlertTriangle, 
-  Plane, Home, Building, Cannabis, Car, Clock, Shield, 
+import {
+  MapPin, Star, CheckCircle, AlertTriangle,
+  Plane, Home, Building, Cannabis, Car, Clock, Shield,
   Mail, ArrowRight, Bed, Store, Mountain,
   Info, Ban, ChevronRight, Search, ShoppingBag, Leaf
 } from "lucide-react";
@@ -57,7 +57,7 @@ const ColoradoHub = () => {
   const [rentals, setRentals] = useState<Rental[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("All");
@@ -73,7 +73,7 @@ const ColoradoHub = () => {
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
         .limit(4);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch top 4 Colorado rentals
@@ -84,7 +84,7 @@ const ColoradoHub = () => {
         .ilike('address', '%Colorado%')
         .order('rating', { ascending: false })
         .limit(4);
-      
+
       if (rentalData) setRentals(rentalData);
 
       // Fetch Colorado-related blog posts
@@ -95,7 +95,7 @@ const ColoradoHub = () => {
         .ilike('title', '%colorado%')
         .order('published_at', { ascending: false })
         .limit(6);
-      
+
       if (blogData) setBlogPosts(blogData);
       setLoading(false);
     };
@@ -112,7 +112,7 @@ const ColoradoHub = () => {
       });
       return;
     }
-    
+
     try {
       const { error } = await supabase.from('newsletter_subscribers').insert({
         email: footerEmail,
@@ -204,10 +204,12 @@ const ColoradoHub = () => {
     { name: "Paonia", region: "Western Slope", slug: "paonia", description: "Wine country and artisan community featuring boutique wineries, farmers markets, and creative cannabis culture." },
     { name: "Ridgway", region: "Mountains", slug: "ridgway", description: "Mountain arts community near Ouray and Telluride with galleries, creative scene, and natural hot springs." },
     { name: "Lake City", region: "Mountains", slug: "lake-city", description: "Alpine mining town at 10,700 ft elevation with world-class fishing, mining history, and San Juan scenic loop." },
+    { name: "Trinidad", region: "Southern Border", slug: "trinidad", description: "The 'Weed Capital' of the Southwest. Historic border town with a massive concentration of dispensaries and Victorian architecture." },
+    { name: "Salida", region: "Mountains", slug: "salida", description: "The Heart of the Rockies. Whitewater rafting, hot springs, and a creative downtown district. A true adventure town." },
   ];
 
   const customCitySlugs = [
-    'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins', 
+    'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins',
     'aurora', 'thornton', 'lakewood', 'longmont', 'pueblo',
     'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
@@ -216,64 +218,64 @@ const ColoradoHub = () => {
     'federal-heights', 'northglenn', 'commerce-city', 'ouray', 'vail',
     'steamboat-springs', 'leadville', 'manitou-springs', 'central-city', 'black-hawk',
     'georgetown', 'idaho-springs', 'nederland', 'ward', 'winter-park',
-    'walden', 'delta', 'paonia', 'ridgway', 'lake-city'
+    'walden', 'delta', 'paonia', 'ridgway', 'lake-city', 'trinidad', 'salida'
   ];
 
   // Detailed Law Data
   const legalDetails = [
-    { 
-      title: "Purchase Limits", 
-      icon: ShoppingBag, 
+    {
+      title: "Purchase Limits",
+      icon: ShoppingBag,
       desc: "In a single transaction, adults 21+ can purchase up to:",
       points: ["1 ounce (28g) of Flower", "8 grams of Concentrate (Wax, Shatter)", "800mg of Edibles", "Mix & Match is allowed (equivalency rules apply)"]
     },
-    { 
-      title: "Public Consumption", 
-      icon: Ban, 
+    {
+      title: "Public Consumption",
+      icon: Ban,
       desc: "Colorado has strict 'Clean Air' laws. Public consumption is illegal in:",
       points: ["Sidewalks, Parks & Streets", "Restaurants, Bars & Concert Venues", "Ski Lifts & Slopes", "Inside Dispensaries"]
     },
-    { 
-      title: "Driving & Transport", 
-      icon: Car, 
+    {
+      title: "Driving & Transport",
+      icon: Car,
       desc: "Driving high is a DUI. Police use blood tests (5ng limit).",
       points: ["Cannabis must be in a SEALED container", "Do not cross state lines (Federal Crime)", "Do not consume in a moving vehicle", "Rental car cleaning fees can be $250+"]
     },
-    { 
-      title: "Federal Land Warning", 
-      icon: AlertTriangle, 
+    {
+      title: "Federal Land Warning",
+      icon: AlertTriangle,
       desc: "Federal law supersedes state law. Possession is illegal on:",
       points: ["National Parks (RMNP, Mesa Verde)", "National Forests & Ski Areas", "Federal Courthouses & Monuments", "Airports (DIA is Federal property)"]
     },
-    { 
-      title: "Home Cultivation", 
-      icon: Leaf, 
+    {
+      title: "Home Cultivation",
+      icon: Leaf,
       desc: "Residents 21+ may grow cannabis with restrictions:",
       points: ["Up to 6 plants per person (3 flowering)", "Max 12 plants per residence", "Must be in an enclosed, locked space", "Plants cannot be visible from outside"]
     },
-    { 
-      title: "Identification", 
-      icon: Shield, 
+    {
+      title: "Identification",
+      icon: Shield,
       desc: "Dispensaries are strict. You must present valid ID:",
       points: ["State-issued Driver's License", "Passport or Passport Card", "Military ID", "Vertical IDs (under 21 style) often rejected even if 21+"]
     }
   ];
 
   const travelTips = [
-    { 
-      title: "The Altitude Effect", 
+    {
+      title: "The Altitude Effect",
       content: "THC hits harder at altitude. Alcohol hits harder too. Combine them, and you might have a bad time. Drink twice as much water as you think you need."
     },
-    { 
-      title: "Edible Dosing", 
+    {
+      title: "Edible Dosing",
       content: "Start low and go slow. The standard dose is 10mg, but we recommend 2.5mg-5mg for visitors. Wait at least 2 hours before taking more."
     },
-    { 
-      title: "Cash is King", 
+    {
+      title: "Cash is King",
       content: "Due to federal banking regulations, most dispensaries are cash-only. They usually have ATMs, but bring cash to save on fees."
     },
-    { 
-      title: "Last Call", 
+    {
+      title: "Last Call",
       content: "Dispensaries have strict closing times (usually 10 PM or midnight, depending on the city). They cannot complete a sale 1 minute past closing."
     },
   ];
@@ -291,7 +293,7 @@ const ColoradoHub = () => {
     return matchesSearch && matchesRegion;
   });
 
-  const regionTabs = ["All", "Metro", "Mountains", "Front Range", "Western Slope"];
+  const regionTabs = ["All", "Metro", "Mountains", "Front Range", "Western Slope", "Southern Border"];
 
   return (
     <>
@@ -302,7 +304,7 @@ const ColoradoHub = () => {
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4">
@@ -368,8 +370,8 @@ const ColoradoHub = () => {
             <div className="max-w-4xl mx-auto mb-10 space-y-6">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input 
-                  placeholder="Search cities (e.g. 'Aspen', 'Denver')..." 
+                <Input
+                  placeholder="Search cities (e.g. 'Aspen', 'Denver')..."
                   className="pl-10 h-12 text-lg bg-card/50 border-accent/20 focus:border-accent"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -410,7 +412,7 @@ const ColoradoHub = () => {
                             </div>
                             <Badge variant="outline" className="text-[10px] md:text-xs border-accent/30 text-accent bg-accent/5">{city.region}</Badge>
                           </div>
-                          
+
                           <h3 className="text-sm md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors line-clamp-1">
                             {city.name}
                           </h3>
@@ -445,7 +447,7 @@ const ColoradoHub = () => {
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Colorado was the first state to legalize recreational cannabis, but strict rules still apply. 
+                Colorado was the first state to legalize recreational cannabis, but strict rules still apply.
                 Stay safe and legal by following these regulations.
               </p>
             </div>
@@ -497,9 +499,9 @@ const ColoradoHub = () => {
                 <Link key={d.id} to={`/dispensary/${d.slug}`}>
                   <Card className="h-full hover:border-accent/50 transition-all border-border/40 bg-card/50">
                     <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
-                      <img 
-                        src={d.image || "/dispensaries/native-roots-denver.png"} 
-                        alt={d.name} 
+                      <img
+                        src={d.image || "/dispensaries/native-roots-denver.png"}
+                        alt={d.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -537,9 +539,9 @@ const ColoradoHub = () => {
                 <Link key={r.id} to={`/hotels/${r.slug}`}>
                   <Card className="h-full hover:border-accent/50 transition-all border-border/40 bg-card/50">
                     <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
-                      <img 
-                        src={r.images?.[0] || "/dest-colorado-ski.jpg"} 
-                        alt={r.name} 
+                      <img
+                        src={r.images?.[0] || "/dest-colorado-ski.jpg"}
+                        alt={r.name}
                         className="w-full h-full object-cover"
                       />
                       <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-[10px] px-2 py-0.5 shadow-sm border-none">
@@ -619,10 +621,10 @@ const ColoradoHub = () => {
               <h2 className="text-2xl font-bold mb-2">Join the Cannabis Travel Club</h2>
               <p className="text-muted-foreground mb-6">Get weekly guides, deals, and legal updates.</p>
               <div className="flex flex-col sm:flex-row gap-2">
-                <Input 
-                  placeholder="Enter email" 
-                  value={footerEmail} 
-                  onChange={(e) => setFooterEmail(e.target.value)} 
+                <Input
+                  placeholder="Enter email"
+                  value={footerEmail}
+                  onChange={(e) => setFooterEmail(e.target.value)}
                   className="bg-background/50 border-accent/20 focus:border-accent"
                 />
                 <Button onClick={handleNewsletterSignup} className="bg-accent hover:bg-accent/90">Subscribe</Button>

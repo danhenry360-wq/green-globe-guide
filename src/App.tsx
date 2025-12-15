@@ -66,6 +66,8 @@ import DeltaGuide from "./pages/DeltaGuide";
 import PaoniaGuide from "./pages/PaoniaGuide";
 import RidgwayGuide from "./pages/RidgwayGuide";
 import LakeCityGuide from "./pages/LakeCityGuide";
+import TrinidadGuide from "./pages/TrinidadGuide";
+import SalidaGuide from "./pages/SalidaGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -133,7 +135,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
-              
+
               {/* Specific blog pages must come BEFORE the generic /blog/:slug route */}
               <Route path="/blog/cannabis-dispensaries-denver" element={<BlogDenverDispensaries />} />
               <Route path="/blog/best-420-rentals-denver" element={<BlogDenverRentals />} />
@@ -275,6 +277,10 @@ function App() {
               <Route path="/usa/colorado/paonia" element={<Navigate to="/paonia" replace />} />
               <Route path="/usa/colorado/ridgway" element={<Navigate to="/ridgway" replace />} />
               <Route path="/usa/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
+              <Route path="/trinidad" element={<TrinidadGuide />} />
+              <Route path="/salida" element={<SalidaGuide />} />
+              <Route path="/usa/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
+              <Route path="/usa/colorado/salida" element={<Navigate to="/salida" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
