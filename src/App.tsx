@@ -221,6 +221,10 @@ function App() {
               <Route path="/usa/colorado/silverton" element={<Navigate to="/silverton" replace />} />
               <Route path="/usa/colorado/ouray" element={<Navigate to="/ouray" replace />} />
               <Route path="/usa/colorado/breckenridge" element={<Navigate to="/breckenridge" replace />} />
+              <Route path="/usa/colorado/altitude" element={<Navigate to="/colorado/altitude-guide" replace />} />
+              <Route path="/usa/colorado/federal-heights" element={<Navigate to="/federal-heights" replace />} />
+              <Route path="/usa/colorado/northglenn" element={<Navigate to="/northglenn" replace />} />
+              <Route path="/usa/colorado/commerce-city" element={<Navigate to="/commerce-city" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />

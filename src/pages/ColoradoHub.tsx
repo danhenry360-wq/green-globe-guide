@@ -197,7 +197,7 @@ const ColoradoHub = () => {
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
     'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
     'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge',
-    'altitude', 'federal-heights', 'northglenn', 'commerce-city', 'ouray'
+    'federal-heights', 'northglenn', 'commerce-city', 'ouray'
   ];
 
   // Detailed Law Data
