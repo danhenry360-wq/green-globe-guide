@@ -55,6 +55,7 @@ import SteamboatSpringsGuide from "./pages/SteamboatSpringsGuide";
 import LeadvilleGuide from "./pages/LeadvilleGuide";
 import ManitouSpringsGuide from "./pages/ManitouSpringsGuide";
 import CentralCityGuide from "./pages/CentralCityGuide";
+import BlackHawkGuide from "./pages/BlackHawkGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -198,6 +199,7 @@ function App() {
               <Route path="/leadville" element={<LeadvilleGuide />} />
               <Route path="/manitou-springs" element={<ManitouSpringsGuide />} />
               <Route path="/central-city" element={<CentralCityGuide />} />
+              <Route path="/black-hawk" element={<BlackHawkGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -242,6 +244,7 @@ function App() {
               <Route path="/usa/colorado/leadville" element={<Navigate to="/leadville" replace />} />
               <Route path="/usa/colorado/manitou-springs" element={<Navigate to="/manitou-springs" replace />} />
               <Route path="/usa/colorado/central-city" element={<Navigate to="/central-city" replace />} />
+              <Route path="/usa/colorado/black-hawk" element={<Navigate to="/black-hawk" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
