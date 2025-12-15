@@ -338,6 +338,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://budquest.guide/breckenridge</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://budquest.guide/vail</loc>
     <lastmod>2025-12-15</lastmod>
     <changefreq>weekly</changefreq>
