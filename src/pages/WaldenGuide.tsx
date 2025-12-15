@@ -18,8 +18,7 @@ import {
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Cloud, Zap, Wind, Compass, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
-  Cattle
+  AlertTriangle, Ban, Mail, Download
 } from "lucide-react";
 
 interface Dispensary {
@@ -222,7 +221,7 @@ const WaldenGuide = () => {
     },
     {
       name: "Historic Ranching Culture",
-      icon: Cattle,
+      icon: Building2,
       description: "Working cattle ranches, cowboy heritage museums, and authentic ranch lifestyle.",
       cannabisTip: "Experience genuine ranch hospitality. Many ranches offer educational tours.",
       address: "Throughout Jackson County"
@@ -341,7 +340,7 @@ const WaldenGuide = () => {
                 { icon: Cannabis, label: "Age Requirement", value: "21+" },
                 { icon: Store, label: "Dispensaries", value: "Limited" },
                 { icon: Shield, label: "Possession Limit", value: "1 oz" },
-                { icon: Cattle, label: "Known For", value: "Ranching" },
+                { icon: Building2, label: "Known For", value: "Ranching" },
                 { icon: Cloud, label: "Population", value: "~600" },
               ].map((stat, index) => (
                 <motion.div
@@ -517,7 +516,7 @@ const WaldenGuide = () => {
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
-                    <Cattle className="w-5 h-5 text-amber-400" />
+                    <Building2 className="w-5 h-5 text-amber-400" />
                   </div>
                   <h3 className="font-semibold text-foreground">Private Property Respect</h3>
                 </div>
