@@ -5,16 +5,16 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { 
-  MapPin, Star, CheckCircle, Plane, Home, Cannabis, Shield, ArrowRight, Bed, Store, ChevronRight,
-  Building2, AlertCircle, Clock, Car, Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
-  Dice5, Mountain, AlertTriangle, Ban, ExternalLink, Compass, Sparkles, TrendingUp, Gold
+  MapPin, Star, CheckCircle, Home, Cannabis, Shield, ArrowRight, Bed, Store, 
+  ChevronRight, Building2, Clock, Car, Bus, Snowflake, Sun, Leaf, Flower2,
+  Dices, Ban, Mail, Download, Compass, Coins
 } from "lucide-react";
 
 interface Dispensary {
@@ -38,8 +38,6 @@ interface Rental {
   address: string | null;
   rating: number | null;
   images: string[] | null;
-  website: string | null;
-  amenities?: unknown;
 }
 
 const CentralCityGuide = () => {
@@ -84,7 +82,7 @@ const CentralCityGuide = () => {
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
-        .insert({ email, source_page: 'central-city-guide' });
+        .insert({ email, source_page: 'centralcity-guide' });
       
       if (error) {
         if (error.code === '23505') {
@@ -116,41 +114,117 @@ const CentralCityGuide = () => {
     return stars;
   };
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "TravelGuide",
-    "name": "Central City Cannabis Travel Guide 2025",
-    "description": "Historic Gold Rush cannabis guide for Central City, Colorado. Gaming, casinos, historic mining heritage, cannabis culture, dispensaries, and 420-friendly lodging.",
-    "url": "https://budquest.guide/central-city",
-    "publisher": { "@type": "Organization", "name": "BudQuest", "url": "https://budquest.guide" },
-    "about": { "@type": "City", "name": "Central City", "address": { "@type": "PostalAddress", "addressLocality": "Central City", "addressRegion": "CO", "addressCountry": "US" } },
-    "dateModified": new Date().toISOString().split('T')[0],
-    "inLanguage": "en-US"
-  };
+  const seasons = [
+    {
+      id: "winter",
+      name: "Winter",
+      months: "December - March",
+      icon: Snowflake,
+      temp: "20-40°F",
+      highlights: ["Holiday gaming", "Casino parties", "Historical tours", "Winter events"],
+      tip: "Peak season for indoor gaming and entertainment. Enjoy cannabis relaxation at your 420-friendly lodge after gaming."
+    },
+    {
+      id: "summer",
+      name: "Summer",
+      months: "June - August",
+      icon: Sun,
+      temp: "60-80°F",
+      highlights: ["Outdoor events", "Historic mine tours", "Summer gaming tournaments", "Community festivals"],
+      tip: "Gaming and outdoor activities combined. Sober for gaming, enjoy cannabis appreciation at your lodge."
+    },
+    {
+      id: "fall",
+      name: "Fall",
+      months: "September - November",
+      icon: Leaf,
+      temp: "40-65°F",
+      highlights: ["Harvest festivals", "Historic preservation", "Cool weather gaming", "Fall events"],
+      tip: "Beautiful season with fewer crowds. Perfect for exploring Gold Rush heritage while sober, then enjoying cannabis."
+    },
+    {
+      id: "spring",
+      name: "Spring",
+      months: "March - May",
+      icon: Flower2,
+      temp: "30-55°F",
+      highlights: ["Spring gaming season", "Historic tours", "Mining heritage", "Spring celebrations"],
+      tip: "Renewal season brings new gaming tournaments and events. Plan sober gaming days with cannabis relaxation."
+    }
+  ];
+
+  const attractions = [
+    {
+      name: "Gold Rush Casinos",
+      icon: Dices,
+      description: "Three major casinos featuring blackjack, poker, slots, and gaming entertainment in historic Gold Rush settings.",
+      cannabisTip: "Never consume cannabis before gaming - impaired judgment costs money. Enjoy cannabis AFTER gaming sessions only."
+    },
+    {
+      name: "Historic Central City",
+      icon: Building2,
+      description: "Well-preserved Gold Rush mining town with Victorian architecture, historic buildings, and cultural heritage.",
+      cannabisTip: "Sober historical tours recommended. Learn about mining heritage fully alert, then enjoy cannabis at lodging."
+    },
+    {
+      name: "Gilpin County Gold Mine Tours",
+      icon: Coins,
+      description: "Authentic mining operation tours showing Colorado's Gold Rush history and mining techniques.",
+      cannabisTip: "Safety tours require full sobriety. Underground mining demands alertness. Enjoy cannabis appreciation after."
+    },
+    {
+      name: "Teller House Museum",
+      icon: Building2,
+      description: "Historic Victorian mansion and museum showcasing Gold Rush era artifacts and architectural significance.",
+      cannabisTip: "Museum visits best done sober for full historical appreciation. Cannabis brainstorming sessions later."
+    },
+    {
+      name: "Central City Opera House",
+      icon: Building2,
+      description: "Historic performing arts venue hosting concerts, theater, and cultural events year-round.",
+      cannabisTip: "Sober for cultural events. Many patrons enjoy cannabis appreciation afterward at nearby venues."
+    },
+    {
+      name: "Mountain Views & Scenic Drives",
+      icon: Leaf,
+      description: "Beautiful surrounding mountains with scenic overlooks and relaxing nature drives through Gold Country.",
+      cannabisTip: "Enjoy scenic drives sober only. Once parked, cannabis appreciation with mountain views is perfect."
+    }
+  ];
+
+  const relatedGuides = [
+    { name: "Black Hawk", slug: "/black-hawk", desc: "Sister Gaming Town", distance: "15 minutes" },
+    { name: "Denver", slug: "/denver", desc: "Cannabis Hub", distance: "1.5 hours" },
+    { name: "Boulder", slug: "/boulder", desc: "Creative Cannabis Culture", distance: "1 hour" },
+  ];
 
   return (
     <>
       <Helmet>
-        <title>Central City Cannabis Travel Guide 2025 | Gold Rush Gaming & Cannabis | BudQuest</title>
-        <meta name="description" content="Complete Central City cannabis guide. Historic mining, casinos, gaming, cannabis culture, dispensaries, and 420-friendly lodging near Denver." />
-        <meta name="keywords" content="Central City cannabis, gaming cannabis, casinos Colorado, historic mining, 420 hotels, Gold Rush" />
+        <title>🌿 420 Central City Cannabis Guide 2025 | Gold Rush Gaming | BudQuest</title>
+        <meta name="description" content="Complete Central City cannabis guide. Historic casinos, Gold Rush heritage, responsible gaming + cannabis tips, and gaming town culture." />
+        <meta name="keywords" content="Central City cannabis, gaming, casinos, Gold Rush, historic mining, responsible gaming" />
         <link rel="canonical" href="https://budquest.guide/central-city" />
-        <meta property="og:title" content="Central City Cannabis Travel Guide 2025 | BudQuest" />
-        <meta property="og:description" content="Historic gaming & cannabis guide for Central City. Casinos, mining heritage, and cannabis culture." />
-        <meta name="robots" content="index, follow" />
-        <meta name="geo.region" content="US-CO" />
-        <meta name="geo.placename" content="Central City" />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        <meta property="og:title" content="🌿 420 Central City Cannabis Guide 2025 | BudQuest" />
+        <meta property="og:description" content="Gaming town cannabis guide. Casinos, Gold Rush heritage, and responsible cannabis + gaming culture." />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelGuide",
+          "name": "Central City Cannabis Travel Guide 2025",
+          "url": "https://budquest.guide/central-city"
+        })}</script>
       </Helmet>
 
       <Navigation />
       
       <main className="min-h-screen bg-background">
-        <nav className="container mx-auto px-4 pt-20 pb-4">
+        <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
-            <li><Link to="/" className="hover:text-accent">Home</Link></li>
+            <li><Link to="/" className="hover:text-accent transition-colors">Home</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li><Link to="/colorado" className="hover:text-accent">Colorado</Link></li>
+            <li><Link to="/usa" className="hover:text-accent transition-colors">USA Guide</Link></li>
+            <ChevronRight className="w-4 h-4" />
+            <li><Link to="/usa/colorado" className="hover:text-accent transition-colors">Colorado</Link></li>
             <ChevronRight className="w-4 h-4" />
             <li className="text-foreground font-medium">Central City</li>
           </ol>
@@ -158,33 +232,33 @@ const CentralCityGuide = () => {
 
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img src="/dest-3.jpg" alt="Central City historic mining town and casinos" className="w-full h-full object-cover" />
+            <img src="/dest-colorado.jpg" alt="Central City Gold Rush Gaming" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
-                <Gold className="w-4 h-4 mr-2" />
-                Historic Gold Rush Gaming Town
+              <Badge className="mb-6 px-4 py-2 bg-yellow-600/20 text-yellow-400 border-yellow-600/30">
+                <Dices className="w-4 h-4 mr-2" />
+                Historic Gold Rush Gaming
               </Badge>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Central City Cannabis Guide
+                  🌿 420 Central City Guide
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Historic Gold Rush mining town near Black Hawk. Casinos, gaming, heritage mining, and cannabis culture. Perfect for gaming + cannabis weekend getaways.
+                Historic Gold Rush mining town with three major casinos, Victorian heritage, and responsible gaming + cannabis culture.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                   <a href="#dispensaries"><Store className="w-5 h-5 mr-2" />Find Dispensaries</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />Gaming Hotels</a>
+                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />Gaming Town Stays</a>
                 </Button>
               </div>
             </motion.div>
@@ -195,16 +269,16 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { icon: Cannabis, label: "Age Requirement", value: "21+" },
-                { icon: Dice5, label: "Casinos", value: "3" },
-                { icon: Shield, label: "Possession Limit", value: "1 oz" },
-                { icon: Gold, label: "Historic", value: "1859" },
-                { icon: TrendingUp, label: "Elevation", value: "8,496 ft" },
+                { icon: Cannabis, label: "Age Required", value: "21+" },
+                { icon: Store, label: "Dispensaries", value: "3+" },
+                { icon: Shield, label: "Possession", value: "1 oz" },
+                { icon: Dices, label: "Casinos", value: "3" },
+                { icon: Home, label: "Lodging", value: "Historic" },
               ].map((stat) => (
                 <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                  <Card className="bg-card/50 border-border/30 text-center p-4 hover:border-accent/50 transition-all">
+                  <Card className="bg-card/50 border-border/30 text-center p-4 hover:border-accent/50 transition-all hover:-translate-y-1">
                     <stat.icon className="w-8 h-8 mx-auto mb-2 text-accent" />
-                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
                     <div className="text-xs text-muted-foreground">{stat.label}</div>
                   </Card>
                 </motion.div>
@@ -215,299 +289,326 @@ const CentralCityGuide = () => {
 
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Gaming + Cannabis Experiences
-              </span>
-            </h2>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Best Time to Visit Central City
+                </span>
+              </h2>
+            </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  name: "Casino Gaming",
-                  icon: Dice5,
-                  description: "Three major casinos with slots, poker, and gaming. Historic mining-themed venues.",
-                  tip: "Light consumption only before gambling. Never gamble while heavily impaired."
-                },
-                {
-                  name: "Historic Mining Tour",
-                  icon: Mountain,
-                  description: "Explore authentic Gold Rush heritage. Historic mines and museum experiences.",
-                  tip: "Tour sober first. Light edible after tour - absorb history first."
-                },
-                {
-                  name: "Heritage Dining",
-                  icon: Building2,
-                  description: "Historic saloons and restaurants serving classic Gold Rush fare with modern cannabis-friendly attitude.",
-                  tip: "Many establishments cannabis-friendly. Combine gaming with dining experience."
-                },
-                {
-                  name: "Scenic Mountain Views",
-                  icon: Mountain,
-                  description: "Mountain peaks and historic town vistas. Perfect for reflection and enjoyment.",
-                  tip: "Light consumption for scenic appreciation. Amazing panoramic views."
-                },
-                {
-                  name: "Art & Culture",
-                  icon: Sparkles,
-                  description: "Historic art galleries and cultural events celebrating Gold Rush heritage.",
-                  tip: "Consume before experiencing art. Historic buildings + cannabis = immersive."
-                },
-                {
-                  name: "Weekend Gaming Getaway",
-                  icon: Bed,
-                  description: "Perfect overnight destination from Denver. Gaming + lodging + cannabis culture.",
-                  tip: "Plan multi-day trip. Gaming + cannabis + food + culture experience."
-                }
-              ].map((attr) => (
-                <Card key={attr.name} className="bg-card/50 border-border/30 p-6 h-full hover:border-accent/50 transition-all">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <attr.icon className="w-6 h-6 text-accent" />
+            <Tabs defaultValue="winter" className="w-full">
+              <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
+                {seasons.map((season) => (
+                  <TabsTrigger key={season.id} value={season.id} className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                    <season.icon className="w-4 h-4 mr-2 hidden sm:inline" />
+                    {season.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              
+              {seasons.map((season) => (
+                <TabsContent key={season.id} value={season.id}>
+                  <Card className="bg-card/50 border-border/30 p-6 md:p-8">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="md:w-1/3">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="p-3 rounded-xl bg-accent/20">
+                            <season.icon className="w-8 h-8 text-accent" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-bold text-foreground">{season.name}</h3>
+                            <p className="text-sm text-muted-foreground">{season.months}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-lg font-medium text-foreground mb-4">
+                          <Clock className="w-5 h-5 text-accent" />
+                          {season.temp}
+                        </div>
+                      </div>
+                      <div className="md:w-2/3">
+                        <h4 className="font-semibold text-foreground mb-3">Season Highlights</h4>
+                        <ul className="space-y-2 mb-4">
+                          {season.highlights.map((highlight, i) => (
+                            <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                              <CheckCircle className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="p-4 rounded-lg bg-accent/10 border border-accent/20">
+                          <p className="text-sm text-foreground">
+                            <strong className="text-accent">Gaming Tip:</strong> {season.tip}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="font-bold">{attr.name}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">{attr.description}</p>
-                  <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                    <p className="text-xs text-accent font-medium mb-1">🎰 Cannabis Tip</p>
-                    <p className="text-xs text-muted-foreground">{attr.tip}</p>
-                  </div>
-                </Card>
+                  </Card>
+                </TabsContent>
               ))}
-            </div>
+            </Tabs>
           </div>
         </section>
 
         <section className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Cannabis & Gaming Laws
-              </span>
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <Card className="p-6 bg-card/50 border-border/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-full bg-green-500/20">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                  </div>
-                  <h3 className="font-semibold">Recreational Legal</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">Adults 21+ can possess up to 1 ounce. Most dispensaries welcome visitors.</p>
-              </Card>
-              
-              <Card className="p-6 bg-card/50 border-border/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-full bg-purple-500/20">
-                    <Dice5 className="w-5 h-5 text-purple-400" />
-                  </div>
-                  <h3 className="font-semibold">Gaming Culture</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">Cannabis + gaming integrated into Central City's Gold Rush heritage and tourism.</p>
-              </Card>
+          <div className="container mx-auto px-4 max-w-6xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Things to Do in Central City
+                </span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Gaming, historic mining heritage, and Gold Rush culture experiences.</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {attractions.map((attr, i) => (
+                <motion.div key={attr.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}>
+                  <Card className="bg-card/50 border-border/30 p-6 h-full hover:border-accent/50 transition-all group">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <attr.icon className="w-6 h-6 text-accent" />
+                      </div>
+                      <h3 className="font-bold text-foreground">{attr.name}</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">{attr.description}</p>
+                    <div className="p-3 rounded-lg bg-background/50 border border-border/30">
+                      <p className="text-xs text-accent font-medium mb-1">Cannabis Traveler Tip</p>
+                      <p className="text-xs text-muted-foreground">{attr.cannabisTip}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
             </div>
-
-            <Card className="p-6 bg-green-500/5 border-green-500/20 mb-6">
-              <h3 className="font-bold text-lg text-green-400 mb-4">✅ Safe Cannabis + Gaming Activities</h3>
-              <div className="grid sm:grid-cols-2 gap-3 text-sm text-muted-foreground">
-                <div>• Pre-gaming consumption at lodge</div>
-                <div>• Light cannabis before casino visit</div>
-                <div>• Historic mining tour (sober)</div>
-                <div>• Heritage dining experiences</div>
-                <div>• Post-gaming cannabis relaxation</div>
-                <div>• Scenic reflection sessions</div>
-                <div>• Art gallery appreciation</div>
-                <div>• Heritage museum exploration</div>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-orange-500/5 border-orange-500/20">
-              <h3 className="font-bold text-lg text-orange-400 mb-4">⚠️ Responsible Cannabis + Gaming Guidelines</h3>
-              <div className="grid sm:grid-cols-2 gap-3 text-sm text-muted-foreground">
-                <div>• Never gamble while heavily impaired</div>
-                <div>• Light consumption only before gaming</div>
-                <div>• Set gambling budgets sober</div>
-                <div>• No driving after consuming</div>
-                <div>• Use rideshare between casinos</div>
-                <div>• Limit daily cannabis intake while gaming</div>
-                <div>• Take gaming breaks for clarity</div>
-                <div>• Don't bet money you can't afford</div>
-              </div>
-            </Card>
           </div>
         </section>
 
         <section className="py-16">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Getting Around
-              </span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-10">
-              {[
-                { name: "Walking", icon: MapPinned, desc: "Compact downtown is walkable. Historic streets and shops accessible on foot.", tip: "Safe for walking after light consumption. Most destinations nearby." },
-                { name: "Rideshare", icon: Car, desc: "Uber/Lyft available. Best option for casino hopping and evening entertainment.", tip: "Essential for responsible gaming + cannabis. Never drive impaired." },
-                { name: "Driving", icon: Bus, desc: "Road from Denver is scenic. About 45 minutes away.", tip: "Drive sober to Central City. Consume responsibly once arrived." },
-                { name: "Gaming Shuttle", icon: Plane, desc: "Some casinos offer shuttle services from Denver.", tip: "Check with casinos for transportation options." }
-              ].map((opt) => (
-                <Card key={opt.name} className="bg-card/50 border-border/30 p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <opt.icon className="w-6 h-6 text-accent" />
-                    </div>
-                    <h3 className="font-bold">{opt.name}</h3>
+          <div className="container mx-auto px-4 max-w-5xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Cannabis & Responsible Gaming Laws
+                </span>
+              </h2>
+            </motion.div>
+            
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <Card className="p-6 bg-card/50 border-border/30">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-full bg-yellow-500/20">
+                    <Coins className="w-5 h-5 text-yellow-400" />
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{opt.desc}</p>
-                  <p className="text-xs text-accent bg-accent/10 p-2 rounded">💡 {opt.tip}</p>
-                </Card>
-              ))}
+                  <h3 className="font-semibold">Responsible Gaming</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">Never consume cannabis before gaming. Set loss limits and use national gaming helpline: 1-800-522-4700.</p>
+              </Card>
+              
+              <Card className="p-6 bg-card/50 border-border/30">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-full bg-blue-500/20">
+                    <Car className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <h3 className="font-semibold">Safe Transportation</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">Never drive after cannabis or gaming. Use casino shuttles, rideshare, or stay local for safety.</p>
+              </Card>
             </div>
 
-            <h3 className="text-2xl font-bold text-center mb-6">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Historic Gaming Districts
-              </span>
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                { name: "Historic Downtown", desc: "Main gaming and casino district with saloons and heritage buildings." },
-                { name: "Mining Heritage Zone", desc: "Authentic Gold Rush preserved structures and museums." },
-                { name: "Casino Row", desc: "Three major casinos concentrated in downtown area." },
-                { name: "Historic District", desc: "Victorian-era architecture and heritage sites." },
-                { name: "Mountain Views", desc: "Scenic overlooks with Rocky Mountain panoramas." },
-                { name: "Black Hawk Adjacent", desc: "Connected gaming town just minutes away." }
-              ].map((h) => (
-                <Card key={h.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
-                  <h4 className="font-semibold text-accent mb-2">{h.name}</h4>
-                  <p className="text-sm text-muted-foreground">{h.desc}</p>
-                </Card>
-              ))}
-            </div>
+            <Card className="p-6 bg-green-500/5 border-green-500/20 mb-6">
+              <h3 className="font-bold text-lg text-green-400 mb-4 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Where You CAN Consume
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  { place: "Private Lodging", note: "With owner permission" },
+                  { place: "Casino Hotel Rooms", note: "Some allow consumption" },
+                  { place: "Private Homes", note: "With permission" },
+                  { place: "Cannabis Lounges", note: "Licensed venues" },
+                ].map((item) => (
+                  <div key={item.place} className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <span className="text-foreground font-medium">{item.place}</span>
+                      <span className="text-muted-foreground text-sm"> — {item.note}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6 bg-red-500/5 border-red-500/20">
+              <h3 className="font-bold text-lg text-red-400 mb-4 flex items-center gap-2">
+                <Ban className="w-5 h-5" />
+                Where You CANNOT Consume
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  { place: "Casino Gaming Floor", fine: "Ejection + Ban" },
+                  { place: "Casino Lobbies", fine: "Prohibited" },
+                  { place: "Public Streets", fine: "Civil citation" },
+                  { place: "Historic Sites", fine: "Federal/public land" },
+                ].map((item) => (
+                  <div key={item.place} className="flex items-start gap-2">
+                    <Ban className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <span className="text-foreground font-medium">{item.place}</span>
+                      <span className="text-red-400 text-sm font-medium"> — {item.fine}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </section>
 
         <section id="dispensaries" className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Dispensaries
-              </span>
-            </h2>
-
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Dispensaries
+                </span>
+              </h2>
+              <Link to="/dispensary" className="text-accent hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            
             {loading ? (
-              <div className="text-center py-12">Loading dispensaries...</div>
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+              </div>
             ) : dispensaries.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
-                {dispensaries.map((d) => (
-                  <Card key={d.id} className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all">
-                    {d.image && <img src={d.image} alt={d.name} className="w-full h-48 object-cover" />}
-                    <CardContent className="p-6">
-                      <h3 className="font-bold text-lg mb-2">{d.name}</h3>
-                      {d.rating && <div className="flex gap-1 mb-3">{renderRating(d.rating)}</div>}
-                      <p className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
-                        <MapPin className="w-4 h-4" /> {d.address}
-                      </p>
-                      <div className="flex gap-2">
-                        {d.is_recreational && <Badge className="bg-accent/20 text-accent">Recreational</Badge>}
+                {dispensaries.map((disp) => (
+                  <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
+                    <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                      <div className="aspect-video relative">
+                        <img src={disp.images?.[0] || disp.image || "/dest-colorado.jpg"} alt={disp.name} className="w-full h-full object-cover" />
+                        <div className="absolute top-2 right-2 flex gap-1">
+                          {disp.is_recreational && <Badge className="bg-green-500/90 text-white text-xs">Rec</Badge>}
+                          {disp.is_medical && <Badge className="bg-blue-500/90 text-white text-xs">Med</Badge>}
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{disp.name}</h3>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                          <MapPin className="w-3 h-3" />
+                          <span>{disp.city}, {disp.state}</span>
+                        </div>
+                        <div className="flex items-center gap-1">{renderRating(disp.rating || 0)}</div>
+                      </div>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <Card className="p-8 text-center bg-card/50 border-border/30">
-                <p className="text-muted-foreground">Dispensaries in Central City area - check local guides!</p>
+              <Card className="p-8 text-center bg-card/50">
+                <Store className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">No dispensaries found right now.</p>
               </Card>
             )}
           </div>
         </section>
 
         <section id="rentals" className="py-16">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Gaming Hotels
-              </span>
-            </h2>
-
-            {rentals.length > 0 ? (
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Gaming Town Lodging
+                </span>
+              </h2>
+              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+              </div>
+            ) : rentals.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
-                {rentals.map((r) => (
-                  <Card key={r.id} className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all">
-                    {r.images?.[0] && <img src={r.images[0]} alt={r.name} className="w-full h-48 object-cover" />}
-                    <CardContent className="p-6">
-                      <h3 className="font-bold text-lg mb-2">{r.name}</h3>
-                      {r.rating && <div className="flex gap-1 mb-3">{renderRating(r.rating)}</div>}
-                      <p className="text-sm text-muted-foreground mb-4">{r.address}</p>
-                      {r.website && (
-                        <Button asChild variant="outline" size="sm" className="w-full">
-                          <a href={r.website} target="_blank">Visit <ExternalLink className="w-3 h-3 ml-1" /></a>
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
+                {rentals.map((rental) => (
+                  <Link key={rental.id} to={`/hotels/${rental.slug}`}>
+                    <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                      <div className="aspect-video relative">
+                        <img src={rental.images?.[0] || "/dest-colorado.jpg"} alt={rental.name} className="w-full h-full object-cover" />
+                        <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-xs">420 Friendly</Badge>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{rental.name}</h3>
+                        {rental.address && (
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                            <MapPin className="w-3 h-3" />
+                            <span className="truncate">{rental.address}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">{renderRating(rental.rating || 4)}</div>
+                      </div>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <Card className="p-8 text-center bg-card/50 border-border/30">
-                <p className="text-muted-foreground">420-friendly gaming hotels available!</p>
+              <Card className="p-8 text-center bg-card/50">
+                <Bed className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">No rentals found right now.</p>
               </Card>
             )}
           </div>
         </section>
 
-        <section className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <Card className="bg-gradient-to-br from-accent/10 via-background to-accent/5 border-accent/20 p-8">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                    🌿 420 Gaming + Cannabis Guide
-                  </span>
-                </h2>
-                <p className="text-muted-foreground">Tips for responsible gaming + cannabis in historic Central City</p>
+        <section className="py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-gold/10" />
+          <div className="container mx-auto px-4 max-w-2xl relative z-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+              <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-6">
+                <Download className="w-8 h-8 text-accent" />
               </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Get the Central City Cannabis Guide
+                </span>
+              </h2>
+              <p className="text-muted-foreground mb-8">Free PDF with casino maps, responsible gaming + cannabis tips, and Gold Rush heritage tours.</p>
               
-              <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3">
-                <Input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="flex-1"
-                />
-                <Button type="submit" disabled={submitting} className="bg-accent hover:bg-accent/90">
-                  {submitting ? "Subscribing..." : "Subscribe"}
+              <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
+                <Input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-card/50 border-border/50 focus:border-accent" required />
+                <Button type="submit" className="bg-accent hover:bg-accent/90 whitespace-nowrap" disabled={submitting}>
+                  {submitting ? "Sending..." : "Get Free Guide"}
+                  <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-            </Card>
+            </motion.div>
           </div>
         </section>
 
-        <section className="py-16">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl font-bold text-center mb-10">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Nearby Colorado Guides
-              </span>
-            </h2>
+        <section className="py-16 bg-card/30">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 More Colorado Destinations
+                </span>
+              </h2>
+            </motion.div>
+
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { name: "Denver", slug: "/denver", desc: "Cannabis epicenter - 45 minutes away", distance: "45 min" },
-                { name: "Black Hawk", slug: "/black-hawk", desc: "Sister gaming town adjacent", distance: "5 min" },
-                { name: "Boulder", slug: "/boulder", desc: "College town cannabis culture", distance: "1.5 hours" }
-              ].map((g) => (
-                <Link key={g.name} to={g.slug}>
-                  <Card className="bg-card/50 border-border/30 p-6 hover:border-accent/50 transition-all h-full">
-                    <h3 className="font-bold text-lg text-accent mb-2">{g.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{g.desc}</p>
-                    <ArrowRight className="w-4 h-4 text-accent" />
-                  </Card>
-                </Link>
+              {relatedGuides.map((guide, index) => (
+                <motion.div key={guide.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }}>
+                  <Link to={guide.slug}>
+                    <Card className="p-6 bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 text-center h-full">
+                      <Compass className="w-8 h-8 text-accent mx-auto mb-3" />
+                      <h3 className="font-bold text-foreground mb-1">{guide.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{guide.desc}</p>
+                      <Badge variant="outline" className="border-accent/30 text-accent text-xs">{guide.distance} from Central City</Badge>
+                    </Card>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>

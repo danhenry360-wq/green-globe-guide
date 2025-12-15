@@ -5,16 +5,16 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { 
-  MapPin, Star, CheckCircle, Plane, Home, Cannabis, Shield, ArrowRight, Bed, Store, ChevronRight,
-  Building2, AlertCircle, Clock, Car, Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
-  Waves, Mountain, Camera, AlertTriangle, Ban, ExternalLink, Compass, Zap
+  MapPin, Star, CheckCircle, Home, Cannabis, Shield, ArrowRight, Bed, Store, 
+  ChevronRight, Building2, Clock, Car, Bus, Snowflake, Sun, Leaf, Flower2,
+  Mountain, Waves, Ban, Mail, Download, Compass
 } from "lucide-react";
 
 interface Dispensary {
@@ -38,8 +38,6 @@ interface Rental {
   address: string | null;
   rating: number | null;
   images: string[] | null;
-  website: string | null;
-  amenities?: unknown;
 }
 
 const SteamboatSpringsGuide = () => {
@@ -116,37 +114,15 @@ const SteamboatSpringsGuide = () => {
     return stars;
   };
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "TravelGuide",
-    "name": "Steamboat Springs Cannabis Travel Guide 2025",
-    "description": "Complete guide to cannabis travel in Steamboat Springs, Colorado. Skiing, hot springs, dispensaries, 420-friendly lodging, and expert tips.",
-    "url": "https://budquest.guide/steamboat-springs",
-    "publisher": { "@type": "Organization", "name": "BudQuest", "url": "https://budquest.guide" },
-    "about": { "@type": "City", "name": "Steamboat Springs", "address": { "@type": "PostalAddress", "addressLocality": "Steamboat Springs", "addressRegion": "CO", "addressCountry": "US" } },
-    "dateModified": new Date().toISOString().split('T')[0],
-    "inLanguage": "en-US"
-  };
-
-  const faqStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "Is cannabis legal in Steamboat Springs?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, recreational cannabis is legal for adults 21+. Possess up to 1 ounce from licensed dispensaries." } },
-      { "@type": "Question", "name": "Can I consume at hot springs?", "acceptedAnswer": { "@type": "Answer", "text": "No, public hot springs prohibit consumption. Many 420-friendly lodges have private hot tub access." } },
-      { "@type": "Question", "name": "Best activities combining skiing and cannabis?", "acceptedAnswer": { "@type": "Answer", "text": "Ski powder days, then relax at thermal hot springs with cannabis at your 420-friendly lodge." } }
-    ]
-  };
-
   const seasons = [
     {
       id: "winter",
       name: "Winter",
       months: "December - March",
       icon: Snowflake,
-      temp: "5-25°F",
-      highlights: ["World-class powder skiing", "Après-ski hot springs relaxation", "Cozy lodge vibes", "Snow-covered mountain scenery"],
-      tip: "Winter is paradise - ski challenging terrain, then soak in 140°F hot springs to relax muscles and cannabis effects."
+      temp: "10-30°F",
+      highlights: ["World-class skiing", "Champagne powder", "Après-ski hot springs", "Holiday events"],
+      tip: "Winter paradise - ski challenging terrain then soak in natural thermal springs to enhance cannabis relaxation."
     },
     {
       id: "summer",
@@ -154,17 +130,17 @@ const SteamboatSpringsGuide = () => {
       months: "June - August",
       icon: Sun,
       temp: "65-80°F",
-      highlights: ["Mountain biking and hiking", "Hot springs without snow", "Outdoor concerts", "Clear blue skies"],
-      tip: "Summer outdoor + edibles = perfect mountain exploration. Hydrate well and never hike impaired."
+      highlights: ["Mountain biking", "Hot springs soaking", "Outdoor concerts", "Clear mountain air"],
+      tip: "Perfect for combining outdoor activities with cannabis-friendly thermal spring relaxation."
     },
     {
       id: "fall",
       name: "Fall",
       months: "September - November",
       icon: Leaf,
-      temp: "35-60°F",
-      highlights: ["Golden aspen trees", "Fall colors peak", "Fewer crowds", "Crisp mountain air"],
-      tip: "October is ideal - beautiful weather, affordable lodging, and peaceful hot springs without summer crowds."
+      temp: "35-65°F",
+      highlights: ["Aspen colors", "Fewer crowds", "Perfect weather", "Fall festivals"],
+      tip: "Beautiful and less crowded. Ideal for enjoying hot springs without summer tourist crowds."
     },
     {
       id: "spring",
@@ -172,8 +148,8 @@ const SteamboatSpringsGuide = () => {
       months: "March - May",
       icon: Flower2,
       temp: "30-55°F",
-      highlights: ["Late spring skiing", "Wildflower blooms", "Snowmelt in streams", "Mild afternoons"],
-      tip: "Spring skiing followed by hot springs relaxation is unique. Perfect combo for cannabis-friendly mountain lovers."
+      highlights: ["Spring skiing", "Wildflowers", "Snowmelt streams", "Mild weather"],
+      tip: "Spring brings beautiful scenery and pleasant cannabis experiences at the hot springs."
     }
   ];
 
@@ -181,93 +157,74 @@ const SteamboatSpringsGuide = () => {
     {
       name: "Steamboat Ski Resort",
       icon: Mountain,
-      description: "Famous for 'Champagne Powder' snow. 2,965 acres with varied terrain for all skill levels.",
-      cannabisTip: "No consumption on resort grounds. Enjoy après-ski at 420-friendly lodges only.",
-      address: "Steamboat Springs, CO"
+      description: "World-class ski resort with champagne powder snow and 2,965 vertical feet.",
+      cannabisTip: "Federal land prohibits consumption. Enjoy après-ski cannabis at your 420-friendly lodge."
     },
     {
-      name: "Hot Springs Pool",
+      name: "Natural Hot Springs",
       icon: Waves,
-      description: "Natural thermal hot springs at 104°F. Historic public bathing experience.",
-      cannabisTip: "Public facility - no consumption. Many lodges have private hot tubs for cannabis relaxation.",
-      address: "Central Steamboat"
+      description: "Natural thermal springs at 104°F perfect for relaxation and recovery.",
+      cannabisTip: "Many 420-friendly resorts have private hot tub access. Cannabis + thermal soaking = ultimate relaxation."
     },
     {
       name: "Routt National Forest",
-      icon: Compass,
-      description: "800,000 acres of pristine wilderness with hiking and mountain biking trails.",
-      cannabisTip: "Light edibles on easy trails only. Never bike or hike while impaired.",
-      address: "Surrounding Steamboat"
+      icon: Mountain,
+      description: "Stunning mountain trails with panoramic views and alpine wilderness.",
+      cannabisTip: "Light edibles on easy trails only. Never hike impaired in mountain terrain."
     },
     {
       name: "Fish Creek Falls",
-      icon: Leaf,
-      description: "Scenic 283-foot waterfall with easy walking trail. Perfect relaxation spot.",
-      cannabisTip: "Peaceful natural setting ideal for light cannabis experience. Bring water.",
-      address: "Fish Creek Falls Trail"
-    },
-    {
-      name: "Steamboat Art Museum",
-      icon: Camera,
-      description: "Contemporary art in historic downtown. Cultural hub of the community.",
-      cannabisTip: "Creative cannabis experience - art and cannabis pair well. No consumption on premises.",
-      address: "Downtown Steamboat"
+      icon: Mountain,
+      description: "Beautiful 283-foot waterfall hike through forest landscape.",
+      cannabisTip: "Perfect sober hike destination. Enjoy cannabis appreciation at lodge afterward."
     },
     {
       name: "Downtown Steamboat",
       icon: Building2,
-      description: "Historic western town with shops, restaurants, galleries, and brewery scene.",
-      cannabisTip: "Most dispensaries and 420-friendly restaurants in downtown area.",
-      address: "Lincoln Avenue"
+      description: "Charming town with galleries, restaurants, breweries, and shops.",
+      cannabisTip: "Cannabis-friendly dining and shopping throughout town. Many dispensaries available."
+    },
+    {
+      name: "Strawberry Park Hot Springs",
+      icon: Waves,
+      description: "Private natural hot springs nestled in the mountains.",
+      cannabisTip: "Top-rated hot springs destination. Cannabis + thermal therapy = peak relaxation experience."
     }
   ];
 
-  const transportOptions = [
-    { name: "Free Town Shuttle", icon: Bus, description: "Connects downtown to ski resort. Free all year.", tip: "Easiest way to get around. Never drive after consuming." },
-    { name: "Rideshare", icon: Car, description: "Uber/Lyft available. Essential for dispensary visits.", tip: "Use for all post-cannabis transport. DUI laws enforced." },
-    { name: "Mountain Biking", icon: Bike, description: "Extensive trail system. Summer season peak.", tip: "Only bike when fully sober. Balance + trails = safety risk." },
-    { name: "Walking", icon: MapPinned, description: "Downtown and resort areas are walkable.", tip: "Safe, scenic exploration of the charming town." }
-  ];
-
-  const neighborhoods = [
-    { name: "Downtown Steamboat", desc: "Historic western charm with shops, restaurants, dispensaries. Heart of town.", safety: "very-safe", walkable: true },
-    { name: "Ski Town Base", desc: "Resort area with modern lodging and dining. Direct slope access.", safety: "very-safe", walkable: true },
-    { name: "Old Town", desc: "Authentic historic district with galleries and local character.", safety: "safe", walkable: true },
-    { name: "Gondola District", desc: "Upscale residential area near ski access.", safety: "very-safe", walkable: true },
-    { name: "Hayden", desc: "Charming smaller town 20 minutes south. Rural feel.", safety: "safe", walkable: false },
-    { name: "Stagecoach", desc: "Mountain hamlet with outdoor recreation focus.", safety: "safe", walkable: false }
-  ];
-
   const relatedGuides = [
-    { name: "Aspen", slug: "/aspen", desc: "Luxury ski resort nearby", distance: "3 hours" },
-    { name: "Vail", slug: "/vail", desc: "Premium ski and cannabis scene", distance: "2.5 hours" },
-    { name: "Denver", slug: "/denver", desc: "Cannabis epicenter", distance: "3 hours" }
+    { name: "Vail", slug: "/vail", desc: "Luxury Ski Resort", distance: "3 hours" },
+    { name: "Breckenridge", slug: "/breckenridge", desc: "Mining Town Vibes", distance: "3.5 hours" },
+    { name: "Denver", slug: "/denver", desc: "Cannabis Hub", distance: "3 hours" },
   ];
 
   return (
     <>
       <Helmet>
-        <title>Steamboat Springs Cannabis Travel Guide 2025 | Ski, Powder & Hot Springs | BudQuest</title>
-        <meta name="description" content="Complete Steamboat Springs cannabis guide. Skiing, hot springs, dispensaries, 420-friendly lodging, and cannabis travel tips in Colorado's premier mountain town." />
-        <meta name="keywords" content="Steamboat Springs cannabis, skiing and cannabis, hot springs Colorado, 420 hotels Steamboat, cannabis travel Steamboat" />
+        <title>🌿 420 Steamboat Springs Cannabis Guide 2025 | Hot Springs & Skiing | BudQuest</title>
+        <meta name="description" content="Complete Steamboat Springs cannabis guide. World-class skiing, natural hot springs, 420-friendly lodging, and cannabis-friendly thermal relaxation." />
+        <meta name="keywords" content="Steamboat cannabis, hot springs 420, ski resort cannabis, thermal springs, Steamboat dispensaries" />
         <link rel="canonical" href="https://budquest.guide/steamboat-springs" />
-        <meta property="og:title" content="Steamboat Springs Cannabis Travel Guide 2025 | BudQuest" />
-        <meta property="og:description" content="Guide to cannabis in Steamboat Springs. Combine skiing and hot springs with 420-friendly experiences." />
-        <meta name="robots" content="index, follow" />
-        <meta name="geo.region" content="US-CO" />
-        <meta name="geo.placename" content="Steamboat Springs" />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
+        <meta property="og:title" content="🌿 420 Steamboat Springs Cannabis Guide 2025 | BudQuest" />
+        <meta property="og:description" content="Hot springs + skiing cannabis guide. Natural thermal soaking + 420 cannabis culture." />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelGuide",
+          "name": "Steamboat Springs Cannabis Travel Guide 2025",
+          "url": "https://budquest.guide/steamboat-springs"
+        })}</script>
       </Helmet>
 
       <Navigation />
       
       <main className="min-h-screen bg-background">
-        <nav className="container mx-auto px-4 pt-20 pb-4">
+        <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
-            <li><Link to="/" className="hover:text-accent">Home</Link></li>
+            <li><Link to="/" className="hover:text-accent transition-colors">Home</Link></li>
             <ChevronRight className="w-4 h-4" />
-            <li><Link to="/colorado" className="hover:text-accent">Colorado</Link></li>
+            <li><Link to="/usa" className="hover:text-accent transition-colors">USA Guide</Link></li>
+            <ChevronRight className="w-4 h-4" />
+            <li><Link to="/usa/colorado" className="hover:text-accent transition-colors">Colorado</Link></li>
             <ChevronRight className="w-4 h-4" />
             <li className="text-foreground font-medium">Steamboat Springs</li>
           </ol>
@@ -275,33 +232,33 @@ const SteamboatSpringsGuide = () => {
 
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img src="/dest-2.jpg" alt="Steamboat Springs ski resort and hot springs" className="w-full h-full object-cover" />
+            <img src="/dest-colorado.jpg" alt="Steamboat Springs Hot Springs" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30">
+              <Badge className="mb-6 px-4 py-2 bg-cyan-600/20 text-cyan-400 border-cyan-600/30">
                 <Waves className="w-4 h-4 mr-2" />
-                Ski & Soak Cannabis Paradise
+                Skiing + Thermal Springs
               </Badge>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Steamboat Springs Cannabis Guide
+                  🌿 420 Steamboat Springs Guide
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Combine world-class skiing with natural hot springs relaxation. Experience cannabis culture in Colorado's premier mountain paradise with thermal wellness.
+                Perfect hybrid destination combining world-class skiing with natural 104°F thermal springs. Premium cannabis-friendly resorts and après-ski culture.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                   <a href="#dispensaries"><Store className="w-5 h-5 mr-2" />Find Dispensaries</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />420 Hot Spring Lodges</a>
+                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />420 Hot Springs Stays</a>
                 </Button>
               </div>
             </motion.div>
@@ -312,16 +269,16 @@ const SteamboatSpringsGuide = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { icon: Cannabis, label: "Age Requirement", value: "21+" },
-                { icon: Store, label: "Dispensaries", value: "12+" },
-                { icon: Shield, label: "Possession Limit", value: "1 oz" },
-                { icon: Home, label: "420 Lodges", value: "20+" },
+                { icon: Cannabis, label: "Age Required", value: "21+" },
+                { icon: Store, label: "Dispensaries", value: "5+" },
+                { icon: Shield, label: "Possession", value: "1 oz" },
                 { icon: Waves, label: "Hot Springs", value: "104°F" },
+                { icon: Home, label: "Lodging", value: "Luxury" },
               ].map((stat) => (
                 <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                  <Card className="bg-card/50 border-border/30 text-center p-4 hover:border-accent/50 transition-all">
+                  <Card className="bg-card/50 border-border/30 text-center p-4 hover:border-accent/50 transition-all hover:-translate-y-1">
                     <stat.icon className="w-8 h-8 mx-auto mb-2 text-accent" />
-                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
                     <div className="text-xs text-muted-foreground">{stat.label}</div>
                   </Card>
                 </motion.div>
@@ -332,20 +289,20 @@ const SteamboatSpringsGuide = () => {
 
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-6xl">
-            <div className="text-center mb-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Best Time to Visit Steamboat Springs
                 </span>
               </h2>
-            </div>
+            </motion.div>
 
-            <Tabs defaultValue="winter">
-              <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50">
-                {seasons.map((s) => (
-                  <TabsTrigger key={s.id} value={s.id}>
-                    <s.icon className="w-4 h-4 mr-2 hidden sm:inline" />
-                    {s.name}
+            <Tabs defaultValue="winter" className="w-full">
+              <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
+                {seasons.map((season) => (
+                  <TabsTrigger key={season.id} value={season.id} className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                    <season.icon className="w-4 h-4 mr-2 hidden sm:inline" />
+                    {season.name}
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -360,27 +317,29 @@ const SteamboatSpringsGuide = () => {
                             <season.icon className="w-8 h-8 text-accent" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-bold">{season.name}</h3>
+                            <h3 className="text-xl font-bold text-foreground">{season.name}</h3>
                             <p className="text-sm text-muted-foreground">{season.months}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 text-lg font-medium mb-4">
+                        <div className="flex items-center gap-2 text-lg font-medium text-foreground mb-4">
                           <Clock className="w-5 h-5 text-accent" />
                           {season.temp}
                         </div>
                       </div>
                       <div className="md:w-2/3">
-                        <h4 className="font-semibold mb-3">Season Highlights</h4>
+                        <h4 className="font-semibold text-foreground mb-3">Season Highlights</h4>
                         <ul className="space-y-2 mb-4">
-                          {season.highlights.map((h, i) => (
+                          {season.highlights.map((highlight, i) => (
                             <li key={i} className="flex items-start gap-2 text-muted-foreground">
                               <CheckCircle className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                              {h}
+                              {highlight}
                             </li>
                           ))}
                         </ul>
                         <div className="p-4 rounded-lg bg-accent/10 border border-accent/20">
-                          <p className="text-sm"><strong className="text-accent">Pro Tip:</strong> {season.tip}</p>
+                          <p className="text-sm text-foreground">
+                            <strong className="text-accent">Local Tip:</strong> {season.tip}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -393,31 +352,32 @@ const SteamboatSpringsGuide = () => {
 
         <section className="py-16 bg-card/30">
           <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                What to Do in Steamboat Springs
-              </span>
-            </h2>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Things to Do in Steamboat Springs
+                </span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Skiing, hot springs, and cannabis-friendly cultural experiences.</p>
+            </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {attractions.map((attr) => (
-                <Card key={attr.name} className="bg-card/50 border-border/30 p-6 h-full hover:border-accent/50 transition-all">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <attr.icon className="w-6 h-6 text-accent" />
+              {attractions.map((attr, i) => (
+                <motion.div key={attr.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}>
+                  <Card className="bg-card/50 border-border/30 p-6 h-full hover:border-accent/50 transition-all group">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <attr.icon className="w-6 h-6 text-accent" />
+                      </div>
+                      <h3 className="font-bold text-foreground">{attr.name}</h3>
                     </div>
-                    <h3 className="font-bold">{attr.name}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">{attr.description}</p>
-                  <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                    <p className="text-xs text-accent font-medium mb-1">Cannabis Tip</p>
-                    <p className="text-xs text-muted-foreground">{attr.cannabisTip}</p>
-                  </div>
-                  <div className="flex items-center gap-1 mt-4 text-xs text-muted-foreground">
-                    <MapPin className="w-3 h-3" />
-                    {attr.address}
-                  </div>
-                </Card>
+                    <p className="text-sm text-muted-foreground mb-4">{attr.description}</p>
+                    <div className="p-3 rounded-lg bg-background/50 border border-border/30">
+                      <p className="text-xs text-accent font-medium mb-1">Cannabis Traveler Tip</p>
+                      <p className="text-xs text-muted-foreground">{attr.cannabisTip}</p>
+                    </div>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -425,11 +385,13 @@ const SteamboatSpringsGuide = () => {
 
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Cannabis Laws & Hot Springs Guide
-              </span>
-            </h2>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Cannabis Laws
+                </span>
+              </h2>
+            </motion.div>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
@@ -437,19 +399,19 @@ const SteamboatSpringsGuide = () => {
                   <div className="p-2 rounded-full bg-green-500/20">
                     <CheckCircle className="w-5 h-5 text-green-400" />
                   </div>
-                  <h3 className="font-semibold">Recreational Legal</h3>
+                  <h3 className="font-semibold">Hot Springs Protocol</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">Adults 21+ can possess up to 1 ounce from licensed dispensaries.</p>
+                <p className="text-sm text-muted-foreground">Many 420-friendly resorts allow consumption in private hot tub areas with permission.</p>
               </Card>
               
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-blue-500/20">
-                    <Waves className="w-5 h-5 text-blue-400" />
+                    <Car className="w-5 h-5 text-blue-400" />
                   </div>
-                  <h3 className="font-semibold">Hot Springs Protocol</h3>
+                  <h3 className="font-semibold">Safe Transportation</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">Public hot springs prohibit consumption. Private lodge hot tubs welcome cannabis users.</p>
+                <p className="text-sm text-muted-foreground">Never drive after cannabis. Use resort shuttles, rideshare, or walk downtown.</p>
               </Card>
             </div>
 
@@ -460,15 +422,14 @@ const SteamboatSpringsGuide = () => {
               </h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { place: "420-Friendly Lodges", note: "Private hot tubs and rooms" },
+                  { place: "420-Friendly Hotels", note: "Private areas with permission" },
                   { place: "Private Residences", note: "With owner permission" },
-                  { place: "Private Patios", note: "On your lodging property" },
-                  { place: "Consumption Lounges", note: "Limited locations available" }
+                  { place: "Hot Spring Resorts", note: "Designated cannabis areas" },
                 ].map((item) => (
                   <div key={item.place} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <span className="font-medium">{item.place}</span>
+                      <span className="text-foreground font-medium">{item.place}</span>
                       <span className="text-muted-foreground text-sm"> — {item.note}</span>
                     </div>
                   </div>
@@ -483,17 +444,15 @@ const SteamboatSpringsGuide = () => {
               </h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { place: "Ski Resort Grounds", fine: "Federal offense" },
-                  { place: "Public Hot Springs", fine: "Ejection + fine" },
-                  { place: "National Forests", fine: "Federal offense" },
-                  { place: "Public Parks", fine: "$100+ fine" },
-                  { place: "Restaurants/Bars", fine: "Prohibited" },
-                  { place: "While Driving", fine: "DUI charges" }
+                  { place: "Ski Slopes", fine: "Ejection + Fine" },
+                  { place: "Public Hot Springs", fine: "Prohibited" },
+                  { place: "Downtown Steamboat", fine: "Civil citation" },
+                  { place: "Forest Trails", fine: "Federal lands" },
                 ].map((item) => (
                   <div key={item.place} className="flex items-start gap-2">
                     <Ban className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <span className="font-medium">{item.place}</span>
+                      <span className="text-foreground font-medium">{item.place}</span>
                       <span className="text-red-400 text-sm font-medium"> — {item.fine}</span>
                     </div>
                   </div>
@@ -503,170 +462,152 @@ const SteamboatSpringsGuide = () => {
           </div>
         </section>
 
-        <section className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Getting Around
-              </span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-10">
-              {transportOptions.map((opt) => (
-                <Card key={opt.name} className="bg-card/50 border-border/30 p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <opt.icon className="w-6 h-6 text-accent" />
-                    </div>
-                    <h3 className="font-bold">{opt.name}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">{opt.description}</p>
-                  <p className="text-xs text-accent bg-accent/10 p-2 rounded">💡 {opt.tip}</p>
-                </Card>
-              ))}
+        <section id="dispensaries" className="py-16 bg-card/30">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Dispensaries
+                </span>
+              </h2>
+              <Link to="/dispensary" className="text-accent hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-
-            <h3 className="text-2xl font-bold text-center mb-6">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Best Neighborhoods
-              </span>
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {neighborhoods.map((h) => (
-                <Card key={h.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-accent">{h.name}</h4>
-                    <Badge variant="outline" className={h.safety === 'very-safe' ? 'border-green-500/50 text-green-400' : 'border-accent/50 text-accent'}>
-                      {h.walkable && "🚶"}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{h.desc}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="dispensaries" className="py-16">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Dispensaries
-              </span>
-            </h2>
-
+            
             {loading ? (
-              <div className="text-center py-12 text-muted-foreground">Loading dispensaries...</div>
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+              </div>
             ) : dispensaries.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
-                {dispensaries.map((d) => (
-                  <Card key={d.id} className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all">
-                    {d.image && <img src={d.image} alt={d.name} className="w-full h-48 object-cover" />}
-                    <CardContent className="p-6">
-                      <h3 className="font-bold text-lg mb-2">{d.name}</h3>
-                      {d.rating && <div className="flex gap-1 mb-3">{renderRating(d.rating)}</div>}
-                      <p className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
-                        <MapPin className="w-4 h-4" /> {d.address}
-                      </p>
-                      <div className="flex gap-2">
-                        {d.is_recreational && <Badge className="bg-accent/20 text-accent border-accent/30">Recreational</Badge>}
+                {dispensaries.map((disp) => (
+                  <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
+                    <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                      <div className="aspect-video relative">
+                        <img src={disp.images?.[0] || disp.image || "/dest-colorado.jpg"} alt={disp.name} className="w-full h-full object-cover" />
+                        <div className="absolute top-2 right-2 flex gap-1">
+                          {disp.is_recreational && <Badge className="bg-green-500/90 text-white text-xs">Rec</Badge>}
+                          {disp.is_medical && <Badge className="bg-blue-500/90 text-white text-xs">Med</Badge>}
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{disp.name}</h3>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                          <MapPin className="w-3 h-3" />
+                          <span>{disp.city}, {disp.state}</span>
+                        </div>
+                        <div className="flex items-center gap-1">{renderRating(disp.rating || 0)}</div>
+                      </div>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <Card className="p-8 text-center bg-card/50 border-border/30">
-                <p className="text-muted-foreground">Dispensaries coming soon to Steamboat Springs!</p>
+              <Card className="p-8 text-center bg-card/50">
+                <Store className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">No dispensaries found right now.</p>
               </Card>
             )}
           </div>
         </section>
 
-        <section id="rentals" className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                🌿 420 Hot Springs Lodges
-              </span>
-            </h2>
-
-            {rentals.length > 0 ? (
+        <section id="rentals" className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 Hot Springs Lodging
+                </span>
+              </h2>
+              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+              </div>
+            ) : rentals.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
-                {rentals.map((r) => (
-                  <Card key={r.id} className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all">
-                    {r.images?.[0] && <img src={r.images[0]} alt={r.name} className="w-full h-48 object-cover" />}
-                    <CardContent className="p-6">
-                      <h3 className="font-bold text-lg mb-2">{r.name}</h3>
-                      {r.rating && <div className="flex gap-1 mb-3">{renderRating(r.rating)}</div>}
-                      <p className="text-sm text-muted-foreground mb-4 flex items-start gap-2">
-                        <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /> {r.address}
-                      </p>
-                      {r.website && (
-                        <Button asChild variant="outline" size="sm" className="w-full">
-                          <a href={r.website} target="_blank">Visit <ExternalLink className="w-3 h-3 ml-1" /></a>
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
+                {rentals.map((rental) => (
+                  <Link key={rental.id} to={`/hotels/${rental.slug}`}>
+                    <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
+                      <div className="aspect-video relative">
+                        <img src={rental.images?.[0] || "/dest-colorado.jpg"} alt={rental.name} className="w-full h-full object-cover" />
+                        <Badge className="absolute top-2 right-2 bg-green-500/90 text-white text-xs">420 Friendly</Badge>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{rental.name}</h3>
+                        {rental.address && (
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+                            <MapPin className="w-3 h-3" />
+                            <span className="truncate">{rental.address}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">{renderRating(rental.rating || 4)}</div>
+                      </div>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <Card className="p-8 text-center bg-card/50 border-border/30">
-                <p className="text-muted-foreground">420-friendly lodges available - contact local tourism board!</p>
+              <Card className="p-8 text-center bg-card/50">
+                <Bed className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">No rentals found right now.</p>
               </Card>
             )}
           </div>
         </section>
 
-        <section className="py-16">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <Card className="bg-gradient-to-br from-accent/10 via-background to-accent/5 border-accent/20 p-8">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                  <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                    Get the Full Steamboat Guide
-                  </span>
-                </h2>
-                <p className="text-muted-foreground">Ski + hot springs + cannabis tips delivered to your inbox</p>
+        <section className="py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-gold/10" />
+          <div className="container mx-auto px-4 max-w-2xl relative z-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+              <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-6">
+                <Download className="w-8 h-8 text-accent" />
               </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Get the Steamboat Springs Cannabis Guide
+                </span>
+              </h2>
+              <p className="text-muted-foreground mb-8">Free PDF with hot springs maps, cannabis + thermal therapy tips, and dispensary guides.</p>
               
-              <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3">
-                <Input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="flex-1"
-                />
-                <Button type="submit" disabled={submitting} className="bg-accent hover:bg-accent/90">
-                  {submitting ? "Subscribing..." : "Subscribe"}
+              <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
+                <Input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-card/50 border-border/50 focus:border-accent" required />
+                <Button type="submit" className="bg-accent hover:bg-accent/90 whitespace-nowrap" disabled={submitting}>
+                  {submitting ? "Sending..." : "Get Free Guide"}
+                  <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-            </Card>
+            </motion.div>
           </div>
         </section>
 
         <section className="py-16 bg-card/30">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h2 className="text-3xl font-bold text-center mb-10">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Explore Other Colorado Destinations
-              </span>
-            </h2>
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  🌿 420 More Colorado Destinations
+                </span>
+              </h2>
+            </motion.div>
+
             <div className="grid md:grid-cols-3 gap-6">
-              {relatedGuides.map((g) => (
-                <Link key={g.name} to={g.slug}>
-                  <Card className="bg-card/50 border-border/30 p-6 hover:border-accent/50 transition-all h-full">
-                    <h3 className="font-bold text-lg text-accent mb-2">{g.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{g.desc}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{g.distance}</span>
-                      <ArrowRight className="w-4 h-4 text-accent" />
-                    </div>
-                  </Card>
-                </Link>
+              {relatedGuides.map((guide, index) => (
+                <motion.div key={guide.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }}>
+                  <Link to={guide.slug}>
+                    <Card className="p-6 bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 text-center h-full">
+                      <Compass className="w-8 h-8 text-accent mx-auto mb-3" />
+                      <h3 className="font-bold text-foreground mb-1">{guide.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{guide.desc}</p>
+                      <Badge variant="outline" className="border-accent/30 text-accent text-xs">{guide.distance} from Steamboat</Badge>
+                    </Card>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
