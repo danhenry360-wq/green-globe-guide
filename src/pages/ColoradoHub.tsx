@@ -149,7 +149,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "41+" },
+    { icon: Mountain, label: "Cities Covered", value: `${cities.length}` },
   ];
 
   const cities = [
