@@ -217,7 +217,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Gaming + Cannabis Experiences
+                🌿 420 Gaming + Cannabis Experiences
               </span>
             </h2>
 
@@ -282,7 +282,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-5xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Central City Cannabis & Gaming Laws
+                🌿 420 Cannabis & Gaming Laws
               </span>
             </h2>
             
@@ -342,7 +342,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Getting Around Central City
+                🌿 420 Getting Around
               </span>
             </h2>
 
@@ -368,7 +368,7 @@ const CentralCityGuide = () => {
 
             <h3 className="text-2xl font-bold text-center mb-6">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Historic Gaming Districts
+                🌿 420 Historic Gaming Districts
               </span>
             </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -393,7 +393,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Central City Dispensaries
+                🌿 420 Dispensaries
               </span>
             </h2>
 
@@ -429,7 +429,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                420-Friendly Gaming Hotels
+                🌿 420 Gaming Hotels
               </span>
             </h2>
 
@@ -465,7 +465,7 @@ const CentralCityGuide = () => {
               <div className="text-center mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold mb-2">
                   <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                    Get the Gaming + Cannabis Guide
+                    🌿 420 Gaming + Cannabis Guide
                   </span>
                 </h2>
                 <p className="text-muted-foreground">Tips for responsible gaming + cannabis in historic Central City</p>
@@ -492,7 +492,7 @@ const CentralCityGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl font-bold text-center mb-10">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Nearby Colorado Cannabis Guides
+                🌿 420 Nearby Colorado Guides
               </span>
             </h2>
             <div className="grid md:grid-cols-3 gap-6">

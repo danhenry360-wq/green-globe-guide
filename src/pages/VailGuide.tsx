@@ -618,7 +618,7 @@ const VailGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Vail Cannabis Laws & Consumption Rules
+                  🌿 420 Cannabis Laws & Consumption Rules
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -744,7 +744,7 @@ const VailGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Getting Around Vail
+                  🌿 420 Getting Around Vail
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -814,7 +814,7 @@ const VailGuide = () => {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Top Vail Dispensaries
+                  🌿 420 Top Dispensaries
                 </span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">

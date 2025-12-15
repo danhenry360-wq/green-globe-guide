@@ -507,7 +507,7 @@ const SteamboatSpringsGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Getting Around Steamboat Springs
+                🌿 420 Getting Around
               </span>
             </h2>
 
@@ -551,7 +551,7 @@ const SteamboatSpringsGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Top Steamboat Springs Dispensaries
+                🌿 420 Dispensaries
               </span>
             </h2>
 
@@ -587,7 +587,7 @@ const SteamboatSpringsGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                420-Friendly Hot Spring Lodges
+                🌿 420 Hot Springs Lodges
               </span>
             </h2>
 

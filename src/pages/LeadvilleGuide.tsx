@@ -501,7 +501,7 @@ const LeadvilleGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Getting Around Leadville
+                🌿 420 Getting Around
               </span>
             </h2>
 
@@ -540,7 +540,7 @@ const LeadvilleGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Top Leadville Dispensaries
+                🌿 420 Dispensaries
               </span>
             </h2>
 
@@ -605,7 +605,7 @@ const LeadvilleGuide = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <h2 className="text-3xl font-bold text-center mb-10">
               <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Explore Other Colorado Cannabis Guides
+                🌿 420 Nearby Colorado Guides
               </span>
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
