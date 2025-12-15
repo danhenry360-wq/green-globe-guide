@@ -118,9 +118,9 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "taiwan": "https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?w=600&q=80", // Taipei 101
   "india": "/world-india.jpg", // Taj Mahal
   "nepal": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80", // Nepal temple
-  "sri-lanka": "https://images.unsplash.com/photo-1586423702687-0e29e1a5e577?w=600&q=80", // Sri Lanka temple
-  "bangladesh": "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=600&q=80", // Dhaka
-  "pakistan": "https://images.unsplash.com/photo-1567605953151-97d4cabc82c4?w=600&q=80", // Lahore mosque
+  "sri-lanka": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Sri Lanka landscape
+  "bangladesh": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Bangladesh landscape
+  "pakistan": "https://images.unsplash.com/photo-1578662996441-2f0d1e99dc32?w=600&q=80", // Pakistan landscape
   "indonesia": "/world-indonesia.jpg", // Bali temple
   "malaysia": "/world-malaysia.jpg", // Petronas towers
   "singapore": "/world-singapore.jpg", // Marina Bay
@@ -133,23 +133,23 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "timor-leste": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80", // Timor beach
   "north-korea": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80", // DMZ mountains
   "mongolia": "https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=600&q=80", // Mongolian steppe
-  "bhutan": "https://images.unsplash.com/photo-1562620669-0f54b9d0b8cc?w=600&q=80", // Paro Taktsang
+  "bhutan": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Bhutan landscape
   "maldives": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80", // Maldives overwater
   "afghanistan": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80", // Hindu Kush peaks
   "iran": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80", // Isfahan mosque
   "iraq": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80", // Baghdad skyline
-  "syria": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?w=600&q=80", // Ancient citadel
+  "syria": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Syria landscape
   "palestine": "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&q=80", // Palestine landscape
 
   // MIDDLE EAST
   "israel": "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&q=80", // Jerusalem
-  "jordan": "https://images.unsplash.com/photo-1555924998-ad6aaea4bf5f?w=600&q=80", // Petra
+  "jordan": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Jordan landscape
   "uae": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", // Dubai Burj
-  "qatar": "https://images.unsplash.com/photo-1543348750-eb0c7cc63c89?w=600&q=80", // Doha skyline
-  "bahrain": "https://images.unsplash.com/photo-1566296314736-6e5ad5fc1e64?w=600&q=80", // Bahrain fort
-  "kuwait": "https://images.unsplash.com/photo-1575969366673-ee6b4cc4e94c?w=600&q=80", // Kuwait towers
+  "qatar": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Qatar landscape
+  "bahrain": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Bahrain landscape
+  "kuwait": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Kuwait landscape
   "saudi-arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80", // Mecca clock
-  "oman": "https://images.unsplash.com/photo-1553374682-3feae42b9316?w=600&q=80", // Muscat mosque
+  "oman": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Oman landscape
   "yemen": "https://images.unsplash.com/photo-1563804447971-6e113ab80713?w=600&q=80", // Yemen architecture
   
   // AFRICA
