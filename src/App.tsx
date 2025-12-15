@@ -68,6 +68,12 @@ import RidgwayGuide from "./pages/RidgwayGuide";
 import LakeCityGuide from "./pages/LakeCityGuide";
 import TrinidadGuide from "./pages/TrinidadGuide";
 import SalidaGuide from "./pages/SalidaGuide";
+// New City Imports
+import GoldenGuide from "./pages/GoldenGuide";
+import CrestedButteGuide from "./pages/CrestedButteGuide";
+import BuenaVistaGuide from "./pages/BuenaVistaGuide";
+import PalisadeGuide from "./pages/PalisadeGuide";
+import CortezGuide from "./pages/CortezGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -222,6 +228,15 @@ function App() {
               <Route path="/paonia" element={<PaoniaGuide />} />
               <Route path="/ridgway" element={<RidgwayGuide />} />
               <Route path="/lake-city" element={<LakeCityGuide />} />
+              <Route path="/trinidad" element={<TrinidadGuide />} />
+              <Route path="/salida" element={<SalidaGuide />} />
+              {/* New Cities Added */}
+              <Route path="/golden" element={<GoldenGuide />} />
+              <Route path="/crested-butte" element={<CrestedButteGuide />} />
+              <Route path="/buena-vista" element={<BuenaVistaGuide />} />
+              <Route path="/palisade" element={<PalisadeGuide />} />
+              <Route path="/cortez" element={<CortezGuide />} />
+
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -259,8 +274,6 @@ function App() {
               <Route path="/usa/colorado/federal-heights" element={<Navigate to="/federal-heights" replace />} />
               <Route path="/usa/colorado/northglenn" element={<Navigate to="/northglenn" replace />} />
               <Route path="/usa/colorado/commerce-city" element={<Navigate to="/commerce-city" replace />} />
-
-              {/* New Regional Guides */}
               <Route path="/usa/colorado/vail" element={<Navigate to="/vail" replace />} />
               <Route path="/usa/colorado/steamboat-springs" element={<Navigate to="/steamboat-springs" replace />} />
               <Route path="/usa/colorado/leadville" element={<Navigate to="/leadville" replace />} />
@@ -277,10 +290,14 @@ function App() {
               <Route path="/usa/colorado/paonia" element={<Navigate to="/paonia" replace />} />
               <Route path="/usa/colorado/ridgway" element={<Navigate to="/ridgway" replace />} />
               <Route path="/usa/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
-              <Route path="/trinidad" element={<TrinidadGuide />} />
-              <Route path="/salida" element={<SalidaGuide />} />
               <Route path="/usa/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
               <Route path="/usa/colorado/salida" element={<Navigate to="/salida" replace />} />
+              {/* New Redirects */}
+              <Route path="/usa/colorado/golden" element={<Navigate to="/golden" replace />} />
+              <Route path="/usa/colorado/crested-butte" element={<Navigate to="/crested-butte" replace />} />
+              <Route path="/usa/colorado/buena-vista" element={<Navigate to="/buena-vista" replace />} />
+              <Route path="/usa/colorado/palisade" element={<Navigate to="/palisade" replace />} />
+              <Route path="/usa/colorado/cortez" element={<Navigate to="/cortez" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
