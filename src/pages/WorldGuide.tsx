@@ -1344,7 +1344,7 @@ const WORLD: Continent[] = [
         tourist: "WARNING: Recreational era ending. Medical script required.",
         description:
           "Decriminalized in 2022, but regulations are tightening significantly in 2025 to ban recreational use. Tourists should act with caution.",
-        image: "",
+        image: getCountryImage("thailand"),
         regions: [
           {
             slug: "bangkok-region",
@@ -1371,7 +1371,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Death penalty risk)",
         tourist: "WARNING: Mandatory death penalty for trafficking. Drug tests at entry.",
         description: "Possession is a serious crime punishable by caning. Trafficking >500g cannabis carries the mandatory death penalty.",
-        image: "",
+        image: getCountryImage("singapore"),
         regions: [{ slug: "singapore-island", name: "Singapore Island", cities: [{ slug: "singapore", name: "Singapore", atGlance: ["Garden city", "Illegal", "Death-penalty risk"] }] }],
       },
       {
@@ -1382,7 +1382,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Trafficking carries death penalty risk.",
         description: "Strictly illegal. While mandatory death penalty was abolished in 2023, it remains a discretionary punishment for trafficking.",
-        image: "",
+        image: getCountryImage("malaysia"),
         regions: [{ slug: "kuala-lumpur-region", name: "Kuala Lumpur Region", cities: [{ slug: "kuala-lumpur", name: "Kuala Lumpur", atGlance: ["Petronas towers", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1393,7 +1393,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance (Death penalty risk for trafficking)",
         tourist: "WARNING: Severe penalties (Bali included). Do not buy.",
         description: "Strictly illegal. Constitutional Court rejected medical use. Police frequently target tourists in Bali.",
-        image: "",
+        image: getCountryImage("indonesia"),
         regions: [{ slug: "jakarta-region", name: "Jakarta Region", cities: [{ slug: "jakarta", name: "Jakarta", atGlance: ["Mega-capital", "Illegal", "Death-penalty caution"] }] }, { slug: "bali-region", name: "Bali Region", cities: [{ slug: "denpasar", name: "Denpasar", atGlance: ["Island hub", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1404,7 +1404,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Medical bill pending but not law.",
         description: "Strictly illegal. Harsh anti-drug enforcement campaigns continue.",
-        image: "",
+        image: getCountryImage("philippines"),
         regions: [{ slug: "manila-region", name: "Manila Region", cities: [{ slug: "manila", name: "Manila", atGlance: ["Mega-city", "Illegal", "Death-penalty caution"] }] }],
       },
       {
@@ -1415,7 +1415,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Death penalty for trafficking.",
         description: "Cannabis illegal. Possession criminalised. Trafficking large amounts leads to death penalty.",
-        image: "",
+        image: getCountryImage("vietnam"),
         regions: [{ slug: "hanoi-region", name: "Hanoi Region", cities: [{ slug: "hanoi", name: "Hanoi", atGlance: ["Old quarter", "Illegal", "Severe penalties"] }] }, { slug: "ho-chi-minh-region", name: "Ho Chi Minh Region", cities: [{ slug: "ho-chi-minh-city", name: "Ho Chi Minh City", atGlance: ["Motorbike chaos", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1437,7 +1437,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; backpacker caution",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("cambodia"),
         regions: [{ slug: "phnom-penh-region", name: "Phnom Penh Region", cities: [{ slug: "phnom-penh", name: "Phnom Penh", atGlance: ["River capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1448,7 +1448,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; civil-war zone",
         description: "Cannabis illegal; possession criminalised.",
-        image: "",
+        image: getCountryImage("myanmar"),
         regions: [{ slug: "yangon-region", name: "Yangon Region", cities: [{ slug: "yangon", name: "Yangon", atGlance: ["Shwedagon pagoda", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1459,7 +1459,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Severe penalties. Random drug tests possible.",
         description: "Strictly illegal. Trafficking can carry the death penalty. Administrative detention for consumption.",
-        image: "",
+        image: getCountryImage("china"),
         regions: [{ slug: "beijing-region", name: "Beijing Region", cities: [{ slug: "beijing", name: "Beijing", atGlance: ["Forbidden City", "Illegal", "Severe penalties"] }] }, { slug: "shanghai-region", name: "Shanghai Region", cities: [{ slug: "shanghai", name: "Shanghai", atGlance: ["Skyline hub", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1470,7 +1470,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Strongly discouraged; zero tolerance culture",
         description: "Cannabis Control Act punishes possession severely. Foreigners are likely to be deported after prison time.",
-        image: "",
+        image: getCountryImage("japan"),
         regions: [{ slug: "tokyo-region", name: "Tokyo Region", cities: [{ slug: "tokyo", name: "Tokyo", atGlance: ["Neon capital", "Illegal", "Severe penalties"] }] }, { slug: "osaka-region", name: "Osaka Region", cities: [{ slug: "osaka", name: "Osaka", atGlance: ["Food capital", "Illegal", "Severe penalties"] }] }],
       },
       {
@@ -1481,7 +1481,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Medical only; K-culture",
         description: "Medical cannabis legal; recreational use prohibited.",
-        image: "",
+        image: getCountryImage("south-korea"),
         regions: [{ slug: "seoul-region", name: "Seoul Region", cities: [{ slug: "seoul", name: "Seoul", atGlance: ["K-pop capital", "Medical only", "No public use"] }] }],
       },
       {
@@ -1547,7 +1547,7 @@ const WORLD: Continent[] = [
         airport: "Zero tolerance",
         tourist: "Flower illegal; 'Bhang' (edible) legal in some states.",
         description: "National law bans flower (ganja) and resin (charas), but leaves/seeds (bhang) are legal in some states for religious reasons.",
-        image: "",
+        image: getCountryImage("india"),
         regions: [{ slug: "delhi-region", name: "Delhi Region", cities: [{ slug: "delhi", name: "Delhi", atGlance: ["Capital chaos", "Flower illegal", "Bhang lassi tolerated"] }] }, { slug: "goa-region", name: "Goa Region", cities: [{ slug: "panaji", name: "Panaji", atGlance: ["Beach parties", "Police raids common", "Flower illegal"] }] }],
       },
       {
