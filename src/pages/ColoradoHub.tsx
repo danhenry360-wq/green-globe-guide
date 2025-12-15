@@ -199,6 +199,12 @@ const ColoradoHub = () => {
     { name: "Lake City", region: "Mountains", slug: "lake-city", description: "Alpine mining town at 10,700 ft elevation with world-class fishing, mining history, and San Juan scenic loop." },
     { name: "Trinidad", region: "Southern Border", slug: "trinidad", description: "The 'Weed Capital' of the Southwest. Historic border town with a massive concentration of dispensaries and Victorian architecture." },
     { name: "Salida", region: "Mountains", slug: "salida", description: "The Heart of the Rockies. Whitewater rafting, hot springs, and a creative downtown district. A true adventure town." },
+    // New Cities Added
+    { name: "Golden", region: "Metro", slug: "golden", description: "The gateway to the mountains. Home to Coors Brewery, Clear Creek tubing, and the best basecamp for Red Rocks concerts." },
+    { name: "Crested Butte", region: "Mountains", slug: "crested-butte", description: "The 'Last Great Ski Town'. A funky, colorful dead-end town with a massive costume culture and steep terrain." },
+    { name: "Buena Vista", region: "Mountains", slug: "buena-vista", description: "The Banana Belt. Whitewater rafting capital paired with natural hot springs and Collegiate Peaks views." },
+    { name: "Palisade", region: "Western Slope", slug: "palisade", description: "Wine and Weed country. Famous for peaches, vineyards, and a growing cannabis tourism scene along the fruit loop." },
+    { name: "Cortez", region: "Western Slope", slug: "cortez", description: "Archaeological hub near Mesa Verde. A key stop for cannabis travelers exploring the Four Corners ancient ruins." },
   ];
 
   const stats = [
@@ -207,8 +213,6 @@ const ColoradoHub = () => {
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
     { icon: Mountain, label: "Cities Covered", value: `${cities.length}` },
   ];
-
-
 
   const customCitySlugs = [
     'denver', 'boulder', 'aspen', 'colorado-springs', 'fort-collins',
@@ -220,7 +224,9 @@ const ColoradoHub = () => {
     'federal-heights', 'northglenn', 'commerce-city', 'ouray', 'vail',
     'steamboat-springs', 'leadville', 'manitou-springs', 'central-city', 'black-hawk',
     'georgetown', 'idaho-springs', 'nederland', 'ward', 'winter-park',
-    'walden', 'delta', 'paonia', 'ridgway', 'lake-city', 'trinidad', 'salida'
+    'walden', 'delta', 'paonia', 'ridgway', 'lake-city', 'trinidad', 'salida',
+    // New Slugs
+    'golden', 'crested-butte', 'buena-vista', 'palisade', 'cortez'
   ];
 
   // Detailed Law Data
