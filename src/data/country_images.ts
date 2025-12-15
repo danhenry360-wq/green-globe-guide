@@ -131,6 +131,22 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "myanmar": "/world-myanmar.jpg", // Bagan temples
   "brunei": "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=80", // Sultan mosque
   "timor-leste": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80", // Timor beach
+  "north-korea": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80", // DMZ mountains
+  "mongolia": "https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=600&q=80", // Mongolian steppe
+  "taiwan": "https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?w=600&q=80", // Taipei 101 skyline
+  "hong-kong": "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=600&q=80", // HK skyline
+  "macau": "https://images.unsplash.com/photo-1558976825-6b1b04c280e7?w=600&q=80", // Macau lights
+  "pakistan": "https://images.unsplash.com/photo-1567605953151-97d4cabc82c4?w=600&q=80", // Lahore mosque
+  "bangladesh": "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=600&q=80", // Dhaka riverfront
+  "sri-lanka": "https://images.unsplash.com/photo-1586423702687-0e29e1a5e577?w=600&q=80", // Sri Lanka stilt fishermen
+  "nepal": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80", // Himalaya / Kathmandu
+  "bhutan": "https://images.unsplash.com/photo-1562620669-0f54b9d0b8cc?w=600&q=80", // Paro Taktsang
+  "maldives": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80", // Maldives overwater
+  "afghanistan": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80", // Hindu Kush peaks
+  "iran": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80", // Isfahan mosque
+  "iraq": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80", // Baghdad skyline
+  "syria": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?w=600&q=80", // Ancient citadel
+  "lebanon": "https://images.unsplash.com/photo-1526481280695-3c469c2f5ab7?w=600&q=80", // Beirut seaside
   
   // MIDDLE EAST
   "israel": "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&q=80", // Jerusalem
