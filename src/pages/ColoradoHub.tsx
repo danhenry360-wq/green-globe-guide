@@ -149,7 +149,7 @@ const ColoradoHub = () => {
     { icon: Cannabis, label: "Age Requirement", value: "21+" },
     { icon: Store, label: "Licensed Dispensaries", value: "500+" },
     { icon: Shield, label: "Possession Limit", value: "1 oz" },
-    { icon: Mountain, label: "Cities Covered", value: "30+" },
+    { icon: Mountain, label: "Cities Covered", value: "35+" },
   ];
 
   const cities = [
@@ -183,6 +183,11 @@ const ColoradoHub = () => {
     { name: "Telluride", region: "Mountains", slug: "telluride", description: "Festival capital in a box canyon. Luxury cannabis and free gondola rides." },
     { name: "Pagosa Springs", region: "Mountains", slug: "pagosa-springs", description: "Deepest hot springs in the world and Wolf Creek ski area." },
     { name: "Silverton", region: "Mountains", slug: "silverton", description: "High-altitude mining town adventure. Rugged, remote, and historic." },
+    { name: "Altitude", region: "Metro", slug: "altitude", description: "Unincorporated area near Denver offering high-altitude cannabis experiences with stunning elevation views." },
+    { name: "Federal Heights", region: "Metro", slug: "federal-heights", description: "North Denver metro city with convenient access to dispensaries and urban cannabis culture." },
+    { name: "Northglenn", region: "Metro", slug: "northglenn", description: "North of Denver with family-friendly atmosphere, quality dispensaries, and easy highway access." },
+    { name: "Commerce City", region: "Metro", slug: "commerce-city", description: "Industrial area northeast of Denver with affordable dispensaries and I-76 access to the plains." },
+    { name: "Ouray", region: "Mountains", slug: "ouray", description: "San Juan Mountains alpine village with epic hiking, ice climbing, and secluded 420-friendly stays." },
   ];
 
   const customCitySlugs = [
@@ -191,7 +196,8 @@ const ColoradoHub = () => {
     'loveland', 'estes-park', 'greeley', 'castle-rock', 'broomfield',
     'westminster', 'arvada', 'centennial', 'grand-junction', 'durango',
     'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
-    'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge'
+    'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge',
+    'altitude', 'federal-heights', 'northglenn', 'commerce-city', 'ouray'
   ];
 
   // Detailed Law Data
