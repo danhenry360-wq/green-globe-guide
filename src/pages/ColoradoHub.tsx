@@ -194,6 +194,16 @@ const ColoradoHub = () => {
     { name: "Manitou Springs", region: "Front Range", slug: "manitou-springs", description: "Artistic mountain community with natural mineral springs, galleries, and creative 420-friendly atmosphere near Colorado Springs." },
     { name: "Central City", region: "Mountains", slug: "central-city", description: "Historic Gold Rush mining town with casinos, mountain scenery, and unique cannabis tourism experience near Denver." },
     { name: "Black Hawk", region: "Mountains", slug: "black-hawk", description: "Sister gaming town to Central City with historic casinos, Gold Rush heritage, and responsible gaming cannabis culture." },
+    { name: "Georgetown", region: "Mountains", slug: "georgetown", description: "Historic Victorian silver mining town with scenic mountain drives, alpine hiking, and charming downtown cannabis culture." },
+    { name: "Idaho Springs", region: "Mountains", slug: "idaho-springs", description: "Historic I-70 mountain town on the gateway to the Rockies with natural hot springs and mineral water relaxation." },
+    { name: "Nederland", region: "Mountains", slug: "nederland", description: "Boulder County bohemian artist village with live music venues, hiking, and progressive cannabis-friendly community." },
+    { name: "Ward", region: "Mountains", slug: "ward", description: "Rural mountain community near Nederland with local art scene, hiking, and peaceful cannabis retreat experiences." },
+    { name: "Winter Park", region: "Mountains", slug: "winter-park", description: "Premier ski resort town with world-class skiing, mountain biking, and high-altitude cannabis adventures." },
+    { name: "Walden", region: "Mountains", slug: "walden", description: "Remote mountain ranching community with stargazing, fly fishing, and peaceful alpine cannabis relaxation." },
+    { name: "Delta", region: "Western Slope", slug: "delta", description: "Agricultural hub on the Western Slope with fruit orchards, Colorado National Monument, and farming community charm." },
+    { name: "Paonia", region: "Western Slope", slug: "paonia", description: "Wine country and artisan community featuring boutique wineries, farmers markets, and creative cannabis culture." },
+    { name: "Ridgway", region: "Mountains", slug: "ridgway", description: "Mountain arts community near Ouray and Telluride with galleries, creative scene, and natural hot springs." },
+    { name: "Lake City", region: "Mountains", slug: "lake-city", description: "Alpine mining town at 10,700 ft elevation with world-class fishing, mining history, and San Juan scenic loop." },
   ];
 
   const customCitySlugs = [
@@ -204,7 +214,9 @@ const ColoradoHub = () => {
     'fort-morgan', 'montrose', 'littleton', 'englewood', 'red-rocks',
     'glenwood-springs', 'telluride', 'pagosa-springs', 'silverton', 'breckenridge',
     'federal-heights', 'northglenn', 'commerce-city', 'ouray', 'vail',
-    'steamboat-springs', 'leadville', 'manitou-springs', 'central-city', 'black-hawk'
+    'steamboat-springs', 'leadville', 'manitou-springs', 'central-city', 'black-hawk',
+    'georgetown', 'idaho-springs', 'nederland', 'ward', 'winter-park',
+    'walden', 'delta', 'paonia', 'ridgway', 'lake-city'
   ];
 
   // Detailed Law Data

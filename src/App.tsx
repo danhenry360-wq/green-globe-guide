@@ -56,6 +56,16 @@ import LeadvilleGuide from "./pages/LeadvilleGuide";
 import ManitouSpringsGuide from "./pages/ManitouSpringsGuide";
 import CentralCityGuide from "./pages/CentralCityGuide";
 import BlackHawkGuide from "./pages/BlackHawkGuide";
+import GeorgetownGuide from "./pages/GeorgetownGuide";
+import IdahoSpringsGuide from "./pages/IdahoSpringsGuide";
+import NederlandGuide from "./pages/NederlandGuide";
+import WardGuide from "./pages/WardGuide";
+import WinterParkGuide from "./pages/WinterParkGuide";
+import WaldenGuide from "./pages/WaldenGuide";
+import DeltaGuide from "./pages/DeltaGuide";
+import PaoniaGuide from "./pages/PaoniaGuide";
+import RidgwayGuide from "./pages/RidgwayGuide";
+import LakeCityGuide from "./pages/LakeCityGuide";
 
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
@@ -200,6 +210,16 @@ function App() {
               <Route path="/manitou-springs" element={<ManitouSpringsGuide />} />
               <Route path="/central-city" element={<CentralCityGuide />} />
               <Route path="/black-hawk" element={<BlackHawkGuide />} />
+              <Route path="/georgetown" element={<GeorgetownGuide />} />
+              <Route path="/idaho-springs" element={<IdahoSpringsGuide />} />
+              <Route path="/nederland" element={<NederlandGuide />} />
+              <Route path="/ward" element={<WardGuide />} />
+              <Route path="/winter-park" element={<WinterParkGuide />} />
+              <Route path="/walden" element={<WaldenGuide />} />
+              <Route path="/delta" element={<DeltaGuide />} />
+              <Route path="/paonia" element={<PaoniaGuide />} />
+              <Route path="/ridgway" element={<RidgwayGuide />} />
+              <Route path="/lake-city" element={<LakeCityGuide />} />
 
               {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
@@ -245,6 +265,16 @@ function App() {
               <Route path="/usa/colorado/manitou-springs" element={<Navigate to="/manitou-springs" replace />} />
               <Route path="/usa/colorado/central-city" element={<Navigate to="/central-city" replace />} />
               <Route path="/usa/colorado/black-hawk" element={<Navigate to="/black-hawk" replace />} />
+              <Route path="/usa/colorado/georgetown" element={<Navigate to="/georgetown" replace />} />
+              <Route path="/usa/colorado/idaho-springs" element={<Navigate to="/idaho-springs" replace />} />
+              <Route path="/usa/colorado/nederland" element={<Navigate to="/nederland" replace />} />
+              <Route path="/usa/colorado/ward" element={<Navigate to="/ward" replace />} />
+              <Route path="/usa/colorado/winter-park" element={<Navigate to="/winter-park" replace />} />
+              <Route path="/usa/colorado/walden" element={<Navigate to="/walden" replace />} />
+              <Route path="/usa/colorado/delta" element={<Navigate to="/delta" replace />} />
+              <Route path="/usa/colorado/paonia" element={<Navigate to="/paonia" replace />} />
+              <Route path="/usa/colorado/ridgway" element={<Navigate to="/ridgway" replace />} />
+              <Route path="/usa/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
 
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
