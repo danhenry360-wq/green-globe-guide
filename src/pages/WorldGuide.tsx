@@ -2813,6 +2813,7 @@ const getAllCountries = () => {
   return WORLD.flatMap(continent => 
     continent.countries.map(country => ({
       ...country,
+      image: country.image || getCountryImage(country.slug),
       continentSlug: continent.slug,
       continentName: continent.name
     }))
