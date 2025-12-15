@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
@@ -122,90 +120,6 @@ const TrinidadGuide = () => {
         return stars;
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "TravelGuide",
-        "name": "Trinidad Cannabis Travel Guide 2025",
-        "description": "The ultimate guide to Trinidad, Colorado - the 'Weed Capital' of the Southwest. Find dispensaries, state park camping, and 420-friendly history.",
-        "url": "https://budquest.guide/trinidad",
-        "publisher": {
-            "@type": "Organization",
-            "name": "BudQuest",
-            "url": "https://budquest.guide"
-        },
-        "about": {
-            "@type": "City",
-            "name": "Trinidad",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Trinidad",
-                "addressRegion": "CO",
-                "addressCountry": "US"
-            }
-        },
-        "dateModified": new Date().toISOString().split('T')[0],
-        "inLanguage": "en-US"
-    };
-
-    const seasons = [
-        {
-            id: "spring",
-            name: "Spring",
-            months: "March - May",
-            icon: Flower2,
-            temp: "40-70°F",
-            highlights: [
-                "Fishing at Trinidad Lake",
-                "Wildflowers in Fishers Peak",
-                "Quiet dispensary lines",
-                "Historic trolley tours"
-            ],
-            tip: "Late snows are common. Bring layers for outdoor adventures."
-        },
-        {
-            id: "summer",
-            name: "Summer",
-            months: "June - August",
-            icon: Sun,
-            temp: "75-90°F",
-            highlights: [
-                "Trinidaddio Blues Fest",
-                "Camping at the State Park",
-                "Downtown Art Walks",
-                "Santa Fe Trail Days"
-            ],
-            tip: "It gets hot! Stay hydrated, especially after consuming."
-        },
-        {
-            id: "fall",
-            name: "Fall",
-            months: "September - November",
-            icon: Leaf,
-            temp: "45-75°F",
-            highlights: [
-                "Leaf peeping on scenic Highway 12",
-                "ArtoCade Art Car Festival",
-                "Cooler hiking weather",
-                "Harvest season vibes"
-            ],
-            tip: "Highway of Legends scenic byway is a must-drive in September."
-        },
-        {
-            id: "winter",
-            name: "Winter",
-            months: "December - February",
-            icon: Snowflake,
-            temp: "20-50°F",
-            highlights: [
-                "Peaceful downtown atmosphere",
-                "Winter hiking at Fishers Peak",
-                "Cozy dispensary visits",
-                "Holiday lights on Main Street"
-            ],
-            tip: "Roads can be icy near the pass. Drive carefully."
-        }
-    ];
-
     const attractions = [
         {
             name: "Dispensary Row (Main St)",
@@ -251,21 +165,8 @@ const TrinidadGuide = () => {
         }
     ];
 
-    const relatedGuides = [
-        { name: "Pueblo", slug: "/pueblo", desc: "Riverwalk & Chiles", distance: "1 hr 15 min" },
-        { name: "Colorado Springs", slug: "/colorado-springs", desc: "Garden of Gods", distance: "2 hrs" },
-        { name: "Alamosa", slug: "/alamosa", desc: "Sand Dunes", distance: "1 hr 30 min" },
-    ];
-
     return (
         <>
-            <Helmet>
-                <title>Trinidad, CO Cannabis Travel Guide 2025 | BudQuest</title>
-                <meta name="description" content="Visit Trinidad, Colorado: The weed capital of the southwest. Guide to dispensaries, Trinidad Lake camping, and 420-friendly history." />
-                <link rel="canonical" href="https://budquest.guide/trinidad" />
-                <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-            </Helmet>
-
             <Navigation />
 
             <main className="min-h-screen bg-background">

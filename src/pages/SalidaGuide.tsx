@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -120,31 +119,6 @@ const SalidaGuide = () => {
         return stars;
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "TravelGuide",
-        "name": "Salida Cannabis Travel Guide 2025",
-        "description": "Visit Salida, Colorado: The Heart of the Rockies. Guide to rafting, hot springs, dispensaries, and 420-friendly adventure.",
-        "url": "https://budquest.guide/salida",
-        "publisher": {
-            "@type": "Organization",
-            "name": "BudQuest",
-            "url": "https://budquest.guide"
-        },
-        "about": {
-            "@type": "City",
-            "name": "Salida",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Salida",
-                "addressRegion": "CO",
-                "addressCountry": "US"
-            }
-        },
-        "dateModified": new Date().toISOString().split('T')[0],
-        "inLanguage": "en-US"
-    };
-
     const attractions = [
         {
             name: "Arkansas River (Whitewater Park)",
@@ -190,21 +164,8 @@ const SalidaGuide = () => {
         }
     ];
 
-    const relatedGuides = [
-        { name: "Buena Vista", slug: "/usa/colorado/buena-vista", desc: "Rafting & 14ers", distance: "25 min" },
-        { name: "Monarch", slug: "/usa/colorado/monarch", desc: "Skiing", distance: "20 min" },
-        { name: "Canon City", slug: "/canon-city", desc: "Royal Gorge", distance: "1 hr" },
-    ];
-
     return (
         <>
-            <Helmet>
-                <title>Salida, CO Cannabis Travel Guide 2025 | BudQuest</title>
-                <meta name="description" content="Explore Salida, Colorado: Hot springs, river rafting, and dispensaries. The ultimate guide to 420-friendly adventures in the Heart of the Rockies." />
-                <link rel="canonical" href="https://budquest.guide/salida" />
-                <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-            </Helmet>
-
             <Navigation />
 
             <main className="min-h-screen bg-background">
