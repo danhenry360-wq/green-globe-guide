@@ -120,7 +120,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "nepal": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80", // Nepal temple
   "sri-lanka": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Sri Lanka landscape
   "bangladesh": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Bangladesh landscape
-  "pakistan": "https://images.unsplash.com/photo-1578662996441-2f0d1e99dc32?w=600&q=80", // Pakistan landscape
+  "pakistan": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Pakistan landscape
   "indonesia": "/world-indonesia.jpg", // Bali temple
   "malaysia": "/world-malaysia.jpg", // Petronas towers
   "singapore": "/world-singapore.jpg", // Marina Bay
@@ -139,6 +139,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "iran": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80", // Isfahan mosque
   "iraq": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80", // Baghdad skyline
   "syria": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Syria landscape
+  "lebanon": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?w=600&q=80", // Lebanon landscape
   "palestine": "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&q=80", // Palestine landscape
 
   // MIDDLE EAST
@@ -150,7 +151,7 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "kuwait": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Kuwait landscape
   "saudi-arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80", // Mecca clock
   "oman": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", // Oman landscape
-  "yemen": "https://images.unsplash.com/photo-1563804447971-6e113ab80713?w=600&q=80", // Yemen architecture
+  "yemen": "https://images.unsplash.com/photo-1578662996441-2f0d1e99dc32?w=600&q=80", // Yemen landscape
   
   // AFRICA
   "south-africa": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80", // Cape Town
