@@ -120,6 +120,31 @@ const SalidaGuide = () => {
         return stars;
     };
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "TravelGuide",
+        "name": "Salida Cannabis Travel Guide 2025",
+        "description": "Explore Salida, Colorado: Hot springs, river rafting, and dispensaries. The ultimate guide to 420-friendly adventures in the Heart of the Rockies.",
+        "url": "https://budquest.guide/salida",
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "url": "https://budquest.guide"
+        },
+        "about": {
+            "@type": "City",
+            "name": "Salida",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Salida",
+                "addressRegion": "CO",
+                "addressCountry": "US"
+            }
+        },
+        "dateModified": new Date().toISOString().split('T')[0],
+        "inLanguage": "en-US"
+    };
+
     const attractions = [
         {
             name: "Arkansas River (Whitewater Park)",
