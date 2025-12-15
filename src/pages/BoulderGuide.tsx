@@ -55,27 +55,37 @@ const BoulderGuide = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch only Boulder dispensaries
-      const { data: dispData } = await supabase
+      // 1. Fetch Dispensaries
+      // FIX: Changed .eq to .ilike with wildcards for robust matching
+      const { data: dispData, error: dispError } = await supabase
         .from('dispensaries')
         .select('*')
-        .eq('city', 'Boulder')
         .eq('state', 'Colorado')
+        .ilike('city', '%Boulder%') // Catches "Boulder", "boulder", "South Boulder", etc.
         .order('rating', { ascending: false })
-        .limit(4);
+        .limit(6); // Increased limit to fill grid
       
-      if (dispData) setDispensaries(dispData);
+      if (dispError) {
+        console.error("Error fetching dispensaries:", dispError);
+      } else if (dispData) {
+        setDispensaries(dispData);
+      }
 
-      // Fetch only Boulder rentals (check address contains Boulder)
-      const { data: rentalData } = await supabase
+      // 2. Fetch Rentals
+      const { data: rentalData, error: rentalError } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
         .ilike('address', '%Boulder%')
         .order('rating', { ascending: false })
-        .limit(4);
+        .limit(3);
       
-      if (rentalData) setRentals(rentalData);
+      if (rentalError) {
+        console.error("Error fetching rentals:", rentalError);
+      } else if (rentalData) {
+        setRentals(rentalData);
+      }
+      
       setLoading(false);
     };
 
@@ -409,6 +419,11 @@ const BoulderGuide = () => {
           <div className="absolute inset-0">
             <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-gold/10" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+            <img 
+              src="/dest-colorado-ski.jpg" 
+              alt="Boulder Flatirons" 
+              className="w-full h-full object-cover mix-blend-overlay opacity-50"
+            />
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
@@ -803,7 +818,7 @@ const BoulderGuide = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Colorado Dispensaries
+                  Boulder Dispensaries
                 </span>
               </h2>
               <Link to="/dispensary" className="text-accent hover:underline flex items-center gap-1">
