@@ -181,7 +181,7 @@ const GeorgetownGuide = () => {
     {
       name: "St. James Church & Historic Cemetery",
       icon: Building2,
-      description: "Beautiful historic mining town church with 1874 origins and scenic cemetery with views of the surrounding mountains."
+      description: "Beautiful historic mining town church with 1874 origins and scenic cemetery with views of the surrounding mountains.",
       cannabisTip: "Respectful sober visit recommended. Learn about mining heritage and local history before cannabis relaxation."
     },
     {
