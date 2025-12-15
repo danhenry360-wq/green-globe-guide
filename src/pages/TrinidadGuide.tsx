@@ -19,7 +19,7 @@ import {
     Sun, Leaf, Flower2, Snowflake,
     Mountain, Tent,
     Mail, Compass,
-    TrainFront, MapPinned, CheckCircle, Ban, Clock
+    TrainFront, MapPinned, CheckCircle, Ban, Clock, ArrowRight
 } from "lucide-react";
 
 interface Dispensary {
