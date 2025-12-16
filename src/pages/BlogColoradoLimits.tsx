@@ -292,16 +292,16 @@ const BlogColoradoLimits = () => {
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link
-                                        to="/blog/cannabis-dispensaries-denver"
+                                        to="/dispensary"
                                         className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                                     >
-                                        Denver Dispensaries <ArrowRight className="h-5 w-5" />
+                                        Find Dispensaries Near Me <ArrowRight className="h-5 w-5" />
                                     </Link>
                                     <Link
-                                        to="/blog/cannabis-dispensaries-aspen"
+                                        to="/usa/colorado"
                                         className="inline-flex items-center gap-2 px-6 py-3 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors"
                                     >
-                                        Aspen Guide <ArrowRight className="h-5 w-5" />
+                                        Colorado Cannabis Guide <ArrowRight className="h-5 w-5" />
                                     </Link>
                                 </div>
                             </Card>
