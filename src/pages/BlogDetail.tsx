@@ -51,7 +51,7 @@ const BlogDetail = () => {
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
-      
+
       if (error) throw error;
       return data;
     },
@@ -63,12 +63,12 @@ const BlogDetail = () => {
     queryKey: ["blog-dispensaries", dbPost?.related_dispensary_ids],
     queryFn: async () => {
       if (!dbPost?.related_dispensary_ids || dbPost.related_dispensary_ids.length === 0) return [];
-      
+
       const { data, error } = await supabase
         .from("dispensaries")
         .select("*")
         .in("id", dbPost.related_dispensary_ids);
-      
+
       if (error) throw error;
       return data;
     },
@@ -80,12 +80,12 @@ const BlogDetail = () => {
     queryKey: ["blog-hotels", dbPost?.related_hotel_ids],
     queryFn: async () => {
       if (!dbPost?.related_hotel_ids || dbPost.related_hotel_ids.length === 0) return [];
-      
+
       const { data, error } = await supabase
         .from("hotels")
         .select("*")
         .in("id", dbPost.related_hotel_ids);
-      
+
       if (error) throw error;
       return data;
     },
@@ -100,10 +100,10 @@ const BlogDetail = () => {
     title: dbPost.title,
     subtitle: dbPost.subtitle || "",
     excerpt: dbPost.excerpt,
-    date: new Date(dbPost.published_at || dbPost.created_at).toLocaleDateString("en-US", { 
-      year: "numeric", 
-      month: "short", 
-      day: "numeric" 
+    date: new Date(dbPost.published_at || dbPost.created_at).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
     }),
     readTime: dbPost.read_time,
     author: dbPost.author_name,
@@ -111,7 +111,7 @@ const BlogDetail = () => {
     category: dbPost.category,
     tags: dbPost.tags,
     image: dbPost.image_url,
-    content: typeof dbPost.content === 'object' ? dbPost.content : { introduction: "", disclaimer: "", sections: [], safetyTips: [] }
+    content: typeof dbPost.content === 'object' ? dbPost.content : { introduction: "", disclaimer: "", sections: [], safetyTips: [], faq: [] }
   } : staticPost;
 
   useEffect(() => {
@@ -172,6 +172,23 @@ const BlogDetail = () => {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:image" content={post.image} />
+        {/* FAQ Schema for SEO */}
+        {post.content && typeof post.content === 'object' && !Array.isArray(post.content) && 'faq' in post.content && Array.isArray(post.content.faq) && post.content.faq.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": (post.content.faq as Array<{ question: string; answer: string }>).map((item) => ({
+                "@type": "Question",
+                "name": item.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": item.answer
+                }
+              }))
+            })}
+          </script>
+        )}
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -329,6 +346,21 @@ const BlogDetail = () => {
                 </ul>
               </Card>
             )}
+
+            {/* FAQ Section */}
+            {post.content && typeof post.content === 'object' && !Array.isArray(post.content) && 'faq' in post.content && Array.isArray(post.content.faq) && post.content.faq.length > 0 && (
+              <Card className="p-6 border-border/50 bg-gradient-card mt-8">
+                <h3 className="text-xl font-semibold mb-6 text-foreground">Frequently Asked Questions</h3>
+                <div className="space-y-6">
+                  {(post.content.faq as Array<{ question: string; answer: string }>).map((item, idx) => (
+                    <div key={idx} className="border-b border-border/30 pb-4 last:border-0 last:pb-0">
+                      <h4 className="font-medium text-foreground mb-2">{item.question}</h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{item.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
           </motion.div>
 
           {/* Affiliate Link CTA */}
@@ -344,9 +376,9 @@ const BlogDetail = () => {
                 <p className="text-muted-foreground mb-4">
                   Get the best deals on accommodations and experiences
                 </p>
-                <a 
-                  href={dbPost.affiliate_link} 
-                  target="_blank" 
+                <a
+                  href={dbPost.affiliate_link}
+                  target="_blank"
                   rel="noopener noreferrer"
                   onClick={async () => {
                     try {
