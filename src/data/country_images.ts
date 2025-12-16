@@ -68,18 +68,18 @@ export const COUNTRY_IMAGES: Record<string, string> = {
   "vatican": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=600&q=80", // Vatican St Peters
 
   // SOUTH AMERICA
-  "uruguay": "https://images.unsplash.com/photo-1583957325642-34e278c0f3a1?w=600&q=80", // Montevideo cityscape
+  "uruguay": "https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=600&q=80", // Montevideo
   "argentina": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=600&q=80", // Buenos Aires
-  "chile": "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?w=600&q=80", // Torres del Paine
-  "colombia": "https://images.unsplash.com/photo-1535131339976-2850c44d08c9?w=600&q=80", // Cartagena colorful streets
+  "chile": "https://images.unsplash.com/photo-1565013844965-b1eaeb2dcbb0?w=600&q=80", // Patagonia
+  "colombia": "https://images.unsplash.com/photo-1533699224246-a1e9a5bc8bfb?w=600&q=80", // Cartagena
   "brazil": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80", // Rio Christ statue
   "peru": "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&q=80", // Machu Picchu
-  "ecuador": "https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=600&q=80", // Quito basilica
+  "ecuador": "/world-ecuador.jpg", // Ecuador highlands
   "bolivia": "https://images.unsplash.com/photo-1591133524085-f1a61c1f47ac?w=600&q=80", // Salt flats
   "paraguay": "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=600&q=80", // Asuncion
-  "venezuela": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=600&q=80", // Angel Falls
-  "guyana": "https://images.unsplash.com/photo-1598881034666-5e2a9e2e4c8d?w=600&q=80", // Kaieteur Falls
-  "suriname": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&q=80", // Paramaribo colonial
+  "venezuela": "/world-venezuela.jpg", // Angel Falls
+  "guyana": "/world-guyana.jpg", // Guyana jungle
+  "suriname": "/world-suriname.jpg", // Paramaribo
   "french-guiana": "https://images.unsplash.com/photo-1604761490413-ee1c76db3c12?w=600&q=80", // Space center
 
   // CARIBBEAN

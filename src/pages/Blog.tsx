@@ -621,41 +621,41 @@ export const BLOG_POSTS = [
       introduction: "Flying with cannabis is the most common dilemma for modern travelers. While 24+ states have legalized recreational use, the TSA remains a federal agency bound by prohibition laws. This creates a confusing reality where enforcement depends entirely on which airport you're in. This guide strips away the rumors to explain the specific risks at major US airports, the difference between 'legal' and 'tolerated,' and how to avoid a missed flight or a criminal record.",
       disclaimer: "Cannabis remains illegal under federal law (Schedule I). TSA agents are federal employees. This article tracks current enforcement trends but offers NO legal guarantees. The only 100% safe option is not to fly with cannabis.",
       sections: [
-        { 
-          title: "The Federal vs State Conflict", 
-          icon: "Scale", 
-          content: "**Federal Law (TSA Jurisdiction)**: Cannabis is a Schedule I narcotic (illegal). TSA screening areas are federal territory. **State Law (Police Jurisdiction)**: In legal states (CA, CO, NY), possession is legal. **The Loophole**: TSA's job is safety, not drug enforcement. If they find weed, they must refer it to *local police*. If you are in a legal state and under the limit, local police often let you go or just confiscate it.", 
-          variant: "default" 
+        {
+          title: "The Federal vs State Conflict",
+          icon: "Scale",
+          content: "**Federal Law (TSA Jurisdiction)**: Cannabis is a Schedule I narcotic (illegal). TSA screening areas are federal territory. **State Law (Police Jurisdiction)**: In legal states (CA, CO, NY), possession is legal. **The Loophole**: TSA's job is safety, not drug enforcement. If they find weed, they must refer it to *local police*. If you are in a legal state and under the limit, local police often let you go or just confiscate it.",
+          variant: "default"
         },
-        { 
-          title: "Official TSA Policy", 
-          icon: "Shield", 
-          content: "TSA does not actively search for marijuana. Their scanners are designed for explosives and weapons. However, if they discover it during a bag check (for a water bottle or lighter), they are required to report it. **Medical Cards**: TSA does not recognize medical cards. **CBD**: FDA-approved CBD or hemp (<0.3% THC) is the ONLY federally legal exception.", 
-          variant: "warning" 
+        {
+          title: "Official TSA Policy",
+          icon: "Shield",
+          content: "TSA does not actively search for marijuana. Their scanners are designed for explosives and weapons. However, if they discover it during a bag check (for a water bottle or lighter), they are required to report it. **Medical Cards**: TSA does not recognize medical cards. **CBD**: FDA-approved CBD or hemp (<0.3% THC) is the ONLY federally legal exception.",
+          variant: "warning"
         },
-        { 
-          title: "High Risk Airports (Avoid)", 
-          icon: "AlertCircle", 
-          content: "**Dallas (DFW/IAH)**: Texas law is harsh. Arrests are common. **Atlanta (ATL)**: Strict enforcement, even for residue. **Miami (MIA)**: Zero tolerance, medical cards strictly scrutinized. **International Flights**: NEVER fly internationally with cannabis. This is drug trafficking and carries severe felony penalties.", 
-          variant: "warning" 
+        {
+          title: "High Risk Airports (Avoid)",
+          icon: "AlertCircle",
+          content: "**Dallas (DFW/IAH)**: Texas law is harsh. Arrests are common. **Atlanta (ATL)**: Strict enforcement, even for residue. **Miami (MIA)**: Zero tolerance, medical cards strictly scrutinized. **International Flights**: NEVER fly internationally with cannabis. This is drug trafficking and carries severe felony penalties.",
+          variant: "warning"
         },
-        { 
-          title: "Low Risk Airports (Tolerated)", 
-          icon: "Plane", 
-          content: "**Los Angeles (LAX)**: Policy explicitly allows passengers to possess up to 28.5g. TSA may still flag it, but airport police rarely cite. **Portland (PDX)**: Extremely lenient; often allows passengers to fly if under state limits. **New York (JFK/LGA)**: State police generally do not arrest for personal amounts, but confiscation is possible.", 
-          variant: "accent" 
+        {
+          title: "Low Risk Airports (Tolerated)",
+          icon: "Plane",
+          content: "**Los Angeles (LAX)**: Policy explicitly allows passengers to possess up to 28.5g. TSA may still flag it, but airport police rarely cite. **Portland (PDX)**: Extremely lenient; often allows passengers to fly if under state limits. **New York (JFK/LGA)**: State police generally do not arrest for personal amounts, but confiscation is possible.",
+          variant: "accent"
         },
-        { 
-          title: "Edibles vs Flower vs Vapes", 
-          icon: "TrendingUp", 
-          content: "**Flower**: Most risky. Organic mass shows on scanners, and smell is a dead giveaway. **Edibles**: Hardest to detect. TSA is looking for bombs, not gummies. However, original packaging with THC warnings makes it obvious if searched. **Vapes**: Batteries show clearly on X-ray. If pulled for inspection, cartridges are easily identified.", 
-          variant: "default" 
+        {
+          title: "Edibles vs Flower vs Vapes",
+          icon: "TrendingUp",
+          content: "**Flower**: Most risky. Organic mass shows on scanners, and smell is a dead giveaway. **Edibles**: Hardest to detect. TSA is looking for bombs, not gummies. However, original packaging with THC warnings makes it obvious if searched. **Vapes**: Batteries show clearly on X-ray. If pulled for inspection, cartridges are easily identified.",
+          variant: "default"
         },
-        { 
-          title: "What Happens If You're Caught", 
-          icon: "Users", 
-          content: "1. **Confiscation**: Most common in legal states. You lose your weed, but make your flight. \n2. **Citation**: A ticket/fine ($100-$500). No arrest, but you might miss your flight. \n3. **Arrest**: Likely in illegal states (TX, FL) or for large quantities (intent to distribute). \n4. **Missed Flight**: The administrative delay often causes you to miss boarding, regardless of legal outcome.", 
-          variant: "gold" 
+        {
+          title: "What Happens If You're Caught",
+          icon: "Users",
+          content: "1. **Confiscation**: Most common in legal states. You lose your weed, but make your flight. \n2. **Citation**: A ticket/fine ($100-$500). No arrest, but you might miss your flight. \n3. **Arrest**: Likely in illegal states (TX, FL) or for large quantities (intent to distribute). \n4. **Missed Flight**: The administrative delay often causes you to miss boarding, regardless of legal outcome.",
+          variant: "gold"
         }
       ],
       safetyTips: [
@@ -684,35 +684,35 @@ export const BLOG_POSTS = [
       introduction: "Colorado is the gold standard for cannabis tourism, but finding a place to smoke is harder than buying the product. Most hotels strictly ban smoking, and Airbnb hosts can be unpredictable. This guide compares the three main ways to stay: dedicated cannabis rentals (safest), 420-friendly Airbnbs (cheapest), and luxury cannabis resorts. We break down the costs, rules, and best locations so you can enjoy your vacation without the paranoia.",
       disclaimer: "Public consumption is illegal in Colorado. Property owners have the final say on smoking rules. '420-friendly' often means outdoor smoking only. Always verify the specific rules (indoor vs outdoor) before booking.",
       sections: [
-        { 
-          title: "The 3 Types of Stays", 
-          icon: "Building2", 
-          content: "**1. Dedicated Platforms (Bud & Breakfast)**: Like Airbnb, but exclusively for cannabis users. Guaranteed friendly hosts. \n**2. Luxury Resorts (Kushkations)**: High-end homes with bongs, dab bars, and chef services included. \n**3. Traditional Rentals (Airbnb/VRBO)**: Hit or miss. You must filter carefully and ask hosts directly to avoid fines.", 
-          variant: "default" 
+        {
+          title: "The 3 Types of Stays",
+          icon: "Building2",
+          content: "**1. Dedicated Platforms (Bud & Breakfast)**: Like Airbnb, but exclusively for cannabis users. Guaranteed friendly hosts. \n**2. Luxury Resorts (Kushkations)**: High-end homes with bongs, dab bars, and chef services included. \n**3. Traditional Rentals (Airbnb/VRBO)**: Hit or miss. You must filter carefully and ask hosts directly to avoid fines.",
+          variant: "default"
         },
-        { 
-          title: "Kushkations vs Airbnb", 
-          icon: "Scale", 
-          content: "**Kushkations**: \n• **Pros**: 100% legal indoor smoking often allowed. Luxury amenities (hot tubs, game rooms). \n• **Cons**: Expensive ($300-800/night). Limited availability. \n**Airbnb**: \n• **Pros**: Cheaper, huge selection. \n• **Cons**: Risk of 'smoking fees' if host isn't clear. Usually outdoor smoking only.", 
-          variant: "accent" 
+        {
+          title: "Kushkations vs Airbnb",
+          icon: "Scale",
+          content: "**Kushkations**: \n• **Pros**: 100% legal indoor smoking often allowed. Luxury amenities (hot tubs, game rooms). \n• **Cons**: Expensive ($300-800/night). Limited availability. \n**Airbnb**: \n• **Pros**: Cheaper, huge selection. \n• **Cons**: Risk of 'smoking fees' if host isn't clear. Usually outdoor smoking only.",
+          variant: "accent"
         },
-        { 
-          title: "Top Locations", 
-          icon: "MapPin", 
-          content: "**Denver**: Best for city vibes and dispensary tours. Look for 'Capitol Hill' mansions. \n**Breckenridge/Aspen**: Best for ski trips. Luxury cabins are pricey but offer private mountain views. \n**Colorado Springs**: Cheaper rentals, near Garden of the Gods, but remember recreational sales are banned in city limits (must buy in Manitou Springs).", 
-          variant: "default" 
+        {
+          title: "Top Locations",
+          icon: "MapPin",
+          content: "**Denver**: Best for city vibes and dispensary tours. Look for 'Capitol Hill' mansions. \n**Breckenridge/Aspen**: Best for ski trips. Luxury cabins are pricey but offer private mountain views. \n**Colorado Springs**: Cheaper rentals, near Garden of the Gods, but remember recreational sales are banned in city limits (must buy in Manitou Springs).",
+          variant: "default"
         },
-        { 
-          title: "Budget Breakdown", 
-          icon: "TrendingUp", 
-          content: "**Budget ($80-150)**: Private room in a shared 420-friendly house. Common on Bud & Breakfast. \n**Mid-Range ($200-400)**: Private condo or small cabin. Usually outdoor smoking only (balcony/patio). \n**Luxury ($500+)**: 'Kushkations' style large homes. Indoor vaping/smoking permitted. Chef services available.", 
-          variant: "gold" 
+        {
+          title: "Budget Breakdown",
+          icon: "TrendingUp",
+          content: "**Budget ($80-150)**: Private room in a shared 420-friendly house. Common on Bud & Breakfast. \n**Mid-Range ($200-400)**: Private condo or small cabin. Usually outdoor smoking only (balcony/patio). \n**Luxury ($500+)**: 'Kushkations' style large homes. Indoor vaping/smoking permitted. Chef services available.",
+          variant: "gold"
         },
-        { 
-          title: "Booking Strategy", 
-          icon: "Sparkles", 
-          content: "1. **Filter First**: On Airbnb, search for '420 friendly' in descriptions, but don't rely on it. \n2. **Message the Host**: 'Hi, is cannabis consumption allowed on the patio?' Get it in writing. \n3. **Check Cleaning Fees**: Some hosts charge $300+ cleaning fees if they smell smoke indoors. \n4. **Book Early**: The best 420 spots book out 3-6 months in advance for ski season.", 
-          variant: "warning" 
+        {
+          title: "Booking Strategy",
+          icon: "Sparkles",
+          content: "1. **Filter First**: On Airbnb, search for '420 friendly' in descriptions, but don't rely on it. \n2. **Message the Host**: 'Hi, is cannabis consumption allowed on the patio?' Get it in writing. \n3. **Check Cleaning Fees**: Some hosts charge $300+ cleaning fees if they smell smoke indoors. \n4. **Book Early**: The best 420 spots book out 3-6 months in advance for ski season.",
+          variant: "warning"
         }
       ],
       safetyTips: [
@@ -892,6 +892,95 @@ export const BLOG_POSTS = [
       sections: [],
       safetyTips: []
     }
+  },
+  {
+    id: "how-much-weed-can-you-buy-colorado-2025",
+    title: "How Much Weed Can You Buy in Colorado? (2025 Guide)",
+    subtitle: "Complete breakdown of Colorado's cannabis purchase limits for recreational and medical customers, including equivalency charts, possession rules, and first-time buyer tips.",
+    excerpt: "In Colorado, recreational customers 21+ can buy up to 1 oz flower, 8g concentrates, or 800mg THC edibles per day. This guide covers everything first-time tourists need to know.",
+    date: "Dec 16, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🌿",
+    category: "Legal Guide",
+    tags: ["Colorado", "Purchase Limits", "Dispensary", "Legal", "First-Time"],
+    image: "/blog-colorado-limits.jpg",
+    content: {
+      introduction: "Colorado was the first state to legalize recreational cannabis, and it remains one of the most tourist-friendly destinations for cannabis enthusiasts. But one question comes up constantly: How much weed can you actually buy? Whether you're a first-time visitor or a returning traveler, understanding Colorado's purchase limits, possession rules, and equivalency system is essential for a stress-free experience. This comprehensive 2025 guide breaks down everything you need to know.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. These limits apply statewide, though some municipalities may have additional restrictions. Never transport cannabis across state lines—even to other legal states. Laws are current as of December 2025 but may change.",
+      sections: [
+        {
+          title: "Quick Answer: Daily Purchase Limits",
+          icon: "Scale",
+          content: "**Recreational customers (21+)** can purchase per day: **1 ounce (28 grams) of flower**, **8 grams of concentrates**, or **800mg of THC in edibles**. You can also buy up to **6 seeds or clones**. **Medical patients** with a valid Colorado med card can purchase up to **2 ounces of flower**. These limits apply per calendar day, not per dispensary visit. Both residents and tourists have the same recreational limits.",
+          variant: "default"
+        },
+        {
+          title: "Recreational Purchase Limits Breakdown",
+          icon: "Shield",
+          content: "Here's the complete breakdown for recreational customers: **Flower**: 1 oz (28g) per day. **Concentrates** (wax, shatter, live resin): 8 grams per day. **Edibles**: 800mg total THC per day. **Seeds/Clones**: 6 per day. These are daily limits—meaning you reset at midnight. A valid government-issued ID (driver's license, passport, or state ID) proving you're 21+ is required for every purchase.",
+          variant: "default"
+        },
+        {
+          title: "How Equivalency Works",
+          icon: "TrendingUp",
+          content: "Colorado uses an equivalency system, meaning you can mix and match products as long as the total doesn't exceed 1 ounce equivalent. The formula: **1 oz flower = 8g concentrate = 800mg edibles = 6 seeds**. **Example combinations that work**: Half oz flower + 4g concentrate ✓ | 14g flower + 400mg edibles + 4g wax ✓ | 7g flower + 2g shatter + 200mg gummies ✓. Dispensary POS systems automatically track this during checkout.",
+          variant: "accent"
+        },
+        {
+          title: "Medical vs Recreational Limits",
+          icon: "Users",
+          content: "**Recreational**: 1 oz flower, 8g concentrates, 800mg edibles. **Medical**: 2 oz flower, 8g concentrates (only 2g for ages 18-20), up to 20,000mg edibles. Medical cards are only available to Colorado residents—out-of-state visitors must purchase recreational regardless of their home state's medical status. Medical patients also get lower taxes (about 15% less) and access to higher-potency products.",
+          variant: "default"
+        },
+        {
+          title: "Possession vs Purchase: Know the Difference",
+          icon: "AlertCircle",
+          content: "This confuses many tourists: **Purchase limit**: 1 oz per day. **Possession limit**: 2 oz at any time. You can legally possess double what you can buy in a single day. So if you buy 1 oz on Monday and 1 oz on Tuesday, you can legally carry both ounces. However, possessing more than 2 oz becomes a misdemeanor with potential fines. Keep your receipts as proof of legal purchase.",
+          variant: "warning"
+        },
+        {
+          title: "Can You Visit Multiple Dispensaries?",
+          icon: "MapPin",
+          content: "**Yes**, you can visit as many dispensaries as you want in a day. However, daily limits still apply across all purchases. Here's the catch: there's **no statewide tracking system** for recreational purchases. Each dispensary tracks purchases individually within their own system. Technically, a tourist could visit multiple dispensaries and exceed limits—but this remains illegal and can result in penalties if caught. Don't risk it.",
+          variant: "default"
+        },
+        {
+          title: "What Happens If You Buy Too Much?",
+          icon: "Scale",
+          content: "Dispensary POS systems are designed to flag when you're approaching limits during a single transaction. If you try to exceed limits, the transaction will be declined. But what if you're caught with too much? **Over 2 oz**: Misdemeanor, up to $700 fine and potential 6 months jail for first offense. **Over 6 oz**: Potential felony charges. **Over 12 oz**: Felony with 1-3 years prison. The limits are generous—there's no reason to risk legal trouble.",
+          variant: "warning"
+        },
+        {
+          title: "Tips for First-Time Buyers",
+          icon: "Users",
+          content: "**Bring valid ID**: Driver's license, passport, or state ID that shows you're 21+. **Cash is king**: Many dispensaries are cash-only due to federal banking restrictions. ATMs are available but charge fees. Some accept debit cards with fees. **Ask budtenders**: They're knowledgeable and can recommend products based on your experience level. **Start low with edibles**: Begin with 5-10mg THC. Effects take 30-90 minutes to kick in. Don't redose too quickly. **Check for deals**: Many dispensaries offer first-time customer discounts, daily deals, and happy hours.",
+          variant: "gold"
+        },
+        {
+          title: "Where You Can (and Can't) Consume",
+          icon: "Building2",
+          content: "Buying is easy—finding a legal place to consume is harder. **Legal**: Private property with owner permission, 420-friendly rentals, licensed consumption lounges. **Illegal**: Public spaces, parks, sidewalks, most hotels, federal land (national parks, some ski resorts), rental cars. Some cities like Denver have licensed cannabis lounges where on-site consumption is permitted. Always verify consumption policies before booking accommodations.",
+          variant: "accent"
+        },
+        {
+          title: "Ready to Shop?",
+          icon: "MapPin",
+          content: "Colorado has over 500 licensed dispensaries across the state, with the highest concentrations in Denver, Boulder, and mountain towns. Whether you're looking for budget-friendly options or premium craft cannabis, you'll find a dispensary that fits your needs. Check out our Colorado Dispensary Guide for verified shops, reviews, and directions in Denver, Boulder, Aspen, and beyond. Happy exploring!",
+          variant: "default"
+        }
+      ],
+      safetyTips: [
+        "Always carry valid government-issued ID proving you're 21+",
+        "Keep cannabis in original sealed packaging when transporting in vehicles",
+        "Never transport cannabis across state lines—even to other legal states like California or Nevada",
+        "Start with 5-10mg THC for edibles if you're a beginner—wait at least 2 hours before taking more",
+        "Don't drive under the influence—Colorado has strict DUI laws for cannabis",
+        "The possession limit is 2 oz—don't accumulate more than this",
+        "Keep receipts as proof of legal purchase",
+        "Never consume in public spaces, parks, or on federal land"
+      ]
+    }
   }
 ];
 
@@ -906,8 +995,8 @@ const ArticleCard = ({ post, onClick }: { post: typeof BLOG_POSTS[0]; onClick: (
   >
     <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 flex flex-col">
       <div className="h-48 sm:h-56 overflow-hidden relative">
-        <img 
-          src={post.image} 
+        <img
+          src={post.image}
           alt={post.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
@@ -988,16 +1077,16 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
       .map(article => {
         // Calculate relevance score
         let score = 0;
-        
+
         // Same category gets high score
         if (article.category === post.category) {
           score += 10;
         }
-        
+
         // Shared tags get points
         const sharedTags = article.tags.filter(tag => post.tags.includes(tag));
         score += sharedTags.length * 5;
-        
+
         return { article, score };
       })
       .filter(item => item.score > 0) // Only include articles with some relation
@@ -1155,7 +1244,7 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
               </h2>
             </div>
             <p className="text-muted-foreground mb-6">Continue exploring cannabis travel guides and tips</p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedArticles.map((relatedPost, index) => (
                 <motion.div
@@ -1178,8 +1267,8 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
                 >
                   <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-xl hover:shadow-accent/10">
                     <div className="h-40 overflow-hidden relative">
-                      <img 
-                        src={relatedPost.image} 
+                      <img
+                        src={relatedPost.image}
                         alt={relatedPost.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
@@ -1202,7 +1291,7 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
                       <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-accent transition-colors line-clamp-2">
                         {relatedPost.title}
                       </h3>
-                      
+
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-3 flex-1">
                         {relatedPost.excerpt}
                       </p>
@@ -1326,7 +1415,7 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <AnimatePresence mode="wait">
         {activeArticle ? (
           <motion.div key="detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -1384,11 +1473,10 @@ export default function Blog() {
                       key={category}
                       variant={activeCategory === category ? "default" : "outline"}
                       onClick={() => setActiveCategory(category)}
-                      className={`rounded-full px-5 ${
-                        activeCategory === category 
-                          ? "bg-accent text-accent-foreground" 
+                      className={`rounded-full px-5 ${activeCategory === category
+                          ? "bg-accent text-accent-foreground"
                           : "hover:border-accent/50"
-                      }`}
+                        }`}
                     >
                       {category}
                     </Button>
@@ -1411,8 +1499,8 @@ export default function Blog() {
                       <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all">
                         <div className="grid md:grid-cols-2 gap-0">
                           <div className="h-64 md:h-80 overflow-hidden relative">
-                            <img 
-                              src={filteredPosts[0].image} 
+                            <img
+                              src={filteredPosts[0].image}
                               alt={filteredPosts[0].title}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
@@ -1492,7 +1580,7 @@ export default function Blog() {
 
                     {/* PAGINATION */}
                     {totalPages > 1 && (
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
@@ -1511,12 +1599,12 @@ export default function Blog() {
                         <div className="flex items-center gap-1">
                           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
                             // Show first page, last page, current page, and pages around current
-                            const showPage = 
-                              page === 1 || 
-                              page === totalPages || 
+                            const showPage =
+                              page === 1 ||
+                              page === totalPages ||
                               (page >= currentPage - 1 && page <= currentPage + 1);
-                            
-                            const showEllipsis = 
+
+                            const showEllipsis =
                               (page === currentPage - 2 && currentPage > 3) ||
                               (page === currentPage + 2 && currentPage < totalPages - 2);
 
@@ -1532,11 +1620,10 @@ export default function Blog() {
                                 variant={currentPage === page ? "default" : "outline"}
                                 size="sm"
                                 onClick={() => handlePageChange(page)}
-                                className={`rounded-full w-10 h-10 p-0 ${
-                                  currentPage === page 
-                                    ? "bg-accent text-accent-foreground" 
+                                className={`rounded-full w-10 h-10 p-0 ${currentPage === page
+                                    ? "bg-accent text-accent-foreground"
                                     : "hover:border-accent/50"
-                                }`}
+                                  }`}
                               >
                                 {page}
                               </Button>
@@ -1590,9 +1677,9 @@ export default function Blog() {
                       Get the latest guides, legal updates, and destination tips delivered to your inbox.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-                      <Input 
-                        type="email" 
-                        placeholder="Enter your email" 
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
                         className="bg-background/50 border-border/50 rounded-full"
                       />
                       <Button className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-6">
