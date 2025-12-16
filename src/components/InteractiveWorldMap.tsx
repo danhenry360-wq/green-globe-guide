@@ -16,7 +16,7 @@ interface CountryData {
   image: string;
 }
 
-// --- Full Data Set ---
+// --- Data ---
 const countryData: Record<string, CountryData> = {
   // NORTH AMERICA
   'USA': { name: 'United States', status: 'mixed', description: 'Varies by state - 24 states recreational, federally illegal', slug: 'united-states', region: 'north-america', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=400&q=80' },
@@ -143,7 +143,8 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
   
   // State
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  // Store width/height to calculate tooltip boundary flips
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -154,6 +155,8 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
       setMousePos({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
+        width: rect.width,
+        height: rect.height
       });
     }
   };
@@ -231,6 +234,12 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
       .filter(([_, data]) => data.name.toLowerCase().includes(searchQuery.toLowerCase()))
       .slice(0, 5);
   }, [searchQuery]);
+
+  // Calculations for Tooltip positioning
+  // If mouse is past 60% of width, flip tooltip to left
+  const isRightSide = mousePos.x > mousePos.width * 0.6;
+  // If mouse is past 60% of height, flip tooltip up
+  const isBottomSide = mousePos.y > mousePos.height * 0.6;
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
@@ -465,10 +474,14 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               style={{ 
-                left: mousePos.x + 20, 
-                top: mousePos.y + 20,
+                left: mousePos.x, 
+                top: mousePos.y,
               }}
-              className="absolute z-50 w-72 pointer-events-none" 
+              // CSS Classes handle the "Flip" logic based on calculations
+              className={`absolute z-50 w-72 pointer-events-none 
+                ${isRightSide ? '-translate-x-full -ml-4' : 'ml-4'} 
+                ${isBottomSide ? '-translate-y-full -mt-4' : 'mt-4'}
+              `}
             >
               <div className="bg-gray-900/90 backdrop-blur-xl border border-white/20 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                 {/* Header Image */}
