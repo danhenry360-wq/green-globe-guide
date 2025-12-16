@@ -124,6 +124,7 @@ import AdminBulkBlog from "./pages/AdminBulkBlog";
 import AdminImageGallery from "./pages/AdminImageGallery";
 import AdminNewsletter from "./pages/AdminNewsletter";
 import BlogDetail from "./pages/BlogDetail";
+import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -322,21 +323,21 @@ function App() {
               <Route path="/world/:continent/:country/:region" element={<WorldGuide />} />
               <Route path="/world/:continent/:country/:region/:city" element={<WorldGuide />} />
 
-              {/* Admin routes */}
+              {/* Admin routes - protected at router level */}
               <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/state-laws" element={<AdminStateLaws />} />
-              <Route path="/admin/country-laws" element={<AdminCountryLaws />} />
-              <Route path="/admin/dispensaries" element={<AdminDispensaries />} />
-              <Route path="/admin/hotels" element={<AdminHotels />} />
-              <Route path="/admin/reviews" element={<AdminReviews />} />
-              <Route path="/admin/revenue" element={<AdminRevenue />} />
-              <Route path="/admin/users" element={<AdminUsers />} />
-              <Route path="/admin/contacts" element={<AdminContacts />} />
-              <Route path="/admin/country-images" element={<AdminCountryImages />} />
-              <Route path="/admin/blog" element={<AdminBlog />} />
-              <Route path="/admin/bulk-blog" element={<AdminBulkBlog />} />
-              <Route path="/admin/images" element={<AdminImageGallery />} />
-              <Route path="/admin/newsletter" element={<AdminNewsletter />} />
+              <Route path="/admin/state-laws" element={<ProtectedAdminRoute><AdminStateLaws /></ProtectedAdminRoute>} />
+              <Route path="/admin/country-laws" element={<ProtectedAdminRoute><AdminCountryLaws /></ProtectedAdminRoute>} />
+              <Route path="/admin/dispensaries" element={<ProtectedAdminRoute><AdminDispensaries /></ProtectedAdminRoute>} />
+              <Route path="/admin/hotels" element={<ProtectedAdminRoute><AdminHotels /></ProtectedAdminRoute>} />
+              <Route path="/admin/reviews" element={<ProtectedAdminRoute><AdminReviews /></ProtectedAdminRoute>} />
+              <Route path="/admin/revenue" element={<ProtectedAdminRoute><AdminRevenue /></ProtectedAdminRoute>} />
+              <Route path="/admin/users" element={<ProtectedAdminRoute><AdminUsers /></ProtectedAdminRoute>} />
+              <Route path="/admin/contacts" element={<ProtectedAdminRoute><AdminContacts /></ProtectedAdminRoute>} />
+              <Route path="/admin/country-images" element={<ProtectedAdminRoute><AdminCountryImages /></ProtectedAdminRoute>} />
+              <Route path="/admin/blog" element={<ProtectedAdminRoute><AdminBlog /></ProtectedAdminRoute>} />
+              <Route path="/admin/bulk-blog" element={<ProtectedAdminRoute><AdminBulkBlog /></ProtectedAdminRoute>} />
+              <Route path="/admin/images" element={<ProtectedAdminRoute><AdminImageGallery /></ProtectedAdminRoute>} />
+              <Route path="/admin/newsletter" element={<ProtectedAdminRoute><AdminNewsletter /></ProtectedAdminRoute>} />
 
               {/* 404 catch-all */}
               <Route path="*" element={<NotFound />} />
