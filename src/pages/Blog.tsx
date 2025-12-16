@@ -912,7 +912,7 @@ export const BLOG_POSTS = [
         {
           title: "Quick Answer: Daily Purchase Limits",
           icon: "Scale",
-          content: "**Recreational customers (21+)** can purchase per day: **1 ounce (28 grams) of flower**, **8 grams of concentrates**, or **800mg of THC in edibles**. You can also buy up to **6 seeds or clones**. **Medical patients** with a valid Colorado med card can purchase up to **2 ounces of flower**. These limits apply per calendar day, not per dispensary visit. Both residents and tourists have the same recreational limits.",
+          content: "**Recreational customers (21+)** can purchase per day: **1 ounce (28 grams) of flower**, **8 grams of concentrates**, or **800mg of THC in edibles**. You can also buy up to **6 seeds or clones**. **Medical patients** with a valid Colorado med card can purchase up to **2 ounces of flower**. These limits apply per calendar day, not per dispensary visit. Both residents and tourists have the same recreational limits. *Note: A 2025 bill to double daily limits was proposed but didn't pass—current limits remain at 1 oz.*",
           variant: "default"
         },
         {
@@ -930,7 +930,7 @@ export const BLOG_POSTS = [
         {
           title: "Medical vs Recreational Limits",
           icon: "Users",
-          content: "**Recreational**: 1 oz flower, 8g concentrates, 800mg edibles. **Medical**: 2 oz flower, 8g concentrates (only 2g for ages 18-20), up to 20,000mg edibles. Medical cards are only available to Colorado residents—out-of-state visitors must purchase recreational regardless of their home state's medical status. Medical patients also get lower taxes (about 15% less) and access to higher-potency products.",
+          content: "**Recreational**: 1 oz flower, 8g concentrates, 800mg edibles. **Medical**: 2 oz flower, 8g concentrates (only 2g for ages 18-20), up to 20,000mg edibles. **Important: Colorado has NO medical marijuana reciprocity.** Out-of-state medical cards are not recognized—even if you have a valid med card from California, Arizona, or any other state, you must purchase from the recreational menu at recreational prices. Only Colorado residents can obtain a Colorado med card. Medical patients get lower taxes (about 15% less) and access to higher-potency products.",
           variant: "default"
         },
         {
@@ -948,7 +948,7 @@ export const BLOG_POSTS = [
         {
           title: "What Happens If You Buy Too Much?",
           icon: "Scale",
-          content: "Dispensary POS systems are designed to flag when you're approaching limits during a single transaction. If you try to exceed limits, the transaction will be declined. But what if you're caught with too much? **Over 2 oz**: Misdemeanor, up to $700 fine and potential 6 months jail for first offense. **Over 6 oz**: Potential felony charges. **Over 12 oz**: Felony with 1-3 years prison. The limits are generous—there's no reason to risk legal trouble.",
+          content: "Dispensary POS systems are designed to flag when you're approaching limits during a single transaction. If you try to exceed limits, the transaction will be declined. But what if you're caught with too much? **Over 2 oz** can result in fines up to $700. **Over 6 oz** gets into felony territory. The limits are generous—stay within them and you'll have zero issues. Keep your receipts as proof of legal purchase.",
           variant: "warning"
         },
         {
@@ -979,6 +979,24 @@ export const BLOG_POSTS = [
         "The possession limit is 2 oz—don't accumulate more than this",
         "Keep receipts as proof of legal purchase",
         "Never consume in public spaces, parks, or on federal land"
+      ],
+      faq: [
+        {
+          question: "How much weed can you buy in Colorado?",
+          answer: "Recreational customers 21+ can purchase up to 1 ounce (28 grams) of flower, 8 grams of concentrates, or 800mg of THC in edibles per day. Medical patients can purchase up to 2 ounces of flower."
+        },
+        {
+          question: "Can tourists buy weed in Colorado?",
+          answer: "Yes! Colorado allows any adult 21+ with valid government-issued ID to purchase cannabis. Tourists have the same purchase limits as residents: 1 oz flower per day."
+        },
+        {
+          question: "Can you visit multiple dispensaries in one day?",
+          answer: "Yes, you can visit as many dispensaries as you want. However, daily limits still apply across all purchases—there's no statewide tracking, but exceeding limits remains illegal."
+        },
+        {
+          question: "What's the difference between purchase and possession limits?",
+          answer: "Purchase limit is 1 oz per day. Possession limit is 2 oz at any time. You can legally possess double what you can buy in a single day."
+        }
       ]
     }
   }
@@ -1474,8 +1492,8 @@ export default function Blog() {
                       variant={activeCategory === category ? "default" : "outline"}
                       onClick={() => setActiveCategory(category)}
                       className={`rounded-full px-5 ${activeCategory === category
-                          ? "bg-accent text-accent-foreground"
-                          : "hover:border-accent/50"
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:border-accent/50"
                         }`}
                     >
                       {category}
@@ -1621,8 +1639,8 @@ export default function Blog() {
                                 size="sm"
                                 onClick={() => handlePageChange(page)}
                                 className={`rounded-full w-10 h-10 p-0 ${currentPage === page
-                                    ? "bg-accent text-accent-foreground"
-                                    : "hover:border-accent/50"
+                                  ? "bg-accent text-accent-foreground"
+                                  : "hover:border-accent/50"
                                   }`}
                               >
                                 {page}
