@@ -295,13 +295,13 @@ const BlogColoradoLimits = () => {
                                         to="/dispensary"
                                         className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                                     >
-                                        Find Dispensaries Near Me <ArrowRight className="h-5 w-5" />
+                                        Find Dispensaries Near Me
                                     </Link>
                                     <Link
                                         to="/usa/colorado"
                                         className="inline-flex items-center gap-2 px-6 py-3 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors"
                                     >
-                                        Colorado Cannabis Guide <ArrowRight className="h-5 w-5" />
+                                        Colorado Cannabis Guide
                                     </Link>
                                 </div>
                             </Card>
