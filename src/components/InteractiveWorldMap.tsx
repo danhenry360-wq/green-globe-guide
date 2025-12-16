@@ -5,9 +5,8 @@ import { Search, Globe, MapPin, X, AlertTriangle, ShieldCheck, ShoppingBag } fro
 import { getStatusHexColor } from '@/lib/legal-status-colors';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-
-// FIX: Import from the file that actually exists in your directory
-import { countryData, type CountryProfile } from '@/data/world_data';
+// IMPORT THE NEW DATA STRUCTURE
+import { countryData, type CountryProfile } from '@/data/country-data';
 
 const statusColors = {
   recreational: getStatusHexColor('recreational'),
@@ -17,6 +16,7 @@ const statusColors = {
   mixed: getStatusHexColor('mixed'),
 };
 
+// --- Filters Configuration ---
 const filters = [
   { id: 'all', label: 'All Regions' },
   { id: 'recreational', label: 'Recreational', color: statusColors.recreational },
@@ -31,11 +31,14 @@ interface InteractiveWorldMapProps {
 const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // State
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Handle Mouse Move for Tooltip
   const handleMouseMove = (e: React.MouseEvent) => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
@@ -48,14 +51,19 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
     }
   };
 
+  // Filter Logic - UPDATED for new data structure
   const isCountryVisible = (code: string) => {
     const country = countryData[code];
     if (!country) return false;
+    
+    // Access nested properties (overview.status)
     const matchesFilter = activeFilter === 'all' || country.overview.status === activeFilter;
     const matchesSearch = country.name.toLowerCase().includes(searchQuery.toLowerCase());
+    
     return matchesFilter && matchesSearch;
   };
 
+  // Navigation
   const handleCountryClick = (countryCode: string) => {
     const country = countryData[countryCode];
     if (country) {
@@ -63,12 +71,18 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
     }
   };
 
+  // Render SVG Path Helper
   const getCountryPath = (code: string, path: string) => {
     const country = countryData[code];
-    if (!country) return <path d={path} fill="#1a1a1a" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />;
+    
+    // If country doesn't exist in our new data file, don't render interaction logic
+    if (!country) return (
+       <path d={path} fill="#1a1a1a" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+    );
 
     const isVisible = isCountryVisible(code);
     const isHovered = hoveredCountry === code;
+    // Dim if filtering is active and country doesn't match
     const isMuted = !isVisible && (activeFilter !== 'all' || searchQuery !== '');
 
     return (
@@ -88,6 +102,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           filter={isHovered ? "url(#glow)" : ""}
           className="transition-all duration-300"
         />
+        {/* Connection Node Dot */}
         {!isMuted && (
           <circle 
             cx={getCentroid(path).x} 
@@ -101,11 +116,13 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
     );
   };
 
+  // Simple helper to guess centroid for visual dots
   const getCentroid = (d: string) => {
     const parts = d.split(' ');
     return { x: parseFloat(parts[1]), y: parseFloat(parts[2]) };
   };
 
+  // Filtered list for search results
   const searchResults = useMemo(() => {
     if (!searchQuery) return [];
     return Object.entries(countryData)
@@ -113,9 +130,11 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
       .slice(0, 5);
   }, [searchQuery]);
 
+  // Calculations for Tooltip positioning
   const isRightSide = mousePos.x > mousePos.width * 0.6;
   const isBottomSide = mousePos.y > mousePos.height * 0.6;
 
+  // Helper to get enforcement icon
   const getEnforcementIcon = (level: string) => {
     switch(level) {
       case 'relaxed': return <ShieldCheck className="w-3 h-3 text-green-400" />;
@@ -126,7 +145,9 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
+      {/* --- Controls Header --- */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-card/30 p-4 rounded-xl border border-white/5 backdrop-blur-sm shadow-xl">
+        {/* Filters */}
         <div className="flex flex-wrap gap-2">
           {filters.map((filter) => (
             <button
@@ -146,6 +167,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           ))}
         </div>
 
+        {/* Search */}
         <div className="relative w-full md:w-64">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -165,6 +187,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
             )}
           </div>
           
+          {/* Quick Search Dropdown */}
           <AnimatePresence>
             {searchQuery && searchResults.length > 0 && (
               <motion.div 
@@ -195,12 +218,14 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
         </div>
       </div>
 
+      {/* --- Map Container --- */}
       <div 
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHoveredCountry(null)}
         className="relative w-full aspect-[2/1] bg-[#050505] rounded-xl overflow-hidden border border-white/10 shadow-2xl group"
       >
+        {/* Animated Grid Background */}
         <div 
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{ 
@@ -208,10 +233,13 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
             backgroundSize: '30px 30px' 
           }}
         />
+
+        {/* Radar Scan Effect */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="w-full h-[5px] bg-gradient-to-r from-transparent via-accent/30 to-transparent absolute top-0 animate-scan-line blur-sm" />
         </div>
         
+        {/* SVG Map */}
         <svg
           viewBox="0 0 1000 500"
           className="w-full h-full relative z-10"
@@ -228,6 +256,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
             </linearGradient>
           </defs>
 
+          {/* Grid Lines */}
           <g stroke="url(#grid-grad)" strokeWidth="0.5">
             {[...Array(10)].map((_, i) => (
               <line key={`h${i}`} x1="0" y1={i * 50} x2="1000" y2={i * 50} />
@@ -237,10 +266,12 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
             ))}
           </g>
 
+          {/* NORTH AMERICA */}
           {getCountryPath('Canada', 'M 80 40 L 300 40 L 310 70 L 280 100 L 250 90 L 200 85 L 150 90 L 100 95 L 80 75 Z')}
           {getCountryPath('USA', 'M 100 100 L 250 105 L 280 150 L 265 195 L 205 215 L 150 195 L 100 175 Z')}
           {getCountryPath('Mexico', 'M 130 215 L 200 220 L 215 255 L 185 275 L 145 260 L 130 235 Z')}
           
+          {/* CENTRAL AMERICA */}
           {getCountryPath('Guatemala', 'M 175 268 L 195 268 L 195 282 L 175 282 Z')}
           {getCountryPath('Belize', 'M 195 262 L 205 262 L 205 275 L 195 275 Z')}
           {getCountryPath('Honduras', 'M 195 275 L 220 275 L 220 288 L 195 288 Z')}
@@ -249,6 +280,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('CostaRica', 'M 200 305 L 218 305 L 218 318 L 200 318 Z')}
           {getCountryPath('Panama', 'M 218 308 L 245 308 L 245 320 L 218 320 Z')}
 
+          {/* CARIBBEAN */}
           {getCountryPath('Cuba', 'M 235 235 L 275 235 L 275 250 L 235 250 Z')}
           {getCountryPath('Jamaica', 'M 250 255 L 270 255 L 270 265 L 250 265 Z')}
           {getCountryPath('Bahamas', 'M 270 220 L 290 220 L 290 235 L 270 235 Z')}
@@ -257,6 +289,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('TrinidadTobago', 'M 315 290 L 330 290 L 330 302 L 315 302 Z')}
           {getCountryPath('Bermuda', 'M 320 195 L 332 195 L 332 205 L 320 205 Z')}
 
+          {/* SOUTH AMERICA */}
           {getCountryPath('Colombia', 'M 220 300 L 265 300 L 265 340 L 220 340 Z')}
           {getCountryPath('Venezuela', 'M 265 295 L 310 295 L 310 325 L 265 325 Z')}
           {getCountryPath('Ecuador', 'M 200 335 L 230 335 L 230 360 L 200 360 Z')}
@@ -267,6 +300,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('Argentina', 'M 255 400 L 295 400 L 295 470 L 260 470 L 255 450 Z')}
           {getCountryPath('Uruguay', 'M 295 395 L 315 395 L 315 415 L 295 415 Z')}
 
+          {/* EUROPE */}
           {getCountryPath('UK', 'M 450 95 L 470 95 L 470 130 L 450 130 Z')}
           {getCountryPath('Ireland', 'M 435 100 L 450 100 L 450 125 L 435 125 Z')}
           {getCountryPath('Portugal', 'M 430 160 L 445 160 L 445 190 L 430 190 Z')}
@@ -294,6 +328,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('Ukraine', 'M 585 115 L 650 115 L 650 155 L 585 155 Z')}
           {getCountryPath('Russia', 'M 620 50 L 780 50 L 780 160 L 650 160 L 650 110 L 620 110 Z')}
 
+          {/* AFRICA */}
           {getCountryPath('Morocco', 'M 440 200 L 480 200 L 480 235 L 440 235 Z')}
           {getCountryPath('Egypt', 'M 560 210 L 605 210 L 605 255 L 560 255 Z')}
           {getCountryPath('Nigeria', 'M 480 290 L 520 290 L 520 330 L 480 330 Z')}
@@ -305,10 +340,12 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('SouthAfrica', 'M 530 400 L 595 400 L 595 450 L 530 450 Z')}
           {getCountryPath('Lesotho', 'M 565 420 L 580 420 L 580 435 L 565 435 Z')}
 
+          {/* MIDDLE EAST / WEST ASIA */}
           {getCountryPath('Israel', 'M 575 200 L 590 200 L 590 225 L 575 225 Z')}
           {getCountryPath('Lebanon', 'M 580 190 L 595 190 L 595 205 L 580 205 Z')}
           {getCountryPath('UAE', 'M 645 230 L 680 230 L 680 255 L 645 255 Z')}
 
+          {/* ASIA */}
           {getCountryPath('India', 'M 680 200 L 750 200 L 750 290 L 700 300 L 680 270 Z')}
           {getCountryPath('Nepal', 'M 720 210 L 750 210 L 750 225 L 720 225 Z')}
           {getCountryPath('SriLanka', 'M 720 300 L 738 300 L 738 325 L 720 325 Z')}
@@ -322,6 +359,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('Japan', 'M 875 145 L 920 145 L 920 210 L 875 210 Z')}
           {getCountryPath('SouthKorea', 'M 865 175 L 890 175 L 890 205 L 865 205 Z')}
 
+          {/* OCEANIA */}
           {getCountryPath('Australia', 'M 815 380 L 920 380 L 920 460 L 815 460 Z')}
           {getCountryPath('NewZealand', 'M 940 420 L 975 420 L 975 470 L 940 470 Z')}
           {getCountryPath('Fiji', 'M 960 380 L 980 380 L 980 400 L 960 400 Z')}
@@ -329,6 +367,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('Vanuatu', 'M 950 400 L 965 400 L 965 420 L 950 420 Z')}
         </svg>
 
+        {/* Mouse-Following Floating Tooltip - UPDATED WITH RICH DATA */}
         <AnimatePresence>
           {hoveredCountry && countryData[hoveredCountry] && (
             <motion.div
@@ -339,12 +378,14 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                 left: mousePos.x, 
                 top: mousePos.y,
               }}
+              // Classes handle the "Flip" logic based on boundary detection
               className={`absolute z-50 w-80 pointer-events-none 
                 ${isRightSide ? '-translate-x-full -ml-4' : 'ml-4'} 
                 ${isBottomSide ? '-translate-y-full -mt-4' : 'mt-4'}
               `}
             >
               <div className="bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                {/* Header Image */}
                 <div className="relative h-28 w-full">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
                   <img 
@@ -360,16 +401,19 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                   </Badge>
                 </div>
                 
+                {/* Content - Now showing richer data */}
                 <div className="p-4 pt-2">
                   <h3 className="text-xl font-bold text-white flex items-center gap-2">
                     {countryData[hoveredCountry].name}
                     <Globe className="w-4 h-4 text-muted-foreground" />
                   </h3>
                   
+                  {/* Short Description */}
                   <p className="text-xs text-gray-300 mt-2 leading-relaxed border-l-2 border-accent/50 pl-2">
                     {countryData[hoveredCountry].overview.shortDescription}
                   </p>
 
+                  {/* Rich Data Grid */}
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     <div className="bg-white/5 rounded p-1.5 flex flex-col gap-0.5">
                       <span className="text-[10px] text-muted-foreground uppercase font-bold flex items-center gap-1">
@@ -399,6 +443,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           )}
         </AnimatePresence>
 
+        {/* Static Legend */}
         <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-lg border border-white/10 text-xs">
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             {Object.entries(statusColors).map(([status, color]) => (
