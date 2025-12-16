@@ -1,162 +1,277 @@
 // src/data/world_data.ts
+import { getStatusHexColor } from '@/lib/legal-status-colors';
 
-interface City {
-  slug: string;
+// --- Types ---
+export type LegalStatus = 'recreational' | 'medical' | 'decriminalized' | 'illegal' | 'mixed';
+export type EnforcementLevel = 'zero-tolerance' | 'strict' | 'moderate' | 'relaxed' | 'varies';
+export type PurchaseMethod = 'dispensary' | 'social_club' | 'pharmacy' | 'home_grow' | 'delivery' | 'street' | 'none';
+
+export interface CountryProfile {
+  id: string;
+  isoCode: string;
   name: string;
-  atGlance: string[];
+  slug: string;
+  region: 'north-america' | 'south-america' | 'central-america' | 'europe' | 'asia' | 'africa' | 'oceania' | 'caribbean';
+  overview: {
+    status: LegalStatus;
+    shortDescription: string;
+    heroImage: string;
+    lastUpdated: string;
+  };
+  legal: {
+    possessionLimit: string;
+    publicConsumption: 'legal' | 'designated_areas' | 'private_only' | 'illegal';
+    medicalReciprocity: boolean;
+    enforcement: EnforcementLevel;
+    ageLimit?: number;
+  };
+  culture: {
+    purchaseMethods: PurchaseMethod[];
+    tourismFriendlyRating: number;
+    localSlang?: string[];
+  };
 }
 
-interface Country {
-  slug: string;
-  name: string;
-  region: string;
-  legalStatus: "Recreational" | "Medical" | "Decriminalized";
-  possession: string;
-  airport: string;
-  tourist: string;
-  description: string;
-  cities: City[];
-  image: string;
-}
-
-export const COUNTRIES: Country[] = [
-  // === NORTH AMERICA ===
-  {
-    slug: "canada",
-    name: "Canada",
-    region: "North America",
-    legalStatus: "Recreational",
-    possession: "30 g public / unlimited home",
-    airport: "30 g domestic only",
-    tourist: "Gov stores only; ID required",
-    description: "First G7 nation to legalise recreational cannabis nationwide.",
-    cities: [
-      { slug: "toronto", name: "Toronto", atGlance: ["200+ legal stores", "Hotels may ban smoking", "Designated lounges exist"] },
-      { slug: "vancouver", name: "Vancouver", atGlance: ["Culture widely accepted", "Some stores have lounges", "Parks = no smoking"] },
-      { slug: "montreal", name: "Montreal", atGlance: ["Legal age 21", "Gov SQDC outlets", "French helpful"] },
-    ],
-    image: "/dest-4.jpg",
+// --- Data ---
+export const countryData: Record<string, CountryProfile> = {
+  'USA': {
+    id: 'USA',
+    isoCode: 'US',
+    name: 'United States',
+    slug: 'united-states',
+    region: 'north-america',
+    overview: {
+      status: 'mixed',
+      shortDescription: '24+ states legalized (CA, NY, CO), but federally illegal.',
+      heroImage: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=400&q=80',
+      lastUpdated: '2024-04-01',
+    },
+    legal: {
+      possessionLimit: 'Varies by state',
+      publicConsumption: 'private_only',
+      medicalReciprocity: true,
+      enforcement: 'varies',
+      ageLimit: 21,
+    },
+    culture: {
+      purchaseMethods: ['dispensary', 'delivery', 'home_grow'],
+      tourismFriendlyRating: 9,
+      localSlang: ['Weed', 'Pot', 'Gas', 'Bud'],
+    },
   },
-  {
-    slug: "mexico",
-    name: "Mexico",
-    region: "North America",
-    legalStatus: "Decriminalized",
-    possession: "Small amounts tolerated",
-    airport: "Zero tolerance",
-    tourist: "Private use low priority; avoid public",
-    description: "Supreme Court ruled prohibition unconstitutional; possession is administrative.",
-    cities: [
-      { slug: "mexico-city", name: "Mexico City", atGlance: ["Capital vibe relaxed", "Private use tolerated", "Great street food"] },
-      { slug: "cancun", name: "Cancun", atGlance: ["Resort security tight", "Pool areas ban smoking", "Enjoy beaches"] },
-      { slug: "guadalajara", name: "Guadalajara", atGlance: ["Tech hub, younger crowd", "More relaxed than coast", "Check Airbnb rules"] },
-    ],
-    image: "/dest-4.jpg",
+  'Canada': {
+    id: 'Canada',
+    isoCode: 'CA',
+    name: 'Canada',
+    slug: 'canada',
+    region: 'north-america',
+    overview: {
+      status: 'recreational',
+      shortDescription: 'Fully legal nationwide. Government and private retailers available.',
+      heroImage: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=400&q=80',
+      lastUpdated: '2023-10-17',
+    },
+    legal: {
+      possessionLimit: '30g public',
+      publicConsumption: 'designated_areas',
+      medicalReciprocity: false,
+      enforcement: 'relaxed',
+      ageLimit: 19,
+    },
+    culture: {
+      purchaseMethods: ['dispensary', 'delivery', 'home_grow'],
+      tourismFriendlyRating: 10,
+    },
   },
-
-  // === EUROPE ===
-  {
-    slug: "netherlands",
-    name: "Netherlands",
-    region: "Europe",
-    legalStatus: "Decriminalized",
-    possession: "5 g tolerated",
-    airport: "Do not transport",
-    tourist: "Coffee-shop weed is potent—start small",
-    description: "Sale tolerated under strict conditions; production remains illegal.",
-    cities: [
-      { slug: "amsterdam", name: "Amsterdam", atGlance: ["150+ coffee shops", "No tobacco inside", "Avoid street dealers"] },
-      { slug: "rotterdam", name: "Rotterdam", atGlance: ["30 shops, less touristy", "Higher quality", "Residency checks"] },
-      { slug: "the-hague", name: "The Hague", atGlance: ["Conservative feel", "Membership clubs", "Stiffer fines"] },
-    ],
-    image: "/dest-3.jpg",
+  'Mexico': {
+    id: 'Mexico',
+    isoCode: 'MX',
+    name: 'Mexico',
+    slug: 'mexico',
+    region: 'north-america',
+    overview: {
+      status: 'decriminalized',
+      shortDescription: 'Technically legal but retail market stalls. Possession <5g is decriminalized.',
+      heroImage: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=400&q=80',
+      lastUpdated: '2024-01-01',
+    },
+    legal: {
+      possessionLimit: '5g',
+      publicConsumption: 'illegal',
+      medicalReciprocity: false,
+      enforcement: 'moderate',
+    },
+    culture: {
+      purchaseMethods: ['street'],
+      tourismFriendlyRating: 4,
+      localSlang: ['Mota'],
+    },
   },
-  {
-    slug: "germany",
-    name: "Germany",
-    region: "Europe",
-    legalStatus: "Recreational",
-    possession: "25 g public / 50 g home",
-    airport: "Domestic OK within limit",
-    tourist: "Join social club for access",
-    description: "Legalised April 2024; cannabis social clubs launching nationwide.",
-    cities: [
-      { slug: "berlin", name: "Berlin", atGlance: ["Club culture capital", "No smoking near kids", "Low-THC starters"] },
-      { slug: "hamburg", name: "Hamburg", atGlance: ["St. Pauli most open", "Harbour lounges discreet", "Use trams, don’t drive"] },
-      { slug: "munich", name: "Munich", atGlance: ["Conservative but OK", "English widely spoken", "Beer gardens = no weed"] },
-    ],
-    image: "/dest-1.jpg",
+  'Germany': {
+    id: 'Germany',
+    isoCode: 'DE',
+    name: 'Germany',
+    slug: 'germany',
+    region: 'europe',
+    overview: {
+      status: 'recreational',
+      shortDescription: 'Legal to possess and grow (Apr 2024). No tourist sales (Social Clubs members only).',
+      heroImage: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&q=80',
+      lastUpdated: '2024-04-01',
+    },
+    legal: {
+      possessionLimit: '25g public / 50g private',
+      publicConsumption: 'designated_areas',
+      medicalReciprocity: false,
+      enforcement: 'moderate',
+      ageLimit: 18,
+    },
+    culture: {
+      purchaseMethods: ['social_club', 'home_grow'],
+      tourismFriendlyRating: 6,
+    },
   },
-
-  // === SOUTH AMERICA ===
-  {
-    slug: "uruguay",
-    name: "Uruguay",
-    region: "South America",
-    legalStatus: "Recreational",
-    possession: "40 g monthly (residents)",
-    airport: "Transport prohibited",
-    tourist: "Tourists cannot purchase—locals only",
-    description: "World’s first full legalisation; pharmacy sales & clubs for residents.",
-    cities: [
-      { slug: "montevideo", name: "Montevideo", atGlance: ["Gov registration needed", "Quiet culture", "Mate & beach vibes"] },
-      { slug: "punta-del-este", name: "Punta del Este", atGlance: ["Upscale = enforcement", "Private circles", "Enjoy beaches"] },
-      { slug: "colonia", name: "Colonia", atGlance: ["Historic small town", "Use noticeable", "Day-trip to Buenos Aires"] },
-    ],
-    image: "/dest-5.jpg",
+  'Netherlands': {
+    id: 'Netherlands',
+    isoCode: 'NL',
+    name: 'Netherlands',
+    slug: 'netherlands',
+    region: 'europe',
+    overview: {
+      status: 'decriminalized',
+      shortDescription: 'World famous Coffeeshop culture. Technically illegal but "tolerated".',
+      heroImage: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=400&q=80',
+      lastUpdated: '2023-01-01',
+    },
+    legal: {
+      possessionLimit: '5g',
+      publicConsumption: 'designated_areas',
+      medicalReciprocity: false,
+      enforcement: 'relaxed',
+      ageLimit: 18,
+    },
+    culture: {
+      purchaseMethods: ['dispensary'],
+      tourismFriendlyRating: 9,
+      localSlang: ['Wiet', 'Hasj'],
+    },
   },
-
-  // === ASIA ===
-  {
-    slug: "thailand",
-    name: "Thailand",
-    region: "Asia",
-    legalStatus: "Medical",
-    possession: "Prescription required",
-    airport: "Strictly prohibited",
-    tourist: "Medical clinics need Thai doctor letter",
-    description: "Decriminalised 2022, medical-only 2024. Recreational use illegal.",
-    cities: [
-      { slug: "bangkok", name: "Bangkok", atGlance: ["Med clinics w/ script", "Cafés closed", "Discreet only"] },
-      { slug: "phuket", name: "Phuket", atGlance: ["Tourist enforcement high", "Beach parties = no weed", "Consider weed-free holiday"] },
-      { slug: "chiang-mai", name: "Chiang Mai", atGlance: ["Conservative north", "Traditional meds", "Docs essential"] },
-    ],
-    image: "/dest-6.jpg",
+  'Thailand': {
+    id: 'Thailand',
+    isoCode: 'TH',
+    name: 'Thailand',
+    slug: 'thailand',
+    region: 'asia',
+    overview: {
+      status: 'medical',
+      shortDescription: 'Cannabis boom shifting back to Medical/Health focus in 2024.',
+      heroImage: 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=400&q=80',
+      lastUpdated: '2024-02-15',
+    },
+    legal: {
+      possessionLimit: 'Unclear',
+      publicConsumption: 'illegal',
+      medicalReciprocity: false,
+      enforcement: 'moderate',
+    },
+    culture: {
+      purchaseMethods: ['dispensary'],
+      tourismFriendlyRating: 8,
+      localSlang: ['Ganja'],
+    },
   },
-
-  // === AFRICA ===
-  {
-    slug: "south-africa",
-    name: "South Africa",
-    region: "Africa",
-    legalStatus: "Decriminalized",
-    possession: "Private use & grow OK",
-    airport: "Transport prohibited",
-    tourist: "Private homes only—enjoy safari & wine",
-    description: "Private use & cultivation legal; public use prohibited, no commercial sales.",
-    cities: [
-      { slug: "cape-town", name: "Cape Town", atGlance: ["Private homes only", "Wine over weed", "Stunning nature"] },
-      { slug: "johannesburg", name: "Johannesburg", atGlance: ["Business city, low profile", "Security tight", "Safari hub"] },
-      { slug: "durban", name: "Durban", atGlance: ["Beach rules strict", "Indian Ocean vibes", "Respect traditional areas"] },
-    ],
-    image: "/dest-5.jpg",
+  'Japan': {
+    id: 'Japan',
+    isoCode: 'JP',
+    name: 'Japan',
+    slug: 'japan',
+    region: 'asia',
+    overview: {
+      status: 'illegal',
+      shortDescription: 'Zero tolerance. Risk of deportation and prison.',
+      heroImage: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80',
+      lastUpdated: '2023-12-01',
+    },
+    legal: {
+      possessionLimit: '0g',
+      publicConsumption: 'illegal',
+      medicalReciprocity: false,
+      enforcement: 'zero-tolerance',
+    },
+    culture: {
+      purchaseMethods: ['none'],
+      tourismFriendlyRating: 0,
+    },
   },
-
-  // === CARIBBEAN ===
-  {
-    slug: "jamaica",
-    name: "Jamaica",
-    region: "Caribbean",
-    legalStatus: "Decriminalized",
-    possession: "Small amounts tolerated",
-    airport: "Do not transport",
-    tourist: "Enjoy reggae & beaches; herb is secondary",
-    description: "Decriminalised 2015; medical & Rasta sacramental use legal. Public use frowned upon.",
-    cities: [
-      { slug: "kingston", name: "Kingston", atGlance: ["Reggae birthplace", "Cultural herb tours", "Downtown discretion"] },
-      { slug: "montego-bay", name: "Montego Bay", atGlance: ["Resort security high", "Balconies OK", "Tourist police visible"] },
-      { slug: "negril", name: "Negril", atGlance: ["Seven-mile beach", "Sunset cliffs", "Small-town friendly"] },
-    ],
-    image: "/dest-6.jpg",
+  'Uruguay': {
+    id: 'Uruguay',
+    isoCode: 'UY',
+    name: 'Uruguay',
+    slug: 'uruguay',
+    region: 'south-america',
+    overview: {
+      status: 'recreational',
+      shortDescription: 'First country to legalize. Sales are for residents/citizens only.',
+      heroImage: 'https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=400&q=80',
+      lastUpdated: '2023-01-01',
+    },
+    legal: {
+      possessionLimit: '40g/month (Registered)',
+      publicConsumption: 'legal',
+      medicalReciprocity: false,
+      enforcement: 'relaxed',
+    },
+    culture: {
+      purchaseMethods: ['pharmacy', 'social_club', 'home_grow'],
+      tourismFriendlyRating: 5,
+    },
   },
-];
+  'SouthAfrica': {
+    id: 'SouthAfrica',
+    isoCode: 'ZA',
+    name: 'South Africa',
+    slug: 'south-africa',
+    region: 'africa',
+    overview: {
+      status: 'decriminalized',
+      shortDescription: 'Private use and cultivation legal (2018 ruling). Buying/selling remains illegal.',
+      heroImage: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400&q=80',
+      lastUpdated: '2024-05-28',
+    },
+    legal: {
+      possessionLimit: '100g public / 600g private',
+      publicConsumption: 'private_only',
+      medicalReciprocity: false,
+      enforcement: 'moderate',
+    },
+    culture: {
+      purchaseMethods: ['social_club', 'home_grow'],
+      tourismFriendlyRating: 7,
+      localSlang: ['Dagga'],
+    },
+  },
+  'Australia': {
+    id: 'Australia',
+    isoCode: 'AU',
+    name: 'Australia',
+    slug: 'australia',
+    region: 'oceania',
+    overview: {
+      status: 'mixed',
+      shortDescription: 'Medical federal legal. Recreational legal in ACT (Canberra) only.',
+      heroImage: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80',
+      lastUpdated: '2023-01-01',
+    },
+    legal: {
+      possessionLimit: '50g (ACT only)',
+      publicConsumption: 'private_only',
+      medicalReciprocity: true,
+      enforcement: 'moderate',
+    },
+    culture: {
+      purchaseMethods: ['pharmacy', 'home_grow'],
+      tourismFriendlyRating: 6,
+    },
+  },
+  // Add other countries here...
+};
