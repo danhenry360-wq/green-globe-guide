@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
@@ -57,14 +57,15 @@ const PuebloGuide = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // Fetch Pueblo dispensaries - check city OR address for "Pueblo"
         const { data: dispData } = await supabase
           .from('dispensaries')
           .select('*')
-          .eq('state', 'Colorado')
-          .ilike('city', '%Pueblo%')
+          .ilike('state', '%Colorado%')
+          .or('city.ilike.%Pueblo%,address.ilike.%Pueblo%')
           .order('rating', { ascending: false })
           .limit(4);
-        
+
         if (dispData) setDispensaries(dispData);
 
         const { data: rentalData } = await supabase
@@ -74,7 +75,7 @@ const PuebloGuide = () => {
           .ilike('address', '%Pueblo%')
           .order('rating', { ascending: false })
           .limit(4);
-        
+
         if (rentalData) setRentals(rentalData);
       } catch (error) {
         console.error("Error fetching Pueblo data:", error);
@@ -90,12 +91,12 @@ const PuebloGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'pueblo-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -108,7 +109,7 @@ const PuebloGuide = () => {
     } catch {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -172,7 +173,7 @@ const PuebloGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "75-95°F",
@@ -260,26 +261,26 @@ const PuebloGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Historic Downtown", 
+    {
+      name: "Historic Downtown",
       desc: "Revitalized downtown with riverwalk, restaurants, and local shops.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "Pueblo West", 
+    {
+      name: "Pueblo West",
       desc: "Suburban community with mountain views and relaxed vibes.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "Mesa Junction", 
+    {
+      name: "Mesa Junction",
       desc: "Arts district with galleries, cafes, and creative energy.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "Belmont", 
+    {
+      name: "Belmont",
       desc: "Quiet residential area with good access to Lake Pueblo.",
       safety: "safe",
       walkable: false
@@ -299,18 +300,18 @@ const PuebloGuide = () => {
         <meta name="description" content="Plan your Pueblo cannabis trip. Find affordable dispensaries, 420-friendly rentals, and experience the Chile & Frijoles Festival in southern Colorado." />
         <meta name="keywords" content="Pueblo cannabis, Pueblo dispensaries, 420-friendly rentals Pueblo, Colorado weed prices, Chile Festival Pueblo" />
         <link rel="canonical" href="https://budquest.guide/pueblo" />
-        
+
         <meta property="og:title" content="Pueblo Cannabis Travel Guide 2025" />
         <meta property="og:description" content="Your complete guide to cannabis in Pueblo: Affordable dispensaries, Lake Pueblo, and legendary green chile." />
         <meta property="og:url" content="https://budquest.guide/pueblo" />
         <meta property="og:image" content="https://budquest.guide/og-logo.jpg" />
         <meta property="og:type" content="article" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -329,15 +330,15 @@ const PuebloGuide = () => {
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-red-500/10" />
-            <img 
-              src="/dest-2.jpg" 
-              alt="Pueblo Colorado Landscape" 
+            <img
+              src="/dest-2.jpg"
+              alt="Pueblo Colorado Landscape"
               className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
               onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -348,13 +349,13 @@ const PuebloGuide = () => {
                 <Utensils className="w-4 h-4 mr-2" />
                 Chile Capital + Cannabis 🌶️
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-red-400 bg-clip-text text-transparent">
                   Pueblo Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Southern Colorado's hidden gem. Affordable dispensaries, legendary green chile, and authentic Colorado culture without the Denver prices.
               </p>
@@ -408,7 +409,7 @@ const PuebloGuide = () => {
                   Pueblo Cannabis Laws 🌿
                 </span>
               </h2>
-              
+
               <div className="grid md:grid-cols-3 gap-6">
                 <Card className="md:col-span-2 bg-card/50 border-accent/30">
                   <CardContent className="p-6 md:p-8">
@@ -421,7 +422,7 @@ const PuebloGuide = () => {
                         💰 Budget Friendly
                       </Badge>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -446,7 +447,7 @@ const PuebloGuide = () => {
                           </li>
                         </ul>
                       </div>
-                      
+
                       <div>
                         <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                           <Ban className="w-5 h-5 text-red-500" /> What's Prohibited
@@ -501,7 +502,7 @@ const PuebloGuide = () => {
                 Best Time to Visit 📅
               </span>
             </h2>
-            
+
             <Tabs defaultValue="fall" className="w-full">
               <TabsList className="grid w-full grid-cols-4 bg-background/50">
                 {seasons.map((season) => (
@@ -511,7 +512,7 @@ const PuebloGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30">
@@ -523,7 +524,7 @@ const PuebloGuide = () => {
                         </div>
                         <season.icon className="w-12 h-12 text-accent mt-2 md:mt-0" />
                       </div>
-                      
+
                       <div className="grid md:grid-cols-2 gap-4">
                         <ul className="space-y-2">
                           {season.highlights.map((highlight, idx) => (
@@ -560,10 +561,10 @@ const PuebloGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[1,2,3,4].map(i => (
+                {[1, 2, 3, 4].map(i => (
                   <div key={i} className="h-64 bg-card/30 animate-pulse rounded-lg" />
                 ))}
               </div>
@@ -573,7 +574,7 @@ const PuebloGuide = () => {
                   <Link key={dispensary.id} to={`/dispensary/${dispensary.slug}`}>
                     <Card className="bg-card/50 border-border/30 hover:border-accent/50 transition-all overflow-hidden group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
+                        <img
                           src={dispensary.images?.[0] || dispensary.image || "/dest-2.jpg"}
                           alt={dispensary.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -628,10 +629,10 @@ const PuebloGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[1,2,3,4].map(i => (
+                {[1, 2, 3, 4].map(i => (
                   <div key={i} className="h-64 bg-card/30 animate-pulse rounded-lg" />
                 ))}
               </div>
@@ -641,7 +642,7 @@ const PuebloGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="bg-card/50 border-border/30 hover:border-accent/50 transition-all overflow-hidden group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
+                        <img
                           src={rental.images?.[0] || "/dest-2.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -683,7 +684,7 @@ const PuebloGuide = () => {
                 Things to Do 🌶️
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {attractions.map((attraction) => (
                 <Card key={attraction.name} className="bg-card/50 border-border/30 hover:border-accent/30 transition-colors">
@@ -715,7 +716,7 @@ const PuebloGuide = () => {
                 Neighborhoods to Explore 🏘️
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               {neighborhoods.map((hood) => (
                 <Card key={hood.name} className="bg-card/50 border-border/30">
@@ -747,7 +748,7 @@ const PuebloGuide = () => {
                 Getting Around 🚗
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-3 gap-6">
               <Card className="bg-card/50 border-border/30">
                 <CardContent className="p-6 text-center">
@@ -810,7 +811,7 @@ const PuebloGuide = () => {
                 Explore Nearby 🗺️
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-3 gap-6">
               {relatedGuides.map((guide) => (
                 <Link key={guide.name} to={guide.slug}>
