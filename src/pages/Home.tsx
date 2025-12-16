@@ -2,7 +2,7 @@ import { useState, KeyboardEvent, useEffect, useRef, lazy, Suspense, useMemo } f
 import { Link, useNavigate } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import {
-  Search, MapPin, Shield, Globe2, Plane, Building2, Map, 
+  Search, MapPin, Shield, Globe2, Plane, Building2, Map,
   ArrowRight, ChevronDown, Flame, Stethoscope, Sparkles, Loader2,
   Store // Store icon for Dispensaries
 } from "lucide-react";
@@ -49,12 +49,12 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "Canada", type: "country", status: "Recreational", path: "/world/north-america/canada", region: "North America" },
   { name: "United States", type: "country", status: "Mixed", path: "/world/north-america/united-states", region: "North America" },
   { name: "Mexico", type: "country", status: "Decriminalized", path: "/world/north-america/mexico", region: "North America" },
-  
+
   // --- Central America ---
   { name: "Costa Rica", type: "country", status: "Decriminalized", path: "/world/central-america/costa-rica", region: "Central America" },
   { name: "Belize", type: "country", status: "Decriminalized", path: "/world/central-america/belize", region: "Central America" },
   { name: "Panama", type: "country", status: "Medical", path: "/world/central-america/panama", region: "Central America" },
-  
+
   // --- Europe ---
   { name: "Netherlands", type: "country", status: "Decriminalized", path: "/world/europe/netherlands", region: "Europe" },
   { name: "Germany", type: "country", status: "Recreational", path: "/world/europe/germany", region: "Europe" },
@@ -75,7 +75,7 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "Denmark", type: "country", status: "Medical", path: "/world/europe/denmark", region: "Europe" },
   { name: "Norway", type: "country", status: "Medical", path: "/world/europe/norway", region: "Europe" },
   { name: "Georgia", type: "country", status: "Recreational", path: "/world/europe/georgia", region: "Europe" }, // Use legal, sale illegal
-  
+
   // --- South America ---
   { name: "Uruguay", type: "country", status: "Recreational", path: "/world/south-america/uruguay", region: "South America" },
   { name: "Colombia", type: "country", status: "Medical", path: "/world/south-america/colombia", region: "South America" },
@@ -85,7 +85,7 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "Brazil", type: "country", status: "Decriminalized", path: "/world/south-america/brazil", region: "South America" },
   { name: "Ecuador", type: "country", status: "Decriminalized", path: "/world/south-america/ecuador", region: "South America" },
   { name: "Paraguay", type: "country", status: "Medical", path: "/world/south-america/paraguay", region: "South America" },
-  
+
   // --- Caribbean ---
   { name: "Jamaica", type: "country", status: "Decriminalized", path: "/world/caribbean/jamaica", region: "Caribbean" },
   { name: "St. Vincent", type: "country", status: "Decriminalized", path: "/world/caribbean/st-vincent", region: "Caribbean" },
@@ -103,16 +103,16 @@ const WORLD_COUNTRIES: SearchItem[] = [
   { name: "South Korea", type: "country", status: "Medical", path: "/world/asia/south-korea", region: "Asia" },
   { name: "Israel", type: "country", status: "Medical", path: "/world/asia/israel", region: "Asia" }, // Major medical hub
   { name: "Lebanon", type: "country", status: "Medical", path: "/world/asia/lebanon", region: "Asia" },
-  
+
   // --- Africa ---
   { name: "South Africa", type: "country", status: "Decriminalized", path: "/world/africa/south-africa", region: "Africa" },
   { name: "Morocco", type: "country", status: "Illegal", path: "/world/africa/morocco", region: "Africa" },
   { name: "Lesotho", type: "country", status: "Medical", path: "/world/africa/lesotho", region: "Africa" },
   { name: "Zimbabwe", type: "country", status: "Medical", path: "/world/africa/zimbabwe", region: "Africa" },
   { name: "Rwanda", type: "country", status: "Medical", path: "/world/africa/rwanda", region: "Africa" },
-  
+
   // --- Oceania ---
-  { name: "Australia", type: "country", status: "Mixed", path: "/world/oceania/australia", region: "Oceania" }, 
+  { name: "Australia", type: "country", status: "Mixed", path: "/world/oceania/australia", region: "Oceania" },
   { name: "New Zealand", type: "country", status: "Medical", path: "/world/oceania/new-zealand", region: "Oceania" },
   { name: "Guam", type: "country", status: "Recreational", path: "/world/oceania/guam", region: "Oceania" },
 ];
@@ -191,7 +191,7 @@ const SEOHead = () => {
 
     updateMeta("description", description);
     updateMeta("keywords", "cannabis travel, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest");
-    
+
     let canonical = document.querySelector("link[rel='canonical']");
     if (!canonical) {
       canonical = document.createElement("link");
@@ -302,7 +302,7 @@ const MobileContinentMap = () => {
     ],
     "oceania": [
       // UPDATED: Australia is Mixed (ACT Recreational, Federal Medical)
-      { name: "Australia", status: "Mixed", description: "Medical federal, ACT recreational", slug: "australia" }, 
+      { name: "Australia", status: "Mixed", description: "Medical federal, ACT recreational", slug: "australia" },
       { name: "New Zealand", status: "Medical", description: "Medical legal since 2020", slug: "new-zealand" },
     ],
   };
@@ -351,17 +351,17 @@ const MobileContinentMap = () => {
             ))}
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="mt-6 pt-2"
           >
-            <Button 
+            <Button
               onClick={() => navigate(`/world/${selectedContinent}`)}
               className="w-full h-12 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/20 flex items-center justify-center gap-2 text-base font-medium"
             >
-              View all {continentInfo?.count} countries in {continentInfo?.name} 
+              View all {continentInfo?.count} countries in {continentInfo?.name}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </motion.div>
@@ -418,7 +418,7 @@ const Home = () => {
   }, []);
 
   // Build search items from USA states
-  const stateSearchItems = useMemo<SearchItem[]>(() => 
+  const stateSearchItems = useMemo<SearchItem[]>(() =>
     USA_STATE_DATA.map(state => ({
       name: state.name,
       type: 'state' as const,
@@ -426,7 +426,7 @@ const Home = () => {
       path: `/usa/${state.slug}`,
       region: 'USA'
     }))
-  , []);
+    , []);
 
   // Combine all searchable items
   const allSearchItems = useMemo(() => [
@@ -531,12 +531,12 @@ const Home = () => {
       </a>
 
       {/* ==========  HERO SECTION  ========== */}
-      <section 
+      <section
         className="relative min-h-[100svh] flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden"
         role="banner"
       >
-        <div 
-          className="absolute inset-0 bg-cover bg-center" 
+        <div
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
           aria-hidden="true"
         />
@@ -588,14 +588,14 @@ const Home = () => {
                 onFocus={() => setShowSuggestions(true)}
                 onKeyDown={handleKeyDown}
               />
-              <Button 
+              <Button
                 onClick={() => {
                   if (selectedIndex >= 0 && suggestions[selectedIndex]) {
                     handleSelectSuggestion(suggestions[selectedIndex]);
                   } else if (searchTerm.trim()) {
                     navigate(`/usa?search=${encodeURIComponent(searchTerm.trim())}`);
                   }
-                }} 
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-accent hover:bg-accent/90 transition-all z-20 text-sm sm:text-base"
                 aria-label="Submit search"
               >
@@ -612,11 +612,10 @@ const Home = () => {
                     <button
                       key={`${item.type}-${item.name}`}
                       onClick={() => handleSelectSuggestion(item)}
-                      className={`w-full px-5 py-4 flex items-center gap-4 text-left transition-colors ${
-                        index === selectedIndex 
-                          ? 'bg-accent/20 border-l-2 border-accent' 
+                      className={`w-full px-5 py-4 flex items-center gap-4 text-left transition-colors ${index === selectedIndex
+                          ? 'bg-accent/20 border-l-2 border-accent'
                           : 'hover:bg-white/5 border-l-2 border-transparent'
-                      }`}
+                        }`}
                     >
                       <span className="text-2xl">{getTypeIcon(item.type)}</span>
                       <div className="flex-1 min-w-0">
@@ -694,23 +693,23 @@ const Home = () => {
       {/* ==========  DESTINATIONS  ========== */}
       <section id="main-content" className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="destinations-heading" 
-            title="Popular Cannabis Destinations" 
-            subtitle="Explore BudQuest's curated list of top 420-friendly travel hotspots worldwide" 
+          <SectionHeader
+            id="destinations-heading"
+            title="Popular Cannabis Destinations"
+            subtitle="Explore BudQuest's curated list of top 420-friendly travel hotspots worldwide"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {FEATURED_DESTINATIONS.map((dest) => (
               <motion.div key={dest.name} variants={FADE_IN} whileHover={{ y: -8 }}>
                 <Link to={dest.link} aria-label={`View cannabis laws and guides for ${dest.name}`}>
                   <Card className="relative h-96 overflow-hidden rounded-2xl border-white/10 bg-gray-900 shadow-xl hover:border-accent/30 group">
-                    <img 
-                      src={dest.image} 
-                      alt={dest.imageAlt} 
-                      loading="lazy" 
+                    <img
+                      src={dest.image}
+                      alt={dest.imageAlt}
+                      loading="lazy"
                       width="400"
                       height="500"
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 z-10">
@@ -731,19 +730,19 @@ const Home = () => {
       {/* ==========  GLOBAL LEGALITY MAP  ========== */}
       <section className="py-16 bg-gradient-to-b from-black via-gray-950 to-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="legality-heading" 
-            title="Global Cannabis Legality Map" 
-            subtitle="Explore marijuana laws worldwide. Filter by legal status (Recreational, Medical, Decriminalized) and continent." 
+          <SectionHeader
+            id="legality-heading"
+            title="Global Cannabis Legality Map"
+            subtitle="Explore marijuana laws worldwide. Filter by legal status (Recreational, Medical, Decriminalized) and continent."
           />
-          
+
           <MobileContinentMap />
 
           <div className="hidden md:block w-full">
             <motion.div variants={FADE_IN}>
               <Card className="bg-card/50 border-border/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl">
                 <div className="w-full h-[600px] bg-card rounded-lg overflow-hidden border border-border/50 relative">
-                  <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2"/>Loading Global Map Data...</div>}>
+                  <Suspense fallback={<div className="flex items-center justify-center h-full w-full text-accent"><Loader2 className="w-10 h-10 animate-spin mr-2" />Loading Global Map Data...</div>}>
                     <InteractiveWorldMap />
                   </Suspense>
                 </div>
@@ -757,36 +756,36 @@ const Home = () => {
       {/* ==========  BLOG SECTION  ========== */}
       <section className="py-16 bg-black">
         <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={STAGGER} className="container mx-auto">
-          <SectionHeader 
-            id="guides-heading" 
-            title="Cannabis Travel Guides & News" 
-            subtitle="Expert advice, legal tips, and dispensary guides for your next adventure" 
+          <SectionHeader
+            id="guides-heading"
+            title="Cannabis Travel Guides & News"
+            subtitle="Expert advice, legal tips, and dispensary guides for your next adventure"
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {BLOG_POSTS
               .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
               .slice(0, 3)
               .map((post) => (
-              <motion.div key={post.id} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
-                <Link to={`/blog/${post.id}`} aria-label={`Read article: ${post.title}`}>
-                  <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
-                    <img 
-                      src={post.image} 
-                      alt={post.title} 
-                      loading="lazy" 
-                      width="400"
-                      height="224"
-                      className="w-full h-56 object-cover transition-transform group-hover:scale-110" 
-                    />
-                    <div className="p-8 flex flex-col flex-grow">
-                      <h3 className="text-2xl font-bold mb-3 text-white">{post.title}</h3>
-                      <p className="text-gray-400 flex-grow mb-6">{post.excerpt}</p>
-                      <div className="flex items-center gap-2 text-accent"><span>Read Article</span><ArrowRight className="w-4 h-4" /></div>
-                    </div>
-                  </Card>
-                </Link>
-              </motion.div>
-            ))}
+                <motion.div key={post.id} variants={FADE_IN} whileHover={{ scale: 1.01 }}>
+                  <Link to={`/blog/${post.id}`} aria-label={`Read article: ${post.title}`}>
+                    <Card className="h-full overflow-hidden rounded-2xl bg-gray-900 border-white/10 hover:border-accent/30 flex flex-col group">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        loading="lazy"
+                        width="400"
+                        height="224"
+                        className="w-full h-56 object-cover transition-transform group-hover:scale-110"
+                      />
+                      <div className="p-8 flex flex-col flex-grow">
+                        <h3 className="text-2xl font-bold mb-3 text-white">{post.title}</h3>
+                        <p className="text-gray-400 flex-grow mb-6">{post.excerpt}</p>
+                        <div className="flex items-center gap-2 text-accent"><span>Read Article</span><ArrowRight className="w-4 h-4" /></div>
+                      </div>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
           </div>
         </motion.div>
       </section>
@@ -799,9 +798,9 @@ const Home = () => {
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
               Start your journey with BudQuest. Search for your next destination and travel with confidence.
             </p>
-            <Button 
-              size="lg" 
-              onClick={() => document.getElementById('search-destinations')?.focus()} 
+            <Button
+              size="lg"
+              onClick={() => document.getElementById('search-destinations')?.focus()}
               className="w-full sm:w-auto h-12 sm:h-14 px-10 text-lg rounded-xl bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20"
             >
               Search Destinations
@@ -817,9 +816,9 @@ const Home = () => {
 
 /* ----------  DATA CONSTANTS  ---------- */
 const FEATURED_DESTINATIONS: Destination[] = [
-  { name: "California", status: "Recreational", country: "USA", image: "/dest-california-beach.jpg", imageAlt: "California cannabis tourism guide beach view", color: "bg-green-500/90", link: "/usa/california" },
-  { name: "Colorado", status: "Recreational", country: "USA", image: "/dest-2.jpg", imageAlt: "Colorado mountains dispensary guide", color: "bg-green-500/90", link: "/usa/colorado" },
-  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "/dest-3.jpg", imageAlt: "Amsterdam coffee shops canal view", color: "bg-amber-500/90", link: "/world/europe/netherlands" },
+  { name: "California", status: "Recreational", country: "USA", image: "/dest-california.png", imageAlt: "California cannabis tourism guide beach view", color: "bg-green-500/90", link: "/usa/california" },
+  { name: "Colorado", status: "Recreational", country: "USA", image: "/dest-colorado.png", imageAlt: "Colorado mountains dispensary guide", color: "bg-green-500/90", link: "/usa/colorado" },
+  { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "/dest-netherlands.png", imageAlt: "Amsterdam coffee shops canal view", color: "bg-amber-500/90", link: "/world/europe/netherlands" },
   { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Canada legal weed travel guide Toronto", color: "bg-green-500/90", link: "/world/north-america/canada" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay cannabis club travel", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
   { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
