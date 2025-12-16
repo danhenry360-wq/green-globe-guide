@@ -1,121 +1,12 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Search, Globe, MapPin, X } from 'lucide-react';
+import { Search, Globe, MapPin, X, AlertTriangle, ShieldCheck, ShoppingBag } from 'lucide-react';
 import { getStatusHexColor } from '@/lib/legal-status-colors';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-
-// --- Types ---
-interface CountryData {
-  name: string;
-  status: 'recreational' | 'medical' | 'illegal' | 'decriminalized' | 'mixed';
-  description: string;
-  slug: string;
-  region: string;
-  image: string;
-}
-
-// --- Data ---
-const countryData: Record<string, CountryData> = {
-  // NORTH AMERICA
-  'USA': { name: 'United States', status: 'mixed', description: 'Varies by state - 24 states recreational, federally illegal', slug: 'united-states', region: 'north-america', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=400&q=80' },
-  'Canada': { name: 'Canada', status: 'recreational', description: 'Fully legal nationwide since 2018', slug: 'canada', region: 'north-america', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=400&q=80' },
-  'Mexico': { name: 'Mexico', status: 'decriminalized', description: 'Decriminalized for personal use (<5g)', slug: 'mexico', region: 'north-america', image: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=400&q=80' },
-  
-  // CENTRAL AMERICA
-  'CostaRica': { name: 'Costa Rica', status: 'decriminalized', description: 'Personal consumption tolerated in private', slug: 'costa-rica', region: 'central-america', image: 'https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=400&q=80' },
-  'Panama': { name: 'Panama', status: 'medical', description: 'Medical cannabis legalized 2021', slug: 'panama', region: 'central-america', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80' },
-  'Belize': { name: 'Belize', status: 'decriminalized', description: 'Up to 10g legal on private property', slug: 'belize', region: 'central-america', image: 'https://images.unsplash.com/photo-1580237072617-771c3ecc4a24?w=400&q=80' },
-  'Guatemala': { name: 'Guatemala', status: 'illegal', description: 'Prison sentences for possession', slug: 'guatemala', region: 'central-america', image: 'https://images.unsplash.com/photo-1591377035549-9bf5c53f96e7?w=400&q=80' },
-  'ElSalvador': { name: 'El Salvador', status: 'illegal', description: 'State of Exception - Risk of arbitrary arrest', slug: 'el-salvador', region: 'central-america', image: 'https://images.unsplash.com/photo-1612362954221-c8b8f6b3c30c?w=400&q=80' },
-  'Honduras': { name: 'Honduras', status: 'illegal', description: 'Prison sentences for possession', slug: 'honduras', region: 'central-america', image: 'https://images.unsplash.com/photo-1572176596507-d0a9c1b79c40?w=400&q=80' },
-  'Nicaragua': { name: 'Nicaragua', status: 'illegal', description: 'Strictly illegal, severe penalties', slug: 'nicaragua', region: 'central-america', image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=400&q=80' },
-  
-  // EUROPE
-  'Netherlands': { name: 'Netherlands', status: 'decriminalized', description: 'Tolerated in coffee shops (5g limit)', slug: 'netherlands', region: 'europe', image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=400&q=80' },
-  'Germany': { name: 'Germany', status: 'recreational', description: 'Legalized recreational use April 2024', slug: 'germany', region: 'europe', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&q=80' },
-  'Spain': { name: 'Spain', status: 'decriminalized', description: 'Private cannabis clubs legal', slug: 'spain', region: 'europe', image: 'https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=400&q=80' },
-  'Portugal': { name: 'Portugal', status: 'decriminalized', description: 'Decriminalized all drugs in 2001', slug: 'portugal', region: 'europe', image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80' },
-  'Switzerland': { name: 'Switzerland', status: 'decriminalized', description: 'Low-THC (<1%) legal, civil fines', slug: 'switzerland', region: 'europe', image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=400&q=80' },
-  'CzechRepublic': { name: 'Czech Republic', status: 'decriminalized', description: 'Medical legal, <15g civil fine', slug: 'czech-republic', region: 'europe', image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?w=400&q=80' },
-  'Italy': { name: 'Italy', status: 'decriminalized', description: 'Cannabis Light (low THC) sold openly', slug: 'italy', region: 'europe', image: 'https://images.unsplash.com/photo-1515859005217-8a1f08870f59?w=400&q=80' },
-  'Austria': { name: 'Austria', status: 'decriminalized', description: 'Small amounts decriminalized', slug: 'austria', region: 'europe', image: 'https://images.unsplash.com/photo-1609856878074-cf31e21ccb6b?w=400&q=80' },
-  'Belgium': { name: 'Belgium', status: 'decriminalized', description: '3g civil fine, lowest priority', slug: 'belgium', region: 'europe', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80' },
-  'Malta': { name: 'Malta', status: 'recreational', description: 'First EU country to legalize', slug: 'malta', region: 'europe', image: 'https://images.unsplash.com/photo-1555881400-69a8a0691b82?w=400&q=80' },
-  'Luxembourg': { name: 'Luxembourg', status: 'recreational', description: 'Home cultivation legal since 2023', slug: 'luxembourg', region: 'europe', image: 'https://images.unsplash.com/photo-1577278219660-7fd07c82ea59?w=400&q=80' },
-  'France': { name: 'France', status: 'illegal', description: 'On-the-spot fines (€200), strict', slug: 'france', region: 'europe', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&q=80' },
-  'UK': { name: 'United Kingdom', status: 'medical', description: 'Medical only, Class B drug', slug: 'uk', region: 'europe', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80' },
-  'Ireland': { name: 'Ireland', status: 'medical', description: 'Medical pilot program only', slug: 'ireland', region: 'europe', image: 'https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=400&q=80' },
-  'Denmark': { name: 'Denmark', status: 'medical', description: 'Christiania enforcement, medical only', slug: 'denmark', region: 'europe', image: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=400&q=80' },
-  'Sweden': { name: 'Sweden', status: 'illegal', description: 'Zero tolerance culture', slug: 'sweden', region: 'europe', image: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=400&q=80' },
-  'Norway': { name: 'Norway', status: 'medical', description: 'Medical only, recreational prohibited', slug: 'norway', region: 'europe', image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=80' },
-  'Finland': { name: 'Finland', status: 'medical', description: 'Medical only, recreational prohibited', slug: 'finland', region: 'europe', image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=400&q=80' },
-  'Poland': { name: 'Poland', status: 'medical', description: 'Medical prescription only', slug: 'poland', region: 'europe', image: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=400&q=80' },
-  'Greece': { name: 'Greece', status: 'medical', description: 'Medical only, enjoy islands', slug: 'greece', region: 'europe', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&q=80' },
-  'Turkey': { name: 'Turkey', status: 'illegal', description: 'Strict penalties, avoid completely', slug: 'turkey', region: 'europe', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400&q=80' },
-  'Russia': { name: 'Russia', status: 'illegal', description: 'Severe penalties, political hostages', slug: 'russia', region: 'europe', image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=400&q=80' },
-  'Ukraine': { name: 'Ukraine', status: 'medical', description: 'Medical legal, wartime caution', slug: 'ukraine', region: 'europe', image: 'https://images.unsplash.com/photo-1561542320-9a18cd340469?w=400&q=80' },
-  'Croatia': { name: 'Croatia', status: 'medical', description: 'Medical only, Adriatic coast', slug: 'croatia', region: 'europe', image: 'https://images.unsplash.com/photo-1555990538-1e6c5549c81c?w=400&q=80' },
-  'Hungary': { name: 'Hungary', status: 'medical', description: 'Medical only, thermal baths', slug: 'hungary', region: 'europe', image: 'https://images.unsplash.com/photo-1551867633-194f125bddfa?w=400&q=80' },
-  'Romania': { name: 'Romania', status: 'medical', description: 'Medical only, Dracula castles', slug: 'romania', region: 'europe', image: 'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=400&q=80' },
-  
-  // SOUTH AMERICA
-  'Uruguay': { name: 'Uruguay', status: 'recreational', description: 'First country to fully legalize (2013)', slug: 'uruguay', region: 'south-america', image: 'https://images.unsplash.com/photo-1603057448655-d51ec3c8c1dc?w=400&q=80' },
-  'Argentina': { name: 'Argentina', status: 'medical', description: 'REPROCANN medical program', slug: 'argentina', region: 'south-america', image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=400&q=80' },
-  'Chile': { name: 'Chile', status: 'medical', description: 'Medical legal, personal cultivation', slug: 'chile', region: 'south-america', image: 'https://images.unsplash.com/photo-1565013844965-b1eaeb2dcbb0?w=400&q=80' },
-  'Colombia': { name: 'Colombia', status: 'medical', description: 'Medical legal, decriminalized <20g', slug: 'colombia', region: 'south-america', image: 'https://images.unsplash.com/photo-1533699224246-a1e9a5bc8bfb?w=400&q=80' },
-  'Brazil': { name: 'Brazil', status: 'decriminalized', description: 'Decriminalized 40g (2024 ruling)', slug: 'brazil', region: 'south-america', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400&q=80' },
-  'Peru': { name: 'Peru', status: 'medical', description: 'Medical only, Machu Picchu', slug: 'peru', region: 'south-america', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=400&q=80' },
-  'Ecuador': { name: 'Ecuador', status: 'medical', description: 'Medical only, Galápagos', slug: 'ecuador', region: 'south-america', image: 'https://images.unsplash.com/photo-1570442296287-6e8ba16d0b2e?w=400&q=80' },
-  'Bolivia': { name: 'Bolivia', status: 'medical', description: 'Medical only, Altiplano', slug: 'bolivia', region: 'south-america', image: 'https://images.unsplash.com/photo-1591133524085-f1a61c1f47ac?w=400&q=80' },
-  'Venezuela': { name: 'Venezuela', status: 'illegal', description: 'Crisis zone, avoid travel', slug: 'venezuela', region: 'south-america', image: 'https://images.unsplash.com/photo-1568291607791-6a26c2de9e08?w=400&q=80' },
-  
-  // CARIBBEAN
-  'Jamaica': { name: 'Jamaica', status: 'decriminalized', description: 'Decriminalized, medical & Rasta legal', slug: 'jamaica', region: 'caribbean', image: 'https://images.unsplash.com/photo-1580995583564-3f47c0ab6d9e?w=400&q=80' },
-  'Bahamas': { name: 'Bahamas', status: 'illegal', description: 'Strictly illegal, paradise beaches', slug: 'bahamas', region: 'caribbean', image: 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80' },
-  'Cuba': { name: 'Cuba', status: 'illegal', description: 'Strictly illegal, salsa & cigars', slug: 'cuba', region: 'caribbean', image: 'https://images.unsplash.com/photo-1500759285222-a95626b934cb?w=400&q=80' },
-  'DominicanRepublic': { name: 'Dominican Republic', status: 'illegal', description: 'Strictly illegal, resort island', slug: 'dominican-republic', region: 'caribbean', image: 'https://images.unsplash.com/photo-1504391975026-8f7ca1e4c7c0?w=400&q=80' },
-  'PuertoRico': { name: 'Puerto Rico', status: 'medical', description: 'Medical only, US territory', slug: 'puerto-rico', region: 'caribbean', image: 'https://images.unsplash.com/photo-1569402928262-a88b4a36e7cd?w=400&q=80' },
-  'TrinidadTobago': { name: 'Trinidad & Tobago', status: 'decriminalized', description: 'Decriminalized 2019, carnival', slug: 'trinidad-tobago', region: 'caribbean', image: 'https://images.unsplash.com/photo-1593882898826-89a4e9c2a54a?w=400&q=80' },
-  'Bermuda': { name: 'Bermuda', status: 'recreational', description: 'Legalized 2022, home grow only', slug: 'bermuda', region: 'caribbean', image: 'https://images.unsplash.com/photo-1574068468760-e9d9f3eb4ca4?w=400&q=80' },
-  
-  // ASIA
-  'Thailand': { name: 'Thailand', status: 'medical', description: 'Medical legal, recreational restricted 2024', slug: 'thailand', region: 'asia', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=400&q=80' },
-  'Japan': { name: 'Japan', status: 'illegal', description: 'Strict prohibition - Travel Warning', slug: 'japan', region: 'asia', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80' },
-  'SouthKorea': { name: 'South Korea', status: 'medical', description: 'Strict medical only', slug: 'south-korea', region: 'asia', image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=400&q=80' },
-  'China': { name: 'China', status: 'illegal', description: 'Zero tolerance, severe penalties', slug: 'china', region: 'asia', image: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=400&q=80' },
-  'India': { name: 'India', status: 'mixed', description: 'Bhang legal, varies by state - complex laws', slug: 'india', region: 'asia', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80' },
-  'Indonesia': { name: 'Indonesia', status: 'illegal', description: 'Death penalty possible, avoid', slug: 'indonesia', region: 'asia', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80' },
-  'Malaysia': { name: 'Malaysia', status: 'illegal', description: 'Death penalty, mandatory sentences', slug: 'malaysia', region: 'asia', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=400&q=80' },
-  'Singapore': { name: 'Singapore', status: 'illegal', description: 'Death penalty, zero tolerance', slug: 'singapore', region: 'asia', image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=400&q=80' },
-  'Philippines': { name: 'Philippines', status: 'illegal', description: 'Harsh penalties, drug war', slug: 'philippines', region: 'asia', image: 'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=400&q=80' },
-  'Vietnam': { name: 'Vietnam', status: 'illegal', description: 'Illegal but varied enforcement', slug: 'vietnam', region: 'asia', image: 'https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=400&q=80' },
-  'UAE': { name: 'UAE', status: 'illegal', description: 'Zero tolerance, prison sentences', slug: 'uae', region: 'asia', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=80' },
-  'Israel': { name: 'Israel', status: 'medical', description: 'Medical legal, decriminalized personal', slug: 'israel', region: 'asia', image: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=400&q=80' },
-  'Lebanon': { name: 'Lebanon', status: 'medical', description: 'Medical cultivation legal 2020', slug: 'lebanon', region: 'asia', image: 'https://images.unsplash.com/photo-1560797257-dcf33a9c2d35?w=400&q=80' },
-  'Nepal': { name: 'Nepal', status: 'illegal', description: 'Illegal but culturally present', slug: 'nepal', region: 'asia', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80' },
-  'SriLanka': { name: 'Sri Lanka', status: 'medical', description: 'Medical legal since 2023', slug: 'sri-lanka', region: 'asia', image: 'https://images.unsplash.com/photo-1586423702687-0e29e1a5e577?w=400&q=80' },
-  
-  // AFRICA
-  'SouthAfrica': { name: 'South Africa', status: 'decriminalized', description: 'Private use and cultivation legal', slug: 'south-africa', region: 'africa', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400&q=80' },
-  'Morocco': { name: 'Morocco', status: 'illegal', description: 'Major hash producer (Kief tolerated)', slug: 'morocco', region: 'africa', image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=400&q=80' },
-  'Lesotho': { name: 'Lesotho', status: 'medical', description: 'First African medical license', slug: 'lesotho', region: 'africa', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80' },
-  'Malawi': { name: 'Malawi', status: 'medical', description: 'Cultivation for medical/export legal', slug: 'malawi', region: 'africa', image: 'https://images.unsplash.com/photo-1613467656395-e32f94f21c5a?w=400&q=80' },
-  'Zimbabwe': { name: 'Zimbabwe', status: 'medical', description: 'Medical cannabis legal since 2018', slug: 'zimbabwe', region: 'africa', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&q=80' },
-  'Rwanda': { name: 'Rwanda', status: 'medical', description: 'Medical cannabis legal since 2021', slug: 'rwanda', region: 'africa', image: 'https://images.unsplash.com/photo-1628263118393-f6cdf3f5d0c9?w=400&q=80' },
-  'Kenya': { name: 'Kenya', status: 'illegal', description: 'Illegal but widely available', slug: 'kenya', region: 'africa', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&q=80' },
-  'Egypt': { name: 'Egypt', status: 'illegal', description: 'Strictly illegal, harsh penalties', slug: 'egypt', region: 'africa', image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=400&q=80' },
-  'Nigeria': { name: 'Nigeria', status: 'illegal', description: 'Illegal but discussions ongoing', slug: 'nigeria', region: 'africa', image: 'https://images.unsplash.com/photo-1618828665011-0abd973f7bb8?w=400&q=80' },
-  'Ghana': { name: 'Ghana', status: 'illegal', description: 'Illegal, narcotics law applies', slug: 'ghana', region: 'africa', image: 'https://images.unsplash.com/photo-1598890777032-6b7f7cc6a0a3?w=400&q=80' },
-  
-  // OCEANIA
-  'Australia': { name: 'Australia', status: 'mixed', description: 'Medical nationwide, ACT recreational - varies by state', slug: 'australia', region: 'oceania', image: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80' },
-  'NewZealand': { name: 'New Zealand', status: 'medical', description: 'Medical legal since 2020', slug: 'new-zealand', region: 'oceania', image: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=400&q=80' },
-  'Fiji': { name: 'Fiji', status: 'illegal', description: 'Strictly illegal, island paradise', slug: 'fiji', region: 'oceania', image: 'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?w=400&q=80' },
-  'Samoa': { name: 'Samoa', status: 'medical', description: 'Medical cannabis legal since 2023', slug: 'samoa', region: 'oceania', image: 'https://images.unsplash.com/photo-1579023154615-c3e3e39c4e50?w=400&q=80' },
-  'Vanuatu': { name: 'Vanuatu', status: 'medical', description: 'Medical cannabis legal since 2023', slug: 'vanuatu', region: 'oceania', image: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80' },
-};
+// IMPORT THE NEW DATA STRUCTURE
+import { countryData, type CountryProfile } from '@/data/country-data';
 
 const statusColors = {
   recreational: getStatusHexColor('recreational'),
@@ -143,7 +34,6 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
   
   // State
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
-  // Store width/height to calculate tooltip boundary flips
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -161,12 +51,13 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
     }
   };
 
-  // Filter Logic
+  // Filter Logic - UPDATED for new data structure
   const isCountryVisible = (code: string) => {
     const country = countryData[code];
     if (!country) return false;
     
-    const matchesFilter = activeFilter === 'all' || country.status === activeFilter;
+    // Access nested properties (overview.status)
+    const matchesFilter = activeFilter === 'all' || country.overview.status === activeFilter;
     const matchesSearch = country.name.toLowerCase().includes(searchQuery.toLowerCase());
     
     return matchesFilter && matchesSearch;
@@ -183,10 +74,15 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
   // Render SVG Path Helper
   const getCountryPath = (code: string, path: string) => {
     const country = countryData[code];
-    if (!country) return null;
+    
+    // If country doesn't exist in our new data file, don't render interaction logic
+    if (!country) return (
+       <path d={path} fill="#1a1a1a" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+    );
 
     const isVisible = isCountryVisible(code);
     const isHovered = hoveredCountry === code;
+    // Dim if filtering is active and country doesn't match
     const isMuted = !isVisible && (activeFilter !== 'all' || searchQuery !== '');
 
     return (
@@ -199,14 +95,14 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
       >
         <path 
           d={path}
-          fill={statusColors[country.status]} 
+          fill={statusColors[country.overview.status]} 
           opacity={isHovered ? 1 : isMuted ? 0.1 : 0.75}
           stroke={isHovered ? "#fff" : isMuted ? "transparent" : "rgba(255,255,255,0.2)"}
           strokeWidth={isHovered ? "2" : "0.5"}
           filter={isHovered ? "url(#glow)" : ""}
           className="transition-all duration-300"
         />
-        {/* Render a connection node dot for aesthetic if visible */}
+        {/* Connection Node Dot */}
         {!isMuted && (
           <circle 
             cx={getCentroid(path).x} 
@@ -220,10 +116,9 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
     );
   };
 
-  // Simple helper to guess centroid for visual dots (approximate based on path start)
+  // Simple helper to guess centroid for visual dots
   const getCentroid = (d: string) => {
     const parts = d.split(' ');
-    // Very rough approximation taking the first M coordinates
     return { x: parseFloat(parts[1]), y: parseFloat(parts[2]) };
   };
 
@@ -236,10 +131,17 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
   }, [searchQuery]);
 
   // Calculations for Tooltip positioning
-  // If mouse is past 60% of width, flip tooltip to left
   const isRightSide = mousePos.x > mousePos.width * 0.6;
-  // If mouse is past 60% of height, flip tooltip up
   const isBottomSide = mousePos.y > mousePos.height * 0.6;
+
+  // Helper to get enforcement icon
+  const getEnforcementIcon = (level: string) => {
+    switch(level) {
+      case 'relaxed': return <ShieldCheck className="w-3 h-3 text-green-400" />;
+      case 'zero-tolerance': return <AlertTriangle className="w-3 h-3 text-red-500" />;
+      default: return <ShieldCheck className="w-3 h-3 text-yellow-400" />;
+    }
+  };
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
@@ -303,10 +205,10 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                     }}
                     className="flex items-center gap-3 p-3 hover:bg-accent/10 cursor-pointer transition-colors border-b border-border/50 last:border-0"
                   >
-                    <img src={data.image} alt={data.name} className="w-8 h-8 rounded object-cover" />
+                    <img src={data.overview.heroImage} alt={data.name} className="w-8 h-8 rounded object-cover" />
                     <div>
                       <div className="text-sm font-medium">{data.name}</div>
-                      <div className="text-xs text-muted-foreground capitalize">{data.status}</div>
+                      <div className="text-xs text-muted-foreground capitalize">{data.overview.status}</div>
                     </div>
                   </div>
                 ))}
@@ -323,7 +225,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
         onMouseLeave={() => setHoveredCountry(null)}
         className="relative w-full aspect-[2/1] bg-[#050505] rounded-xl overflow-hidden border border-white/10 shadow-2xl group"
       >
-        {/* 1. Animated Grid Background */}
+        {/* Animated Grid Background */}
         <div 
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{ 
@@ -332,18 +234,17 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           }}
         />
 
-        {/* 2. Radar Scan Effect */}
+        {/* Radar Scan Effect */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="w-full h-[5px] bg-gradient-to-r from-transparent via-accent/30 to-transparent absolute top-0 animate-scan-line blur-sm" />
         </div>
         
-        {/* 3. SVG Map */}
+        {/* SVG Map */}
         <svg
           viewBox="0 0 1000 500"
           className="w-full h-full relative z-10"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Defs for Glow Filters */}
           <defs>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="3" result="blur" />
@@ -466,7 +367,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           {getCountryPath('Vanuatu', 'M 950 400 L 965 400 L 965 420 L 950 420 Z')}
         </svg>
 
-        {/* 4. Mouse-Following Floating Tooltip */}
+        {/* Mouse-Following Floating Tooltip - UPDATED WITH RICH DATA */}
         <AnimatePresence>
           {hoveredCountry && countryData[hoveredCountry] && (
             <motion.div
@@ -477,42 +378,64 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                 left: mousePos.x, 
                 top: mousePos.y,
               }}
-              // CSS Classes handle the "Flip" logic based on calculations
-              className={`absolute z-50 w-72 pointer-events-none 
+              // Classes handle the "Flip" logic based on boundary detection
+              className={`absolute z-50 w-80 pointer-events-none 
                 ${isRightSide ? '-translate-x-full -ml-4' : 'ml-4'} 
                 ${isBottomSide ? '-translate-y-full -mt-4' : 'mt-4'}
               `}
             >
-              <div className="bg-gray-900/90 backdrop-blur-xl border border-white/20 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+              <div className="bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                 {/* Header Image */}
-                <div className="relative h-24 w-full">
+                <div className="relative h-28 w-full">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
                   <img 
-                    src={countryData[hoveredCountry].image} 
+                    src={countryData[hoveredCountry].overview.heroImage} 
                     alt={countryData[hoveredCountry].name}
                     className="w-full h-full object-cover"
                   />
                   <Badge 
-                    className="absolute top-2 right-2 z-20 backdrop-blur-md shadow-sm border-none text-white"
-                    style={{ backgroundColor: statusColors[countryData[hoveredCountry].status] }}
+                    className="absolute top-2 right-2 z-20 backdrop-blur-md shadow-sm border-none text-white capitalize"
+                    style={{ backgroundColor: statusColors[countryData[hoveredCountry].overview.status] }}
                   >
-                    {countryData[hoveredCountry].status}
+                    {countryData[hoveredCountry].overview.status}
                   </Badge>
                 </div>
                 
-                {/* Content */}
+                {/* Content - Now showing richer data */}
                 <div className="p-4 pt-2">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
                     {countryData[hoveredCountry].name}
-                    <Globe className="w-3 h-3 text-muted-foreground" />
+                    <Globe className="w-4 h-4 text-muted-foreground" />
                   </h3>
-                  <p className="text-xs text-gray-300 mt-1 leading-relaxed border-l-2 border-accent/50 pl-2">
-                    {countryData[hoveredCountry].description}
-                  </p>
                   
-                  <div className="mt-3 flex items-center gap-2 text-[10px] text-muted-foreground font-mono">
-                    <MapPin className="w-3 h-3" />
-                    CLICK TO EXPLORE GUIDE
+                  {/* Short Description */}
+                  <p className="text-xs text-gray-300 mt-2 leading-relaxed border-l-2 border-accent/50 pl-2">
+                    {countryData[hoveredCountry].overview.shortDescription}
+                  </p>
+
+                  {/* Rich Data Grid */}
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <div className="bg-white/5 rounded p-1.5 flex flex-col gap-0.5">
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold flex items-center gap-1">
+                        {getEnforcementIcon(countryData[hoveredCountry].legal.enforcement)}
+                        Enforcement
+                      </span>
+                      <span className="text-xs text-white capitalize">{countryData[hoveredCountry].legal.enforcement.replace('-', ' ')}</span>
+                    </div>
+                    <div className="bg-white/5 rounded p-1.5 flex flex-col gap-0.5">
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold flex items-center gap-1">
+                        <ShoppingBag className="w-3 h-3" />
+                        Access
+                      </span>
+                      <span className="text-xs text-white capitalize truncate">
+                        {countryData[hoveredCountry].culture.purchaseMethods.slice(0, 1).join(', ') || 'None'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-3 flex items-center justify-between text-[10px] text-accent font-mono border-t border-white/10 pt-2">
+                     <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> VIEW GUIDE</span>
+                     <span className="text-muted-foreground">Updated: {new Date(countryData[hoveredCountry].overview.lastUpdated).getFullYear()}</span>
                   </div>
                 </div>
               </div>
@@ -520,7 +443,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
           )}
         </AnimatePresence>
 
-        {/* 5. Static Legend (Bottom Right) */}
+        {/* Static Legend */}
         <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-lg border border-white/10 text-xs">
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             {Object.entries(statusColors).map(([status, color]) => (
