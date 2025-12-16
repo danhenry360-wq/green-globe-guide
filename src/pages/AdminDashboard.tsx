@@ -12,7 +12,6 @@ import {
   Scale, 
   MessageSquare, 
   MapPin, 
-  Building2,
   ArrowRight,
   Settings,
   Users,
@@ -33,6 +32,16 @@ interface AdminModule {
   icon: React.ElementType;
   href: string;
   color: string;
+}
+
+interface AdminStats {
+  states: number;
+  countries: number;
+  pendingReviews: number;
+  dispensaries: number;
+  users: number;
+  rentals: number;
+  subscribers: number;
 }
 
 const adminModules: AdminModule[] = [
@@ -134,11 +143,11 @@ const AdminDashboard = () => {
     enabled: !!user,
   });
 
-  // Fetch stats
-  const { data: stats } = useQuery({
+  // Fetch stats with error resilience using Promise.allSettled
+  const { data: stats } = useQuery<AdminStats>({
     queryKey: ["admin-stats"],
     queryFn: async () => {
-      const [statesRes, countriesRes, reviewsRes, dispensariesRes, usersRes, rentalsRes, subscribersRes] = await Promise.all([
+      const results = await Promise.allSettled([
         supabase.from("states").select("id", { count: "exact", head: true }),
         supabase.from("countries").select("id", { count: "exact", head: true }),
         supabase.from("reviews").select("id", { count: "exact", head: true }).eq("status", "pending"),
@@ -147,14 +156,23 @@ const AdminDashboard = () => {
         supabase.from("hotels").select("id", { count: "exact", head: true }),
         supabase.from("newsletter_subscribers").select("id", { count: "exact", head: true }).eq("is_active", true),
       ]);
+
+      const getCount = (result: PromiseSettledResult<{ count: number | null }>): number => {
+        if (result.status === "fulfilled") {
+          return result.value.count || 0;
+        }
+        console.error("Stats query failed:", result.reason);
+        return 0;
+      };
+
       return {
-        states: statesRes.count || 0,
-        countries: countriesRes.count || 0,
-        pendingReviews: reviewsRes.count || 0,
-        dispensaries: dispensariesRes.count || 0,
-        users: usersRes.count || 0,
-        rentals: rentalsRes.count || 0,
-        subscribers: subscribersRes.count || 0,
+        states: getCount(results[0]),
+        countries: getCount(results[1]),
+        pendingReviews: getCount(results[2]),
+        dispensaries: getCount(results[3]),
+        users: getCount(results[4]),
+        rentals: getCount(results[5]),
+        subscribers: getCount(results[6]),
       };
     },
     enabled: !!isAdmin,
