@@ -93,10 +93,19 @@ export default {
             height: "0",
           },
         },
+        // Added for Map scan effect
+        scan: {
+          '0%': { top: '0%', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { top: '100%', opacity: '0' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // Added custom animations
+        "scan-line": "scan 3s linear infinite",
+        "spin-slow": "spin 3s linear infinite",
       },
     },
   },
