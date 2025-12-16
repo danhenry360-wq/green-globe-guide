@@ -18,11 +18,11 @@ import {
   Users,
   Globe,
   Mail,
-  FileText,
   DollarSign,
-  Sparkles,
   Image,
-  ArrowLeft
+  ArrowLeft,
+  Home,
+  Newspaper
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -58,9 +58,9 @@ const adminModules: AdminModule[] = [
     color: "text-purple-400",
   },
   {
-    title: "Hotels",
-    description: "Manage 420-friendly hotel listings with verified badges.",
-    icon: Building2,
+    title: "420 Rentals",
+    description: "Manage 420-friendly rental listings with verified badges.",
+    icon: Home,
     href: "/admin/hotels",
     color: "text-amber-400",
   },
@@ -86,18 +86,11 @@ const adminModules: AdminModule[] = [
     color: "text-pink-400",
   },
   {
-    title: "Blog Posts",
-    description: "Create and manage blog articles with images and rich content.",
-    icon: FileText,
-    href: "/admin/blog",
+    title: "Newsletter Subscribers",
+    description: "View and manage newsletter email subscribers.",
+    icon: Newspaper,
+    href: "/admin/newsletter",
     color: "text-indigo-400",
-  },
-  {
-    title: "AI Bulk Generator",
-    description: "Generate multiple destination guides at once using AI.",
-    icon: Sparkles,
-    href: "/admin/bulk-blog",
-    color: "text-violet-400",
   },
   {
     title: "Country Images",
@@ -145,12 +138,14 @@ const AdminDashboard = () => {
   const { data: stats } = useQuery({
     queryKey: ["admin-stats"],
     queryFn: async () => {
-      const [statesRes, countriesRes, reviewsRes, dispensariesRes, usersRes] = await Promise.all([
+      const [statesRes, countriesRes, reviewsRes, dispensariesRes, usersRes, rentalsRes, subscribersRes] = await Promise.all([
         supabase.from("states").select("id", { count: "exact", head: true }),
         supabase.from("countries").select("id", { count: "exact", head: true }),
         supabase.from("reviews").select("id", { count: "exact", head: true }).eq("status", "pending"),
         supabase.from("dispensaries").select("id", { count: "exact", head: true }),
         supabase.from("profiles").select("id", { count: "exact", head: true }),
+        supabase.from("hotels").select("id", { count: "exact", head: true }),
+        supabase.from("newsletter_subscribers").select("id", { count: "exact", head: true }).eq("is_active", true),
       ]);
       return {
         states: statesRes.count || 0,
@@ -158,6 +153,8 @@ const AdminDashboard = () => {
         pendingReviews: reviewsRes.count || 0,
         dispensaries: dispensariesRes.count || 0,
         users: usersRes.count || 0,
+        rentals: rentalsRes.count || 0,
+        subscribers: subscribersRes.count || 0,
       };
     },
     enabled: !!isAdmin,
@@ -254,7 +251,7 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8"
+              className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 mb-8"
             >
               <Card className="bg-gradient-card border-border/50">
                 <CardContent className="pt-6">
@@ -276,7 +273,13 @@ const AdminDashboard = () => {
               </Card>
               <Card className="bg-gradient-card border-border/50">
                 <CardContent className="pt-6">
-                  <div className="text-3xl font-bold text-amber-400">{stats.pendingReviews}</div>
+                  <div className="text-3xl font-bold text-amber-400">{stats.rentals}</div>
+                  <p className="text-sm text-muted-foreground">Rentals</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-card border-border/50">
+                <CardContent className="pt-6">
+                  <div className="text-3xl font-bold text-pink-400">{stats.pendingReviews}</div>
                   <p className="text-sm text-muted-foreground">Pending Reviews</p>
                 </CardContent>
               </Card>
@@ -284,6 +287,12 @@ const AdminDashboard = () => {
                 <CardContent className="pt-6">
                   <div className="text-3xl font-bold text-blue-400">{stats.users}</div>
                   <p className="text-sm text-muted-foreground">Users</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-card border-border/50">
+                <CardContent className="pt-6">
+                  <div className="text-3xl font-bold text-indigo-400">{stats.subscribers}</div>
+                  <p className="text-sm text-muted-foreground">Subscribers</p>
                 </CardContent>
               </Card>
             </motion.div>
