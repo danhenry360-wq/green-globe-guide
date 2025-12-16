@@ -905,99 +905,13 @@ export const BLOG_POSTS = [
     category: "Legal Guide",
     tags: ["Colorado", "Purchase Limits", "Dispensary", "Legal", "First-Time"],
     image: "/blog-colorado-limits.png",
+    isExternalPage: true,
+    externalUrl: "/blog/how-much-weed-can-you-buy-colorado-2025",
     content: {
       introduction: "Colorado was the first state to legalize recreational cannabis, and it remains one of the most tourist-friendly destinations for cannabis enthusiasts. But one question comes up constantly: How much weed can you actually buy? Whether you're a first-time visitor or a returning traveler, understanding Colorado's purchase limits, possession rules, and equivalency system is essential for a stress-free experience. This comprehensive 2025 guide breaks down everything you need to know.",
       disclaimer: "Cannabis is legal for adults 21+ in Colorado. These limits apply statewide, though some municipalities may have additional restrictions. Never transport cannabis across state lines—even to other legal states. Laws are current as of December 2025 but may change.",
-      sections: [
-        {
-          title: "Quick Answer: Daily Purchase Limits",
-          icon: "Scale",
-          content: "**Recreational customers (21+)** can purchase per day: **1 ounce (28 grams) of flower**, **8 grams of concentrates**, or **800mg of THC in edibles**. You can also buy up to **6 seeds or clones**. **Medical patients** with a valid Colorado med card can purchase up to **2 ounces of flower**. These limits apply per calendar day, not per dispensary visit. Both residents and tourists have the same recreational limits. *Note: A 2025 bill to double daily limits was proposed but didn't pass—current limits remain at 1 oz.*",
-          variant: "default"
-        },
-        {
-          title: "Recreational Purchase Limits Breakdown",
-          icon: "Shield",
-          content: "Here's the complete breakdown for recreational customers: **Flower**: 1 oz (28g) per day. **Concentrates** (wax, shatter, live resin): 8 grams per day. **Edibles**: 800mg total THC per day. **Seeds/Clones**: 6 per day. These are daily limits—meaning you reset at midnight. A valid government-issued ID (driver's license, passport, or state ID) proving you're 21+ is required for every purchase.",
-          variant: "default"
-        },
-        {
-          title: "How Equivalency Works",
-          icon: "TrendingUp",
-          content: "Colorado uses an equivalency system, meaning you can mix and match products as long as the total doesn't exceed 1 ounce equivalent. The formula: **1 oz flower = 8g concentrate = 800mg edibles = 6 seeds**. **Example combinations that work**: Half oz flower + 4g concentrate ✓ | 14g flower + 400mg edibles + 4g wax ✓ | 7g flower + 2g shatter + 200mg gummies ✓. Dispensary POS systems automatically track this during checkout.",
-          variant: "accent"
-        },
-        {
-          title: "Medical vs Recreational Limits",
-          icon: "Users",
-          content: "**Recreational**: 1 oz flower, 8g concentrates, 800mg edibles. **Medical**: 2 oz flower, 8g concentrates (only 2g for ages 18-20), up to 20,000mg edibles. **Important: Colorado has NO medical marijuana reciprocity.** Out-of-state medical cards are not recognized—even if you have a valid med card from California, Arizona, or any other state, you must purchase from the recreational menu at recreational prices. Only Colorado residents can obtain a Colorado med card. Medical patients get lower taxes (about 15% less) and access to higher-potency products.",
-          variant: "default"
-        },
-        {
-          title: "Possession vs Purchase: Know the Difference",
-          icon: "AlertCircle",
-          content: "This confuses many tourists: **Purchase limit**: 1 oz per day. **Possession limit**: 2 oz at any time. You can legally possess double what you can buy in a single day. So if you buy 1 oz on Monday and 1 oz on Tuesday, you can legally carry both ounces. However, possessing more than 2 oz becomes a misdemeanor with potential fines. Keep your receipts as proof of legal purchase.",
-          variant: "warning"
-        },
-        {
-          title: "Can You Visit Multiple Dispensaries?",
-          icon: "MapPin",
-          content: "**Yes**, you can visit as many dispensaries as you want in a day. However, daily limits still apply across all purchases. Here's the catch: there's **no statewide tracking system** for recreational purchases. Each dispensary tracks purchases individually within their own system. Technically, a tourist could visit multiple dispensaries and exceed limits—but this remains illegal and can result in penalties if caught. Don't risk it.",
-          variant: "default"
-        },
-        {
-          title: "What Happens If You Buy Too Much?",
-          icon: "Scale",
-          content: "Dispensary POS systems are designed to flag when you're approaching limits during a single transaction. If you try to exceed limits, the transaction will be declined. But what if you're caught with too much? **Over 2 oz** can result in fines up to $700. **Over 6 oz** gets into felony territory. The limits are generous—stay within them and you'll have zero issues. Keep your receipts as proof of legal purchase.",
-          variant: "warning"
-        },
-        {
-          title: "Tips for First-Time Buyers",
-          icon: "Users",
-          content: "**Bring valid ID**: Driver's license, passport, or state ID that shows you're 21+. **Cash is king**: Many dispensaries are cash-only due to federal banking restrictions. ATMs are available but charge fees. Some accept debit cards with fees. **Ask budtenders**: They're knowledgeable and can recommend products based on your experience level. **Start low with edibles**: Begin with 5-10mg THC. Effects take 30-90 minutes to kick in. Don't redose too quickly. **Check for deals**: Many dispensaries offer first-time customer discounts, daily deals, and happy hours.",
-          variant: "gold"
-        },
-        {
-          title: "Where You Can (and Can't) Consume",
-          icon: "Building2",
-          content: "Buying is easy—finding a legal place to consume is harder. **Legal**: Private property with owner permission, 420-friendly rentals, licensed consumption lounges. **Illegal**: Public spaces, parks, sidewalks, most hotels, federal land (national parks, some ski resorts), rental cars. Some cities like Denver have licensed cannabis lounges where on-site consumption is permitted. Always verify consumption policies before booking accommodations.",
-          variant: "accent"
-        },
-        {
-          title: "Ready to Shop?",
-          icon: "MapPin",
-          content: "Colorado has over 500 licensed dispensaries across the state, with the highest concentrations in Denver, Boulder, and mountain towns. Whether you're looking for budget-friendly options or premium craft cannabis, you'll find a dispensary that fits your needs. Check out our Colorado Dispensary Guide for verified shops, reviews, and directions in Denver, Boulder, Aspen, and beyond. Happy exploring!",
-          variant: "default"
-        }
-      ],
-      safetyTips: [
-        "Always carry valid government-issued ID proving you're 21+",
-        "Keep cannabis in original sealed packaging when transporting in vehicles",
-        "Never transport cannabis across state lines—even to other legal states like California or Nevada",
-        "Start with 5-10mg THC for edibles if you're a beginner—wait at least 2 hours before taking more",
-        "Don't drive under the influence—Colorado has strict DUI laws for cannabis",
-        "The possession limit is 2 oz—don't accumulate more than this",
-        "Keep receipts as proof of legal purchase",
-        "Never consume in public spaces, parks, or on federal land"
-      ],
-      faq: [
-        {
-          question: "How much weed can you buy in Colorado?",
-          answer: "Recreational customers 21+ can purchase up to 1 ounce (28 grams) of flower, 8 grams of concentrates, or 800mg of THC in edibles per day. Medical patients can purchase up to 2 ounces of flower."
-        },
-        {
-          question: "Can tourists buy weed in Colorado?",
-          answer: "Yes! Colorado allows any adult 21+ with valid government-issued ID to purchase cannabis. Tourists have the same purchase limits as residents: 1 oz flower per day."
-        },
-        {
-          question: "Can you visit multiple dispensaries in one day?",
-          answer: "Yes, you can visit as many dispensaries as you want. However, daily limits still apply across all purchases—there's no statewide tracking, but exceeding limits remains illegal."
-        },
-        {
-          question: "What's the difference between purchase and possession limits?",
-          answer: "Purchase limit is 1 oz per day. Possession limit is 2 oz at any time. You can legally possess double what you can buy in a single day."
-        }
-      ]
+      sections: [],
+      safetyTips: []
     }
   }
 ];

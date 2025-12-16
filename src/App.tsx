@@ -84,6 +84,7 @@ import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
 import BlogBoulderRentals from "./pages/BlogBoulderRentals";
 import BlogAspenDispensaries from "./pages/BlogAspenDispensaries";
+import BlogColoradoLimits from "./pages/BlogColoradoLimits";
 import BlogAspenRentals from "./pages/BlogAspenRentals";
 import BlogColoradoSpringsDispensaries from "./pages/BlogColoradoSpringsDispensaries";
 import BlogColoradoSpringsRentals from "./pages/BlogColoradoSpringsRentals";
@@ -157,6 +158,7 @@ function App() {
               <Route path="/blog/best-420-rentals-aspen" element={<BlogAspenRentals />} />
               <Route path="/blog/cannabis-dispensaries-colorado-springs" element={<BlogColoradoSpringsDispensaries />} />
               <Route path="/blog/best-420-rentals-colorado-springs" element={<BlogColoradoSpringsRentals />} />
+              <Route path="/blog/how-much-weed-can-you-buy-colorado-2025" element={<BlogColoradoLimits />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
@@ -236,7 +238,7 @@ function App() {
               <Route path="/lake-city" element={<LakeCityGuide />} />
               <Route path="/trinidad" element={<TrinidadGuide />} />
               <Route path="/salida" element={<SalidaGuide />} />
-              
+
               {/* NEW CITY ROUTES */}
               <Route path="/golden" element={<GoldenGuide />} />
               <Route path="/crested-butte" element={<CrestedButteGuide />} />
@@ -301,7 +303,7 @@ function App() {
               <Route path="/usa/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
               <Route path="/usa/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
               <Route path="/usa/colorado/salida" element={<Navigate to="/salida" replace />} />
-              
+
               {/* NEW CITY REDIRECTS */}
               <Route path="/usa/colorado/golden" element={<Navigate to="/golden" replace />} />
               <Route path="/usa/colorado/crested-butte" element={<Navigate to="/crested-butte" replace />} />
