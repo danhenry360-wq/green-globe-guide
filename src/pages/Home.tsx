@@ -613,8 +613,8 @@ const Home = () => {
                       key={`${item.type}-${item.name}`}
                       onClick={() => handleSelectSuggestion(item)}
                       className={`w-full px-5 py-4 flex items-center gap-4 text-left transition-colors ${index === selectedIndex
-                          ? 'bg-accent/20 border-l-2 border-accent'
-                          : 'hover:bg-white/5 border-l-2 border-transparent'
+                        ? 'bg-accent/20 border-l-2 border-accent'
+                        : 'hover:bg-white/5 border-l-2 border-transparent'
                         }`}
                     >
                       <span className="text-2xl">{getTypeIcon(item.type)}</span>
@@ -821,7 +821,7 @@ const FEATURED_DESTINATIONS: Destination[] = [
   { name: "Netherlands", status: "Decriminalized", country: "Europe", image: "/dest-netherlands.png", imageAlt: "Amsterdam coffee shops canal view", color: "bg-amber-500/90", link: "/world/europe/netherlands" },
   { name: "Canada", status: "Recreational", country: "North America", image: "/dest-canada-toronto.jpg", imageAlt: "Canada legal weed travel guide Toronto", color: "bg-green-500/90", link: "/world/north-america/canada" },
   { name: "Uruguay", status: "Recreational", country: "South America", image: "/dest-uruguay.jpg", imageAlt: "Uruguay cannabis club travel", color: "bg-green-500/90", link: "/world/south-america/uruguay" },
-  { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-6.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
+  { name: "Thailand", status: "Medical", country: "Asia", image: "/dest-thailand.jpg", imageAlt: "Thailand cannabis laws and temples", color: "bg-amber-700/90", link: "/world/asia/thailand" },
 ];
 
 export default Home;
