@@ -14,10 +14,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, isAuthenticated, signOut, loading } = useAuth();
+
+  // Fetch user profile for avatar
+  const { data: profile } = useQuery({
+    queryKey: ["user-profile", user?.id],
+    queryFn: async () => {
+      if (!user) return null;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("display_name, avatar_url")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (error) return null;
+      return data;
+    },
+    enabled: !!user,
+  });
 
   // Check admin role
   const { data: isAdmin } = useQuery({
@@ -34,6 +51,21 @@ export const Navigation = () => {
     enabled: !!user,
   });
 
+  // Get user initials for avatar fallback
+  const getUserInitials = () => {
+    if (profile?.display_name) {
+      const names = profile.display_name.trim().split(" ");
+      if (names.length >= 2) {
+        return `${names[0][0]}${names[1][0]}`.toUpperCase();
+      }
+      return profile.display_name.substring(0, 2).toUpperCase();
+    }
+    if (user?.email) {
+      return user.email.substring(0, 2).toUpperCase();
+    }
+    return "U";
+  };
+
   const handleSignOut = async () => {
     await signOut();
   };
@@ -44,9 +76,9 @@ export const Navigation = () => {
         <div className="flex h-16 items-center justify-between">
           <Link to="/home" className="flex items-center gap-2 sm:gap-3 group">
             <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden group-hover:scale-110 transition-all duration-300">
-              <img 
-                src={logo} 
-                alt="BudQuest Logo" 
+              <img
+                src={logo}
+                alt="BudQuest Logo"
                 className="h-full w-full object-contain drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
               />
               {/* Glow effect for dark mode */}
@@ -84,20 +116,41 @@ export const Navigation = () => {
             <Link to="/blog" className="text-sm text-foreground hover:text-accent transition-colors">
               Blog
             </Link>
-            
+
             {/* Auth Section */}
             {!loading && (
               isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full border-accent/30 hover:border-accent">
-                      <User className="h-4 w-4" />
+                    <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 hover:ring-2 hover:ring-accent/50">
+                      <Avatar className="h-9 w-9 border-2 border-accent/30 hover:border-accent transition-colors">
+                        <AvatarImage
+                          src={profile?.avatar_url || undefined}
+                          alt={profile?.display_name || user?.email || "User"}
+                        />
+                        <AvatarFallback className="bg-accent/20 text-accent font-semibold text-sm">
+                          {getUserInitials()}
+                        </AvatarFallback>
+                      </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-card border-accent/30">
-                    <DropdownMenuItem className="text-muted-foreground">
-                      {user?.email}
-                    </DropdownMenuItem>
+                  <DropdownMenuContent align="end" className="bg-card border-accent/30 w-56">
+                    <div className="flex items-center gap-3 p-3 border-b border-border/50">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src={profile?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-accent/20 text-accent font-semibold">
+                          {getUserInitials()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">
+                          {profile?.display_name || "BudQuest User"}
+                        </p>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </div>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild className="cursor-pointer">
                       <Link to="/profile" className="flex items-center">
@@ -172,13 +225,30 @@ export const Navigation = () => {
             <Link to="/blog" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Blog
             </Link>
-            
+
             {/* Mobile Auth */}
             {!loading && (
               isAuthenticated ? (
-                <div className="flex flex-col gap-2 pt-2 border-t border-border/50">
-                  <Link 
-                    to="/profile" 
+                <div className="flex flex-col gap-3 pt-3 border-t border-border/50">
+                  {/* User Info with Avatar */}
+                  <div className="flex items-center gap-3 pb-2">
+                    <Avatar className="h-10 w-10 border-2 border-accent/30">
+                      <AvatarImage src={profile?.avatar_url || undefined} />
+                      <AvatarFallback className="bg-accent/20 text-accent font-semibold">
+                        {getUserInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {profile?.display_name || "BudQuest User"}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">
+                        {user?.email}
+                      </p>
+                    </div>
+                  </div>
+                  <Link
+                    to="/profile"
                     className="text-sm text-accent hover:text-accent/80 flex items-center gap-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -186,8 +256,8 @@ export const Navigation = () => {
                     My Profile
                   </Link>
                   {isAdmin && (
-                    <Link 
-                      to="/admin" 
+                    <Link
+                      to="/admin"
                       className="text-sm text-accent hover:text-accent/80 flex items-center gap-2"
                       onClick={() => setMobileMenuOpen(false)}
                     >
@@ -195,11 +265,12 @@ export const Navigation = () => {
                       Admin Dashboard
                     </Link>
                   )}
-                  <button 
+                  <button
                     onClick={handleSignOut}
-                    className="text-sm text-destructive hover:text-destructive/80 text-left"
+                    className="text-sm text-destructive hover:text-destructive/80 text-left flex items-center gap-2"
                   >
-                    Sign Out ({user?.email})
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
                   </button>
                 </div>
               ) : (
