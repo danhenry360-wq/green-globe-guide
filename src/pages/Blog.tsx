@@ -904,7 +904,7 @@ export const BLOG_POSTS = [
     avatar: "🌿",
     category: "Legal Guide",
     tags: ["Colorado", "Purchase Limits", "Dispensary", "Legal", "First-Time"],
-    image: "/blog-colorado-limits.jpg",
+    image: "/blog-colorado-limits.png",
     content: {
       introduction: "Colorado was the first state to legalize recreational cannabis, and it remains one of the most tourist-friendly destinations for cannabis enthusiasts. But one question comes up constantly: How much weed can you actually buy? Whether you're a first-time visitor or a returning traveler, understanding Colorado's purchase limits, possession rules, and equivalency system is essential for a stress-free experience. This comprehensive 2025 guide breaks down everything you need to know.",
       disclaimer: "Cannabis is legal for adults 21+ in Colorado. These limits apply statewide, though some municipalities may have additional restrictions. Never transport cannabis across state lines—even to other legal states. Laws are current as of December 2025 but may change.",
