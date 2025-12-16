@@ -278,7 +278,7 @@ const BlogColoradoConsumption = () => {
                                     to="/blog/best-420-rentals-denver"
                                     className="px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                                 >
-                                    Shop 420 Rentals
+                                    Visit 420 Rentals
                                 </Link>
                                 <Link
                                     to="/usa/colorado"
