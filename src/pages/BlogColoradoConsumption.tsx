@@ -141,7 +141,7 @@ const BlogColoradoConsumption = () => {
                     <div className="container mx-auto px-4">
                         <div className="max-w-4xl">
                             <div className="bg-accent/5 border-l-4 border-accent p-6 rounded-r-lg">
-                                <h2 className="text-xl font-bold text-foreground mb-3">Quick Answer</h2>
+                                <h2 className="text-xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-3">Quick Answer</h2>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
                                     In Colorado, you can legally consume cannabis on <b>private property</b> with the owner's permission, at <b>licensed consumption lounges</b>, and at <b>420-friendly rentals</b>.
                                     <br /><br />
@@ -156,7 +156,7 @@ const BlogColoradoConsumption = () => {
                 <section className="py-12">
                     <div className="container mx-auto px-4">
                         <div className="max-w-3xl mx-auto text-center">
-                            <h2 className="text-3xl font-bold mb-4">The Basic Rule</h2>
+                            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">The Basic Rule</h2>
                             <p className="text-xl text-foreground font-medium mb-8">
                                 "Private Property = Legal. <span className="text-red-500">Public Spaces = Illegal.</span>"
                             </p>
@@ -219,7 +219,7 @@ const BlogColoradoConsumption = () => {
                     <div className="container mx-auto px-4 max-w-4xl">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <h3 className="text-2xl font-bold mb-4">Why Not Hotels?</h3>
+                                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">Why Not Hotels?</h3>
                                 <p className="text-muted-foreground mb-4">
                                     Most hotels operate under the <b>Colorado Clean Indoor Air Act</b>, which bans smoking indoors. Even if you have a "smoking room," it's usually for tobacco only.
                                 </p>
@@ -230,7 +230,7 @@ const BlogColoradoConsumption = () => {
                                 </ul>
                             </div>
                             <div>
-                                <h3 className="text-2xl font-bold mb-4">No Cars (Seriously)</h3>
+                                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">No Cars (Seriously)</h3>
                                 <p className="text-muted-foreground mb-4">
                                     Consumption in a vehicle is a hard NO. It's illegal for both drivers and passengers, even if parked.
                                 </p>
@@ -248,7 +248,7 @@ const BlogColoradoConsumption = () => {
                 {/* City Notes */}
                 <section className="py-12 border-t border-accent/10">
                     <div className="container mx-auto px-4 max-w-4xl">
-                        <h2 className="text-2xl font-bold mb-6">City-by-City Quick Notes</h2>
+                        <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">City-by-City Quick Notes</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {cityNotes.map((city, i) => (
                                 <Link key={i} to={city.link} className="block group">
@@ -269,7 +269,7 @@ const BlogColoradoConsumption = () => {
                 <section className="py-12 border-t border-accent/10">
                     <div className="container mx-auto px-4 max-w-4xl">
                         <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-8 text-center">
-                            <h3 className="text-xl font-bold text-foreground mb-4">The Best Way to Smoke Legally?</h3>
+                            <h3 className="text-xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-4">The Best Way to Smoke Legally?</h3>
                             <p className="text-muted-foreground mb-6">
                                 Book a verified 420-friendly stay where you can consume without stress.
                             </p>
