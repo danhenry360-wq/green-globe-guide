@@ -831,6 +831,27 @@ export const BLOG_POSTS = [
     }
   },
   {
+    id: "where-can-you-smoke-weed-in-colorado-2025",
+    title: "Where Can You Legally Smoke Weed in Colorado? (2025 Guide)",
+    subtitle: "Stop wondering if you can smoke in public (you can't). Here's the complete guide to legal consumption spots, from private balconies to licensed lounges.",
+    excerpt: "Confused about where you can legal consume cannabis in Colorado? This guide breaks down private property rules, consumption lounges, and why hotels are strictly off-limits.",
+    date: "Dec 16, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "🏔️",
+    category: "Legal Guide",
+    tags: ["Colorado", "Consumption Laws", "Lounges", "Hotels", "Legal"],
+    image: "/blog-colorado-consumption.png",
+    isExternalPage: true,
+    externalUrl: "/blog/where-can-you-smoke-weed-in-colorado-2025",
+    content: {
+      introduction: "",
+      disclaimer: "",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "best-420-rentals-aspen",
     title: "Best 420-Friendly Rentals in Aspen: Luxury Guide 2025",
     subtitle: "Find the perfect cannabis-friendly luxury accommodation for your Aspen mountain adventure.",
