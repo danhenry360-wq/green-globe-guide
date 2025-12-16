@@ -128,11 +128,10 @@ const StarRating = ({ value }: { value: number }) => (
         key={i}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        className={`w-3 h-3 sm:w-4 sm:h-4 ${
-          i <= Math.round(value)
-            ? "fill-yellow-400 text-yellow-400"
-            : "text-gray-600"
-        }`}
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${i <= Math.round(value)
+          ? "fill-yellow-400 text-yellow-400"
+          : "text-gray-600"
+          }`}
       >
         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
       </svg>
@@ -200,11 +199,10 @@ const Pagination = ({
                 )}
                 <button
                   onClick={() => onPageChange(page)}
-                  className={`w-10 h-10 rounded-lg font-semibold transition-all ${
-                    currentPage === page
-                      ? "bg-green-400 text-white"
-                      : "bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10"
-                  }`}
+                  className={`w-10 h-10 rounded-lg font-semibold transition-all ${currentPage === page
+                    ? "bg-green-400 text-white"
+                    : "bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10"
+                    }`}
                 >
                   {page}
                 </button>
@@ -303,26 +301,24 @@ const FilterPanel = ({
                 </select>
               </div>
 
-              {/* STATE FILTER */}
-              {filters.country && (
-                <div>
-                  <label className="block text-sm font-semibold text-muted-foreground mb-3">
-                    State/Province
-                  </label>
-                  <select
-                    value={filters.state}
-                    onChange={(e) => onFilterChange("state", e.target.value)}
-                    className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
-                  >
-                    <option value="">All States</option>
-                    {states.map((state) => (
-                      <option key={state} value={state} className="bg-card">
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              {/* STATE FILTER - Always visible */}
+              <div>
+                <label className="block text-sm font-semibold text-muted-foreground mb-3">
+                  State/Province
+                </label>
+                <select
+                  value={filters.state}
+                  onChange={(e) => onFilterChange("state", e.target.value)}
+                  className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
+                >
+                  <option value="">All States</option>
+                  {states.map((state) => (
+                    <option key={state} value={state} className="bg-card">
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               {/* TYPE FILTER */}
               <div>
@@ -336,11 +332,10 @@ const FilterPanel = ({
                     <button
                       key={type}
                       onClick={() => onFilterChange("type", type)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filters.type === type
-                          ? "bg-green-400 text-white"
-                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
-                      }`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${filters.type === type
+                        ? "bg-green-400 text-white"
+                        : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
+                        }`}
                     >
                       <span className="capitalize">
                         {type === "all" ? "All Types" : type}
@@ -371,11 +366,10 @@ const FilterPanel = ({
                     <button
                       key={specialty}
                       onClick={() => onFilterChange("specialty", specialty)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filters.specialty === specialty
-                          ? "bg-green-400 text-white"
-                          : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
-                      }`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${filters.specialty === specialty
+                        ? "bg-green-400 text-white"
+                        : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
+                        }`}
                     >
                       <span className="capitalize">
                         {specialty === "all" ? "All Products" : specialty}
@@ -467,14 +461,14 @@ const DispensaryCard = ({
 }) => {
   // Use slug from DB or generate from name
   const dispensarySlug = dispensary.slug || createSlug(dispensary.name);
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
     >
-      <Link 
+      <Link
         to={`/dispensary/${dispensarySlug}`}
         state={{ dispensaryId: dispensary.id }}
         className="block"
@@ -592,13 +586,13 @@ const Dispensary = () => {
         .from('dispensaries')
         .select('*')
         .order('rating', { ascending: false });
-      
+
       if (!error && data) {
         setDbDispensaries(data);
       }
       setIsLoading(false);
     };
-    
+
     fetchDbDispensaries();
   }, []);
 
@@ -639,13 +633,15 @@ const Dispensary = () => {
   );
 
   const states = useMemo(() => {
-    if (!filters.country) return [];
+    // If country is selected, filter states by that country
+    // Otherwise, show all unique states across all dispensaries
+    const dataToUse = filters.country
+      ? processedData.filter((d) => d.countryName === filters.country)
+      : processedData;
+
+    // Normalize state names (trim whitespace) to prevent duplicates
     return Array.from(
-      new Set(
-        processedData
-          .filter((d) => d.countryName === filters.country)
-          .map((d) => d.stateObj)
-      )
+      new Set(dataToUse.map((d) => d.stateObj?.trim()).filter(Boolean))
     ).sort();
   }, [processedData, filters.country]);
 
@@ -659,7 +655,7 @@ const Dispensary = () => {
     }
 
     if (filters.state) {
-      result = result.filter((d) => d.stateObj === filters.state);
+      result = result.filter((d) => d.stateObj?.trim() === filters.state);
     }
 
     // Filter by type (recreational/medical/both)
@@ -843,7 +839,7 @@ const Dispensary = () => {
                 </option>
               </select>
             </div>
-            
+
             {/* Active Filters Preview */}
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mt-3 pb-1 overflow-x-auto no-scrollbar">
@@ -894,7 +890,7 @@ const Dispensary = () => {
                   states={states}
                   filterCounts={filterCounts}
                   isOpen={true}
-                  onClose={() => {}}
+                  onClose={() => { }}
                 />
               </div>
 
@@ -1064,7 +1060,7 @@ const Dispensary = () => {
                       </p>
                     </div>
 
-                {/* DISPENSARY CARDS GRID */}
+                    {/* DISPENSARY CARDS GRID */}
                     <div className="space-y-4 mb-12">
                       <AnimatePresence mode="wait">
                         {paginatedData.map((dispensary) => (
@@ -1106,12 +1102,12 @@ const Dispensary = () => {
               <div className="max-w-3xl mx-auto">
                 <Card className="relative overflow-hidden border-yellow-500/20 bg-yellow-500/5">
                   <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500/50" />
-                  
+
                   <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
                     <div className="p-2 rounded-full bg-yellow-500/10 shrink-0">
                       <AlertTriangle className="w-5 h-5 text-yellow-500" />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h3 className="text-base sm:text-lg font-semibold text-yellow-500 leading-none mt-1">
                         Legal Disclaimer
