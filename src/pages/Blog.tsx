@@ -19,6 +19,25 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "denver-vs-boulder-cannabis-tourists-2025",
+    title: "Denver vs Boulder: Which is Better for Cannabis Tourists? (2025)",
+    subtitle: "Head-to-head comparison of dispensaries, vibes, and 420-friendly stays.",
+    excerpt: "Deciding between Denver and Boulder? We break down the dispensaries, culture, prices, and vibes to help you choose the perfect base for your trip.",
+    date: "Dec 17, 2025",
+    readTime: "10 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "Comparison Guide",
+    tags: ["Colorado", "Denver", "Boulder", "Trip Planning"],
+    image: "/blog-denver-vs-boulder.png",
+    content: {
+      introduction: "Two iconic Colorado cities, two very different cannabis scenes. Whether you want craft quality or big-city variety, here is how to choose.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "first-time-dispensary-guide-colorado-2025",
     title: "First Time at a Colorado Dispensary: What to Expect (2025 Guide)",
     subtitle: "Step-by-step walkthrough of your first legal cannabis purchase.",
