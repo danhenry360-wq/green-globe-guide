@@ -342,6 +342,7 @@ const Profile = () => {
     pending: reviews.filter(r => r.status === 'pending').length,
     approved: reviews.filter(r => r.status === 'approved').length,
     rejected: reviews.filter(r => r.status === 'rejected').length,
+    favorites: favorites.length,
   };
 
   if (authLoading || loading) {
@@ -586,6 +587,9 @@ const Profile = () => {
                     <TabsTrigger value="rejected" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
                       Rejected ({counts.rejected})
                     </TabsTrigger>
+                    <TabsTrigger value="favorites" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
+                      Saved ({counts.favorites})
+                    </TabsTrigger>
                   </TabsList>
 
                   <TabsContent value={activeTab}>
@@ -662,6 +666,80 @@ const Profile = () => {
                                   </div>
                                 )}
                               </CardContent>
+                            </Card>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </TabsContent>
+
+                  <TabsContent value="favorites">
+                    {favorites.length === 0 ? (
+                      <div className="text-center py-12">
+                        <Heart className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium text-foreground mb-2">No Saved Items</h3>
+                        <p className="text-muted-foreground mb-6">
+                          You haven't added any dispensaries or rentals to your favorites yet.
+                        </p>
+                        <Button
+                          onClick={() => navigate('/dispensary')}
+                          className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                        >
+                          Explore Dispensaries
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {favorites.map((fav: any) => {
+                          const isDispensary = !!fav.dispensary_id;
+                          const item = isDispensary ? fav.dispensaries : fav.hotels;
+
+                          if (!item) return null;
+
+                          return (
+                            <Card key={fav.id} className="bg-background/50 border-border/30 overflow-hidden hover:border-accent/30 transition-colors group">
+                              <div className="flex h-full">
+                                <div className="w-32 sm:w-40 relative bg-muted">
+                                  <img
+                                    src={isDispensary
+                                      ? (item.image || '/dest-california.jpg')
+                                      : (item.images?.[0] || '/dest-california.jpg')
+                                    }
+                                    alt={item.name}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      e.currentTarget.src = "/dest-california.jpg";
+                                    }}
+                                  />
+                                </div>
+                                <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between">
+                                  <div>
+                                    <div className="flex justify-between items-start gap-2">
+                                      <h4 className="font-semibold text-foreground line-clamp-1 group-hover:text-accent transition-colors">
+                                        {item.name}
+                                      </h4>
+                                      {item.rating && (
+                                        <div className="flex items-center gap-1 bg-background/80 px-1.5 py-0.5 rounded text-xs">
+                                          <Star className="w-3 h-3 fill-gold text-gold" />
+                                          <span className="font-medium">{item.rating}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                      {isDispensary ? 'Dispensary' : 'Rental'} • {item.city || item.cities?.name}, {item.state || item.cities?.states?.name}
+                                    </p>
+                                  </div>
+
+                                  <div className="mt-3">
+                                    <Link
+                                      to={isDispensary ? `/dispensary/${item.slug}` : `/hotels/${item.slug}`}
+                                      className="inline-flex items-center text-xs font-medium text-accent hover:text-accent/80"
+                                    >
+                                      View Details <ExternalLink className="w-3 h-3 ml-1" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
                             </Card>
                           );
                         })}

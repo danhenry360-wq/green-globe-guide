@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { DispensaryMap } from "@/components/DispensaryMap";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 // Types for database dispensary
 interface DbDispensary {
@@ -52,14 +53,14 @@ const DispensaryDetail = () => {
   useEffect(() => {
     const fetchDispensary = async () => {
       setLoading(true);
-      
+
       if (slug) {
         const { data, error } = await supabase
           .from('dispensaries')
           .select('*')
           .eq('slug', slug)
           .maybeSingle();
-        
+
         if (!error && data) {
           setDbDispensary(data);
         } else {
@@ -68,7 +69,7 @@ const DispensaryDetail = () => {
       } else {
         setNotFound(true);
       }
-      
+
       setLoading(false);
     };
 
@@ -127,12 +128,12 @@ const DispensaryDetail = () => {
               <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2 sm:mb-3 leading-tight">
                 {dbDispensary.name}
               </h1>
-              
+
               <div className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
                 <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0 mt-0.5" />
                 <span className="leading-snug">{dbDispensary.address}</span>
               </div>
-              
+
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 <div className="flex gap-0.5">{renderRating(dbDispensary.rating || 0)}</div>
                 <span className="text-base sm:text-lg font-bold text-yellow-400">{dbDispensary.rating || 0}</span>
@@ -154,31 +155,44 @@ const DispensaryDetail = () => {
                   </Badge>
                 )}
               </div>
-              
+
               {dbDispensary.hours && (
                 <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                   <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
                   <span>{dbDispensary.hours}</span>
                 </div>
               )}
-              
-              {/* Order Now Button - Always full width on mobile */}
-              {dbDispensary.website && (
-                <a
-                  href={dbDispensary.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full sm:w-auto sm:inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
-                >
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
-                  Visit
-                </a>
-              )}
+
+              {/* Actions Row */}
+              <div className="flex items-center gap-3">
+                {/* Order Now Button - Always full width on mobile */}
+                {dbDispensary.website && (
+                  <a
+                    href={dbDispensary.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
+                  >
+                    <Globe className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
+                    Visit
+                  </a>
+                )}
+
+                {/* Favorite Button */}
+                {isDbDispensary && (
+                  <FavoriteButton
+                    entityId={dbDispensary.id}
+                    type="dispensary"
+                    variant="outline"
+                    className="h-[42px] sm:h-[48px] px-4 rounded-lg sm:rounded-xl border-accent/30 text-accent hover:bg-accent/10"
+                  />
+                )}
+              </div>
             </header>
 
             {/* Mobile-First Stacked Layout */}
             <div className="space-y-4 sm:space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
-              
+
               {/* Location Card - First on mobile */}
               <div className="lg:col-span-1 lg:order-last">
                 <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
@@ -208,20 +222,20 @@ const DispensaryDetail = () => {
                   {(() => {
                     const allImages = dbDispensary.images?.filter(img => img) || (dbDispensary.image ? [dbDispensary.image] : ['/dest-california.jpg']);
                     const hasMultipleImages = allImages.length > 1;
-                    
+
                     return (
                       <div className="relative">
-                        <img 
-                          src={`${allImages[currentImageIndex]}${allImages[currentImageIndex].includes('?') ? '&' : '?'}v=${Date.now()}`} 
-                          alt={`${dbDispensary.name} - Image ${currentImageIndex + 1}`} 
+                        <img
+                          src={`${allImages[currentImageIndex]}${allImages[currentImageIndex].includes('?') ? '&' : '?'}v=${Date.now()}`}
+                          alt={`${dbDispensary.name} - Image ${currentImageIndex + 1}`}
                           className="w-full h-40 sm:h-56 lg:h-72 object-cover"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.onerror = null; 
+                            target.onerror = null;
                             target.src = "/dest-california.jpg";
                           }}
                         />
-                        
+
                         {/* Navigation Arrows */}
                         {hasMultipleImages && (
                           <>
@@ -239,14 +253,14 @@ const DispensaryDetail = () => {
                             >
                               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
-                            
+
                             {/* Image Counter */}
                             <div className="absolute bottom-2 right-2 px-2 py-1 rounded-md bg-black/60 text-white text-xs font-medium">
                               {currentImageIndex + 1} / {allImages.length}
                             </div>
                           </>
                         )}
-                        
+
                         {/* Thumbnail Strip */}
                         {hasMultipleImages && (
                           <div className="absolute bottom-2 left-2 flex gap-1.5">
@@ -254,17 +268,16 @@ const DispensaryDetail = () => {
                               <button
                                 key={idx}
                                 onClick={() => setCurrentImageIndex(idx)}
-                                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all ${
-                                  idx === currentImageIndex ? 'border-accent' : 'border-white/30 hover:border-white/60'
-                                }`}
+                                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all ${idx === currentImageIndex ? 'border-accent' : 'border-white/30 hover:border-white/60'
+                                  }`}
                               >
-                                <img 
-                                  src={img} 
+                                <img
+                                  src={img}
                                   alt={`Thumbnail ${idx + 1}`}
                                   className="w-full h-full object-cover"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
-                                    target.onerror = null; 
+                                    target.onerror = null;
                                     target.src = "/dest-california.jpg";
                                   }}
                                 />
@@ -275,7 +288,7 @@ const DispensaryDetail = () => {
                       </div>
                     );
                   })()}
-                  
+
                   <CardContent className="p-3 sm:p-5">
                     <h2 className="text-base sm:text-xl font-bold text-foreground mb-1.5 sm:mb-2">About {dbDispensary.name}</h2>
                     <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{dbDispensary.description}</p>
@@ -325,7 +338,7 @@ const DispensaryDetail = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     {/* License Number */}
                     {dbDispensary.license_number && (
                       <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border/50">

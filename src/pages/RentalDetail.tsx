@@ -6,6 +6,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { RentalReviewsSection } from "@/components/RentalReviewsSection";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { HOTEL_DATA } from "@/data/hotel_data";
 import { Hotel } from "@/types/data";
 import { supabase } from "@/integrations/supabase/client";
@@ -215,16 +216,27 @@ const RentalDetail = () => {
               </span>
             </div>
 
-            {/* Book Now CTA */}
-            <a
-              href={affiliateLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
-            >
-              Book Now
-              <ExternalLink className="h-4 w-4" />
-            </a>
+            {/* Actions Row */}
+            <div className="flex items-center gap-3">
+              <a
+                href={affiliateLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
+              >
+                Book Now
+                <ExternalLink className="h-4 w-4" />
+              </a>
+
+              {dbHotel && (
+                <FavoriteButton
+                  entityId={dbHotel.id}
+                  type="hotel"
+                  variant="outline"
+                  className="h-[48px] px-4 rounded-lg border-accent/30 text-accent hover:bg-accent/10"
+                />
+              )}
+            </div>
           </div>
         </section>
 
