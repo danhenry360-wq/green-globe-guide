@@ -19,6 +19,25 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "cannabis-dispensaries-breckenridge-complete-guide-2025",
+    title: "Cannabis Dispensaries in Breckenridge: Complete Guide 2025",
+    subtitle: "Where to buy weed in Breckenridge, current prices, and altitude safety tips.",
+    excerpt: "Breckenridge offers world-class skiing and legal cannabis. Here is your guide to the best dispensaries, 420-friendly stays, and how to safely consume at 9,600 feet.",
+    date: "Dec 17, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "City Guide",
+    tags: ["Colorado", "Breckenridge", "Skiing", "Dispensary"],
+    image: "/blog-breckenridge-dispensaries.png",
+    content: {
+      introduction: "Premier ski destination meets legal cannabis. Just remember: elevation changes everything.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "denver-vs-boulder-cannabis-tourists-2025",
     title: "Denver vs Boulder: Which is Better for Cannabis Tourists? (2025)",
     subtitle: "Head-to-head comparison of dispensaries, vibes, and 420-friendly stays.",
