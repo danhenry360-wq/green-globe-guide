@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { 
+import { Helmet } from "react-helmet";
+import {
   Search, ArrowLeft, X,
   Mountain, Sun, Wheat, Building2, ChevronRight, Map, Star, ArrowRight
 } from "lucide-react";
@@ -20,32 +21,32 @@ import { cn } from "@/lib/utils";
 
 const REGIONS = [
   {
-    id: 'West', 
+    id: 'West',
     name: 'The West',
     description: 'Pacific Coast, Rockies & Desert',
     count: '13 states',
-    icon: Mountain, 
+    icon: Mountain,
   },
   {
     id: 'Midwest',
     name: 'The Midwest',
     description: 'Great Lakes & Great Plains',
     count: '12 states',
-    icon: Wheat, 
+    icon: Wheat,
   },
   {
     id: 'South',
     name: 'The South',
     description: 'Deep South, Texas & Florida',
     count: '17 jurisdictions',
-    icon: Sun, 
+    icon: Sun,
   },
   {
     id: 'Northeast',
     name: 'The Northeast',
     description: 'New England & Mid-Atlantic',
     count: '9 states',
-    icon: Building2, 
+    icon: Building2,
   }
 ];
 
@@ -70,15 +71,15 @@ const STATE_TO_REGION: Record<string, string> = {
 ----------------------------------------------------- */
 
 // Search Results View - Shows matching states from any region
-const SearchResults = ({ 
-  query, 
-  onClear 
-}: { 
-  query: string; 
+const SearchResults = ({
+  query,
+  onClear
+}: {
+  query: string;
   onClear: () => void;
 }) => {
   const filteredStates = useMemo(() => {
-    return USA_STATE_DATA.filter(s => 
+    return USA_STATE_DATA.filter(s =>
       s.name.toLowerCase().includes(query.toLowerCase())
     );
   }, [query]);
@@ -225,7 +226,7 @@ const RegionIndex = ({ onSelect }: { onSelect: (id: string) => void }) => {
 // State Index (Within a region)
 const StateIndex = ({ regionId, onBack }: { regionId: string; onBack: () => void }) => {
   const region = REGIONS.find(r => r.id === regionId);
-  
+
   const statesInRegion = useMemo(() => {
     return USA_STATE_DATA.filter(state => STATE_TO_REGION[state.name] === regionId);
   }, [regionId]);
@@ -277,8 +278,13 @@ const USAGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>USA Cannabis Guide 2025 | State-by-State Laws | BudQuest</title>
+        <meta name="description" content="Complete guide to cannabis laws in all 50 US states. Find recreational and medical marijuana laws, dispensaries, and 420-friendly travel tips." />
+        <link rel="canonical" href="https://budquest.guide/usa" />
+      </Helmet>
       <Navigation />
-      
+
       {/* Fixed Search Bar - Always visible */}
       <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
         <div className="container mx-auto max-w-7xl px-4 py-3">
@@ -304,14 +310,14 @@ const USAGuide = () => {
 
       {/* Content based on search/navigation state */}
       {isSearching ? (
-        <SearchResults 
-          query={searchQuery} 
-          onClear={() => setSearchQuery("")} 
+        <SearchResults
+          query={searchQuery}
+          onClear={() => setSearchQuery("")}
         />
       ) : selectedRegion ? (
-        <StateIndex 
-          regionId={selectedRegion} 
-          onBack={() => setSelectedRegion(null)} 
+        <StateIndex
+          regionId={selectedRegion}
+          onBack={() => setSelectedRegion(null)}
         />
       ) : (
         <RegionIndex onSelect={setSelectedRegion} />

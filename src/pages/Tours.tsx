@@ -1,12 +1,18 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
+import { Helmet } from "react-helmet";
 
 const Tours = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Cannabis Tours & Experiences 2025 | BudQuest</title>
+        <meta name="description" content="Discover guided cannabis tours and unique 420-friendly experiences around the world. Farm visits, cooking classes, and more." />
+        <link rel="canonical" href="https://budquest.guide/tours" />
+      </Helmet>
       <Navigation />
-      
+
       <div className="pt-24 pb-20 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto mb-12 text-center">

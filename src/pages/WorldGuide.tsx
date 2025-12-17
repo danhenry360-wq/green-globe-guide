@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
 import { cn } from "@/lib/utils";
 import {
   ChevronRight,
@@ -19,7 +20,7 @@ import {
   Waves,
   Sun,
   AlertTriangle,
-  Skull, 
+  Skull,
   Siren,
   Gavel,
   ShieldAlert,
@@ -1338,7 +1339,7 @@ const WORLD: Continent[] = [
       {
         slug: "thailand",
         name: "Thailand",
-        legalStatus: "Mixed", 
+        legalStatus: "Mixed",
         possession: "Medical prescription required (2025)",
         airport: "Illegal to import/export",
         tourist: "WARNING: Recreational era ending. Medical script required.",
@@ -1377,7 +1378,7 @@ const WORLD: Continent[] = [
       {
         slug: "malaysia",
         name: "Malaysia",
-        legalStatus: "Illegal", 
+        legalStatus: "Illegal",
         possession: "Severe prison / Caning",
         airport: "Zero tolerance",
         tourist: "WARNING: Trafficking carries death penalty risk.",
@@ -1388,7 +1389,7 @@ const WORLD: Continent[] = [
       {
         slug: "indonesia",
         name: "Indonesia",
-        legalStatus: "Illegal", 
+        legalStatus: "Illegal",
         possession: "Prison / Deportation",
         airport: "Zero tolerance (Death penalty risk for trafficking)",
         tourist: "WARNING: Severe penalties (Bali included). Do not buy.",
@@ -1399,7 +1400,7 @@ const WORLD: Continent[] = [
       {
         slug: "philippines",
         name: "Philippines",
-        legalStatus: "Illegal", 
+        legalStatus: "Illegal",
         possession: "Life imprisonment for large amounts",
         airport: "Zero tolerance",
         tourist: "WARNING: Severe penalties. Medical bill pending but not law.",
@@ -1729,7 +1730,7 @@ const WORLD: Continent[] = [
       {
         slug: "uae",
         name: "United Arab Emirates",
-        legalStatus: "Illegal", 
+        legalStatus: "Illegal",
         possession: "4+ years prison / Deportation",
         airport: "Zero tolerance (Sensitive equipment)",
         tourist: "Strictly illegal. THC in blood stream counts as possession.",
@@ -2788,29 +2789,29 @@ const statusColor = (s: string) => getStatusBadgeClasses(s);
 
 // HELPER: Detect Critical Human Rights Risks (Death/Caning)
 const isDeathPenalty = (country: Country) => {
-    const deathKeywords = ["death penalty", "execution", "capital punishment", "beheading"];
-    const combinedText = (country.tourist + country.description).toLowerCase();
-    return deathKeywords.some(kw => combinedText.includes(kw));
+  const deathKeywords = ["death penalty", "execution", "capital punishment", "beheading"];
+  const combinedText = (country.tourist + country.description).toLowerCase();
+  return deathKeywords.some(kw => combinedText.includes(kw));
 }
 
 // HELPER: Detect Corporal Punishment (Caning/Lashes)
 const isCorporalPunishment = (country: Country) => {
-    const corporalKeywords = ["caning", "lashes", "whipping", "corporal punishment"];
-    const combinedText = (country.tourist + country.description).toLowerCase();
-    return corporalKeywords.some(kw => combinedText.includes(kw));
+  const corporalKeywords = ["caning", "lashes", "whipping", "corporal punishment"];
+  const combinedText = (country.tourist + country.description).toLowerCase();
+  return corporalKeywords.some(kw => combinedText.includes(kw));
 }
 
 // HELPER: Detect Severe Legal/Prison Risks (Indefinite detention, state of exception)
 const isSeverePrison = (country: Country) => {
-   const strictKeywords = ["indefinite detention", "arbitrary arrest", "state of exception", "prison terms", "life imprisonment"];
-   const combinedText = (country.tourist + country.description).toLowerCase(); 
-   return strictKeywords.some(kw => combinedText.includes(kw));
+  const strictKeywords = ["indefinite detention", "arbitrary arrest", "state of exception", "prison terms", "life imprisonment"];
+  const combinedText = (country.tourist + country.description).toLowerCase();
+  return strictKeywords.some(kw => combinedText.includes(kw));
 }
 
 /* ---------- sub-components ---------- */
 // Get all countries flattened from all continents
 const getAllCountries = () => {
-  return WORLD.flatMap(continent => 
+  return WORLD.flatMap(continent =>
     continent.countries.map(country => ({
       ...country,
       image: country.image || getCountryImage(country.slug),
@@ -2821,18 +2822,18 @@ const getAllCountries = () => {
 };
 
 // Search Results for Countries
-const CountrySearchResults = ({ 
-  query, 
-  onClear 
-}: { 
-  query: string; 
+const CountrySearchResults = ({
+  query,
+  onClear
+}: {
+  query: string;
   onClear: () => void;
 }) => {
   const nav = useNavigate();
   const allCountries = useMemo(() => getAllCountries(), []);
-  
+
   const filteredCountries = useMemo(() => {
-    return allCountries.filter(c => 
+    return allCountries.filter(c =>
       c.name.toLowerCase().includes(query.toLowerCase())
     );
   }, [query, allCountries]);
@@ -2889,9 +2890,9 @@ const CountrySearchResults = ({
                       {c.legalStatus}
                     </Badge>
                   </div>
-                  
+
                   <p className="text-xs text-muted-foreground mb-2">{c.continentName}</p>
-                  
+
                   {deathRisk && (
                     <div className="flex items-center gap-2 mb-3 bg-red-950/40 text-red-400 p-2 rounded text-xs font-bold border border-red-500/30 animate-pulse">
                       <Skull className="w-4 h-4" />
@@ -2939,11 +2940,11 @@ const CountrySearchResults = ({
   );
 };
 
-const ContinentIndex = ({ 
-  searchQuery, 
-  onSearchChange 
-}: { 
-  searchQuery: string; 
+const ContinentIndex = ({
+  searchQuery,
+  onSearchChange
+}: {
+  searchQuery: string;
   onSearchChange: (q: string) => void;
 }) => {
   const nav = useNavigate();
@@ -2997,8 +2998,8 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
     () =>
       q
         ? continent.countries.filter((c) =>
-            c.name.toLowerCase().includes(q.toLowerCase())
-          )
+          c.name.toLowerCase().includes(q.toLowerCase())
+        )
         : continent.countries,
     [q, continent]
   );
@@ -3047,57 +3048,57 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
             const prisonRisk = isSeverePrison(c);
 
             return (
-                <Card
-                  key={c.slug}
-                  className={cn(
-                    "group relative overflow-hidden rounded-2xl border border-white/10",
-                    "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
-                    "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
-                  )}
-                  onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
-                >
-                  <img
-                    src={c.image}
-                    alt={c.name}
-                    className="h-48 w-full object-cover"
-                  />
-                  <div className="p-5">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold">{c.name}</h3>
-                      <Badge className={`${statusColor(c.legalStatus)} border-none`}>
-                        {c.legalStatus}
-                      </Badge>
-                    </div>
-                    
-                    {deathRisk && (
-                        <div className="flex items-center gap-2 mb-3 bg-red-950/40 text-red-400 p-2 rounded text-xs font-bold border border-red-500/30 animate-pulse">
-                            <Skull className="w-4 h-4" />
-                            <span>DEATH PENALTY RISK</span>
-                        </div>
-                    )}
-
-                    {!deathRisk && corporalRisk && (
-                        <div className="flex items-center gap-2 mb-3 bg-orange-950/40 text-orange-400 p-2 rounded text-xs font-bold border border-orange-500/30">
-                            <Gavel className="w-4 h-4" />
-                            <span>SEVERE PENALTIES / LASHES</span>
-                        </div>
-                    )}
-
-                    {!deathRisk && !corporalRisk && prisonRisk && (
-                        <div className="flex items-center gap-2 mb-3 bg-yellow-950/40 text-yellow-400 p-2 rounded text-xs font-bold border border-yellow-500/30">
-                            <ShieldAlert className="w-4 h-4" />
-                            <span>STRICT ENFORCEMENT</span>
-                        </div>
-                    )}
-
-                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                      {c.description}
-                    </p>
-                    <Button size="sm" className="w-full">
-                      View details
-                    </Button>
+              <Card
+                key={c.slug}
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border border-white/10",
+                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5",
+                  "shadow-lg hover:shadow-green-400/20 transition-shadow cursor-pointer"
+                )}
+                onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
+              >
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-5">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xl font-bold">{c.name}</h3>
+                    <Badge className={`${statusColor(c.legalStatus)} border-none`}>
+                      {c.legalStatus}
+                    </Badge>
                   </div>
-                </Card>
+
+                  {deathRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-red-950/40 text-red-400 p-2 rounded text-xs font-bold border border-red-500/30 animate-pulse">
+                      <Skull className="w-4 h-4" />
+                      <span>DEATH PENALTY RISK</span>
+                    </div>
+                  )}
+
+                  {!deathRisk && corporalRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-orange-950/40 text-orange-400 p-2 rounded text-xs font-bold border border-orange-500/30">
+                      <Gavel className="w-4 h-4" />
+                      <span>SEVERE PENALTIES / LASHES</span>
+                    </div>
+                  )}
+
+                  {!deathRisk && !corporalRisk && prisonRisk && (
+                    <div className="flex items-center gap-2 mb-3 bg-yellow-950/40 text-yellow-400 p-2 rounded text-xs font-bold border border-yellow-500/30">
+                      <ShieldAlert className="w-4 h-4" />
+                      <span>STRICT ENFORCEMENT</span>
+                    </div>
+                  )}
+
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                    {c.description}
+                  </p>
+                  <Button size="sm" className="w-full">
+                    View details
+                  </Button>
+                </div>
+              </Card>
             )
           })}
         </div>
@@ -3113,12 +3114,12 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
     () =>
       q
         ? country.regions.filter((r) =>
-            r.name.toLowerCase().includes(q.toLowerCase())
-          )
+          r.name.toLowerCase().includes(q.toLowerCase())
+        )
         : country.regions,
     [q, country]
   );
-  
+
   const deathRisk = isDeathPenalty(country);
   const corporalRisk = isCorporalPunishment(country);
   const prisonRisk = isSeverePrison(country);
@@ -3154,51 +3155,51 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
           animate={{ opacity: 1, y: 0 }}
           className="mb-10"
         >
-           <div className="flex flex-col gap-2">
-             <h1 className="text-4xl md:text-5xl font-bold">{country.name}</h1>
-             <div className="flex gap-2 items-center flex-wrap">
-                <Badge className={`${statusColor(country.legalStatus)} text-sm px-3 py-1`}>
-                    {country.legalStatus}
-                </Badge>
-                
-                {deathRisk && (
-                    <Badge variant="destructive" className="animate-pulse bg-red-600 flex items-center gap-1">
-                        <Skull className="w-3 h-3"/> DEATH PENALTY WARNING
-                    </Badge>
-                )}
-                 {!deathRisk && corporalRisk && (
-                    <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1">
-                        <Gavel className="w-3 h-3"/> SEVERE CORPORAL PUNISHMENT
-                    </Badge>
-                )}
-                 {!deathRisk && !corporalRisk && prisonRisk && (
-                    <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1">
-                        <ShieldAlert className="w-3 h-3"/> STRICT ENFORCEMENT
-                    </Badge>
-                )}
+          <div className="flex flex-col gap-2">
+            <h1 className="text-4xl md:text-5xl font-bold">{country.name}</h1>
+            <div className="flex gap-2 items-center flex-wrap">
+              <Badge className={`${statusColor(country.legalStatus)} text-sm px-3 py-1`}>
+                {country.legalStatus}
+              </Badge>
 
-             </div>
+              {deathRisk && (
+                <Badge variant="destructive" className="animate-pulse bg-red-600 flex items-center gap-1">
+                  <Skull className="w-3 h-3" /> DEATH PENALTY WARNING
+                </Badge>
+              )}
+              {!deathRisk && corporalRisk && (
+                <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1">
+                  <Gavel className="w-3 h-3" /> SEVERE CORPORAL PUNISHMENT
+                </Badge>
+              )}
+              {!deathRisk && !corporalRisk && prisonRisk && (
+                <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1">
+                  <ShieldAlert className="w-3 h-3" /> STRICT ENFORCEMENT
+                </Badge>
+              )}
+
+            </div>
           </div>
           <div className="mt-4 p-4 rounded-lg bg-card border border-white/10 max-w-3xl">
-              <h3 className="font-semibold mb-2 flex items-center gap-2">
-                <Info className="w-4 h-4 text-primary"/> Legal Context
-              </h3>
-              <p className="text-muted-foreground">{country.description}</p>
+            <h3 className="font-semibold mb-2 flex items-center gap-2">
+              <Info className="w-4 h-4 text-primary" /> Legal Context
+            </h3>
+            <p className="text-muted-foreground">{country.description}</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 max-w-3xl">
-              <div className="bg-white/5 p-3 rounded border border-white/5">
-                  <span className="text-xs text-muted-foreground uppercase font-bold">Possession</span>
-                  <p className="text-sm">{country.possession}</p>
-              </div>
-              <div className="bg-white/5 p-3 rounded border border-white/5">
-                  <span className="text-xs text-muted-foreground uppercase font-bold">Airport</span>
-                  <p className="text-sm">{country.airport}</p>
-              </div>
-              <div className={cn("bg-white/5 p-3 rounded border border-white/5", deathRisk ? "border-red-500/30 bg-red-950/10" : "")}>
-                  <span className={cn("text-xs text-muted-foreground uppercase font-bold", deathRisk ? "text-red-400" : "")}>Tourist Warning</span>
-                  <p className={cn("text-sm", deathRisk ? "text-red-200 font-semibold" : "")}>{country.tourist}</p>
-              </div>
+            <div className="bg-white/5 p-3 rounded border border-white/5">
+              <span className="text-xs text-muted-foreground uppercase font-bold">Possession</span>
+              <p className="text-sm">{country.possession}</p>
+            </div>
+            <div className="bg-white/5 p-3 rounded border border-white/5">
+              <span className="text-xs text-muted-foreground uppercase font-bold">Airport</span>
+              <p className="text-sm">{country.airport}</p>
+            </div>
+            <div className={cn("bg-white/5 p-3 rounded border border-white/5", deathRisk ? "border-red-500/30 bg-red-950/10" : "")}>
+              <span className={cn("text-xs text-muted-foreground uppercase font-bold", deathRisk ? "text-red-400" : "")}>Tourist Warning</span>
+              <p className={cn("text-sm", deathRisk ? "text-red-200 font-semibold" : "")}>{country.tourist}</p>
+            </div>
           </div>
         </motion.div>
 
@@ -3228,8 +3229,8 @@ const CityIndex = ({ continent, country, region }: { continent: Continent; count
     () =>
       q
         ? region.cities.filter((c) =>
-            c.name.toLowerCase().includes(q.toLowerCase())
-          )
+          c.name.toLowerCase().includes(q.toLowerCase())
+        )
         : region.cities,
     [q, region]
   );
@@ -3309,18 +3310,18 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
               <h1 className="text-3xl font-bold">{city.name}</h1>
               <div className="flex gap-2">
-                 <Badge className={`${statusColor(country.legalStatus)} border-none w-fit`}>
-                    {country.legalStatus}
-                 </Badge>
-                 
+                <Badge className={`${statusColor(country.legalStatus)} border-none w-fit`}>
+                  {country.legalStatus}
+                </Badge>
+
                 {deathRisk && (
-                    <Badge variant="destructive" className="flex items-center gap-1"><Skull className="w-3 h-3"/> Death Penalty Risk</Badge>
+                  <Badge variant="destructive" className="flex items-center gap-1"><Skull className="w-3 h-3" /> Death Penalty Risk</Badge>
                 )}
-                 {!deathRisk && corporalRisk && (
-                    <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1"><Gavel className="w-3 h-3"/> Corporal Punishment</Badge>
+                {!deathRisk && corporalRisk && (
+                  <Badge variant="destructive" className="bg-orange-600 flex items-center gap-1"><Gavel className="w-3 h-3" /> Corporal Punishment</Badge>
                 )}
-                 {!deathRisk && !corporalRisk && prisonRisk && (
-                    <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1"><ShieldAlert className="w-3 h-3"/> Strict Enforcement</Badge>
+                {!deathRisk && !corporalRisk && prisonRisk && (
+                  <Badge variant="outline" className="border-yellow-500 text-yellow-500 flex items-center gap-1"><ShieldAlert className="w-3 h-3" /> Strict Enforcement</Badge>
                 )}
 
               </div>
@@ -3355,11 +3356,11 @@ const CityDetail = ({ city, region, country }: { city: City; region: Region; cou
             </div>
 
             <div className="p-4 bg-white/5 rounded-lg border border-white/10 mb-6">
-                 <h3 className="font-semibold mb-1 flex items-center gap-2">
-                    {country.legalStatus === "Illegal" ? <AlertTriangle className="w-4 h-4 text-red-500"/> : <Info className="w-4 h-4"/>}
-                    Local Context
-                 </h3>
-                 <p className="text-muted-foreground">{country.description}</p>
+              <h3 className="font-semibold mb-1 flex items-center gap-2">
+                {country.legalStatus === "Illegal" ? <AlertTriangle className="w-4 h-4 text-red-500" /> : <Info className="w-4 h-4" />}
+                Local Context
+              </h3>
+              <p className="text-muted-foreground">{country.description}</p>
             </div>
 
             <h2 className="text-lg font-semibold mb-2">City Quick Facts</h2>
@@ -3391,8 +3392,13 @@ const WorldGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>World Cannabis Guide 2025 | Global Cannabis Laws | BudQuest</title>
+        <meta name="description" content="Complete guide to cannabis laws in 100+ countries. Find legal status, tourist tips, and 420-friendly travel guides for every continent." />
+        <link rel="canonical" href="https://budquest.guide/world" />
+      </Helmet>
       <Navigation />
-      
+
       {/* Fixed Search Bar - Only at continent level */}
       {isAtContinentLevel && (
         <div className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">

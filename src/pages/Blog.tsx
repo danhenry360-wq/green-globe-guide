@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Helmet } from "react-helmet";
 import {
   Search, ArrowLeft, Calendar, Clock, Share2, ArrowRight,
   Sparkles, Tag, Info, TrendingUp, Shield, Users,
@@ -1424,6 +1425,11 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Cannabis Travel Blog 2025 | Guides & Legal Updates | BudQuest</title>
+        <meta name="description" content="Stay updated with the latest cannabis travel guides, legal changes across the globe, and expert tips for 420-friendly tourism." />
+        <link rel="canonical" href="https://budquest.guide/blog" />
+      </Helmet>
       <Navigation />
 
       <AnimatePresence mode="wait">
