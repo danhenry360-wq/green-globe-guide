@@ -1,3 +1,48 @@
+export type CountryLegalStatus =
+  | "illegal"
+  | "decriminalized"
+  | "medical"
+  | "recreational"
+  | "mixed";
+
+export type PublicConsumptionRule =
+  | "illegal"
+  | "private_only"
+  | "designated_areas"
+  | "legal";
+
+export type EnforcementLevel =
+  | "relaxed"
+  | "moderate"
+  | "strict"
+  | "zero-tolerance"
+  | "varies";
+
+export interface CountryProfile {
+  id: string;
+  isoCode: string;
+  name: string;
+  slug: string;
+  region: string;
+  overview: {
+    status: CountryLegalStatus;
+    shortDescription: string;
+    heroImage: string;
+    lastUpdated?: string;
+  };
+  legal: {
+    possessionLimit: string;
+    publicConsumption: PublicConsumptionRule;
+    medicalReciprocity: boolean;
+    enforcement: EnforcementLevel;
+    ageLimit?: number;
+  };
+  culture: {
+    purchaseMethods: string[];
+    tourismFriendlyRating: number;
+  };
+}
+
 export const countryData: Record<string, CountryProfile> = {
   // ==================== NORTH AMERICA ====================
   'USA': {
