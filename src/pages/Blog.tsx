@@ -1581,7 +1581,7 @@ export default function Blog() {
                             if (post.isExternalPage && post.externalUrl) {
                               navigate(post.externalUrl);
                             } else {
-                              setActiveArticle(post);
+                              navigate(`/blog/${post.id}`);
                             }
                           }} />
                         </motion.div>
