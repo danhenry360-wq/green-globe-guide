@@ -10,11 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Home, Cannabis, Shield,
   ArrowRight, Store, ChevronRight,
-  Mountain, AlertTriangle, Ban, Mail, 
+  Mountain, AlertTriangle, Ban, Mail,
   Snowflake, Bike, CloudSnow
 } from "lucide-react";
 
@@ -57,7 +57,7 @@ const MonarchGuide = () => {
     "@type": "TravelGuide",
     "name": "Monarch Mountain Cannabis Guide 2025",
     "description": "Guide to Monarch Mountain and Monarch Pass. Real snow, Continental Divide views, and where to find cannabis nearby (Salida).",
-    "url": "https://budquest.guide/usa/colorado/monarch",
+    "url": "https://budquest.guide/monarch",
     "publisher": { "@type": "Organization", "name": "BudQuest" },
     "about": { "@type": "Place", "name": "Monarch Mountain", "address": { "@type": "PostalAddress", "addressRegion": "CO" } }
   };
@@ -67,12 +67,12 @@ const MonarchGuide = () => {
       <Helmet>
         <title>Monarch Mountain Cannabis Guide 2025 | BudQuest</title>
         <meta name="description" content="Explore Monarch Mountain. 100% natural snow, no lift lines. Find the nearest dispensaries in Salida and Poncha Springs." />
-        <link rel="canonical" href="https://budquest.guide/usa/colorado/monarch" />
+        <link rel="canonical" href="https://budquest.guide/monarch" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         <nav className="container mx-auto px-4 pt-20 pb-4">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -110,19 +110,19 @@ const MonarchGuide = () => {
         {/* Legal Alert - CRITICAL for Monarch */}
         <section className="py-12 bg-card/30 border-y border-border/30">
           <div className="container mx-auto px-4">
-             <Card className="p-6 bg-red-900/10 border-red-900/30">
-                <div className="flex items-start gap-4">
-                   <AlertTriangle className="w-12 h-12 text-red-500 shrink-0" />
-                   <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2">US Forest Service Land</h3>
-                      <p className="text-muted-foreground">
-                        Monarch Mountain operates entirely on Federal Land. <strong>Possession of cannabis on the mountain is a federal crime.</strong> 
-                        Ski patrol cooperates with federal authorities. Keep your stash at your hotel in Salida. 
-                        Do not smoke on the lifts.
-                      </p>
-                   </div>
+            <Card className="p-6 bg-red-900/10 border-red-900/30">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="w-12 h-12 text-red-500 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-bold text-red-500 mb-2">US Forest Service Land</h3>
+                  <p className="text-muted-foreground">
+                    Monarch Mountain operates entirely on Federal Land. <strong>Possession of cannabis on the mountain is a federal crime.</strong>
+                    Ski patrol cooperates with federal authorities. Keep your stash at your hotel in Salida.
+                    Do not smoke on the lifts.
+                  </p>
                 </div>
-             </Card>
+              </div>
+            </Card>
           </div>
         </section>
 
@@ -159,15 +159,15 @@ const MonarchGuide = () => {
             <h2 className="text-3xl font-bold mb-6">Nearest Supplies</h2>
             <p className="mb-8 text-muted-foreground">Since Monarch is federal land, you must buy in Salida or Poncha Springs (20 mins down the pass).</p>
             <div className="grid md:grid-cols-3 gap-6">
-               {dispensaries.map((d) => (
-                 <Link key={d.id} to={`/dispensary/${d.slug}`}>
-                   <Card className="p-4 hover:border-accent transition-all">
-                     <h3 className="font-bold">{d.name}</h3>
-                     <p className="text-sm text-muted-foreground">{d.city}</p>
-                     <div className="flex justify-center mt-2"><Star className="w-4 h-4 text-gold fill-gold" /> {d.rating}</div>
-                   </Card>
-                 </Link>
-               ))}
+              {dispensaries.map((d) => (
+                <Link key={d.id} to={`/dispensary/${d.slug}`}>
+                  <Card className="p-4 hover:border-accent transition-all">
+                    <h3 className="font-bold">{d.name}</h3>
+                    <p className="text-sm text-muted-foreground">{d.city}</p>
+                    <div className="flex justify-center mt-2"><Star className="w-4 h-4 text-gold fill-gold" /> {d.rating}</div>
+                  </Card>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Mountain, Waves, Fish,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   GraduationCap
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const GunnisonGuide = () => {
         .ilike('city', '%Gunnison%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch Gunnison 420 Friendly Rentals
@@ -75,7 +75,7 @@ const GunnisonGuide = () => {
         .ilike('address', '%Gunnison%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -87,12 +87,12 @@ const GunnisonGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'gunnison-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -105,7 +105,7 @@ const GunnisonGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -128,7 +128,7 @@ const GunnisonGuide = () => {
     "@type": "TravelGuide",
     "name": "Gunnison Colorado Cannabis Travel Guide 2025",
     "description": "The complete guide to cannabis in Gunnison, CO. Explore the Black Canyon, Blue Mesa Reservoir, and 420-friendly spots in this college town.",
-    "url": "https://budquest.guide/usa/colorado/gunnison",
+    "url": "https://budquest.guide/gunnison",
     "publisher": {
       "@type": "Organization",
       "name": "BudQuest",
@@ -172,7 +172,7 @@ const GunnisonGuide = () => {
   const seasons = [
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "75-85°F",
@@ -301,26 +301,26 @@ const GunnisonGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Downtown Gunnison", 
+    {
+      name: "Downtown Gunnison",
       desc: "Main Street. Shops, restaurants, and bars. Very walkable.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Western Campus", 
+    {
+      name: "Western Campus",
       desc: "Student area. Lively but subject to stricter campus rules.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Dos Rios", 
+    {
+      name: "Dos Rios",
       desc: "Golf course community near the river. Quiet and residential.",
       safety: "safe",
       walkable: false
     },
-    { 
-      name: "Ohio City / Pitkin", 
+    {
+      name: "Ohio City / Pitkin",
       desc: "Remote mountain towns nearby. Very 420-friendly for privacy.",
       safety: "very-safe",
       walkable: false
@@ -338,13 +338,13 @@ const GunnisonGuide = () => {
       <Helmet>
         <title>Gunnison Cannabis Travel Guide 2025 | BudQuest</title>
         <meta name="description" content="Visit Gunnison, CO. The gateway to the Black Canyon and Crested Butte. Affordable lodging, top dispensaries, and outdoor adventure." />
-        <link rel="canonical" href="https://budquest.guide/usa/colorado/gunnison" />
+        <link rel="canonical" href="https://budquest.guide/gunnison" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         <nav className="container mx-auto px-4 pt-20 pb-4">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -359,14 +359,14 @@ const GunnisonGuide = () => {
         {/* Hero */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-2.jpg" 
-              alt="Gunnison Colorado" 
+            <img
+              src="/dest-2.jpg"
+              alt="Gunnison Colorado"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -377,13 +377,13 @@ const GunnisonGuide = () => {
                 <Mountain className="w-4 h-4 mr-2" />
                 Basecamp of the West Elk
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Gunnison Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg text-muted-foreground mb-8">
                 The authentic Colorado mountain town. Home to Western Colorado University, the Black Canyon, and a chill local cannabis scene.
               </p>
@@ -470,19 +470,19 @@ const GunnisonGuide = () => {
         {/* Legal Warning */}
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-4xl">
-             <Card className="p-6 bg-red-900/10 border-red-900/30">
-                <div className="flex items-start gap-4">
-                   <AlertTriangle className="w-10 h-10 text-red-500 shrink-0" />
-                   <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2">Federal Land Warning</h3>
-                      <p className="text-muted-foreground">
-                        Gunnison is surrounded by the <strong>Black Canyon National Park</strong> and <strong>Curecanti National Recreation Area (Blue Mesa)</strong>. 
-                        These are FEDERAL lands. Possession of cannabis is a federal crime here, punishable by fines or jail time. 
-                        Keep your stash in town or on private property.
-                      </p>
-                   </div>
+            <Card className="p-6 bg-red-900/10 border-red-900/30">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="w-10 h-10 text-red-500 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-bold text-red-500 mb-2">Federal Land Warning</h3>
+                  <p className="text-muted-foreground">
+                    Gunnison is surrounded by the <strong>Black Canyon National Park</strong> and <strong>Curecanti National Recreation Area (Blue Mesa)</strong>.
+                    These are FEDERAL lands. Possession of cannabis is a federal crime here, punishable by fines or jail time.
+                    Keep your stash in town or on private property.
+                  </p>
                 </div>
-             </Card>
+              </div>
+            </Card>
           </div>
         </section>
 

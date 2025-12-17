@@ -770,7 +770,7 @@ const Dispensary = () => {
           name="keywords"
           content="dispensaries, 420 shops, cannabis stores, BudQuest verified, marijuana stores, weed shops, USA, Canada, Netherlands"
         />
-        <link rel="canonical" href="https://budquest.guide/dispensaries" />
+        <link rel="canonical" href="https://budquest.guide/dispensary" />
         <script type="application/ld+json">
           {JSON.stringify(generateStructuredData(filteredData.length))}
         </script>

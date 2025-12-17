@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Mountain, Waves, Anchor,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Coffee
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const FriscoGuide = () => {
         .or('city.ilike.%Frisco%,city.ilike.%Silverthorne%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       const { data: rentalData } = await supabase
@@ -74,7 +74,7 @@ const FriscoGuide = () => {
         .ilike('address', '%Frisco%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -109,7 +109,7 @@ const FriscoGuide = () => {
     "@type": "TravelGuide",
     "name": "Frisco Colorado Cannabis Travel Guide 2025",
     "description": "The Main Street of the Rockies. Your cannabis guide to Frisco, CO - the central hub for Breckenridge, Copper Mountain, and Keystone.",
-    "url": "https://budquest.guide/usa/colorado/frisco",
+    "url": "https://budquest.guide/frisco",
     "publisher": { "@type": "Organization", "name": "BudQuest", "url": "https://budquest.guide" },
     "about": { "@type": "City", "name": "Frisco", "address": { "@type": "PostalAddress", "addressLocality": "Frisco", "addressRegion": "CO", "addressCountry": "US" } }
   };
@@ -126,7 +126,7 @@ const FriscoGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "60-75°F",
@@ -196,12 +196,12 @@ const FriscoGuide = () => {
       <Helmet>
         <title>Frisco CO Cannabis Guide 2025 | BudQuest</title>
         <meta name="description" content="Visit Frisco, Colorado. The 'Main Street of the Rockies'. The perfect 420-friendly basecamp for skiing Copper, Breck, and Keystone." />
-        <link rel="canonical" href="https://budquest.guide/usa/colorado/frisco" />
+        <link rel="canonical" href="https://budquest.guide/frisco" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         <nav className="container mx-auto px-4 pt-20 pb-4">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
