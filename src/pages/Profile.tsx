@@ -9,14 +9,15 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
-import { 
-  User, 
-  Mail, 
-  CheckCircle, 
-  XCircle, 
-  Clock, 
+import {
+  User,
+  Mail,
+  CheckCircle,
+  XCircle,
+  Clock,
   Star,
   Loader2,
   ShieldCheck,
@@ -66,10 +67,12 @@ const Profile = () => {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
-  
+
   const { user, isAuthenticated, loading: authLoading, resendOTP } = useAuth();
+
   const { toast } = useToast();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -202,7 +205,7 @@ const Profile = () => {
         });
         return;
       }
-      
+
       setAvatarFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -235,7 +238,7 @@ const Profile = () => {
       // Upload avatar if changed
       if (avatarFile) {
         setIsUploadingAvatar(true);
-        
+
         // Delete old avatar if exists
         if (profile?.avatar_url) {
           const oldPath = profile.avatar_url.split('/').pop();
@@ -249,7 +252,7 @@ const Profile = () => {
         // Upload new avatar
         const fileExt = avatarFile.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('avatars')
           .upload(fileName, avatarFile, {
@@ -290,6 +293,9 @@ const Profile = () => {
         description: 'Your profile has been saved successfully.',
       });
 
+      // Invalidate user profile query to update Navigation immediately
+      queryClient.invalidateQueries({ queryKey: ['user-profile', user.id] });
+
       handleCancelEdit();
     } catch (error: any) {
       console.error('Error updating profile:', error);
@@ -308,9 +314,8 @@ const Profile = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-4 h-4 ${
-          i < rating ? 'fill-gold text-gold' : 'text-muted-foreground/30'
-        }`}
+        className={`w-4 h-4 ${i < rating ? 'fill-gold text-gold' : 'text-muted-foreground/30'
+          }`}
       />
     ));
   };
@@ -328,8 +333,8 @@ const Profile = () => {
     }
   };
 
-  const filteredReviews = activeTab === 'all' 
-    ? reviews 
+  const filteredReviews = activeTab === 'all'
+    ? reviews
     : reviews.filter(review => review.status === activeTab);
 
   const counts = {
@@ -357,7 +362,7 @@ const Profile = () => {
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        
+
         <main className="pt-24 pb-20 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             {/* Profile Header */}
@@ -568,7 +573,7 @@ const Profile = () => {
               </CardHeader>
               <CardContent>
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-                  <TabsList className="bg-card/70 border border-accent/20">
+                  <TabsList className="bg-card/70 border border-accent/20 w-full flex flex-wrap h-auto justify-start p-2 gap-2">
                     <TabsTrigger value="all" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">
                       All ({counts.all})
                     </TabsTrigger>
@@ -587,21 +592,21 @@ const Profile = () => {
                     {filteredReviews.length === 0 ? (
                       <div className="text-center py-12">
                         <p className="text-muted-foreground mb-4">
-                          {activeTab === 'all' 
-                            ? 'You haven\'t submitted any reviews yet.' 
+                          {activeTab === 'all'
+                            ? 'You haven\'t submitted any reviews yet.'
                             : `No ${activeTab} reviews found.`}
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center w-full">
                           <Button
                             onClick={() => navigate('/dispensary')}
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                            className="bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto"
                           >
                             Review a Dispensary
                           </Button>
                           <Button
                             onClick={() => navigate('/hotels')}
                             variant="outline"
-                            className="border-accent/30 text-accent hover:bg-accent/10"
+                            className="border-accent/30 text-accent hover:bg-accent/10 w-full sm:w-auto"
                           >
                             Review a Rental
                           </Button>
@@ -613,7 +618,7 @@ const Profile = () => {
                           const propertyName = review.dispensaries?.name || review.hotels?.name || 'Unknown Property';
                           const propertySlug = review.dispensaries?.slug || review.hotels?.slug;
                           const propertyType = review.dispensaries ? 'dispensary' : 'hotels';
-                          
+
                           return (
                             <Card key={review.id} className="bg-background/50 border-border/30">
                               <CardHeader className="pb-2">
@@ -624,7 +629,7 @@ const Profile = () => {
                                         {propertyName}
                                       </CardTitle>
                                       {propertySlug && (
-                                        <Link 
+                                        <Link
                                           to={`/${propertyType}/${propertySlug}`}
                                           className="text-accent hover:text-accent/80"
                                         >
@@ -641,12 +646,12 @@ const Profile = () => {
                               </CardHeader>
                               <CardContent className="space-y-3">
                                 <div className="flex gap-1">{renderStars(review.rating)}</div>
-                                
+
                                 {review.title && (
                                   <h4 className="font-semibold text-foreground">{review.title}</h4>
                                 )}
-                                
-                                <p className="text-sm text-muted-foreground">{review.content}</p>
+
+                                <p className="text-sm text-muted-foreground break-words">{review.content}</p>
 
                                 {review.status === 'pending' && (
                                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 mt-3">
@@ -668,7 +673,7 @@ const Profile = () => {
             </Card>
           </div>
         </main>
-        
+
         <Footer />
       </div>
     </>
