@@ -19,6 +19,25 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "first-time-dispensary-guide-colorado-2025",
+    title: "First Time at a Colorado Dispensary: What to Expect (2025 Guide)",
+    subtitle: "Step-by-step walkthrough of your first legal cannabis purchase.",
+    excerpt: "Feeling nervous? Here is exactly what happens, step-by-step, from checking in to walking out with your first legal purchase.",
+    date: "Dec 17, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "Beginner Guide",
+    tags: ["Colorado", "Beginner", "Guide", "Dispensary"],
+    image: "/blog-first-time-dispensary.jpg",
+    content: {
+      introduction: "Your first time visiting a recreational dispensary can be intimidating, but it doesn't have to be. We've helped thousands of visitors navigate their first purchase.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "amsterdam-vs-california-dispensaries",
     title: "Amsterdam Coffee Shops vs California Dispensaries: A Complete Comparison",
     subtitle: "Explore the key differences between Amsterdam's iconic coffee shops and California's modern dispensaries - from atmosphere and products to legal frameworks and culture.",

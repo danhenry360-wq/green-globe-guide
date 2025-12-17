@@ -89,6 +89,7 @@ import BlogColoradoConsumption from "./pages/BlogColoradoConsumption";
 import BlogAspenRentals from "./pages/BlogAspenRentals";
 import BlogColoradoSpringsDispensaries from "./pages/BlogColoradoSpringsDispensaries";
 import BlogColoradoSpringsRentals from "./pages/BlogColoradoSpringsRentals";
+import BlogDispensaryFirstTime from "./pages/BlogDispensaryFirstTime";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -161,6 +162,7 @@ function App() {
               <Route path="/blog/best-420-rentals-colorado-springs" element={<BlogColoradoSpringsRentals />} />
               <Route path="/blog/how-much-weed-can-you-buy-colorado-2025" element={<BlogColoradoLimits />} />
               <Route path="/blog/where-can-you-smoke-weed-in-colorado-2025" element={<BlogColoradoConsumption />} />
+              <Route path="/blog/first-time-dispensary-guide-colorado-2025" element={<BlogDispensaryFirstTime />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
