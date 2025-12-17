@@ -9,65 +9,29 @@ import {
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+// ... existing imports
+
 const BlogBreckenridgeDispensaries = () => {
-    // Top dispensaries data derived from user request
-    const dispensaries = [
-        {
-            name: "Breckenridge Organic Therapy",
-            address: "1900 Airport Rd A1, Breckenridge, CO 80424",
-            hours: "9:30 AM - 9:30 PM",
-            rating: "4.8",
-            type: "Recreational",
-            vibe: "Local favorite, organic focus",
-            proTip: "One of Colorado's first recreational dispensaries—15 years running.",
-            bestFor: "First-timers & quality flower",
-            features: ["Organic", "Education Focus", "Visitor Friendly"]
+    // Fetch dispensaries from Supabase
+    const { data: dispensaries, isLoading } = useQuery({
+        queryKey: ["breckenridge-dispensaries"],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from("dispensaries")
+                .select("*")
+                .eq("city", "Breckenridge")
+                .order("rating", { ascending: false });
+
+            if (error) throw error;
+            return data;
         },
-        {
-            name: "Alpenglow Botanicals",
-            address: "1805 Airport Rd, Breckenridge, CO 80424",
-            hours: "9:00 AM - 9:00 PM",
-            rating: "4.9",
-            type: "Recreational",
-            vibe: "Upscale, craft-focused",
-            proTip: "Visitors consistently rate it the best in town.",
-            bestFor: "Connoisseurs & premium products",
-            features: ["Craft Quality", "Knowledgeable Staff", "Premium"]
-        },
-        {
-            name: "Green Dragon – Breckenridge",
-            address: "1900 Airport Rd, Breckenridge, CO 80424",
-            hours: "8:00 AM - 9:45 PM",
-            rating: "4.5",
-            type: "Recreational",
-            vibe: "Established chain, reliable",
-            proTip: "Online ordering allows for quick pickup.",
-            bestFor: "Consistency & variety",
-            features: ["Wide Selection", "Online Ordering", "Budget Options"]
-        },
-        {
-            name: "High Country Healing",
-            address: "191 Blue River Pkwy, Silverthorne, CO (Nearby)",
-            hours: "9:00 AM - 10:00 PM",
-            rating: "4.7",
-            type: "Recreational",
-            vibe: "Mountain town feel",
-            proTip: "Great stop if you are staying near Dillon/Silverthorne.",
-            bestFor: "Value seekers",
-            features: ["Good Prices", "Friendly", "Deals"]
-        },
-        {
-            name: "Organix",
-            address: "1795 Airport Rd, Breckenridge, CO 80424",
-            hours: "9:00 AM - 9:00 PM",
-            rating: "4.6",
-            type: "Recreational",
-            vibe: "Wide selection",
-            proTip: "Check their daily specials board.",
-            bestFor: "Variety hunters",
-            features: ["Large Menu", "Edibles", "Concentrates"]
-        }
-    ];
+    });
+
+    // Fallback/Loading state handled in render
+    // ... existing quickFacts
 
     const quickFacts = [
         { label: "Age Requirement", value: "21+ with valid ID" },
@@ -205,45 +169,45 @@ const BlogBreckenridgeDispensaries = () => {
                             </p>
 
                             <div className="space-y-6">
-                                {dispensaries.map((shop, index) => (
-                                    <Card key={index} className="p-6 border-accent/20 hover:border-accent/40 transition-colors">
-                                        <div className="flex flex-col md:flex-row gap-6">
-                                            <div className="flex-1">
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <h3 className="text-xl font-bold text-accent flex items-center gap-2">
-                                                        #{index + 1} {shop.name}
-                                                    </h3>
-                                                    <span className="px-2 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded">
-                                                        {shop.rating} ★
-                                                    </span>
+                                <div className="space-y-6">
+                                    {isLoading && <div className="text-center py-8 text-muted-foreground">Loading dispensaries...</div>}
+
+                                    {dispensaries?.map((shop, index) => (
+                                        <Card key={index} className="p-6 border-accent/20 hover:border-accent/40 transition-colors">
+                                            <div className="flex flex-col md:flex-row gap-6">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <h3 className="text-xl font-bold text-accent flex items-center gap-2">
+                                                            #{index + 1} {shop.name}
+                                                        </h3>
+                                                        {shop.rating && (
+                                                            <span className="px-2 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded">
+                                                                {shop.rating} ★
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                                                        <p className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {shop.address}</p>
+                                                        <p className="flex items-center gap-2"><Clock className="h-4 w-4" /> {shop.hours || "Check website"}</p>
+                                                        <p className="flex items-center gap-2"><Building className="h-4 w-4" /> {shop.type || "Recreational/Medical"}</p>
+                                                    </div>
+
+                                                    <div className="p-3 bg-accent/10 rounded-lg text-sm border-l-2 border-accent">
+                                                        <strong>Pro Tip:</strong> {shop.description ? shop.description.substring(0, 100) + "..." : "Visit early for best selection."}
+                                                    </div>
                                                 </div>
-                                                <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                                                    <p className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {shop.address}</p>
-                                                    <p className="flex items-center gap-2"><Clock className="h-4 w-4" /> {shop.hours}</p>
-                                                    <p className="flex items-center gap-2"><Building className="h-4 w-4" /> {shop.type} • {shop.vibe}</p>
-                                                </div>
-                                                <div className="flex flex-wrap gap-2 mb-4">
-                                                    {shop.features.map((feat, i) => (
-                                                        <span key={i} className="px-2 py-1 bg-secondary rounded text-xs text-secondary-foreground">
-                                                            {feat}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                <div className="p-3 bg-accent/10 rounded-lg text-sm border-l-2 border-accent">
-                                                    <strong>Pro Tip:</strong> {shop.proTip}
+                                                <div className="flex flex-col justify-center gap-3 min-w-[150px]">
+                                                    <Button className="w-full bg-accent hover:bg-accent/90" asChild>
+                                                        <Link to={`/dispensary/${shop.slug || "#"}`}>View Details</Link>
+                                                    </Button>
+                                                    <div className="text-center text-xs text-muted-foreground">
+                                                        <strong>View On Map</strong>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col justify-center gap-3 min-w-[150px]">
-                                                <Button className="w-full bg-accent hover:bg-accent/90">
-                                                    View Details
-                                                </Button>
-                                                <div className="text-center text-xs text-muted-foreground">
-                                                    <strong>Best For:</strong><br />{shop.bestFor}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                ))}
+                                        </Card>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
