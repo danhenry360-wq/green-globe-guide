@@ -48,9 +48,9 @@ const ABOUT_STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "BudQuest",
-  url: "https://budquest.com",
+  url: "https://budquest.guide",
   description: "Attorney-verified cannabis travel guide for 120+ countries",
-  logo: "https://budquest.com/logo.png",
+  logo: "https://budquest.guide/logo.png",
   foundingDate: "2019",
   contactPoint: {
     "@type": "ContactPoint",
@@ -67,8 +67,8 @@ const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://budquest.com" },
-    { "@type": "ListItem", position: 2, name: "About", item: "https://budquest.com/about" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://budquest.guide" },
+    { "@type": "ListItem", position: 2, name: "About", item: "https://budquest.guide/about" },
   ],
 };
 
@@ -145,7 +145,7 @@ const About = () => {
         />
         <meta name="author" content="BudQuest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href="https://budquest.com/about" />
+        <link rel="canonical" href="https://budquest.guide/about" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
@@ -154,7 +154,7 @@ const About = () => {
           property="og:description"
           content="Discover how BudQuest provides attorney-verified cannabis travel information for 120+ countries"
         />
-        <meta property="og:url" content="https://budquest.com/about" />
+        <meta property="og:url" content="https://budquest.guide/about" />
 
         {/* Structured Data */}
         <script type="application/ld+json">{JSON.stringify(ABOUT_STRUCTURED_DATA)}</script>

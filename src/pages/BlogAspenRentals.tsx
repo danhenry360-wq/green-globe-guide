@@ -2,8 +2,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car,
   ArrowRight, ExternalLink, AlertTriangle
 } from "lucide-react";
@@ -36,7 +36,7 @@ const BlogAspenRentals = () => {
         .eq('is_420_friendly', true)
         .ilike('address', '%Aspen%')
         .order('rating', { ascending: false });
-      
+
       console.log('Aspen rentals fetch:', { data, error });
       if (error) console.error('Aspen rentals error:', error);
       if (data) setRentals(data);
@@ -127,7 +127,7 @@ const BlogAspenRentals = () => {
         <title>Best 420-Friendly Rentals in Aspen: Luxury Guide 2025 | BudQuest</title>
         <meta name="description" content="Discover Aspen's top 420-friendly luxury hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado mountain getaway." />
         <meta name="keywords" content="420-friendly hotels Aspen, cannabis hotels Aspen, weed friendly rentals Aspen, Aspen 420 accommodations, luxury cannabis travel" />
-        <link rel="canonical" href="https://budquest.com/blog/best-420-rentals-aspen" />
+        <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-aspen" />
         <meta property="og:title" content="Best 420-Friendly Rentals in Aspen: Luxury Guide 2025" />
         <meta property="og:description" content="Find verified cannabis-friendly accommodations in Aspen, Colorado." />
         <meta property="og:type" content="article" />
@@ -147,9 +147,9 @@ const BlogAspenRentals = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-aspen-rentals.jpg" 
-            alt="Luxury 420-friendly ski chalet in Aspen, Colorado" 
+          <img
+            src="/blog-aspen-rentals.jpg"
+            alt="Luxury 420-friendly ski chalet in Aspen, Colorado"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -226,7 +226,7 @@ const BlogAspenRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Top 420-Friendly Stays in Aspen</h2>
-              
+
               {loading ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -271,11 +271,11 @@ const BlogAspenRentals = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {rental.policies && (
                               <p className="text-muted-foreground mb-4 line-clamp-2">{rental.policies}</p>
                             )}
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                               <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
                                 <CheckCircle2 className="h-3 w-3" /> 420-Friendly
@@ -409,7 +409,7 @@ const BlogAspenRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Regulations</h2>
-              
+
               <div className="space-y-4">
                 <Card className="bg-card/60 border-accent/20 p-6">
                   <div className="flex items-start gap-4">
@@ -480,14 +480,14 @@ const BlogAspenRentals = () => {
                   Explore our comprehensive Aspen cannabis travel guide with dispensary recommendations, attractions, and more.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link 
-                    to="/aspen" 
+                  <Link
+                    to="/aspen"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                   >
                     Aspen Travel Guide <ArrowRight className="h-5 w-5" />
                   </Link>
-                  <Link 
-                    to="/blog/cannabis-dispensaries-aspen" 
+                  <Link
+                    to="/blog/cannabis-dispensaries-aspen"
                     className="inline-flex items-center gap-2 px-6 py-3 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors"
                   >
                     Aspen Dispensaries Guide <ExternalLink className="h-4 w-4" />

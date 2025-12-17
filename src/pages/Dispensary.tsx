@@ -59,7 +59,7 @@ const generateStructuredData = (dispensaryCount: number) => ({
   name: "BudQuest Verified Dispensaries | Find Cannabis Shops Worldwide",
   description:
     "Browse and discover BudQuest-verified dispensaries by country, state, and city. Policies checked, premium experience.",
-  url: "https://budquest.com/dispensaries",
+  url: "https://budquest.guide/dispensaries",
   mainEntity: {
     "@type": "ItemList",
     name: "Verified Dispensaries Collection",
@@ -770,7 +770,7 @@ const Dispensary = () => {
           name="keywords"
           content="dispensaries, 420 shops, cannabis stores, BudQuest verified, marijuana stores, weed shops, USA, Canada, Netherlands"
         />
-        <link rel="canonical" href="https://budquest.com/dispensaries" />
+        <link rel="canonical" href="https://budquest.guide/dispensaries" />
         <script type="application/ld+json">
           {JSON.stringify(generateStructuredData(filteredData.length))}
         </script>

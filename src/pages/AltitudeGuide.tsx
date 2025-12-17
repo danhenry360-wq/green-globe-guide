@@ -5,12 +5,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import { 
-  Mountain, 
-  Droplets, 
-  Brain, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  Mountain,
+  Droplets,
+  Brain,
+  AlertTriangle,
+  CheckCircle,
   Heart,
   Wind,
   Thermometer,
@@ -44,25 +44,25 @@ const AltitudeGuide = () => {
   ];
 
   const dosingTips = [
-    { 
+    {
       title: "First 24-48 Hours",
       icon: Moon,
       tip: "Don't consume cannabis at all during your first day or two. Let your body adjust to the altitude first.",
       color: "destructive"
     },
-    { 
+    {
       title: "Start at 50%",
       icon: Gauge,
       tip: "Take half your normal dose. If you usually take 10mg edible, start with 5mg. You can always take more.",
       color: "accent"
     },
-    { 
+    {
       title: "Wait Longer",
       icon: Coffee,
       tip: "Effects take longer to assess at altitude. Wait at least 2-3 hours before redosing edibles.",
       color: "accent"
     },
-    { 
+    {
       title: "Hydrate Aggressively",
       icon: Droplets,
       tip: "Drink water before, during, and after consuming. Aim for 3-4 liters daily at altitude.",
@@ -76,33 +76,33 @@ const AltitudeGuide = () => {
         <title>Cannabis & Altitude Guide | Colorado | BudQuest</title>
         <meta name="description" content="How altitude affects cannabis in Colorado. Dosing adjustments, safety tips, and what to expect when consuming at elevation in Denver, Aspen, and mountain towns." />
         <meta name="keywords" content="cannabis altitude effects, colorado elevation cannabis, denver altitude weed, mountain cannabis dosing" />
-        <link rel="canonical" href="https://budquest.com/colorado/altitude-guide" />
+        <link rel="canonical" href="https://budquest.guide/colorado/altitude-guide" />
       </Helmet>
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        
+
         <main className="pt-20">
           {/* Hero Section */}
           <section className="relative py-16 sm:py-24 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-accent/10 via-background to-background" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent" />
-            
+
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <Badge className="mb-6 bg-accent/20 text-accent border-accent/50 text-lg px-4 py-2">
                   <Mountain className="w-5 h-5 mr-2" />
                   ALTITUDE AWARENESS
                 </Badge>
-                
+
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                   <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                     🏔️ Why Altitude Makes You Higher
                   </span>
                 </h1>
-                
+
                 <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                  Colorado sits at 5,280+ feet. That's not just a fun fact—it fundamentally changes how 
+                  Colorado sits at 5,280+ feet. That's not just a fun fact—it fundamentally changes how
                   cannabis affects your body. Here's what you need to know.
                 </p>
 
@@ -159,18 +159,18 @@ const AltitudeGuide = () => {
                     </h3>
                     <div className="space-y-4 text-muted-foreground">
                       <p>
-                        At higher elevations, there's less atmospheric pressure, which means less oxygen reaches your bloodstream. 
-                        Your body responds by <span className="text-foreground font-semibold">increasing blood flow</span> to 
+                        At higher elevations, there's less atmospheric pressure, which means less oxygen reaches your bloodstream.
+                        Your body responds by <span className="text-foreground font-semibold">increasing blood flow</span> to
                         compensate—especially to your brain.
                       </p>
                       <p>
-                        When you consume cannabis at altitude, this increased blood flow means THC reaches your brain 
-                        <span className="text-accent font-semibold"> faster and more efficiently</span>. The reduced oxygen 
+                        When you consume cannabis at altitude, this increased blood flow means THC reaches your brain
+                        <span className="text-accent font-semibold"> faster and more efficiently</span>. The reduced oxygen
                         also affects how your body metabolizes cannabinoids.
                       </p>
                       <p>
-                        The result? The same dose that feels comfortable at sea level can feel 
-                        <span className="text-accent font-semibold"> 20-60% stronger</span> in Colorado, depending on 
+                        The result? The same dose that feels comfortable at sea level can feel
+                        <span className="text-accent font-semibold"> 20-60% stronger</span> in Colorado, depending on
                         your exact elevation and individual physiology.
                       </p>
                     </div>
@@ -188,10 +188,9 @@ const AltitudeGuide = () => {
                     `}>
                       <CardContent className="p-4 flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <Mountain className={`w-6 h-6 ${
-                            item.level === 'moderate' ? 'text-accent' : 
-                            item.level === 'high' ? 'text-orange-500' : 'text-destructive'
-                          }`} />
+                          <Mountain className={`w-6 h-6 ${item.level === 'moderate' ? 'text-accent' :
+                              item.level === 'high' ? 'text-orange-500' : 'text-destructive'
+                            }`} />
                           <div>
                             <p className="font-bold text-foreground">{item.city}</p>
                             <p className="text-sm text-muted-foreground">{item.elevation}</p>
@@ -263,12 +262,10 @@ const AltitudeGuide = () => {
                     `}>
                       <CardContent className="p-6">
                         <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${
-                            tip.color === 'destructive' ? 'bg-destructive/20' : 'bg-accent/20'
-                          }`}>
-                            <tip.icon className={`w-6 h-6 ${
-                              tip.color === 'destructive' ? 'text-destructive' : 'text-accent'
-                            }`} />
+                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${tip.color === 'destructive' ? 'bg-destructive/20' : 'bg-accent/20'
+                            }`}>
+                            <tip.icon className={`w-6 h-6 ${tip.color === 'destructive' ? 'text-destructive' : 'text-accent'
+                              }`} />
                           </div>
                           <div>
                             <h3 className="font-bold text-foreground text-lg mb-2">{tip.title}</h3>
@@ -425,7 +422,7 @@ const AltitudeGuide = () => {
                       <div>
                         <h3 className="text-xl font-bold text-destructive mb-2">When to Seek Help</h3>
                         <p className="text-muted-foreground mb-4">
-                          These symptoms require immediate attention—they could indicate altitude sickness 
+                          These symptoms require immediate attention—they could indicate altitude sickness
                           complicated by cannabis:
                         </p>
                         <ul className="grid sm:grid-cols-2 gap-2 text-muted-foreground">
@@ -500,7 +497,7 @@ const AltitudeGuide = () => {
                   </span>
                 </h2>
                 <p className="text-xl text-muted-foreground mb-8">
-                  Now that you know how altitude affects cannabis, check out our other guides for a safe, 
+                  Now that you know how altitude affects cannabis, check out our other guides for a safe,
                   enjoyable Colorado experience.
                 </p>
 
@@ -528,7 +525,7 @@ const AltitudeGuide = () => {
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

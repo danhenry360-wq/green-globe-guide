@@ -89,7 +89,7 @@ const BlogColoradoLimits = () => {
                 <title>How Much Weed Can You Buy in Colorado? (2025 Limits) | BudQuest</title>
                 <meta name="description" content="Official 2025 guide to Colorado cannabis purchase limits. 1 oz flower, 8g concentrates, or 800mg edibles. Learn about equivalency and possession rules." />
                 <meta name="keywords" content="Colorado weed limits, purchase limits, how much pot can I buy, Colorado dispensary rules 2025" />
-                <link rel="canonical" href="https://budquest.com/blog/how-much-weed-can-you-buy-colorado-2025" />
+                <link rel="canonical" href="https://budquest.guide/blog/how-much-weed-can-you-buy-colorado-2025" />
                 <meta property="og:title" content="How Much Weed Can You Buy in Colorado? (2025 Guide)" />
                 <meta property="og:description" content="Complete breakdown of recreational purchase limits for tourists." />
                 <meta property="og:image" content="/blog-colorado-limits.png" />

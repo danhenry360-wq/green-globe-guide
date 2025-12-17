@@ -5,14 +5,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import { 
-  AlertTriangle, 
-  Shield, 
-  MapPin, 
-  Mountain, 
-  TreePine, 
-  Scale, 
-  CheckCircle, 
+import {
+  AlertTriangle,
+  Shield,
+  MapPin,
+  Mountain,
+  TreePine,
+  Scale,
+  CheckCircle,
   XCircle,
   Info,
   ArrowRight,
@@ -71,33 +71,33 @@ const FederalLandWarning = () => {
         <title>Federal Land Cannabis Warning | Colorado Guide | BudQuest</title>
         <meta name="description" content="Critical information about cannabis laws on federal land in Colorado. National parks, forests, and federal property have different rules - learn the risks." />
         <meta name="keywords" content="federal land cannabis, national park cannabis laws, colorado cannabis federal, rocky mountain national park weed" />
-        <link rel="canonical" href="https://budquest.com/colorado/federal-land-warning" />
+        <link rel="canonical" href="https://budquest.guide/colorado/federal-land-warning" />
       </Helmet>
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        
+
         <main className="pt-20">
           {/* Hero Section */}
           <section className="relative py-16 sm:py-24 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-destructive/10 via-background to-background" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-destructive/20 via-transparent to-transparent" />
-            
+
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <Badge className="mb-6 bg-destructive/20 text-destructive border-destructive/50 text-lg px-4 py-2">
                   <AlertTriangle className="w-5 h-5 mr-2" />
                   CRITICAL WARNING
                 </Badge>
-                
+
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                   <span className="bg-gradient-to-r from-destructive via-orange-500 to-destructive bg-clip-text text-transparent">
                     🚨 Federal Land = Federal Crime
                   </span>
                 </h1>
-                
+
                 <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                  Colorado legalized cannabis, but federal land didn't. If you're on National Park or Forest land, 
+                  Colorado legalized cannabis, but federal land didn't. If you're on National Park or Forest land,
                   you're under <span className="text-destructive font-bold">federal jurisdiction</span>.
                 </p>
 
@@ -209,8 +209,8 @@ const FederalLandWarning = () => {
                       <div>
                         <h3 className="text-xl font-bold text-destructive mb-2">The Bottom Line</h3>
                         <p className="text-muted-foreground">
-                          When you step onto federal land, Colorado law no longer applies. You're under federal jurisdiction, 
-                          where cannabis is completely illegal. Rangers can cite you, arrest you, and you'll face federal 
+                          When you step onto federal land, Colorado law no longer applies. You're under federal jurisdiction,
+                          where cannabis is completely illegal. Rangers can cite you, arrest you, and you'll face federal
                           prosecution. This applies even if you legally purchased the cannabis from a Colorado dispensary.
                         </p>
                       </div>
@@ -438,7 +438,7 @@ const FederalLandWarning = () => {
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

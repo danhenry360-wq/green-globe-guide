@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, XCircle, AlertTriangle, DollarSign, Car, CreditCard,
   Truck, Info, ArrowRight
 } from "lucide-react";
@@ -262,7 +262,7 @@ const BlogDenverDispensaries = () => {
         <title>Cannabis Dispensaries in Denver: Complete Guide 2025 | BudQuest</title>
         <meta name="description" content="Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws. Plan your Denver cannabis trip." />
         <meta name="keywords" content="cannabis dispensary Denver, best dispensary Denver, Denver weed shops, cannabis strains Denver, where to buy weed Denver, Denver cannabis guide, 420 dispensary Denver" />
-        <link rel="canonical" href="https://budquest.com/blog/cannabis-dispensaries-denver" />
+        <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-denver" />
         <meta property="og:title" content="Cannabis Dispensaries in Denver: Complete Guide 2025" />
         <meta property="og:description" content="Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws." />
         <meta property="og:type" content="article" />
@@ -287,9 +287,9 @@ const BlogDenverDispensaries = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-denver-dispensaries.jpg" 
-            alt="Cannabis dispensary storefront in Denver, Colorado" 
+          <img
+            src="/blog-denver-dispensaries.jpg"
+            alt="Cannabis dispensary storefront in Denver, Colorado"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -416,7 +416,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Best 10 Cannabis Dispensaries in Denver</h2>
-              
+
               <div className="space-y-6">
                 {dispensaries.map((disp, index) => (
                   <motion.div
@@ -451,9 +451,9 @@ const BlogDenverDispensaries = () => {
                           <span className="text-lg font-bold text-gold">{disp.pricing}</span>
                         </div>
                       </div>
-                      
+
                       <p className="text-muted-foreground mb-4">{disp.description}</p>
-                      
+
                       <div className="mb-4">
                         <h4 className="text-sm font-semibold text-foreground mb-2">What to Expect:</h4>
                         <ul className="grid grid-cols-2 gap-2">
@@ -465,7 +465,7 @@ const BlogDenverDispensaries = () => {
                           ))}
                         </ul>
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-4 mb-4">
                         <span className="text-xs flex items-center gap-1 text-muted-foreground">
                           <Truck className={`h-3 w-3 ${disp.delivery ? 'text-green-400' : 'text-red-400'}`} />
@@ -476,13 +476,13 @@ const BlogDenverDispensaries = () => {
                           Parking: {disp.parking ? 'Yes' : 'No'}
                         </span>
                       </div>
-                      
+
                       <div className="flex flex-col sm:flex-row gap-4">
                         <div className="flex-1 bg-accent/10 border border-accent/20 rounded-lg p-3">
                           <p className="text-xs text-accent font-medium mb-1">Pro Tip</p>
                           <p className="text-sm text-muted-foreground">{disp.tip}</p>
                         </div>
-                        <Link 
+                        <Link
                           to={`/dispensary/${disp.slug}`}
                           className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm shrink-0"
                         >
@@ -522,7 +522,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Cannabis Products Guide</h2>
-              
+
               <div className="space-y-4">
                 {productTypes.map((product) => (
                   <Card key={product.type} className="bg-card/60 border-accent/20 p-6">
@@ -548,7 +548,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Denver Cannabis Shopping Tips</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {shoppingTips.map((tip, index) => (
                   <Card key={tip.title} className="bg-card/60 border-accent/20 p-5">
@@ -571,7 +571,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Frequently Asked Questions</h2>
-              
+
               <div className="space-y-4">
                 {faqs.map((faq) => (
                   <Card key={faq.q} className="bg-card/60 border-accent/20 p-5">
@@ -589,7 +589,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Cannabis Consumption Laws</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card className="bg-green-500/5 border-green-500/20 p-6">
                   <div className="flex items-center gap-2 mb-4">
@@ -611,7 +611,7 @@ const BlogDenverDispensaries = () => {
                     ))}
                   </ul>
                 </Card>
-                
+
                 <Card className="bg-red-500/5 border-red-500/20 p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <XCircle className="h-5 w-5 text-red-400" />
@@ -634,7 +634,7 @@ const BlogDenverDispensaries = () => {
                   </ul>
                 </Card>
               </div>
-              
+
               <Card className="bg-amber-500/5 border-amber-500/20 p-4 mt-6">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0" />
@@ -656,7 +656,7 @@ const BlogDenverDispensaries = () => {
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Plan Your Denver Cannabis Trip</h2>
               <p className="text-muted-foreground mb-6">Sample 3-day itinerary for cannabis travelers</p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {itinerary.map((day) => (
                   <Card key={day.day} className="bg-card/60 border-accent/20 p-5">
@@ -681,7 +681,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Related Resources</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <h3 className="font-semibold text-accent mb-3">Denver Guides</h3>
@@ -716,7 +716,7 @@ const BlogDenverDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Conclusion</h2>
-              
+
               <div className="prose prose-invert">
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   Denver's cannabis scene offers something for everyone—from budget-conscious shoppers to connoisseurs seeking craft cannabis. The city's mature market means competitive prices, exceptional quality, and professional service at nearly every dispensary.
@@ -725,7 +725,7 @@ const BlogDenverDispensaries = () => {
                   Remember: start low and go slow, especially with edibles. Respect local laws by consuming only in private, legal spaces. And don't try to take anything across state lines.
                 </p>
               </div>
-              
+
               <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-6 mb-6">
                 <h3 className="font-bold text-foreground mb-4">Final Pro Tips</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -742,7 +742,7 @@ const BlogDenverDispensaries = () => {
                   ))}
                 </ul>
               </Card>
-              
+
               <div>
                 <p className="text-muted-foreground mb-4">Ready to explore Denver's cannabis scene?</p>
                 <Link to="/denver">
@@ -751,7 +751,7 @@ const BlogDenverDispensaries = () => {
                   </button>
                 </Link>
               </div>
-              
+
               <p className="text-center text-sm text-muted-foreground mt-8">
                 Safe travels and happy exploring!<br />
                 — The BudQuest Team

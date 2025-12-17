@@ -38,7 +38,7 @@ const generateStructuredData = (rentalCount: number) => ({
   "@type": "CollectionPage",
   name: "BudQuest Verified 420 Rentals | Book Cannabis-Friendly Accommodations Worldwide",
   description: "Discover and book BudQuest-verified 420-friendly rentals across USA, Canada, Netherlands, and worldwide.",
-  url: "https://budquest.com/hotels",
+  url: "https://budquest.guide/hotels",
   mainEntity: {
     "@type": "ItemList",
     name: "420-Friendly Rentals Collection",
@@ -102,11 +102,10 @@ const StarRating = ({ value }: { value: number }) => (
     {[1, 2, 3, 4, 5].map((i) => (
       <Star
         key={i}
-        className={`w-3 h-3 sm:w-4 sm:h-4 ${
-          i <= Math.round(value)
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${i <= Math.round(value)
             ? "fill-yellow-400 text-yellow-400"
             : "text-gray-600"
-        }`}
+          }`}
       />
     ))}
     <span className="text-[10px] sm:text-xs text-muted-foreground ml-0.5 sm:ml-1 font-medium">
@@ -171,11 +170,10 @@ const Pagination = ({
                 )}
                 <button
                   onClick={() => onPageChange(page)}
-                  className={`w-10 h-10 rounded-lg font-semibold transition-all ${
-                    currentPage === page
+                  className={`w-10 h-10 rounded-lg font-semibold transition-all ${currentPage === page
                       ? "bg-green-400 text-white"
                       : "bg-card/50 text-muted-foreground hover:bg-green-400/20 hover:text-white border border-white/10"
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -321,11 +319,10 @@ const FilterPanel = ({
                     <button
                       key={option.value}
                       onClick={() => onFilterChange("type", option.value)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filters.type === option.value
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all ${filters.type === option.value
                           ? "bg-green-400 text-white"
                           : "bg-background/80 text-muted-foreground hover:text-white hover:bg-green-400/20 border border-white/10"
-                      }`}
+                        }`}
                     >
                       {option.label}
                       <span className="text-xs bg-muted/50 px-2 py-1 rounded">
@@ -400,7 +397,7 @@ interface ProcessedRentalWithSlug extends ProcessedRental {
 const RentalCard = ({ rental }: { rental: ProcessedRentalWithSlug }) => {
   // Use database slug if available, otherwise generate from name
   const slug = rental.slug || createSlug(rental.name);
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -428,7 +425,7 @@ const RentalCard = ({ rental }: { rental: ProcessedRentalWithSlug }) => {
                     </Badge>
                   )}
                 </div>
-                
+
                 {/* Location */}
                 <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
                   <MapPin className="w-3 h-3 text-green-400 flex-shrink-0" />
@@ -488,7 +485,7 @@ const Hotels = () => {
   // Fetch ONLY database hotels (no static data)
   const DATA: CountryHotels[] = useMemo(() => {
     if (!dbHotels || dbHotels.length === 0) return [];
-    
+
     // Convert DB hotels to the format expected by the component
     const dbHotelsFormatted: (Hotel & { isVerified?: boolean; slug?: string; amenitiesData?: any })[] = dbHotels.map((hotel, index) => {
       const amenities = hotel.amenities as { smoking?: boolean; vaping?: boolean; edibles?: boolean; price_range?: string } | null;
@@ -518,11 +515,11 @@ const Hotels = () => {
     const hotelsByCountryState = dbHotelsFormatted.reduce((acc, hotel) => {
       const country = 'USA'; // Default for now
       const state = hotel.state;
-      
+
       if (!acc[country]) acc[country] = {};
       if (!acc[country][state]) acc[country][state] = [];
       acc[country][state].push(hotel);
-      
+
       return acc;
     }, {} as Record<string, Record<string, Hotel[]>>);
 
@@ -554,8 +551,8 @@ const Hotels = () => {
 
   // Process and flatten data
   const processedData = useMemo(() => {
-    return DATA.flatMap(country => 
-      country.states.flatMap(state => 
+    return DATA.flatMap(country =>
+      country.states.flatMap(state =>
         state.hotels.map(hotel => {
           const hotelAny = hotel as any;
           return {
@@ -583,7 +580,7 @@ const Hotels = () => {
   }, [DATA]);
 
   // Get unique countries and states
-  const countries = useMemo(() => 
+  const countries = useMemo(() =>
     Array.from(new Set(processedData.map(h => h.country))).sort(),
     [processedData]
   );
@@ -630,7 +627,7 @@ const Hotels = () => {
 
     // Search filter
     if (q) {
-      result = result.filter(h => 
+      result = result.filter(h =>
         h.name.toLowerCase().includes(q) ||
         h.city.toLowerCase().includes(q) ||
         h.country.toLowerCase().includes(q) ||
@@ -697,7 +694,7 @@ const Hotels = () => {
         <title>BudQuest Verified 420 Rentals | Book Cannabis-Friendly Stays</title>
         <meta name="description" content="Discover BudQuest-verified 420-friendly rentals worldwide. Browse cannabis-friendly accommodations by country, state, and city." />
         <meta name="keywords" content="420 friendly rentals, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels, 420 rentals" />
-        <link rel="canonical" href="https://budquest.com/hotels" />
+        <link rel="canonical" href="https://budquest.guide/hotels" />
         <script type="application/ld+json">{JSON.stringify(generateStructuredData(filteredData.length))}</script>
       </Helmet>
 
@@ -756,7 +753,7 @@ const Hotels = () => {
                   states={states}
                   filterCounts={filterCounts}
                   isOpen={true}
-                  onClose={() => {}}
+                  onClose={() => { }}
                 />
               </div>
 
@@ -847,12 +844,12 @@ const Hotels = () => {
               <div className="max-w-3xl mx-auto">
                 <Card className="relative overflow-hidden border-yellow-500/20 bg-yellow-500/5">
                   <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500/50" />
-                  
+
                   <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
                     <div className="p-2 rounded-full bg-yellow-500/10 shrink-0">
                       <AlertTriangle className="w-5 h-5 text-yellow-500" />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h3 className="text-base sm:text-lg font-semibold text-yellow-500 leading-none mt-1">
                         Important Notice

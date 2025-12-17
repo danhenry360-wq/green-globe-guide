@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Calendar, Clock, Info, AlertTriangle, CheckCircle2, 
+import {
+  MapPin, Calendar, Clock, Info, AlertTriangle, CheckCircle2,
   XCircle, Car, Bike, Mountain, Building, Leaf, ChevronRight,
   Mail, Sun, Snowflake, CloudRain, Trees, Star, ExternalLink
 } from "lucide-react";
@@ -50,13 +50,13 @@ const ColoradoSpringsGuide = () => {
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setIsSubmitting(true);
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'colorado-springs-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.info("You're already subscribed!");
@@ -148,7 +148,7 @@ const ColoradoSpringsGuide = () => {
         <title>Colorado Springs Cannabis Travel Guide 2025 | BudQuest</title>
         <meta name="description" content="Complete guide to cannabis in Colorado Springs. Find 420-friendly hotels, top dispensaries, consumption rules, and insider tips for Pikes Peak region." />
         <meta name="keywords" content="Colorado Springs cannabis, marijuana Colorado Springs, 420 friendly hotels Colorado Springs, dispensaries Colorado Springs, Pikes Peak weed" />
-        <link rel="canonical" href="https://budquest.com/colorado-springs" />
+        <link rel="canonical" href="https://budquest.guide/colorado-springs" />
         <meta property="og:title" content="Colorado Springs Cannabis Travel Guide 2025" />
         <meta property="og:description" content="Your complete guide to cannabis travel in Colorado Springs - dispensaries, hotels, and attractions." />
         <meta property="og:type" content="article" />
@@ -173,7 +173,7 @@ const ColoradoSpringsGuide = () => {
         {/* Hero Section */}
         <section className="relative pt-20 pb-16 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-accent/10 via-background to-background" />
-          <div 
+          <div
             className="absolute inset-0 opacity-20"
             style={{
               backgroundImage: `url('/dest-colorado.jpg')`,
@@ -182,7 +182,7 @@ const ColoradoSpringsGuide = () => {
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
-          
+
           <div className="container mx-auto px-4 relative z-10">
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6 pt-8">
@@ -208,7 +208,7 @@ const ColoradoSpringsGuide = () => {
                 <br />
                 <span className="text-foreground/90">Cannabis Travel Guide 2025</span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
                 Gateway to Pikes Peak with world-class natural attractions, legal recreational cannabis, and stunning mountain scenery.
               </p>
@@ -268,14 +268,14 @@ const ColoradoSpringsGuide = () => {
                   View All →
                 </Link>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {rentals.map((rental) => (
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="bg-card/60 border-accent/20 hover:border-accent/40 transition-all overflow-hidden group">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={rental.images?.[0] || '/dest-colorado.jpg'} 
+                        <img
+                          src={rental.images?.[0] || '/dest-colorado.jpg'}
                           alt={rental.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
@@ -314,7 +314,7 @@ const ColoradoSpringsGuide = () => {
                   View All →
                 </Link>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {dispensaries.map((disp) => (
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
@@ -342,7 +342,7 @@ const ColoradoSpringsGuide = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Best Time to Visit</h2>
-            
+
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid grid-cols-4 mb-6 bg-card/60">
                 <TabsTrigger value="spring" className="flex items-center gap-2">
@@ -362,7 +362,7 @@ const ColoradoSpringsGuide = () => {
                   <span className="hidden sm:inline">Winter</span>
                 </TabsTrigger>
               </TabsList>
-              
+
               {Object.entries(seasons).map(([season, data]) => (
                 <TabsContent key={season} value={season}>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -394,7 +394,7 @@ const ColoradoSpringsGuide = () => {
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">What to Do in Colorado Springs</h2>
             <p className="text-muted-foreground mb-8">Top attractions for cannabis travelers</p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {attractions.map((attraction, index) => (
                 <motion.div
@@ -422,7 +422,7 @@ const ColoradoSpringsGuide = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Consumption Rules</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="bg-green-500/5 border-green-500/20 p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -444,7 +444,7 @@ const ColoradoSpringsGuide = () => {
                   ))}
                 </ul>
               </Card>
-              
+
               <Card className="bg-red-500/5 border-red-500/20 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <XCircle className="h-5 w-5 text-red-400" />
@@ -467,7 +467,7 @@ const ColoradoSpringsGuide = () => {
                 </ul>
               </Card>
             </div>
-            
+
             <Card className="bg-amber-500/5 border-amber-500/20 p-4 mt-6">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -486,7 +486,7 @@ const ColoradoSpringsGuide = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Getting Around Colorado Springs</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <Card className="bg-card/60 border-accent/20 p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -500,7 +500,7 @@ const ColoradoSpringsGuide = () => {
                   <li>• <strong>Airport:</strong> COS is 15 min from downtown</li>
                 </ul>
               </Card>
-              
+
               <Card className="bg-card/60 border-accent/20 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Building className="h-5 w-5 text-accent" />
@@ -525,14 +525,14 @@ const ColoradoSpringsGuide = () => {
                 <Mail className="h-4 w-4 text-accent" />
                 <span className="text-sm text-accent">Free Guide</span>
               </div>
-              
+
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                 Get the Colorado Springs Cannabis Guide
               </h2>
               <p className="text-muted-foreground mb-8">
                 Free PDF with insider tips, dispensary map, and Pikes Peak region guide
               </p>
-              
+
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <Input
                   type="email"
@@ -542,15 +542,15 @@ const ColoradoSpringsGuide = () => {
                   required
                   className="bg-card/60 border-accent/20 focus:border-accent"
                 />
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="bg-accent hover:bg-accent/90 text-accent-foreground whitespace-nowrap"
                 >
                   {isSubmitting ? "Sending..." : "Get Free Guide"}
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground mt-4">
                 Free • No spam • Unsubscribe anytime
               </p>
@@ -562,7 +562,7 @@ const ColoradoSpringsGuide = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold text-foreground mb-6">Explore More Colorado</h2>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { name: "Denver", path: "/denver", desc: "Capital city" },

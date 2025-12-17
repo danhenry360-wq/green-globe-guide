@@ -2,8 +2,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car,
   ArrowRight, ExternalLink, AlertTriangle
 } from "lucide-react";
@@ -36,7 +36,7 @@ const BlogColoradoSpringsRentals = () => {
         .eq('is_420_friendly', true)
         .ilike('address', '%Colorado Springs%')
         .order('rating', { ascending: false });
-      
+
       console.log('Colorado Springs rentals fetch:', { data, error });
       if (error) console.error('Colorado Springs rentals error:', error);
       if (data) setRentals(data);
@@ -127,7 +127,7 @@ const BlogColoradoSpringsRentals = () => {
         <title>Best 420-Friendly Rentals in Colorado Springs: Guide 2025 | BudQuest</title>
         <meta name="description" content="Discover Colorado Springs' top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your trip." />
         <meta name="keywords" content="420-friendly hotels Colorado Springs, cannabis hotels Colorado Springs, weed friendly rentals Colorado Springs, Colorado Springs 420 accommodations" />
-        <link rel="canonical" href="https://budquest.com/blog/best-420-rentals-colorado-springs" />
+        <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-colorado-springs" />
         <meta property="og:title" content="Best 420-Friendly Rentals in Colorado Springs: Guide 2025" />
         <meta property="og:description" content="Find verified cannabis-friendly accommodations in Colorado Springs, Colorado." />
         <meta property="og:type" content="article" />
@@ -147,9 +147,9 @@ const BlogColoradoSpringsRentals = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-colorado-springs-rentals.jpg" 
-            alt="420-friendly vacation rental in Colorado Springs with Garden of the Gods view" 
+          <img
+            src="/blog-colorado-springs-rentals.jpg"
+            alt="420-friendly vacation rental in Colorado Springs with Garden of the Gods view"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -226,7 +226,7 @@ const BlogColoradoSpringsRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Top 420-Friendly Stays in Colorado Springs</h2>
-              
+
               {loading ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -271,11 +271,11 @@ const BlogColoradoSpringsRentals = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {rental.policies && (
                               <p className="text-muted-foreground mb-4 line-clamp-2">{rental.policies}</p>
                             )}
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                               <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
                                 <CheckCircle2 className="h-3 w-3" /> 420-Friendly
@@ -409,7 +409,7 @@ const BlogColoradoSpringsRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Springs Cannabis Laws & Regulations</h2>
-              
+
               <Card className="bg-amber-500/10 border-amber-500/30 p-6 mb-4">
                 <div className="flex items-start gap-4">
                   <AlertTriangle className="h-6 w-6 text-amber-500 flex-shrink-0" />
@@ -471,14 +471,14 @@ const BlogColoradoSpringsRentals = () => {
                   Explore our comprehensive Colorado Springs travel guide with dispensary recommendations, attractions, and more.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link 
-                    to="/colorado-springs" 
+                  <Link
+                    to="/colorado-springs"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                   >
                     Colorado Springs Travel Guide <ArrowRight className="h-5 w-5" />
                   </Link>
-                  <Link 
-                    to="/blog/cannabis-dispensaries-colorado-springs" 
+                  <Link
+                    to="/blog/cannabis-dispensaries-colorado-springs"
                     className="inline-flex items-center gap-2 px-6 py-3 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors"
                   >
                     Dispensaries Guide <ExternalLink className="h-4 w-4" />

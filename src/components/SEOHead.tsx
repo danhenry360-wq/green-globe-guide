@@ -16,8 +16,8 @@ const DEFAULT_SEO = {
     title: "BudQuest | The Ultimate Global Cannabis Travel Guide",
     description: "Plan your 420-friendly vacation with BudQuest. Verified cannabis laws, legal weed destinations, dispensary finders, and travel guides for 150+ countries.",
     keywords: "cannabis travel, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest",
-    url: "https://budquest.com",
-    image: "https://budquest.com/og-social-share.jpg",
+    url: "https://budquest.guide",
+    image: "https://budquest.guide/og-social-share.jpg",
 };
 
 export const SEOHead = ({
@@ -92,7 +92,7 @@ export const SEOHead = ({
                     "@type": "Organization",
                     "name": "BudQuest",
                     "url": url,
-                    "logo": "https://budquest.com/logo.png"
+                    "logo": "https://budquest.guide/logo.png"
                 }
             ]);
             document.head.appendChild(script);

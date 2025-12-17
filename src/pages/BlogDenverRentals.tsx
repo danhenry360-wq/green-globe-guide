@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car,
   ArrowRight, ExternalLink
 } from "lucide-react";
@@ -37,7 +37,7 @@ const BlogDenverRentals = () => {
         .eq('is_420_friendly', true)
         .ilike('address', '%Denver%')
         .order('rating', { ascending: false });
-      
+
       console.log('Denver rentals fetch:', { data, error });
       if (error) console.error('Denver rentals error:', error);
       if (data) setRentals(data);
@@ -152,7 +152,7 @@ const BlogDenverRentals = () => {
         <title>Best 420-Friendly Rentals in Denver: Complete Guide 2025 | BudQuest</title>
         <meta name="description" content="Discover Denver's top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado adventure." />
         <meta name="keywords" content="420-friendly hotels Denver, cannabis hotels Denver, weed friendly rentals Denver, Denver 420 accommodations, bud and breakfast Denver" />
-        <link rel="canonical" href="https://budquest.com/blog/best-420-rentals-denver" />
+        <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-denver" />
         <meta property="og:title" content="Best 420-Friendly Rentals in Denver: Complete Guide 2025" />
         <meta property="og:description" content="Find verified cannabis-friendly accommodations in Denver, Colorado." />
         <meta property="og:type" content="article" />
@@ -172,9 +172,9 @@ const BlogDenverRentals = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-denver-rentals.jpg" 
-            alt="420-friendly vacation rental interior in Denver, Colorado" 
+          <img
+            src="/blog-denver-rentals.jpg"
+            alt="420-friendly vacation rental interior in Denver, Colorado"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -251,7 +251,7 @@ const BlogDenverRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Top 420-Friendly Stays in Denver</h2>
-              
+
               {loading ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -296,11 +296,11 @@ const BlogDenverRentals = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {rental.policies && (
                               <p className="text-muted-foreground mb-4 line-clamp-2">{rental.policies}</p>
                             )}
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                               <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
                                 <CheckCircle2 className="h-3 w-3" /> 420-Friendly
@@ -315,9 +315,9 @@ const BlogDenverRentals = () => {
                                 <span className="px-2 py-1 bg-accent/20 text-accent rounded text-xs">Edibles Welcome</span>
                               )}
                             </div>
-                            
+
                             <div className="flex gap-3">
-                              <Link 
+                              <Link
                                 to={`/hotels/${rental.slug}`}
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm"
                               >

@@ -36,32 +36,32 @@ const RentalDetail = () => {
   const [dbHotel, setDbHotel] = useState<DatabaseHotel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   // Fetch hotel from database first
   useEffect(() => {
     const fetchHotel = async () => {
       if (!rentalSlug) return;
-      
+
       const { data, error } = await supabase
         .from('hotels')
         .select('*, cities(name, states(name))')
         .eq('slug', rentalSlug)
         .maybeSingle();
-      
+
       if (!error && data) {
         setDbHotel(data);
       }
       setIsLoading(false);
     };
-    
+
     fetchHotel();
   }, [rentalSlug]);
-  
+
   // Search in static data by creating slug from name
   const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  
-  const allStaticRentals = HOTEL_DATA.flatMap(country => 
-    country.states.flatMap(state => 
+
+  const allStaticRentals = HOTEL_DATA.flatMap(country =>
+    country.states.flatMap(state =>
       state.hotels.map(hotel => ({
         ...hotel,
         countryName: country.country,
@@ -69,10 +69,10 @@ const RentalDetail = () => {
       }))
     )
   );
-  
+
   // Try matching by URL slug first
   let rental = allStaticRentals.find(hotel => createSlug(hotel.name) === rentalSlug);
-  
+
   // If database hotel exists but no static match by slug, try matching by name
   if (dbHotel && !rental) {
     rental = allStaticRentals.find(hotel => createSlug(hotel.name) === createSlug(dbHotel.name));
@@ -82,7 +82,7 @@ const RentalDetail = () => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-    
+
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
         stars.push(<Star key={i} className="h-4 w-4 fill-gold text-gold" />);
@@ -125,7 +125,7 @@ const RentalDetail = () => {
   const displayRating = rental?.rating || dbHotel?.rating || 4.0;
   const displayPolicies = rental?.policies || dbHotel?.policies || "";
   const displayAddress = rental?.address || dbHotel?.address || "";
-  
+
   // Get amenities from database or fall back to rental static data
   const amenities = {
     smoking: dbHotel?.amenities?.smoking ?? rental?.hasSmoking ?? true,
@@ -133,7 +133,7 @@ const RentalDetail = () => {
     edibles: dbHotel?.amenities?.edibles ?? rental?.hasEdibles ?? true,
     price_range: dbHotel?.amenities?.price_range || rental?.priceRange || "$$"
   };
-  
+
   const displayPriceRange = amenities.price_range;
 
   return (
@@ -144,7 +144,7 @@ const RentalDetail = () => {
         <meta property="og:title" content={`${displayName} - 420-Friendly Rental`} />
         <meta property="og:description" content={`Verified 420-friendly rental in ${displayCity}. ${displayPolicies}`} />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href={`https://budquest.com/hotels/${rentalSlug}`} />
+        <link rel="canonical" href={`https://budquest.guide/hotels/${rentalSlug}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -166,14 +166,14 @@ const RentalDetail = () => {
           })}
         </script>
       </Helmet>
-      
+
       <Navigation />
-      
+
       <main className="min-h-screen bg-background pt-20">
         {/* Back Navigation */}
         <div className="container mx-auto px-4 py-4">
-          <Link 
-            to="/hotels" 
+          <Link
+            to="/hotels"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -187,14 +187,14 @@ const RentalDetail = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-4">
               {displayName}
             </h1>
-            
+
             <div className="flex flex-wrap items-center gap-4 mb-4">
               <div className="flex items-center gap-1 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-accent" />
                 <span>{displayCity}, {stateName}</span>
                 {countryName !== "USA" && <span className="text-muted-foreground/60">• {countryName}</span>}
               </div>
-              
+
               <div className="flex items-center gap-1">
                 {renderRating(displayRating)}
                 <span className="ml-1 text-sm text-muted-foreground">({displayRating})</span>
@@ -245,7 +245,7 @@ const RentalDetail = () => {
                       e.currentTarget.src = "/dest-california.jpg";
                     }}
                   />
-                  
+
                   {/* Navigation Arrows */}
                   {images.length > 1 && (
                     <>
@@ -265,7 +265,7 @@ const RentalDetail = () => {
                       </button>
                     </>
                   )}
-                  
+
                   {/* Image Counter */}
                   {images.length > 1 && (
                     <div className="absolute bottom-3 right-3 px-2 py-1 rounded-md bg-background/80 text-xs text-foreground">
@@ -273,7 +273,7 @@ const RentalDetail = () => {
                     </div>
                   )}
                 </div>
-                
+
                 {/* Thumbnail Strip */}
                 {images.length > 1 && (
                   <div className="flex gap-1 p-2 bg-background/50 overflow-x-auto">
@@ -281,9 +281,8 @@ const RentalDetail = () => {
                       <button
                         key={idx}
                         onClick={() => setCurrentImageIndex(idx)}
-                        className={`flex-shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-colors ${
-                          idx === currentImageIndex ? 'border-accent' : 'border-transparent hover:border-accent/50'
-                        }`}
+                        className={`flex-shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-colors ${idx === currentImageIndex ? 'border-accent' : 'border-transparent hover:border-accent/50'
+                          }`}
                       >
                         <img
                           src={img}
@@ -304,7 +303,7 @@ const RentalDetail = () => {
                   <p className="text-muted-foreground leading-relaxed mb-4">
                     {description}
                   </p>
-                  
+
                   {/* Address */}
                   {displayAddress && (
                     <div className="flex items-start gap-2 mb-4">
@@ -312,7 +311,7 @@ const RentalDetail = () => {
                       <span className="text-sm text-muted-foreground">{displayAddress}</span>
                     </div>
                   )}
-                  
+
                   {/* Policy Highlights */}
                   {displayPolicies && (
                     <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
@@ -465,7 +464,7 @@ const RentalDetail = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

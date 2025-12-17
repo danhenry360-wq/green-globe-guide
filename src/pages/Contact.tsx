@@ -19,7 +19,7 @@ const CONTACT_STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
   name: "Contact BudQuest - Cannabis Travel Support",
-  url: "https://budquest.com/contact",
+  url: "https://budquest.guide/contact",
   description: "Get in touch with BudQuest for cannabis travel questions, law updates, or hotel recommendations",
   mainEntity: {
     "@type": "Organization",
@@ -217,9 +217,8 @@ const ContactForm = () => {
               placeholder="John Doe"
               value={formData.name}
               onChange={handleChange}
-              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
-                errors.name ? "border-red-500" : "border-border focus:border-accent"
-              }`}
+              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${errors.name ? "border-red-500" : "border-border focus:border-accent"
+                }`}
               required
             />
             {errors.name && (
@@ -241,9 +240,8 @@ const ContactForm = () => {
               placeholder="your@email.com"
               value={formData.email}
               onChange={handleChange}
-              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
-                errors.email ? "border-red-500" : "border-border focus:border-accent"
-              }`}
+              className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${errors.email ? "border-red-500" : "border-border focus:border-accent"
+                }`}
               required
             />
             {errors.email && (
@@ -291,9 +289,8 @@ const ContactForm = () => {
             placeholder="Brief topic of your message..."
             value={formData.subject}
             onChange={handleChange}
-            className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${
-              errors.subject ? "border-red-500" : "border-border focus:border-accent"
-            }`}
+            className={`bg-card border-2 transition-all text-base h-14 sm:h-12 px-4 ${errors.subject ? "border-red-500" : "border-border focus:border-accent"
+              }`}
             required
           />
           {errors.subject && (
@@ -316,9 +313,8 @@ const ContactForm = () => {
             value={formData.message}
             onChange={handleChange}
             rows={6}
-            className={`bg-card border-2 transition-all text-base p-4 font-medium resize-none min-h-[160px] ${
-              errors.message ? "border-red-500" : "border-border focus:border-accent"
-            }`}
+            className={`bg-card border-2 transition-all text-base p-4 font-medium resize-none min-h-[160px] ${errors.message ? "border-red-500" : "border-border focus:border-accent"
+              }`}
             required
           />
           <div className="flex justify-between items-center">
@@ -418,7 +414,7 @@ const Contact = () => {
         />
         <meta name="author" content="BudQuest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href="https://budquest.com/contact" />
+        <link rel="canonical" href="https://budquest.guide/contact" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
@@ -427,7 +423,7 @@ const Contact = () => {
           property="og:description"
           content="Reach out to BudQuest for cannabis travel questions and support"
         />
-        <meta property="og:url" content="https://budquest.com/contact" />
+        <meta property="og:url" content="https://budquest.guide/contact" />
 
         {/* Structured Data */}
         <script type="application/ld+json">{JSON.stringify(CONTACT_STRUCTURED_DATA)}</script>
