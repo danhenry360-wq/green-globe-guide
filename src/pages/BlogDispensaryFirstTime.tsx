@@ -108,7 +108,7 @@ const BlogDispensaryFirstTime = () => {
                 <link rel="canonical" href="https://budquest.guide/blog/first-time-dispensary-guide-colorado-2025" />
                 <meta property="og:title" content="First Time at a Colorado Dispensary? Read This Guide." />
                 <meta property="og:description" content="Step-by-step walkthrough of your first legal cannabis purchase." />
-                <meta property="og:image" content="/blog-first-time-dispensary.jpg" />
+                <meta property="og:image" content="/blog-first-time-dispensary.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">
                     {JSON.stringify({
@@ -141,7 +141,7 @@ const BlogDispensaryFirstTime = () => {
                 {/* Hero Image */}
                 <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
                     <img
-                        src="/blog-first-time-dispensary.jpg"
+                        src="/blog-first-time-dispensary.png"
                         alt="First time purchasing cannabis at a dispensary"
                         className="w-full h-full object-cover"
                     />

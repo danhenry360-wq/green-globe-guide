@@ -29,7 +29,7 @@ export const BLOG_POSTS = [
     avatar: "👋",
     category: "Beginner Guide",
     tags: ["Colorado", "Beginner", "Guide", "Dispensary"],
-    image: "/blog-first-time-dispensary.jpg",
+    image: "/blog-first-time-dispensary.png",
     content: {
       introduction: "Your first time visiting a recreational dispensary can be intimidating, but it doesn't have to be. We've helped thousands of visitors navigate their first purchase.",
       disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
