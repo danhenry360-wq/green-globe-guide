@@ -189,7 +189,7 @@ const BlogBreckenridgeDispensaries = () => {
                                                     <div className="space-y-2 text-sm text-muted-foreground mb-4">
                                                         <p className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {shop.address}</p>
                                                         <p className="flex items-center gap-2"><Clock className="h-4 w-4" /> {shop.hours || "Check website"}</p>
-                                                        <p className="flex items-center gap-2"><Building className="h-4 w-4" /> {shop.type || "Recreational/Medical"}</p>
+                                                        <p className="flex items-center gap-2"><Building className="h-4 w-4" /> {shop.is_recreational && shop.is_medical ? "Recreational/Medical" : shop.is_recreational ? "Recreational" : "Medical"}</p>
                                                     </div>
 
                                                     <div className="p-3 bg-accent/10 rounded-lg text-sm border-l-2 border-accent">
