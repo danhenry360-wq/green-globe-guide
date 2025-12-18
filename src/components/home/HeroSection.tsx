@@ -92,17 +92,18 @@ export const HeroSection = () => {
                 {/* Main heading */}
                 <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
                     <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                        BudQuest
+                        BudQuest: Global Cannabis Travel Guide
                     </span>
                 </h1>
 
                 {/* Subheadings */}
                 <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto leading-relaxed">
-                    Your Global Cannabis Travel Companion
+                    Premium Intelligence for Legal Cannabis Tourism
                 </p>
                 <p className="text-[clamp(0.95rem,2vw,1.3rem)] text-muted-foreground/80 font-normal mt-3 max-w-4xl mx-auto leading-relaxed">
-                    Navigate cannabis laws, discover 420-friendly accommodations, and explore travel regulations in 150+ countries with verified, real-time information.
+                    Navigate 420-friendly regulations, discover verified dispensaries, and explore legal weed destinations in 150+ countries with our real-time global database.
                 </p>
+
 
                 {/* Search bar */}
                 <div className="max-w-3xl mx-auto mt-10" ref={searchRef}>
@@ -143,8 +144,8 @@ export const HeroSection = () => {
                                         key={`${item.type}-${item.name}`}
                                         onClick={() => handleSelectSuggestion(item)}
                                         className={`w-full px-5 py-4 flex items-center gap-4 text-left transition-colors ${index === selectedIndex
-                                                ? 'bg-accent/20 border-l-2 border-accent'
-                                                : 'hover:bg-white/5 border-l-2 border-transparent'
+                                            ? 'bg-accent/20 border-l-2 border-accent'
+                                            : 'hover:bg-white/5 border-l-2 border-transparent'
                                             }`}
                                     >
                                         <span className="text-2xl">{getTypeIcon(item.type)}</span>
@@ -167,20 +168,24 @@ export const HeroSection = () => {
                     </div>
                 </div>
 
-                {/* Quick links */}
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
-                    {QUICK_LINKS.map((item) => (
-                        <motion.button
-                            key={item.label}
-                            onClick={() => navigate(item.path)}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer"
-                        >
-                            {item.label}
-                        </motion.button>
-                    ))}
+                {/* Quick Link & Trending Navigation */}
+                <div className="mt-8">
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground/50 mb-3 font-semibold">Trending Destinations</p>
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                        {QUICK_LINKS.map((item) => (
+                            <motion.button
+                                key={item.label}
+                                onClick={() => navigate(item.path)}
+                                whileHover={{ scale: 1.05, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
+                                whileTap={{ scale: 0.95 }}
+                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer shadow-lg hover:shadow-accent/5"
+                            >
+                                {item.label}
+                            </motion.button>
+                        ))}
+                    </div>
                 </div>
+
 
                 {/* Scroll indicator */}
                 <div className="mt-8 flex justify-center">

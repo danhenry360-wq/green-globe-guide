@@ -56,7 +56,8 @@ export const MapSection = () => {
                                     <InteractiveWorldMap />
                                 </Suspense>
                             </div>
-                            <div className="mt-6 flex justify-center">
+                            <div className="mt-8 pt-6 border-t border-border/50">
+                                <p className="text-center text-xs uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 font-bold">Legality Map Key</p>
                                 <MapLegend />
                             </div>
                         </Card>
