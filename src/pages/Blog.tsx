@@ -20,6 +20,27 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "ultimate-stoner-guide-colorado-2025",
+    title: "High Altitude, Higher Vibes: The Ultimate Stoner's Guide to Colorado 2025",
+    subtitle: "Everything you need to know for the perfect Colorado cannabis vacation.",
+    excerpt: "The complete 2025 roadmap for Colorado cannabis tourism. Laws, the best cities, altitude tips, consumption lounges, and itinerary ideas for your mile-high trip.",
+    date: "Dec 18, 2025",
+    readTime: "15 min read",
+    author: "BudQuest Team",
+    avatar: "🏔️",
+    category: "Pillar Guide",
+    tags: ["Colorado", "Travel", "Legal", "Denver"],
+    image: "/blog-colorado-ultimate-guide.png",
+    isExternalPage: true,
+    externalUrl: "/blog/ultimate-stoner-guide-colorado-2025",
+    content: {
+      introduction: "Welcome to the Mile High State. Let's get higher. Planning the perfect Colorado cannabis trip starts here.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Don't drive high.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "cannabis-dispensaries-breckenridge-complete-guide-2025",
     title: "Cannabis Dispensaries in Breckenridge: Complete Guide 2025",
     subtitle: "Where to buy weed in Breckenridge, current prices, and altitude safety tips.",
