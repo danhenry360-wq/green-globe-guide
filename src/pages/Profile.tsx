@@ -23,8 +23,10 @@ import {
   ShieldCheck,
   AlertCircle,
   ExternalLink,
-  Upload
+  Upload,
+  Heart
 } from 'lucide-react';
+import { useFavorites, FavoriteItem } from '@/hooks/useFavorites';
 import { format } from 'date-fns';
 
 interface UserProfile {
@@ -69,6 +71,7 @@ const Profile = () => {
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
 
   const { user, isAuthenticated, loading: authLoading, resendOTP } = useAuth();
+  const { favorites, isLoading: favoritesLoading } = useFavorites();
 
   const { toast } = useToast();
   const navigate = useNavigate();
