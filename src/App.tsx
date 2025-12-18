@@ -375,6 +375,7 @@ function App() {
               <Route path="/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
               <Route path="/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
               <Route path="/colorado/salida" element={<Navigate to="/salida" replace />} />
+              <Route path="/grand-lake" element={<Navigate to="/usa/colorado" replace />} />
               <Route path="/colorado/golden" element={<Navigate to="/golden" replace />} />
               <Route path="/colorado/crested-butte" element={<Navigate to="/crested-butte" replace />} />
               <Route path="/colorado/buena-vista" element={<Navigate to="/buena-vista" replace />} />

@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Gauge, Palette, Waves, TreePine, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Compass
 } from "lucide-react";
 
@@ -63,7 +63,7 @@ const WinterParkGuide = () => {
         .ilike('city', '%Winter Park%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       const { data: rentalData } = await supabase
@@ -73,7 +73,7 @@ const WinterParkGuide = () => {
         .ilike('address', '%Winter Park%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -85,12 +85,12 @@ const WinterParkGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'winter-park-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -103,7 +103,7 @@ const WinterParkGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -251,7 +251,7 @@ const WinterParkGuide = () => {
   ];
 
   const relatedGuides = [
-    { name: "Grand Lake", slug: "/grand-lake", desc: "Mountain Lake Town", distance: "20 min" },
+    { name: "Grand Lake", slug: "/usa/colorado", desc: "Mountain Lake Town", distance: "20 min" },
     { name: "Boulder", slug: "/boulder", desc: "College Town & Trails", distance: "90 min" },
     { name: "Aspen", slug: "/aspen", desc: "Luxury Ski Village", distance: "2 hr" },
   ];
@@ -263,18 +263,18 @@ const WinterParkGuide = () => {
         <meta name="description" content="Plan your cannabis trip to Winter Park, CO. Find dispensaries near the ski resort, elevation tips, and 420-friendly mountain lodging." />
         <meta name="keywords" content="Winter Park cannabis, Colorado ski resort weed, mountain dispensaries, 420 friendly hotels Winter Park, high altitude edibles" />
         <link rel="canonical" href="https://budquest.guide/winter-park" />
-        
+
         <meta property="og:title" content="Winter Park Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Your guide to cannabis and skiing in Winter Park, Colorado." />
         <meta property="og:url" content="https://budquest.guide/winter-park" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado.jpg" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -292,14 +292,14 @@ const WinterParkGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-colorado.jpg" 
-              alt="Winter Park Colorado Mountains" 
+            <img
+              src="/dest-colorado.jpg"
+              alt="Winter Park Colorado Mountains"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -310,13 +310,13 @@ const WinterParkGuide = () => {
                 <Snowflake className="w-4 h-4 mr-2" />
                 Alpine Ski Town
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Winter Park Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Explore Colorado's premier ski destination at 10,000+ feet elevation. World-class terrain, mountain biking, hiking, and 420-friendly mountain lodging.
               </p>
@@ -380,8 +380,8 @@ const WinterParkGuide = () => {
             <Tabs defaultValue="winter" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -390,7 +390,7 @@ const WinterParkGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30 p-6 md:p-8">
@@ -500,7 +500,7 @@ const WinterParkGuide = () => {
                 </span>
               </h2>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -513,7 +513,7 @@ const WinterParkGuide = () => {
                   Winter Park sits at 10,000+ feet. Cannabis effects are amplified at altitude. Start with lower doses of edibles.
                 </p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -589,7 +589,7 @@ const WinterParkGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -600,8 +600,8 @@ const WinterParkGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-colorado.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-colorado.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -650,7 +650,7 @@ const WinterParkGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -661,8 +661,8 @@ const WinterParkGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-colorado.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-colorado.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -717,7 +717,7 @@ const WinterParkGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with elevation tips, dispensary maps, and ski resort logistics.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -777,7 +777,7 @@ const WinterParkGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );
