@@ -41,6 +41,27 @@ export const BLOG_POSTS = [
     }
   },
   {
+    id: "clean-green-guide-colorado-2025",
+    title: "The Clean Green Guide: How to Find Colorado's Best (and Safest) Strains in 2025",
+    subtitle: "Legal doesn't always mean clean. Here is how to shop smarter.",
+    excerpt: "Pesticides, heavy metals, and mold can hide in legal cannabis. This guide breaks down how to find the safest, cleanest flower and concentrates in Colorado.",
+    date: "Dec 18, 2025",
+    readTime: "10 min read",
+    author: "BudQuest Team",
+    avatar: "🌿",
+    category: "Education",
+    tags: ["Clean Cannabis", "Organic", "Safety", "Colorado"],
+    image: "/blog-clean-green-guide.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/clean-green-guide-colorado-2025",
+    content: {
+      introduction: "Not all legal weed is clean. Learn how to find pesticide-free, organic, and lab-tested cannabis in Colorado.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "cannabis-dispensaries-breckenridge-complete-guide-2025",
     title: "Cannabis Dispensaries in Breckenridge: Complete Guide 2025",
     subtitle: "Where to buy weed in Breckenridge, current prices, and altitude safety tips.",

@@ -92,6 +92,7 @@ import BlogColoradoSpringsRentals from "./pages/BlogColoradoSpringsRentals";
 import BlogDispensaryFirstTime from "./pages/BlogDispensaryFirstTime";
 import BlogDenverVsBoulder from "./pages/BlogDenverVsBoulder";
 import BlogBreckenridgeDispensaries from "./pages/BlogBreckenridgeDispensaries";
+import BlogCleanGreenGuide from "./pages/BlogCleanGreenGuide";
 import BlogUltimateColoradoGuide from "./pages/BlogUltimateColoradoGuide";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
@@ -168,6 +169,7 @@ function App() {
               <Route path="/blog/first-time-dispensary-guide-colorado-2025" element={<BlogDispensaryFirstTime />} />
               <Route path="/blog/denver-vs-boulder-cannabis-tourists-2025" element={<BlogDenverVsBoulder />} />
               <Route path="/blog/cannabis-dispensaries-breckenridge-complete-guide-2025" element={<BlogBreckenridgeDispensaries />} />
+              <Route path="/blog/clean-green-guide-colorado-2025" element={<BlogCleanGreenGuide />} />
               <Route path="/blog/ultimate-stoner-guide-colorado-2025" element={<BlogUltimateColoradoGuide />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
