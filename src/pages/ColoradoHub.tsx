@@ -199,7 +199,7 @@ const ColoradoHub = () => {
     { name: "Lake City", region: "Mountains", slug: "lake-city", description: "Alpine mining town at 10,700 ft elevation with world-class fishing, mining history, and San Juan scenic loop." },
     { name: "Trinidad", region: "Southern Border", slug: "trinidad", description: "The 'Weed Capital' of the Southwest. Historic border town with a massive concentration of dispensaries and Victorian architecture." },
     { name: "Salida", region: "Mountains", slug: "salida", description: "The Heart of the Rockies. Whitewater rafting, hot springs, and a creative downtown district. A true adventure town." },
-    
+
     // NEW CITIES ADDED
     { name: "Golden", region: "Metro", slug: "golden", description: "The gateway to the mountains. Home to Coors Brewery, Clear Creek tubing, and the best basecamp for Red Rocks concerts." },
     { name: "Crested Butte", region: "Mountains", slug: "crested-butte", description: "The 'Last Great Ski Town'. A funky, colorful dead-end town with a massive costume culture and steep terrain." },
@@ -230,7 +230,8 @@ const ColoradoHub = () => {
     'georgetown', 'idaho-springs', 'nederland', 'ward', 'winter-park',
     'walden', 'delta', 'paonia', 'ridgway', 'lake-city', 'trinidad', 'salida',
     // New Additions
-    'golden', 'crested-butte', 'buena-vista', 'palisade', 'cortez', 'gunnison', 'frisco', 'monarch'
+    'golden', 'crested-butte', 'buena-vista', 'palisade', 'cortez', 'gunnison', 'frisco', 'monarch',
+    'altitude'
   ];
 
   // Detailed Law Data
@@ -415,7 +416,7 @@ const ColoradoHub = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                   >
-                    <Link to={customCitySlugs.includes(city.slug) ? `/${city.slug}` : `/usa/colorado/${city.slug}`}>
+                    <Link to={city.slug === 'altitude' ? '/colorado/altitude-guide' : `/${city.slug}`}>
                       <Card className="h-full bg-card/50 border-border/30 hover:border-accent/50 transition-all hover:-translate-y-1 group">
                         <CardContent className="p-4 md:p-6 flex flex-col h-full">
                           <div className="flex items-start justify-between mb-3">

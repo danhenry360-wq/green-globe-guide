@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
@@ -64,7 +64,7 @@ const LakewoodGuide = () => {
           .ilike('city', '%Lakewood%')
           .order('rating', { ascending: false })
           .limit(4);
-        
+
         if (dispData) setDispensaries(dispData);
 
         const { data: rentalData } = await supabase
@@ -74,7 +74,7 @@ const LakewoodGuide = () => {
           .ilike('address', '%Lakewood%')
           .order('rating', { ascending: false })
           .limit(4);
-        
+
         if (rentalData) setRentals(rentalData);
       } catch (error) {
         console.error("Error fetching Lakewood data:", error);
@@ -90,12 +90,12 @@ const LakewoodGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'lakewood-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -108,7 +108,7 @@ const LakewoodGuide = () => {
     } catch {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -172,7 +172,7 @@ const LakewoodGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "70-90°F",
@@ -260,26 +260,26 @@ const LakewoodGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Belmar", 
+    {
+      name: "Belmar",
       desc: "Walkable urban center with shops, restaurants, and entertainment venues.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Green Mountain", 
+    {
+      name: "Green Mountain",
       desc: "Residential area with quick access to hiking and mountain views.",
       safety: "safe",
       walkable: false
     },
-    { 
-      name: "West Colfax", 
+    {
+      name: "West Colfax",
       desc: "Diverse corridor with dispensaries, restaurants, and local character.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "Union Square", 
+    {
+      name: "Union Square",
       desc: "Newer development with modern amenities and easy highway access.",
       safety: "very-safe",
       walkable: false
@@ -288,7 +288,7 @@ const LakewoodGuide = () => {
 
   const relatedGuides = [
     { name: "Denver", slug: "/denver", desc: "The Mile High City", distance: "15 min" },
-    { name: "Golden", slug: "/usa/colorado/golden", desc: "Coors & Trails", distance: "10 min" },
+    { name: "Golden", slug: "/golden", desc: "Coors & Trails", distance: "10 min" },
     { name: "Colorado Hub", slug: "/usa/colorado", desc: "Full State Guide", distance: "" },
   ];
 
@@ -299,18 +299,18 @@ const LakewoodGuide = () => {
         <meta name="description" content="Plan your Lakewood cannabis trip. Find dispensaries near Red Rocks, 420-friendly rentals, and explore Bear Creek and Dinosaur Ridge." />
         <meta name="keywords" content="Lakewood cannabis, Lakewood dispensaries, Red Rocks 420, 420-friendly rentals Lakewood, Colorado weed laws 2025" />
         <link rel="canonical" href="https://budquest.guide/lakewood" />
-        
+
         <meta property="og:title" content="Lakewood Cannabis Travel Guide 2025" />
         <meta property="og:description" content="Your complete guide to cannabis in Lakewood: Red Rocks, Dispensaries, and 420 Rentals." />
         <meta property="og:url" content="https://budquest.guide/lakewood" />
         <meta property="og:image" content="https://budquest.guide/og-logo.jpg" />
         <meta property="og:type" content="article" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -329,15 +329,15 @@ const LakewoodGuide = () => {
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-gold/10" />
-            <img 
-              src="/dest-2.jpg" 
-              alt="Lakewood Colorado Mountains" 
+            <img
+              src="/dest-2.jpg"
+              alt="Lakewood Colorado Mountains"
               className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
               onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -348,13 +348,13 @@ const LakewoodGuide = () => {
                 <Music className="w-4 h-4 mr-2" />
                 Gateway to Red Rocks
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Lakewood Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Denver's western neighbor with Red Rocks Amphitheatre, mountain trails, and quality dispensaries. Experience cannabis with iconic Colorado scenery.
               </p>
@@ -408,7 +408,7 @@ const LakewoodGuide = () => {
                   Lakewood Cannabis Laws 🌿
                 </span>
               </h2>
-              
+
               <div className="grid md:grid-cols-3 gap-6">
                 <Card className="md:col-span-2 bg-card/50 border-accent/30">
                   <CardContent className="p-6 md:p-8">
@@ -418,7 +418,7 @@ const LakewoodGuide = () => {
                         Recreational Legal
                       </Badge>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -443,7 +443,7 @@ const LakewoodGuide = () => {
                           </li>
                         </ul>
                       </div>
-                      
+
                       <div>
                         <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                           <Ban className="w-5 h-5 text-red-500" /> What's Prohibited
@@ -498,7 +498,7 @@ const LakewoodGuide = () => {
                 Best Time to Visit 📅
               </span>
             </h2>
-            
+
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 bg-background/50">
                 {seasons.map((season) => (
@@ -508,7 +508,7 @@ const LakewoodGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30">
@@ -520,7 +520,7 @@ const LakewoodGuide = () => {
                         </div>
                         <season.icon className="w-12 h-12 text-accent mt-2 md:mt-0" />
                       </div>
-                      
+
                       <div className="grid md:grid-cols-2 gap-4">
                         <ul className="space-y-2">
                           {season.highlights.map((highlight, idx) => (
@@ -557,10 +557,10 @@ const LakewoodGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[1,2,3,4].map(i => (
+                {[1, 2, 3, 4].map(i => (
                   <div key={i} className="h-64 bg-card/30 animate-pulse rounded-lg" />
                 ))}
               </div>
@@ -570,7 +570,7 @@ const LakewoodGuide = () => {
                   <Link key={dispensary.id} to={`/dispensary/${dispensary.slug}`}>
                     <Card className="bg-card/50 border-border/30 hover:border-accent/50 transition-all overflow-hidden group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
+                        <img
                           src={dispensary.images?.[0] || dispensary.image || "/dest-2.jpg"}
                           alt={dispensary.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -625,10 +625,10 @@ const LakewoodGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[1,2,3,4].map(i => (
+                {[1, 2, 3, 4].map(i => (
                   <div key={i} className="h-64 bg-card/30 animate-pulse rounded-lg" />
                 ))}
               </div>
@@ -638,7 +638,7 @@ const LakewoodGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="bg-card/50 border-border/30 hover:border-accent/50 transition-all overflow-hidden group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
+                        <img
                           src={rental.images?.[0] || "/dest-2.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -680,7 +680,7 @@ const LakewoodGuide = () => {
                 Things to Do 🎸
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {attractions.map((attraction) => (
                 <Card key={attraction.name} className="bg-card/50 border-border/30 hover:border-accent/30 transition-colors">
@@ -712,7 +712,7 @@ const LakewoodGuide = () => {
                 Neighborhoods to Explore 🏘️
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               {neighborhoods.map((hood) => (
                 <Card key={hood.name} className="bg-card/50 border-border/30">
@@ -744,7 +744,7 @@ const LakewoodGuide = () => {
                 Getting Around 🚗
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-3 gap-6">
               <Card className="bg-card/50 border-border/30">
                 <CardContent className="p-6 text-center">
@@ -807,7 +807,7 @@ const LakewoodGuide = () => {
                 Explore Nearby 🗺️
               </span>
             </h2>
-            
+
             <div className="grid md:grid-cols-3 gap-6">
               {relatedGuides.map((guide) => (
                 <Link key={guide.name} to={guide.slug}>

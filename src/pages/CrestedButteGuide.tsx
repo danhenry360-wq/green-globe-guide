@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Utensils, TreePine, Footprints
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const CrestedButteGuide = () => {
         .ilike('city', '%Crested Butte%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch CB 420 Friendly Rentals
@@ -75,7 +75,7 @@ const CrestedButteGuide = () => {
         .ilike('address', '%Crested Butte%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -87,12 +87,12 @@ const CrestedButteGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'crested-butte-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -105,7 +105,7 @@ const CrestedButteGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -196,7 +196,7 @@ const CrestedButteGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Flower2,
       temp: "60-75°F",
@@ -311,26 +311,26 @@ const CrestedButteGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Town of Crested Butte", 
+    {
+      name: "Town of Crested Butte",
       desc: "The historic district. Walkable, colorful, full of nightlife and dispensaries.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Mt. Crested Butte", 
+    {
+      name: "Mt. Crested Butte",
       desc: "The resort base area. Condos, hotels, and slope access. Connected by free bus.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "CB South", 
+    {
+      name: "CB South",
       desc: "Residential community 10 mins south. Quiet, local vibe with a few amenities.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "Skyland / Riverbend", 
+    {
+      name: "Skyland / Riverbend",
       desc: "Upscale residential areas near the golf course. Very quiet and scenic.",
       safety: "very-safe",
       walkable: false
@@ -339,7 +339,7 @@ const CrestedButteGuide = () => {
 
   const relatedGuides = [
     { name: "Aspen", slug: "/aspen", desc: "Hiking over West Maroon Pass", distance: "11 mi (Hike)" },
-    { name: "Gunnison", slug: "/usa/colorado/gunnison", desc: "The valley hub", distance: "30 min" },
+    { name: "Gunnison", slug: "/gunnison", desc: "The valley hub", distance: "30 min" },
     { name: "Salida", slug: "/salida", desc: "River adventure town", distance: "1.5 hours" },
   ];
 
@@ -350,27 +350,27 @@ const CrestedButteGuide = () => {
         <meta name="description" content="Visit the 'Last Great Ski Town'. Your guide to Crested Butte cannabis dispensaries, 420-friendly lodging, and high-altitude travel tips." />
         <meta name="keywords" content="Crested Butte cannabis, CB dispensaries, wildflower festival weed, Crested Butte 420 friendly hotels, Colorado ski town weed" />
         <link rel="canonical" href="https://budquest.guide/crested-butte" />
-        
+
         <meta property="og:title" content="Crested Butte Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Complete guide to cannabis in Crested Butte. Wildflowers, steep skiing, and local vibes." />
         <meta property="og:url" content="https://budquest.guide/crested-butte" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado-ski.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Crested Butte Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Dispensaries, laws, and travel tips for Crested Butte, CO." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Crested Butte" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -388,14 +388,14 @@ const CrestedButteGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-colorado-ski.jpg" 
-              alt="Crested Butte Mountain and Wildflowers" 
+            <img
+              src="/dest-colorado-ski.jpg"
+              alt="Crested Butte Mountain and Wildflowers"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -406,13 +406,13 @@ const CrestedButteGuide = () => {
                 <Snowflake className="w-4 h-4 mr-2" />
                 The Last Great Ski Town
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Crested Butte Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Where the pavement ends and the funk begins. A paradise for steep skiers, wildflower lovers, and cannabis enthusiasts seeking authentic mountain culture.
               </p>
@@ -479,8 +479,8 @@ const CrestedButteGuide = () => {
             <Tabs defaultValue="winter" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -489,7 +489,7 @@ const CrestedButteGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -608,7 +608,7 @@ const CrestedButteGuide = () => {
                 Crested Butte is surrounded by National Forest. Know where state law ends and federal law begins.
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -618,11 +618,11 @@ const CrestedButteGuide = () => {
                   <h3 className="font-semibold text-foreground">Altitude Warning (8,909 ft)</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Oxygen is thin here. <strong>THC hits 2x harder.</strong> Alcohol hits 2x harder. 
+                  Oxygen is thin here. <strong>THC hits 2x harder.</strong> Alcohol hits 2x harder.
                   Combine them, and you might faint. Drink massive amounts of water and pace yourself.
                 </p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -631,7 +631,7 @@ const CrestedButteGuide = () => {
                   <h3 className="font-semibold text-foreground">Federal Land</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  The ski resort and surrounding hiking trails are often on <strong>US Forest Service land</strong>. 
+                  The ski resort and surrounding hiking trails are often on <strong>US Forest Service land</strong>.
                   Possession is technically a federal crime there. Be discreet and respectful.
                 </p>
               </Card>
@@ -741,13 +741,12 @@ const CrestedButteGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                        'border-amber-500/50 text-amber-400'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          hood.safety === 'safe' ? 'border-accent/50 text-accent' :
+                            'border-amber-500/50 text-amber-400'
+                        }`}
                     >
                       {hood.walkable ? "🚶 Walkable" : "🚗 Car/Bus Needed"}
                     </Badge>
@@ -772,7 +771,7 @@ const CrestedButteGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -783,8 +782,8 @@ const CrestedButteGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-colorado-ski.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-colorado-ski.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -836,7 +835,7 @@ const CrestedButteGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -847,8 +846,8 @@ const CrestedButteGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -903,7 +902,7 @@ const CrestedButteGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF including the "Secret Stash" menu guide, wildflower maps, and hidden smoke spots.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -918,7 +917,7 @@ const CrestedButteGuide = () => {
                   <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground">
                 ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
               </p>
@@ -980,7 +979,7 @@ const CrestedButteGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

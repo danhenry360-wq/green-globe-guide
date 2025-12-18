@@ -88,7 +88,7 @@ export const POPULAR_CITIES: SearchItem[] = [
     { name: "Amsterdam", type: "city", status: "Decriminalized", path: "/world/europe/netherlands/north-holland/amsterdam", region: "Netherlands" },
     { name: "Barcelona", type: "city", status: "Decriminalized", path: "/world/europe/spain/catalonia/barcelona", region: "Spain" },
     { name: "Los Angeles", type: "city", status: "Recreational", path: "/usa/california/los-angeles", region: "California" },
-    { name: "Denver", type: "city", status: "Recreational", path: "/usa/colorado/denver", region: "Colorado" },
+    { name: "Denver", type: "city", status: "Recreational", path: "/denver", region: "Colorado" },
     { name: "San Francisco", type: "city", status: "Recreational", path: "/usa/california/san-francisco", region: "California" },
     { name: "Toronto", type: "city", status: "Recreational", path: "/world/north-america/canada/ontario/toronto", region: "Canada" },
     { name: "Vancouver", type: "city", status: "Recreational", path: "/world/north-america/canada/british-columbia/vancouver", region: "Canada" },

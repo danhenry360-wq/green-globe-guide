@@ -289,7 +289,7 @@ const PuebloGuide = () => {
 
   const relatedGuides = [
     { name: "Colorado Springs", slug: "/colorado-springs", desc: "Pikes Peak Region", distance: "45 min" },
-    { name: "Trinidad", slug: "/usa/colorado/trinidad", desc: "Border Town Vibes", distance: "80 min" },
+    { name: "Trinidad", slug: "/trinidad", desc: "Border Town Vibes", distance: "80 min" },
     { name: "Colorado Hub", slug: "/usa/colorado", desc: "Full State Guide", distance: "" },
   ];
 

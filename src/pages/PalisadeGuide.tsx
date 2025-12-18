@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Wine, Grape, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Utensils, Tractor, Waves
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const PalisadeGuide = () => {
         .ilike('city', '%Palisade%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch Palisade 420 Friendly Rentals
@@ -75,7 +75,7 @@ const PalisadeGuide = () => {
         .ilike('address', '%Palisade%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -87,12 +87,12 @@ const PalisadeGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'palisade-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -105,7 +105,7 @@ const PalisadeGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -196,7 +196,7 @@ const PalisadeGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "85-100°F",
@@ -311,26 +311,26 @@ const PalisadeGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Downtown / The Plaza", 
+    {
+      name: "Downtown / The Plaza",
       desc: "The heart of town. Walkable access to the distillery, bakery, and Sunday market.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "East Orchard Mesa", 
+    {
+      name: "East Orchard Mesa",
       desc: "Located above the river with sweeping views. Mostly orchards and vineyards.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "The Vinelands", 
+    {
+      name: "The Vinelands",
       desc: "The dense agricultural area along the river. Prime location for bike tours.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "Clifton (West)", 
+    {
+      name: "Clifton (West)",
       desc: "The suburban buffer between Palisade and Grand Junction. More affordable lodging.",
       safety: "safe",
       walkable: false
@@ -350,27 +350,27 @@ const PalisadeGuide = () => {
         <meta name="description" content="Plan your Palisade cannabis trip. The ultimate 'Wine & Weed' destination. Find dispensaries, 420-friendly rentals, and the famous Fruit Loop." />
         <meta name="keywords" content="Palisade cannabis, Palisade dispensaries, wine and weed Colorado, Palisade peach festival weed, Palisade 420 travel" />
         <link rel="canonical" href="https://budquest.guide/palisade" />
-        
+
         <meta property="og:title" content="Palisade Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Your complete guide to cannabis in Palisade. Vineyards, orchards, and dispensaries." />
         <meta property="og:url" content="https://budquest.guide/palisade" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-california.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Palisade Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Complete Palisade cannabis guide with dispensaries, hotels, and legal info." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Palisade" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -388,14 +388,14 @@ const PalisadeGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-california.jpg" 
-              alt="Palisade Vineyards and Mount Garfield" 
+            <img
+              src="/dest-california.jpg"
+              alt="Palisade Vineyards and Mount Garfield"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -406,13 +406,13 @@ const PalisadeGuide = () => {
                 <Grape className="w-4 h-4 mr-2" />
                 Wine & Weed Country
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Palisade Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Colorado's agricultural heart. Where vineyards meet cannabis cultivation, and life slows down for peaches, wine, and premium bud.
               </p>
@@ -479,8 +479,8 @@ const PalisadeGuide = () => {
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -489,7 +489,7 @@ const PalisadeGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -608,7 +608,7 @@ const PalisadeGuide = () => {
                 While relaxed, Palisade is strict about public safety. Know the rules before you ride.
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -619,7 +619,7 @@ const PalisadeGuide = () => {
                 </div>
                 <p className="text-sm text-muted-foreground">Adults 21+ can purchase and possess up to 2 oz of cannabis (higher than Denver's 1oz limit in some contexts, but standard purchase is 1oz/transaction).</p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -735,13 +735,12 @@ const PalisadeGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                        'border-amber-500/50 text-amber-400'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          hood.safety === 'safe' ? 'border-accent/50 text-accent' :
+                            'border-amber-500/50 text-amber-400'
+                        }`}
                     >
                       {hood.walkable ? "🚶 Walkable" : "🚗 Car/Bike Needed"}
                     </Badge>
@@ -766,7 +765,7 @@ const PalisadeGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -777,8 +776,8 @@ const PalisadeGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -810,8 +809,8 @@ const PalisadeGuide = () => {
               <Card className="p-8 text-center bg-card/50">
                 <Building2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  No dispensaries found strictly in Palisade. 
-                  <Link to="/usa/colorado/grand-junction" className="text-accent ml-1 underline">
+                  No dispensaries found strictly in Palisade.
+                  <Link to="/grand-junction" className="text-accent ml-1 underline">
                     Check Grand Junction (10 min away)
                   </Link>.
                 </p>
@@ -833,7 +832,7 @@ const PalisadeGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -844,8 +843,8 @@ const PalisadeGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -900,7 +899,7 @@ const PalisadeGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with the Fruit Loop route, dispensary locations, and winery pairing tips.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -915,7 +914,7 @@ const PalisadeGuide = () => {
                   <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground">
                 ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
               </p>
@@ -977,7 +976,7 @@ const PalisadeGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

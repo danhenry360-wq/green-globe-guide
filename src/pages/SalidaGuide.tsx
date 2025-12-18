@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Mountain, Waves, Palette,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Fish, ThermometerSun
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const SalidaGuide = () => {
         .ilike('city', '%Salida%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch Salida 420 Friendly Rentals
@@ -75,7 +75,7 @@ const SalidaGuide = () => {
         .ilike('address', '%Salida%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -87,12 +87,12 @@ const SalidaGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'salida-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -105,7 +105,7 @@ const SalidaGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -182,7 +182,7 @@ const SalidaGuide = () => {
   const seasons = [
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "70-85°F",
@@ -311,26 +311,26 @@ const SalidaGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Historic Downtown", 
+    {
+      name: "Historic Downtown",
       desc: "Red brick buildings, riverfront parks, and art galleries. The cultural heart.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Highway 50 Corridor", 
+    {
+      name: "Highway 50 Corridor",
       desc: "Where the motels, hot springs, and most dispensaries are. Commercial vibe.",
       safety: "safe",
       walkable: false
     },
-    { 
-      name: "Poncha Springs", 
+    {
+      name: "Poncha Springs",
       desc: "The crossroads 5 miles west. Breweries, wineries, and newer housing.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "Smeltertown", 
+    {
+      name: "Smeltertown",
       desc: "Historic industrial area near the smoke stack. Quiet, local residential feel.",
       safety: "safe",
       walkable: true
@@ -339,8 +339,8 @@ const SalidaGuide = () => {
 
   const relatedGuides = [
     { name: "Buena Vista", slug: "/buena-vista", desc: "Sister city to the north", distance: "25 min" },
-    { name: "Monarch", slug: "/usa/colorado/monarch", desc: "Ski area & pass", distance: "20 min" },
-    { name: "Gunnison", slug: "/usa/colorado/gunnison", desc: "Over the pass", distance: "1 hour" },
+    { name: "Monarch", slug: "/monarch", desc: "Ski area & pass", distance: "20 min" },
+    { name: "Gunnison", slug: "/gunnison", desc: "Over the pass", distance: "1 hour" },
   ];
 
   return (
@@ -350,27 +350,27 @@ const SalidaGuide = () => {
         <meta name="description" content="Plan your Salida cannabis trip. Whitewater rafting, hot springs, art galleries, and top dispensaries in the Heart of the Rockies." />
         <meta name="keywords" content="Salida cannabis, Salida dispensaries, Monarch Mountain weed, Salida hot springs 420, Colorado rafting weed" />
         <link rel="canonical" href="https://budquest.guide/salida" />
-        
+
         <meta property="og:title" content="Salida Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Rafting, Art, and Cannabis. The complete guide to Salida, CO." />
         <meta property="og:url" content="https://budquest.guide/salida" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado-ski.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Salida Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Dispensaries, hot springs, and legal info for Salida, CO." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Salida" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -388,14 +388,14 @@ const SalidaGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-colorado-ski.jpg" 
-              alt="Salida and the Sawatch Range" 
+            <img
+              src="/dest-colorado-ski.jpg"
+              alt="Salida and the Sawatch Range"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -406,13 +406,13 @@ const SalidaGuide = () => {
                 <Mountain className="w-4 h-4 mr-2" />
                 Heart of the Rockies
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Salida Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 A creative haven on the banks of the Arkansas River. World-class rafting, authentic mountain culture, and a thriving local cannabis scene.
               </p>
@@ -479,8 +479,8 @@ const SalidaGuide = () => {
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -489,7 +489,7 @@ const SalidaGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -608,7 +608,7 @@ const SalidaGuide = () => {
                 Salida is welcoming, but it's surrounded by Federal land. Know the boundaries.
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -618,11 +618,11 @@ const SalidaGuide = () => {
                   <h3 className="font-semibold text-foreground">River Safety</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  The Arkansas River is wild and cold. <strong>Never raft while high.</strong> Impaired reflexes can be deadly in rapids. 
+                  The Arkansas River is wild and cold. <strong>Never raft while high.</strong> Impaired reflexes can be deadly in rapids.
                   Save the session for the riverside park after your trip.
                 </p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -631,7 +631,7 @@ const SalidaGuide = () => {
                   <h3 className="font-semibold text-foreground">Federal Land</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Monarch Mountain and the surrounding forests are on <strong>US Forest Service land</strong>. 
+                  Monarch Mountain and the surrounding forests are on <strong>US Forest Service land</strong>.
                   Possession is technically illegal. Be discreet, don't smoke on ski lifts, and pack out all trash.
                 </p>
               </Card>
@@ -741,13 +741,12 @@ const SalidaGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                        'border-amber-500/50 text-amber-400'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          hood.safety === 'safe' ? 'border-accent/50 text-accent' :
+                            'border-amber-500/50 text-amber-400'
+                        }`}
                     >
                       {hood.walkable ? "🚶 Walkable" : "🚗 Car Needed"}
                     </Badge>
@@ -772,7 +771,7 @@ const SalidaGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -783,8 +782,8 @@ const SalidaGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-colorado-ski.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-colorado-ski.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -816,7 +815,7 @@ const SalidaGuide = () => {
               <Card className="p-8 text-center bg-card/50">
                 <Building2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  No dispensaries found in the database for Salida. 
+                  No dispensaries found in the database for Salida.
                   (Note: Check Highway 50/Poncha Springs area).
                 </p>
               </Card>
@@ -837,7 +836,7 @@ const SalidaGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -848,8 +847,8 @@ const SalidaGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-colorado-ski.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -904,7 +903,7 @@ const SalidaGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF including the rafting season calendar, dispensary deals, and art walk map.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -919,7 +918,7 @@ const SalidaGuide = () => {
                   <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground">
                 ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
               </p>
@@ -981,7 +980,7 @@ const SalidaGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );
