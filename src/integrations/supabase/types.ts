@@ -265,6 +265,7 @@ export type Database = {
           consumption_notes: string | null
           created_at: string | null
           id: string
+          image_url: string | null
           last_updated: string | null
           name: string
           penalties: string | null
@@ -281,6 +282,7 @@ export type Database = {
           consumption_notes?: string | null
           created_at?: string | null
           id?: string
+          image_url?: string | null
           last_updated?: string | null
           name: string
           penalties?: string | null
@@ -297,6 +299,7 @@ export type Database = {
           consumption_notes?: string | null
           created_at?: string | null
           id?: string
+          image_url?: string | null
           last_updated?: string | null
           name?: string
           penalties?: string | null
