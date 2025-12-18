@@ -3,43 +3,43 @@
   <!-- Core Pages -->
   <url>
     <loc>https://budquest.guide/</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://budquest.guide/home</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/about</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://budquest.guide/contact</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://budquest.guide/terms</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://budquest.guide/privacy</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://budquest.guide/disclaimer</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -47,37 +47,37 @@
   <!-- Main Directories -->
   <url>
     <loc>https://budquest.guide/blog</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/tours</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/world</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/usa</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -85,441 +85,435 @@
   <!-- Colorado Hub & Special Guides -->
   <url>
     <loc>https://budquest.guide/usa/colorado</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://budquest.guide/colorado/consumption-guide</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/colorado/federal-land-warning</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/colorado/altitude-guide</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://budquest.guide/colorado/altitude-guide</loc>
-    <lastmod>2025-06-15</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://budquest.guide/arvada</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/aspen</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/aurora</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/black-hawk</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/boulder</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/breckenridge</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/broomfield</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/buena-vista</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/castle-rock</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/centennial</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/central-city</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/colorado-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/commerce-city</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/cortez</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/crested-butte</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/delta</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/denver</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/durango</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/englewood</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/estes-park</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/federal-heights</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/fort-collins</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/fort-morgan</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/frisco</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/georgetown</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/glenwood-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/golden</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/grand-junction</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/greeley</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/gunnison</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/idaho-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/lake-city</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/lakewood</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/leadville</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/littleton</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/longmont</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/loveland</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/manitou-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/monarch</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/montrose</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/nederland</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/northglenn</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/ouray</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/pagosa-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/palisade</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/paonia</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/pueblo</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/red-rocks</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/ridgway</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/salida</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/silverton</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/steamboat-springs</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/telluride</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/thornton</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/trinidad</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/vail</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/walden</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/ward</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/westminster</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://budquest.guide/winter-park</loc>
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Static Blog Posts -->
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-denver</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/best-420-rentals-denver</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/best-420-rentals-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-aspen</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/best-420-rentals-aspen</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-colorado-springs</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/blog/best-420-rentals-colorado-springs</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -527,517 +521,517 @@
   <!-- ALL 86 DISPENSARIES -->
   <url>
     <loc>https://budquest.guide/dispensary/allgreens</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/alternative-medicine-on-capitol-hill-amch-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/apothecary-farms-colorado-springs</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/ascend-cannabis-co</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/best-buds-dispensary-rino</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/best-buds-highland</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/boulder-built-rec-med-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/buku-loud-recreational-and-medical-marijuana-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/c-r-e-a-m-recreational-medical-marijuana-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/connected-cannabis-sf</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/cookies-sf</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/discrete-greens</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/elevations-recreational-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/emerald-fields</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/fired-cannabis-aurora</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/fired-cannabis-lakewood</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/flyhi-cannabis-dispensary-aurora</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/fresh-baked-boulder-cannabis-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/gardens-dispensary-canna-commerce-city</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-dragon-weed-dispensary-aspen</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-dragon-weed-dispensary-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-dragon-weed-dispensary-fort-collins-smithfield-dr</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-tree-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-tree-of-berthoud</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/green-valley-dispensary-denver-airport</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/grow-life-recreational-medical-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/harborside-oakland</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/hierba</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/hightops-recreational-medical-marijuana-dispensary-powers</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/horizon-cannabis-recreational-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/igadi-northglenn</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/indico-dispensary-recreational-medical</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/karing-kind-boulder-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/kindcare</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/lax-cannabis-club</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/lightshade-denver</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/livwell-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/livwell-dispensary-federal-heights</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/livwell-dispensary-fort-collins</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/livwell-dispensary-lakewood</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/maggie-s-farm</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/maggie-s-farm-marijuana-dispensary-pueblo</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/magnolia-road-cannabis-co-boulder-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/magnolia-road-cannabis-co-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/maikoh-holistics</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/medicine-man</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/medicine-man-longmont</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/medmen-los-angeles</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/native-roots-marijuana-dispensary-aspen-rec</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/native-roots-marijuana-dispensary-colorado-springs-tejon-med-rec</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/native-roots-marijuana-dispensary-denver-university-rec</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/native-roots-denver</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/natural-alternatives-for-health</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/nuvue-pharma-dispensary-pueblo-north</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/organic-alternatives</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/puff-la</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/reefer-madness-broadway</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/rise-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/rocky-mountain-high</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/rocky-road-thornton-marijuana-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/roots-rx-aspen-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/silverpeak-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/skunked-retail-marijuana-dispensary-thornton</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/smokin-cowboy-llc</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/sohi-cannabis-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/space-station-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/spark-co</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/star-buds-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/star-buds-colorado-springs</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/star-buds-lakewood</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/star-buds-pueblo</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/starbuds-aurora</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/stiiizy-dtla</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-404-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-cannabis-depot</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-chronic-boutique-cannabis-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-epic-remedy-west-medical-and-recreational-cannabis</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-farm</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-green-solution</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-green-solution-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-healing-canna-bijou-medical-recreational-marijuana-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-lodge-cannabis</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-set-northridge</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-spot-420-pueblo-central-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/the-trust-cannabis-company</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/dispensary/xclusive-cannabis-dispensary</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1045,235 +1039,235 @@
   <!-- ALL 39 RENTALS -->
   <url>
     <loc>https://budquest.guide/hotels/420-friendly-boutique-hotel</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/cheap-420-friendly-centrally-located-balcony-hotel</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-st-regis-aspen-resort</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/4-seasons-inn-on-fall-river</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/420-hottub-theater-gameroom-outdoor-pooltable</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/420-loft-a-smoker-friendly-vacation-in-the-rocky-mountains</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/420-ps5-hottub-arcade-theater-pooltablepinball</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/420friendly-hottub-ps5-theater-golf-gameroom-dancepole</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/420friendly-ps5-hottub-gameroom-theater-pooltable-pole</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/arapaho-valley-ranch</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/aspen-meadows-resort</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/basecamp-boulder</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/beautiful-creekside-chalet-with-awesome-mountain-views</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/bradley-boulder-inn</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/capitol-hill-mansion-b-b-inn</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/desert-hot-springs-cannabis-friendly-hotel</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/downtown-boulder-hotel-starting-at-199</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/downtown-denver-boutique-all-suite-hotel-starting</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/east-denver-hotel-with-indoor-pool-hot-tub-and-balconies</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/garden-of-the-gods-resort-and-club</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/golfsimulator-hottub-theater-6br-5bath-420friendly</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/hilton-garden-inn-colorado-springs-downtown</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/hotel-boulderado-4-0-star-property</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/hotel-jerome-auberge-collection</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/colorado-springs-cannabis-friendly-hotel</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/kushkations-hotbox-denver</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/palm-springs-first-420-lgbtq-shiloh-pet-friendly</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/paradise-tiny-home</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/pet-and-420-friendly-hotel-with-outdoor-pool-near-airport-private-balconies</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/picturesque-mountain-lodge-with-swimming-pool-and-hot-tub</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/scp-hotel-colorado-springs</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/stoney-river-lodge</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-broadmoor</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-cliff-house-a-red-rocks-amphitheater-lodge</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-ganja-getaway</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-inn-at-aspen</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-little-nell</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/the-rustic-acre-estes-park</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/hotels/trinidad-hotel-420-friendly-b-b</loc>
-    <lastmod>2025-06-15</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
