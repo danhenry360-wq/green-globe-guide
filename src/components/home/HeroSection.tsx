@@ -90,19 +90,17 @@ export const HeroSection = () => {
                 </Badge>
 
                 {/* Main heading */}
-                <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[1.1] tracking-tight drop-shadow-2xl">
+                <h1 className="text-[clamp(3rem,10vw,6.5rem)] font-bold leading-[1.1] tracking-tighter drop-shadow-2xl mb-2">
                     <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                        BudQuest: Global Cannabis Travel Guide
+                        BudQuest
                     </span>
                 </h1>
 
                 {/* Subheadings */}
-                <p className="text-[clamp(1rem,2.5vw,1.75rem)] text-muted-foreground font-light mt-4 max-w-4xl mx-auto leading-relaxed">
-                    Premium Intelligence for Legal Cannabis Tourism
+                <p className="text-[clamp(1rem,2.2vw,1.4rem)] text-muted-foreground/90 font-light mt-4 max-w-4xl mx-auto leading-relaxed">
+                    Premium intelligence for legal cannabis tourism. Navigate 420-friendly regulations, discover verified dispensaries, and explore travel destinations in 150+ countries.
                 </p>
-                <p className="text-[clamp(0.95rem,2vw,1.3rem)] text-muted-foreground/80 font-normal mt-3 max-w-4xl mx-auto leading-relaxed">
-                    Navigate 420-friendly regulations, discover verified dispensaries, and explore legal weed destinations in 150+ countries with our real-time global database.
-                </p>
+
 
 
                 {/* Search bar */}
