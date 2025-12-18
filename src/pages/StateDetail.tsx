@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Helmet } from "react-helmet";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { USA_STATE_DATA } from "@/lib/usa_state_data";
@@ -32,8 +33,13 @@ const StateDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{state.name} Cannabis Travel Guide 2025 | BudQuest</title>
+        <meta name="description" content={`Explore ${state.name}'s cannabis laws, destinations, and 420-friendly travel info in our comprehensive 2025 guide.`} />
+        <link rel="canonical" href={`https://budquest.guide/usa/${stateSlug}`} />
+      </Helmet>
       <Navigation />
-      
+
       <div className="pt-24 pb-20">
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Breadcrumb */}
@@ -67,7 +73,7 @@ const StateDetail = () => {
                 <Scale className="w-5 h-5 mr-2" />
                 Legal Overview & Quick Facts
               </h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2 flex items-center">
@@ -103,7 +109,7 @@ const StateDetail = () => {
 
             <Card className="p-4 md:p-6 bg-gradient-card border-border/50">
               <h3 className="text-lg md:text-xl font-bold mb-4 text-accent">Quick Facts</h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="p-2 bg-accent/10 rounded-lg">
@@ -182,7 +188,7 @@ const StateDetail = () => {
           {/* Disclaimer */}
           <Card className="p-4 md:p-6 bg-accent/5 border-accent/20">
             <p className="text-xs md:text-sm text-muted-foreground text-center">
-              <strong className="text-foreground">Disclaimer:</strong> This information is for educational purposes only. 
+              <strong className="text-foreground">Disclaimer:</strong> This information is for educational purposes only.
               Cannabis laws can change rapidly. Always verify current laws before traveling and consume responsibly where legal.
             </p>
           </Card>

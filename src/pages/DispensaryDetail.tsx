@@ -116,6 +116,7 @@ const DispensaryDetail = () => {
         <title>{dbDispensary.name} | Verified Dispensary - BudQuest</title>
         <meta name="description" content={`Full details, reviews, and vital information for ${dbDispensary.name} in ${dbDispensary.city}, ${dbDispensary.state}.`} />
         <meta name="keywords" content={`${dbDispensary.name}, ${dbDispensary.city} dispensary, ${dbDispensary.state} cannabis store, BudQuest verified`} />
+        <link rel="canonical" href={`https://budquest.guide/dispensary/${slug}`} />
       </Helmet>
 
       <div className="min-h-screen bg-background">

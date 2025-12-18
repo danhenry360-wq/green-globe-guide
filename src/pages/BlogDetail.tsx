@@ -172,6 +172,7 @@ const BlogDetail = () => {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:image" content={post.image} />
+        <link rel="canonical" href={`https://budquest.guide/blog/${slug}`} />
         {/* FAQ Schema for SEO */}
         {post.content && typeof post.content === 'object' && !Array.isArray(post.content) && 'faq' in post.content && Array.isArray(post.content.faq) && post.content.faq.length > 0 && (
           <script type="application/ld+json">

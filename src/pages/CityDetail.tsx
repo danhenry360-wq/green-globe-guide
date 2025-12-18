@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -154,140 +155,140 @@ const FullCityGuide = ({ city, state }: { city: CityData, state: typeof USA_STAT
   // Fallback to original template if no detailed guide
   return (
     <div className="space-y-8 md:space-y-12">
-    {/* Introduction */}
-    <section>
-      <Card className="p-4 md:p-8 bg-card/50 backdrop-blur border-l-4 border-accent">
-        <h2 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2 text-accent">
-          <Info className="w-5 h-5 text-accent" />
-          Introduction to {city.name}
+      {/* Introduction */}
+      <section>
+        <Card className="p-4 md:p-8 bg-card/50 backdrop-blur border-l-4 border-accent">
+          <h2 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2 text-accent">
+            <Info className="w-5 h-5 text-accent" />
+            Introduction to {city.name}
+          </h2>
+          <p className="text-base text-muted-foreground leading-relaxed mb-4">
+            Welcome to the comprehensive cannabis travel guide for **{city.name}, {state.name}**. This city is a major hub in the state's cannabis landscape.
+          </p>
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mt-4">
+            <p className="text-xs text-amber-200 flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>
+                <strong>Important:</strong> Laws and regulations change frequently. Always verify information with official {state.name} state and local sources before making any decisions.
+              </span>
+            </p>
+          </div>
+        </Card>
+      </section>
+
+      {/* Legal Overview */}
+      <section>
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+          <Shield className="w-6 h-6 text-accent" />
+          Legal Overview in {state.name}
         </h2>
-        <p className="text-base text-muted-foreground leading-relaxed mb-4">
-          Welcome to the comprehensive cannabis travel guide for **{city.name}, {state.name}**. This city is a major hub in the state's cannabis landscape.
-        </p>
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mt-4">
-          <p className="text-xs text-amber-200 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <span>
-              <strong>Important:</strong> Laws and regulations change frequently. Always verify information with official {state.name} state and local sources before making any decisions.
-            </span>
-          </p>
-        </div>
-      </Card>
-    </section>
-
-    {/* Legal Overview */}
-    <section>
-      <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-        <Shield className="w-6 h-6 text-accent" />
-        Legal Overview in {state.name}
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Card className="p-4">
-          <h3 className="text-lg font-semibold mb-2 text-accent">
-            State Status
-          </h3>
-          <p className="text-muted-foreground text-sm">
-            <strong>{state.status.charAt(0).toUpperCase() + state.status.slice(1)}</strong>
-          </p>
-          <p className="text-muted-foreground text-xs mt-1">
-            {state.subtitle}
-          </p>
-        </Card>
-
-        <Card className="p-4">
-          <h3 className="text-lg font-semibold mb-2 text-accent">
-            Age & Purchase
-          </h3>
-          <p className="text-muted-foreground text-sm">
-            <strong>Minimum age: {state.age_requirement || 'Varies'}</strong>
-          </p>
-          <p className="text-muted-foreground text-xs mt-1">
-            {state.purchase_rules || 'No legal purchase rules apply.'}
-          </p>
-        </Card>
-
-        <Card className="p-4">
-          <h3 className="text-lg font-semibold mb-2 text-accent">
-            Possession Limits
-          </h3>
-          <p className="text-muted-foreground text-xs">
-            {state.possession_limits || 'Varies by local ordinance.'}
-          </p>
-        </Card>
-
-        <Card className="p-4">
-          <h3 className="text-lg font-semibold mb-2 text-accent">
-            Consumption Rules
-          </h3>
-          <p className="text-muted-foreground text-xs">
-            {state.consumption_rules || 'Public consumption is generally prohibited.'}
-          </p>
-        </Card>
-      </div>
-    </section>
-
-    {/* Local Cannabis Scene (Uses city.content) */}
-    <section>
-      <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-        <Users className="w-6 h-6 text-accent" />
-        The Local Vibe: {city.name}
-      </h2>
-      <Card className="p-4 md:p-8 bg-gradient-to-br from-accent/5 to-transparent">
-        <div className="space-y-4 text-muted-foreground">
-          <p className="leading-relaxed whitespace-pre-wrap text-sm md:text-base">
-            {city.content}
-          </p>
-        </div>
-      </Card>
-    </section>
-
-    {/* Dispensary Environment (Uses state.dispensary_guide) */}
-    <section>
-      <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-        <Building2 className="w-6 h-6 text-accent" />
-        Dispensary Environment
-      </h2>
-      <Card className="p-4 md:p-8">
-        <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">
-          {state.dispensary_guide || 'Check local listings for licensed dispensaries.'}
-        </p>
-        <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 mt-4">
-          <p className="text-xs text-accent-foreground">
-            <strong>Note:</strong> All legal cannabis sales must occur through state-licensed dispensaries. Unlicensed sales remain illegal.
-          </p>
-        </div>
-      </Card>
-    </section>
-
-    {/* Safety, Etiquette & Public Rules (Uses state.travel_rules) */}
-    <section>
-      <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-        <AlertCircle className="w-6 h-6 text-red-400" />
-        Safety & Travel Rules
-      </h2>
-      <Card className="p-4 md:p-8 bg-gradient-to-br from-red-500/5 to-transparent border-red-500/20">
-        <div className="space-y-4">
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
-            <h3 className="font-semibold text-red-300 mb-1 text-sm">
-              Public Consumption is Prohibited
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Card className="p-4">
+            <h3 className="text-lg font-semibold mb-2 text-accent">
+              State Status
             </h3>
-            <p className="text-xs text-muted-foreground">
-              {state.consumption_rules || 'Cannabis use in any public space is prohibited and may result in fines.'}
+            <p className="text-muted-foreground text-sm">
+              <strong>{state.status.charAt(0).toUpperCase() + state.status.slice(1)}</strong>
+            </p>
+            <p className="text-muted-foreground text-xs mt-1">
+              {state.subtitle}
+            </p>
+          </Card>
+
+          <Card className="p-4">
+            <h3 className="text-lg font-semibold mb-2 text-accent">
+              Age & Purchase
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              <strong>Minimum age: {state.age_requirement || 'Varies'}</strong>
+            </p>
+            <p className="text-muted-foreground text-xs mt-1">
+              {state.purchase_rules || 'No legal purchase rules apply.'}
+            </p>
+          </Card>
+
+          <Card className="p-4">
+            <h3 className="text-lg font-semibold mb-2 text-accent">
+              Possession Limits
+            </h3>
+            <p className="text-muted-foreground text-xs">
+              {state.possession_limits || 'Varies by local ordinance.'}
+            </p>
+          </Card>
+
+          <Card className="p-4">
+            <h3 className="text-lg font-semibold mb-2 text-accent">
+              Consumption Rules
+            </h3>
+            <p className="text-muted-foreground text-xs">
+              {state.consumption_rules || 'Public consumption is generally prohibited.'}
+            </p>
+          </Card>
+        </div>
+      </section>
+
+      {/* Local Cannabis Scene (Uses city.content) */}
+      <section>
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+          <Users className="w-6 h-6 text-accent" />
+          The Local Vibe: {city.name}
+        </h2>
+        <Card className="p-4 md:p-8 bg-gradient-to-br from-accent/5 to-transparent">
+          <div className="space-y-4 text-muted-foreground">
+            <p className="leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+              {city.content}
             </p>
           </div>
+        </Card>
+      </section>
 
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
-            <h3 className="font-semibold text-amber-300 mb-1 text-sm">
-              Transportation Rules
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              {state.travel_rules || 'Cannabis must be transported according to state law. Never transport across state lines. Driving under the influence is a DUI offense.'}
+      {/* Dispensary Environment (Uses state.dispensary_guide) */}
+      <section>
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+          <Building2 className="w-6 h-6 text-accent" />
+          Dispensary Environment
+        </h2>
+        <Card className="p-4 md:p-8">
+          <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">
+            {state.dispensary_guide || 'Check local listings for licensed dispensaries.'}
+          </p>
+          <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 mt-4">
+            <p className="text-xs text-accent-foreground">
+              <strong>Note:</strong> All legal cannabis sales must occur through state-licensed dispensaries. Unlicensed sales remain illegal.
             </p>
           </div>
-        </div>
-      </Card>
-    </section>
-  </div>
+        </Card>
+      </section>
+
+      {/* Safety, Etiquette & Public Rules (Uses state.travel_rules) */}
+      <section>
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+          <AlertCircle className="w-6 h-6 text-red-400" />
+          Safety & Travel Rules
+        </h2>
+        <Card className="p-4 md:p-8 bg-gradient-to-br from-red-500/5 to-transparent border-red-500/20">
+          <div className="space-y-4">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+              <h3 className="font-semibold text-red-300 mb-1 text-sm">
+                Public Consumption is Prohibited
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                {state.consumption_rules || 'Cannabis use in any public space is prohibited and may result in fines.'}
+              </p>
+            </div>
+
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+              <h3 className="font-semibold text-amber-300 mb-1 text-sm">
+                Transportation Rules
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                {state.travel_rules || 'Cannabis must be transported according to state law. Never transport across state lines. Driving under the influence is a DUI offense.'}
+              </p>
+            </div>
+          </div>
+        </Card>
+      </section>
+    </div>
   );
 };
 
@@ -373,10 +374,15 @@ const CityDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{city.name} Cannabis Travel Guide 2025 | BudQuest</title>
+        <meta name="description" content={`Plan your cannabis trip to ${city.name}, ${state.name} with our complete 2025 guide. Find local laws, consumption rules, and travel tips.`} />
+        <link rel="canonical" href={`https://budquest.guide/usa/${stateSlug}/${citySlug}`} />
+      </Helmet>
       <Navigation />
-      
+
       {/* Hero Section */}
-      <motion.section 
+      <motion.section
         className="relative pt-24 pb-12 px-4 bg-gradient-to-br from-background to-card/50 overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -384,8 +390,8 @@ const CityDetail = () => {
       >
         <div className="container mx-auto max-w-5xl relative z-10">
           {/* Back Button */}
-          <Link 
-            to={`/usa/${stateSlug}`} 
+          <Link
+            to={`/usa/${stateSlug}`}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-6 text-sm font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -399,14 +405,14 @@ const CityDetail = () => {
               </span>{' '}
               Cannabis Guide
             </h1>
-            <Badge 
+            <Badge
               className={`text-lg px-4 py-2 font-semibold shadow-lg ${city.type === 'major' ? 'bg-accent text-accent-foreground' : city.type === 'medium' ? 'bg-gold text-gold-foreground' : 'bg-secondary text-secondary-foreground'}`}
             >
               {city.type.charAt(0).toUpperCase() + city.type.slice(1)} Guide
             </Badge>
           </div>
-          
-            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl font-light">
+
+          <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl font-light">
             Your essential guide to navigating the local cannabis scene in {city.name}, {state.name}.
           </p>
         </div>
@@ -416,7 +422,7 @@ const CityDetail = () => {
         <div className="container mx-auto max-w-5xl">
           {/* Main Content */}
           <div className="mt-[-40px] relative z-20">
-            <motion.section 
+            <motion.section
               className="p-4 md:p-8 bg-card rounded-xl shadow-2xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

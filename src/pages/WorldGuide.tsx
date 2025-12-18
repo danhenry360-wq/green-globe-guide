@@ -3390,12 +3390,14 @@ const WorldGuide = () => {
   const isSearching = searchQuery.length >= 2;
   const isAtContinentLevel = !cSlug;
 
+  const canonicalUrl = `https://budquest.guide/world${cSlug ? `/${cSlug}` : ''}${coSlug ? `/${coSlug}` : ''}${rSlug ? `/${rSlug}` : ''}${ciSlug ? `/${ciSlug}` : ''}`;
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>World Cannabis Guide 2025 | Global Cannabis Laws | BudQuest</title>
         <meta name="description" content="Complete guide to cannabis laws in 100+ countries. Find legal status, tourist tips, and 420-friendly travel guides for every continent." />
-        <link rel="canonical" href="https://budquest.guide/world" />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <Navigation />
 

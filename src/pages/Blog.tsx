@@ -1108,6 +1108,11 @@ const ArticleDetail = ({ post, onBack }: { post: typeof BLOG_POSTS[0]; onBack: (
 
   return (
     <div className="pt-24 pb-20">
+      <Helmet>
+        <title>{post.title} | BudQuest Blog</title>
+        <meta name="description" content={post.excerpt} />
+        <link rel="canonical" href={`https://budquest.guide/blog/${post.id}`} />
+      </Helmet>
       <div className="container mx-auto max-w-4xl px-4">
         {/* Back Button */}
         <div className="flex justify-between items-start mb-8">
