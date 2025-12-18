@@ -322,6 +322,68 @@ function App() {
               <Route path="/usa/colorado/frisco" element={<Navigate to="/frisco" replace />} />
               <Route path="/usa/colorado/monarch" element={<Navigate to="/monarch" replace />} />
 
+              {/* LEGACY COLORADO CITY REDIRECTS (Resolving Soft 404s) */}
+              <Route path="/colorado/denver" element={<Navigate to="/denver" replace />} />
+              <Route path="/colorado/boulder" element={<Navigate to="/boulder" replace />} />
+              <Route path="/colorado/aspen" element={<Navigate to="/aspen" replace />} />
+              <Route path="/colorado/colorado-springs" element={<Navigate to="/colorado-springs" replace />} />
+              <Route path="/colorado/fort-collins" element={<Navigate to="/fort-collins" replace />} />
+              <Route path="/colorado/thornton" element={<Navigate to="/thornton" replace />} />
+              <Route path="/colorado/aurora" element={<Navigate to="/aurora" replace />} />
+              <Route path="/colorado/lakewood" element={<Navigate to="/lakewood" replace />} />
+              <Route path="/colorado/longmont" element={<Navigate to="/longmont" replace />} />
+              <Route path="/colorado/pueblo" element={<Navigate to="/pueblo" replace />} />
+              <Route path="/colorado/loveland" element={<Navigate to="/loveland" replace />} />
+              <Route path="/colorado/estes-park" element={<Navigate to="/estes-park" replace />} />
+              <Route path="/colorado/greeley" element={<Navigate to="/greeley" replace />} />
+              <Route path="/colorado/castle-rock" element={<Navigate to="/castle-rock" replace />} />
+              <Route path="/colorado/broomfield" element={<Navigate to="/broomfield" replace />} />
+              <Route path="/colorado/westminster" element={<Navigate to="/westminster" replace />} />
+              <Route path="/colorado/arvada" element={<Navigate to="/arvada" replace />} />
+              <Route path="/colorado/centennial" element={<Navigate to="/centennial" replace />} />
+              <Route path="/colorado/grand-junction" element={<Navigate to="/grand-junction" replace />} />
+              <Route path="/colorado/durango" element={<Navigate to="/durango" replace />} />
+              <Route path="/colorado/fort-morgan" element={<Navigate to="/fort-morgan" replace />} />
+              <Route path="/colorado/montrose" element={<Navigate to="/montrose" replace />} />
+              <Route path="/colorado/littleton" element={<Navigate to="/littleton" replace />} />
+              <Route path="/colorado/englewood" element={<Navigate to="/englewood" replace />} />
+              <Route path="/colorado/red-rocks" element={<Navigate to="/red-rocks" replace />} />
+              <Route path="/colorado/glenwood-springs" element={<Navigate to="/glenwood-springs" replace />} />
+              <Route path="/colorado/telluride" element={<Navigate to="/telluride" replace />} />
+              <Route path="/colorado/pagosa-springs" element={<Navigate to="/pagosa-springs" replace />} />
+              <Route path="/colorado/silverton" element={<Navigate to="/silverton" replace />} />
+              <Route path="/colorado/ouray" element={<Navigate to="/ouray" replace />} />
+              <Route path="/colorado/breckenridge" element={<Navigate to="/breckenridge" replace />} />
+              <Route path="/colorado/commerce-city" element={<Navigate to="/commerce-city" replace />} />
+              <Route path="/colorado/federal-heights" element={<Navigate to="/federal-heights" replace />} />
+              <Route path="/colorado/northglenn" element={<Navigate to="/northglenn" replace />} />
+              <Route path="/colorado/vail" element={<Navigate to="/vail" replace />} />
+              <Route path="/colorado/steamboat-springs" element={<Navigate to="/steamboat-springs" replace />} />
+              <Route path="/colorado/leadville" element={<Navigate to="/leadville" replace />} />
+              <Route path="/colorado/manitou-springs" element={<Navigate to="/manitou-springs" replace />} />
+              <Route path="/colorado/central-city" element={<Navigate to="/central-city" replace />} />
+              <Route path="/colorado/black-hawk" element={<Navigate to="/black-hawk" replace />} />
+              <Route path="/colorado/georgetown" element={<Navigate to="/georgetown" replace />} />
+              <Route path="/colorado/idaho-springs" element={<Navigate to="/idaho-springs" replace />} />
+              <Route path="/colorado/nederland" element={<Navigate to="/nederland" replace />} />
+              <Route path="/colorado/ward" element={<Navigate to="/ward" replace />} />
+              <Route path="/colorado/winter-park" element={<Navigate to="/winter-park" replace />} />
+              <Route path="/colorado/walden" element={<Navigate to="/walden" replace />} />
+              <Route path="/colorado/delta" element={<Navigate to="/delta" replace />} />
+              <Route path="/colorado/paonia" element={<Navigate to="/paonia" replace />} />
+              <Route path="/colorado/ridgway" element={<Navigate to="/ridgway" replace />} />
+              <Route path="/colorado/lake-city" element={<Navigate to="/lake-city" replace />} />
+              <Route path="/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
+              <Route path="/colorado/salida" element={<Navigate to="/salida" replace />} />
+              <Route path="/colorado/golden" element={<Navigate to="/golden" replace />} />
+              <Route path="/colorado/crested-butte" element={<Navigate to="/crested-butte" replace />} />
+              <Route path="/colorado/buena-vista" element={<Navigate to="/buena-vista" replace />} />
+              <Route path="/colorado/palisade" element={<Navigate to="/palisade" replace />} />
+              <Route path="/colorado/cortez" element={<Navigate to="/cortez" replace />} />
+              <Route path="/colorado/gunnison" element={<Navigate to="/gunnison" replace />} />
+              <Route path="/colorado/frisco" element={<Navigate to="/frisco" replace />} />
+              <Route path="/colorado/monarch" element={<Navigate to="/monarch" replace />} />
+
               {/* Generic state/city routes */}
               <Route path="/usa/:stateSlug" element={<StateDetail />} />
               <Route path="/usa/:stateSlug/:citySlug" element={<CityDetail />} />
