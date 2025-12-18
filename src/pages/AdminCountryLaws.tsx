@@ -20,9 +20,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -117,6 +116,35 @@ const AdminCountryLaws = () => {
     },
   });
 
+  // Filter countries - MUST be before any early returns
+  const filteredCountries = useMemo(() => {
+    if (!countries) return [];
+    let filtered = countries;
+    
+    if (selectedRegion !== "All") {
+      filtered = filtered.filter(c => c.region === selectedRegion);
+    }
+    
+    if (searchQuery) {
+      filtered = filtered.filter((c) =>
+        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.region?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  }, [countries, searchQuery, selectedRegion]);
+
+  // Group countries by region - MUST be before any early returns
+  const regionCounts = useMemo(() => {
+    if (!countries) return {};
+    return countries.reduce((acc, c) => {
+      const region = c.region || "Unknown";
+      acc[region] = (acc[region] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }, [countries]);
+
   // Handle image upload
   const handleImageUpload = async (file: File) => {
     if (!editingCountry) return;
@@ -147,25 +175,6 @@ const AdminCountryLaws = () => {
       setUploadingImage(false);
     }
   };
-
-  // Filter countries
-  const filteredCountries = useMemo(() => {
-    if (!countries) return [];
-    let filtered = countries;
-    
-    if (selectedRegion !== "All") {
-      filtered = filtered.filter(c => c.region === selectedRegion);
-    }
-    
-    if (searchQuery) {
-      filtered = filtered.filter((c) =>
-        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.region?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    
-    return filtered;
-  }, [countries, searchQuery, selectedRegion]);
 
   const handleEdit = (country: CountryRecord) => {
     setEditingCountry(country);
@@ -232,16 +241,6 @@ const AdminCountryLaws = () => {
       </div>
     );
   }
-
-  // Group countries by region
-  const regionCounts = useMemo(() => {
-    if (!countries) return {};
-    return countries.reduce((acc, c) => {
-      const region = c.region || "Unknown";
-      acc[region] = (acc[region] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-  }, [countries]);
 
   return (
     <>
