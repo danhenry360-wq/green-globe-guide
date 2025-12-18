@@ -97,6 +97,9 @@ export const HeroSection = () => {
                 </h1>
 
                 {/* Subheadings */}
+                <p className="text-[clamp(1.1rem,2.8vw,1.85rem)] text-accent font-medium mt-2 max-w-4xl mx-auto tracking-wide uppercase">
+                    Global Cannabis Travel Guide
+                </p>
                 <p className="text-[clamp(1rem,2.2vw,1.4rem)] text-muted-foreground/90 font-light mt-4 max-w-4xl mx-auto leading-relaxed">
                     Premium intelligence for legal cannabis tourism. Navigate 420-friendly regulations, discover verified dispensaries, and explore travel destinations in 150+ countries.
                 </p>
