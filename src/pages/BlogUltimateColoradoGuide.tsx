@@ -213,7 +213,7 @@ const BlogUltimateColoradoGuide = () => {
                                     {/* Denver */}
                                     <div className="flex flex-col md:flex-row gap-8 items-start">
                                         <div className="w-full md:w-1/3">
-                                            <img src="/dest-denver.jpg" alt="Denver Skyline" className="rounded-xl shadow-lg w-full h-48 object-cover" />
+                                            <img src="/images/blog/colorado-guide/denver-skyline.png" alt="Denver Skyline" className="rounded-xl shadow-lg w-full h-48 object-cover" />
                                         </div>
                                         <div className="w-full md:w-2/3">
                                             <h3 className="text-2xl font-bold mb-2">Denver — The Cannabis Capital</h3>
@@ -232,7 +232,7 @@ const BlogUltimateColoradoGuide = () => {
                                     {/* Boulder */}
                                     <div className="flex flex-col md:flex-row-reverse gap-8 items-start border-t border-accent/10 pt-12">
                                         <div className="w-full md:w-1/3">
-                                            <img src="/dest-boulder.jpg" alt="Boulder Flatirons" className="rounded-xl shadow-lg w-full h-48 object-cover" />
+                                            <img src="/images/blog/colorado-guide/boulder-flatirons.png" alt="Boulder Flatirons" className="rounded-xl shadow-lg w-full h-48 object-cover" />
                                         </div>
                                         <div className="w-full md:w-2/3">
                                             <h3 className="text-2xl font-bold mb-2">Boulder — Craft Cannabis + Mountain Vibes</h3>
@@ -246,7 +246,7 @@ const BlogUltimateColoradoGuide = () => {
                                     {/* Breckenridge */}
                                     <div className="flex flex-col md:flex-row gap-8 items-start border-t border-accent/10 pt-12">
                                         <div className="w-full md:w-1/3">
-                                            <img src="/dest-breckenridge.jpg" alt="Breckenridge Ski Resort" className="rounded-xl shadow-lg w-full h-48 object-cover" />
+                                            <img src="/images/blog/colorado-guide/breckenridge-ski-resort.png" alt="Breckenridge Ski Resort" className="rounded-xl shadow-lg w-full h-48 object-cover" />
                                         </div>
                                         <div className="w-full md:w-2/3">
                                             <h3 className="text-2xl font-bold mb-2">Breckenridge — Ski Town + High Altitudes</h3>
@@ -260,7 +260,7 @@ const BlogUltimateColoradoGuide = () => {
                                     {/* Aspen */}
                                     <div className="flex flex-col md:flex-row-reverse gap-8 items-start border-t border-accent/10 pt-12">
                                         <div className="w-full md:w-1/3">
-                                            <img src="/dest-aspen.jpg" alt="Aspen Mountains" className="rounded-xl shadow-lg w-full h-48 object-cover" />
+                                            <img src="/images/blog/colorado-guide/aspen-mountains.png" alt="Aspen Mountains" className="rounded-xl shadow-lg w-full h-48 object-cover" />
                                         </div>
                                         <div className="w-full md:w-2/3">
                                             <h3 className="text-2xl font-bold mb-2">Aspen — Luxury Cannabis Experience</h3>
