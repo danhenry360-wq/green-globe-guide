@@ -246,7 +246,7 @@ const Tours = () => {
           </header>
 
           {/* Mobile Search Bar – Compact Design */}
-          <div className="lg:hidden sticky top-16 z-40 bg-background border-b border-white/10 shadow-md mt-16 mb-8">
+          <div className="lg:hidden sticky top-16 z-40 bg-background border-b border-white/10 shadow-md mb-8">
             <div className="px-4 py-4">
               <div className="flex gap-3 items-stretch">
                 {/* Search Input */}
