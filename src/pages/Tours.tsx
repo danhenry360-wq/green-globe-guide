@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, Clock, Star, ExternalLink, CheckCircle, Sparkles } from "lucide-react";
+import { MapPin, Clock, Star, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "react-router-dom";
 
 const Tours = () => {
   const { data: tours, isLoading } = useQuery({
@@ -136,14 +137,12 @@ const Tours = () => {
                         <div className="text-lg font-semibold text-accent">
                           {tour.price_range}
                         </div>
-                        {tour.booking_url && (
-                          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                            <a href={tour.booking_url} target="_blank" rel="noopener noreferrer">
-                              Book Now
-                              <ExternalLink className="w-4 h-4 ml-2" />
-                            </a>
-                          </Button>
-                        )}
+                        <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                          <Link to={`/tours/${tour.slug}`}>
+                            View Details
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Link>
+                        </Button>
                       </div>
                     </CardContent>
                   </div>
