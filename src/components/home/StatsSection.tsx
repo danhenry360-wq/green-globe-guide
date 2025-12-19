@@ -2,7 +2,7 @@
 // Stats grid showing key platform metrics
 
 import { motion } from "framer-motion";
-import { Globe2, Store, Building2, Shield } from "lucide-react";
+import { Globe2, Store, Building2, Shield, Map } from "lucide-react";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { useDynamicStats } from "@/hooks/useDynamicStats";
 
@@ -10,13 +10,13 @@ const COUNTRY_COUNT = 150;
 const DATA_ACCURACY = 94;
 
 export const StatsSection = () => {
-    const { dispensaryCount, hotelCount } = useDynamicStats();
+    const { dispensaryCount, hotelCount, tourCount } = useDynamicStats();
 
     const stats = [
         { icon: Globe2, label: "Countries Covered", count: COUNTRY_COUNT, suffix: "+" },
         { icon: Store, label: "Verified Dispensaries", count: dispensaryCount, suffix: "+" },
         { icon: Building2, label: "420-Friendly Hotels", count: hotelCount, suffix: "+" },
-        { icon: Shield, label: "Data Accuracy", count: DATA_ACCURACY, suffix: "%" },
+        { icon: Map, label: "Cannabis Tours", count: tourCount, suffix: "+" },
     ];
 
     return (

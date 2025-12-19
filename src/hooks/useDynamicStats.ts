@@ -7,16 +7,19 @@ import { supabase } from "@/integrations/supabase/client";
 interface DynamicStats {
     dispensaryCount: number;
     hotelCount: number;
+    tourCount: number;
     isLoading: boolean;
     error: string | null;
 }
 
 const DEFAULT_DISPENSARY_COUNT = 48;
 const DEFAULT_HOTEL_COUNT = 31;
+const DEFAULT_TOUR_COUNT = 1;
 
 export const useDynamicStats = (): DynamicStats => {
     const [dispensaryCount, setDispensaryCount] = useState(DEFAULT_DISPENSARY_COUNT);
     const [hotelCount, setHotelCount] = useState(DEFAULT_HOTEL_COUNT);
+    const [tourCount, setTourCount] = useState(DEFAULT_TOUR_COUNT);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -26,9 +29,10 @@ export const useDynamicStats = (): DynamicStats => {
                 setIsLoading(true);
                 setError(null);
 
-                const [dispResult, hotelResult] = await Promise.all([
+                const [dispResult, hotelResult, tourResult] = await Promise.all([
                     supabase.from('dispensaries').select('id', { count: 'exact', head: true }),
-                    supabase.from('hotels').select('id', { count: 'exact', head: true })
+                    supabase.from('hotels').select('id', { count: 'exact', head: true }),
+                    supabase.from('tours').select('id', { count: 'exact', head: true })
                 ]);
 
                 if (dispResult.error) {
@@ -41,6 +45,12 @@ export const useDynamicStats = (): DynamicStats => {
                     console.warn('Failed to fetch hotel count:', hotelResult.error);
                 } else if (hotelResult.count !== null) {
                     setHotelCount(hotelResult.count);
+                }
+
+                if (tourResult.error) {
+                    console.warn('Failed to fetch tour count:', tourResult.error);
+                } else if (tourResult.count !== null) {
+                    setTourCount(tourResult.count);
                 }
             } catch (err) {
                 console.error('Error fetching dynamic stats:', err);
@@ -56,6 +66,7 @@ export const useDynamicStats = (): DynamicStats => {
     return {
         dispensaryCount,
         hotelCount,
+        tourCount,
         isLoading,
         error,
     };
