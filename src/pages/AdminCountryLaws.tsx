@@ -79,7 +79,7 @@ const AdminCountryLaws = () => {
   });
 
   // Fetch countries
-  const { data: countries, isLoading: countriesLoading } = useQuery({
+  const { data: countries, isLoading: countriesLoading, refetch } = useQuery({
     queryKey: ["admin-countries"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -90,6 +90,8 @@ const AdminCountryLaws = () => {
       return data as CountryRecord[];
     },
     enabled: !!isAdmin,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
   });
 
   // Update country mutation
@@ -107,6 +109,7 @@ const AdminCountryLaws = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-countries"] });
+      refetch();
       toast.success("Country laws updated successfully");
       setDialogOpen(false);
       setEditingCountry(null);
