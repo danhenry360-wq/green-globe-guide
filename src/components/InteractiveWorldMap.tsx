@@ -5,6 +5,7 @@ import { Search, Globe, MapPin, X, AlertTriangle, ShieldCheck, ShoppingBag } fro
 import { getStatusHexColor } from '@/lib/legal-status-colors';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useCountryImages, getCountryImageUrl } from "@/hooks/useCountryImages";
 
 // ✅ FIXED IMPORT: Points to 'world_data' instead of 'country-data'
 import { countryData, type CountryProfile } from '@/data/world_data';
@@ -32,11 +33,27 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Fetch country images from database
+  const { data: countryImages } = useCountryImages();
+  
   // State
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Helper to get the best image for a country
+  const getCountryImage = (countryCode: string): string => {
+    const country = countryData[countryCode];
+    if (!country) return '';
+    
+    // First try database image
+    const dbImage = getCountryImageUrl(countryImages, country.name, undefined);
+    if (dbImage) return dbImage;
+    
+    // Fallback to static data
+    return country.overview.heroImage;
+  };
 
   // Handle Mouse Move for Tooltip
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -193,7 +210,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                     }}
                     className="flex items-center gap-3 p-3 hover:bg-accent/10 cursor-pointer transition-colors border-b border-border/50 last:border-0"
                   >
-                    <img src={data.overview.heroImage} alt={data.name} className="w-8 h-8 rounded object-cover" />
+                    <img src={getCountryImage(code)} alt={data.name} className="w-8 h-8 rounded object-cover" />
                     <div>
                       <div className="text-sm font-medium">{data.name}</div>
                       <div className="text-xs text-muted-foreground capitalize">{data.overview.status}</div>
@@ -362,7 +379,7 @@ const InteractiveWorldMap: React.FC<InteractiveWorldMapProps> = ({ className }) 
                 <div className="relative h-28 w-full">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
                   <img 
-                    src={countryData[hoveredCountry].overview.heroImage} 
+                    src={getCountryImage(hoveredCountry)} 
                     alt={countryData[hoveredCountry].name}
                     className="w-full h-full object-cover"
                   />

@@ -26,7 +26,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Edit, Shield, ArrowLeft, Save, Loader2, Globe, Upload, Image as ImageIcon, X } from "lucide-react";
+import { Search, Edit, Shield, ArrowLeft, Save, Loader2, Globe, Upload, Image as ImageIcon, X, Images, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
@@ -62,6 +62,16 @@ const AdminCountryLaws = () => {
   const [formData, setFormData] = useState<Partial<CountryRecord>>({});
   const [uploadingImage, setUploadingImage] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  
+  // Bulk upload state
+  const [bulkUploadOpen, setBulkUploadOpen] = useState(false);
+  const [bulkUploading, setBulkUploading] = useState(false);
+  const [bulkUploadProgress, setBulkUploadProgress] = useState<{
+    total: number;
+    completed: number;
+    current: string;
+    results: { name: string; success: boolean; error?: string }[];
+  }>({ total: 0, completed: 0, current: "", results: [] });
 
   // Check admin role
   const { data: isAdmin, isLoading: roleLoading } = useQuery({
@@ -179,6 +189,109 @@ const AdminCountryLaws = () => {
     }
   };
 
+  // Handle bulk image upload
+  const handleBulkUpload = async (files: FileList) => {
+    if (!countries || files.length === 0) return;
+    
+    setBulkUploading(true);
+    setBulkUploadProgress({
+      total: files.length,
+      completed: 0,
+      current: "",
+      results: []
+    });
+    
+    const results: { name: string; success: boolean; error?: string }[] = [];
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileNameWithoutExt = file.name.split('.').slice(0, -1).join('.');
+      
+      // Try to match file name to country name (case-insensitive, handle various formats)
+      const normalizedFileName = fileNameWithoutExt
+        .toLowerCase()
+        .replace(/[-_]/g, ' ')
+        .trim();
+      
+      const matchedCountry = countries.find(c => {
+        const normalizedCountryName = c.name.toLowerCase();
+        const normalizedSlug = c.slug.replace(/-/g, ' ');
+        return normalizedCountryName === normalizedFileName || 
+               normalizedSlug === normalizedFileName ||
+               normalizedCountryName.includes(normalizedFileName) ||
+               normalizedFileName.includes(normalizedCountryName);
+      });
+      
+      setBulkUploadProgress(prev => ({
+        ...prev,
+        current: fileNameWithoutExt,
+        completed: i
+      }));
+      
+      if (!matchedCountry) {
+        results.push({ name: file.name, success: false, error: "No matching country found" });
+        continue;
+      }
+      
+      try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `country-${matchedCountry.slug}-${Date.now()}.${fileExt}`;
+        const filePath = `country-images/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('dispensary-images')
+          .upload(filePath, file, { upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('dispensary-images')
+          .getPublicUrl(filePath);
+
+        // Update country with new image URL
+        const { error: updateError } = await supabase
+          .from("countries")
+          .update({ 
+            image_url: publicUrl,
+            last_updated: new Date().toISOString()
+          })
+          .eq("id", matchedCountry.id);
+
+        if (updateError) throw updateError;
+
+        results.push({ name: file.name, success: true });
+      } catch (error) {
+        results.push({ 
+          name: file.name, 
+          success: false, 
+          error: error instanceof Error ? error.message : "Upload failed" 
+        });
+      }
+    }
+    
+    setBulkUploadProgress(prev => ({
+      ...prev,
+      completed: files.length,
+      current: "",
+      results
+    }));
+    
+    const successCount = results.filter(r => r.success).length;
+    const failCount = results.filter(r => !r.success).length;
+    
+    if (successCount > 0) {
+      toast.success(`Successfully uploaded ${successCount} image(s)`);
+      queryClient.invalidateQueries({ queryKey: ["admin-countries"] });
+      queryClient.invalidateQueries({ queryKey: ["country-images"] });
+      refetch();
+    }
+    if (failCount > 0) {
+      toast.error(`${failCount} upload(s) failed`);
+    }
+    
+    setBulkUploading(false);
+  };
+
   const handleEdit = (country: CountryRecord) => {
     setEditingCountry(country);
     setFormData({
@@ -277,6 +390,18 @@ const AdminCountryLaws = () => {
                 Manage cannabis laws for {countries?.length || 0} international destinations
               </p>
             </motion.div>
+            
+            {/* Bulk Upload Button */}
+            <div className="mt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setBulkUploadOpen(true)}
+                className="gap-2"
+              >
+                <Images className="w-4 h-4" />
+                Bulk Upload Images
+              </Button>
+            </div>
           </div>
 
           {/* Region Filter Tabs */}
@@ -566,6 +691,116 @@ const AdminCountryLaws = () => {
                 )}
                 Save Changes
               </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Bulk Upload Dialog */}
+        <Dialog open={bulkUploadOpen} onOpenChange={setBulkUploadOpen}>
+          <DialogContent className="max-w-lg">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Images className="w-5 h-5 text-accent" />
+                Bulk Upload Country Images
+              </DialogTitle>
+            </DialogHeader>
+
+            <div className="space-y-4 mt-4">
+              <div className="bg-muted/50 p-4 rounded-lg border border-border">
+                <p className="text-sm text-muted-foreground mb-2">
+                  <strong>How it works:</strong>
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
+                  <li>Name your image files after the country (e.g., "cameroon.jpg", "United States.png")</li>
+                  <li>Supported formats: JPG, PNG, WebP</li>
+                  <li>Files will be matched to countries by name</li>
+                  <li>Existing images will be replaced</li>
+                </ul>
+              </div>
+
+              {!bulkUploading && bulkUploadProgress.results.length === 0 && (
+                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-accent/50 transition-colors">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    id="bulk-upload-input"
+                    className="hidden"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        handleBulkUpload(e.target.files);
+                      }
+                    }}
+                  />
+                  <Label htmlFor="bulk-upload-input" className="cursor-pointer">
+                    <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-lg font-medium mb-1">Drop files here or click to upload</p>
+                    <p className="text-sm text-muted-foreground">Select multiple images at once</p>
+                  </Label>
+                </div>
+              )}
+
+              {bulkUploading && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Loader2 className="w-5 h-5 animate-spin text-accent" />
+                    <span className="text-sm">
+                      Uploading {bulkUploadProgress.completed + 1} of {bulkUploadProgress.total}...
+                    </span>
+                  </div>
+                  {bulkUploadProgress.current && (
+                    <p className="text-xs text-muted-foreground">
+                      Processing: {bulkUploadProgress.current}
+                    </p>
+                  )}
+                  <div className="w-full bg-muted rounded-full h-2">
+                    <div 
+                      className="bg-accent h-2 rounded-full transition-all duration-300"
+                      style={{ 
+                        width: `${(bulkUploadProgress.completed / bulkUploadProgress.total) * 100}%` 
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {!bulkUploading && bulkUploadProgress.results.length > 0 && (
+                <div className="space-y-3">
+                  <p className="text-sm font-medium">
+                    Upload Complete: {bulkUploadProgress.results.filter(r => r.success).length} succeeded, 
+                    {" "}{bulkUploadProgress.results.filter(r => !r.success).length} failed
+                  </p>
+                  <div className="max-h-48 overflow-y-auto space-y-1">
+                    {bulkUploadProgress.results.map((result, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`flex items-center gap-2 text-xs p-2 rounded ${
+                          result.success ? 'bg-accent/10 text-accent' : 'bg-destructive/10 text-destructive'
+                        }`}
+                      >
+                        {result.success ? (
+                          <Check className="w-3 h-3" />
+                        ) : (
+                          <X className="w-3 h-3" />
+                        )}
+                        <span className="truncate flex-1">{result.name}</span>
+                        {result.error && (
+                          <span className="text-muted-foreground truncate">{result.error}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => {
+                      setBulkUploadProgress({ total: 0, completed: 0, current: "", results: [] });
+                    }}
+                  >
+                    Upload More
+                  </Button>
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>
