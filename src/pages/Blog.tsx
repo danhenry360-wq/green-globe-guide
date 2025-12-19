@@ -62,6 +62,27 @@ export const BLOG_POSTS = [
     }
   },
   {
+    id: "best-dispensaries-near-red-rocks-2025",
+    title: "Best Dispensaries Near Red Rocks (2025)",
+    subtitle: "Don't get caught dry at the concert. Here's where to stop nearby.",
+    excerpt: "Heading to a show? We mapped the closest dispensaries to Red Rocks in Morrison, Golden, and Lakewood, plus crucial tips for consuming before the music starts.",
+    date: "Dec 18, 2025",
+    readTime: "5 min read",
+    author: "BudQuest Team",
+    avatar: "🎸",
+    category: "Concert Guide",
+    tags: ["Red Rocks", "Dispensaries", "Music", "Morrison"],
+    image: "/blog-red-rocks-dispensaries.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-dispensaries-near-red-rocks-2025",
+    content: {
+      introduction: "Red Rocks is a bucket-list venue. Make sure your cannabis game is on point before you get there.",
+      disclaimer: "Cannabis is prohibited inside Red Rocks Amphitheatre. Consume responsibly before entry.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "cannabis-dispensaries-breckenridge-complete-guide-2025",
     title: "Cannabis Dispensaries in Breckenridge: Complete Guide 2025",
     subtitle: "Where to buy weed in Breckenridge, current prices, and altitude safety tips.",
