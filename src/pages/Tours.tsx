@@ -7,11 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import {
   Star, MapPin, Clock, Loader2,
-  ChevronRight, Sparkles, Search, Filter
+  ChevronRight, Sparkles, Search, Filter, X
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -246,30 +245,70 @@ const Tours = () => {
             </p>
           </header>
 
-          {/* Search & Mobile Filter Toggle */}
-          <div className="max-w-7xl mx-auto mb-8 flex gap-4 sticky top-20 z-30 bg-background/95 backdrop-blur-sm py-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-              <Input
-                placeholder="Search tours, cities..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 bg-card/50 border-white/10 h-11"
-              />
+          {/* Mobile Search Bar – Compact Design */}
+          <div className="lg:hidden sticky top-16 z-40 bg-background border-b border-white/10 shadow-md mt-16 mb-8">
+            <div className="px-4 py-4">
+              <div className="flex gap-3 items-stretch">
+                {/* Search Input */}
+                <div className="flex-1 relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-white/10 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                  />
+                  {search && (
+                    <button
+                      onClick={() => setSearch("")}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                    >
+                      <X className="w-5 h-5 text-muted-foreground hover:text-white" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Filter Button */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 border-white/10 text-sm px-4 h-12 rounded-xl hover:bg-accent/10"
+                    >
+                      <Filter className="w-5 h-5" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-[300px] bg-background border-r border-white/10">
+                    <SheetHeader className="mb-6">
+                      <SheetTitle className="text-left">Filters</SheetTitle>
+                    </SheetHeader>
+                    <FilterControls />
+                  </SheetContent>
+                </Sheet>
+
+                {/* Sort Dropdown */}
+                <select
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value as string)}
+                  className="px-4 py-3 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 h-12 w-12"
+                >
+                  <option value="recommended" className="bg-card">
+                    Recommended
+                  </option>
+                  <option value="rating" className="bg-card">
+                    Highest Rated
+                  </option>
+                  <option value="price-low" className="bg-card">
+                    Price: Low to High
+                  </option>
+                  <option value="price-high" className="bg-card">
+                    Price: High to Low
+                  </option>
+                </select>
+              </div>
             </div>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" className="lg:hidden h-11 border-white/10 gap-2">
-                  <Filter className="w-4 h-4" /> Filters
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] bg-background border-r border-white/10">
-                <SheetHeader className="mb-6">
-                  <SheetTitle className="text-left">Filters</SheetTitle>
-                </SheetHeader>
-                <FilterControls />
-              </SheetContent>
-            </Sheet>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
