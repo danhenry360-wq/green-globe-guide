@@ -35,11 +35,12 @@ interface Tour {
 
 const MOCK_TOUR_METADATA: Record<string, Partial<Tour>> = {
   'beyond-light-show-meditation': {
-    rating: 4.8,
-    review_count: 366,
+    rating: 4.9,
+    review_count: 818,
     duration: '1 hour',
     price_range: '$25.00',
-    price_value: 25
+    price_value: 25,
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=600&fit=crop'
   }
 };
 
