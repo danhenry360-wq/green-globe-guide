@@ -16,11 +16,11 @@ import { DispensaryMap } from "@/components/DispensaryMap";
 // Mock tour images for fallback
 const MOCK_TOUR_IMAGES: Record<string, string[]> = {
   'beyond-light-show-meditation': [
-    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1516738901601-1e9d7da29111?w=1200&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=1200&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1200&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&h=800&fit=crop'
+    '/tours/beyond-light-show-denver.jpg',
+    '/tours/beyond-light-show-denver.jpg',
+    '/tours/beyond-light-show-denver.jpg',
+    '/tours/beyond-light-show-denver.jpg',
+    '/tours/beyond-light-show-denver.jpg'
   ]
 };
 
@@ -132,7 +132,8 @@ const TourDetail = () => {
   }
 
   const mockImages = slug ? MOCK_TOUR_IMAGES[slug] : null;
-  const allImages = tour.images?.filter(img => img) || mockImages || ['/tours/beyond-light-show-denver.jpg'];
+  // Use mock images if available and tour doesn't have multiple images, otherwise use tour images
+  const allImages = (mockImages && mockImages.length > 1) ? mockImages : (tour.images?.filter(img => img) || mockImages || ['/tours/beyond-light-show-denver.jpg']);
   const hasMultipleImages = allImages.length > 1;
 
   return (
