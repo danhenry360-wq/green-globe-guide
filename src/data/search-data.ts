@@ -254,7 +254,6 @@ export const POPULAR_CITIES: SearchItem[] = [
     { name: "Cape Town", type: "city", status: "Decriminalized", path: "/world/africa/south-africa/western-cape/cape-town", region: "South Africa" },
     { name: "Tel Aviv", type: "city", status: "Medical", path: "/world/asia/israel/tel-aviv", region: "Israel" },
     { name: "Canberra", type: "city", status: "Recreational", path: "/world/oceania/australia/act/canberra", region: "Australia" },
-    { name: "BEYOND: Light Show & Meditation", type: "city", status: "Experience", path: "/tours/beyond-light-show-meditation", region: "Denver, CO" },
 ];
 
 // Combined search items for easy consumption

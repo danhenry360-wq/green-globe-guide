@@ -102,7 +102,6 @@ const Tours = () => {
     };
 
     fetchTours();
-    // Search implementation initialized
   }, []);
 
   // Filter Logic
