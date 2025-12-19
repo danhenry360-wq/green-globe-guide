@@ -339,6 +339,9 @@ const TourDetail = () => {
                   </Card>
                 )}
 
+                {/* Reviews Section */}
+                <TourReviewsSection tourId={tour.id} />
+
                 {/* Nearby Dispensaries */}
                 {nearbyDispensaries.length > 0 && (
                   <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
@@ -384,9 +387,6 @@ const TourDetail = () => {
                     </CardContent>
                   </Card>
                 )}
-
-                {/* Reviews Section */}
-                <TourReviewsSection tourId={tour.id} />
               </div>
             </div>
           </div>
