@@ -31,6 +31,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { getCountryImage } from "@/data/country_images";
 import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
+import { useCountryImages, getCountryImageUrl } from "@/hooks/useCountryImages";
 
 /* ----------------------------------------------------
    4-LEVEL DATA MODEL
@@ -2830,7 +2831,19 @@ const CountrySearchResults = ({
   onClear: () => void;
 }) => {
   const nav = useNavigate();
+  const { data: dbImages } = useCountryImages();
   const allCountries = useMemo(() => getAllCountries(), []);
+
+  // Helper to get best image for country
+  const getImageForCountry = (country: { name: string; slug: string; image: string }) => {
+    // First check database images
+    const dbImage = getCountryImageUrl(dbImages, country.name);
+    if (dbImage) return dbImage;
+    // Then static image
+    if (country.image) return country.image;
+    // Fallback to country_images.ts
+    return getCountryImage(country.slug);
+  };
 
   const filteredCountries = useMemo(() => {
     return allCountries.filter(c =>
@@ -2879,7 +2892,7 @@ const CountrySearchResults = ({
                 onClick={() => nav(`/world/${c.continentSlug}/${c.slug}`)}
               >
                 <img
-                  src={c.image}
+                  src={getImageForCountry(c)}
                   alt={c.name}
                   className="h-48 w-full object-cover"
                 />
@@ -2994,6 +3007,19 @@ const ContinentIndex = ({
 const CountryIndex = ({ continent }: { continent: Continent }) => {
   const nav = useNavigate();
   const [q, setQ] = useState("");
+  const { data: dbImages } = useCountryImages();
+  
+  // Helper to get best image for country
+  const getImageForCountry = (country: Country) => {
+    // First check database images
+    const dbImage = getCountryImageUrl(dbImages, country.name);
+    if (dbImage) return dbImage;
+    // Then static image
+    if (country.image) return country.image;
+    // Fallback to country_images.ts
+    return getCountryImage(country.slug);
+  };
+  
   const filtered = useMemo(
     () =>
       q
@@ -3058,7 +3084,7 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
                 onClick={() => nav(`/world/${continent.slug}/${c.slug}`)}
               >
                 <img
-                  src={c.image}
+                  src={getImageForCountry(c)}
                   alt={c.name}
                   className="h-48 w-full object-cover"
                 />
@@ -3110,6 +3136,19 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
 const RegionIndex = ({ continent, country }: { continent: Continent; country: Country }) => {
   const nav = useNavigate();
   const [q, setQ] = useState("");
+  const { data: dbImages } = useCountryImages();
+  
+  // Helper to get best image for country
+  const getImageForCountry = () => {
+    // First check database images
+    const dbImage = getCountryImageUrl(dbImages, country.name);
+    if (dbImage) return dbImage;
+    // Then static image
+    if (country.image) return country.image;
+    // Fallback to country_images.ts
+    return getCountryImage(country.slug);
+  };
+  
   const filtered = useMemo(
     () =>
       q
