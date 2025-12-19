@@ -210,14 +210,6 @@ const TourDetail = () => {
                     </a>
                   </Button>
                 )}
-                {tour.website && (
-                  <Button variant="outline" asChild className="border-accent/30 text-accent hover:bg-accent/10">
-                    <a href={tour.website} target="_blank" rel="noopener noreferrer">
-                      <Globe className="w-4 h-4 mr-2" />
-                      Website
-                    </a>
-                  </Button>
-                )}
               </div>
             </header>
 
