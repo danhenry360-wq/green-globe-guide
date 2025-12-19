@@ -51,7 +51,7 @@ export const BLOG_POSTS = [
     avatar: "🌿",
     category: "Education",
     tags: ["Clean Cannabis", "Organic", "Safety", "Colorado"],
-    image: "https://images.unsplash.com/photo-1576091160550-112173f7b2b7?w=1200&h=600&fit=crop",
+    image: "/blog-clean-green-guide.jpg",
     isExternalPage: true,
     externalUrl: "/blog/clean-green-guide-colorado-2025",
     content: {
