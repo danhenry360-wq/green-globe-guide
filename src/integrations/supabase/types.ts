@@ -742,35 +742,65 @@ export type Database = {
       }
       tours: {
         Row: {
+          address: string | null
+          booking_url: string | null
           city_id: string | null
           created_at: string | null
           description: string | null
+          duration: string | null
+          highlights: string[] | null
           id: string
           images: string[] | null
+          is_420_friendly: boolean | null
+          is_verified: boolean | null
+          latitude: number | null
+          longitude: number | null
           name: string
           price_range: string | null
+          rating: number | null
+          review_count: number | null
           slug: string
           website: string | null
         }
         Insert: {
+          address?: string | null
+          booking_url?: string | null
           city_id?: string | null
           created_at?: string | null
           description?: string | null
+          duration?: string | null
+          highlights?: string[] | null
           id?: string
           images?: string[] | null
+          is_420_friendly?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
           name: string
           price_range?: string | null
+          rating?: number | null
+          review_count?: number | null
           slug: string
           website?: string | null
         }
         Update: {
+          address?: string | null
+          booking_url?: string | null
           city_id?: string | null
           created_at?: string | null
           description?: string | null
+          duration?: string | null
+          highlights?: string[] | null
           id?: string
           images?: string[] | null
+          is_420_friendly?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
           name?: string
           price_range?: string | null
+          rating?: number | null
+          review_count?: number | null
           slug?: string
           website?: string | null
         }
