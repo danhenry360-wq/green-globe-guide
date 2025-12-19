@@ -5,12 +5,61 @@ import { Link } from "react-router-dom";
 import {
     MapPin, Clock, AlertTriangle, Car, Music,
     ShoppingBag, CheckCircle2, ChevronRight, Store,
-    Leaf, Flame, Ban, Info, ArrowRight
+    Leaf, Flame, Ban, Info, ArrowRight, Star
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Dispensary {
+    id: string;
+    name: string;
+    slug: string;
+    city: string;
+    state: string;
+    rating: number | null;
+    image: string | null;
+    images: string[] | null;
+    is_recreational: boolean | null;
+    is_medical: boolean | null;
+    address: string;
+}
 
 const BlogRedRocksDispensaries = () => {
+    const [dispensaries, setDispensaries] = useState<Dispensary[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchDispensaries = async () => {
+            const { data, error } = await supabase
+                .from("dispensaries")
+                .select("*")
+                .eq("state", "Colorado")
+                .or("city.ilike.%Morrison%,city.ilike.%Golden%,city.ilike.%Lakewood%")
+                .order("rating", { ascending: false })
+                .limit(6);
+
+            if (data) setDispensaries(data);
+            setLoading(false);
+        };
+
+        fetchDispensaries();
+    }, []);
+
+    const renderRating = (rating: number) => {
+        const stars = [];
+        const fullStars = Math.floor(rating);
+        for (let i = 0; i < 5; i++) {
+            if (i < fullStars) {
+                stars.push(<Star key={i} className="h-4 w-4 fill-gold text-gold" />);
+            } else {
+                stars.push(<Star key={i} className="h-4 w-4 text-muted-foreground/30" />);
+            }
+        }
+        return stars;
+    };
+
     return (
         <>
             <Helmet>
@@ -114,61 +163,55 @@ const BlogRedRocksDispensaries = () => {
                             <section id="dispensaries">
                                 <h2 className="text-3xl font-bold mb-8">Best Dispensaries Near Red Rocks</h2>
 
-                                <h3 className="text-xl font-bold mb-4 text-accent">Closest Options (10-15 Min Drive)</h3>
-                                <div className="space-y-4 mb-8">
-                                    <Card className="p-6 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between hover:border-accent/50 transition-all">
-                                        <div>
-                                            <h4 className="font-bold text-lg flex items-center gap-2">The Green Solution <span className="text-xs bg-muted px-2 py-0.5 rounded text-muted-foreground font-normal">Lakewood</span></h4>
-                                            <p className="text-sm text-muted-foreground">Reliable chain, strict testing, loyalty rewards. Great for quick stops.</p>
-                                        </div>
-                                        <div className="flex flex-col items-end gap-1 min-w-[100px]">
-                                            <span className="text-xs font-bold text-accent">~10 min away</span>
-                                            <span className="text-xs text-muted-foreground">5110 W Colfax Ave</span>
-                                        </div>
+                                {loading ? (
+                                    <div className="flex justify-center py-12">
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+                                    </div>
+                                ) : dispensaries.length > 0 ? (
+                                    <div className="space-y-4 mb-8">
+                                        {dispensaries.map((disp) => (
+                                            <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
+                                                <Card className="p-6 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between hover:border-accent/50 transition-all group">
+                                                    <div className="flex gap-4 items-center">
+                                                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
+                                                            <img
+                                                                src={disp.images?.[0] || disp.image || "/dest-colorado.png"}
+                                                                alt={disp.name}
+                                                                className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="font-bold text-lg flex items-center gap-2">
+                                                                {disp.name}
+                                                                <span className="text-xs bg-muted px-2 py-0.5 rounded text-muted-foreground font-normal">{disp.city}</span>
+                                                            </h4>
+                                                            <div className="flex items-center gap-1 mt-1">
+                                                                {renderRating(disp.rating || 0)}
+                                                                <span className="text-xs text-muted-foreground ml-1">({disp.rating || "N/A"})</span>
+                                                            </div>
+                                                            <p className="text-sm text-muted-foreground mt-1">{disp.address}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col items-end gap-1 min-w-[100px]">
+                                                        <span className="text-xs font-bold text-accent flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                            View Menu <ChevronRight className="h-3 w-3" />
+                                                        </span>
+                                                        <div className="flex gap-1 mt-1">
+                                                            {disp.is_recreational && <span className="text-[10px] bg-green-500/10 text-green-500 px-1.5 py-0.5 rounded">Rec</span>}
+                                                            {disp.is_medical && <span className="text-[10px] bg-blue-500/10 text-blue-500 px-1.5 py-0.5 rounded">Med</span>}
+                                                        </div>
+                                                    </div>
+                                                </Card>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <Card className="p-8 text-center bg-card/50">
+                                        <Store className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                                        <p className="text-muted-foreground">No dispensaries found in immediate vicinity. Check Golden or Lakewood listings!</p>
                                     </Card>
+                                )}
 
-                                    <Card className="p-6 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between hover:border-accent/50 transition-all">
-                                        <div>
-                                            <h4 className="font-bold text-lg flex items-center gap-2">Native Roots <span className="text-xs bg-muted px-2 py-0.5 rounded text-muted-foreground font-normal">Littleton/Golden</span></h4>
-                                            <p className="text-sm text-muted-foreground">Tourist-friendly, massive selection ("Gas & Grass" stations often nearby).</p>
-                                        </div>
-                                        <div className="flex flex-col items-end gap-1 min-w-[100px]">
-                                            <span className="text-xs font-bold text-accent">~12 min away</span>
-                                            <span className="text-xs text-muted-foreground">Multiple Locations</span>
-                                        </div>
-                                    </Card>
-
-                                    <Card className="p-6 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between hover:border-accent/50 transition-all">
-                                        <div>
-                                            <h4 className="font-bold text-lg flex items-center gap-2">Diego Pellicer <span className="text-xs bg-muted px-2 py-0.5 rounded text-muted-foreground font-normal">Denver/Lakewood</span></h4>
-                                            <p className="text-sm text-muted-foreground">Premium "cannabis architecture" experience. High-end products.</p>
-                                        </div>
-                                        <div className="flex flex-col items-end gap-1 min-w-[100px]">
-                                            <span className="text-xs font-bold text-accent">~15 min away</span>
-                                            <span className="text-xs text-muted-foreground">Alameda Ave</span>
-                                        </div>
-                                    </Card>
-                                </div>
-
-                                <h3 className="text-xl font-bold mb-4 text-accent">On the Way from Denver (I-70 Corridor)</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="p-4 border border-card bg-card/50 rounded-lg">
-                                        <h4 className="font-bold">Green Dragon</h4>
-                                        <p className="text-sm text-muted-foreground"> consistent quality, fast online ordering.</p>
-                                    </div>
-                                    <div className="p-4 border border-card bg-card/50 rounded-lg">
-                                        <h4 className="font-bold">The Lodge Cannabis</h4>
-                                        <p className="text-sm text-muted-foreground">Premium flower selection, great deals.</p>
-                                    </div>
-                                    <div className="p-4 border border-card bg-card/50 rounded-lg">
-                                        <h4 className="font-bold">Cookies Denver</h4>
-                                        <p className="text-sm text-muted-foreground">Hype strains, famous genetics (Gary Payton, Cereal Milk).</p>
-                                    </div>
-                                    <div className="p-4 border border-card bg-card/50 rounded-lg">
-                                        <h4 className="font-bold">Lightshade</h4>
-                                        <p className="text-sm text-muted-foreground">Quality house products, knowledgeable staff.</p>
-                                    </div>
-                                </div>
                                 <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
                                     <Info className="h-4 w-4" /> <strong>Pro Tip:</strong> Order online for pickup. Skip the line and get to the tailgate faster.
                                 </p>
