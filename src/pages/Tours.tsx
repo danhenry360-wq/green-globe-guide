@@ -94,47 +94,9 @@ const Tours = () => {
           };
         });
 
-        // Ensure "BEYOND" is present (Fallsafe for migration/dev envs)
-        const beyondExists = enhancedTours.some(t => t.slug === 'beyond-light-show-meditation');
-        if (!beyondExists) {
-          const beyondMeta = MOCK_TOUR_METADATA['beyond-light-show-meditation']!;
-          enhancedTours.unshift({
-            id: 'mock-beyond',
-            name: 'BEYOND: Light Show & Meditation',
-            slug: 'beyond-light-show-meditation',
-            description: 'An immersive, psychedelic audio-visual experience...',
-            price_range: beyondMeta.price_range || '$25.00',
-            website: 'https://beyondlightshow.com/',
-            images: ['https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041'],
-            city: 'Denver',
-            state: 'Colorado',
-            rating: beyondMeta.rating || 4.8,
-            review_count: beyondMeta.review_count || 366,
-            duration: beyondMeta.duration || '1 hour',
-            image: 'https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041',
-            price_value: 25
-          });
-        }
         setTours(enhancedTours);
       } else {
-        // Fallback
-        const beyondMeta = MOCK_TOUR_METADATA['beyond-light-show-meditation']!;
-        setTours([{
-          id: 'mock-beyond',
-          name: 'BEYOND: Light Show & Meditation',
-          slug: 'beyond-light-show-meditation',
-          description: 'An immersive...',
-          price_range: beyondMeta.price_range || '$25.00',
-          website: 'https://beyondlightshow.com/',
-          images: ['https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041'],
-          city: 'Denver',
-          state: 'Colorado',
-          rating: beyondMeta.rating || 4.8,
-          review_count: beyondMeta.review_count || 366,
-          duration: beyondMeta.duration || '1 hour',
-          image: 'https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041',
-          price_value: 25
-        }]);
+        setTours([]);
       }
       setLoading(false);
     };

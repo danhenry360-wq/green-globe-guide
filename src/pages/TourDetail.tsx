@@ -89,33 +89,6 @@ const TourDetail = () => {
             highlights: d.highlights || mock.highlights || [],
             image: d.image || d.images?.[0] || null
           } as any);
-        } else if (slug === 'beyond-light-show-meditation') {
-          // Local fallback for the main tour
-          const mock = MOCK_TOUR_METADATA[slug];
-          setTour({
-            id: 'mock-beyond',
-            name: 'BEYOND: Light Show & Meditation',
-            slug: 'beyond-light-show-meditation',
-            description: 'An immersive, psychedelic audio-visual experience located within the historic International Church of Cannabis. The tour features a 3D-mapped laser light show, guided meditation, and access to unique art installations and a retro arcade. The venue is a 125-year-old church building transformed into a vibrant art sanctuary by world-renowned artists Okuda San Miguel and Kenny Scharf.',
-            price_range: '$25.00',
-            website: 'https://beyondlightshow.com/',
-            images: [
-              'https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041',
-              'https://beyondlightshow.com/cdn/shop/files/01orange_diskAngels_1000x.jpg?v=1686003041',
-              'https://beyondlightshow.com/cdn/shop/files/01PsychedlcKaleidoscopeStage_1000x.jpg?v=1686003041'
-            ],
-            city: 'Denver',
-            state: 'Colorado',
-            address: mock.address || '400 S Logan St, Denver, CO 80209',
-            latitude: mock.latitude || 39.7089,
-            longitude: mock.longitude || -104.9823,
-            rating: mock.rating || 4.8,
-            review_count: mock.review_count || 366,
-            duration: mock.duration || '1 hour',
-            price: mock.price || 25.00,
-            highlights: mock.highlights || [],
-            image: 'https://beyondlightshow.com/cdn/shop/files/ChurchofCannabisLaserLightShow1_3_1000x.jpg?v=1686003041'
-          } as any);
         } else {
           setNotFound(true);
         }
