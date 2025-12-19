@@ -158,7 +158,7 @@ const TourDetail = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const allImages = tour.images?.filter(img => img) || (tour.image ? [tour.image] : ['/dest-colorado.png']);
+  const allImages = tour.images?.filter(img => img) || (tour.image ? [tour.image] : []);
   const hasMultipleImages = allImages.length > 1;
 
   return (

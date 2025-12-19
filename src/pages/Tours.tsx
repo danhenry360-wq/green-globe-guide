@@ -88,7 +88,7 @@ const Tours = () => {
             rating: t.rating || mock.rating || 0,
             review_count: t.review_count || mock.review_count || 0,
             duration: t.duration || mock.duration || 'N/A',
-            image: t.image || t.images?.[0] || '/dest-colorado.png',
+            image: t.image || t.images?.[0] || null,
             price_range: priceStr,
             price_value: parsePrice(priceStr)
           };
@@ -334,7 +334,7 @@ const Tours = () => {
                         <Card className="h-full overflow-hidden border-accent/20 bg-card/50 backdrop-blur-sm hover:border-accent/50 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/10">
                           <div className="relative aspect-[16/9]">
                             <img
-                              src={tour.image || '/dest-colorado.png'}
+                              src={tour.image || ''}
                               alt={tour.name}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             />
