@@ -103,6 +103,7 @@ import Dispensary from "./pages/Dispensary";
 import DispensaryDetail from "./pages/DispensaryDetail";
 import RentalDetail from "./pages/RentalDetail";
 import Tours from "./pages/Tours";
+import TourDetail from "./pages/TourDetail";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -179,6 +180,7 @@ function App() {
               <Route path="/hotels" element={<Hotels />} />
               <Route path="/hotels/:slug" element={<RentalDetail />} />
               <Route path="/tours" element={<Tours />} />
+              <Route path="/tours/:slug" element={<TourDetail />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
