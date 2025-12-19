@@ -311,6 +311,22 @@ const Tours = () => {
             </div>
           </div>
 
+          {/* Desktop Search Bar */}
+          <div className="hidden lg:block mb-8">
+            <div className="max-w-7xl mx-auto flex gap-4 sticky top-20 z-30 bg-background/95 backdrop-blur-sm py-4 px-4 rounded-xl border border-white/10">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search tours, cities..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-card/50 border border-white/10 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {/* Desktop Sidebar Filters */}
             <aside className="hidden lg:block space-y-8 sticky top-36 h-fit p-6 bg-card/30 rounded-2xl border border-white/5">
