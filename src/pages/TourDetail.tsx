@@ -12,6 +12,7 @@ import {
   ChevronLeft, ChevronRight, Sparkles, DollarSign, ExternalLink 
 } from "lucide-react";
 import { DispensaryMap } from "@/components/DispensaryMap";
+import { TourReviewsSection } from "@/components/TourReviewsSection";
 
 // Mock tour images for fallback
 const MOCK_TOUR_IMAGES: Record<string, string[]> = {
@@ -383,6 +384,9 @@ const TourDetail = () => {
                     </CardContent>
                   </Card>
                 )}
+
+                {/* Reviews Section */}
+                <TourReviewsSection tourId={tour.id} />
               </div>
             </div>
           </div>

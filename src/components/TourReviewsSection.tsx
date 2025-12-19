@@ -1,0 +1,259 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { TourReviewForm } from "./TourReviewForm";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Star, MessageSquare, Loader2, User, Clock } from "lucide-react";
+import { format } from "date-fns";
+
+interface TourReview {
+  id: string;
+  rating: number;
+  title: string | null;
+  content: string;
+  created_at: string;
+  user_id: string;
+  status: 'pending' | 'approved' | 'rejected';
+  profiles: {
+    display_name: string | null;
+  } | null;
+}
+
+interface TourReviewsSectionProps {
+  tourId: string;
+}
+
+export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
+  const [reviews, setReviews] = useState<TourReview[]>([]);
+  const [userPendingReviews, setUserPendingReviews] = useState<TourReview[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const fetchReviews = async () => {
+    setLoading(true);
+    
+    try {
+      // Fetch approved reviews (visible to everyone)
+      const { data: approvedData, error: approvedError } = await supabase
+        .from('tour_reviews')
+        .select('id, rating, title, content, created_at, user_id, status')
+        .eq('tour_id', tourId)
+        .eq('status', 'approved')
+        .order('created_at', { ascending: false });
+
+      if (approvedError) throw approvedError;
+      
+      // Fetch profiles for approved reviews
+      const approvedUserIds = approvedData?.map(r => r.user_id) || [];
+      let approvedProfilesMap: Record<string, { display_name: string | null }> = {};
+      
+      if (approvedUserIds.length > 0) {
+        const { data: profiles } = await supabase
+          .from('profiles')
+          .select('id, display_name')
+          .in('id', approvedUserIds);
+        
+        profiles?.forEach(p => {
+          approvedProfilesMap[p.id] = { display_name: p.display_name };
+        });
+      }
+      
+      const approvedWithProfiles = approvedData?.map(r => ({
+        ...r,
+        status: r.status as 'pending' | 'approved' | 'rejected',
+        profiles: approvedProfilesMap[r.user_id] || null
+      })) || [];
+      
+      setReviews(approvedWithProfiles);
+
+      // If user is logged in, also fetch their pending reviews for this tour
+      if (user) {
+        const { data: pendingData, error: pendingError } = await supabase
+          .from('tour_reviews')
+          .select('id, rating, title, content, created_at, user_id, status')
+          .eq('tour_id', tourId)
+          .eq('user_id', user.id)
+          .eq('status', 'pending')
+          .order('created_at', { ascending: false });
+
+        if (pendingError) throw pendingError;
+        
+        // Get profile for current user
+        const { data: userProfile } = await supabase
+          .from('profiles')
+          .select('id, display_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        
+        const pendingWithProfiles = pendingData?.map(r => ({
+          ...r,
+          status: r.status as 'pending' | 'approved' | 'rejected',
+          profiles: userProfile || null
+        })) || [];
+        
+        setUserPendingReviews(pendingWithProfiles);
+      } else {
+        setUserPendingReviews([]);
+      }
+    } catch (error) {
+      console.error('Error fetching tour reviews:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (tourId) {
+      fetchReviews();
+    }
+  }, [tourId]);
+
+  const handleWriteReview = () => {
+    if (!isAuthenticated) {
+      navigate('/auth');
+    } else {
+      setShowForm(true);
+    }
+  };
+
+  const handleReviewSubmitted = () => {
+    setShowForm(false);
+    fetchReviews();
+  };
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${
+          i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'
+        }`}
+      />
+    ));
+  };
+
+  return (
+    <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4">
+        <CardTitle className="text-sm sm:text-xl font-bold text-accent flex items-center gap-1.5 sm:gap-2">
+          <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" /> Reviews
+        </CardTitle>
+        {!showForm && (
+          <Button
+            onClick={handleWriteReview}
+            className="bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
+          >
+            Write a Review
+          </Button>
+        )}
+      </CardHeader>
+      
+      <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-4 pt-0">
+        {showForm && user && (
+          <TourReviewForm
+            tourId={tourId}
+            userId={user.id}
+            onReviewSubmitted={handleReviewSubmitted}
+            onCancel={() => setShowForm(false)}
+          />
+        )}
+        
+        {loading ? (
+          <div className="flex items-center justify-center py-6 sm:py-8">
+            <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin text-accent" />
+          </div>
+        ) : reviews.length === 0 && userPendingReviews.length === 0 ? (
+          <div className="text-center py-6 sm:py-8">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">No reviews yet. Be the first to share your experience!</p>
+            {!showForm && (
+              <Button
+                onClick={handleWriteReview}
+                variant="outline"
+                className="border-accent/30 hover:border-accent/60 text-xs sm:text-sm h-8 sm:h-9"
+              >
+                Write the First Review
+              </Button>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-3 sm:space-y-4">
+            {/* Show user's pending reviews first */}
+            {userPendingReviews.map((review) => (
+              <div
+                key={review.id}
+                className="border-b border-yellow-500/30 pb-3 sm:pb-4 bg-yellow-500/5 rounded-lg p-3"
+              >
+                <div className="flex items-start justify-between gap-2 sm:gap-4 mb-1.5 sm:mb-2">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                      <User className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold text-xs sm:text-sm text-foreground">
+                          {review.profiles?.display_name || 'Anonymous'}
+                        </p>
+                        <Badge className="bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 text-[10px] px-2 py-0 font-medium">
+                          Pending
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <div className="flex gap-0.5">{renderStars(review.rating)}</div>
+                        <span className="text-xs sm:text-sm font-semibold text-yellow-400">{review.rating}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 text-[10px] sm:text-xs text-muted-foreground flex-shrink-0">
+                    <Clock className="w-3 h-3" />
+                    {format(new Date(review.created_at), 'MMM d, yyyy')}
+                  </div>
+                </div>
+                
+                {review.title && (
+                  <p className="font-semibold text-xs sm:text-sm text-foreground mb-1.5">{review.title}</p>
+                )}
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{review.content}</p>
+              </div>
+            ))}
+
+            {/* Show approved reviews */}
+            {reviews.map((review) => (
+              <div key={review.id} className="border-b border-white/10 pb-3 sm:pb-4">
+                <div className="flex items-start justify-between gap-2 sm:gap-4 mb-1.5 sm:mb-2">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                      <User className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-xs sm:text-sm text-foreground">
+                        {review.profiles?.display_name || 'Anonymous'}
+                      </p>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <div className="flex gap-0.5">{renderStars(review.rating)}</div>
+                        <span className="text-xs sm:text-sm font-semibold text-yellow-400">{review.rating}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 text-[10px] sm:text-xs text-muted-foreground flex-shrink-0">
+                    <Clock className="w-3 h-3" />
+                    {format(new Date(review.created_at), 'MMM d, yyyy')}
+                  </div>
+                </div>
+                
+                {review.title && (
+                  <p className="font-semibold text-xs sm:text-sm text-foreground mb-1.5">{review.title}</p>
+                )}
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{review.content}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
