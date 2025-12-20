@@ -93,10 +93,8 @@ const AdminTours = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   
-  // Array of refs for the 5 file input slots
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Fetch tours
   const { data: tours = [], isLoading } = useQuery({
     queryKey: ["admin-tours"],
     queryFn: async () => {
@@ -110,14 +108,12 @@ const AdminTours = () => {
     enabled: !!user,
   });
 
-  // Filtered tours
   const filteredTours = useMemo(() => {
     return tours.filter(tour =>
       tour.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [tours, searchQuery]);
 
-  // Mutations
   const createMutation = useMutation({
     mutationFn: async (data: Partial<Tour>) => {
       const { error } = await supabase.from("tours").insert([data as any]);
@@ -128,7 +124,6 @@ const AdminTours = () => {
       toast.success("Tour created successfully");
       setDialogOpen(false);
     },
-    onError: (error: any) => toast.error(error.message),
   });
 
   const updateMutation = useMutation({
@@ -141,7 +136,6 @@ const AdminTours = () => {
       toast.success("Tour updated successfully");
       setDialogOpen(false);
     },
-    onError: (error: any) => toast.error(error.message),
   });
 
   const deleteMutation = useMutation({
@@ -175,14 +169,12 @@ const AdminTours = () => {
         .from('tour-images')
         .getPublicUrl(filePath);
 
-      // FIX: Ensure we create a clean new array for state
       const currentImages = formData.images ? [...formData.images] : [];
       currentImages[index] = publicUrl;
       
       setFormData({ ...formData, images: currentImages });
       toast.success("Image uploaded!");
     } catch (error: any) {
-      console.error("Upload error:", error);
       toast.error("Upload failed: " + error.message);
     } finally {
       setUploadingImage(false);
@@ -194,12 +186,8 @@ const AdminTours = () => {
       toast.error("Name and slug are required");
       return;
     }
-
-    if (isCreating) {
-      createMutation.mutate(formData);
-    } else if (editingTour) {
-      updateMutation.mutate({ id: editingTour.id, ...formData });
-    }
+    if (isCreating) createMutation.mutate(formData);
+    else if (editingTour) updateMutation.mutate({ id: editingTour.id, ...formData });
   };
 
   if (authLoading || isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
@@ -208,14 +196,18 @@ const AdminTours = () => {
     <>
       <Helmet><title>Admin | Manage Tours</title></Helmet>
       <Navigation />
-      <main className="min-h-screen bg-background py-12 px-4">
+      {/* 
+          IMPORTANT: pt-28 (padding-top) pushes the content 
+          down so it is not hidden under the Navigation bar 
+      */}
+      <main className="min-h-screen bg-background pt-28 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <Sparkles className="text-accent" /> Manage Tours
             </h1>
             <Button onClick={() => { setFormData(emptyTour); setIsCreating(true); setDialogOpen(true); }}>
-              <Plus className="mr-2" /> New Tour
+              <Plus className="mr-2 h-4 w-4" /> New Tour
             </Button>
           </div>
 
@@ -225,32 +217,42 @@ const AdminTours = () => {
               placeholder="Search tours..." 
               value={searchQuery} 
               onChange={(e) => setSearchQuery(e.target.value)} 
-              className="pl-10"
+              className="pl-10 bg-card/50 border-white/10"
             />
           </div>
 
           <div className="grid gap-4">
-            {filteredTours.map((tour) => (
-              <Card key={tour.id} className="p-6 bg-card/50 border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div className="flex items-center gap-4">
-                  <img src={tour.images?.[0] || "/placeholder.svg"} className="w-16 h-16 object-cover rounded-lg border border-white/10" alt="" />
-                  <div>
-                    <h3 className="font-bold text-lg">{tour.name}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {tour.city}, {tour.state}
-                    </p>
+            {filteredTours.length === 0 ? (
+              <div className="text-center py-20 border border-dashed rounded-xl border-white/10 text-muted-foreground">
+                No tours found. Create your first experience!
+              </div>
+            ) : (
+              filteredTours.map((tour) => (
+                <Card key={tour.id} className="p-4 bg-card/50 border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+                  <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <img 
+                      src={tour.images?.[0] || "/placeholder.svg"} 
+                      className="w-16 h-16 object-cover rounded-lg border border-white/10" 
+                      alt="" 
+                    />
+                    <div>
+                      <h3 className="font-bold text-lg">{tour.name}</h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <MapPin className="w-3 h-3" /> {tour.city}, {tour.state}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => { setFormData(tour); setIsCreating(false); setDialogOpen(true); setEditingTour(tour); }}>
-                    <Edit className="w-4 h-4 mr-2" /> Edit
-                  </Button>
-                  <Button variant="destructive" size="sm" onClick={() => setDeleteId(tour.id)}>
-                    <Trash2 className="w-4 h-4 mr-2" /> Delete
-                  </Button>
-                </div>
-              </Card>
-            ))}
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none" onClick={() => { setFormData(tour); setIsCreating(false); setDialogOpen(true); setEditingTour(tour); }}>
+                      <Edit className="w-4 h-4 mr-2" /> Edit
+                    </Button>
+                    <Button variant="destructive" size="sm" className="flex-1 sm:flex-none" onClick={() => setDeleteId(tour.id)}>
+                      <Trash2 className="w-4 h-4 mr-2" /> Delete
+                    </Button>
+                  </div>
+                </Card>
+              ))
+            )}
           </div>
         </div>
       </main>
@@ -262,31 +264,28 @@ const AdminTours = () => {
           </DialogHeader>
 
           <div className="space-y-6 py-4">
-            {/* Basic Details */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Tour Name</Label>
-                <Input value={formData.name || ""} onChange={e => setFormData({...formData, name: e.target.value})} />
+                <Label>Tour Name *</Label>
+                <Input value={formData.name || ""} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="e.g. Denver Grow Tour" />
               </div>
               <div className="space-y-2">
-                <Label>Slug</Label>
-                <Input value={formData.slug || ""} onChange={e => setFormData({...formData, slug: e.target.value})} />
+                <Label>Slug *</Label>
+                <Input value={formData.slug || ""} onChange={e => setFormData({...formData, slug: e.target.value})} placeholder="e.g. denver-grow-tour" />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>Description</Label>
-              <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
+              <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Tell people about the experience..." />
             </div>
 
-            {/* Location */}
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2"><Label>City</Label><Input value={formData.city || ""} onChange={e => setFormData({...formData, city: e.target.value})} /></div>
               <div className="space-y-2"><Label>State</Label><Input value={formData.state || ""} onChange={e => setFormData({...formData, state: e.target.value})} /></div>
-              <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({...formData, price_range: e.target.value})} /></div>
+              <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({...formData, price_range: e.target.value})} placeholder="$25.00" /></div>
             </div>
 
-            {/* Switches */}
             <div className="flex gap-8 p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-2">
                 <Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({...formData, is_420_friendly: v})} />
@@ -298,12 +297,11 @@ const AdminTours = () => {
               </div>
             </div>
 
-            {/* Images - Fixing the logic here */}
             <div className="space-y-4">
               <Label>Tour Images (Max 5)</Label>
               <div className="grid grid-cols-5 gap-2">
                 {[0, 1, 2, 3, 4].map((index) => (
-                  <div key={index} className="relative aspect-square border-2 border-dashed border-white/10 rounded-xl overflow-hidden group">
+                  <div key={index} className="relative aspect-square border-2 border-dashed border-white/10 rounded-xl overflow-hidden group bg-card/50">
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -314,7 +312,7 @@ const AdminTours = () => {
                     
                     {formData.images?.[index] ? (
                       <>
-                        <img src={formData.images[index]} className="w-full h-full object-cover" />
+                        <img src={formData.images[index]} className="w-full h-full object-cover" alt="" />
                         <button 
                           className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => {
@@ -329,10 +327,12 @@ const AdminTours = () => {
                     ) : (
                       <button 
                         disabled={uploadingImage}
-                        className="w-full h-full flex items-center justify-center hover:bg-white/5 transition-colors"
+                        className="w-full h-full flex flex-col items-center justify-center hover:bg-white/5 transition-colors gap-1"
                         onClick={() => fileInputRefs.current[index]?.click()}
+                        type="button"
                       >
-                        {uploadingImage ? <Loader2 className="animate-spin text-accent" /> : <ImagePlus className="text-muted-foreground" />}
+                        {uploadingImage ? <Loader2 className="animate-spin text-accent w-4 h-4" /> : <ImagePlus className="text-muted-foreground w-4 h-4" />}
+                        <span className="text-[10px] text-muted-foreground">Slot {index + 1}</span>
                       </button>
                     )}
                   </div>
@@ -351,7 +351,6 @@ const AdminTours = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirm */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
