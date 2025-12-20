@@ -96,6 +96,7 @@ import BlogCleanGreenGuide from "./pages/BlogCleanGreenGuide";
 import BlogRedRocksDispensaries from "./pages/BlogRedRocksDispensaries";
 import BlogUltimateColoradoGuide from "./pages/BlogUltimateColoradoGuide";
 import BlogGreeleyDispensaries from "./pages/BlogGreeleyDispensaries";
+import BlogColoradoSpringsStays from "./pages/BlogColoradoSpringsStays";
 import BlogColoradoAllInclusive from "./pages/BlogColoradoAllInclusive";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
@@ -178,6 +179,7 @@ function App() {
               <Route path="/blog/best-dispensaries-near-red-rocks-2025" element={<BlogRedRocksDispensaries />} />
               <Route path="/blog/ultimate-stoner-guide-colorado-2025" element={<BlogUltimateColoradoGuide />} />
               <Route path="/blog/greeley-dispensaries-garden-city-loophole" element={<BlogGreeleyDispensaries />} />
+              <Route path="/blog/best-420-friendly-stays-colorado-springs" element={<BlogColoradoSpringsStays />} />
               <Route path="/blog/all-inclusive-weed-resorts-colorado" element={<BlogColoradoAllInclusive />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />

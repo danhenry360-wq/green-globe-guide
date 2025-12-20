@@ -20,6 +20,27 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "best-420-friendly-stays-colorado-springs",
+    title: "Best 420-Friendly Stays in Colorado Springs & Manitou Springs (2025)",
+    subtitle: "Conservative town, hippie neighbor. Here is where to stay.",
+    excerpt: "Colorado Springs is conservative, but Manitou Springs (10 minutes away) is a 420-friendly oasis. Here are the best cannabis-welcoming stays in the Pikes Peak region.",
+    date: "Dec 20, 2025",
+    readTime: "7 min read",
+    author: "BudQuest Team",
+    avatar: "🏨",
+    category: "Stays Guide",
+    tags: ["Colorado Springs", "Manitou Springs", "Hotels", "420 Friendly"],
+    image: "/blog-colorado-springs-stays.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-friendly-stays-colorado-springs",
+    content: {
+      introduction: "Finding a place to smoke in the Springs can be tough. We found the hidden gems where you can relax.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "all-inclusive-weed-resorts-colorado",
     title: "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
     subtitle: "The honest truth about cannabis hospitality in the Mile High State.",
