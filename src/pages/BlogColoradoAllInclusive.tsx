@@ -62,24 +62,32 @@ const BlogColoradoAllInclusive = () => {
             description: "Luxury B&B near Red Rocks with mountain views and hot tubs. Cannabis-friendly property. Infused dinner by Chef Roilty available.",
             bestFor: "Closest to a 'cannabis resort' in Colorado",
             distance: "20 minutes from Denver",
+            image: "/rentals/arrowhead-manor.png",
+            website: "https://arrowheadmanor.com/"
         },
         {
             name: "The Holiday Chalet (Denver)",
             description: "Historic B&B in a mansion setting. Some rooms feature parlors and kitchens. Cannabis-friendly outdoor patio.",
             bestFor: "Historic charm & downtown access",
             distance: "Walking distance to downtown",
+            image: "/rentals/holiday-chalet.png",
+            website: "https://theholidaychalet.com/"
         },
         {
             name: "Flora House Denver",
             description: "Music-inspired boutique hotel with music-themed decor. Features a daily 4:20 Happy Hour and hot tubs in some rooms.",
             bestFor: "Social vibe & boutique luxury",
             distance: "Near downtown",
+            image: "/blog-denver-rentals.jpg",
+            website: "https://www.florahousedenver.com/"
         },
         {
             name: "Kushkations Properties",
             description: "A collection of private homes specifically designed for cannabis consumers. Full amenities and consumption allowed.",
             bestFor: "Private groups & full freedom",
             distance: "Various Denver locations",
+            image: "/blog-colorado-rentals.jpg",
+            website: "https://kushkations.com/"
         }
     ];
 
@@ -330,9 +338,9 @@ const BlogColoradoAllInclusive = () => {
                                     {resortStays.map((stay, idx) => (
                                         <Card key={idx} className="overflow-hidden group hover:border-accent/40 transition-all duration-300">
                                             <div className="flex flex-col md:flex-row">
-                                                <div className="md:w-1/3 bg-muted relative overflow-hidden">
+                                                <div className="md:w-1/3 bg-muted relative overflow-hidden aspect-video md:aspect-auto">
                                                     <img
-                                                        src={`/blog-colorado-rentals.jpg`}
+                                                        src={stay.image}
                                                         alt={stay.name}
                                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                     />
@@ -358,9 +366,16 @@ const BlogColoradoAllInclusive = () => {
                                                             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
                                                             <span className="text-sm font-bold text-accent">{stay.bestFor}</span>
                                                         </div>
-                                                        <Button variant="outline" size="sm" className="group-hover:bg-accent group-hover:text-white transition-colors">
-                                                            Check Details
-                                                        </Button>
+                                                        <a
+                                                            href={stay.website}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2"
+                                                        >
+                                                            <Button variant="outline" size="sm" className="group-hover:bg-accent group-hover:text-white transition-colors">
+                                                                Book Now <ExternalLink className="h-3 w-3 ml-1" />
+                                                            </Button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
