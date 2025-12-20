@@ -53,6 +53,8 @@ interface Tour {
   review_count: number | null;
   is_420_friendly: boolean | null;
   is_verified: boolean | null;
+  latitude: number | null;
+  longitude: number | null;
   city: string | null;
   state: string | null;
 }
@@ -62,13 +64,20 @@ const emptyTour: Partial<Tour> = {
   slug: "",
   description: "",
   price_range: "$0",
+  website: "",
   images: [],
-  city: "",
-  state: "Colorado",
+  address: "",
+  duration: "",
+  highlights: [],
+  booking_url: "",
+  rating: 0,
+  review_count: 0,
   is_420_friendly: false,
   is_verified: false,
-  rating: 0,
-  review_count: 0
+  latitude: 0,
+  longitude: 0,
+  city: "",
+  state: "Colorado",
 };
 
 const AdminTours = () => {
@@ -81,97 +90,164 @@ const AdminTours = () => {
   const [formData, setFormData] = useState<Partial<Tour>>(emptyTour);
   const [isCreating, setIsCreating] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  
+  // Array of refs for the 5 file input slots
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  // Fetch tours
   const { data: tours = [], isLoading } = useQuery({
     queryKey: ["admin-tours"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("tours").select("*").order("name");
+      const { data, error } = await supabase
+        .from("tours")
+        .select("*")
+        .order("name", { ascending: true });
       if (error) throw error;
       return data as Tour[];
     },
     enabled: !!user,
   });
 
+  // Filtered tours
   const filteredTours = useMemo(() => {
-    return tours.filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    return tours.filter(tour =>
+      tour.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   }, [tours, searchQuery]);
 
+  // Mutations
   const createMutation = useMutation({
-    mutationFn: async (data: any) => supabase.from("tours").insert([data]),
+    mutationFn: async (data: Partial<Tour>) => {
+      const { error } = await supabase.from("tours").insert([data as any]);
+      if (error) throw error;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
-      toast.success("Tour created");
+      toast.success("Tour created successfully");
       setDialogOpen(false);
-    }
+    },
+    onError: (error: any) => toast.error(error.message),
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, ...data }: any) => supabase.from("tours").update(data).eq("id", id),
+    mutationFn: async ({ id, ...data }: Partial<Tour> & { id: string }) => {
+      const { error } = await supabase.from("tours").update(data).eq("id", id);
+      if (error) throw error;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
-      toast.success("Tour updated");
+      toast.success("Tour updated successfully");
       setDialogOpen(false);
-    }
+    },
+    onError: (error: any) => toast.error(error.message),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("tours").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour deleted");
+      setDeleteId(null);
+    },
   });
 
   const handleFileUpload = async (file: File, index: number) => {
-    setUploadingIndex(index);
+    if (!file) return;
+    setUploadingImage(true);
+    
     try {
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `tours/${fileName}`;
-      const { error: uploadError } = await supabase.storage.from('tour-images').upload(filePath, file);
+
+      const { error: uploadError } = await supabase.storage
+        .from('tour-images')
+        .upload(filePath, file);
+
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage.from('tour-images').getPublicUrl(filePath);
+      const { data: { publicUrl } } = supabase.storage
+        .from('tour-images')
+        .getPublicUrl(filePath);
 
-      setFormData(prev => {
-        const newImages = prev.images ? [...prev.images] : [];
-        // Ensure array slots exist
-        while (newImages.length <= index) newImages.push("");
-        newImages[index] = publicUrl;
-        return { ...prev, images: newImages.filter(img => img !== "") };
-      });
-      toast.success("Image uploaded");
+      // FIX: Ensure we create a clean new array for state
+      const currentImages = formData.images ? [...formData.images] : [];
+      currentImages[index] = publicUrl;
+      
+      setFormData({ ...formData, images: currentImages });
+      toast.success("Image uploaded!");
     } catch (error: any) {
-      toast.error("Upload failed");
+      console.error("Upload error:", error);
+      toast.error("Upload failed: " + error.message);
     } finally {
-      setUploadingIndex(null);
+      setUploadingImage(false);
     }
   };
 
   const handleSave = () => {
-    if (!formData.name || !formData.slug) return toast.error("Name and slug required");
-    if (isCreating) createMutation.mutate(formData);
-    else updateMutation.mutate({ id: editingTour?.id, ...formData });
+    if (!formData.name || !formData.slug) {
+      toast.error("Name and slug are required");
+      return;
+    }
+
+    if (isCreating) {
+      createMutation.mutate(formData);
+    } else if (editingTour) {
+      updateMutation.mutate({ id: editingTour.id, ...formData });
+    }
   };
 
   if (authLoading || isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
 
   return (
     <>
-      <Helmet><title>Admin - Manage Tours</title></Helmet>
+      <Helmet><title>Admin | Manage Tours</title></Helmet>
       <Navigation />
       <main className="min-h-screen bg-background py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold flex items-center gap-2"><Sparkles className="text-accent" /> Manage Tours</h1>
-            <Button onClick={() => { setFormData(emptyTour); setIsCreating(true); setDialogOpen(true); }}>New Tour</Button>
+            <h1 className="text-3xl font-bold flex items-center gap-3">
+              <Sparkles className="text-accent" /> Manage Tours
+            </h1>
+            <Button onClick={() => { setFormData(emptyTour); setIsCreating(true); setDialogOpen(true); }}>
+              <Plus className="mr-2" /> New Tour
+            </Button>
           </div>
-          
+
+          <div className="relative mb-8">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
+            <Input 
+              placeholder="Search tours..." 
+              value={searchQuery} 
+              onChange={(e) => setSearchQuery(e.target.value)} 
+              className="pl-10"
+            />
+          </div>
+
           <div className="grid gap-4">
-            {filteredTours.map(tour => (
-              <Card key={tour.id} className="p-4 bg-card/50 border-white/10 flex gap-4 items-center">
-                <img src={tour.images?.[0] || "/placeholder.svg"} className="w-16 h-16 object-cover rounded" alt="" />
-                <div className="flex-1">
-                  <h3 className="font-bold">{tour.name}</h3>
-                  <p className="text-sm text-muted-foreground">{tour.city}, {tour.state}</p>
+            {filteredTours.map((tour) => (
+              <Card key={tour.id} className="p-6 bg-card/50 border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <img src={tour.images?.[0] || "/placeholder.svg"} className="w-16 h-16 object-cover rounded-lg border border-white/10" alt="" />
+                  <div>
+                    <h3 className="font-bold text-lg">{tour.name}</h3>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                      <MapPin className="w-3 h-3" /> {tour.city}, {tour.state}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => { setFormData(tour); setIsCreating(false); setDialogOpen(true); setEditingTour(tour); }}>Edit</Button>
-                  <Button variant="destructive" size="sm" onClick={() => setDeleteId(tour.id)}>Delete</Button>
+                  <Button variant="outline" size="sm" onClick={() => { setFormData(tour); setIsCreating(false); setDialogOpen(true); setEditingTour(tour); }}>
+                    <Edit className="w-4 h-4 mr-2" /> Edit
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => setDeleteId(tour.id)}>
+                    <Trash2 className="w-4 h-4 mr-2" /> Delete
+                  </Button>
                 </div>
               </Card>
             ))}
@@ -181,47 +257,115 @@ const AdminTours = () => {
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>{isCreating ? "New Tour" : "Edit Tour"}</DialogTitle></DialogHeader>
-          <div className="space-y-4 py-4">
+          <DialogHeader>
+            <DialogTitle>{isCreating ? "Create New Tour" : "Edit Tour"}</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-6 py-4">
+            {/* Basic Details */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2"><Label>Name</Label><Input value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} /></div>
-              <div className="space-y-2"><Label>Slug</Label><Input value={formData.slug} onChange={e => setFormData({...formData, slug: e.target.value})} /></div>
+              <div className="space-y-2">
+                <Label>Tour Name</Label>
+                <Input value={formData.name || ""} onChange={e => setFormData({...formData, name: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Slug</Label>
+                <Input value={formData.slug || ""} onChange={e => setFormData({...formData, slug: e.target.value})} />
+              </div>
             </div>
-            <div className="space-y-2"><Label>Description</Label><Textarea value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} /></div>
-            
-            <Label>Images (Max 5)</Label>
-            <div className="grid grid-cols-5 gap-2">
-              {[0, 1, 2, 3, 4].map(i => (
-                <div key={i} className="aspect-square relative border-2 border-dashed rounded-lg flex items-center justify-center overflow-hidden bg-card/50">
-                  {formData.images?.[i] ? (
-                    <>
-                      <img src={formData.images[i]} className="w-full h-full object-cover" />
-                      <button className="absolute top-1 right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center text-white text-xs" onClick={() => {
-                        const imgs = [...(formData.images || [])];
-                        imgs.splice(i, 1);
-                        setFormData({...formData, images: imgs});
-                      }}>×</button>
-                    </>
-                  ) : (
-                    <button onClick={() => fileInputRefs.current[i]?.click()} disabled={uploadingIndex === i}>
-                      {uploadingIndex === i ? <Loader2 className="animate-spin w-5 h-5" /> : <ImagePlus className="w-5 h-5" />}
-                    </button>
-                  )}
-                  <input type="file" ref={el => fileInputRefs.current[i] = el} hidden onChange={e => e.target.files?.[0] && handleFileUpload(e.target.files[0], i)} />
-                </div>
-              ))}
+
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-               <div className="flex items-center justify-between"><Label>420 Friendly</Label><Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({...formData, is_420_friendly: v})} /></div>
-               <div className="flex items-center justify-between"><Label>Verified</Label><Switch checked={formData.is_verified || false} onCheckedChange={v => setFormData({...formData, is_verified: v})} /></div>
+
+            {/* Location */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="space-y-2"><Label>City</Label><Input value={formData.city || ""} onChange={e => setFormData({...formData, city: e.target.value})} /></div>
+              <div className="space-y-2"><Label>State</Label><Input value={formData.state || ""} onChange={e => setFormData({...formData, state: e.target.value})} /></div>
+              <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({...formData, price_range: e.target.value})} /></div>
+            </div>
+
+            {/* Switches */}
+            <div className="flex gap-8 p-4 bg-muted/50 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({...formData, is_420_friendly: v})} />
+                <Label>420 Friendly</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch checked={formData.is_verified || false} onCheckedChange={v => setFormData({...formData, is_verified: v})} />
+                <Label>Verified</Label>
+              </div>
+            </div>
+
+            {/* Images - Fixing the logic here */}
+            <div className="space-y-4">
+              <Label>Tour Images (Max 5)</Label>
+              <div className="grid grid-cols-5 gap-2">
+                {[0, 1, 2, 3, 4].map((index) => (
+                  <div key={index} className="relative aspect-square border-2 border-dashed border-white/10 rounded-xl overflow-hidden group">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      ref={el => fileInputRefs.current[index] = el}
+                      onChange={(e) => handleFileUpload(e.target.files?.[0] as File, index)} 
+                    />
+                    
+                    {formData.images?.[index] ? (
+                      <>
+                        <img src={formData.images[index]} className="w-full h-full object-cover" />
+                        <button 
+                          className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => {
+                            const newImgs = [...(formData.images || [])];
+                            newImgs.splice(index, 1);
+                            setFormData({...formData, images: newImgs});
+                          }}
+                        >
+                          <Trash2 className="text-white w-5 h-5" />
+                        </button>
+                      </>
+                    ) : (
+                      <button 
+                        disabled={uploadingImage}
+                        className="w-full h-full flex items-center justify-center hover:bg-white/5 transition-colors"
+                        onClick={() => fileInputRefs.current[index]?.click()}
+                      >
+                        {uploadingImage ? <Loader2 className="animate-spin text-accent" /> : <ImagePlus className="text-muted-foreground" />}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave}>Save Changes</Button>
+            <Button onClick={handleSave} disabled={createMutation.isPending || updateMutation.isPending}>
+              {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="mr-2 animate-spin w-4 h-4" />}
+              Save Tour
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirm */}
+      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>This will permanently delete this tour experience.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deleteId && deleteMutation.mutate(deleteId)} className="bg-destructive hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
