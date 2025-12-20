@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Compass, TrainFront
 } from "lucide-react";
 
@@ -64,8 +64,8 @@ const GreeleyGuide = () => {
         .eq('state', 'Colorado')
         .or('city.ilike.%Greeley%,city.ilike.%Garden City%')
         .order('rating', { ascending: false })
-        .limit(3);
-      
+        .limit(50);
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch hotels/rentals in Greeley
@@ -76,7 +76,7 @@ const GreeleyGuide = () => {
         .ilike('address', '%Greeley%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -88,12 +88,12 @@ const GreeleyGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'greeley-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -106,7 +106,7 @@ const GreeleyGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -166,7 +166,7 @@ const GreeleyGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "75-95°F",
@@ -287,18 +287,18 @@ const GreeleyGuide = () => {
         <meta name="description" content="Plan your cannabis trip to Greeley and Garden City, CO. Find the 'Green Mile' dispensaries, Stampede tips, and 420-friendly hotels." />
         <meta name="keywords" content="Greeley cannabis, Garden City dispensaries, Greeley Stampede weed, 420 friendly hotels Greeley, Northern Colorado marijuana" />
         <link rel="canonical" href="https://budquest.guide/greeley" />
-        
+
         <meta property="og:title" content="Greeley Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="The Garden City of the West. Your guide to Greeley's dispensaries and attractions." />
         <meta property="og:url" content="https://budquest.guide/greeley" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado.jpg" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -316,14 +316,14 @@ const GreeleyGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-colorado.jpg" 
-              alt="Greeley Colorado Plains" 
+            <img
+              src="/dest-colorado.jpg"
+              alt="Greeley Colorado Plains"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -334,13 +334,13 @@ const GreeleyGuide = () => {
                 <Store className="w-4 h-4 mr-2" />
                 Home of Garden City
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Greeley Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Explore the plains of Northern Colorado. Famous for the "Green Mile" of dispensaries in Garden City, the massive Greeley Stampede, and a relaxed, authentic vibe.
               </p>
@@ -404,8 +404,8 @@ const GreeleyGuide = () => {
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -414,7 +414,7 @@ const GreeleyGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30 p-6 md:p-8">
@@ -524,7 +524,7 @@ const GreeleyGuide = () => {
                 </span>
               </h2>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -537,7 +537,7 @@ const GreeleyGuide = () => {
                   Garden City (a tiny town inside Greeley) permits recreational sales and has many dispensaries. Greeley city limits are stricter, but possession is legal in both.
                 </p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -613,7 +613,7 @@ const GreeleyGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -624,8 +624,8 @@ const GreeleyGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -674,7 +674,7 @@ const GreeleyGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -685,8 +685,8 @@ const GreeleyGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-california.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-california.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -741,7 +741,7 @@ const GreeleyGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with Garden City dispensary maps and local tips.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -801,7 +801,7 @@ const GreeleyGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );
