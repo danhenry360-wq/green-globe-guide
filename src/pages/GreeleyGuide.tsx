@@ -62,7 +62,7 @@ const GreeleyGuide = () => {
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
-        .or('city.ilike.%Greeley%,city.ilike.%Garden City%')
+        .or('city.ilike.%Greeley%,city.ilike.%Garden%')
         .order('rating', { ascending: false })
         .limit(50);
 
