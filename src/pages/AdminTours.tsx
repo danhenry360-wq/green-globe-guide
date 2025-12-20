@@ -323,16 +323,20 @@ const AdminTours = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Card className="p-4 sm:p-6 bg-card/50 border-accent/20 hover:border-accent/50 transition-colors">
-                      <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                    <Card className="p-6 bg-card/50 border-accent/20 hover:border-accent/50 transition-colors">
+                      {/* Header */}
+                      <div className="grid sm:grid-cols-2 gap-4 mb-6">
                         <div>
-                          <h3 className="font-bold text-lg text-foreground mb-1">{tour.name}</h3>
-                          <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
+                          <h3 className="font-bold text-xl text-foreground mb-2">{tour.name}</h3>
+                          <p className="text-sm text-muted-foreground flex items-center gap-1 mb-2">
+                            <MapPin className="w-4 h-4" />
                             {tour.city}, {tour.state}
                           </p>
+                          {tour.address && (
+                            <p className="text-xs text-muted-foreground mb-2">{tour.address}</p>
+                          )}
                         </div>
-                        <div className="flex flex-wrap gap-2 justify-end">
+                        <div className="flex flex-wrap gap-2 justify-end items-start">
                           {tour.is_420_friendly && (
                             <Badge className="bg-accent/20 text-accent border-accent/40">420 Friendly</Badge>
                           )}
@@ -342,31 +346,56 @@ const AdminTours = () => {
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-4 gap-4 mb-4 text-xs sm:text-sm">
+                      {/* Description */}
+                      {tour.description && (
+                        <p className="text-sm text-muted-foreground mb-6 line-clamp-2">{tour.description}</p>
+                      )}
+
+                      {/* Details Grid */}
+                      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-6 p-4 bg-background/50 rounded-lg">
                         <div>
-                          <p className="text-muted-foreground">Rating</p>
-                          <p className="font-semibold flex items-center gap-1">
-                            <Star className="w-4 h-4 text-yellow-400" /> {tour.rating || 0}
+                          <p className="text-xs text-muted-foreground mb-1">Rating</p>
+                          <p className="font-bold text-sm flex items-center gap-1">
+                            <Star className="w-4 h-4 text-yellow-400" /> {(tour.rating || 0).toFixed(1)}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Duration</p>
-                          <p className="font-semibold flex items-center gap-1">
-                            <Clock className="w-4 h-4" /> {tour.duration || 'N/A'}
+                          <p className="text-xs text-muted-foreground mb-1">Reviews</p>
+                          <p className="font-bold text-sm">{tour.review_count || 0}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Duration</p>
+                          <p className="font-bold text-sm flex items-center gap-1">
+                            <Clock className="w-3 h-3" /> {tour.duration || 'N/A'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Price</p>
-                          <p className="font-semibold flex items-center gap-1">
-                            <DollarSign className="w-4 h-4" /> {tour.price_range || '$0'}
+                          <p className="text-xs text-muted-foreground mb-1">Price</p>
+                          <p className="font-bold text-sm flex items-center gap-1">
+                            <DollarSign className="w-3 h-3" /> {tour.price_range || '$0'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Images</p>
-                          <p className="font-semibold">{tour.images?.length || 0}</p>
+                          <p className="text-xs text-muted-foreground mb-1">Images</p>
+                          <p className="font-bold text-sm flex items-center gap-1">
+                            <ImagePlus className="w-4 h-4" /> {tour.images?.length || 0}
+                          </p>
                         </div>
                       </div>
 
+                      {/* Image Previews */}
+                      {tour.images && tour.images.length > 0 && (
+                        <div className="mb-6">
+                          <p className="text-xs font-semibold text-muted-foreground mb-2">Tour Images</p>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            {tour.images.slice(0, 3).map((img, idx) => (
+                              <img key={idx} src={img} alt={`Tour ${idx}`} className="w-full h-20 object-cover rounded" />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Actions */}
                       <div className="flex gap-2 justify-end">
                         <Button
                           variant="outline"
