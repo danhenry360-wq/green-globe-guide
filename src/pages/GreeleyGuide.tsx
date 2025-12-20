@@ -56,16 +56,18 @@ const GreeleyGuide = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Fetching dispensaries for Greeley/Garden City...");
       // Greeley's dispensary scene is unique because most are located in "Garden City",
       // a tiny town inside Greeley limits. We search for both.
-      const { data: dispData } = await supabase
+      const { data: dispData, error: dispError } = await supabase
         .from('dispensaries')
         .select('*')
-        .eq('state', 'Colorado')
-        .or('city.ilike.%Greeley%,city.ilike.%Garden%')
+        .or('city.ilike.%Greeley%,city.ilike.%Garden City%,city.ilike.%garden city%')
         .order('rating', { ascending: false })
         .limit(50);
 
+      if (dispError) console.error("Dispensary fetch error:", dispError);
+      console.log("Found dispensaries:", dispData);
       if (dispData) setDispensaries(dispData);
 
       // Fetch hotels/rentals in Greeley
