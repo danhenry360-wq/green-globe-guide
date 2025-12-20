@@ -7,7 +7,7 @@ import {
     ShoppingBag, CheckCircle2, ChevronRight, Store,
     Leaf, Flame, Ban, Info, ArrowRight, Star,
     Download, Mail, Compass, GraduationCap, History,
-    ShieldCheck, Home
+    ShieldCheck, Home, Map
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
