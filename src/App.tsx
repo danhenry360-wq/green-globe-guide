@@ -125,6 +125,7 @@ import AdminCountryLaws from "./pages/AdminCountryLaws";
 import AdminUsers from "./pages/AdminUsers";
 import AdminDispensaries from "./pages/AdminDispensaries";
 import AdminHotels from "./pages/AdminHotels";
+import AdminTours from "./pages/AdminTours";
 import AdminContacts from "./pages/AdminContacts";
 import AdminCountryImages from "./pages/AdminCountryImages";
 import AdminBlog from "./pages/AdminBlog";
@@ -410,6 +411,7 @@ function App() {
               <Route path="/admin/country-laws" element={<ProtectedAdminRoute><AdminCountryLaws /></ProtectedAdminRoute>} />
               <Route path="/admin/dispensaries" element={<ProtectedAdminRoute><AdminDispensaries /></ProtectedAdminRoute>} />
               <Route path="/admin/hotels" element={<ProtectedAdminRoute><AdminHotels /></ProtectedAdminRoute>} />
+              <Route path="/admin/tours" element={<ProtectedAdminRoute><AdminTours /></ProtectedAdminRoute>} />
               <Route path="/admin/reviews" element={<ProtectedAdminRoute><AdminReviews /></ProtectedAdminRoute>} />
               <Route path="/admin/revenue" element={<ProtectedAdminRoute><AdminRevenue /></ProtectedAdminRoute>} />
               <Route path="/admin/users" element={<ProtectedAdminRoute><AdminUsers /></ProtectedAdminRoute>} />

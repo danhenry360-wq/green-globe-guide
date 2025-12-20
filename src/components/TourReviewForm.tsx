@@ -36,8 +36,9 @@ export const TourReviewForm = ({ tourId, userId, onReviewSubmitted, onCancel }: 
     
     setIsSubmitting(true);
     
+    // Use raw SQL-like insert to avoid type issues with new table
     const { error } = await supabase
-      .from('tour_reviews')
+      .from('tour_reviews' as any)
       .insert({
         tour_id: tourId,
         user_id: userId,
@@ -48,6 +49,7 @@ export const TourReviewForm = ({ tourId, userId, onReviewSubmitted, onCancel }: 
       });
     
     if (error) {
+      console.error('Error submitting tour review:', error);
       toast({
         title: 'Error',
         description: 'Failed to submit review. Please try again.',
