@@ -196,16 +196,25 @@ const AdminTours = () => {
     <>
       <Helmet><title>Admin | Manage Tours</title></Helmet>
       <Navigation />
-      {/* 
-          IMPORTANT: pt-28 (padding-top) pushes the content 
-          down so it is not hidden under the Navigation bar 
-      */}
+      
       <main className="min-h-screen bg-background pt-28 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold flex items-center gap-3">
-              <Sparkles className="text-accent" /> Manage Tours
-            </h1>
+          
+          {/* Header with Back Button */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={() => navigate("/admin")} 
+                className="rounded-full border-white/10 bg-card/50 hover:bg-accent hover:text-white"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <h1 className="text-3xl font-bold flex items-center gap-3">
+                <Sparkles className="text-accent" /> Manage Tours
+              </h1>
+            </div>
             <Button onClick={() => { setFormData(emptyTour); setIsCreating(true); setDialogOpen(true); }}>
               <Plus className="mr-2 h-4 w-4" /> New Tour
             </Button>
