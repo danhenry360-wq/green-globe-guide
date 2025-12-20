@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 interface FavoriteButtonProps {
     entityId: string;
-    type: "dispensary" | "hotel";
+    type: "dispensary" | "hotel" | "tour";
     className?: string;
     variant?: "default" | "outline" | "ghost" | "icon";
 }
@@ -26,7 +26,8 @@ export const FavoriteButton = ({
 
     const favorite = isFavorite(
         type === "dispensary" ? entityId : undefined,
-        type === "hotel" ? entityId : undefined
+        type === "hotel" ? entityId : undefined,
+        type === "tour" ? entityId : undefined
     );
 
     const isSaved = !!favorite;
@@ -41,8 +42,7 @@ export const FavoriteButton = ({
                 description: "Please sign in to save favorites.",
                 variant: "destructive",
             });
-            // Optional: redirect to login
-            // navigate("/auth"); 
+            navigate("/auth");
             return;
         }
 
@@ -52,6 +52,7 @@ export const FavoriteButton = ({
             addFavorite.mutate({
                 dispensary_id: type === "dispensary" ? entityId : undefined,
                 hotel_id: type === "hotel" ? entityId : undefined,
+                tour_id: type === "tour" ? entityId : undefined,
             });
         }
     };

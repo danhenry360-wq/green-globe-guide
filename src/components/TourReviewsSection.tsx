@@ -38,9 +38,9 @@ export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
     setLoading(true);
     
     try {
-      // Fetch approved reviews (visible to everyone)
+      // Fetch approved reviews (visible to everyone) - use 'as any' to bypass type checking for new table
       const { data: approvedData, error: approvedError } = await supabase
-        .from('tour_reviews')
+        .from('tour_reviews' as any)
         .select('id, rating, title, content, created_at, user_id, status')
         .eq('tour_id', tourId)
         .eq('status', 'approved')
@@ -49,7 +49,7 @@ export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
       if (approvedError) throw approvedError;
       
       // Fetch profiles for approved reviews
-      const approvedUserIds = approvedData?.map(r => r.user_id) || [];
+      const approvedUserIds = (approvedData as any[])?.map(r => r.user_id) || [];
       let approvedProfilesMap: Record<string, { display_name: string | null }> = {};
       
       if (approvedUserIds.length > 0) {
@@ -63,7 +63,7 @@ export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
         });
       }
       
-      const approvedWithProfiles = approvedData?.map(r => ({
+      const approvedWithProfiles = (approvedData as any[])?.map(r => ({
         ...r,
         status: r.status as 'pending' | 'approved' | 'rejected',
         profiles: approvedProfilesMap[r.user_id] || null
@@ -74,7 +74,7 @@ export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
       // If user is logged in, also fetch their pending reviews for this tour
       if (user) {
         const { data: pendingData, error: pendingError } = await supabase
-          .from('tour_reviews')
+          .from('tour_reviews' as any)
           .select('id, rating, title, content, created_at, user_id, status')
           .eq('tour_id', tourId)
           .eq('user_id', user.id)
@@ -90,7 +90,7 @@ export const TourReviewsSection = ({ tourId }: TourReviewsSectionProps) => {
           .eq('id', user.id)
           .maybeSingle();
         
-        const pendingWithProfiles = pendingData?.map(r => ({
+        const pendingWithProfiles = (pendingData as any[])?.map(r => ({
           ...r,
           status: r.status as 'pending' | 'approved' | 'rejected',
           profiles: userProfile || null

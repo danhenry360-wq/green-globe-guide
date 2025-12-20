@@ -21,7 +21,8 @@ import {
   Image,
   ArrowLeft,
   Home,
-  Newspaper
+  Newspaper,
+  Compass
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -72,6 +73,13 @@ const adminModules: AdminModule[] = [
     icon: Home,
     href: "/admin/hotels",
     color: "text-amber-400",
+  },
+  {
+    title: "Cannabis Tours",
+    description: "Add, edit, and manage cannabis tour listings.",
+    icon: Compass,
+    href: "/admin/tours",
+    color: "text-teal-400",
   },
   {
     title: "Review Moderation",
