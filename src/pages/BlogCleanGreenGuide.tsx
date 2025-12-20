@@ -67,7 +67,7 @@ const BlogCleanGreenGuide = () => {
                 <link rel="canonical" href="https://budquest.guide/blog/clean-green-guide-colorado-2025" />
                 <meta property="og:title" content="The Clean Green Guide: Find Safe Cannabis in Colorado" />
                 <meta property="og:description" content="Your lungs deserve better. Here is how to spot top-tier, clean cannabis in Colorado in 2025." />
-                <meta property="og:image" content="/blog-clean-green-guide.jpg" />
+                <meta property="og:image" content="/images/blog/clean-green-guide.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">
                     {JSON.stringify(faqSchema)}
@@ -80,7 +80,7 @@ const BlogCleanGreenGuide = () => {
                 {/* Hero Section */}
                 <section className="relative h-[60vh] overflow-hidden">
                     <img
-                        src="/blog-clean-green-guide.jpg"
+                        src="/images/blog/clean-green-guide.png"
                         alt="Clean Green Cannabis - Laboratory Testing and Safety"
                         className="w-full h-full object-cover"
                     />
