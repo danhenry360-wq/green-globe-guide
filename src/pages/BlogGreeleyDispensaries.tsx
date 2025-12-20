@@ -127,7 +127,7 @@ const BlogGreeleyDispensaries = () => {
                 <link rel="canonical" href="https://budquest.guide/blog/greeley-dispensaries-garden-city-loophole" />
                 <meta property="og:title" content="Cannabis Dispensaries Near Greeley: The Garden City Loophole" />
                 <meta property="og:description" content="Why Greeley doesn't have weed, and where you can actually find it seconds away." />
-                <meta property="og:image" content="/images/blog/greeley-dispensaries.png" />
+                <meta property="og:image" content="/greeley-dispensaries.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
             </Helmet>
@@ -138,7 +138,7 @@ const BlogGreeleyDispensaries = () => {
                 {/* Hero Section */}
                 <section className="relative h-[60vh] overflow-hidden">
                     <img
-                        src="/images/blog/greeley-dispensaries.png"
+                        src="/greeley-dispensaries.png"
                         alt="Garden City Dispensaries near Greeley"
                         className="w-full h-full object-cover"
                     />

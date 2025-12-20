@@ -51,7 +51,7 @@ export const BLOG_POSTS = [
     avatar: "🏙️",
     category: "Guides",
     tags: ["Greeley", "Garden City", "Colorado", "Dispensaries"],
-    image: "/images/blog/greeley-dispensaries.png",
+    image: "/greeley-dispensaries.png",
     isExternalPage: true,
     externalUrl: "/blog/greeley-dispensaries-garden-city-loophole",
     content: {
@@ -72,7 +72,7 @@ export const BLOG_POSTS = [
     avatar: "🌿",
     category: "Education",
     tags: ["Clean Cannabis", "Organic", "Safety", "Colorado"],
-    image: "/images/blog/clean-green-guide.png",
+    image: "/clean-green-guide.png",
     isExternalPage: true,
     externalUrl: "/blog/clean-green-guide-colorado-2025",
     content: {
