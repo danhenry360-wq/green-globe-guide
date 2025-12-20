@@ -165,15 +165,25 @@ const BlogColoradoSpringsStays = () => {
                                     </div>
 
                                     <div className="space-y-6">
-                                        <Card id="inyhale" className="p-6 overflow-hidden">
+                                        <Card id="inyhale" className="p-6 overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
                                             <div className="flex flex-col md:flex-row gap-6">
-                                                <div className="w-full md:w-1/3 bg-muted rounded-lg h-48 md:h-auto overflow-hidden relative">
-                                                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-bold">Fully Friendly</div>
-                                                    <img src="/dest-2.jpg" alt="INNhale Resort" className="w-full h-full object-cover" />
+                                                <div className="w-full md:w-1/3 bg-muted rounded-lg h-48 md:h-auto overflow-hidden relative group cursor-pointer">
+                                                    <Link to="/hotels/innhale-resort-and-spa">
+                                                        <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-bold z-10">Fully Friendly</div>
+                                                        <img
+                                                            src="/innhale-resort-room.png"
+                                                            alt="INNhale Resort Room"
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                        />
+                                                    </Link>
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="flex justify-between items-start mb-2">
-                                                        <h4 className="text-xl font-bold">INNhale Resort and Spa</h4>
+                                                        <Link to="/hotels/innhale-resort-and-spa" className="hover:text-accent transition-colors">
+                                                            <h4 className="text-xl font-bold flex items-center gap-2">
+                                                                INNhale Resort and Spa <ChevronRight className="h-4 w-4" />
+                                                            </h4>
+                                                        </Link>
                                                         <span className="flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
                                                             <Star className="h-3 w-3 fill-gold text-gold" /> 9.1
                                                         </span>
@@ -185,23 +195,39 @@ const BlogColoradoSpringsStays = () => {
                                                     <p className="text-muted-foreground mb-4">
                                                         The closest thing to a cannabis resort in the Pikes Peak region. Purpose-built for cannabis travelers with spa services available. You can consume openly here.
                                                     </p>
-                                                    <div className="flex gap-2">
+                                                    <div className="flex flex-wrap gap-2 mb-4">
                                                         <span className="text-xs bg-green-500/10 text-green-600 px-2 py-1 rounded font-medium">Consumption Allowed</span>
                                                         <span className="text-xs bg-muted px-2 py-1 rounded">Spa Services</span>
                                                     </div>
+                                                    <Link
+                                                        to="/hotels/innhale-resort-and-spa"
+                                                        className="inline-flex items-center gap-2 text-sm font-bold text-white bg-accent px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
+                                                    >
+                                                        View Details & Book <ChevronRight className="h-4 w-4" />
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </Card>
 
-                                        <Card className="p-6 overflow-hidden">
+                                        <Card className="p-6 overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
                                             <div className="flex flex-col md:flex-row gap-6">
-                                                <div className="w-full md:w-1/3 bg-muted rounded-lg h-48 md:h-auto overflow-hidden relative">
-                                                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-bold">VRBO</div>
-                                                    <img src="/dest-3.jpg" alt="Ganja Getaway" className="w-full h-full object-cover" />
+                                                <div className="w-full md:w-1/3 bg-muted rounded-lg h-48 md:h-auto overflow-hidden relative group cursor-pointer">
+                                                    <Link to="/hotels/the-ganja-getaway">
+                                                        <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-bold z-10">VRBO</div>
+                                                        <img
+                                                            src="/ganja-getaway-living-room.png"
+                                                            alt="Ganja Getaway Living Room"
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                        />
+                                                    </Link>
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="flex justify-between items-start mb-2">
-                                                        <h4 className="text-xl font-bold">The Ganja Getaway</h4>
+                                                        <Link to="/hotels/the-ganja-getaway" className="hover:text-accent transition-colors">
+                                                            <h4 className="text-xl font-bold flex items-center gap-2">
+                                                                The Ganja Getaway <ChevronRight className="h-4 w-4" />
+                                                            </h4>
+                                                        </Link>
                                                         <span className="flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
                                                             <Star className="h-3 w-3 fill-gold text-gold" /> 4.0
                                                         </span>
@@ -213,10 +239,16 @@ const BlogColoradoSpringsStays = () => {
                                                     <p className="text-muted-foreground mb-4">
                                                         Private home near Ghost Town Museum and Garden of the Gods. Designed for cannabis consumers with full kitchen and privacy.
                                                     </p>
-                                                    <div className="flex gap-2">
+                                                    <div className="flex flex-wrap gap-2 mb-4">
                                                         <span className="text-xs bg-green-500/10 text-green-600 px-2 py-1 rounded font-medium">Private Home</span>
                                                         <span className="text-xs bg-muted px-2 py-1 rounded">Full Kitchen</span>
                                                     </div>
+                                                    <Link
+                                                        to="/hotels/the-ganja-getaway"
+                                                        className="inline-flex items-center gap-2 text-sm font-bold text-white bg-accent px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
+                                                    >
+                                                        View Details & Book <ChevronRight className="h-4 w-4" />
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </Card>
