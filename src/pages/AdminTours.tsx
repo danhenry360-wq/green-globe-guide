@@ -9,13 +9,31 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Edit, ArrowLeft, Loader2, Plus, Trash2, ImagePlus, Star, MapPin, Clock, DollarSign, Sparkles } from "lucide-react";
+import { 
+  Search, Edit, ArrowLeft, Loader2, Plus, Trash2, 
+  ImagePlus, Star, MapPin, Clock, DollarSign, Sparkles 
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 
@@ -57,6 +75,7 @@ const AdminTours = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [editingTour, setEditingTour] = useState<Tour | null>(null);
   const [formData, setFormData] = useState<Partial<Tour>>(emptyTour);
@@ -80,23 +99,22 @@ const AdminTours = () => {
     return tours.filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()));
   }, [tours, searchQuery]);
 
-  const mutationOptions = {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
-      toast.success("Changes saved successfully");
-      setDialogOpen(false);
-    },
-    onError: (error: any) => toast.error(error.message)
-  };
-
   const createMutation = useMutation({
     mutationFn: async (data: any) => supabase.from("tours").insert([data]),
-    ...mutationOptions
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour created");
+      setDialogOpen(false);
+    }
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, ...data }: any) => supabase.from("tours").update(data).eq("id", id),
-    ...mutationOptions
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour updated");
+      setDialogOpen(false);
+    }
   });
 
   const handleFileUpload = async (file: File, index: number) => {
@@ -110,9 +128,11 @@ const AdminTours = () => {
       const { data: { publicUrl } } = supabase.storage.from('tour-images').getPublicUrl(filePath);
 
       setFormData(prev => {
-        const newImages = [...(prev.images || [])];
+        const newImages = prev.images ? [...prev.images] : [];
+        // Ensure array slots exist
+        while (newImages.length <= index) newImages.push("");
         newImages[index] = publicUrl;
-        return { ...prev, images: newImages };
+        return { ...prev, images: newImages.filter(img => img !== "") };
       });
       toast.success("Image uploaded");
     } catch (error: any) {
@@ -124,13 +144,15 @@ const AdminTours = () => {
 
   const handleSave = () => {
     if (!formData.name || !formData.slug) return toast.error("Name and slug required");
-    isCreating ? createMutation.mutate(formData) : updateMutation.mutate({ id: editingTour?.id, ...formData });
+    if (isCreating) createMutation.mutate(formData);
+    else updateMutation.mutate({ id: editingTour?.id, ...formData });
   };
 
   if (authLoading || isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
 
   return (
     <>
+      <Helmet><title>Admin - Manage Tours</title></Helmet>
       <Navigation />
       <main className="min-h-screen bg-background py-12 px-4">
         <div className="container mx-auto max-w-6xl">
@@ -138,11 +160,11 @@ const AdminTours = () => {
             <h1 className="text-3xl font-bold flex items-center gap-2"><Sparkles className="text-accent" /> Manage Tours</h1>
             <Button onClick={() => { setFormData(emptyTour); setIsCreating(true); setDialogOpen(true); }}>New Tour</Button>
           </div>
-
+          
           <div className="grid gap-4">
             {filteredTours.map(tour => (
               <Card key={tour.id} className="p-4 bg-card/50 border-white/10 flex gap-4 items-center">
-                <img src={tour.images?.[0] || "/placeholder.svg"} className="w-20 h-20 object-cover rounded" alt="" />
+                <img src={tour.images?.[0] || "/placeholder.svg"} className="w-16 h-16 object-cover rounded" alt="" />
                 <div className="flex-1">
                   <h3 className="font-bold">{tour.name}</h3>
                   <p className="text-sm text-muted-foreground">{tour.city}, {tour.state}</p>
@@ -165,15 +187,16 @@ const AdminTours = () => {
               <div className="space-y-2"><Label>Name</Label><Input value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} /></div>
               <div className="space-y-2"><Label>Slug</Label><Input value={formData.slug} onChange={e => setFormData({...formData, slug: e.target.value})} /></div>
             </div>
+            <div className="space-y-2"><Label>Description</Label><Textarea value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} /></div>
             
-            <Label>Tour Images (Gallery)</Label>
+            <Label>Images (Max 5)</Label>
             <div className="grid grid-cols-5 gap-2">
               {[0, 1, 2, 3, 4].map(i => (
-                <div key={i} className="aspect-square relative border-2 border-dashed rounded-lg flex items-center justify-center overflow-hidden">
+                <div key={i} className="aspect-square relative border-2 border-dashed rounded-lg flex items-center justify-center overflow-hidden bg-card/50">
                   {formData.images?.[i] ? (
                     <>
                       <img src={formData.images[i]} className="w-full h-full object-cover" />
-                      <button className="absolute top-0 right-0 bg-red-500 text-white p-1" onClick={() => {
+                      <button className="absolute top-1 right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center text-white text-xs" onClick={() => {
                         const imgs = [...(formData.images || [])];
                         imgs.splice(i, 1);
                         setFormData({...formData, images: imgs});
@@ -181,17 +204,21 @@ const AdminTours = () => {
                     </>
                   ) : (
                     <button onClick={() => fileInputRefs.current[i]?.click()} disabled={uploadingIndex === i}>
-                      {uploadingIndex === i ? <Loader2 className="animate-spin" /> : <ImagePlus />}
+                      {uploadingIndex === i ? <Loader2 className="animate-spin w-5 h-5" /> : <ImagePlus className="w-5 h-5" />}
                     </button>
                   )}
                   <input type="file" ref={el => fileInputRefs.current[i] = el} hidden onChange={e => e.target.files?.[0] && handleFileUpload(e.target.files[0], i)} />
                 </div>
               ))}
             </div>
+            <div className="grid grid-cols-2 gap-4">
+               <div className="flex items-center justify-between"><Label>420 Friendly</Label><Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({...formData, is_420_friendly: v})} /></div>
+               <div className="flex items-center justify-between"><Label>Verified</Label><Switch checked={formData.is_verified || false} onCheckedChange={v => setFormData({...formData, is_verified: v})} /></div>
+            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave}>Save Tour</Button>
+            <Button onClick={handleSave}>Save Changes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
