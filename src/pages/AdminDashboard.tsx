@@ -22,7 +22,7 @@ import {
   ArrowLeft,
   Home,
   Newspaper,
-  Compass
+  Sparkles
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -76,10 +76,10 @@ const adminModules: AdminModule[] = [
   },
   {
     title: "Cannabis Tours",
-    description: "Add, edit, and manage cannabis tour listings.",
-    icon: Compass,
+    description: "Add, edit, and manage cannabis tour listings with image uploads.",
+    icon: Sparkles,
     href: "/admin/tours",
-    color: "text-teal-400",
+    color: "text-pink-400",
   },
   {
     title: "Review Moderation",

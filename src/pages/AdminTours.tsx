@@ -1,20 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { Switch } from "@/components/ui/switch";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useAuth } from "@/hooks/useAuth";
-import { ArrowLeft, Plus, Pencil, Trash2, Loader2, Star, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { 
+  Search, Edit, Shield, ArrowLeft, Save, Loader2, Plus, Trash2, 
+  ImagePlus, Star, MapPin, Clock, DollarSign, Sparkles 
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 interface Tour {
   id: string;
@@ -22,473 +44,603 @@ interface Tour {
   slug: string;
   description: string | null;
   price_range: string | null;
-  duration: string | null;
-  address: string | null;
   website: string | null;
-  booking_url: string | null;
   images: string[] | null;
+  address: string | null;
+  duration: string | null;
   highlights: string[] | null;
-  is_420_friendly: boolean | null;
-  is_verified: boolean | null;
+  booking_url: string | null;
   rating: number | null;
   review_count: number | null;
+  is_420_friendly: boolean | null;
+  is_verified: boolean | null;
   latitude: number | null;
   longitude: number | null;
   city_id: string | null;
+  city: string | null;
+  state: string | null;
 }
 
-const emptyTour: Omit<Tour, 'id'> = {
-  name: '',
-  slug: '',
-  description: '',
-  price_range: '',
-  duration: '',
-  address: '',
-  website: '',
-  booking_url: '',
+const emptyTour: Partial<Tour> = {
+  name: "",
+  slug: "",
+  description: "",
+  price_range: "$0",
+  website: "",
   images: [],
+  address: "",
+  duration: "",
   highlights: [],
-  is_420_friendly: true,
-  is_verified: false,
+  booking_url: "",
   rating: 0,
   review_count: 0,
-  latitude: null,
-  longitude: null,
-  city_id: null,
+  is_420_friendly: false,
+  is_verified: false,
+  latitude: 0,
+  longitude: 0,
+  city: "",
+  state: "Colorado",
 };
 
 const AdminTours = () => {
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingTour, setEditingTour] = useState<Tour | null>(null);
-  const [formData, setFormData] = useState<Omit<Tour, 'id'>>(emptyTour);
-  const [highlightsText, setHighlightsText] = useState('');
-  const [imagesText, setImagesText] = useState('');
-  const { toast } = useToast();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const queryClient = useQueryClient();
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [editingTour, setEditingTour] = useState<Tour | null>(null);
+  const [formData, setFormData] = useState<Partial<Tour>>(emptyTour);
+  const [isCreating, setIsCreating] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  useEffect(() => {
-    fetchTours();
-  }, []);
-
-  const fetchTours = async () => {
-    try {
+  // Fetch tours
+  const { data: tours = [], isLoading } = useQuery({
+    queryKey: ["admin-tours"],
+    queryFn: async () => {
       const { data, error } = await supabase
-        .from('tours')
-        .select('*')
-        .order('created_at', { ascending: false });
-
+        .from("tours")
+        .select("*")
+        .order("name", { ascending: true });
       if (error) throw error;
-      setTours(data || []);
-    } catch (error) {
-      console.error('Error fetching tours:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch tours",
-        variant: "destructive",
-      });
+      return (data as any[]).map(tour => ({
+        ...tour,
+        city: tour.city || 'Unknown',
+        state: tour.state || 'Unknown'
+      })) as Tour[];
+    },
+    enabled: !!user,
+  });
+
+  // Filtered tours
+  const filteredTours = useMemo(() => {
+    return tours.filter(tour =>
+      tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tour.slug.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [tours, searchQuery]);
+
+  // Create/Update mutation
+  const createMutation = useMutation({
+    mutationFn: async (data: Partial<Tour>) => {
+      const { error } = await supabase.from("tours").insert([data as any]);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour created successfully");
+      handleCloseDialog();
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to create tour");
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, ...data }: Partial<Tour> & { id: string }) => {
+      const { error } = await supabase.from("tours").update(data).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour updated successfully");
+      handleCloseDialog();
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to update tour");
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("tours").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-tours"] });
+      toast.success("Tour deleted successfully");
+      setDeleteId(null);
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to delete tour");
+    },
+  });
+
+  const handleFileUpload = async (file: File, index: number) => {
+    if (!file) return;
+    
+    setUploadingImage(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `tours/${fileName}`;
+
+      const { error: uploadError, data } = await supabase.storage
+        .from('tour-images')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('tour-images')
+        .getPublicUrl(filePath);
+
+      const images = formData.images || [];
+      images[index] = publicUrl;
+      setFormData({ ...formData, images });
+
+      toast.success("Image uploaded successfully");
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image");
     } finally {
-      setLoading(false);
+      setUploadingImage(false);
     }
   };
 
-  const generateSlug = (name: string) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+  const handleOpenEdit = (tour: Tour) => {
+    setEditingTour(tour);
+    setFormData(tour);
+    setIsCreating(false);
+    setDialogOpen(true);
   };
 
-  const handleInputChange = (field: keyof Omit<Tour, 'id'>, value: any) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-      ...(field === 'name' ? { slug: generateSlug(value) } : {}),
-    }));
-  };
-
-  const openCreateDialog = () => {
+  const handleOpenCreate = () => {
     setEditingTour(null);
     setFormData(emptyTour);
-    setHighlightsText('');
-    setImagesText('');
+    setIsCreating(true);
     setDialogOpen(true);
   };
 
-  const openEditDialog = (tour: Tour) => {
-    setEditingTour(tour);
-    setFormData({
-      name: tour.name,
-      slug: tour.slug,
-      description: tour.description || '',
-      price_range: tour.price_range || '',
-      duration: tour.duration || '',
-      address: tour.address || '',
-      website: tour.website || '',
-      booking_url: tour.booking_url || '',
-      images: tour.images || [],
-      highlights: tour.highlights || [],
-      is_420_friendly: tour.is_420_friendly ?? true,
-      is_verified: tour.is_verified ?? false,
-      rating: tour.rating,
-      review_count: tour.review_count,
-      latitude: tour.latitude,
-      longitude: tour.longitude,
-      city_id: tour.city_id,
-    });
-    setHighlightsText((tour.highlights || []).join('\n'));
-    setImagesText((tour.images || []).join('\n'));
-    setDialogOpen(true);
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+    setEditingTour(null);
+    setFormData(emptyTour);
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!formData.name || !formData.slug) {
-      toast({
-        title: "Error",
-        description: "Name and slug are required",
-        variant: "destructive",
-      });
+      toast.error("Name and slug are required");
       return;
     }
 
-    setSaving(true);
-
-    try {
-      const tourData = {
-        ...formData,
-        highlights: highlightsText.split('\n').filter(h => h.trim()),
-        images: imagesText.split('\n').filter(i => i.trim()),
-        latitude: formData.latitude ? Number(formData.latitude) : null,
-        longitude: formData.longitude ? Number(formData.longitude) : null,
-      };
-
-      if (editingTour) {
-        const { error } = await supabase
-          .from('tours')
-          .update(tourData)
-          .eq('id', editingTour.id);
-
-        if (error) throw error;
-
-        toast({
-          title: "Success",
-          description: "Tour updated successfully",
-        });
-      } else {
-        const { error } = await supabase
-          .from('tours')
-          .insert(tourData);
-
-        if (error) throw error;
-
-        toast({
-          title: "Success",
-          description: "Tour created successfully",
-        });
-      }
-
-      setDialogOpen(false);
-      fetchTours();
-    } catch (error: any) {
-      console.error('Error saving tour:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to save tour",
-        variant: "destructive",
-      });
-    } finally {
-      setSaving(false);
+    if (isCreating) {
+      createMutation.mutate(formData);
+    } else if (editingTour) {
+      updateMutation.mutate({ id: editingTour.id, ...formData });
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this tour?')) return;
-
-    try {
-      const { error } = await supabase
-        .from('tours')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Tour deleted successfully",
-      });
-      fetchTours();
-    } catch (error: any) {
-      console.error('Error deleting tour:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to delete tour",
-        variant: "destructive",
-      });
+  const handleDelete = async () => {
+    if (deleteId) {
+      deleteMutation.mutate(deleteId);
     }
   };
+
+  if (authLoading || isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Button onClick={() => navigate("/auth")}>Sign In Required</Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <>
+      <Helmet>
+        <title>Manage Tours - Admin Dashboard</title>
+      </Helmet>
       <Navigation />
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/admin')}
+      <main className="min-h-screen bg-background py-12">
+        <div className="container mx-auto px-4 max-w-6xl">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
           >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <h1 className="text-2xl font-bold text-foreground">Manage Tours</h1>
-        </div>
-
-        <Card className="bg-card/50 border-accent/20">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-accent">Tours</CardTitle>
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={openCreateDialog} className="bg-accent hover:bg-accent/90">
-                  <Plus className="w-4 h-4 mr-2" /> Add Tour
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/admin")}
+                  className="gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" /> Back
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>
-                    {editingTour ? 'Edit Tour' : 'Add New Tour'}
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Name *</Label>
-                      <Input
-                        value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
-                        placeholder="Tour name"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Slug *</Label>
-                      <Input
-                        value={formData.slug}
-                        onChange={(e) => handleInputChange('slug', e.target.value)}
-                        placeholder="tour-slug"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea
-                      value={formData.description || ''}
-                      onChange={(e) => handleInputChange('description', e.target.value)}
-                      placeholder="Tour description"
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Price Range</Label>
-                      <Input
-                        value={formData.price_range || ''}
-                        onChange={(e) => handleInputChange('price_range', e.target.value)}
-                        placeholder="$50-100"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Duration</Label>
-                      <Input
-                        value={formData.duration || ''}
-                        onChange={(e) => handleInputChange('duration', e.target.value)}
-                        placeholder="2-3 hours"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Address</Label>
-                    <Input
-                      value={formData.address || ''}
-                      onChange={(e) => handleInputChange('address', e.target.value)}
-                      placeholder="123 Main St, Denver, CO"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Website</Label>
-                      <Input
-                        value={formData.website || ''}
-                        onChange={(e) => handleInputChange('website', e.target.value)}
-                        placeholder="https://example.com"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Booking URL</Label>
-                      <Input
-                        value={formData.booking_url || ''}
-                        onChange={(e) => handleInputChange('booking_url', e.target.value)}
-                        placeholder="https://example.com/book"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Latitude</Label>
-                      <Input
-                        type="number"
-                        step="any"
-                        value={formData.latitude || ''}
-                        onChange={(e) => handleInputChange('latitude', e.target.value ? Number(e.target.value) : null)}
-                        placeholder="39.7392"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Longitude</Label>
-                      <Input
-                        type="number"
-                        step="any"
-                        value={formData.longitude || ''}
-                        onChange={(e) => handleInputChange('longitude', e.target.value ? Number(e.target.value) : null)}
-                        placeholder="-104.9903"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Highlights (one per line)</Label>
-                    <Textarea
-                      value={highlightsText}
-                      onChange={(e) => setHighlightsText(e.target.value)}
-                      placeholder="Dispensary tour&#10;Cannabis cooking class&#10;Guided meditation"
-                      rows={4}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Images (URLs, one per line)</Label>
-                    <Textarea
-                      value={imagesText}
-                      onChange={(e) => setImagesText(e.target.value)}
-                      placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        checked={formData.is_420_friendly ?? true}
-                        onCheckedChange={(checked) => handleInputChange('is_420_friendly', checked)}
-                      />
-                      <Label>420 Friendly</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        checked={formData.is_verified ?? false}
-                        onCheckedChange={(checked) => handleInputChange('is_verified', checked)}
-                      />
-                      <Label>Verified</Label>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end gap-3">
-                    <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button onClick={handleSave} disabled={saving} className="bg-accent hover:bg-accent/90">
-                      {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                      {editingTour ? 'Update' : 'Create'}
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </CardHeader>
-          
-          <CardContent>
-            {loading ? (
-              <div className="flex justify-center py-8">
-                <Loader2 className="w-8 h-8 animate-spin text-accent" />
+                <h1 className="text-3xl font-bold flex items-center gap-3">
+                  <Sparkles className="w-8 h-8 text-accent" />
+                  Manage Tours
+                </h1>
               </div>
-            ) : tours.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">No tours found. Add your first tour!</p>
+              <Button onClick={handleOpenCreate} className="gap-2 bg-accent hover:bg-accent/90">
+                <Plus className="w-4 h-4" /> New Tour
+              </Button>
+            </div>
+
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                placeholder="Search tours..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-card/50 border-white/10"
+              />
+            </div>
+          </motion.div>
+
+          {/* Tours Table */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
+            {filteredTours.length === 0 ? (
+              <Card className="p-12 text-center bg-card/30 border-accent/20">
+                <p className="text-muted-foreground mb-4">No tours found</p>
+                <Button onClick={handleOpenCreate} className="gap-2">
+                  <Plus className="w-4 h-4" /> Create First Tour
+                </Button>
+              </Card>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Duration</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Rating</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {tours.map((tour) => (
-                    <TableRow key={tour.id}>
-                      <TableCell>
+              <div className="grid gap-4">
+                {filteredTours.map((tour, index) => (
+                  <motion.div
+                    key={tour.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Card className="p-4 sm:p-6 bg-card/50 border-accent/20 hover:border-accent/50 transition-colors">
+                      <div className="grid sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                          <p className="font-medium">{tour.name}</p>
-                          <p className="text-xs text-muted-foreground">{tour.slug}</p>
+                          <h3 className="font-bold text-lg text-foreground mb-1">{tour.name}</h3>
+                          <p className="text-sm text-muted-foreground flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {tour.city}, {tour.state}
+                          </p>
                         </div>
-                      </TableCell>
-                      <TableCell>{tour.duration || '-'}</TableCell>
-                      <TableCell>{tour.price_range || '-'}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span>{tour.rating || 0}</span>
-                          <span className="text-muted-foreground">({tour.review_count || 0})</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-1">
+                        <div className="flex flex-wrap gap-2 justify-end">
                           {tour.is_420_friendly && (
-                            <Badge variant="secondary" className="text-xs">420</Badge>
+                            <Badge className="bg-accent/20 text-accent border-accent/40">420 Friendly</Badge>
                           )}
                           {tour.is_verified && (
-                            <Badge className="bg-green-500/20 text-green-400 text-xs">Verified</Badge>
+                            <Badge className="bg-green-500/20 text-green-400 border-green-500/40">Verified</Badge>
                           )}
                         </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openEditDialog(tour)}
-                          >
-                            <Pencil className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDelete(tour.id)}
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
-      </main>
+                      </div>
 
+                      <div className="grid sm:grid-cols-4 gap-4 mb-4 text-xs sm:text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Rating</p>
+                          <p className="font-semibold flex items-center gap-1">
+                            <Star className="w-4 h-4 text-yellow-400" /> {tour.rating || 0}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Duration</p>
+                          <p className="font-semibold flex items-center gap-1">
+                            <Clock className="w-4 h-4" /> {tour.duration || 'N/A'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Price</p>
+                          <p className="font-semibold flex items-center gap-1">
+                            <DollarSign className="w-4 h-4" /> {tour.price_range || '$0'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Images</p>
+                          <p className="font-semibold">{tour.images?.length || 0}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 justify-end">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleOpenEdit(tour)}
+                          className="gap-2"
+                        >
+                          <Edit className="w-4 h-4" /> Edit
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setDeleteId(tour.id)}
+                          className="gap-2"
+                        >
+                          <Trash2 className="w-4 h-4" /> Delete
+                        </Button>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </main>
       <Footer />
-    </div>
+
+      {/* Edit/Create Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{isCreating ? "Create New Tour" : "Edit Tour"}</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {/* Basic Info */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Tour Name *</Label>
+                <Input
+                  value={formData.name || ""}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g., BEYOND Light Show"
+                  className="bg-card/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Slug *</Label>
+                <Input
+                  value={formData.slug || ""}
+                  onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                  placeholder="e.g., beyond-light-show-meditation"
+                  className="bg-card/50"
+                />
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label>City</Label>
+                <Input
+                  value={formData.city || ""}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  placeholder="Denver"
+                  className="bg-card/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>State</Label>
+                <Input
+                  value={formData.state || ""}
+                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                  placeholder="Colorado"
+                  className="bg-card/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Address</Label>
+                <Input
+                  value={formData.address || ""}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  placeholder="Street address"
+                  className="bg-card/50"
+                />
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <Textarea
+                value={formData.description || ""}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Tour description..."
+                rows={3}
+                className="bg-card/50 resize-none"
+              />
+            </div>
+
+            {/* Tour Details */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Duration</Label>
+                <Input
+                  value={formData.duration || ""}
+                  onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                  placeholder="e.g., 1 hour"
+                  className="bg-card/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Price Range</Label>
+                <Input
+                  value={formData.price_range || ""}
+                  onChange={(e) => setFormData({ ...formData, price_range: e.target.value })}
+                  placeholder="e.g., $25.00"
+                  className="bg-card/50"
+                />
+              </div>
+            </div>
+
+            {/* Rating & Reviews */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Rating</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="5"
+                  step="0.1"
+                  value={formData.rating || 0}
+                  onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
+                  placeholder="e.g., 4.8"
+                  className="bg-card/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Review Count</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={formData.review_count || 0}
+                  onChange={(e) => setFormData({ ...formData, review_count: parseInt(e.target.value) })}
+                  placeholder="e.g., 818"
+                  className="bg-card/50"
+                />
+              </div>
+            </div>
+
+            {/* URLs */}
+            <div className="space-y-2">
+              <Label>Booking URL</Label>
+              <Input
+                value={formData.booking_url || ""}
+                onChange={(e) => setFormData({ ...formData, booking_url: e.target.value })}
+                placeholder="https://..."
+                className="bg-card/50"
+              />
+            </div>
+
+            {/* Toggles */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label>420 Friendly</Label>
+                <Switch
+                  checked={formData.is_420_friendly || false}
+                  onCheckedChange={(checked) => setFormData({ ...formData, is_420_friendly: checked })}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <Label>Verified</Label>
+                <Switch
+                  checked={formData.is_verified || false}
+                  onCheckedChange={(checked) => setFormData({ ...formData, is_verified: checked })}
+                />
+              </div>
+            </div>
+
+            {/* Image Upload */}
+            <div className="space-y-3">
+              <Label>Tour Images</Label>
+              <div className="grid grid-cols-3 gap-2">
+                {[0, 1, 2, 3, 4].map((index) => (
+                  <div key={index} className="space-y-2">
+                    <input
+                      ref={(el) => fileInputRefs.current[index] = el}
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleFileUpload(file, index);
+                      }}
+                    />
+                    {formData.images?.[index] ? (
+                      <div className="relative aspect-square rounded-lg overflow-hidden border border-accent/30">
+                        <img
+                          src={formData.images[index]}
+                          alt={`Tour ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="absolute top-1 right-1 h-6 w-6 p-0"
+                          onClick={() => {
+                            const images = [...(formData.images || [])];
+                            images.splice(index, 1);
+                            setFormData({ ...formData, images });
+                          }}
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => fileInputRefs.current[index]?.click()}
+                        disabled={uploadingImage}
+                        className="w-full aspect-square rounded-lg border-2 border-dashed border-accent/30 hover:border-accent/60 transition-colors flex items-center justify-center bg-card/50"
+                      >
+                        {uploadingImage ? (
+                          <Loader2 className="w-6 h-6 animate-spin text-accent" />
+                        ) : (
+                          <ImagePlus className="w-6 h-6 text-muted-foreground" />
+                        )}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCloseDialog}>Cancel</Button>
+            <Button
+              onClick={handleSave}
+              disabled={createMutation.isPending || updateMutation.isPending}
+              className="gap-2 bg-accent hover:bg-accent/90"
+            >
+              {(createMutation.isPending || updateMutation.isPending) && (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              )}
+              {isCreating ? "Create Tour" : "Save Changes"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation */}
+      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Tour</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              className="bg-destructive hover:bg-destructive/90"
+            >
+              {deleteMutation.isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 

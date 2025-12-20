@@ -7,12 +7,13 @@ import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Star, MapPin, CheckCircle, Clock, Loader2, Globe, 
-  ChevronLeft, ChevronRight, Sparkles, DollarSign, ExternalLink 
+import {
+  Star, MapPin, CheckCircle, Clock, Loader2, Globe,
+  ChevronLeft, ChevronRight, Sparkles, DollarSign, ExternalLink
 } from "lucide-react";
 import { DispensaryMap } from "@/components/DispensaryMap";
 import { TourReviewsSection } from "@/components/TourReviewsSection";
+import { TourImageUploader } from "@/components/TourImageUploader";
 
 // Mock tour images for fallback
 const MOCK_TOUR_IMAGES: Record<string, string[]> = {
@@ -78,14 +79,14 @@ const TourDetail = () => {
 
         if (!error && data) {
           setTour(data);
-          
+
           // Fetch nearby dispensaries (based on city or general Colorado for now)
           const { data: dispensaries } = await supabase
             .from('dispensaries')
             .select('id, name, slug, city, state, address, rating, image')
             .eq('state', 'Colorado')
             .limit(4);
-          
+
           if (dispensaries) {
             setNearbyDispensaries(dispensaries);
           }
@@ -133,9 +134,14 @@ const TourDetail = () => {
   }
 
   const mockImages = slug ? MOCK_TOUR_IMAGES[slug] : null;
-  // Prioritize mock images if they exist for this tour, otherwise use DB images
-  const allImages = mockImages && mockImages.length > 0 ? mockImages : (tour.images?.filter(img => img) || ['/tours/beyond-light-show-denver.jpg']);
+  // Prioritize DB images if they exist, otherwise fallback to mock, then default
+  const allImages = (tour.images && tour.images.length > 0)
+    ? tour.images
+    : (mockImages && mockImages.length > 0 ? mockImages : ['/tours/beyond-light-show-denver.jpg']);
   const hasMultipleImages = allImages.length > 1;
+
+  // Placeholder for image uploader, if needed for admin or user contributions
+  // <TourImageUploader tourId={tour.id} onImageUpload={(newImageUrl) => setTour(prev => prev ? { ...prev, images: [...(prev.images || []), newImageUrl] } : prev)} />
 
   return (
     <>
@@ -216,7 +222,7 @@ const TourDetail = () => {
 
             {/* Main Content Grid */}
             <div className="space-y-4 sm:space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
-              
+
               {/* Location Card - Sidebar on desktop */}
               <div className="lg:col-span-1 lg:order-last">
                 <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
@@ -289,9 +295,8 @@ const TourDetail = () => {
                           <button
                             key={idx}
                             onClick={() => setCurrentImageIndex(idx)}
-                            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all ${
-                              idx === currentImageIndex ? 'border-accent' : 'border-white/30 hover:border-white/60'
-                            }`}
+                            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border-2 transition-all ${idx === currentImageIndex ? 'border-accent' : 'border-white/30 hover:border-white/60'
+                              }`}
                           >
                             <img
                               src={img}
@@ -339,6 +344,13 @@ const TourDetail = () => {
                   </Card>
                 )}
 
+                {/* Image Uploader */}
+                <TourImageUploader
+                  tourId={tour.id}
+                  currentImages={tour.images || []}
+                  onImagesUpdate={(newImages) => setTour({ ...tour, images: newImages })}
+                />
+
                 {/* Reviews Section */}
                 <TourReviewsSection tourId={tour.id} />
 
@@ -353,13 +365,13 @@ const TourDetail = () => {
                     <CardContent className="p-3 sm:p-4 pt-0">
                       <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                         {nearbyDispensaries.map((dispensary) => (
-                          <Link 
-                            key={dispensary.id} 
+                          <Link
+                            key={dispensary.id}
                             to={`/dispensary/${dispensary.slug}`}
                             className="flex gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors border border-border/30"
                           >
-                            <img 
-                              src={dispensary.image || '/dest-colorado.png'} 
+                            <img
+                              src={dispensary.image || '/dest-colorado.png'}
                               alt={dispensary.name}
                               className="w-16 h-16 rounded-md object-cover flex-shrink-0"
                               onError={(e) => {
