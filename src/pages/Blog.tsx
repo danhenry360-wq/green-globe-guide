@@ -20,6 +20,27 @@ import { useQuery } from "@tanstack/react-query";
 /* ---------- FULL BLOG ARTICLES DATA ---------- */
 export const BLOG_POSTS = [
   {
+    id: "all-inclusive-weed-resorts-colorado",
+    title: "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
+    subtitle: "The honest truth about cannabis hospitality in the Mile High State.",
+    excerpt: "Looking for an all-inclusive weed resort in Colorado? Here is the honest truth about what exists, where to stay, and how to book the ultimate 420 vacation.",
+    date: "Dec 20, 2025",
+    readTime: "15 min read",
+    author: "BudQuest Team",
+    avatar: "🏨",
+    category: "Guides",
+    tags: ["Colorado", "Stays", "Luxury", "All-Inclusive"],
+    image: "/blog-all-inclusive-weed-resorts-colorado.png",
+    isExternalPage: true,
+    externalUrl: "/blog/all-inclusive-weed-resorts-colorado",
+    content: {
+      introduction: "Colorado pioneers legal cannabis, but 'all-inclusive' means something different here.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "ultimate-stoner-guide-colorado-2025",
     title: "High Altitude, Higher Vibes: The Ultimate Stoner's Guide to Colorado 2025",
     subtitle: "Everything you need to know for the perfect Colorado cannabis vacation.",

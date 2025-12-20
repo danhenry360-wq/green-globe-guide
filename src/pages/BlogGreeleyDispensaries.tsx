@@ -157,8 +157,10 @@ const BlogGreeleyDispensaries = () => {
                                 </span>
                             </div>
                             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight shadow-xl">
-                                Dispensaries Near Greeley: <br />
-                                <span className="text-green-500">The Garden City Loophole</span>
+                                <span className="bg-gradient-to-r from-white via-green-400 to-emerald-500 bg-clip-text text-transparent">
+                                    Dispensaries Near Greeley: <br />
+                                    The Garden City Loophole
+                                </span>
                             </h1>
                             <p className="text-xl text-white/90 max-w-2xl mb-6 drop-shadow-md">
                                 All the "Greeley dispensaries" are actually in Garden City, just minutes from downtown and UNC.
@@ -175,7 +177,10 @@ const BlogGreeleyDispensaries = () => {
                             {/* Quick Answer */}
                             <section id="quick-answer" className="bg-accent/5 p-6 rounded-2xl border border-accent/10">
                                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                                    <Info className="h-6 w-6 text-accent" /> Quick Answer
+                                    <Info className="h-6 w-6 text-accent animate-pulse" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        Quick Answer
+                                    </span>
                                 </h2>
                                 <p className="text-lg text-muted-foreground">
                                     Greeley banned dispensaries. But Garden City—a tiny town completely surrounded by Greeley—didn't. All the "Greeley dispensaries" are actually in Garden City, just minutes from downtown and UNC campus.
@@ -184,7 +189,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 1. The Greeley Situation */}
                             <section id="situation">
-                                <h2 className="text-3xl font-bold mb-6">1. The Greeley Situation</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <AlertTriangle className="h-8 w-8 text-amber-500" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        1. The Greeley Situation
+                                    </span>
+                                </h2>
                                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                                     <p>
                                         Greeley is one of Colorado's largest cities to ban cannabis dispensaries entirely. Despite state legalization in 2012, Section 24-1104(d) of the Greeley Municipal Code prohibits both recreational AND medical dispensaries within city limits.
@@ -205,7 +215,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 2. Garden City Dispensaries */}
                             <section id="table">
-                                <h2 className="text-3xl font-bold mb-6">2. Garden City Dispensaries (Serving Greeley)</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <Map className="h-8 w-8 text-green-500" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        2. Garden City Dispensaries
+                                    </span>
+                                </h2>
                                 <div className="overflow-x-auto rounded-xl border border-border/30">
                                     <table className="w-full text-left text-sm">
                                         <thead className="bg-muted/50 border-b border-border/30">
@@ -263,7 +278,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 3. Best Dispensary by Need */}
                             <section id="needs">
-                                <h2 className="text-3xl font-bold mb-6">3. Best Dispensary by Need</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <Star className="h-8 w-8 text-gold" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        3. Best Dispensary by Need
+                                    </span>
+                                </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                     <Card className="p-4 bg-accent/5 border-accent/20">
                                         <Clock className="h-8 w-8 text-accent mb-2" />
@@ -300,7 +320,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* Real-time Dispensaries */}
                             <section id="live-data">
-                                <h2 className="text-3xl font-bold mb-8">Dispensaries in Garden City & Greeley</h2>
+                                <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                                    <Leaf className="h-8 w-8 text-green-500 animate-bounce" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        Dispensaries in Garden City & Greeley
+                                    </span>
+                                </h2>
                                 {loading ? (
                                     <div className="flex justify-center py-12">
                                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -335,7 +360,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 4. For UNC Students */}
                             <section id="unc">
-                                <h2 className="text-3xl font-bold mb-6">4. For UNC Students</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <GraduationCap className="h-8 w-8 text-accent" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        4. For UNC Students
+                                    </span>
+                                </h2>
                                 <p className="text-muted-foreground mb-6">
                                     University of Northern Colorado is less than a mile from several Garden City dispensaries. But remember:
                                 </p>
@@ -361,7 +391,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 5. Getting There */}
                             <section id="getting-there">
-                                <h2 className="text-3xl font-bold mb-6">5. Getting There</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <Car className="h-8 w-8 text-accent" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        5. Getting There
+                                    </span>
+                                </h2>
                                 <div className="space-y-6">
                                     <div className="flex gap-4">
                                         <div className="p-3 rounded-xl bg-muted h-fit"><Car className="h-6 w-6" /></div>
@@ -403,7 +438,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 6. What to Know Before You Go */}
                             <section id="basics">
-                                <h2 className="text-3xl font-bold mb-6">6. What to Know Before You Go</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <ShieldCheck className="h-8 w-8 text-green-500" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        6. What to Know Before You Go
+                                    </span>
+                                </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {[
                                         { title: "Age", value: "21+ with valid government ID" },
@@ -422,7 +462,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 7. Where to Consume */}
                             <section id="consume">
-                                <h2 className="text-3xl font-bold mb-6">7. Where to Consume in Greeley</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <Flame className="h-8 w-8 text-orange-500" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        7. Where to Consume in Greeley
+                                    </span>
+                                </h2>
                                 <p className="text-muted-foreground mb-6">
                                     Greeley banned dispensaries, but possession and private consumption are still legal under state law.
                                 </p>
@@ -453,7 +498,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 8. Why Garden City Exists */}
                             <section id="history">
-                                <h2 className="text-3xl font-bold mb-6">8. Why Garden City Exists (The Weird History)</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <History className="h-8 w-8 text-accent" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        8. Why Garden City Exists
+                                    </span>
+                                </h2>
                                 <div className="flex flex-col md:flex-row gap-8 items-center border border-border/30 p-8 rounded-2xl bg-muted/30 text-left">
                                     <div className="flex-1 space-y-4">
                                         <p className="text-muted-foreground">
@@ -471,7 +521,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 9. Nearby Alternatives */}
                             <section id="alternatives">
-                                <h2 className="text-3xl font-bold mb-6">9. Nearby Alternatives</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <Compass className="h-8 w-8 text-accent" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        9. Nearby Alternatives
+                                    </span>
+                                </h2>
                                 <div className="grid gap-4">
                                     {[
                                         { town: "Fort Collins", distance: "25 miles north", notes: "Bigger selection, more options" },
@@ -497,7 +552,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 10. Deals & Discounts */}
                             <section id="deals">
-                                <h2 className="text-3xl font-bold mb-6">10. Deals & Discounts</h2>
+                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                                    <ShoppingBag className="h-8 w-8 text-green-500" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        10. Deals & Discounts
+                                    </span>
+                                </h2>
                                 <div className="flex flex-wrap gap-2">
                                     {["First-time discounts", "Loyalty programs", "Daily deals", "Student discounts", "Veteran discounts"].map((tag) => (
                                         <Badge key={tag} className="bg-accent/10 text-accent hover:bg-accent/20 border-accent/20 px-3 py-1">
@@ -512,7 +572,12 @@ const BlogGreeleyDispensaries = () => {
 
                             {/* 11. FAQ Section */}
                             <section id="faq" className="space-y-8">
-                                <h2 className="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+                                <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                                    <Info className="h-8 w-8 text-accent" />
+                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
+                                        Frequently Asked Questions
+                                    </span>
+                                </h2>
                                 <div className="grid gap-6">
                                     {faqSchema.mainEntity.map((faq, index) => (
                                         <Card key={index} className="p-6 bg-muted/20 border-border/30">
