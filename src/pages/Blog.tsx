@@ -41,6 +41,27 @@ export const BLOG_POSTS = [
     }
   },
   {
+    id: "greeley-dispensaries-garden-city-loophole",
+    title: "Cannabis Dispensaries Near Greeley: The Garden City Loophole (2025)",
+    subtitle: "Why Greeley doesn't have weed, and where you can actually find it seconds away.",
+    excerpt: "Greeley banned dispensaries. But Garden City—a tiny town completely surrounded by Greeley—didn't. Here is your guide to the 'Green Mile'.",
+    date: "Dec 20, 2025",
+    readTime: "7 min read",
+    author: "BudQuest Team",
+    avatar: "🏙️",
+    category: "Guides",
+    tags: ["Greeley", "Garden City", "Colorado", "Dispensaries"],
+    image: "/images/blog/greeley-dispensaries.png",
+    isExternalPage: true,
+    externalUrl: "/blog/greeley-dispensaries-garden-city-loophole",
+    content: {
+      introduction: "Greeley banned dispensaries, but Garden City didn't. Quality cannabis is just minutes away.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "clean-green-guide-colorado-2025",
     title: "The Clean Green Guide: How to Find Colorado's Best (and Safest) Strains in 2025",
     subtitle: "Legal doesn't always mean clean. Here is how to shop smarter.",
