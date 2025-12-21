@@ -142,12 +142,10 @@ const TourDetail = () => {
                 {tour.name}
               </h1>
 
-              {tour.address && (
-                <div className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                  <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="leading-snug">{tour.address}</span>
-                </div>
-              )}
+              <div className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
+                <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span className="leading-snug">{tour.address}</span>
+              </div>
 
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 <div className="flex gap-0.5">{renderRating(tour.rating || 0)}</div>
@@ -166,20 +164,10 @@ const TourDetail = () => {
                 )}
               </div>
 
-              {(tour.duration || tour.price_range) && (
-                <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  {tour.duration && (
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
-                      <span>{tour.duration}</span>
-                    </div>
-                  )}
-                  {tour.price_range && (
-                    <div className="flex items-center gap-1.5">
-                      <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
-                      <span>{tour.price_range}</span>
-                    </div>
-                  )}
+              {tour.duration && (
+                <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                  <span>{tour.duration}</span>
                 </div>
               )}
 
@@ -196,17 +184,7 @@ const TourDetail = () => {
                     Book Now
                   </a>
                 )}
-                {tour.website && (
-                  <a
-                    href={tour.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 border border-accent/30 bg-card/50 hover:bg-accent/10 text-accent text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all text-center"
-                  >
-                    <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Visit Website
-                  </a>
-                )}
+
                 <FavoriteButton
                   entityId={tour.id}
                   type="tour"
@@ -308,30 +286,60 @@ const TourDetail = () => {
                     <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                       {tour.description || 'Experience a unique cannabis-friendly tour that combines education, entertainment, and memorable moments.'}
                     </p>
+                    {tour.highlights && tour.highlights.length > 0 && (
+                      <div className="mt-2.5 sm:mt-4 p-2.5 sm:p-3 rounded-md sm:rounded-lg bg-accent/10 border border-accent/20">
+                        <p className="text-[11px] sm:text-xs text-foreground font-medium">
+                          Highlights: {tour.highlights.join(', ')}
+                        </p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
-                {/* Highlights */}
-                {tour.highlights && tour.highlights.length > 0 && (
-                  <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-                    <CardHeader className="p-3 sm:p-4 pb-2">
-                      <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                        Tour Highlights
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-3 sm:p-4 pt-0 text-xs sm:text-sm text-muted-foreground">
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
-                        {tour.highlights.map((highlight, idx) => (
-                          <li key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                )}
+                {/* Vital Information - Compact Grid for Mobile */}
+                <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                  <CardHeader className="p-3 sm:p-4 pb-2">
+                    <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-1.5 sm:gap-2">
+                      <Info className="w-4 h-4 sm:w-5 sm:h-5" /> Vital Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3 sm:p-4 pt-0">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3 text-[11px] sm:text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                        <span>Duration: {tour.duration || 'N/A'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                        <span>Price: {tour.price_range || 'N/A'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <CheckCircle className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${tour.is_420_friendly ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>420 Friendly: {tour.is_420_friendly ? 'Yes' : 'No'}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <CheckCircle className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${tour.is_verified ? 'text-green-500' : 'text-red-500'}`} />
+                        <span>Verified: {tour.is_verified ? 'Yes' : 'No'}</span>
+                      </div>
+                      {tour.website && (
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                          <a href={tour.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline truncate">
+                            Website
+                          </a>
+                        </div>
+                      )}
+                      {tour.booking_url && (
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                          <a href={tour.booking_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline truncate">
+                            Booking URL
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Legal Disclaimer Section */}
                 <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
