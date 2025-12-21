@@ -464,7 +464,56 @@
   </url>
   <url>
     <loc>https://budquest.guide/winter-park</loc>
-    <lastmod>2025-12-18</lastmod>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- New Cities Added -->
+  <url>
+    <loc>https://budquest.guide/golden</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/crested-butte</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/buena-vista</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/palisade</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/cortez</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/gunnison</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/frisco</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/monarch</loc>
+    <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -543,7 +592,43 @@
   </url>
   <url>
     <loc>https://budquest.guide/blog/cannabis-dispensaries-breckenridge-complete-guide-2025</loc>
-    <lastmod>2025-12-18</lastmod>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/clean-green-guide-colorado-2025</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/best-dispensaries-near-red-rocks-2025</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/ultimate-stoner-guide-colorado-2025</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/greeley-dispensaries-garden-city-loophole</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/best-420-friendly-stays-colorado-springs</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/blog/all-inclusive-weed-resorts-colorado</loc>
+    <lastmod>2025-12-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
