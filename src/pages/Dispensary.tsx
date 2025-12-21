@@ -1081,6 +1081,30 @@ const Dispensary = () => {
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
                     />
+
+                    {/* LEGAL DISCLAIMER */}
+                    <section className="mt-12 md:mt-16 px-0 mb-8">
+                      <div className="max-w-3xl mx-auto">
+                        <Card className="relative overflow-hidden border-yellow-500/20 bg-yellow-500/5">
+                          <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500/50" />
+
+                          <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
+                            <div className="p-2 rounded-full bg-yellow-500/10 shrink-0">
+                              <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                            </div>
+
+                            <div className="space-y-2">
+                              <h3 className="text-base sm:text-lg font-semibold text-yellow-500 leading-none mt-1">
+                                Legal Disclaimer
+                              </h3>
+                              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed text-left">
+                                BudQuest is an informational resource only. We do not provide legal advice. Always verify current local laws and confirm dispensary policies before purchasing cannabis. International transport of cannabis remains illegal. Users are responsible for ensuring compliance with applicable laws.
+                              </p>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+                    </section>
                   </>
                 )}
               </div>
@@ -1097,29 +1121,6 @@ const Dispensary = () => {
               onClose={() => setIsFilterOpen(false)}
             />
 
-            {/* LEGAL DISCLAIMER */}
-            <section className="mt-12 md:mt-16 px-0 mb-8">
-              <div className="max-w-3xl mx-auto">
-                <Card className="relative overflow-hidden border-yellow-500/20 bg-yellow-500/5">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500/50" />
-
-                  <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
-                    <div className="p-2 rounded-full bg-yellow-500/10 shrink-0">
-                      <AlertTriangle className="w-5 h-5 text-yellow-500" />
-                    </div>
-
-                    <div className="space-y-2">
-                      <h3 className="text-base sm:text-lg font-semibold text-yellow-500 leading-none mt-1">
-                        Legal Disclaimer
-                      </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed text-left">
-                        BudQuest is an informational resource only. We do not provide legal advice. Always verify current local laws and confirm dispensary policies before purchasing cannabis. International transport of cannabis remains illegal. Users are responsible for ensuring compliance with applicable laws.
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-            </section>
 
             {/* INTERNAL LINKS */}
             <nav className="mt-12 text-center">
