@@ -1,19 +1,22 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Helmet } from "react-helmet";
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import {
-  Star, MapPin, Clock, Loader2,
-  ChevronRight, Sparkles, Search, Filter, X
+  MapPin, Clock, Loader2,
+  ChevronRight, Sparkles, Search, Filter, X,
+  CheckCircle, ExternalLink, ChevronLeft
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 // --- HIGH QUALITY STATIC IMAGES ---
 const STATIC_TOUR_IMAGES: Record<string, string> = {
@@ -25,7 +28,110 @@ const STATIC_TOUR_IMAGES: Record<string, string> = {
   "default": "https://images.unsplash.com/photo-1550951298-5c7b95a66bfc?auto=format&fit=crop&w=800&q=80"
 };
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 10;
+
+/* ============================================
+   HELPER COMPONENTS
+ ============================================ */
+const StarRating = ({ value }: { value: number }) => (
+  <div className="flex items-center gap-0.5 sm:gap-1">
+    {[1, 2, 3, 4, 5].map((i) => (
+      <svg
+        key={i}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        className={`w-3 h-3 sm:w-4 sm:h-4 ${i <= Math.round(value)
+          ? "fill-yellow-400 text-yellow-400"
+          : "text-gray-600"
+          }`}
+      >
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+      </svg>
+    ))}
+    <span className="text-[10px] sm:text-xs text-muted-foreground ml-0.5 sm:ml-1 font-medium">
+      {value.toFixed(1)}
+    </span>
+  </div>
+);
+
+const TourCard = ({ tour }: { tour: any }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: 10 }}
+  >
+    <Link
+      to={`/tours/${tour.slug}`}
+      className="block"
+    >
+      <Card className={cn(
+        "p-3 sm:p-5 rounded-2xl border border-white/10",
+        "bg-gradient-to-br from-accent/10 via-transparent to-accent/5",
+        "hover:shadow-lg hover:shadow-accent/20 transition-all cursor-pointer group"
+      )}>
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start sm:items-center gap-1.5 sm:gap-2 flex-wrap mb-1.5 sm:mb-2">
+                <h4 className="text-base sm:text-lg font-bold text-white break-words group-hover:text-accent transition-colors leading-tight">
+                  {tour.name}
+                </h4>
+                <div className="flex gap-1.5">
+                  {tour.is_verified && (
+                    <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold gap-0.5 sm:gap-1 flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1">
+                      <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      BudQuest Verified
+                    </Badge>
+                  )}
+                  {tour.is_420_friendly && (
+                    <Badge className="bg-green-600/20 text-green-400 border border-green-600/40 text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1">
+                      420 Friendly
+                    </Badge>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 mb-2 sm:mb-3">
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-accent" />
+                {tour.city}, {tour.state}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                <StarRating value={tour.rating || 0} />
+                <span className="text-[10px] sm:text-xs text-muted-foreground">
+                  ({tour.review_count || 0} reviews)
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 text-accent border-accent/40">
+                  <Clock className="w-3 h-3 mr-1" /> {tour.duration}
+                </Badge>
+                <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 text-yellow-400 border-yellow-500/40">
+                  {tour.price_range}
+                </Badge>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 mt-2 sm:mt-0">
+              <span className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-accent-foreground text-xs sm:text-sm font-semibold rounded-lg transition-all group-hover:shadow-lg">
+                View Details
+                <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </span>
+            </div>
+          </div>
+
+          <div className="pt-2 sm:pt-3 border-t border-white/10">
+            <p className="text-[10px] sm:text-xs text-muted-foreground/80 leading-relaxed line-clamp-2">
+              <span className="font-semibold text-muted-foreground">About:</span>{" "}
+              {tour.description}
+            </p>
+          </div>
+        </div>
+      </Card>
+    </Link>
+  </motion.div>
+);
 
 const Tours = () => {
   const [tours, setTours] = useState<any[]>([]);
@@ -37,6 +143,7 @@ const Tours = () => {
   const [priceRange, setPriceRange] = useState<number[]>([250]);
   const [sortOrder, setSortOrder] = useState<string>("recommended");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -48,28 +155,17 @@ const Tours = () => {
 
       if (data) {
         const enhancedTours = data.map((t: any) => {
-          // Extract the numeric value from price_range (handle ranges like "$100 - $200")
           const pricePart = t.price_range?.split('-')[0] || '0';
           const price = parseFloat(pricePart.replace(/[^0-9.]/g, '') || '0');
-
-          // --- IMAGE LOGIC ---
-          // 1. Check if database has images
-          // 2. If not, check our STATIC_TOUR_IMAGES map using the slug
-          // 3. Final fallback to a generic 420-friendly image
-          const displayImg = t.image ||
-            (t.images && t.images.length > 0 ? t.images[0] : null) ||
-            STATIC_TOUR_IMAGES[t.slug] ||
-            STATIC_TOUR_IMAGES["default"];
 
           return {
             ...t,
             city: t.city || t.address?.split(',')[0]?.trim() || 'Denver',
             state: t.state || 'Colorado',
-            rating: t.rating || 4.5, // Default rating for visual appeal
+            rating: t.rating || 4.5,
             review_count: t.review_count || 12,
             duration: t.duration || 'Flexible',
-            price_value: price,
-            displayImage: displayImg
+            price_value: price
           };
         });
         setTours(enhancedTours);
@@ -100,10 +196,12 @@ const Tours = () => {
   const totalPages = Math.ceil(filteredTours.length / ITEMS_PER_PAGE);
   const currentTours = filteredTours.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
-  const renderStars = (rating: number) => {
-    return Array(5).fill(0).map((_, i) => (
-      <Star key={i} className={`w-3 h-3 ${i < Math.floor(rating) ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`} />
-    ));
+  const handleClearFilters = () => {
+    setSearch("");
+    setSelectedCity("all");
+    setPriceRange([250]);
+    setSortOrder("recommended");
+    setCurrentPage(1);
   };
 
   const FilterControls = () => (
@@ -111,10 +209,10 @@ const Tours = () => {
       <div>
         <label className="text-xs font-bold uppercase tracking-wider mb-3 block text-muted-foreground">Location</label>
         <Select value={selectedCity} onValueChange={setSelectedCity}>
-          <SelectTrigger className="bg-card/50 border-white/10">
+          <SelectTrigger className="bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
             <SelectValue placeholder="All Cities" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-card border-white/10">
             <SelectItem value="all">All Cities</SelectItem>
             {uniqueCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}
           </SelectContent>
@@ -126,12 +224,25 @@ const Tours = () => {
           <span>Max Price</span>
           <span className="text-accent">${priceRange[0]}</span>
         </label>
-        <Slider value={priceRange} max={250} step={5} onValueChange={setPriceRange} className="py-4" />
+        <Slider value={priceRange} max={250} step={5} onValueChange={setPriceRange} className="py-2" />
       </div>
 
-      <Button variant="outline" className="w-full border-white/10" onClick={() => {
-        setSearch(""); setSelectedCity("all"); setPriceRange([250]); setSortOrder("recommended");
-      }}>
+      <div>
+        <label className="text-xs font-bold uppercase tracking-wider mb-3 block text-muted-foreground">Sort By</label>
+        <Select value={sortOrder} onValueChange={setSortOrder}>
+          <SelectTrigger className="bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
+            <SelectValue placeholder="Recommended" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-white/10">
+            <SelectItem value="recommended">Recommended</SelectItem>
+            <SelectItem value="rating">Highest Rated</SelectItem>
+            <SelectItem value="price-low">Price: Low to High</SelectItem>
+            <SelectItem value="price-high">Price: High to Low</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Button variant="outline" className="w-full border-white/10 hover:bg-accent/10 hover:text-accent transition-colors" onClick={handleClearFilters}>
         Reset Filters
       </Button>
     </div>
@@ -141,88 +252,158 @@ const Tours = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Cannabis Tours & Experiences | BudQuest</title>
+        <meta name="description" content="Discover hand-picked cannabis tours and experiences. BudQuest verified activities in Colorado and beyond." />
       </Helmet>
       <Navigation />
 
-      <main className="pt-24 pb-20 px-4">
-        <div className="container mx-auto">
-          <header className="max-w-3xl mx-auto mb-12 text-center">
-            <Badge className="mb-4 bg-accent/20 text-accent border-accent/40 px-3 py-1">
-              <Sparkles className="w-3 h-3 mr-2" /> 2025 Hand-Picked
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Cannabis Experiences</h1>
-            <p className="text-lg text-muted-foreground">Discover the best 420-friendly tours and activities.</p>
-          </header>
+      {/* MOBILE HEADER / SEARCH */}
+      <div className="md:hidden sticky top-16 z-40 bg-background border-b border-white/10 shadow-md mt-16">
+        <div className="px-4 py-4">
+          <div className="flex gap-3 items-stretch">
+            <div className="flex-1 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search experiences..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-xl bg-card/80 border border-white/10 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
+              />
+            </div>
+            <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="border-white/10 h-[52px] w-[52px] p-0 rounded-xl bg-card/80 hover:bg-accent/10">
+                  <Filter className="w-5 h-5 text-accent" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl bg-card border-white/10">
+                <SheetHeader>
+                  <SheetTitle className="text-xl font-bold text-accent">Filters</SheetTitle>
+                </SheetHeader>
+                <div className="mt-8">
+                  <FilterControls />
+                  <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground py-6 rounded-xl font-bold" onClick={() => setIsFilterOpen(false)}>
+                    Show Results
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {/* Sidebar Filters */}
-            <aside className="hidden lg:block space-y-8 sticky top-32 h-fit p-6 bg-card/30 rounded-2xl border border-white/5">
-              <h3 className="font-bold text-lg flex items-center gap-2"><Filter className="w-4 h-4 text-accent" /> Filters</h3>
+      <main className="pt-8 md:pt-28 pb-20 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* SIDEBAR FILTERS (Desktop Only) */}
+            <aside className="hidden md:block w-72 space-y-8 sticky top-32 h-fit p-6 bg-card/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-visible">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Filter className="w-5 h-5 text-accent" />
+                  Filters
+                </h3>
+                {(search || selectedCity !== 'all' || priceRange[0] !== 250) && (
+                  <button onClick={handleClearFilters} className="text-xs text-accent hover:underline">Clear all</button>
+                )}
+              </div>
               <FilterControls />
             </aside>
 
-            {/* Tours Grid */}
-            <div className="lg:col-span-3">
-              <div className="flex gap-4 mb-8">
-                <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                  <input
-                    type="text"
-                    placeholder="Search experiences..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-card/30 border border-white/10 focus:border-accent/50 outline-none transition-all"
-                  />
+            {/* MAIN CONTENT AREA */}
+            <div className="flex-1 min-w-0">
+              {/* DESKTOP SEARCH & COUNT */}
+              <div className="hidden md:flex flex-col gap-6 mb-8">
+                <div className="flex items-center justify-between">
+                  <div className="relative flex-1 max-w-2xl">
+                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                    <input
+                      type="text"
+                      placeholder="Search experiences, cities..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="w-full pl-16 pr-6 py-4 rounded-2xl bg-card/50 border border-white/10 focus:border-accent/50 focus:ring-4 focus:ring-accent/10 outline-none text-white text-lg transition-all"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-muted-foreground">Sort:</span>
+                    <Select value={sortOrder} onValueChange={setSortOrder}>
+                      <SelectTrigger className="w-[180px] bg-card/50 border-white/10 rounded-xl">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-white/10">
+                        <SelectItem value="recommended">Recommended</SelectItem>
+                        <SelectItem value="rating">Highest Rated</SelectItem>
+                        <SelectItem value="price-low">Price: Low to High</SelectItem>
+                        <SelectItem value="price-high">Price: High to Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline" className="lg:hidden border-white/10 h-auto px-4"><Filter className="w-4 h-4" /></Button>
-                  </SheetTrigger>
-                  <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl">
-                    <SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>
-                    <div className="mt-6"><FilterControls /></div>
-                  </SheetContent>
-                </Sheet>
+
+                <div className="flex items-center gap-2">
+                  <h1 className="text-2xl font-bold text-white">Cannabis Experiences</h1>
+                  <span className="text-muted-foreground">•</span>
+                  <p className="text-sm text-muted-foreground">
+                    Showing <span className="font-bold text-accent">{currentTours.length}</span> of <span className="font-bold text-accent">{filteredTours.length}</span> results
+                  </p>
+                </div>
               </div>
 
-              {loading ? (
-                <div className="flex justify-center py-20"><Loader2 className="w-10 h-10 animate-spin text-accent" /></div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {currentTours.map((tour) => (
-                    <Link key={tour.id} to={`/tours/${tour.slug}`} className="group">
-                      <Card className="h-full overflow-hidden border-white/10 bg-card/40 backdrop-blur-sm hover:border-accent/40 transition-all duration-300">
-                        <div className="relative aspect-[16/10] overflow-hidden">
-                          <img
-                            src={tour.displayImage}
-                            alt={tour.name}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          />
-                          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white">
-                            {tour.price_range}
-                          </div>
+              {/* RESULTS GRID */}
+              <div className="space-y-4">
+                {loading ? (
+                  <div className="flex flex-col items-center justify-center py-20 gap-4">
+                    <Loader2 className="w-10 h-10 animate-spin text-accent" />
+                    <p className="text-muted-foreground animate-pulse">Finding the best experiences...</p>
+                  </div>
+                ) : filteredTours.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-20 bg-card/20 rounded-3xl border border-dashed border-white/10">
+                    <X className="w-12 h-12 text-muted-foreground mb-4" />
+                    <h3 className="text-xl font-bold text-white mb-2">No experiences found</h3>
+                    <p className="text-muted-foreground mb-6">Try adjusting your search or filters to find what you're looking for.</p>
+                    <Button onClick={handleClearFilters} className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-xl px-8">
+                      Clear All Filters
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <AnimatePresence mode="popLayout">
+                      {currentTours.map((tour) => (
+                        <TourCard key={tour.id} tour={tour} />
+                      ))}
+                    </AnimatePresence>
+
+                    {/* PAGINATION */}
+                    {totalPages > 1 && (
+                      <div className="flex items-center justify-center gap-2 mt-12 pb-8">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="border-white/10 rounded-xl w-12 h-12"
+                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                          disabled={currentPage === 1}
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </Button>
+                        <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-card border border-white/10 text-sm font-bold">
+                          <span className="text-accent">{currentPage}</span>
+                          <span className="text-muted-foreground">/</span>
+                          <span className="text-muted-foreground">{totalPages}</span>
                         </div>
-                        <CardContent className="p-5">
-                          <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-accent mb-3">
-                            <MapPin className="w-3 h-3" /> {tour.city}, {tour.state}
-                          </div>
-                          <h3 className="text-lg font-bold mb-3 leading-tight group-hover:text-accent transition-colors line-clamp-2 h-12">
-                            {tour.name}
-                          </h3>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="flex">{renderStars(tour.rating)}</div>
-                            <span className="text-xs text-muted-foreground">({tour.review_count})</span>
-                          </div>
-                          <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Clock className="w-3.5 h-3.5" /> {tour.duration}</div>
-                            <ChevronRight className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" />
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              )}
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="border-white/10 rounded-xl w-12 h-12"
+                          onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                          disabled={currentPage === totalPages}
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </Button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
