@@ -64,7 +64,7 @@ const TourDetail = () => {
         const { data, error } = await supabase
           .from('tours')
           .select('*')
-          .eq('slug', slug)
+          .ilike('slug', slug)
           .maybeSingle();
 
         if (!error && data) {

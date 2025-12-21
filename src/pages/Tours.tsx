@@ -48,20 +48,22 @@ const Tours = () => {
 
       if (data) {
         const enhancedTours = data.map((t: any) => {
-          const price = parseFloat(t.price_range?.replace(/[^0-9.]/g, '') || '0');
-          
+          // Extract the numeric value from price_range (handle ranges like "$100 - $200")
+          const pricePart = t.price_range?.split('-')[0] || '0';
+          const price = parseFloat(pricePart.replace(/[^0-9.]/g, '') || '0');
+
           // --- IMAGE LOGIC ---
           // 1. Check if database has images
           // 2. If not, check our STATIC_TOUR_IMAGES map using the slug
           // 3. Final fallback to a generic 420-friendly image
-          const displayImg = t.image || 
-                             (t.images && t.images.length > 0 ? t.images[0] : null) || 
-                             STATIC_TOUR_IMAGES[t.slug] || 
-                             STATIC_TOUR_IMAGES["default"];
+          const displayImg = t.image ||
+            (t.images && t.images.length > 0 ? t.images[0] : null) ||
+            STATIC_TOUR_IMAGES[t.slug] ||
+            STATIC_TOUR_IMAGES["default"];
 
           return {
             ...t,
-            city: t.city || 'Denver',
+            city: t.city || t.address?.split(',')[0]?.trim() || 'Denver',
             state: t.state || 'Colorado',
             rating: t.rating || 4.5, // Default rating for visual appeal
             review_count: t.review_count || 12,
@@ -81,7 +83,7 @@ const Tours = () => {
   const filteredTours = useMemo(() => {
     return tours.filter(tour => {
       const matchSearch = tour.name.toLowerCase().includes(search.toLowerCase()) ||
-                         tour.city.toLowerCase().includes(search.toLowerCase());
+        tour.city.toLowerCase().includes(search.toLowerCase());
       const matchCity = selectedCity === 'all' || tour.city === selectedCity;
       const matchPrice = tour.price_value <= priceRange[0];
 
