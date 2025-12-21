@@ -312,22 +312,33 @@ const Tours = () => {
             {/* MAIN CONTENT AREA */}
             <div className="flex-1 min-w-0">
               {/* DESKTOP SEARCH & COUNT */}
-              <div className="hidden md:flex flex-col gap-6 mb-8">
-                <div className="flex items-center justify-between">
-                  <div className="relative flex-1 max-w-2xl">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+              <div className={cn(
+                "hidden md:block rounded-2xl border border-white/10 p-4 sm:p-6 mb-8 shadow-2xl",
+                "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
+              )}>
+                <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                     <input
                       type="text"
                       placeholder="Search experiences, cities..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full pl-16 pr-6 py-4 rounded-2xl bg-card/50 border border-white/10 focus:border-accent/50 focus:ring-4 focus:ring-accent/10 outline-none text-white text-lg transition-all"
+                      className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
                     />
+                    {search && (
+                      <button
+                        onClick={() => setSearch("")}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-accent/10 rounded-lg transition-colors"
+                      >
+                        <X className="w-5 h-5 text-muted-foreground hover:text-white" />
+                      </button>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-muted-foreground">Sort:</span>
+                    <span className="text-sm text-muted-foreground font-medium">Sort:</span>
                     <Select value={sortOrder} onValueChange={setSortOrder}>
-                      <SelectTrigger className="w-[180px] bg-card/50 border-white/10 rounded-xl">
+                      <SelectTrigger className="w-[180px] bg-card/80 border border-white/10 rounded-xl h-11 sm:h-12">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-white/10">
@@ -340,13 +351,32 @@ const Tours = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-white">Cannabis Experiences</h1>
-                  <span className="text-muted-foreground">•</span>
-                  <p className="text-sm text-muted-foreground">
-                    Showing <span className="font-bold text-accent">{currentTours.length}</span> of <span className="font-bold text-accent">{filteredTours.length}</span> results
-                  </p>
-                </div>
+                {/* ACTIVE FILTERS PREVIEW */}
+                {(search || selectedCity !== 'all' || priceRange[0] !== 250) && (
+                  <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
+                    {search && (
+                      <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        Search: {search}
+                        <button onClick={() => setSearch("")} className="hover:opacity-70"><X className="w-3 h-3" /></button>
+                      </Badge>
+                    )}
+                    {selectedCity !== 'all' && (
+                      <Badge className="bg-accent/15 text-accent border border-accent/40 gap-2 px-3 py-1 text-xs font-semibold">
+                        {selectedCity}
+                        <button onClick={() => setSelectedCity('all')} className="hover:opacity-70"><X className="w-3 h-3" /></button>
+                      </Badge>
+                    )}
+                    <button onClick={handleClearFilters} className="text-red-400 hover:text-red-300 text-xs font-semibold px-3 py-1 rounded-lg hover:bg-red-950/20 transition-colors">
+                      Clear All
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-8 px-2 sm:px-0">
+                <p className="text-sm text-muted-foreground">
+                  Showing <span className="text-accent font-bold">{currentTours.length}</span> of <span className="text-accent font-bold">{filteredTours.length}</span> experiences
+                </p>
               </div>
 
               {/* RESULTS GRID */}

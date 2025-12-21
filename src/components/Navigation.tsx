@@ -111,7 +111,7 @@ export const Navigation = () => {
               Tours
             </Link>
             <Link to="/dispensary" className="text-sm text-foreground hover:text-accent transition-colors">
-              Dispensary
+              Dispensaries
             </Link>
             <Link to="/blog" className="text-sm text-foreground hover:text-accent transition-colors">
               Blog
@@ -220,7 +220,7 @@ export const Navigation = () => {
               Tours
             </Link>
             <Link to="/dispensary" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
-              Dispensary
+              Dispensaries
             </Link>
             <Link to="/blog" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
               Blog
