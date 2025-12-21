@@ -352,16 +352,8 @@ const FilterPanel = ({
               </div>
 
               <Button
-                variant="outline"
-                className="w-full border-white/10 hover:bg-green-400/10 hover:text-green-400 transition-colors py-5 text-sm font-semibold rounded-xl"
-                onClick={handleClearFilters}
-              >
-                Reset Filters
-              </Button>
-
-              <Button
                 onClick={onClose}
-                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3 mt-4"
+                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3"
               >
                 Apply Filters
               </Button>
@@ -778,73 +770,35 @@ const Hotels = () => {
 
               {/* MAIN CONTENT */}
               <div className="flex-1 min-w-0">
-                {/* DESKTOP SEARCH & COUNT */}
-                <div className={cn(
-                  "hidden md:block rounded-2xl border border-white/10 p-4 sm:p-6 mb-8 shadow-2xl",
-                  "bg-gradient-to-br from-green-400/10 via-transparent to-green-400/5"
-                )}>
-                  <div className="flex flex-col sm:flex-row gap-3 items-stretch">
-                    <div className="flex-1 relative">
-                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
-                      <input
-                        type="text"
-                        placeholder="Search rentals by name, city, or policy..."
-                        value={filters.search}
-                        onChange={(e) => handleFilterChange("search", e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 focus:border-green-400/50 focus:ring-2 focus:ring-green-400/20 outline-none text-white text-base placeholder:text-muted-foreground/60 transition-all"
-                      />
-                      {filters.search && (
-                        <button
-                          onClick={() => handleFilterChange("search", "")}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-green-400/10 rounded-lg transition-colors"
-                        >
-                          <X className="w-5 h-5 text-muted-foreground hover:text-white" />
-                        </button>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm text-muted-foreground font-medium">Sort:</span>
-                      <select
-                        value={filters.sort}
-                        onChange={(e) => handleFilterChange("sort", e.target.value as SortType)}
-                        className="px-4 py-3 sm:py-4 rounded-xl bg-card/80 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-400/20 h-11 sm:h-12"
-                      >
-                        <option value="rating" className="bg-card">Highest Rated</option>
-                        <option value="price-low" className="bg-card">Price: Low to High</option>
-                        <option value="price-high" className="bg-card">Price: High to Low</option>
-                        <option value="name" className="bg-card">Alphabetical</option>
-                      </select>
-                    </div>
+                {/* Desktop Search */}
+                <div className="hidden md:flex items-center gap-4 mb-6">
+                  <div className="relative flex-1 max-w-md">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <input
+                      type="text"
+                      value={filters.search}
+                      onChange={(e) => handleFilterChange("search", e.target.value)}
+                      placeholder="Search rentals by name, city, or policy..."
+                      className="w-full pl-9 pr-4 py-2 bg-card/80 border border-white/10 rounded-lg text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-green-400/40"
+                    />
                   </div>
-
-                  {/* ACTIVE FILTERS PREVIEW */}
                   {hasActiveFilters && (
-                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
-                      {filters.country && (
-                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
-                          {filters.country}
-                          <button onClick={() => handleFilterChange("country", "")} className="hover:opacity-70"><X className="w-3 h-3" /></button>
-                        </Badge>
-                      )}
-                      {filters.state && (
-                        <Badge className="bg-green-400/15 text-green-400 border border-green-400/40 gap-2 px-3 py-1 text-xs font-semibold">
-                          {filters.state}
-                          <button onClick={() => handleFilterChange("state", "")} className="hover:opacity-70"><X className="w-3 h-3" /></button>
-                        </Badge>
-                      )}
-                      <button onClick={handleClearFilters} className="text-red-400 hover:text-red-300 text-xs font-semibold px-3 py-1 rounded-lg hover:bg-red-950/20 transition-colors">
-                        Clear All
-                      </button>
-                    </div>
+                    <Button
+                      onClick={handleClearFilters}
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-white"
+                    >
+                      Clear filters
+                    </Button>
                   )}
                 </div>
 
-                <div className="mb-8 px-2 sm:px-0">
-                  <p className="text-sm text-muted-foreground">
-                    Showing <span className="text-green-400 font-bold">{filteredData.length}</span> rentals
-                    {hasActiveFilters && " (filtered)"}
-                  </p>
-                </div>
+                {/* Results count */}
+                <p className="text-sm text-muted-foreground mb-4">
+                  Showing <span className="font-bold text-green-400">{filteredData.length}</span> rentals
+                  {hasActiveFilters && " (filtered)"}
+                </p>
 
                 {/* RENTAL CARDS */}
                 <div className="space-y-4">
