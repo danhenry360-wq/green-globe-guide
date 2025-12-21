@@ -682,7 +682,7 @@ const Profile = () => {
                         <Heart className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-foreground mb-2">No Saved Items</h3>
                         <p className="text-muted-foreground mb-6">
-                          You haven't added any dispensaries or rentals to your favorites yet.
+                          You haven't added any dispensaries, rentals, or tours to your favorites yet.
                         </p>
                         <Button
                           onClick={() => navigate('/dispensary')}
@@ -693,21 +693,38 @@ const Profile = () => {
                       </div>
                     ) : (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {favorites.map((fav: any) => {
+                        {favorites.map((fav: FavoriteItem) => {
                           const isDispensary = !!fav.dispensary_id;
-                          const item = isDispensary ? fav.dispensaries : fav.hotels;
+                          const isHotel = !!fav.hotel_id;
+                          const isTour = !!fav.tour_id;
+                          
+                          const item = isDispensary ? fav.dispensaries : isHotel ? fav.hotels : fav.tours;
 
                           if (!item) return null;
+
+                          const itemType = isDispensary ? 'Dispensary' : isHotel ? 'Rental' : 'Tour';
+                          const itemLink = isDispensary 
+                            ? `/dispensary/${item.slug}` 
+                            : isHotel 
+                              ? `/hotels/${item.slug}` 
+                              : `/tours/${item.slug}`;
+                          
+                          const itemImage = isDispensary 
+                            ? ((item as any).image || '/dest-california.jpg')
+                            : ((item as any).images?.[0] || '/dest-california.jpg');
+                          
+                          const locationText = isDispensary 
+                            ? `${(item as any).city}, ${(item as any).state}`
+                            : isHotel 
+                              ? `${(item as any).cities?.name || 'Unknown'}, ${(item as any).cities?.states?.name || ''}`
+                              : (item as any).address || 'No address';
 
                           return (
                             <Card key={fav.id} className="bg-background/50 border-border/30 overflow-hidden hover:border-accent/30 transition-colors group">
                               <div className="flex h-full">
                                 <div className="w-32 sm:w-40 relative bg-muted">
                                   <img
-                                    src={isDispensary
-                                      ? (item.image || '/dest-california.jpg')
-                                      : (item.images?.[0] || '/dest-california.jpg')
-                                    }
+                                    src={itemImage}
                                     alt={item.name}
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
@@ -729,13 +746,13 @@ const Profile = () => {
                                       )}
                                     </div>
                                     <p className="text-xs text-muted-foreground mt-1">
-                                      {isDispensary ? 'Dispensary' : 'Rental'} • {item.city || item.cities?.name}, {item.state || item.cities?.states?.name}
+                                      {itemType} • {locationText}
                                     </p>
                                   </div>
 
                                   <div className="mt-3">
                                     <Link
-                                      to={isDispensary ? `/dispensary/${item.slug}` : `/hotels/${item.slug}`}
+                                      to={itemLink}
                                       className="inline-flex items-center text-xs font-medium text-accent hover:text-accent/80"
                                     >
                                       View Details <ExternalLink className="w-3 h-3 ml-1" />

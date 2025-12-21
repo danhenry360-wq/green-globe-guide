@@ -55,8 +55,7 @@ interface Tour {
   is_verified: boolean | null;
   latitude: number | null;
   longitude: number | null;
-  city: string | null;
-  state: string | null;
+  city_id: string | null;
 }
 
 const emptyTour: Partial<Tour> = {
@@ -76,8 +75,7 @@ const emptyTour: Partial<Tour> = {
   is_verified: false,
   latitude: 0,
   longitude: 0,
-  city: "",
-  state: "Colorado",
+  city_id: null,
 };
 
 const AdminTours = () => {
@@ -247,7 +245,7 @@ const AdminTours = () => {
                     <div>
                       <h3 className="font-bold text-lg">{tour.name}</h3>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <MapPin className="w-3 h-3" /> {tour.city}, {tour.state}
+                        <MapPin className="w-3 h-3" /> {tour.address || 'No address'}
                       </p>
                     </div>
                   </div>
@@ -289,9 +287,8 @@ const AdminTours = () => {
               <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Tell people about the experience..." />
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-2"><Label>City</Label><Input value={formData.city || ""} onChange={e => setFormData({ ...formData, city: e.target.value })} /></div>
-              <div className="space-y-2"><Label>State</Label><Input value={formData.state || ""} onChange={e => setFormData({ ...formData, state: e.target.value })} /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2"><Label>Address</Label><Input value={formData.address || ""} onChange={e => setFormData({ ...formData, address: e.target.value })} placeholder="e.g. 123 Main St, Denver, CO" /></div>
               <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({ ...formData, price_range: e.target.value })} placeholder="$25.00" /></div>
             </div>
 
