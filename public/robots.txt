@@ -46,3 +46,5 @@ Allow: /*.png
 Allow: /*.jpg
 Allow: /*.webp
 Allow: /*.svg
+Allow: /*.ico
+Allow: /favicon.ico
