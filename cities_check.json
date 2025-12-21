@@ -1,0 +1,13 @@
+Checking columns of 'tours' table...
+Columns found: [
+  'id',              'name',
+  'slug',            'city_id',
+  'description',     'price_range',
+  'website',         'images',
+  'created_at',      'address',
+  'rating',          'review_count',
+  'duration',        'highlights',
+  'is_420_friendly', 'is_verified',
+  'latitude',        'longitude',
+  'booking_url'
+]

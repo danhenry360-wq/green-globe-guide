@@ -255,8 +255,9 @@ const Tours = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Cannabis Tours & Experiences | BudQuest</title>
-        <meta name="description" content="Discover hand-picked cannabis tours and experiences. BudQuest verified activities in Colorado and beyond." />
+        <title>Best Cannabis Tours Denver & Colorado | BudQuest Verified Experiences</title>
+        <meta name="description" content="Book top-rated Denver cannabis tours and 420 experiences. BudQuest-verified weed tours, grow facility visits, and high-altitude adventures in Colorado." />
+        <meta name="keywords" content="cannabis tours denver, 420 tours colorado, marijuana experiences, weed tours denver, grow tour colorado, BudQuest verified" />
       </Helmet>
       <Navigation />
 

@@ -1,0 +1,83 @@
+Listing all tours from DB...
+[
+  {
+    "id": "982b1a04-49c2-40f7-a5c2-72f8b9693bc5",
+    "name": "BEYOND Light Show & Meditation",
+    "slug": "BEYOND-light-Show-&-Meditation",
+    "city_id": null,
+    "description": "Immerse yourself in a world of illumination during a 1-hour light show in Denver. Get swept away through a combination of lasers, guided meditation, and accompanying rock music. Offered hourly seven days a week, the immersive experience is easy to fit into any schedule and perfect for all ages. In addition to the show, your ticket grants you unlimited access to The Church's retro arcade lounge, art gallery, movie theater, and Gandhi Garden, with dozens of Instagram-worthy picture spots throughout the venue.",
+    "price_range": "$25",
+    "website": "https://www.tripadvisor.com/AttractionProductReview-g33388-d17517506-BEYOND_Light_Show_Meditation-Denver_Colorado.html",
+    "images": [
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/m79xu253ac-1766286257436.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/f51efhcz9x-1766286270927.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/coem9gxxn9s-1766286283493.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/rxijr08p4h-1766286295659.jpg"
+    ],
+    "created_at": "2025-12-21T03:05:24.017021+00:00",
+    "address": "1160 Lincoln St, Denver, CO 80203",
+    "rating": 0,
+    "review_count": 0,
+    "duration": "1hr",
+    "highlights": [],
+    "is_420_friendly": true,
+    "is_verified": true,
+    "latitude": 0,
+    "longitude": 0,
+    "booking_url": ""
+  },
+  {
+    "id": "0e4e7e57-0984-499e-9f5a-97896869b8ee",
+    "name": "Cultivating Spirits",
+    "slug": "Cultivating-Spirits",
+    "city_id": null,
+    "description": "Experience the ultimate fusion of fine dining and cannabis education with Cultivating Spirits’ 3-Course Cannabis Pairing Dinner. Serving stunning Colorado destinations, this one-of-a-kind culinary journey expertly combines gourmet cuisine, premium cannabis, and sommelier-level guidance. Led by Philip Wolf, a pioneer in cannabis hospitality, you’ll explore how terpenes, flavors, and aromas in cannabis can enhance experineces. From the welcome reception to the final bite, this experience is designed to delight your senses, deepen your understanding of cannabis, & create lasting memories with friends or loved ones. Perfect for both seasoned connoisseurs and curious newcomers, this dinner pairs education with fine dinning. Whether you’re celebrating a special occasion or looking for a unique way to enjoy cannabis, the 3-Course Cannabis Pairing Dinner is a must-try experience for those seeking sophistication & adventure. Reserve your spot today for a sensory journey!",
+    "price_range": " $135 - $249",
+    "website": "https://cultivatingspirits.com/colorado-cannabis-experiences/",
+    "images": [
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/0oxtz00xsyqn-1766292775475.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/i1temuii3s-1766292789585.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/wwswcyqwk7-1766292803044.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/ru5d5ugntla-1766292814104.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/cqaprbnb45-1766292826271.jpg"
+    ],
+    "created_at": "2025-12-21T05:01:20.272584+00:00",
+    "address": "Breckenridge, CO ",
+    "rating": 0,
+    "review_count": 0,
+    "duration": "3hrs",
+    "highlights": [],
+    "is_420_friendly": true,
+    "is_verified": true,
+    "latitude": 0,
+    "longitude": 0,
+    "booking_url": "https://cultivatingspirits.com/colorado-cannabis-experiences/"
+  },
+  {
+    "id": "3ef5af22-b5e5-44c8-8041-de5040f770ff",
+    "name": "Seed & Smith",
+    "slug": "Seed-&-Smith",
+    "city_id": null,
+    "description": "Seed & Smith is more than a dispensary — it’s a destination. Our state-of-the-art grow facility offers free tours, giving you an inside look at how cannabis is cultivated, harvested, extracted, and packaged. After the tour, explore our attached dispensary for top-quality products.",
+    "price_range": "",
+    "website": "https://seedandsmith.com/cannabistour/",
+    "images": [
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/qq5kx6vzd3o-1766284484762.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/4s0po9ra1ts-1766284495942.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/y0t5326d5zj-1766284509671.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/kr10iakppn8-1766284522434.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/uxl5rbpzge9-1766284536238.jpg"
+    ],
+    "created_at": "2025-12-21T02:38:11.183833+00:00",
+    "address": "5070 Oakland Street Denver, CO 80239",
+    "rating": 0,
+    "review_count": 0,
+    "duration": "",
+    "highlights": [],
+    "is_420_friendly": true,
+    "is_verified": true,
+    "latitude": 0,
+    "longitude": 0,
+    "booking_url": ""
+  }
+]

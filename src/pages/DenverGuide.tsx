@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   ExternalLink, Compass
 } from "lucide-react";
 
@@ -63,7 +63,7 @@ const DenverGuide = () => {
         .ilike('city', '%Denver%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       const { data: rentalData } = await supabase
@@ -73,7 +73,7 @@ const DenverGuide = () => {
         .ilike('address', '%Denver%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -85,12 +85,12 @@ const DenverGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'denver-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -103,7 +103,7 @@ const DenverGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -202,7 +202,7 @@ const DenverGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "70-90°F",
@@ -317,38 +317,38 @@ const DenverGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "RiNo (River North)", 
+    {
+      name: "RiNo (River North)",
       desc: "Art district with trendy dispensaries, street art, and creative vibes. Denver's coolest neighborhood.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "LoDo (Lower Downtown)", 
+    {
+      name: "LoDo (Lower Downtown)",
       desc: "Historic district near Union Station with upscale dining, sports venues, and nightlife.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "Capitol Hill", 
+    {
+      name: "Capitol Hill",
       desc: "Diverse, eclectic neighborhood with great nightlife, restaurants, and dispensary options.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "South Broadway (SoBo)", 
+    {
+      name: "South Broadway (SoBo)",
       desc: "Vintage shops, dive bars, and strong cannabis culture. Authentic Denver experience.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "Five Points", 
+    {
+      name: "Five Points",
       desc: "Historic jazz district experiencing revitalization. Growing food and cannabis scene.",
       safety: "mostly-safe",
       walkable: true
     },
-    { 
-      name: "Cherry Creek", 
+    {
+      name: "Cherry Creek",
       desc: "Upscale shopping and dining. More expensive but very safe and well-maintained.",
       safety: "very-safe",
       walkable: true
@@ -364,31 +364,31 @@ const DenverGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Denver Cannabis Travel Guide 2025 | Dispensaries, 420 Hotels & Laws | BudQuest</title>
-        <meta name="description" content="Plan your Denver cannabis trip with our 2025 guide. Find top-rated dispensaries, 420-friendly hotels, marijuana laws, possession limits, and expert tips for the Mile High City." />
-        <meta name="keywords" content="Denver cannabis, Denver dispensaries, 420-friendly hotels Denver, Denver marijuana laws 2025, Mile High City cannabis, Denver weed tourism, Colorado cannabis Denver, Denver 420 travel" />
+        <title>Denver 420 Guide 2025 | Best Weed Friendly Hotels & Tours | BudQuest</title>
+        <meta name="description" content="Ultimate Denver 420 Guide for 2025. Find the best weed-friendly hotels, top-rated dispensaries, cannabis tours, and Mile High City marijuana laws. Start your high-altitude trip here." />
+        <meta name="keywords" content="denver 420 guide, weed friendly hotels denver, cannabis tours denver, denver marijuana laws 2025, 420 friendly travel denver, BudQuest" />
         <link rel="canonical" href="https://budquest.guide/denver" />
-        
+
         <meta property="og:title" content="Denver Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Your complete guide to cannabis in Denver. Find dispensaries, 420-friendly stays, and travel tips." />
         <meta property="og:url" content="https://budquest.guide/denver" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-2.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Denver Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Complete Denver cannabis guide with dispensaries, hotels, and legal info." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Denver" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -406,14 +406,14 @@ const DenverGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-2.jpg" 
-              alt="Denver Colorado skyline with Rocky Mountains" 
+            <img
+              src="/dest-2.jpg"
+              alt="Denver Colorado skyline with Rocky Mountains"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -424,13 +424,13 @@ const DenverGuide = () => {
                 <Cannabis className="w-4 h-4 mr-2" />
                 The Mile High City
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Denver Cannabis Travel Guide 2025
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Colorado's capital and America's cannabis epicenter. Home to 200+ dispensaries, world-class 420-friendly accommodations, and the most vibrant cannabis culture in the nation.
               </p>
@@ -497,8 +497,8 @@ const DenverGuide = () => {
             <Tabs defaultValue="spring" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -507,7 +507,7 @@ const DenverGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -626,7 +626,7 @@ const DenverGuide = () => {
                 Know the rules before you go. Denver has specific regulations cannabis travelers must follow.
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -637,7 +637,7 @@ const DenverGuide = () => {
                 </div>
                 <p className="text-sm text-muted-foreground">Adults 21+ can purchase and possess up to 1 oz of cannabis from licensed dispensaries with valid government ID.</p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -708,7 +708,7 @@ const DenverGuide = () => {
                 <div>
                   <h3 className="font-bold text-lg text-red-400 mb-2">Airport Warning - DIA</h3>
                   <p className="text-muted-foreground mb-3">
-                    Denver International Airport is <strong className="text-foreground">federal property</strong> where cannabis is strictly prohibited. 
+                    Denver International Airport is <strong className="text-foreground">federal property</strong> where cannabis is strictly prohibited.
                     TSA will confiscate any cannabis found during screening.
                   </p>
                   <ul className="text-sm text-muted-foreground space-y-1">
@@ -783,13 +783,12 @@ const DenverGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                        'border-amber-500/50 text-amber-400'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          hood.safety === 'safe' ? 'border-accent/50 text-accent' :
+                            'border-amber-500/50 text-amber-400'
+                        }`}
                     >
                       {hood.walkable && "🚶 Walkable"}
                     </Badge>
@@ -814,7 +813,7 @@ const DenverGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -825,8 +824,8 @@ const DenverGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -876,7 +875,7 @@ const DenverGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -887,8 +886,8 @@ const DenverGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-california.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-california.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -943,7 +942,7 @@ const DenverGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with insider tips, neighborhood guides, dispensary map, and local recommendations.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -958,7 +957,7 @@ const DenverGuide = () => {
                   <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground">
                 ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
               </p>
@@ -1020,7 +1019,7 @@ const DenverGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

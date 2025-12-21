@@ -1,0 +1,30 @@
+Searching for 'Cultivating Spirits' tour...
+Found tour info: [
+  {
+    "id": "0e4e7e57-0984-499e-9f5a-97896869b8ee",
+    "name": "Cultivating Spirits",
+    "slug": "Cultivating-Spirits",
+    "city_id": null,
+    "description": "Experience the ultimate fusion of fine dining and cannabis education with Cultivating Spirits’ 3-Course Cannabis Pairing Dinner. Serving stunning Colorado destinations, this one-of-a-kind culinary journey expertly combines gourmet cuisine, premium cannabis, and sommelier-level guidance. Led by Philip Wolf, a pioneer in cannabis hospitality, you’ll explore how terpenes, flavors, and aromas in cannabis can enhance experineces. From the welcome reception to the final bite, this experience is designed to delight your senses, deepen your understanding of cannabis, & create lasting memories with friends or loved ones. Perfect for both seasoned connoisseurs and curious newcomers, this dinner pairs education with fine dinning. Whether you’re celebrating a special occasion or looking for a unique way to enjoy cannabis, the 3-Course Cannabis Pairing Dinner is a must-try experience for those seeking sophistication & adventure. Reserve your spot today for a sensory journey!",
+    "price_range": " $135 - $249",
+    "website": "https://cultivatingspirits.com/colorado-cannabis-experiences/",
+    "images": [
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/0oxtz00xsyqn-1766292775475.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/i1temuii3s-1766292789585.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/wwswcyqwk7-1766292803044.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/ru5d5ugntla-1766292814104.jpg",
+      "https://wtwruzxvkzlihisqvzlz.supabase.co/storage/v1/object/public/tour-images/tours/cqaprbnb45-1766292826271.jpg"
+    ],
+    "created_at": "2025-12-21T05:01:20.272584+00:00",
+    "address": "Breckenridge, CO ",
+    "rating": 0,
+    "review_count": 0,
+    "duration": "3hrs",
+    "highlights": [],
+    "is_420_friendly": true,
+    "is_verified": true,
+    "latitude": 0,
+    "longitude": 0,
+    "booking_url": "https://cultivatingspirits.com/colorado-cannabis-experiences/"
+  }
+]

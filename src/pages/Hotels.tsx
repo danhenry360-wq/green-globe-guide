@@ -691,9 +691,9 @@ const Hotels = () => {
   return (
     <>
       <Helmet>
-        <title>BudQuest Verified 420 Rentals | Book Cannabis-Friendly Stays</title>
-        <meta name="description" content="Discover BudQuest-verified 420-friendly rentals worldwide. Browse cannabis-friendly accommodations by country, state, and city." />
-        <meta name="keywords" content="420 friendly rentals, cannabis hotels, BudQuest verified, marijuana accommodation, weed friendly hotels, 420 rentals" />
+        <title>420 Friendly Hotels Colorado & Denver | BudQuest Verified Rentals</title>
+        <meta name="description" content="Book BudQuest-verified 420-friendly hotels and vacation rentals in Colorado, Denver, and worldwide. Find cannabis-friendly accommodations for your perfect trip." />
+        <meta name="keywords" content="420 friendly hotels colorado, weed friendly denver hotels, cannabis friendly rentals, marijuana stays, 420 airbnb colorado, BudQuest" />
         <link rel="canonical" href="https://budquest.guide/hotels" />
         <script type="application/ld+json">{JSON.stringify(generateStructuredData(filteredData.length))}</script>
       </Helmet>

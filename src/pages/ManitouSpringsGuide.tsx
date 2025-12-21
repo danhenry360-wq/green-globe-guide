@@ -11,8 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, Home, Cannabis, Shield, ArrowRight, Bed, Store, 
+import {
+  MapPin, Star, CheckCircle, Home, Cannabis, Shield, ArrowRight, Bed, Store,
   ChevronRight, Building2, Clock, Car, Bus, Snowflake, Sun, Leaf, Flower2,
   Palette, Ban, Mail, Download, Compass, Image as ImageIcon
 } from "lucide-react";
@@ -56,7 +56,7 @@ const ManitouSpringsGuide = () => {
         .ilike('city', '%Manitou%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       const { data: rentalData } = await supabase
@@ -66,7 +66,7 @@ const ManitouSpringsGuide = () => {
         .ilike('address', '%Manitou%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -78,12 +78,12 @@ const ManitouSpringsGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'manitou-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -96,7 +96,7 @@ const ManitouSpringsGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -201,11 +201,11 @@ const ManitouSpringsGuide = () => {
   return (
     <>
       <Helmet>
-        <title>🌿 420 Manitou Springs Cannabis Guide 2025 | Art Community | BudQuest</title>
-        <meta name="description" content="Complete Manitou Springs cannabis guide. 20+ galleries, artistic community, natural springs, and creative cannabis experiences." />
-        <meta name="keywords" content="Manitou Springs cannabis, art galleries, artist community, creative cannabis, mineral springs" />
+        <title>Manitou Springs 420 Guide 2025 | Best Weed Friendly Hotels & Stays | BudQuest</title>
+        <meta name="description" content="Plan your Manitou Springs 420 trip. Find the best weed-friendly hotels, vacation rentals near Garden of the Gods, and local cannabis laws. Your complete 2025 travel guide." />
+        <meta name="keywords" content="manitou springs 420 guide, weed friendly hotels manitou springs, cannabis lodging manitou, garden of the gods 420 guide, BudQuest" />
         <link rel="canonical" href="https://budquest.guide/manitou-springs" />
-        <meta property="og:title" content="🌿 420 Manitou Springs Cannabis Guide 2025 | BudQuest" />
+        <meta property="og:title" content="Manitou Springs 420 Guide 2025 | BudQuest" />
         <meta property="og:description" content="Art-focused cannabis guide for Colorado's creative community. Galleries, studios, and artistic inspiration." />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -216,7 +216,7 @@ const ManitouSpringsGuide = () => {
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -235,20 +235,20 @@ const ManitouSpringsGuide = () => {
             <img src="/dest-colorado.jpg" alt="Manitou Springs Art Community" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <Badge className="mb-6 px-4 py-2 bg-purple-600/20 text-purple-400 border-purple-600/30">
                 <Palette className="w-4 h-4 mr-2" />
                 Artistic Community
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   🌿 420 Manitou Springs Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Colorado's artistic haven with 20+ galleries, creative studios, and a vibrant cannabis-friendly cultural community.
               </p>
@@ -306,7 +306,7 @@ const ManitouSpringsGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30 p-6 md:p-8">
@@ -392,7 +392,7 @@ const ManitouSpringsGuide = () => {
                 </span>
               </h2>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -403,7 +403,7 @@ const ManitouSpringsGuide = () => {
                 </div>
                 <p className="text-sm text-muted-foreground">Manitou Springs is highly cannabis-friendly with many artistic establishments welcoming adult consumers.</p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-blue-500/20">
@@ -475,7 +475,7 @@ const ManitouSpringsGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -525,7 +525,7 @@ const ManitouSpringsGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -575,7 +575,7 @@ const ManitouSpringsGuide = () => {
                 </span>
               </h2>
               <p className="text-muted-foreground mb-8">Free PDF with gallery maps, artist community tips, and cannabis-friendly creative venues.</p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-card/50 border-border/50 focus:border-accent" required />
                 <Button type="submit" className="bg-accent hover:bg-accent/90 whitespace-nowrap" disabled={submitting}>
