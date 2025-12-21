@@ -213,21 +213,13 @@ const ColoradoSpringsGuide = () => {
                 Gateway to Pikes Peak with world-class natural attractions, legal recreational cannabis, and stunning mountain scenery.
               </p>
 
-              {/* Quick Facts */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                {quickFacts.map((fact, index) => (
-                  <motion.div
-                    key={fact.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="bg-card/60 backdrop-blur-sm border border-accent/20 rounded-xl p-4 text-center"
-                  >
-                    <fact.icon className="h-5 w-5 text-accent mx-auto mb-2" />
-                    <p className="text-xs text-muted-foreground">{fact.label}</p>
-                    <p className="text-sm font-semibold text-foreground">{fact.value}</p>
-                  </motion.div>
-                ))}
+              <div className="flex flex-wrap gap-4 mt-8">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                  <Link to="/hotels?search=Colorado Springs"><Bed className="w-5 h-5 mr-2" />Find 420 Hotels</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+                  <Link to="/tours?city=Colorado Springs"><Compass className="w-5 h-5 mr-2" />Book Springs Tours</Link>
+                </Button>
               </div>
             </motion.div>
           </div>
@@ -264,7 +256,7 @@ const ColoradoSpringsGuide = () => {
                   <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">420-Friendly Stays</h2>
                   <p className="text-muted-foreground">Cannabis-welcoming accommodations near Pikes Peak</p>
                 </div>
-                <Link to="/hotels" className="text-accent hover:underline text-sm">
+                <Link to="/hotels?search=Colorado Springs" className="text-accent hover:underline text-sm">
                   View All →
                 </Link>
               </div>

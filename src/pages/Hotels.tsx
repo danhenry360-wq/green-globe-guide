@@ -21,7 +21,7 @@ import {
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
 import { useMemo, useState, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet";
@@ -539,12 +539,15 @@ const Hotels = () => {
     return dbData;
   }, [dbHotels]);
 
+  const [searchParams] = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+
   const [filters, setFilters] = useState<FilterState>({
     country: '',
     state: '',
     type: 'all',
     sort: 'rating',
-    search: '',
+    search: initialSearch,
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -836,6 +839,34 @@ const Hotels = () => {
                   totalPages={totalPages}
                   onPageChange={setCurrentPage}
                 />
+
+                {/* POPULAR DESTINATIONS GUIDE LINKS */}
+                <section className="mt-16 py-12 border-t border-white/10">
+                  <div className="flex items-center justify-between mb-8">
+                    <h2 className="text-2xl font-bold text-white">
+                      Popular Cannabis Destinations
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {[
+                      { name: "Denver", path: "/denver", icon: Building },
+                      { name: "Colorado Springs", path: "/colorado-springs", icon: Mountain },
+                      { name: "Manitou Springs", path: "/manitou-springs", icon: Info },
+                      { name: "Boulder", path: "/boulder", icon: MapPin },
+                      { name: "Breckenridge", path: "/breckenridge", icon: Search },
+                      { name: "Aspen", path: "/aspen", icon: Star },
+                    ].map((dest) => (
+                      <Link key={dest.path} to={dest.path}>
+                        <Card className="p-4 bg-card/50 border-white/10 hover:border-green-400/40 transition-all group text-center">
+                          <dest.icon className="w-6 h-6 mx-auto mb-2 text-green-400 group-hover:scale-110 transition-transform" />
+                          <span className="text-sm font-medium text-white group-hover:text-green-400 transition-colors">
+                            {dest.name} Guide
+                          </span>
+                        </Card>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
 
                 {/* LEGAL DISCLAIMER */}
                 <section className="mt-12 md:mt-16 px-0 mb-8">

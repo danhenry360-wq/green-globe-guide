@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Helmet } from "react-helmet";
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   MapPin, Clock, Loader2,
   ChevronRight, Sparkles, Search, Filter, X,
@@ -134,12 +134,15 @@ const TourCard = ({ tour }: { tour: any }) => (
 );
 
 const Tours = () => {
+  const [searchParams] = useSearchParams();
+  const initialCity = searchParams.get('city') || 'all';
+
   const [tours, setTours] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Filter & UI States
   const [search, setSearch] = useState("");
-  const [selectedCity, setSelectedCity] = useState<string>("all");
+  const [selectedCity, setSelectedCity] = useState<string>(initialCity);
   const [priceRange, setPriceRange] = useState<number[]>([250]);
   const [sortOrder, setSortOrder] = useState<string>("recommended");
   const [currentPage, setCurrentPage] = useState(1);
@@ -299,6 +302,19 @@ const Tours = () => {
 
       <main className="pt-8 md:pt-28 pb-20 px-4">
         <div className="container mx-auto max-w-7xl">
+          {/* HERO SECTION */}
+          <section className="max-w-4xl mx-auto mb-8 sm:mb-12 text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+              Verified 420 Tours
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2">
+              Premium cannabis experiences and grow facility tours
+            </p>
+            <p className="text-xs sm:text-sm text-muted-foreground/80">
+              {tours.length} verified experiences • Expert guides • Safe consumption
+            </p>
+          </section>
+
           <div className="flex flex-col md:flex-row gap-8">
             {/* SIDEBAR FILTERS (Desktop Only) */}
             <aside className="hidden md:block w-72 space-y-8 sticky top-32 h-fit p-6 bg-card/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-visible">

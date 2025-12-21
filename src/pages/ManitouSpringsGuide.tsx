@@ -258,7 +258,10 @@ const ManitouSpringsGuide = () => {
                   <a href="#dispensaries"><Store className="w-5 h-5 mr-2" />Find Dispensaries</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />Artist Stays</a>
+                  <Link to="/hotels?search=Manitou"><Bed className="w-5 h-5 mr-2" />Find 420 Hotels</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+                  <Link to="/tours?city=Manitou"><Compass className="w-5 h-5 mr-2" />Book Manitou Tours</Link>
                 </Button>
               </div>
             </motion.div>
@@ -521,7 +524,7 @@ const ManitouSpringsGuide = () => {
                   🌿 420 Artistic Lodging
                 </span>
               </h2>
-              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+              <Link to="/hotels?search=Manitou" className="text-accent hover:underline flex items-center gap-1">
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

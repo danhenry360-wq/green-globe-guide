@@ -440,7 +440,10 @@ const DenverGuide = () => {
                   <a href="#dispensaries"><Store className="w-5 h-5 mr-2" />Find Dispensaries</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
-                  <a href="#rentals"><Bed className="w-5 h-5 mr-2" />420 Stays</a>
+                  <Link to="/hotels?search=Denver"><Bed className="w-5 h-5 mr-2" />Find 420 Hotels</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+                  <Link to="/tours?city=Denver"><Compass className="w-5 h-5 mr-2" />Book Denver Tours</Link>
                 </Button>
               </div>
             </motion.div>
@@ -786,8 +789,8 @@ const DenverGuide = () => {
                     <Badge
                       variant="outline"
                       className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                          hood.safety === 'safe' ? 'border-accent/50 text-accent' :
-                            'border-amber-500/50 text-amber-400'
+                        hood.safety === 'safe' ? 'border-accent/50 text-accent' :
+                          'border-amber-500/50 text-amber-400'
                         }`}
                     >
                       {hood.walkable && "🚶 Walkable"}
@@ -871,7 +874,7 @@ const DenverGuide = () => {
                   420-Friendly Stays
                 </span>
               </h2>
-              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+              <Link to="/hotels?search=Denver" className="text-accent hover:underline flex items-center gap-1">
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
