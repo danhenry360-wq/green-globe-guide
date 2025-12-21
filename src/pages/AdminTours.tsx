@@ -30,9 +30,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { 
-  Search, Edit, ArrowLeft, Loader2, Plus, Trash2, 
-  ImagePlus, Star, MapPin, Clock, DollarSign, Sparkles 
+import {
+  Search, Edit, ArrowLeft, Loader2, Plus, Trash2,
+  ImagePlus, Star, MapPin, Clock, DollarSign, Sparkles
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
@@ -84,7 +84,7 @@ const AdminTours = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
-  
+
   const [searchQuery, setSearchQuery] = useState("");
   const [editingTour, setEditingTour] = useState<Tour | null>(null);
   const [formData, setFormData] = useState<Partial<Tour>>(emptyTour);
@@ -92,7 +92,7 @@ const AdminTours = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  
+
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const { data: tours = [], isLoading } = useQuery({
@@ -153,7 +153,7 @@ const AdminTours = () => {
   const handleFileUpload = async (file: File, index: number) => {
     if (!file) return;
     setUploadingImage(true);
-    
+
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
@@ -171,7 +171,7 @@ const AdminTours = () => {
 
       const currentImages = formData.images ? [...formData.images] : [];
       currentImages[index] = publicUrl;
-      
+
       setFormData({ ...formData, images: currentImages });
       toast.success("Image uploaded!");
     } catch (error: any) {
@@ -196,17 +196,17 @@ const AdminTours = () => {
     <>
       <Helmet><title>Admin | Manage Tours</title></Helmet>
       <Navigation />
-      
+
       <main className="min-h-screen bg-background pt-28 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
-          
+
           {/* Header with Back Button */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div className="flex items-center gap-4">
-              <Button 
-                variant="outline" 
-                size="icon" 
-                onClick={() => navigate("/admin")} 
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => navigate("/admin")}
                 className="rounded-full border-white/10 bg-card/50 hover:bg-accent hover:text-white"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -222,10 +222,10 @@ const AdminTours = () => {
 
           <div className="relative mb-8">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-            <Input 
-              placeholder="Search tours..." 
-              value={searchQuery} 
-              onChange={(e) => setSearchQuery(e.target.value)} 
+            <Input
+              placeholder="Search tours..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-card/50 border-white/10"
             />
           </div>
@@ -239,10 +239,10 @@ const AdminTours = () => {
               filteredTours.map((tour) => (
                 <Card key={tour.id} className="p-4 bg-card/50 border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div className="flex items-center gap-4 w-full sm:w-auto">
-                    <img 
-                      src={tour.images?.[0] || "/placeholder.svg"} 
-                      className="w-16 h-16 object-cover rounded-lg border border-white/10" 
-                      alt="" 
+                    <img
+                      src={tour.images?.[0] || "/placeholder.svg"}
+                      className="w-16 h-16 object-cover rounded-lg border border-white/10"
+                      alt=""
                     />
                     <div>
                       <h3 className="font-bold text-lg">{tour.name}</h3>
@@ -276,32 +276,41 @@ const AdminTours = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Tour Name *</Label>
-                <Input value={formData.name || ""} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="e.g. Denver Grow Tour" />
+                <Input value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Denver Grow Tour" />
               </div>
               <div className="space-y-2">
                 <Label>Slug *</Label>
-                <Input value={formData.slug || ""} onChange={e => setFormData({...formData, slug: e.target.value})} placeholder="e.g. denver-grow-tour" />
+                <Input value={formData.slug || ""} onChange={e => setFormData({ ...formData, slug: e.target.value })} placeholder="e.g. denver-grow-tour" />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>Description</Label>
-              <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Tell people about the experience..." />
+              <Textarea rows={3} value={formData.description || ""} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Tell people about the experience..." />
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-2"><Label>City</Label><Input value={formData.city || ""} onChange={e => setFormData({...formData, city: e.target.value})} /></div>
-              <div className="space-y-2"><Label>State</Label><Input value={formData.state || ""} onChange={e => setFormData({...formData, state: e.target.value})} /></div>
-              <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({...formData, price_range: e.target.value})} placeholder="$25.00" /></div>
+              <div className="space-y-2"><Label>City</Label><Input value={formData.city || ""} onChange={e => setFormData({ ...formData, city: e.target.value })} /></div>
+              <div className="space-y-2"><Label>State</Label><Input value={formData.state || ""} onChange={e => setFormData({ ...formData, state: e.target.value })} /></div>
+              <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({ ...formData, price_range: e.target.value })} placeholder="$25.00" /></div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Website URL</Label>
+              <Input
+                value={formData.website || ""}
+                onChange={e => setFormData({ ...formData, website: e.target.value })}
+                placeholder="https://example.com"
+              />
             </div>
 
             <div className="flex gap-8 p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-2">
-                <Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({...formData, is_420_friendly: v})} />
+                <Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({ ...formData, is_420_friendly: v })} />
                 <Label>420 Friendly</Label>
               </div>
               <div className="flex items-center gap-2">
-                <Switch checked={formData.is_verified || false} onCheckedChange={v => setFormData({...formData, is_verified: v})} />
+                <Switch checked={formData.is_verified || false} onCheckedChange={v => setFormData({ ...formData, is_verified: v })} />
                 <Label>Verified</Label>
               </div>
             </div>
@@ -311,30 +320,30 @@ const AdminTours = () => {
               <div className="grid grid-cols-5 gap-2">
                 {[0, 1, 2, 3, 4].map((index) => (
                   <div key={index} className="relative aspect-square border-2 border-dashed border-white/10 rounded-xl overflow-hidden group bg-card/50">
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      className="hidden" 
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
                       ref={el => fileInputRefs.current[index] = el}
-                      onChange={(e) => handleFileUpload(e.target.files?.[0] as File, index)} 
+                      onChange={(e) => handleFileUpload(e.target.files?.[0] as File, index)}
                     />
-                    
+
                     {formData.images?.[index] ? (
                       <>
                         <img src={formData.images[index]} className="w-full h-full object-cover" alt="" />
-                        <button 
+                        <button
                           className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => {
                             const newImgs = [...(formData.images || [])];
                             newImgs.splice(index, 1);
-                            setFormData({...formData, images: newImgs});
+                            setFormData({ ...formData, images: newImgs });
                           }}
                         >
                           <Trash2 className="text-white w-5 h-5" />
                         </button>
                       </>
                     ) : (
-                      <button 
+                      <button
                         disabled={uploadingImage}
                         className="w-full h-full flex flex-col items-center justify-center hover:bg-white/5 transition-colors gap-1"
                         onClick={() => fileInputRefs.current[index]?.click()}
