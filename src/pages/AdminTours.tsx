@@ -320,6 +320,28 @@ const AdminTours = () => {
               </div>
             </div>
 
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Rating (0-5)</Label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="5"
+                  value={formData.rating || 0}
+                  onChange={e => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Review Count</Label>
+                <Input
+                  type="number"
+                  value={formData.review_count || 0}
+                  onChange={e => setFormData({ ...formData, review_count: parseInt(e.target.value) })}
+                />
+              </div>
+            </div>
+
             <div className="flex gap-8 p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-2">
                 <Switch checked={formData.is_420_friendly || false} onCheckedChange={v => setFormData({ ...formData, is_420_friendly: v })} />
