@@ -292,6 +292,15 @@ const AdminTours = () => {
               <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({ ...formData, price_range: e.target.value })} placeholder="$25.00" /></div>
             </div>
 
+            <div className="space-y-2">
+              <Label>Booking URL (for "Book Now" button)</Label>
+              <Input
+                value={formData.booking_url || ""}
+                onChange={e => setFormData({ ...formData, booking_url: e.target.value })}
+                placeholder="https://booking-site.com/tour"
+              />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Duration</Label>
