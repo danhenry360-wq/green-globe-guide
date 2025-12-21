@@ -259,12 +259,12 @@ const BlogDenverDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>Cannabis Dispensaries in Denver: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws. Plan your Denver cannabis trip." />
+        <title>Best Denver Dispensaries 2025: The Complete Tourist Guide</title>
+        <meta name="description" content="Stop guessing! See top-rated Denver dispensaries plus 420-friendly hotels where you can actually smoke. Your 2025 guide to the Mile High City." />
         <meta name="keywords" content="cannabis dispensary Denver, best dispensary Denver, Denver weed shops, cannabis strains Denver, where to buy weed Denver, Denver cannabis guide, 420 dispensary Denver" />
         <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-denver" />
-        <meta property="og:title" content="Cannabis Dispensaries in Denver: Complete Guide 2025" />
-        <meta property="og:description" content="Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws." />
+        <meta property="og:title" content="Best Denver Dispensaries 2025: The Complete Tourist Guide" />
+        <meta property="og:description" content="Stop guessing! See top-rated Denver dispensaries plus 420-friendly hotels where you can actually smoke." />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content="2025-12-04" />
         <meta property="article:author" content="BudQuest" />

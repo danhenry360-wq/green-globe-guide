@@ -139,12 +139,12 @@ const BlogBoulderDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>10 Best Boulder Dispensaries 2025: Verified Guide</title>
-        <meta name="description" content="Don't guess on quality. See the best cannabis shops in Boulder for 2025. Expert reviews on craft flower, top deals, and local favorites for tourists." />
+        <title>Top 10 Boulder Dispensaries (2025): Plus Where to Stay</title>
+        <meta name="description" content="Everything you need to know about buying weed in Boulder. Best local shops plus our verified list of 420-friendly hotels for the ultimate Colorado trip." />
         <meta name="keywords" content="Boulder dispensaries, cannabis Boulder, weed shops Boulder, marijuana Boulder Colorado, 420 Boulder" />
         <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-boulder" />
-        <meta property="og:title" content="Cannabis Dispensaries in Boulder: Complete Guide 2025" />
-        <meta property="og:description" content="Complete guide to Boulder's best cannabis shops, craft products, and shopping tips." />
+        <meta property="og:title" content="Top 10 Boulder Dispensaries (2025): Plus Where to Stay" />
+        <meta property="og:description" content="Everything you need to know about buying weed in Boulder. Best local shops plus our verified list of 420-friendly hotels." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({

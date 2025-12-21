@@ -14,12 +14,12 @@ const BlogColoradoSpringsStays = () => {
     return (
         <>
             <Helmet>
-                <title>Best 420-Friendly Stays in Colorado Springs & Manitou Springs (2025)</title>
-                <meta name="description" content="Looking for 420 friendly hotels in Colorado Springs? We found the best cannabis tolerant stays, from Manitou Springs cabins to private rentals." />
+                <title>Best 420-Friendly Hotels Colorado Springs & Manitou (2025)</title>
+                <meta name="description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips to keep you safe in 2025." />
                 <meta name="keywords" content="420 friendly hotels colorado springs, 420 friendly hotels manitou springs, bud and breakfast colorado springs, cannabis friendly hotels pikes peak" />
                 <link rel="canonical" href="https://budquest.guide/blog/best-420-friendly-stays-colorado-springs" />
-                <meta property="og:title" content="Best 420-Friendly Stays in Colorado Springs & Manitou Springs (2025)" />
-                <meta property="og:description" content="Colorado Springs is conservative, but Manitou Springs is a 420-friendly oasis. Here are the best cannabis-welcoming stays." />
+                <meta property="og:title" content="Best 420-Friendly Hotels Colorado Springs & Manitou (2025)" />
+                <meta property="og:description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips to keep you safe." />
                 <meta property="og:image" content="/blog-colorado-springs-stays.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">

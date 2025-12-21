@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car, Mountain,
   ArrowRight, ExternalLink, TreePine, Utensils, Coffee, AlertTriangle
 } from "lucide-react";
@@ -38,7 +38,7 @@ const BlogBoulderRentals = () => {
         .eq('is_420_friendly', true)
         .ilike('address', '%Boulder%')
         .order('rating', { ascending: false });
-      
+
       console.log('Boulder rentals fetch:', { data, error });
       if (error) console.error('Boulder rentals error:', error);
       if (data) setRentals(data);
@@ -110,37 +110,37 @@ const BlogBoulderRentals = () => {
   ];
 
   const faqs = [
-    { 
-      q: "Can I smoke cannabis in Boulder hotels?", 
-      a: "Most traditional Boulder hotels prohibit cannabis. Our verified 420-friendly properties explicitly welcome consumption in designated areas—usually outdoor patios or balconies." 
+    {
+      q: "Can I smoke cannabis in Boulder hotels?",
+      a: "Most traditional Boulder hotels prohibit cannabis. Our verified 420-friendly properties explicitly welcome consumption in designated areas—usually outdoor patios or balconies."
     },
-    { 
-      q: "Are there cannabis-friendly Airbnbs in Boulder?", 
-      a: "Yes, many Boulder hosts welcome cannabis guests. Always message hosts first to confirm their specific policies before booking." 
+    {
+      q: "Are there cannabis-friendly Airbnbs in Boulder?",
+      a: "Yes, many Boulder hosts welcome cannabis guests. Always message hosts first to confirm their specific policies before booking."
     },
-    { 
-      q: "What's the best area to stay in Boulder for cannabis tourists?", 
-      a: "The Hill offers budget-friendly options near dispensaries. North Boulder provides hiking access. Downtown/Pearl Street is best for walkability to shops and restaurants." 
+    {
+      q: "What's the best area to stay in Boulder for cannabis tourists?",
+      a: "The Hill offers budget-friendly options near dispensaries. North Boulder provides hiking access. Downtown/Pearl Street is best for walkability to shops and restaurants."
     },
-    { 
-      q: "Can I consume cannabis on my rental's patio?", 
-      a: "At verified 420-friendly properties, yes. Always check specific house rules as some limit consumption to certain areas or times." 
+    {
+      q: "Can I consume cannabis on my rental's patio?",
+      a: "At verified 420-friendly properties, yes. Always check specific house rules as some limit consumption to certain areas or times."
     },
-    { 
-      q: "Do Boulder rentals provide smoking accessories?", 
-      a: "Some do! Our featured properties often include outdoor ashtrays and may offer welcome joints or dispensary discounts." 
+    {
+      q: "Do Boulder rentals provide smoking accessories?",
+      a: "Some do! Our featured properties often include outdoor ashtrays and may offer welcome joints or dispensary discounts."
     },
-    { 
-      q: "How far is Boulder from Denver airport?", 
-      a: "About 45 minutes to 1 hour depending on traffic. Several shuttle services operate between DIA and Boulder." 
+    {
+      q: "How far is Boulder from Denver airport?",
+      a: "About 45 minutes to 1 hour depending on traffic. Several shuttle services operate between DIA and Boulder."
     },
-    { 
-      q: "Can I bring cannabis from Denver to Boulder?", 
-      a: "Yes, it's legal to transport personal amounts (up to 1 oz) between Colorado cities. Keep it in a sealed container." 
+    {
+      q: "Can I bring cannabis from Denver to Boulder?",
+      a: "Yes, it's legal to transport personal amounts (up to 1 oz) between Colorado cities. Keep it in a sealed container."
     },
-    { 
-      q: "Are there consumption lounges in Boulder?", 
-      a: "Yes, Boulder has licensed social consumption establishments. Some 420-friendly properties also offer dedicated consumption spaces." 
+    {
+      q: "Are there consumption lounges in Boulder?",
+      a: "Yes, Boulder has licensed social consumption establishments. Some 420-friendly properties also offer dedicated consumption spaces."
     },
   ];
 
@@ -207,12 +207,12 @@ const BlogBoulderRentals = () => {
   return (
     <>
       <Helmet>
-        <title>Best 420-Friendly Rentals in Boulder: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Discover Boulder's top 420-friendly hotels, vacation rentals, and mountain lodges. Book verified cannabis-welcoming accommodations near the Flatirons." />
+        <title>Top 420-Friendly Boulder Rentals: High-Altitude Stays 2025</title>
+        <meta name="description" content="Escape to the Flatirons! Book verified cannabis-friendly mountain lodges and 420-friendly hotels in Boulder. 2025 guide to the best smoke-friendly stays." />
         <meta name="keywords" content="420-friendly hotels Boulder, cannabis hotels Boulder, weed friendly rentals Boulder, Boulder 420 accommodations, Flatirons lodging" />
         <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-boulder" />
-        <meta property="og:title" content="Best 420-Friendly Rentals in Boulder: Complete Guide 2025" />
-        <meta property="og:description" content="Find verified cannabis-friendly accommodations in Boulder, Colorado near the Flatirons." />
+        <meta property="og:title" content="Top 420-Friendly Boulder Rentals: High-Altitude Stays 2025" />
+        <meta property="og:description" content="Escape to the Flatirons! Book verified cannabis-friendly mountain lodges and 420-friendly hotels in Boulder." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -230,9 +230,9 @@ const BlogBoulderRentals = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-boulder-rentals.jpg" 
-            alt="420-friendly mountain lodge rental in Boulder, Colorado" 
+          <img
+            src="/blog-boulder-rentals.jpg"
+            alt="420-friendly mountain lodge rental in Boulder, Colorado"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -362,7 +362,7 @@ const BlogBoulderRentals = () => {
               <p className="text-muted-foreground mb-8">
                 Our handpicked selection of verified cannabis-welcoming accommodations in the Boulder area. Each property has been confirmed to welcome cannabis consumption.
               </p>
-              
+
               {loading ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -407,11 +407,11 @@ const BlogBoulderRentals = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {rental.policies && (
                               <p className="text-muted-foreground mb-4 line-clamp-2">{rental.policies}</p>
                             )}
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                               <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
                                 <CheckCircle2 className="h-3 w-3" /> 420-Friendly
@@ -429,9 +429,9 @@ const BlogBoulderRentals = () => {
                                 <span className="px-2 py-1 bg-accent/20 text-accent rounded text-xs">Edibles Welcome</span>
                               )}
                             </div>
-                            
+
                             <div className="flex flex-wrap gap-3">
-                              <Link 
+                              <Link
                                 to={`/hotels/${rental.slug}`}
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm"
                               >
@@ -470,7 +470,7 @@ const BlogBoulderRentals = () => {
               )}
 
               <div className="mt-8 text-center">
-                <Link 
+                <Link
                   to="/hotels"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-accent/10 hover:bg-accent/20 text-accent font-semibold rounded-lg transition-colors border border-accent/30"
                 >
@@ -608,7 +608,7 @@ const BlogBoulderRentals = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Regulations</h2>
-              
+
               <div className="space-y-4">
                 <Card className="bg-card/60 border-accent/20 p-6">
                   <div className="flex items-start gap-4">
@@ -679,14 +679,14 @@ const BlogBoulderRentals = () => {
                   Explore our comprehensive Boulder cannabis travel guide with dispensary recommendations, attractions, consumption laws, and more.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link 
-                    to="/boulder" 
+                  <Link
+                    to="/boulder"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
                   >
                     Boulder Travel Guide <ArrowRight className="h-5 w-5" />
                   </Link>
-                  <Link 
-                    to="/blog/cannabis-dispensaries-boulder" 
+                  <Link
+                    to="/blog/cannabis-dispensaries-boulder"
                     className="inline-flex items-center gap-2 px-6 py-3 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors"
                   >
                     Boulder Dispensaries Guide <ArrowRight className="h-5 w-5" />

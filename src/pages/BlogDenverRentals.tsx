@@ -149,12 +149,12 @@ const BlogDenverRentals = () => {
   return (
     <>
       <Helmet>
-        <title>Best 420-Friendly Rentals in Denver: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Discover Denver's top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado adventure." />
+        <title>Best 420-Friendly Hotels Denver (2025): Verified Stays</title>
+        <meta name="description" content="Stop worrying about cleaning fees. Book verified 420-friendly hotels and vacation rentals in Denver. Everything you need for a stress-free cannabis trip." />
         <meta name="keywords" content="420-friendly hotels Denver, cannabis hotels Denver, weed friendly rentals Denver, Denver 420 accommodations, bud and breakfast Denver" />
         <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-denver" />
-        <meta property="og:title" content="Best 420-Friendly Rentals in Denver: Complete Guide 2025" />
-        <meta property="og:description" content="Find verified cannabis-friendly accommodations in Denver, Colorado." />
+        <meta property="og:title" content="Best 420-Friendly Hotels Denver (2025): Verified Stays" />
+        <meta property="og:description" content="Stop worrying about cleaning fees. Book verified 420-friendly hotels and vacation rentals in Denver." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({
