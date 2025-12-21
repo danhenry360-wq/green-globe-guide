@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import {
   MapPin, Calendar, Clock, Info, AlertTriangle, CheckCircle2,
   XCircle, Car, Bike, Mountain, Building, Leaf, ChevronRight,
-  Mail, Sun, Snowflake, CloudRain, Trees, Star, ExternalLink
+  Mail, Sun, Snowflake, CloudRain, Trees, Star, ExternalLink,
+  Bed, Compass
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";

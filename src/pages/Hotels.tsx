@@ -17,6 +17,7 @@ import {
   CheckCircle,
   Star,
   AlertTriangle,
+  Mountain,
 } from "lucide-react";
 import { Hotel, CountryHotels } from "@/types/data";
 import { HOTEL_DATA } from "@/data/hotel_data";
