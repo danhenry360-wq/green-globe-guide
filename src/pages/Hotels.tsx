@@ -352,8 +352,16 @@ const FilterPanel = ({
               </div>
 
               <Button
+                variant="outline"
+                className="w-full border-white/10 hover:bg-green-400/10 hover:text-green-400 transition-colors py-5 text-sm font-semibold rounded-xl"
+                onClick={handleClearFilters}
+              >
+                Reset Filters
+              </Button>
+
+              <Button
                 onClick={onClose}
-                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3"
+                className="w-full md:hidden bg-green-400 hover:bg-green-500 text-white rounded-xl font-semibold py-3 mt-4"
               >
                 Apply Filters
               </Button>

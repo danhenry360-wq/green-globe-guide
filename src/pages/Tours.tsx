@@ -207,20 +207,21 @@ const Tours = () => {
   const FilterControls = () => (
     <div className="space-y-6">
       <div>
-        <label className="text-xs font-bold uppercase tracking-wider mb-3 block text-muted-foreground">Location</label>
-        <Select value={selectedCity} onValueChange={setSelectedCity}>
-          <SelectTrigger className="bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
-            <SelectValue placeholder="All Cities" />
-          </SelectTrigger>
-          <SelectContent className="bg-card border-white/10">
-            <SelectItem value="all">All Cities</SelectItem>
-            {uniqueCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}
-          </SelectContent>
-        </Select>
+        <label className="block text-sm font-semibold text-muted-foreground mb-3">Location</label>
+        <select
+          value={selectedCity}
+          onChange={(e) => setSelectedCity(e.target.value)}
+          className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
+        >
+          <option value="all" className="bg-card">All Cities</option>
+          {uniqueCities.map(city => (
+            <option key={city} value={city} className="bg-card">{city}</option>
+          ))}
+        </select>
       </div>
 
       <div>
-        <label className="text-xs font-bold uppercase tracking-wider mb-3 block text-muted-foreground flex justify-between">
+        <label className="block text-sm font-semibold text-muted-foreground mb-3 flex justify-between">
           <span>Max Price</span>
           <span className="text-accent">${priceRange[0]}</span>
         </label>
@@ -228,21 +229,24 @@ const Tours = () => {
       </div>
 
       <div>
-        <label className="text-xs font-bold uppercase tracking-wider mb-3 block text-muted-foreground">Sort By</label>
-        <Select value={sortOrder} onValueChange={setSortOrder}>
-          <SelectTrigger className="bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
-            <SelectValue placeholder="Recommended" />
-          </SelectTrigger>
-          <SelectContent className="bg-card border-white/10">
-            <SelectItem value="recommended">Recommended</SelectItem>
-            <SelectItem value="rating">Highest Rated</SelectItem>
-            <SelectItem value="price-low">Price: Low to High</SelectItem>
-            <SelectItem value="price-high">Price: High to Low</SelectItem>
-          </SelectContent>
-        </Select>
+        <label className="block text-sm font-semibold text-muted-foreground mb-3">Sort By</label>
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as SortType)}
+          className="w-full px-3 py-2 bg-background/80 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
+        >
+          <option value="recommended" className="bg-card">Recommended</option>
+          <option value="rating" className="bg-card">Highest Rated</option>
+          <option value="price-low" className="bg-card">Price: Low to High</option>
+          <option value="price-high" className="bg-card">Price: High to Low</option>
+        </select>
       </div>
 
-      <Button variant="outline" className="w-full border-white/10 hover:bg-accent/10 hover:text-accent transition-colors" onClick={handleClearFilters}>
+      <Button
+        variant="outline"
+        className="w-full border-white/10 hover:bg-accent/10 hover:text-accent transition-colors py-5 text-sm font-semibold rounded-xl"
+        onClick={handleClearFilters}
+      >
         Reset Filters
       </Button>
     </div>
@@ -297,9 +301,8 @@ const Tours = () => {
           <div className="flex flex-col md:flex-row gap-8">
             {/* SIDEBAR FILTERS (Desktop Only) */}
             <aside className="hidden md:block w-72 space-y-8 sticky top-32 h-fit p-6 bg-card/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-visible">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-accent" />
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-white">
                   Filters
                 </h3>
                 {(search || selectedCity !== 'all' || priceRange[0] !== 250) && (
