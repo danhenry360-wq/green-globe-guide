@@ -292,13 +292,23 @@ const AdminTours = () => {
               <div className="space-y-2"><Label>Price Range</Label><Input value={formData.price_range || ""} onChange={e => setFormData({ ...formData, price_range: e.target.value })} placeholder="$25.00" /></div>
             </div>
 
-            <div className="space-y-2">
-              <Label>Website URL</Label>
-              <Input
-                value={formData.website || ""}
-                onChange={e => setFormData({ ...formData, website: e.target.value })}
-                placeholder="https://example.com"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Duration</Label>
+                <Input
+                  value={formData.duration || ""}
+                  onChange={e => setFormData({ ...formData, duration: e.target.value })}
+                  placeholder="e.g. 2 hours"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Website URL</Label>
+                <Input
+                  value={formData.website || ""}
+                  onChange={e => setFormData({ ...formData, website: e.target.value })}
+                  placeholder="https://example.com"
+                />
+              </div>
             </div>
 
             <div className="flex gap-8 p-4 bg-muted/50 rounded-lg">
