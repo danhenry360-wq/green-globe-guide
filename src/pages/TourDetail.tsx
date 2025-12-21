@@ -359,27 +359,6 @@ const TourDetail = () => {
                   </CardContent>
                 </Card>
 
-                {/* Legal Disclaimer Section */}
-                <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-                  <CardHeader className="p-3 sm:p-4 pb-2">
-                    <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-2">
-                      <Info className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Legal Information & Disclaimers
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-4 pt-0 space-y-3">
-                    <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                      <p className="text-[11px] sm:text-xs text-amber-200 leading-relaxed">
-                        <strong>Public Consumption Notice:</strong> In Colorado, cannabis consumption (smoking, vaping, or edibles) is strictly prohibited in all public places. This includes streets, sidewalks, parks, ski resorts, and most federal lands. Please ensure you only consume in private residences or licensed social consumption areas.
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-accent/10 border border-accent/20">
-                      <p className="text-[11px] sm:text-xs text-muted-foreground leading-relaxed">
-                        BudQuest provides travel information and tour listings for recreational purposes. We do not sell cannabis or facilitate illegal transactions. All participants must be 21+ with a valid government-issued ID. Driving under the influence of cannabis is illegal and strictly enforced in Colorado.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
 
                 {/* Reviews Section */}
                 <TourReviewsSection tourId={tour.id} />
