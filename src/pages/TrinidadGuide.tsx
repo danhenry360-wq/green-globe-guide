@@ -308,7 +308,7 @@ const TrinidadGuide = () => {
                 <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0">
                         <img
-                            src="/lovable-uploads/e28153b6-1748-4203-8854-3e9196b05423.png" // Fallback or placeholder, ideally replace with real Trinidad image
+                            src="/hero-bg.jpg"
                             alt="Trinidad Colorado Landscape"
                             className="w-full h-full object-cover"
                         />
