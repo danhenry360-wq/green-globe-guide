@@ -27,6 +27,8 @@ interface Review {
   user_id: string;
   dispensary_id: string | null;
   rental_id: string | null;
+  tour_id: string | null;
+  review_type: 'dispensary' | 'rental' | 'tour';
   profiles: {
     display_name: string | null;
   } | null;
@@ -35,6 +37,10 @@ interface Review {
     slug: string;
   } | null;
   hotels: {
+    name: string;
+    slug: string;
+  } | null;
+  tours: {
     name: string;
     slug: string;
   } | null;
@@ -48,7 +54,7 @@ const AdminReviews = () => {
   const [activeTab, setActiveTab] = useState('pending');
   const [selectedReviews, setSelectedReviews] = useState<Set<string>>(new Set());
   const [bulkProcessing, setBulkProcessing] = useState(false);
-  const [propertyFilter, setPropertyFilter] = useState<'all' | 'dispensary' | 'rental'>('all');
+  const [propertyFilter, setPropertyFilter] = useState<'all' | 'dispensary' | 'rental' | 'tour'>('all');
   const [dateFilter, setDateFilter] = useState<'all' | '7days' | '30days' | '90days'>('all');
   const [showAnalytics, setShowAnalytics] = useState(false);
   
@@ -91,7 +97,7 @@ const AdminReviews = () => {
   const fetchReviews = async () => {
     setLoading(true);
     
-    // Fetch reviews with dispensary and rental data
+    // Fetch dispensary/rental reviews
     const { data: reviewsData, error: reviewsError } = await supabase
       .from('reviews')
       .select(`
@@ -115,30 +121,82 @@ const AdminReviews = () => {
       `)
       .order('created_at', { ascending: false });
 
-    if (reviewsError || !reviewsData) {
-      console.error('Error fetching reviews:', reviewsError);
+    // Fetch tour reviews
+    const { data: tourReviewsData, error: tourReviewsError } = await supabase
+      .from('tour_reviews')
+      .select(`
+        id,
+        rating,
+        title,
+        content,
+        status,
+        created_at,
+        user_id,
+        tour_id,
+        tours (
+          name,
+          slug
+        )
+      `)
+      .order('created_at', { ascending: false });
+
+    if (reviewsError && tourReviewsError) {
+      console.error('Error fetching reviews:', reviewsError, tourReviewsError);
       setLoading(false);
       return;
     }
 
-    // Get unique user IDs and fetch profiles separately
-    const userIds = [...new Set(reviewsData.map(r => r.user_id))];
+    // Get unique user IDs from both review types
+    const allUserIds = [
+      ...new Set([
+        ...(reviewsData?.map(r => r.user_id) || []),
+        ...(tourReviewsData?.map(r => r.user_id) || [])
+      ])
+    ];
+    
     const { data: profilesData } = await supabase
       .from('profiles')
       .select('id, display_name')
-      .in('id', userIds);
+      .in('id', allUserIds);
 
     const profilesMap = new Map(profilesData?.map(p => [p.id, p]) || []);
 
-    const transformedData = reviewsData.map(review => ({
+    // Transform dispensary/rental reviews
+    const transformedReviews: Review[] = (reviewsData || []).map(review => ({
       ...review,
+      tour_id: null,
+      review_type: review.dispensary_id ? 'dispensary' as const : 'rental' as const,
       profiles: profilesMap.get(review.user_id) || null,
       dispensaries: Array.isArray(review.dispensaries) ? review.dispensaries[0] : review.dispensaries,
       hotels: Array.isArray(review.hotels) ? review.hotels[0] : review.hotels,
+      tours: null,
       status: review.status as 'pending' | 'approved' | 'rejected'
     }));
+
+    // Transform tour reviews
+    const transformedTourReviews: Review[] = (tourReviewsData || []).map(review => ({
+      id: review.id,
+      rating: review.rating,
+      title: review.title,
+      content: review.content,
+      status: review.status as 'pending' | 'approved' | 'rejected',
+      created_at: review.created_at,
+      user_id: review.user_id,
+      dispensary_id: null,
+      rental_id: null,
+      tour_id: review.tour_id,
+      review_type: 'tour' as const,
+      profiles: profilesMap.get(review.user_id) || null,
+      dispensaries: null,
+      hotels: null,
+      tours: Array.isArray(review.tours) ? review.tours[0] : review.tours,
+    }));
+
+    // Merge and sort by date
+    const allReviews = [...transformedReviews, ...transformedTourReviews]
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     
-    setReviews(transformedData);
+    setReviews(allReviews);
     setLoading(false);
   };
 
@@ -151,11 +209,18 @@ const AdminReviews = () => {
   const handleUpdateStatus = async (reviewId: string, newStatus: 'approved' | 'rejected') => {
     setProcessingId(reviewId);
     
-    // Find the review to get user info
+    // Find the review to get user info and determine which table to update
     const review = reviews.find(r => r.id === reviewId);
+    if (!review) {
+      setProcessingId(null);
+      return;
+    }
+    
+    // Determine which table to update based on review type
+    const tableName = review.review_type === 'tour' ? 'tour_reviews' : 'reviews';
     
     const { error } = await supabase
-      .from('reviews')
+      .from(tableName)
       .update({
         status: newStatus,
         reviewed_at: new Date().toISOString(),
@@ -176,35 +241,31 @@ const AdminReviews = () => {
       });
       
       // Send email notification
-      if (review) {
-        try {
-          // Get user email
-          const { data: userData } = await supabase
-            .from('profiles')
-            .select('id')
-            .eq('id', review.user_id)
-            .single();
+      try {
+        const { data: userData } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', review.user_id)
+          .single();
+        
+        if (userData) {
+          const { data: authData } = await supabase.auth.admin.getUserById(review.user_id);
           
-          if (userData) {
-            const { data: authData } = await supabase.auth.admin.getUserById(review.user_id);
-            
-            if (authData?.user?.email) {
-              await supabase.functions.invoke('notify-review-status', {
-                body: {
-                  reviewId: review.id,
-                  status: newStatus,
-                  userEmail: authData.user.email,
-                  userName: review.profiles?.display_name || 'Valued User',
-                  propertyName: review.dispensaries?.name || review.hotels?.name || 'Property',
-                  propertyType: review.dispensaries ? 'dispensary' : 'rental'
-                }
-              });
-            }
+          if (authData?.user?.email) {
+            await supabase.functions.invoke('notify-review-status', {
+              body: {
+                reviewId: review.id,
+                status: newStatus,
+                userEmail: authData.user.email,
+                userName: review.profiles?.display_name || 'Valued User',
+                propertyName: review.dispensaries?.name || review.hotels?.name || review.tours?.name || 'Property',
+                propertyType: review.review_type
+              }
+            });
           }
-        } catch (emailError) {
-          console.error('Failed to send notification email:', emailError);
-          // Don't show error to admin, just log it
         }
+      } catch (emailError) {
+        console.error('Failed to send notification email:', emailError);
       }
       
       fetchReviews();
@@ -218,8 +279,17 @@ const AdminReviews = () => {
     
     setProcessingId(reviewId);
     
+    // Find the review to determine which table to delete from
+    const review = reviews.find(r => r.id === reviewId);
+    if (!review) {
+      setProcessingId(null);
+      return;
+    }
+    
+    const tableName = review.review_type === 'tour' ? 'tour_reviews' : 'reviews';
+    
     const { error } = await supabase
-      .from('reviews')
+      .from(tableName)
       .delete()
       .eq('id', reviewId);
 
@@ -265,16 +335,48 @@ const AdminReviews = () => {
 
     setBulkProcessing(true);
 
-    const promises = Array.from(selectedReviews).map(reviewId =>
-      supabase
-        .from('reviews')
-        .update({
-          status: action,
-          reviewed_at: new Date().toISOString(),
-          reviewed_by: user?.id
-        })
-        .eq('id', reviewId)
-    );
+    // Group reviews by type for batch updates
+    const selectedReviewsList = Array.from(selectedReviews);
+    const regularReviewIds = selectedReviewsList.filter(id => {
+      const review = reviews.find(r => r.id === id);
+      return review && review.review_type !== 'tour';
+    });
+    const tourReviewIds = selectedReviewsList.filter(id => {
+      const review = reviews.find(r => r.id === id);
+      return review && review.review_type === 'tour';
+    });
+
+    const promises = [];
+    
+    if (regularReviewIds.length > 0) {
+      regularReviewIds.forEach(reviewId => {
+        promises.push(
+          supabase
+            .from('reviews')
+            .update({
+              status: action,
+              reviewed_at: new Date().toISOString(),
+              reviewed_by: user?.id
+            })
+            .eq('id', reviewId)
+        );
+      });
+    }
+    
+    if (tourReviewIds.length > 0) {
+      tourReviewIds.forEach(reviewId => {
+        promises.push(
+          supabase
+            .from('tour_reviews')
+            .update({
+              status: action,
+              reviewed_at: new Date().toISOString(),
+              reviewed_by: user?.id
+            })
+            .eq('id', reviewId)
+        );
+      });
+    }
 
     const results = await Promise.all(promises);
     const errors = results.filter(r => r.error);
@@ -336,8 +438,9 @@ const AdminReviews = () => {
     if (review.status !== activeTab) return false;
 
     // Property type filter
-    if (propertyFilter === 'dispensary' && !review.dispensary_id) return false;
-    if (propertyFilter === 'rental' && !review.rental_id) return false;
+    if (propertyFilter === 'dispensary' && review.review_type !== 'dispensary') return false;
+    if (propertyFilter === 'rental' && review.review_type !== 'rental') return false;
+    if (propertyFilter === 'tour' && review.review_type !== 'tour') return false;
 
     // Date filter
     if (dateFilter !== 'all') {
@@ -361,8 +464,9 @@ const AdminReviews = () => {
   const totalReviews = reviews.length;
   const approvalRate = totalReviews > 0 ? ((counts.approved / totalReviews) * 100).toFixed(1) : '0';
   const rejectionRate = totalReviews > 0 ? ((counts.rejected / totalReviews) * 100).toFixed(1) : '0';
-  const dispensaryReviews = reviews.filter(r => r.dispensary_id).length;
-  const rentalReviews = reviews.filter(r => r.rental_id).length;
+  const dispensaryReviews = reviews.filter(r => r.review_type === 'dispensary').length;
+  const rentalReviews = reviews.filter(r => r.review_type === 'rental').length;
+  const tourReviews = reviews.filter(r => r.review_type === 'tour').length;
   const uniqueReviewers = new Set(reviews.map(r => r.user_id)).size;
   const avgRating = reviews.length > 0 
     ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(1)
@@ -492,6 +596,18 @@ const AdminReviews = () => {
 
                 <Card className="bg-card/70 border-accent/20">
                   <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Tour Reviews</p>
+                        <p className="text-2xl font-bold text-foreground">{tourReviews}</p>
+                      </div>
+                      <Badge variant="outline" className="border-purple-500 text-purple-500">Tour</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-card/70 border-accent/20">
+                  <CardContent className="p-6">
                     <div>
                       <p className="text-sm text-muted-foreground">Rejection Rate</p>
                       <p className="text-2xl font-bold text-red-500">{rejectionRate}%</p>
@@ -527,6 +643,7 @@ const AdminReviews = () => {
                       <SelectItem value="all">All Properties</SelectItem>
                       <SelectItem value="dispensary">Dispensaries Only</SelectItem>
                       <SelectItem value="rental">Rentals Only</SelectItem>
+                      <SelectItem value="tour">Tours Only</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -647,10 +764,10 @@ const AdminReviews = () => {
                               )}
                               <div className="flex-1">
                                 <CardTitle className="text-lg text-foreground">
-                                  {review.dispensaries?.name || review.hotels?.name || 'Unknown Property'}
+                                  {review.dispensaries?.name || review.hotels?.name || review.tours?.name || 'Unknown Property'}
                                 </CardTitle>
                                 <p className="text-xs text-muted-foreground mb-1">
-                                  {review.dispensaries ? 'Dispensary Review' : 'Rental Review'}
+                                  {review.review_type === 'dispensary' ? 'Dispensary Review' : review.review_type === 'rental' ? 'Rental Review' : 'Tour Review'}
                                 </p>
                                 <p className="text-sm text-muted-foreground">
                                   By {review.profiles?.display_name || 'Anonymous'} • {format(new Date(review.created_at), 'MMM d, yyyy h:mm a')}

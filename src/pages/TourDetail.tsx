@@ -15,6 +15,7 @@ import { DispensaryMap } from "@/components/DispensaryMap";
 import { TourReviewsSection } from "@/components/TourReviewsSection";
 import { TourImageUploader } from "@/components/TourImageUploader";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { SocialShareButtons } from "@/components/SocialShareButtons";
 
 // Mock tour images for fallback
 const MOCK_TOUR_IMAGES: Record<string, string[]> = {
@@ -209,16 +210,24 @@ const TourDetail = () => {
               </div>
 
               {/* Actions Row */}
-              <div className="flex items-center gap-3">
-                {tour.booking_url && (
-                  <Button asChild className="flex-1 sm:flex-none bg-accent hover:bg-accent/90 text-accent-foreground font-bold">
-                    <a href={tour.booking_url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Book Now
-                    </a>
-                  </Button>
-                )}
-                <FavoriteButton entityId={tour.id} type="tour" />
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-3">
+                  {tour.booking_url && (
+                    <Button asChild className="flex-1 sm:flex-none bg-accent hover:bg-accent/90 text-accent-foreground font-bold">
+                      <a href={tour.booking_url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Book Now
+                      </a>
+                    </Button>
+                  )}
+                  <FavoriteButton entityId={tour.id} type="tour" />
+                </div>
+                
+                <SocialShareButtons 
+                  url={`https://budquest.guide/tours/${slug}`}
+                  title={tour.name}
+                  description={tour.description || `Experience ${tour.name} - a unique cannabis-friendly tour.`}
+                />
               </div>
             </header>
 
