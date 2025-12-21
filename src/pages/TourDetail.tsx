@@ -219,8 +219,41 @@ const TourDetail = () => {
             {/* Main Content Grid */}
             <div className="space-y-4 sm:space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
 
-              {/* Location Card - Sidebar on desktop */}
-              <div className="lg:col-span-1 lg:order-last">
+              {/* Tour Info & Location - Sidebar on desktop */}
+              <div className="lg:col-span-1 lg:order-last space-y-4 sm:space-y-6">
+                {/* Quick Info Card */}
+                {(tour.duration || tour.price_range) && (
+                  <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                    <CardHeader className="p-3 sm:p-4 pb-2">
+                      <CardTitle className="text-sm sm:text-lg font-bold text-accent">Tour Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3 sm:p-4 pt-0 space-y-4">
+                      {tour.duration && (
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                            <Clock className="w-4 h-4 text-accent" />
+                          </div>
+                          <div>
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Duration</p>
+                            <p className="text-sm font-semibold">{tour.duration}</p>
+                          </div>
+                        </div>
+                      )}
+                      {tour.price_range && (
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                            <DollarSign className="w-4 h-4 text-accent" />
+                          </div>
+                          <div>
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Price Range</p>
+                            <p className="text-sm font-semibold">{tour.price_range}</p>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
+
                 <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
                   <CardHeader className="p-3 sm:p-4 pb-2">
                     <CardTitle className="text-sm sm:text-lg font-bold text-accent">Location</CardTitle>
