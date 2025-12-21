@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { DispensaryMap } from "@/components/DispensaryMap";
 import { TourReviewsSection } from "@/components/TourReviewsSection";
-import { TourImageUploader } from "@/components/TourImageUploader";
+
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { SocialShareButtons } from "@/components/SocialShareButtons";
 
@@ -49,21 +49,9 @@ interface Tour {
   city_id: string | null;
 }
 
-interface NearbyDispensary {
-  id: string;
-  name: string;
-  slug: string;
-  city: string;
-  state: string;
-  address: string;
-  rating: number | null;
-  image: string | null;
-}
-
 const TourDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const [tour, setTour] = useState<Tour | null>(null);
-  const [nearbyDispensaries, setNearbyDispensaries] = useState<NearbyDispensary[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -81,17 +69,6 @@ const TourDetail = () => {
 
         if (!error && data) {
           setTour(data);
-
-          // Fetch nearby dispensaries (based on city or general Colorado for now)
-          const { data: dispensaries } = await supabase
-            .from('dispensaries')
-            .select('id, name, slug, city, state, address, rating, image')
-            .eq('state', 'Colorado')
-            .limit(4);
-
-          if (dispensaries) {
-            setNearbyDispensaries(dispensaries);
-          }
         } else {
           setNotFound(true);
         }
@@ -222,8 +199,8 @@ const TourDetail = () => {
                   )}
                   <FavoriteButton entityId={tour.id} type="tour" />
                 </div>
-                
-                <SocialShareButtons 
+
+                <SocialShareButtons
                   url={`https://budquest.guide/tours/${slug}`}
                   title={tour.name}
                   description={tour.description || `Experience ${tour.name} - a unique cannabis-friendly tour.`}
@@ -355,61 +332,8 @@ const TourDetail = () => {
                   </Card>
                 )}
 
-                {/* Image Uploader */}
-                <TourImageUploader
-                  tourId={tour.id}
-                  currentImages={tour.images || []}
-                  onImagesUpdate={(newImages) => setTour({ ...tour, images: newImages })}
-                />
-
                 {/* Reviews Section */}
                 <TourReviewsSection tourId={tour.id} />
-
-                {/* Nearby Dispensaries */}
-                {nearbyDispensaries.length > 0 && (
-                  <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-                    <CardHeader className="p-3 sm:p-4 pb-2">
-                      <CardTitle className="text-sm sm:text-lg font-bold text-accent">
-                        Nearby Dispensaries
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-3 sm:p-4 pt-0">
-                      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-                        {nearbyDispensaries.map((dispensary) => (
-                          <Link
-                            key={dispensary.id}
-                            to={`/dispensary/${dispensary.slug}`}
-                            className="flex gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors border border-border/30"
-                          >
-                            <img
-                              src={dispensary.image || '/dest-colorado.png'}
-                              alt={dispensary.name}
-                              className="w-16 h-16 rounded-md object-cover flex-shrink-0"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.onerror = null;
-                                target.src = '/dest-colorado.png';
-                              }}
-                            />
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-sm text-foreground truncate">{dispensary.name}</h4>
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
-                                <MapPin className="w-3 h-3" />
-                                <span className="truncate">{dispensary.city}, {dispensary.state}</span>
-                              </div>
-                              {dispensary.rating && (
-                                <div className="flex items-center gap-1 mt-1">
-                                  <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                                  <span className="text-xs font-medium text-yellow-400">{dispensary.rating}</span>
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
               </div>
             </div>
           </div>
