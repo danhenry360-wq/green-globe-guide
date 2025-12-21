@@ -10,6 +10,36 @@ export interface FavoriteItem {
     hotel_id: string | null;
     tour_id: string | null;
     created_at: string;
+    dispensaries?: {
+        id: string;
+        name: string;
+        slug: string;
+        image: string | null;
+        city: string;
+        state: string;
+        rating: number | null;
+    } | null;
+    hotels?: {
+        id: string;
+        name: string;
+        slug: string;
+        images: string[] | null;
+        rating: number | null;
+        cities?: {
+            name: string;
+            states?: {
+                name: string;
+            } | null;
+        } | null;
+    } | null;
+    tours?: {
+        id: string;
+        name: string;
+        slug: string;
+        images: string[] | null;
+        address: string | null;
+        rating: number | null;
+    } | null;
 }
 
 export const useFavorites = () => {
@@ -24,7 +54,12 @@ export const useFavorites = () => {
             
             const { data, error } = await supabase
                 .from('favorites')
-                .select('*')
+                .select(`
+                    *,
+                    dispensaries(id, name, slug, image, city, state, rating),
+                    hotels(id, name, slug, images, rating, cities(name, states(name))),
+                    tours(id, name, slug, images, address, rating)
+                `)
                 .eq('user_id', user.id);
 
             if (error) throw error;

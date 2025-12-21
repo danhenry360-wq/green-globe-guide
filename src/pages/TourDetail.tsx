@@ -14,6 +14,7 @@ import {
 import { DispensaryMap } from "@/components/DispensaryMap";
 import { TourReviewsSection } from "@/components/TourReviewsSection";
 import { TourImageUploader } from "@/components/TourImageUploader";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 // Mock tour images for fallback
 const MOCK_TOUR_IMAGES: Record<string, string[]> = {
@@ -217,6 +218,7 @@ const TourDetail = () => {
                     </a>
                   </Button>
                 )}
+                <FavoriteButton entityId={tour.id} type="tour" />
               </div>
             </header>
 
