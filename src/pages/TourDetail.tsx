@@ -197,6 +197,14 @@ const TourDetail = () => {
                       </a>
                     </Button>
                   )}
+                  {tour.website && (
+                    <Button asChild variant="outline" className="flex-1 sm:flex-none border-accent text-accent hover:bg-accent hover:text-white">
+                      <a href={tour.website} target="_blank" rel="noopener noreferrer">
+                        <Globe className="w-4 h-4 mr-2" />
+                        Visit Website
+                      </a>
+                    </Button>
+                  )}
                   <FavoriteButton entityId={tour.id} type="tour" />
                 </div>
 
