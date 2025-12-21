@@ -65,9 +65,28 @@
   </url>
   <url>
     <loc>https://budquest.guide/tours</loc>
-    <lastmod>2025-12-18</lastmod>
+    <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <!-- Individual Tours -->
+  <url>
+    <loc>https://budquest.guide/tours/BEYOND-light-Show-%26-Meditation</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/tours/Cultivating-Spirits</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://budquest.guide/tours/Seed-%26-Smith</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://budquest.guide/world</loc>
