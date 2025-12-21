@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
@@ -64,7 +64,7 @@ const BoulderGuide = () => {
         .ilike('city', '%Boulder%') // Catches "Boulder", "boulder", "South Boulder", etc.
         .order('rating', { ascending: false })
         .limit(6); // Increased limit to fill grid
-      
+
       if (dispError) {
         console.error("Error fetching dispensaries:", dispError);
       } else if (dispData) {
@@ -79,13 +79,13 @@ const BoulderGuide = () => {
         .ilike('address', '%Boulder%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalError) {
         console.error("Error fetching rentals:", rentalError);
       } else if (rentalData) {
         setRentals(rentalData);
       }
-      
+
       setLoading(false);
     };
 
@@ -96,12 +96,12 @@ const BoulderGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'boulder-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -114,7 +114,7 @@ const BoulderGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -213,7 +213,7 @@ const BoulderGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "65-88°F",
@@ -328,38 +328,38 @@ const BoulderGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Downtown/Pearl Street", 
+    {
+      name: "Downtown/Pearl Street",
       desc: "Heart of Boulder with shops, restaurants, and easy dispensary access. Most walkable area.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "The Hill", 
+    {
+      name: "The Hill",
       desc: "College neighborhood near CU. Young, energetic vibe with affordable eats and cannabis culture.",
       safety: "safe",
       walkable: true
     },
-    { 
-      name: "North Boulder", 
+    {
+      name: "North Boulder",
       desc: "Quieter residential area with great restaurants on North Broadway. Local feel.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "East Boulder", 
+    {
+      name: "East Boulder",
       desc: "More suburban with some dispensaries and hotels. Good for those with cars.",
       safety: "safe",
       walkable: false
     },
-    { 
-      name: "Gunbarrel", 
+    {
+      name: "Gunbarrel",
       desc: "Suburb northeast of Boulder. Some 420-friendly accommodations available.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "South Boulder", 
+    {
+      name: "South Boulder",
       desc: "Near Chautauqua Park and the Flatirons. Great for outdoor enthusiasts.",
       safety: "very-safe",
       walkable: true
@@ -375,31 +375,31 @@ const BoulderGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Boulder Cannabis Travel Guide 2025 | Dispensaries, 420 Hotels & Outdoor Adventures | BudQuest</title>
-        <meta name="description" content="Plan your Boulder cannabis trip with our 2025 guide. Find dispensaries, 420-friendly hotels, hiking trails, and marijuana laws for Colorado's outdoor paradise." />
+        <title>Boulder Cannabis Guide 2025: Dispensaries & 420 Hotels</title>
+        <meta name="description" content="Maximize your Boulder trip! The total 2025 guide to top dispensaries, 420-friendly stays, and social consumption rules for Colorado's outdoor paradise." />
         <meta name="keywords" content="Boulder cannabis, Boulder dispensaries, 420-friendly hotels Boulder, Boulder marijuana laws 2025, Boulder weed tourism, Colorado cannabis Boulder, Flatirons cannabis, Boulder 420 travel" />
         <link rel="canonical" href="https://budquest.guide/boulder" />
-        
+
         <meta property="og:title" content="Boulder Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Your complete guide to cannabis in Boulder. Find dispensaries, 420-friendly stays, hiking trails, and travel tips." />
         <meta property="og:url" content="https://budquest.guide/boulder" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Boulder Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Complete Boulder cannabis guide with dispensaries, hotels, and outdoor activities." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Boulder" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -419,13 +419,13 @@ const BoulderGuide = () => {
           <div className="absolute inset-0">
             <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-gold/10" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
-            <img 
-              src="/dest-colorado-ski.jpg" 
-              alt="Boulder Flatirons" 
+            <img
+              src="/dest-colorado-ski.jpg"
+              alt="Boulder Flatirons"
               className="w-full h-full object-cover mix-blend-overlay opacity-50"
             />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -436,13 +436,13 @@ const BoulderGuide = () => {
                 <Mountain className="w-4 h-4 mr-2" />
                 The Adventure Capital
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Boulder Cannabis Travel Guide 2025
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Where stunning mountain scenery meets progressive cannabis culture. Boulder offers the perfect blend of outdoor adventure, college town energy, and world-class dispensaries.
               </p>
@@ -509,8 +509,8 @@ const BoulderGuide = () => {
             <Tabs defaultValue="summer" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -519,7 +519,7 @@ const BoulderGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -638,7 +638,7 @@ const BoulderGuide = () => {
                 Boulder follows Colorado state law with some local considerations for outdoor enthusiasts.
               </p>
             </motion.div>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
@@ -649,7 +649,7 @@ const BoulderGuide = () => {
                 </div>
                 <p className="text-sm text-muted-foreground">Adults 21+ can purchase and possess up to 1 oz of cannabis from licensed dispensaries with valid government ID.</p>
               </Card>
-              
+
               <Card className="p-6 bg-card/50 border-border/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-full bg-amber-500/20">
@@ -720,7 +720,7 @@ const BoulderGuide = () => {
                 <div>
                   <h3 className="font-bold text-lg text-amber-400 mb-2">Outdoor Recreation Warning</h3>
                   <p className="text-muted-foreground mb-3">
-                    Boulder's outdoor spaces are <strong className="text-foreground">public land</strong> where cannabis consumption is strictly prohibited - 
+                    Boulder's outdoor spaces are <strong className="text-foreground">public land</strong> where cannabis consumption is strictly prohibited -
                     this includes all hiking trails, trailheads, parks, and open spaces.
                   </p>
                   <ul className="text-sm text-muted-foreground space-y-1">
@@ -795,12 +795,11 @@ const BoulderGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        'border-accent/50 text-accent'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          'border-accent/50 text-accent'
+                        }`}
                     >
                       {hood.walkable ? "🚶 Walkable" : "🚗 Car needed"}
                     </Badge>
@@ -825,7 +824,7 @@ const BoulderGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -836,8 +835,8 @@ const BoulderGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -887,7 +886,7 @@ const BoulderGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -898,8 +897,8 @@ const BoulderGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-california.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-california.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -954,7 +953,7 @@ const BoulderGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with hiking trails, dispensary map, local tips, and outdoor adventure recommendations.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -969,7 +968,7 @@ const BoulderGuide = () => {
                   <Mail className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-              
+
               <p className="text-xs text-muted-foreground">
                 ✓ Free • ✓ No spam • ✓ Unsubscribe anytime
               </p>
@@ -1031,7 +1030,7 @@ const BoulderGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

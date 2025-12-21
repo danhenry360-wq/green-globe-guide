@@ -56,8 +56,8 @@ const BlogColoradoConsumption = () => {
     return (
         <>
             <Helmet>
-                <title>Where Can You Legally Smoke Weed in Colorado? (2025 Guide)</title>
-                <meta name="description" content="Detailed guide on legal cannabis consumption in Colorado. Learn about private property rules, 420-friendly rentals, consumption lounges, and where strict bans apply." />
+                <title>Where to Legally Smoke Weed in Colorado (2025 Rules)</title>
+                <meta name="description" content="Avoid $999 fines! The definitive guide to where you can (and can't) legally consume cannabis in Colorado. Private vs. public consumption rules explained." />
                 <meta name="keywords" content="where can you smoke weed in colorado, colorado consumption laws, 420 friendly places colorado, cannabis lounges denver" />
                 <link rel="canonical" href="https://budquest.guide/blog/where-can-you-smoke-weed-in-colorado-2025" />
                 <meta property="og:title" content="Where Can You Legally Smoke Weed in Colorado?" />

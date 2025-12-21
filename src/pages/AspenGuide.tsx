@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
@@ -63,7 +63,7 @@ const AspenGuide = () => {
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
         .limit(4);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch only Aspen rentals
@@ -74,7 +74,7 @@ const AspenGuide = () => {
         .ilike('address', '%Aspen%')
         .order('rating', { ascending: false })
         .limit(4);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -86,12 +86,12 @@ const AspenGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'aspen-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -104,7 +104,7 @@ const AspenGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -318,38 +318,38 @@ const AspenGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Downtown/Core", 
+    {
+      name: "Downtown/Core",
       desc: "Heart of Aspen with luxury hotels, restaurants, and dispensaries. Most walkable area.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Aspen Mountain Base", 
+    {
+      name: "Aspen Mountain Base",
       desc: "Ski-in/ski-out lodging at the base of Ajax. Convenient for winter visitors.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "West End", 
+    {
+      name: "West End",
       desc: "Quiet residential area with historic homes. Walking distance to downtown.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Aspen Highlands", 
+    {
+      name: "Aspen Highlands",
       desc: "Near Highlands ski area. More affordable lodging options.",
       safety: "very-safe",
       walkable: false
     },
-    { 
-      name: "Snowmass Village", 
+    {
+      name: "Snowmass Village",
       desc: "15 minutes away with its own ski area. More family-friendly, good dispensary access.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Basalt/El Jebel", 
+    {
+      name: "Basalt/El Jebel",
       desc: "30 minutes downvalley. Most affordable area with dispensary access.",
       safety: "very-safe",
       walkable: false
@@ -365,31 +365,31 @@ const AspenGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Aspen Cannabis Travel Guide 2025 | Dispensaries, 420 Hotels & Ski Resorts | BudQuest</title>
-        <meta name="description" content="Plan your Aspen cannabis trip with our 2025 guide. Find dispensaries, 420-friendly hotels, ski resort tips, and marijuana laws for Colorado's luxury mountain destination." />
+        <title>Aspen Cannabis Guide 2025: Luxury Stays & Ski Tips</title>
+        <meta name="description" content="Elevate your Aspen ski trip! Best luxury dispensaries, 420-friendly lodges, and high-altitude consumption tips for Colorado's premier resort." />
         <meta name="keywords" content="Aspen cannabis, Aspen dispensaries, 420-friendly hotels Aspen, Aspen marijuana laws 2025, Aspen weed tourism, Colorado cannabis Aspen, ski and cannabis Aspen, Aspen 420 travel" />
         <link rel="canonical" href="https://budquest.guide/aspen" />
-        
+
         <meta property="og:title" content="Aspen Cannabis Travel Guide 2025 | BudQuest" />
         <meta property="og:description" content="Your complete guide to cannabis in Aspen. Find dispensaries, 420-friendly stays, ski tips, and travel advice." />
         <meta property="og:url" content="https://budquest.guide/aspen" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://budquest.guide/dest-colorado.jpg" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Aspen Cannabis Travel Guide 2025 | BudQuest" />
         <meta name="twitter:description" content="Complete Aspen cannabis guide with dispensaries, hotels, and ski resort tips." />
-        
+
         <meta name="robots" content="index, follow" />
         <meta name="geo.region" content="US-CO" />
         <meta name="geo.placename" content="Aspen" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqStructuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -410,7 +410,7 @@ const AspenGuide = () => {
             <div className="w-full h-full bg-gradient-to-br from-accent/20 via-background to-gold/10" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -421,13 +421,13 @@ const AspenGuide = () => {
                 <Sparkles className="w-4 h-4 mr-2" />
                 Luxury Cannabis Destination
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Aspen Cannabis Travel Guide 2025
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Where world-class skiing meets premium cannabis culture. Aspen offers the ultimate luxury cannabis travel experience with high-end dispensaries, upscale accommodations, and stunning Rocky Mountain scenery.
               </p>
@@ -532,7 +532,7 @@ const AspenGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map(season => (
                 <TabsContent key={season.id} value={season.id}>
                   <motion.div
@@ -612,8 +612,8 @@ const AspenGuide = () => {
                   <Link to={`/dispensary/${dispensary.slug}`}>
                     <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={dispensary.image || dispensary.images?.[0] || "/dispensaries/native-roots-denver.png"} 
+                        <img
+                          src={dispensary.image || dispensary.images?.[0] || "/dispensaries/native-roots-denver.png"}
                           alt={`${dispensary.name} dispensary in Aspen`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -692,8 +692,8 @@ const AspenGuide = () => {
                   <Link to={`/hotels/${rental.slug}`}>
                     <Card className="bg-card/50 border-border/30 overflow-hidden hover:border-accent/50 transition-all group h-full">
                       <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src={rental.images?.[0] || "/rentals/420-loft-glenwood-springs.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/rentals/420-loft-glenwood-springs.jpg"}
                           alt={`${rental.name} 420-friendly accommodation in Aspen`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -885,8 +885,8 @@ const AspenGuide = () => {
                     <div>
                       <h4 className="text-lg font-bold text-foreground mb-2">Penalties for Violations</h4>
                       <p className="text-muted-foreground">
-                        Public consumption fines start at $100+ in Aspen. Consumption on ski slopes can result in loss of ski pass, 
-                        ejection from the mountain, and criminal charges. DUI laws apply to cannabis - never drive impaired. 
+                        Public consumption fines start at $100+ in Aspen. Consumption on ski slopes can result in loss of ski pass,
+                        ejection from the mountain, and criminal charges. DUI laws apply to cannabis - never drive impaired.
                         Aspen police actively enforce consumption laws, especially in tourist areas.
                       </p>
                     </div>
@@ -951,8 +951,8 @@ const AspenGuide = () => {
                             <p className="text-sm text-muted-foreground">{hood.desc}</p>
                           </div>
                           <div className="flex flex-col items-end gap-1">
-                            <Badge 
-                              variant="outline" 
+                            <Badge
+                              variant="outline"
                               className={hood.safety === 'very-safe' ? 'text-accent border-accent/30' : 'text-yellow-400 border-yellow-400/30'}
                             >
                               {hood.safety === 'very-safe' ? 'Very Safe' : 'Safe'}
@@ -986,7 +986,7 @@ const AspenGuide = () => {
                 <Download className="w-4 h-4" />
                 <span className="text-sm font-medium">Free Download</span>
               </div>
-              
+
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Get the Aspen Cannabis Travel Guide
@@ -1005,8 +1005,8 @@ const AspenGuide = () => {
                   required
                   className="flex-1 bg-card/50 border-border/30"
                 />
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={submitting}
                   className="bg-accent hover:bg-accent/90 text-accent-foreground"
                 >

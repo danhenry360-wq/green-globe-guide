@@ -73,8 +73,8 @@ const AltitudeGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Cannabis & Altitude Guide | Colorado | BudQuest</title>
-        <meta name="description" content="How altitude affects cannabis in Colorado. Dosing adjustments, safety tips, and what to expect when consuming at elevation in Denver, Aspen, and mountain towns." />
+        <title>Cannabis & Altitude: How to Stay Safe in Colorado</title>
+        <meta name="description" content="THC hits harder at 5,000+ feet! Expert tips on dosing, hydration, and safety for your Colorado cannabis trip. Don't ruin your vacation—read this first." />
         <meta name="keywords" content="cannabis altitude effects, colorado elevation cannabis, denver altitude weed, mountain cannabis dosing" />
         <link rel="canonical" href="https://budquest.guide/colorado/altitude-guide" />
       </Helmet>
@@ -189,7 +189,7 @@ const AltitudeGuide = () => {
                       <CardContent className="p-4 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <Mountain className={`w-6 h-6 ${item.level === 'moderate' ? 'text-accent' :
-                              item.level === 'high' ? 'text-orange-500' : 'text-destructive'
+                            item.level === 'high' ? 'text-orange-500' : 'text-destructive'
                             }`} />
                           <div>
                             <p className="font-bold text-foreground">{item.city}</p>

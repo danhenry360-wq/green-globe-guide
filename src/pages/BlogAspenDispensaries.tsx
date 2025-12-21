@@ -101,8 +101,8 @@ const BlogAspenDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>Best Cannabis Dispensaries in Aspen: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Discover Aspen's top cannabis dispensaries. Find premium flower, concentrates, and edibles for your luxury Colorado mountain getaway." />
+        <title>Top 5 Aspen Dispensaries: Premium Cannabis Guide</title>
+        <meta name="description" content="Where to find the best craft flower and concentrates in Aspen. Our 2025 guide to high-end cannabis shops for your luxury mountain getaway." />
         <meta name="keywords" content="Aspen dispensaries, cannabis Aspen, weed shops Aspen, luxury cannabis Colorado, Aspen 420" />
         <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-aspen" />
         <meta property="og:title" content="Best Cannabis Dispensaries in Aspen: Complete Guide 2025" />

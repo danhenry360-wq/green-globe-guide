@@ -2,8 +2,8 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, Star, Clock, Calendar, User, ChevronRight, 
+import {
+  MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Cannabis, Leaf, DollarSign, Car, CreditCard,
   ArrowRight, ExternalLink, AlertTriangle
 } from "lucide-react";
@@ -35,7 +35,7 @@ const BlogBoulderDispensaries = () => {
         .select('*')
         .ilike('city', '%Boulder%')
         .order('rating', { ascending: false });
-      
+
       console.log('Boulder dispensaries fetch:', { data, error });
       if (error) console.error('Boulder dispensaries error:', error);
       if (data) setDispensaries(data);
@@ -139,8 +139,8 @@ const BlogBoulderDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>Cannabis Dispensaries in Boulder: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Discover Boulder's best cannabis dispensaries. Complete guide to top shops, craft products, shopping tips, and local laws. Plan your Boulder cannabis experience." />
+        <title>10 Best Boulder Dispensaries 2025: Verified Guide</title>
+        <meta name="description" content="Don't guess on quality. See the best cannabis shops in Boulder for 2025. Expert reviews on craft flower, top deals, and local favorites for tourists." />
         <meta name="keywords" content="Boulder dispensaries, cannabis Boulder, weed shops Boulder, marijuana Boulder Colorado, 420 Boulder" />
         <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-boulder" />
         <meta property="og:title" content="Cannabis Dispensaries in Boulder: Complete Guide 2025" />
@@ -162,9 +162,9 @@ const BlogBoulderDispensaries = () => {
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
         <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img 
-            src="/blog-boulder-dispensaries.jpg" 
-            alt="Cannabis dispensary in Boulder, Colorado with Flatirons view" 
+          <img
+            src="/blog-boulder-dispensaries.jpg"
+            alt="Cannabis dispensary in Boulder, Colorado with Flatirons view"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -276,7 +276,7 @@ const BlogBoulderDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Boulder Cannabis Dispensaries</h2>
-              
+
               {loading ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -321,11 +321,11 @@ const BlogBoulderDispensaries = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {disp.description && (
                               <p className="text-muted-foreground mb-4 line-clamp-2">{disp.description}</p>
                             )}
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                               {disp.status?.toLowerCase() === 'licensed' && (
                                 <>
@@ -337,8 +337,8 @@ const BlogBoulderDispensaries = () => {
                               )}
                               <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Recreational</span>
                             </div>
-                            
-                            <Link 
+
+                            <Link
                               to={`/dispensary/${disp.slug}`}
                               className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm"
                             >
@@ -461,7 +461,7 @@ const BlogBoulderDispensaries = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Regulations</h2>
-              
+
               <div className="space-y-4">
                 <Card className="bg-card/60 border-accent/20 p-6">
                   <div className="flex items-start gap-4">
@@ -597,7 +597,7 @@ const BlogBoulderDispensaries = () => {
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Remember to consume responsibly, respect local laws, and enjoy everything this mountain town has to offer. The combination of world-class outdoor recreation and legal cannabis makes Boulder one of the best cannabis tourism destinations in America.
               </p>
-              <Link 
+              <Link
                 to="/boulder"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
               >

@@ -101,8 +101,8 @@ const BlogColoradoSpringsDispensaries = () => {
   return (
     <>
       <Helmet>
-        <title>Cannabis Dispensaries in Colorado Springs: Complete Guide 2025 | BudQuest</title>
-        <meta name="description" content="Your essential guide to cannabis dispensaries in Colorado Springs. Find top shops, products, and important information for recreational and medical users." />
+        <title>Best Colorado Springs Dispensaries 2025: Local Guide</title>
+        <meta name="description" content="Find the best deals on flower and concentrates in Colorado Springs. Expert guide to top-rated medical and recreational shops near Pikes Peak." />
         <meta name="keywords" content="Colorado Springs dispensaries, recreational weed Colorado Springs, medical cannabis, weed shops Colorado Springs" />
         <link rel="canonical" href="https://budquest.guide/blog/cannabis-dispensaries-colorado-springs" />
         <meta property="og:title" content="Cannabis Dispensaries in Colorado Springs: Complete Guide 2025" />

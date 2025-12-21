@@ -145,8 +145,8 @@ const ColoradoSpringsGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Colorado Springs Cannabis Travel Guide 2025 | BudQuest</title>
-        <meta name="description" content="Complete guide to cannabis in Colorado Springs. Find 420-friendly hotels, top dispensaries, consumption rules, and insider tips for Pikes Peak region." />
+        <title>Colorado Springs 420 Guide 2025: Hotels & Tips</title>
+        <meta name="description" content="Explore Pikes Peak safely! The complete 2025 guide to Colorado Springs dispensaries, 420-friendly hotels, and local marijuana consumption laws." />
         <meta name="keywords" content="Colorado Springs cannabis, marijuana Colorado Springs, 420 friendly hotels Colorado Springs, dispensaries Colorado Springs, Pikes Peak weed" />
         <link rel="canonical" href="https://budquest.guide/colorado-springs" />
         <meta property="og:title" content="Colorado Springs Cannabis Travel Guide 2025" />
