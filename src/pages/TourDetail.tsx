@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Star, MapPin, CheckCircle, Clock, Loader2, Globe,
+  Star, MapPin, CheckCircle, Clock, Loader2, Globe, Info,
   ChevronLeft, ChevronRight, Sparkles, DollarSign, ExternalLink
 } from "lucide-react";
 import { DispensaryMap } from "@/components/DispensaryMap";
@@ -136,7 +136,7 @@ const TourDetail = () => {
 
         <main className="pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6">
           <div className="container mx-auto max-w-5xl">
-            {/* Hero Header */}
+            {/* Hero Header - Mobile First */}
             <header className="mb-5 sm:mb-8">
               <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2 sm:mb-3 leading-tight">
                 {tour.name}
@@ -150,110 +150,77 @@ const TourDetail = () => {
               )}
 
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                {tour.rating && (
-                  <>
-                    <div className="flex gap-0.5">{renderRating(tour.rating)}</div>
-                    <span className="text-base sm:text-lg font-bold text-yellow-400">{tour.rating}</span>
-                    <span className="text-xs sm:text-sm text-muted-foreground">({tour.review_count || 0} reviews)</span>
-                  </>
+                <div className="flex gap-0.5">{renderRating(tour.rating || 0)}</div>
+                <span className="text-base sm:text-lg font-bold text-yellow-400">{tour.rating || 0}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground">({tour.review_count || 0} reviews)</span>
+                {tour.is_verified && (
+                  <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold px-2 py-0.5 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    BudQuest Verified
+                  </Badge>
                 )}
                 {tour.is_420_friendly && (
-                  <Badge className="bg-accent/20 text-accent border border-accent/40 text-[10px] sm:text-xs font-semibold px-2 py-0.5 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
+                  <Badge className="bg-green-600 hover:bg-green-700 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5">
                     420 Friendly
                   </Badge>
                 )}
-                {tour.is_verified && (
-                  <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 text-[10px] sm:text-xs font-semibold px-2 py-0.5 flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3" />
-                    Verified
-                  </Badge>
-                )}
               </div>
 
-              <div className="flex flex-wrap gap-3 text-sm text-muted-foreground mb-3 sm:mb-4">
-                {tour.duration && (
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4 text-accent" />
-                    <span>{tour.duration}</span>
-                  </div>
-                )}
-                {tour.price_range && (
-                  <div className="flex items-center gap-1.5">
-                    <DollarSign className="w-4 h-4 text-accent" />
-                    <span>{tour.price_range}</span>
-                  </div>
-                )}
-              </div>
+              {(tour.duration || tour.price_range) && (
+                <div className="flex flex-wrap gap-3 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+                  {tour.duration && (
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                      <span>{tour.duration}</span>
+                    </div>
+                  )}
+                  {tour.price_range && (
+                    <div className="flex items-center gap-1.5">
+                      <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0" />
+                      <span>{tour.price_range}</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Actions Row */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                <div className="flex items-center gap-3">
-                  {tour.booking_url && (
-                    <Button asChild className="flex-1 sm:flex-none bg-accent hover:bg-accent/90 text-accent-foreground font-bold">
-                      <a href={tour.booking_url} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Book Now
-                      </a>
-                    </Button>
-                  )}
-                  {tour.website && (
-                    <Button asChild variant="outline" className="flex-1 sm:flex-none border-accent text-accent hover:bg-accent hover:text-white">
-                      <a href={tour.website} target="_blank" rel="noopener noreferrer">
-                        <Globe className="w-4 h-4 mr-2" />
-                        Visit Website
-                      </a>
-                    </Button>
-                  )}
-                  <FavoriteButton entityId={tour.id} type="tour" />
-                </div>
-
-                <SocialShareButtons
-                  url={`https://budquest.guide/tours/${slug}`}
-                  title={tour.name}
-                  description={tour.description || `Experience ${tour.name} - a unique cannabis-friendly tour.`}
+              <div className="flex items-center gap-3">
+                {tour.booking_url && (
+                  <a
+                    href={tour.booking_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
+                  >
+                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
+                    Book Now
+                  </a>
+                )}
+                {tour.website && (
+                  <a
+                    href={tour.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 border border-accent/30 bg-card/50 hover:bg-accent/10 text-accent text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all text-center"
+                  >
+                    <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Visit Website
+                  </a>
+                )}
+                <FavoriteButton
+                  entityId={tour.id}
+                  type="tour"
+                  variant="outline"
+                  className="h-[42px] sm:h-[48px] px-4 rounded-lg sm:rounded-xl border-accent/30 text-accent hover:bg-accent/10"
                 />
               </div>
             </header>
 
-            {/* Main Content Grid */}
+            {/* Mobile-First Stacked Layout */}
             <div className="space-y-4 sm:space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
 
-              {/* Tour Info & Location - Sidebar on desktop */}
-              <div className="lg:col-span-1 lg:order-last space-y-4 sm:space-y-6">
-                {/* Quick Info Card */}
-                {(tour.duration || tour.price_range) && (
-                  <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
-                    <CardHeader className="p-3 sm:p-4 pb-2">
-                      <CardTitle className="text-sm sm:text-lg font-bold text-accent">Tour Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-3 sm:p-4 pt-0 space-y-4">
-                      {tour.duration && (
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                            <Clock className="w-4 h-4 text-accent" />
-                          </div>
-                          <div>
-                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Duration</p>
-                            <p className="text-sm font-semibold">{tour.duration}</p>
-                          </div>
-                        </div>
-                      )}
-                      {tour.price_range && (
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                            <DollarSign className="w-4 h-4 text-accent" />
-                          </div>
-                          <div>
-                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Price Range</p>
-                            <p className="text-sm font-semibold">{tour.price_range}</p>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-
+              {/* Location Card - Sidebar on desktop, first on mobile */}
+              <div className="lg:col-span-1 lg:order-last">
                 <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
                   <CardHeader className="p-3 sm:p-4 pb-2">
                     <CardTitle className="text-sm sm:text-lg font-bold text-accent">Location</CardTitle>
@@ -266,11 +233,9 @@ const TourDetail = () => {
                       name={tour.name}
                       className="h-40 sm:h-48 lg:h-56"
                     />
-                    {tour.address && (
-                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-2">
-                        {tour.address}
-                      </p>
-                    )}
+                    <p className="text-[11px] sm:text-xs text-muted-foreground mt-2">
+                      {tour.address}
+                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -284,11 +249,11 @@ const TourDetail = () => {
                     <img
                       src={allImages[currentImageIndex]}
                       alt={`${tour.name} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-48 sm:h-64 lg:h-80 object-cover"
+                      className="w-full h-40 sm:h-56 lg:h-72 object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.onerror = null;
-                        target.src = "/tours/beyond-light-show-denver.jpg";
+                        target.src = "/dest-california.jpg";
                       }}
                     />
 
@@ -331,11 +296,6 @@ const TourDetail = () => {
                               src={img}
                               alt={`Thumbnail ${idx + 1}`}
                               className="w-full h-full object-cover"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.onerror = null;
-                                target.src = "/tours/beyond-light-show-denver.jpg";
-                              }}
                             />
                           </button>
                         ))}
@@ -344,7 +304,7 @@ const TourDetail = () => {
                   </div>
 
                   <CardContent className="p-3 sm:p-5">
-                    <h2 className="text-base sm:text-xl font-bold text-foreground mb-1.5 sm:mb-2">About This Tour</h2>
+                    <h2 className="text-base sm:text-xl font-bold text-foreground mb-1.5 sm:mb-2">About {tour.name}</h2>
                     <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                       {tour.description || 'Experience a unique cannabis-friendly tour that combines education, entertainment, and memorable moments.'}
                     </p>
@@ -360,11 +320,11 @@ const TourDetail = () => {
                         Tour Highlights
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 sm:p-4 pt-0">
-                      <ul className="space-y-2">
+                    <CardContent className="p-3 sm:p-4 pt-0 text-xs sm:text-sm text-muted-foreground">
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
                         {tour.highlights.map((highlight, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
-                            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <li key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
                             <span>{highlight}</span>
                           </li>
                         ))}
@@ -372,6 +332,28 @@ const TourDetail = () => {
                     </CardContent>
                   </Card>
                 )}
+
+                {/* Legal Disclaimer Section */}
+                <Card className="rounded-lg sm:rounded-xl shadow-md sm:shadow-lg bg-card/70 backdrop-blur-sm border-accent/20 sm:border-accent/30">
+                  <CardHeader className="p-3 sm:p-4 pb-2">
+                    <CardTitle className="text-sm sm:text-lg font-bold text-accent flex items-center gap-2">
+                      <Info className="w-4 h-4 sm:w-5 sm:h-5" />
+                      Legal Information & Disclaimers
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3 sm:p-4 pt-0 space-y-3">
+                    <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                      <p className="text-[11px] sm:text-xs text-amber-200 leading-relaxed">
+                        <strong>Public Consumption Notice:</strong> In Colorado, cannabis consumption (smoking, vaping, or edibles) is strictly prohibited in all public places. This includes streets, sidewalks, parks, ski resorts, and most federal lands. Please ensure you only consume in private residences or licensed social consumption areas.
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-accent/10 border border-accent/20">
+                      <p className="text-[11px] sm:text-xs text-muted-foreground leading-relaxed">
+                        BudQuest provides travel information and tour listings for recreational purposes. We do not sell cannabis or facilitate illegal transactions. All participants must be 21+ with a valid government-issued ID. Driving under the influence of cannabis is illegal and strictly enforced in Colorado.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Reviews Section */}
                 <TourReviewsSection tourId={tour.id} />
