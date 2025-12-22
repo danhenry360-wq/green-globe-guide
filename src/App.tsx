@@ -99,6 +99,7 @@ import BlogUltimateColoradoGuide from "./pages/BlogUltimateColoradoGuide";
 import BlogGreeleyDispensaries from "./pages/BlogGreeleyDispensaries";
 import BlogColoradoSpringsStays from "./pages/BlogColoradoSpringsStays";
 import BlogBreckenridgeStays from "./pages/BlogBreckenridgeStays";
+import BlogFortCollinsStays from "./pages/BlogFortCollinsStays";
 import BlogColoradoAllInclusive from "./pages/BlogColoradoAllInclusive";
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
@@ -183,6 +184,7 @@ function App() {
               <Route path="/blog/greeley-dispensaries-garden-city-loophole" element={<BlogGreeleyDispensaries />} />
               <Route path="/blog/best-420-friendly-stays-colorado-springs" element={<BlogColoradoSpringsStays />} />
               <Route path="/blog/best-420-friendly-stays-breckenridge" element={<BlogBreckenridgeStays />} />
+              <Route path="/blog/best-420-friendly-stays-fort-collins" element={<BlogFortCollinsStays />} />
               <Route path="/blog/all-inclusive-weed-resorts-colorado" element={<BlogColoradoAllInclusive />} />
               <Route path="/blog/best-420-rentals-breckenridge" element={<BlogBreckenridgeRentals />} />
               <Route path="/blog/:slug" element={<BlogDetail />} />
