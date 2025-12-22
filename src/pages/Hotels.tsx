@@ -747,6 +747,7 @@ const Hotels = () => {
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-4">
                 Discover cannabis-friendly accommodations worldwide.
                 Looking for specific guides? Check out our
+                <Link to="/blog/best-420-friendly-stays-breckenridge" className="text-accent hover:underline mx-1">Breckenridge Stays</Link>,
                 <Link to="/blog/best-420-friendly-stays-colorado-springs" className="text-accent hover:underline mx-1">Colorado Springs Stays</Link>
                 or
                 <Link to="/blog/all-inclusive-weed-resorts-colorado" className="text-accent hover:underline mx-1">All-Inclusive Resorts</Link>.

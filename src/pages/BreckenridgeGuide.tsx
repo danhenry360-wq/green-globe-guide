@@ -11,14 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  MapPin, Star, CheckCircle, 
-  Plane, Home, Cannabis, Shield, 
+import {
+  MapPin, Star, CheckCircle,
+  Plane, Home, Cannabis, Shield,
   ArrowRight, Bed, Store, ChevronRight,
   Building2, AlertCircle, Clock, Car,
   Bus, Bike, MapPinned, Snowflake, Sun, Leaf, Flower2,
   Music, Palette, Beer, TreePine, Mountain, Camera,
-  AlertTriangle, Ban, Mail, Download, 
+  AlertTriangle, Ban, Mail, Download,
   Compass, CableCar, Footprints
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const BreckenridgeGuide = () => {
         .ilike('city', '%Breckenridge%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (dispData) setDispensaries(dispData);
 
       // Fetch hotels/rentals in Breckenridge
@@ -75,7 +75,7 @@ const BreckenridgeGuide = () => {
         .ilike('address', '%Breckenridge%')
         .order('rating', { ascending: false })
         .limit(3);
-      
+
       if (rentalData) setRentals(rentalData);
       setLoading(false);
     };
@@ -87,12 +87,12 @@ const BreckenridgeGuide = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email, source_page: 'breckenridge-guide' });
-      
+
       if (error) {
         if (error.code === '23505') {
           toast.success("You're already subscribed!");
@@ -105,7 +105,7 @@ const BreckenridgeGuide = () => {
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    
+
     setEmail("");
     setSubmitting(false);
   };
@@ -165,7 +165,7 @@ const BreckenridgeGuide = () => {
     },
     {
       id: "summer",
-      name: "Summer", 
+      name: "Summer",
       months: "June - August",
       icon: Sun,
       temp: "45-70°F",
@@ -274,20 +274,20 @@ const BreckenridgeGuide = () => {
   ];
 
   const neighborhoods = [
-    { 
-      name: "Main Street", 
+    {
+      name: "Main Street",
       desc: "The historic center. Walkable to everything except dispensaries.",
       safety: "very-safe",
       walkable: true
     },
-    { 
-      name: "Airport Road", 
+    {
+      name: "Airport Road",
       desc: "Commercial district north of town. Home to almost all dispensaries and breweries.",
       safety: "safe",
       walkable: false
     },
-    { 
-      name: "Peak 8 Base", 
+    {
+      name: "Peak 8 Base",
       desc: "Resort area with ski-in/ski-out condos. Connected to town via Gondola.",
       safety: "very-safe",
       walkable: true
@@ -307,12 +307,12 @@ const BreckenridgeGuide = () => {
         <meta name="description" content="Plan your Breckenridge cannabis trip. Find dispensaries on Airport Road, learn federal ski rules, and book 420-friendly mountain lodging." />
         <meta name="keywords" content="Breckenridge cannabis, Breckenridge dispensaries, Airport Road weed, Breckenridge ski resort cannabis rules, 420 friendly hotels Breckenridge" />
         <link rel="canonical" href="https://budquest.guide/breckenridge" />
-        
+
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
       <Navigation />
-      
+
       <main className="min-h-screen bg-background">
         {/* Breadcrumb */}
         <nav className="container mx-auto px-4 pt-20 pb-4" aria-label="Breadcrumb">
@@ -330,14 +330,14 @@ const BreckenridgeGuide = () => {
         {/* Hero Section */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/dest-colorado-ski.jpg" 
-              alt="Breckenridge Ski Resort" 
+            <img
+              src="/dest-colorado-ski.jpg"
+              alt="Breckenridge Ski Resort"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -348,13 +348,13 @@ const BreckenridgeGuide = () => {
                 <Mountain className="w-4 h-4 mr-2" />
                 The Kingdom of Breck
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Breckenridge Cannabis Guide
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 High-altitude adventure meets historic charm. Explore the "Green Light District" on Airport Road and enjoy the Rockies responsibly.
               </p>
@@ -402,7 +402,7 @@ const BreckenridgeGuide = () => {
         {/* Critical Warning Section - Altitude & Federal Land */}
         <section className="py-10">
           <div className="container mx-auto px-4 max-w-5xl">
-             <Card className="p-6 bg-red-500/10 border-red-500/30">
+            <Card className="p-6 bg-red-500/10 border-red-500/30">
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-red-500/20 flex-shrink-0">
                   <AlertTriangle className="w-8 h-8 text-red-400" />
@@ -451,8 +451,8 @@ const BreckenridgeGuide = () => {
             <Tabs defaultValue="winter" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8 bg-card/50 p-1">
                 {seasons.map((season) => (
-                  <TabsTrigger 
-                    key={season.id} 
+                  <TabsTrigger
+                    key={season.id}
                     value={season.id}
                     className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                   >
@@ -461,7 +461,7 @@ const BreckenridgeGuide = () => {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              
+
               {seasons.map((season) => (
                 <TabsContent key={season.id} value={season.id}>
                   <Card className="bg-card/50 border-border/30 p-6 md:p-8">
@@ -606,12 +606,11 @@ const BreckenridgeGuide = () => {
                 <Card key={hood.name} className="p-4 bg-card/50 border-border/30 hover:border-accent/50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-accent">{hood.name}</h4>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
-                        'border-accent/50 text-accent'
-                      }`}
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${hood.safety === 'very-safe' ? 'border-green-500/50 text-green-400' :
+                          'border-accent/50 text-accent'
+                        }`}
                     >
                       {hood.walkable ? "🚶 Walkable" : "🚗 Car/Bus Needed"}
                     </Badge>
@@ -636,7 +635,7 @@ const BreckenridgeGuide = () => {
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -647,8 +646,8 @@ const BreckenridgeGuide = () => {
                   <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"} 
+                        <img
+                          src={disp.images?.[0] || disp.image || "/dest-california.jpg"}
                           alt={disp.name}
                           className="w-full h-full object-cover"
                         />
@@ -693,11 +692,16 @@ const BreckenridgeGuide = () => {
                   420-Friendly Stays in Breck
                 </span>
               </h2>
-              <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
-                View All <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="flex gap-4 items-center">
+                <Link to="/blog/best-420-friendly-stays-breckenridge" className="text-accent hover:underline text-sm hidden sm:block">
+                  Read Stays Guide
+                </Link>
+                <Link to="/hotels" className="text-accent hover:underline flex items-center gap-1">
+                  View All <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
-            
+
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
@@ -708,8 +712,8 @@ const BreckenridgeGuide = () => {
                   <Link key={rental.id} to={`/hotels/${rental.slug}`}>
                     <Card className="overflow-hidden hover:border-accent/50 transition-all hover:-translate-y-1 bg-card/50">
                       <div className="aspect-video relative">
-                        <img 
-                          src={rental.images?.[0] || "/dest-california.jpg"} 
+                        <img
+                          src={rental.images?.[0] || "/dest-california.jpg"}
                           alt={rental.name}
                           className="w-full h-full object-cover"
                         />
@@ -764,7 +768,7 @@ const BreckenridgeGuide = () => {
               <p className="text-muted-foreground mb-8">
                 Free PDF with dispensary maps, bus schedules, and ski safety tips.
               </p>
-              
+
               <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
                 <Input
                   type="email"
@@ -824,7 +828,7 @@ const BreckenridgeGuide = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

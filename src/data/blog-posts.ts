@@ -55,6 +55,27 @@ export const BLOG_POSTS: BlogPost[] = [
     }
   },
   {
+    id: "best-420-friendly-stays-breckenridge",
+    title: "Best 420-Friendly Stays in Breckenridge (2025): Ski High, Sleep High",
+    subtitle: "Elevation 9,600'. Here is where to stay for a cannabis-friendly ski trip.",
+    excerpt: "Breckenridge is a world-class ski destination with some of Colorado's best 420-friendly accommodations. From mountain lodges to private condos, here is the ultimate guide to cannabis-friendly stays in Breck.",
+    date: "Dec 22, 2025",
+    readTime: "10 min read",
+    author: "BudQuest Team",
+    avatar: "🏔️",
+    category: "Stays Guide",
+    tags: ["Breckenridge", "Skiing", "Hotels", "420 Friendly"],
+    image: "/blog-breckenridge-stays.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-friendly-stays-breckenridge",
+    content: {
+      introduction: "Planning a ski trip to Breckenridge? We found the best spots where you can actually consume your legal purchases.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Altitude affects tolerance.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "all-inclusive-weed-resorts-colorado",
     title: "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
     subtitle: "The honest truth about cannabis hospitality in the Mile High State.",
