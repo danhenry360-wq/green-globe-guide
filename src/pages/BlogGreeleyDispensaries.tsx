@@ -168,13 +168,15 @@ const BlogGreeleyDispensaries = () => {
 
             <main className="min-h-screen bg-background pt-20">
                 {/* Hero Section */}
-                <section className="relative h-[60vh] overflow-hidden">
-                    <img
-                        src="/greeley-dispensaries.png"
-                        alt="Garden City Dispensaries near Greeley"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                <section className="relative h-[75vh] overflow-hidden">
+                    <div className="absolute inset-0">
+                        <img
+                            src="/greeley-dispensaries.png"
+                            alt="Garden City Dispensaries near Greeley - Cannabis loophole"
+                            className="w-full h-full object-cover opacity-80 scale-105 transition-transform duration-700 hover:scale-100"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/30 to-background" />
+                    </div>
                     <div className="absolute bottom-0 left-0 right-0 p-8 container mx-auto">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -245,112 +247,7 @@ const BlogGreeleyDispensaries = () => {
                                 </div>
                             </section>
 
-                            {/* 2. Garden City Dispensaries */}
-                            <section id="table">
-                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                                    <Map className="h-8 w-8 text-green-500" />
-                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
-                                        2. Garden City Dispensaries
-                                    </span>
-                                </h2>
-                                <div className="overflow-x-auto rounded-xl border border-border/30">
-                                    <table className="w-full text-left text-sm">
-                                        <thead className="bg-muted/50 border-b border-border/30">
-                                            <tr>
-                                                <th className="p-4 font-bold text-foreground">Dispensary</th>
-                                                <th className="p-4 font-bold text-foreground">Type</th>
-                                                <th className="p-4 font-bold text-foreground">Address</th>
-                                                <th className="p-4 font-bold text-foreground">Hours</th>
-                                                <th className="p-4 font-bold text-foreground">Notes</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-border/30">
-                                            <tr>
-                                                <td className="p-4 font-medium">LivWell Garden City</td>
-                                                <td className="p-4">Rec + Med</td>
-                                                <td className="p-4 text-xs">Highway 85, Garden City</td>
-                                                <td className="p-4">8am-10pm</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Established 2013, spacious, reliable chain</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 font-medium text-green-400">Star Buds Garden City</td>
-                                                <td className="p-4">Rec + Med</td>
-                                                <td className="p-4 text-xs">2502 8th Ave, Garden City</td>
-                                                <td className="p-4">8am-11:45pm</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Late hours, competitive prices</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 font-medium">Nature's Herbs & Wellness</td>
-                                                <td className="p-4">Rec + Med</td>
-                                                <td className="p-4 text-xs">Garden City</td>
-                                                <td className="p-4">Varies</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Local Colorado brand, award-winning strains</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 font-medium">High Plainz Strains</td>
-                                                <td className="p-4">Rec + Med</td>
-                                                <td className="p-4 text-xs">Garden City/Greeley border</td>
-                                                <td className="p-4">7 days</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Walking distance from UNC, cash only</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 font-medium">Herbals Finest</td>
-                                                <td className="p-4">Rec</td>
-                                                <td className="p-4 text-xs">Garden City</td>
-                                                <td className="p-4">Varies</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Less commercial, friendly vibe</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <p className="mt-4 text-sm text-muted-foreground italic flex items-center gap-2">
-                                    <Info className="h-4 w-4 text-accent" /> Pro tip: Star Buds has the latest hours (until 11:45pm)—good for last-minute runs.
-                                </p>
-                            </section>
-
-                            {/* 3. Best Dispensary by Need */}
-                            <section id="needs">
-                                <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                                    <Star className="h-8 w-8 text-gold" />
-                                    <span className="bg-gradient-to-r from-foreground via-accent to-green-500 bg-clip-text text-transparent">
-                                        3. Best Dispensary by Need
-                                    </span>
-                                </h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    <Card className="p-4 bg-accent/5 border-accent/20">
-                                        <Clock className="h-8 w-8 text-accent mb-2" />
-                                        <h3 className="font-bold">Latest hours</h3>
-                                        <p className="text-sm text-muted-foreground">Star Buds (until 11:45pm)</p>
-                                    </Card>
-                                    <Card className="p-4 bg-accent/5 border-accent/20">
-                                        <History className="h-8 w-8 text-accent mb-2" />
-                                        <h3 className="font-bold">Established / Reliable</h3>
-                                        <p className="text-sm text-muted-foreground">LivWell (since 2013)</p>
-                                    </Card>
-                                    <Card className="p-4 bg-accent/5 border-accent/20">
-                                        <Star className="h-8 w-8 text-accent mb-2" />
-                                        <h3 className="font-bold">Award-winning flower</h3>
-                                        <p className="text-sm text-muted-foreground">Nature's Herbs & Wellness</p>
-                                    </Card>
-                                    <Card className="p-4 bg-accent/5 border-accent/20">
-                                        <GraduationCap className="h-8 w-8 text-accent mb-2" />
-                                        <h3 className="font-bold">Close to UNC campus</h3>
-                                        <p className="text-sm text-muted-foreground">High Plainz Strains</p>
-                                    </Card>
-                                    <Card className="p-4 bg-accent/5 border-accent/20">
-                                        <Store className="h-8 w-8 text-accent mb-2" />
-                                        <h3 className="font-bold">Less corporate vibe</h3>
-                                        <p className="text-sm text-muted-foreground">Herbals Finest</p>
-                                    </Card>
-                                    <Card className="p-4 bg-background border-dashed border-border/50 flex flex-col items-center justify-center">
-                                        <ShoppingBag className="h-8 w-8 text-muted-foreground mb-2" />
-                                        <h3 className="font-bold">Best deals</h3>
-                                        <p className="text-sm text-muted-foreground">Check Weedmaps for specials</p>
-                                    </Card>
-                                </div>
-                            </section>
-
-                            {/* Real-time Dispensaries */}
+                            {/* 2. Garden City Dispensaries - Real-time from Database */}
                             <section id="live-data">
                                 <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
                                     <Leaf className="h-8 w-8 text-green-500 animate-bounce" />
