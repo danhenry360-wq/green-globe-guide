@@ -118,6 +118,36 @@ const BlogGreeleyDispensaries = () => {
         ]
     };
 
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Dispensaries Near Greeley: Garden City Loophole | BudQuest",
+        "description": "Greeley bans dispensaries, but Garden City doesn't. Find the best dispensaries near Greeley, UNC campus, and the 'Green Mile'.",
+        "image": "https://budquest.guide/greeley-dispensaries.png",
+        "author": { "@type": "Organization", "name": "BudQuest" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+        },
+        "datePublished": "2025-12-18",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/greeley-dispensaries-garden-city-loophole"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+            { "@type": "ListItem", "position": 3, "name": "Greeley Dispensaries", "item": "https://budquest.guide/blog/greeley-dispensaries-garden-city-loophole" }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -130,6 +160,8 @@ const BlogGreeleyDispensaries = () => {
                 <meta property="og:image" content="/greeley-dispensaries.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
 
             <Navigation />

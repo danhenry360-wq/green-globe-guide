@@ -58,6 +58,36 @@ const BlogCleanGreenGuide = () => {
         ]
     };
 
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "The Clean Green Guide: How to Find Colorado's Best (and Safest) Strains in 2025",
+        "description": "Not all legal weed is clean. Learn how to find pesticide-free, organic, and lab-tested cannabis in Colorado.",
+        "image": "https://budquest.guide/images/blog/clean-green-guide.png",
+        "author": { "@type": "Organization", "name": "BudQuest" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+        },
+        "datePublished": "2025-12-18",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/clean-green-guide-colorado-2025"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+            { "@type": "ListItem", "position": 3, "name": "Clean Green Guide", "item": "https://budquest.guide/blog/clean-green-guide-colorado-2025" }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -71,6 +101,12 @@ const BlogCleanGreenGuide = () => {
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">
                     {JSON.stringify(faqSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(articleSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbSchema)}
                 </script>
             </Helmet>
 
