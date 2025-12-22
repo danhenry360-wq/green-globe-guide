@@ -146,13 +146,15 @@ const BlogColoradoSpringsRentals = () => {
 
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Image */}
-        <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-          <img
-            src="/blog-colorado-springs-rentals.jpg"
-            alt="420-friendly vacation rental in Colorado Springs with Garden of the Gods view"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <section className="relative h-[75vh] overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="/blog-colorado-springs-rentals.jpg"
+              alt="420-friendly vacation rental in Colorado Springs with Garden of the Gods view"
+              className="w-full h-full object-cover opacity-80 scale-105 transition-transform duration-700 hover:scale-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/30 to-background" />
+          </div>
         </section>
 
         {/* Hero Content */}
