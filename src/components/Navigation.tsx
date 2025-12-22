@@ -82,10 +82,7 @@ export const Navigation = () => {
                 className="h-full w-full object-contain"
               />
             </div>
-            <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent 
-              dark:from-white dark:via-accent dark:to-gold
-              group-hover:from-accent group-hover:via-gold group-hover:to-accent
-              transition-all duration-300">
+            <span className="text-lg sm:text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">
               BudQuest
             </span>
           </Link>
