@@ -1,8 +1,69 @@
-cimport { useState, useEffect } from "react"; import { Link } from "react-router-dom"; import { motion } from "framer-motion"; import { Helmet } from "react-helmet"; import { Navigation } from "@/components/Navigation"; import { Footer } from "@/components/Footer"; import { Button } from "@/components/ui/button"; import { Card } from "@/components/ui/card"; import { Badge } from "@/components/ui/badge"; import { Input } from "@/components/ui/input"; import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; import { supabase } from "@/integrations/supabase/client"; import { toast } from "sonner"; import { MapPin, Star, CheckCircle, Home, Cannabis, Shield, ArrowRight, Bed, Store, ChevronRight, Building2, Clock, Car, Bus, Snowflake, Sun, Leaf, Flower2, Waves, Ban, Mail, Download, Compass } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import {
+  MapPin,
+  Star,
+  CheckCircle,
+  Home,
+  Cannabis,
+  Shield,
+  ArrowRight,
+  Bed,
+  Store,
+  ChevronRight,
+  Building2,
+  Clock,
+  Car,
+  Bus,
+  Snowflake,
+  Sun,
+  Leaf,
+  Flower2,
+  Waves,
+  Ban,
+  Mail,
+  Download,
+  Compass,
+} from "lucide-react";
 
-interface Dispensary { id: string; name: string; slug: string; city: string; state: string; rating: number | null; image: string | null; images: string[] | null; is_recreational: boolean | null; is_medical: boolean | null; address: string; }
+interface Dispensary {
+  id: string;
+  name: string;
+  slug: string;
+  city: string;
+  state: string;
+  rating: number | null;
+  image: string | null;
+  images: string[] | null;
+  is_recreational: boolean | null;
+  is_medical: boolean | null;
+  address: string;
+}
 
-interface Rental { id: string; name: string; slug: string; address: string | null; rating: number | null; images: string[] | null; }
+interface Rental {
+  id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  rating: number | null;
+  images: string[] | null;
+}
 
 const WardGuide = () => {
   const [dispensaries, setDispensaries] = useState<Dispensary[]>([]);
