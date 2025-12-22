@@ -59,6 +59,57 @@ const BlogUltimateColoradoGuide = () => {
         ]
     };
 
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "High Altitude, Higher Vibes: The Ultimate Stoner's Guide to Colorado 2025",
+        "description": "Plan the ultimate 420 vacation in Colorado. From Denver lounges to mountain highs, this 2025 guide covers laws, cities, altitude tips, and best activities.",
+        "image": "https://budquest.guide/blog-colorado-ultimate-guide.png",
+        "author": {
+            "@type": "Organization",
+            "name": "BudQuest"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://budquest.guide/logo.png"
+            }
+        },
+        "datePublished": "2025-12-18",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/ultimate-stoner-guide-colorado-2025"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://budquest.guide"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://budquest.guide/blog"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Ultimate Stoner's Guide to Colorado 2025",
+                "item": "https://budquest.guide/blog/ultimate-stoner-guide-colorado-2025"
+            }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -72,6 +123,12 @@ const BlogUltimateColoradoGuide = () => {
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">
                     {JSON.stringify(faqSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(articleSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbSchema)}
                 </script>
             </Helmet>
 

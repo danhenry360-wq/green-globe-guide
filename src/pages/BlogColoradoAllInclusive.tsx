@@ -128,21 +128,63 @@ const BlogColoradoAllInclusive = () => {
         "@type": "Article",
         "headline": "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
         "description": "Discover the reality of cannabis resorts in Colorado. From 420-friendly B&Bs to luxury vacation packages, find the best all-inclusive style weed vacations.",
+        "image": "https://budquest.guide/blog-all-inclusive-weed-resorts-colorado.png",
         "author": {
             "@type": "Organization",
             "name": "BudQuest"
         },
-        "mainEntity": {
-            "@type": "FAQPage",
-            "mainEntity": faqs.map(faq => ({
-                "@type": "Question",
-                "name": faq.q,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": faq.a
-                }
-            }))
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://budquest.guide/logo.png"
+            }
+        },
+        "datePublished": "2025-12-20",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/all-inclusive-weed-resorts-colorado"
         }
+    };
+
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+            }
+        }))
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://budquest.guide"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://budquest.guide/blog"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "All-Inclusive Weed Resorts Colorado",
+                "item": "https://budquest.guide/blog/all-inclusive-weed-resorts-colorado"
+            }
+        ]
     };
 
     return (
@@ -152,7 +194,13 @@ const BlogColoradoAllInclusive = () => {
                 <meta name="description" content="Looking for an all-inclusive weed resort in Colorado? Here is the honest truth about what exists, where to stay, and how to book the ultimate 420 vacation." />
                 <meta name="keywords" content="all inclusive weed resorts colorado, 420 resort colorado, cannabis resort colorado, weed vacation packages colorado, marijuana friendly resorts colorado" />
                 <link rel="canonical" href="https://budquest.guide/blog/all-inclusive-weed-resorts-colorado" />
+                <meta property="og:title" content="All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)" />
+                <meta property="og:description" content="The honest truth about cannabis resorts in Colorado and how to book your ultimate 420 vacation." />
+                <meta property="og:image" content="https://budquest.guide/blog-all-inclusive-weed-resorts-colorado.png" />
+                <meta property="og:type" content="article" />
                 <script type="application/ld+json">{JSON.stringify(schema)}</script>
+                <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
 
             <Navigation />
