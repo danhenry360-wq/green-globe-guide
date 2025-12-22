@@ -6,7 +6,7 @@ import { motion, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { BLOG_POSTS } from "@/data/blog-posts";
+import { BLOG_POSTS } from "@/pages/Blog";
 
 const FADE_IN: Variants = {
     initial: { opacity: 0, y: 30 },
