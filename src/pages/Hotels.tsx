@@ -749,7 +749,7 @@ const Hotels = () => {
                 Looking for specific guides? Check out our
                 <Link to="/blog/best-420-friendly-stays-colorado-springs" className="text-accent hover:underline mx-1">Colorado Springs Stays</Link>
                 or
-                <Link to="/blog/best-colorado-all-inclusive-cannabis-resorts" className="text-accent hover:underline mx-1">All-Inclusive Resorts</Link>.
+                <Link to="/blog/all-inclusive-weed-resorts-colorado" className="text-accent hover:underline mx-1">All-Inclusive Resorts</Link>.
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground/80">
                 {processedData.length} verified rentals • Policies checked • Premium experience
