@@ -12,8 +12,58 @@ import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { HOTEL_DATA } from "@/data/hotel_data";
+import { supabase } from "@/integrations/supabase/client";
 
 const BlogBreckenridgeStays = () => {
+    const [rentals, setRentals] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRentals = async () => {
+            // 1. Get static rentals for Breckenridge
+            const staticRentals = HOTEL_DATA.flatMap(country =>
+                country.states.flatMap(state =>
+                    state.hotels
+                        .filter(hotel => hotel.city.toLowerCase() === "breckenridge")
+                        .map(hotel => ({
+                            ...hotel,
+                            source: 'static'
+                        }))
+                )
+            );
+
+            // 2. Get database rentals for Breckenridge
+            const { data: dbRentals, error } = await supabase
+                .from('hotels')
+                .select('*')
+                .eq('city', 'Breckenridge');
+
+            let combined = [...staticRentals];
+
+            if (!error && dbRentals) {
+                // Merge database rentals, prioritize DB over static if name matches
+                (dbRentals as any[]).forEach(dbHotel => {
+                    const index = combined.findIndex(h => h.name.toLowerCase() === dbHotel.name.toLowerCase());
+                    const hotelWithSource = { ...dbHotel, source: 'database' };
+                    if (index !== -1) {
+                        combined[index] = hotelWithSource;
+                    } else {
+                        combined.push(hotelWithSource);
+                    }
+                });
+            }
+
+            setRentals(combined);
+            setIsLoading(false);
+        };
+
+        fetchRentals();
+    }, []);
+
+    const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
     const articleSchema = {
         "@context": "https://schema.org",
         "@type": "Article",
@@ -223,146 +273,70 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 3. Best 420-Friendly Stays */}
                             <div id="stays" className="space-y-12">
-                                <h2 className="text-3xl font-bold mb-8">Best 420-Friendly Stays</h2>
+                                <h2 className="text-3xl font-bold mb-8">Top 420-Friendly Rentals in Breckenridge</h2>
 
-                                {/* Tier 1 */}
                                 <div className="space-y-8">
-                                    <div className="flex items-center gap-3">
-                                        <Award className="h-7 w-7 text-gold" />
-                                        <h3 className="text-2xl font-bold">Tier 1: Explicitly 420-Friendly</h3>
-                                    </div>
 
-                                    <Card className="overflow-hidden border-green-500/20 group hover:border-green-500/40 transition-all duration-300">
-                                        <div className="flex flex-col md:flex-row">
-                                            <div className="md:w-1/3 bg-muted relative aspect-video md:aspect-auto overflow-hidden">
-                                                <img
-                                                    src="/rentals/bunk-house-lodge.png"
-                                                    alt="Bunk House Lodge Breckenridge"
-                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                />
-                                                <div className="absolute top-4 left-4">
-                                                    <Badge className="bg-green-500 text-white border-0 shadow-lg">Social Choice</Badge>
-                                                </div>
+                                    {/* Tier 1 */}
+                                    <div className="space-y-8">
+                                        {isLoading ? (
+                                            <div className="flex justify-center py-12">
+                                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
                                             </div>
-                                            <div className="p-5 sm:p-8 md:w-2/3">
-                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
-                                                    <h4 className="text-xl sm:text-2xl font-bold">Bunk House Lodge</h4>
-                                                    <span className="text-base sm:text-lg font-bold text-green-500">$$</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4 font-medium">
-                                                    <MapPin className="h-4 w-4 text-green-500" /> 2 miles north of Breckenridge
-                                                </div>
-                                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                                    The only lodge in Breck that explicitly allows cannabis. Featuring a communal lounge vibe and welcoming hosts, this is the spot for legal use and sharing in a social atmosphere.
-                                                </p>
-                                                <div className="flex flex-wrap gap-2 mb-6">
-                                                    <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-0">420-Friendly Lounge</Badge>
-                                                    <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-0">LGBTQ+ Welcome</Badge>
-                                                    <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Social Vibe</Badge>
-                                                </div>
-                                                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pt-6 border-t border-border/50 gap-6">
-                                                    <div className="flex-1">
-                                                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
-                                                        <span className="text-sm font-bold text-green-500">Solo travelers, couples, social atmosphere</span>
+                                        ) : rentals.length > 0 ? (
+                                            rentals.map((rental) => (
+                                                <Card key={rental.id || rental.name} className="overflow-hidden border-green-500/20 group hover:border-green-500/40 transition-all duration-300">
+                                                    <div className="flex flex-col md:flex-row">
+                                                        <div className="md:w-1/3 bg-muted relative aspect-video md:aspect-auto overflow-hidden">
+                                                            <img
+                                                                src={rental.image || rental.images?.[0] || "/blog-breckenridge-stays.png"}
+                                                                alt={rental.name}
+                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                            />
+                                                            <div className="absolute top-4 left-4">
+                                                                <Badge className="bg-green-500 text-white border-0 shadow-lg">
+                                                                    {rental.priceRange === "$$$$" || rental.amenities?.price_range === "$$$$" ? "Premium Pick" : "Social Choice"}
+                                                                </Badge>
+                                                            </div>
+                                                        </div>
+                                                        <div className="p-5 sm:p-8 md:w-2/3">
+                                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                                                <h4 className="text-xl sm:text-2xl font-bold">{rental.name}</h4>
+                                                                <span className="text-base sm:text-lg font-bold text-green-500">
+                                                                    {rental.priceRange || rental.amenities?.price_range || "$$"}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4 font-medium">
+                                                                <MapPin className="h-4 w-4 text-green-500" /> {rental.address || `${rental.city}, ${rental.state}`}
+                                                            </div>
+                                                            <p className="text-muted-foreground mb-6 leading-relaxed">
+                                                                {rental.description || rental.policies}
+                                                            </p>
+                                                            <div className="flex flex-wrap gap-2 mb-6">
+                                                                {rental.hasSmoking && <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-0">420-Friendly</Badge>}
+                                                                {rental.hasVaping && <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Vaping Allowed</Badge>}
+                                                                {rental.is_verified && <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-0">Verified Stay</Badge>}
+                                                            </div>
+                                                            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pt-6 border-t border-border/50 gap-6">
+                                                                <div className="flex-1">
+                                                                    <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
+                                                                    <span className="text-sm font-bold text-green-500">
+                                                                        {rental.bestFor || (rental.priceRange === "$$$$" ? "Groups & Luxury Seekers" : "Solo travelers & Couples")}
+                                                                    </span>
+                                                                </div>
+                                                                <Link to={`/hotels/${rental.slug || createSlug(rental.name)}`} className="w-full lg:w-auto">
+                                                                    <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-11 px-8">
+                                                                        View Details <ArrowRight className="h-4 w-4 ml-2" />
+                                                                    </Button>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <Link to="/hotels/bunk-house-lodge" className="w-full lg:w-auto">
-                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-11 px-8">
-                                                            View Details <ArrowRight className="h-4 w-4 ml-2" />
-                                                        </Button>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-
-                                    <Card className="overflow-hidden border-green-500/20 group hover:border-green-500/40 transition-all duration-300">
-                                        <div className="flex flex-col md:flex-row">
-                                            <div className="md:w-1/3 bg-muted relative aspect-video md:aspect-auto overflow-hidden">
-                                                <img
-                                                    src="/rentals/breck-haus.png"
-                                                    alt="Breck Haus Airbnb"
-                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                />
-                                                <div className="absolute top-4 left-4">
-                                                    <Badge className="bg-green-500 text-white border-0 shadow-lg">Premium Pick</Badge>
-                                                </div>
-                                            </div>
-                                            <div className="p-5 sm:p-8 md:w-2/3">
-                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
-                                                    <h4 className="text-xl sm:text-2xl font-bold">Breck Haus (Airbnb)</h4>
-                                                    <span className="text-base sm:text-lg font-bold text-green-500">$420/night</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4 font-medium">
-                                                    <MapPin className="h-4 w-4 text-green-500" /> 1.5 miles from Main Street
-                                                </div>
-                                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                                    Purpose-built for cannabis travelers. This 4-bedroom mountain home offers a private hot tub, stunning views, and an explicit 420-friendly policy that makes it a favorite for groups.
-                                                </p>
-                                                <div className="flex flex-wrap gap-2 mb-6">
-                                                    <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-0">Explicitly Friendly</Badge>
-                                                    <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Private Hot Tub</Badge>
-                                                    <Badge variant="secondary" className="bg-orange-500/10 text-orange-600 border-0">Sleeps 8</Badge>
-                                                </div>
-                                                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pt-6 border-t border-border/50 gap-6">
-                                                    <div className="flex-1">
-                                                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
-                                                        <span className="text-sm font-bold text-green-500">Groups, families (21+), special occasions</span>
-                                                    </div>
-                                                    <Link to="/hotels/breck-haus" className="w-full lg:w-auto">
-                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-11 px-8">
-                                                            Check Availability <ArrowRight className="h-4 w-4 ml-2" />
-                                                        </Button>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </div>
-
-                                {/* Tier 2 */}
-                                <div className="space-y-8 pt-8">
-                                    <div className="flex items-center gap-3">
-                                        <Home className="h-7 w-7 text-blue-500" />
-                                        <h3 className="text-2xl font-bold">Tier 2: 420-Tolerant Private Rentals</h3>
-                                    </div>
-                                    <p className="text-muted-foreground italic text-sm">Rule of thumb: These allow outdoor smoking on balconies/patios. Be discreet.</p>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <Card className="p-6 sm:p-8 hover:border-blue-500/40 transition-all">
-                                            <Building className="h-10 w-10 text-blue-500 mb-6" />
-                                            <h4 className="text-xl font-bold mb-2">Breckenridge Ski Condos</h4>
-                                            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 font-medium">
-                                                <DollarSign className="h-3 w-3" /> $225-400/night
-                                            </div>
-                                            <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-                                                Found throughout town. Most feature balconies or patios perfect for discreet vaping or smoking. Great value for groups who want proximity to the lifts.
-                                            </p>
-                                            <ul className="space-y-2 text-xs text-muted-foreground mb-6">
-                                                <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Pools & Hot Tubs</li>
-                                                <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Ski-in/Ski-out options</li>
-                                            </ul>
-                                            <div className="pt-4 border-t border-border/50">
-                                                <span className="text-xs font-bold text-blue-500">Best for: Ski groups, budget-conscious</span>
-                                            </div>
-                                        </Card>
-
-                                        <Card className="p-6 sm:p-8 hover:border-blue-500/40 transition-all">
-                                            <Home className="h-10 w-10 text-blue-500 mb-6" />
-                                            <h4 className="text-xl font-bold mb-2">Breckenridge Townhouses</h4>
-                                            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 font-medium">
-                                                <DollarSign className="h-3 w-3" /> $300-665/night
-                                            </div>
-                                            <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-                                                Full privacy and space to spread out. Many have private garages and patios where you can consume safely away from the street.
-                                            </p>
-                                            <ul className="space-y-2 text-xs text-muted-foreground mb-6">
-                                                <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Full Kitchens</li>
-                                                <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Mountain Views</li>
-                                            </ul>
-                                            <div className="pt-4 border-t border-border/50">
-                                                <span className="text-xs font-bold text-blue-500">Best for: Families, privacy seekers</span>
-                                            </div>
-                                        </Card>
+                                                </Card>
+                                            ))
+                                        ) : (
+                                            <p className="text-center text-muted-foreground">No Breckenridge rentals found at the moment.</p>
+                                        )}
                                     </div>
                                 </div>
 
