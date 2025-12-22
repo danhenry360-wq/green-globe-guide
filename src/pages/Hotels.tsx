@@ -695,10 +695,15 @@ const Hotels = () => {
   return (
     <>
       <Helmet>
-        <title>420 Friendly Hotels Colorado & Denver | BudQuest Verified Rentals</title>
-        <meta name="description" content="Book BudQuest-verified 420-friendly hotels and vacation rentals in Colorado, Denver, and worldwide. Find cannabis-friendly accommodations for your perfect trip." />
-        <meta name="keywords" content="420 friendly hotels colorado, weed friendly denver hotels, cannabis friendly rentals, marijuana stays, 420 airbnb colorado, BudQuest" />
+        <title>420-Friendly Hotels Colorado & Denver 2025 | Cannabis Stays & Verified Rentals</title>
+        <meta name="description" content="Book BudQuest-verified 420-friendly hotels and cannabis vacation rentals in Colorado, Denver, and worldwide. Find marijuana-friendly accommodations for your 2025 trip." />
+        <meta name="keywords" content="420 friendly hotels colorado 2025, weed friendly denver hotels, cannabis friendly rentals, marijuana stays, 420 airbnb colorado, BudQuest verified" />
         <link rel="canonical" href="https://budquest.guide/hotels" />
+        <meta property="og:title" content="420-Friendly Hotels Colorado & Denver 2025 | BudQuest" />
+        <meta property="og:description" content="Book verified 420-friendly hotels and cannabis vacation rentals in Colorado, Denver, and worldwide." />
+        <meta property="og:url" content="https://budquest.guide/hotels" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://budquest.guide/og-social-share.jpg" />
         <script type="application/ld+json">{JSON.stringify(generateStructuredData(filteredData.length))}</script>
       </Helmet>
 

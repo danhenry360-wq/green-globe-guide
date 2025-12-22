@@ -260,9 +260,33 @@ const Tours = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Best Cannabis Tours Denver & Colorado | BudQuest Verified Experiences</title>
-        <meta name="description" content="Book top-rated Denver cannabis tours and 420 experiences. BudQuest-verified weed tours, grow facility visits, and high-altitude adventures in Colorado." />
-        <meta name="keywords" content="cannabis tours denver, 420 tours colorado, marijuana experiences, weed tours denver, grow tour colorado, BudQuest verified" />
+        <title>Cannabis Tours Denver & Colorado 2025 | Grow Facility Tours & 420 Experiences</title>
+        <meta name="description" content="Book top-rated Denver cannabis tours and 420 experiences in 2025. BudQuest-verified weed tours, grow facility visits, cooking classes, and high-altitude adventures in Colorado." />
+        <meta name="keywords" content="cannabis tours denver 2025, 420 tours colorado, marijuana experiences, weed tours denver, grow tour colorado, cannabis cooking class, BudQuest verified" />
+        <link rel="canonical" href="https://budquest.guide/tours" />
+        <meta property="og:title" content="Cannabis Tours Denver & Colorado 2025 | BudQuest Verified" />
+        <meta property="og:description" content="Book top-rated Denver cannabis tours and 420 experiences. Grow facility visits, cooking classes, and high-altitude adventures." />
+        <meta property="og:url" content="https://budquest.guide/tours" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://budquest.guide/og-social-share.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Cannabis Tours Denver & Colorado 2025",
+            "description": "BudQuest-verified cannabis tours, grow facility visits, and 420 experiences in Denver and Colorado.",
+            "url": "https://budquest.guide/tours",
+            "mainEntity": {
+              "@type": "ItemList",
+              "name": "420 Tours Collection",
+              "numberOfItems": tours.length
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest"
+            }
+          })}
+        </script>
       </Helmet>
       <Navigation />
 
