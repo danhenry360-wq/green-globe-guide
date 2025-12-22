@@ -236,7 +236,7 @@ const BlogBreckenridgeStays = () => {
                                         <div className="flex flex-col md:flex-row">
                                             <div className="md:w-1/3 bg-muted relative aspect-video md:aspect-auto overflow-hidden">
                                                 <img
-                                                    src="/rentals/bunk-house-lodge.jpg"
+                                                    src="/rentals/bunk-house-lodge.png"
                                                     alt="Bunk House Lodge Breckenridge"
                                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                 />
@@ -279,7 +279,7 @@ const BlogBreckenridgeStays = () => {
                                         <div className="flex flex-col md:flex-row">
                                             <div className="md:w-1/3 bg-muted relative aspect-video md:aspect-auto overflow-hidden">
                                                 <img
-                                                    src="/rentals/breck-haus.jpg"
+                                                    src="/rentals/breck-haus.png"
                                                     alt="Breck Haus Airbnb"
                                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                 />
