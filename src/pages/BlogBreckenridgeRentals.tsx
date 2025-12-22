@@ -518,7 +518,7 @@ const BlogBreckenridgeRentals = () => {
               ) : (
                 <Card className="bg-card/60 border-accent/20 p-6 sm:p-8">
                   <p className="text-center text-muted-foreground text-sm sm:text-base">
-                    Loading Breckenridge accommodations... Check back soon for
+                    No Breckenridge accommodations found. Check back soon for
                     verified 420-friendly stays!
                   </p>
                 </Card>
