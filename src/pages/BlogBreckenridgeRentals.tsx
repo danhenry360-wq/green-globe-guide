@@ -49,7 +49,7 @@ const BlogBreckenridgeRentals = () => {
         .from("hotels")
         .select("*")
         .eq("is_420_friendly", true)
-        .ilike("address", "%Breckenridge%")
+        .eq("city", "Breckenridge")
         .order("rating", { ascending: false });
 
       console.log("Breckenridge rentals fetch:", { data, error });
