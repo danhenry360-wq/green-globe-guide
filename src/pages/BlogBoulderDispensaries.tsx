@@ -36,8 +36,8 @@ const BlogBoulderDispensaries = () => {
         .ilike('city', '%Boulder%')
         .order('rating', { ascending: false });
 
-      console.log('Boulder dispensaries fetch:', { data, error });
-      if (error) console.error('Boulder dispensaries error:', error);
+      if (import.meta.env.DEV) console.log('Boulder dispensaries fetch:', { data, error });
+      if (error && import.meta.env.DEV) console.error('Boulder dispensaries error:', error);
       if (data) setDispensaries(data);
       setLoading(false);
     };

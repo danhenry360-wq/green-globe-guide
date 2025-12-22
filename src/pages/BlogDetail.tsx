@@ -25,6 +25,7 @@ import {
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { BLOG_POSTS } from "./Blog";
+import DOMPurify from 'dompurify';
 
 const iconMap: Record<string, any> = {
   Shield,
@@ -320,7 +321,11 @@ const BlogDetail = () => {
                           </h3>
                           <div
                             className="prose prose-sm max-w-none text-muted-foreground"
-                            dangerouslySetInnerHTML={{ __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(
+                                section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                              )
+                            }}
                           />
                         </div>
                       </div>
@@ -387,7 +392,9 @@ const BlogDetail = () => {
                         body: { blog_post_id: dbPost.id }
                       });
                     } catch (error) {
-                      console.error('Error tracking click:', error);
+                      if (import.meta.env.DEV) {
+                        console.error('Error tracking click:', error);
+                      }
                     }
                   }}
                 >

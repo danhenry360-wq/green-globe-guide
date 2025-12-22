@@ -37,8 +37,8 @@ const BlogColoradoSpringsRentals = () => {
         .ilike('address', '%Colorado Springs%')
         .order('rating', { ascending: false });
 
-      console.log('Colorado Springs rentals fetch:', { data, error });
-      if (error) console.error('Colorado Springs rentals error:', error);
+      if (import.meta.env.DEV) console.log('Colorado Springs rentals fetch:', { data, error });
+      if (error && import.meta.env.DEV) console.error('Colorado Springs rentals error:', error);
       if (data) setRentals(data);
       setLoading(false);
     };

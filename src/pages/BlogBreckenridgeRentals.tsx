@@ -52,8 +52,8 @@ const BlogBreckenridgeRentals = () => {
         .eq("city", "Breckenridge")
         .order("rating", { ascending: false });
 
-      console.log("Breckenridge rentals fetch:", { data, error });
-      if (error) console.error("Breckenridge rentals error:", error);
+      if (import.meta.env.DEV) console.log("Breckenridge rentals fetch:", { data, error });
+      if (error && import.meta.env.DEV) console.error("Breckenridge rentals error:", error);
       if (data) setRentals(data);
       setLoading(false);
     };

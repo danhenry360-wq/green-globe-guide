@@ -208,33 +208,35 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 2. The Breckenridge Situation */}
                             <div id="situation">
-                                <h2 className="text-3xl font-bold mb-8">The Breckenridge Situation</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                                    <div className="overflow-x-auto">
-                                        <table className="w-full text-left border-collapse bg-card rounded-xl border border-border">
-                                            <tbody>
-                                                <tr className="border-b border-border">
-                                                    <td className="p-4 font-bold bg-muted/50 w-1/3 text-sm">Elevation</td>
-                                                    <td className="p-4 text-sm font-medium">9,600 ft (Altitude intensifies effects)</td>
-                                                </tr>
-                                                <tr className="border-b border-border">
-                                                    <td className="p-4 font-bold bg-muted/50 text-sm">Hotels with smoking</td>
-                                                    <td className="p-4 text-sm font-medium text-red-500">None — all Breck hotels are smoke-free</td>
-                                                </tr>
-                                                <tr className="border-b border-border">
-                                                    <td className="p-4 font-bold bg-muted/50 text-sm">420-friendly options</td>
-                                                    <td className="p-4 text-sm font-medium">Private rentals, vacation homes, one lodge</td>
-                                                </tr>
-                                                <tr className="border-b border-border">
-                                                    <td className="p-4 font-bold bg-muted/50 text-sm">Dispensaries</td>
-                                                    <td className="p-4 text-sm font-medium">5 in town (BOT, Alpenglow, etc.)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="p-4 font-bold bg-muted/50 text-sm">Consumption rules</td>
-                                                    <td className="p-4 text-sm font-medium">Private property only, no public spaces</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">The Breckenridge Situation</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
+                                    <div className="overflow-x-auto -mx-4 sm:mx-0">
+                                        <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+                                            <table className="min-w-full text-left border-collapse bg-card rounded-xl border border-border">
+                                                <tbody>
+                                                    <tr className="border-b border-border">
+                                                        <td className="p-3 sm:p-4 font-bold bg-muted/50 text-xs sm:text-sm whitespace-nowrap">Elevation</td>
+                                                        <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium">9,600 ft (Altitude intensifies effects)</td>
+                                                    </tr>
+                                                    <tr className="border-b border-border">
+                                                        <td className="p-3 sm:p-4 font-bold bg-muted/50 text-xs sm:text-sm whitespace-nowrap">Hotels with smoking</td>
+                                                        <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium text-red-500">None — all Breck hotels are smoke-free</td>
+                                                    </tr>
+                                                    <tr className="border-b border-border">
+                                                        <td className="p-3 sm:p-4 font-bold bg-muted/50 text-xs sm:text-sm whitespace-nowrap">420-friendly options</td>
+                                                        <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium">Private rentals, vacation homes, one lodge</td>
+                                                    </tr>
+                                                    <tr className="border-b border-border">
+                                                        <td className="p-3 sm:p-4 font-bold bg-muted/50 text-xs sm:text-sm whitespace-nowrap">Dispensaries</td>
+                                                        <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium">5 in town (BOT, Alpenglow, etc.)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="p-3 sm:p-4 font-bold bg-muted/50 text-xs sm:text-sm whitespace-nowrap">Consumption rules</td>
+                                                        <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium">Private property only, no public spaces</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div className="flex flex-col justify-center">
                                         <Card className="p-6 bg-accent/5 border-accent/20">
@@ -250,8 +252,8 @@ const BlogBreckenridgeStays = () => {
                             </div>
 
                             {/* 3. Best 420-Friendly Stays */}
-                            <div id="stays" className="space-y-12">
-                                <h2 className="text-3xl font-bold mb-8">Top 420-Friendly Rentals in Breckenridge</h2>
+                            <div id="stays" className="space-y-8 sm:space-y-12">
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Top 420-Friendly Rentals in Breckenridge</h2>
 
                                 <div className="space-y-8">
 

@@ -36,8 +36,12 @@ const BlogAspenDispensaries = () => {
         .ilike('city', '%Aspen%')
         .order('rating', { ascending: false });
 
-      console.log('Aspen dispensaries fetch:', { data, error });
-      if (error) console.error('Aspen dispensaries error:', error);
+      if (import.meta.env.DEV) {
+        console.log('Aspen dispensaries fetch:', { data, error });
+      }
+      if (error && import.meta.env.DEV) {
+        console.error('Aspen dispensaries error:', error);
+      }
       if (data) setDispensaries(data);
       setLoading(false);
     };

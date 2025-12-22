@@ -37,8 +37,8 @@ const BlogAspenRentals = () => {
         .ilike('address', '%Aspen%')
         .order('rating', { ascending: false });
 
-      console.log('Aspen rentals fetch:', { data, error });
-      if (error) console.error('Aspen rentals error:', error);
+      if (import.meta.env.DEV) console.log('Aspen rentals fetch:', { data, error });
+      if (error && import.meta.env.DEV) console.error('Aspen rentals error:', error);
       if (data) setRentals(data);
       setLoading(false);
     };

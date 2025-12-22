@@ -36,8 +36,8 @@ const BlogColoradoSpringsDispensaries = () => {
         .ilike('city', '%Colorado Springs%')
         .order('rating', { ascending: false });
 
-      console.log('Colorado Springs dispensaries fetch:', { data, error });
-      if (error) console.error('Colorado Springs dispensaries error:', error);
+      if (import.meta.env.DEV) console.log('Colorado Springs dispensaries fetch:', { data, error });
+      if (error && import.meta.env.DEV) console.error('Colorado Springs dispensaries error:', error);
       if (data) setDispensaries(data);
       setLoading(false);
     };

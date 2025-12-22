@@ -39,8 +39,8 @@ const BlogBoulderRentals = () => {
         .ilike('address', '%Boulder%')
         .order('rating', { ascending: false });
 
-      console.log('Boulder rentals fetch:', { data, error });
-      if (error) console.error('Boulder rentals error:', error);
+      if (import.meta.env.DEV) console.log('Boulder rentals fetch:', { data, error });
+      if (error && import.meta.env.DEV) console.error('Boulder rentals error:', error);
       if (data) setRentals(data);
       setLoading(false);
     };

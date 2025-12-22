@@ -361,7 +361,7 @@ const BlogColoradoAllInclusive = () => {
                                         </div>
                                         {idx === 0 && (
                                             <div className="mt-4 p-4 bg-muted/50 rounded-lg text-sm italic">
-                                                Contact: 303-420-8687 | <a href="https://coloradocannabistours.com" className="text-accent hover:underline">coloradocannabistours.com</a>
+                                                Contact: 303-420-8687 | <a href="https://coloradocannabistours.com" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">coloradocannabistours.com</a>
                                             </div>
                                         )}
                                         {idx === 1 && (
