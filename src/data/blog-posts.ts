@@ -72,6 +72,27 @@ export const BLOG_POSTS: BlogPost[] = [
     }
   },
   {
+    id: "best-420-friendly-stays-fort-collins",
+    title: "Best 420-Friendly Stays in Fort Collins (2025): Craft Beer & Cannabis Capital",
+    subtitle: "College town vibes, 100+ breweries, and cannabis-friendly lodging.",
+    excerpt: "Fort Collins is Colorado's craft beer capital with a laid-back college town vibe. Here's your complete guide to 420-friendly hostels, private rentals, and campgrounds in NoCo.",
+    date: "Jan 15, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "🍺",
+    category: "Stays Guide",
+    tags: ["Fort Collins", "Beer", "Hotels", "420 Friendly"],
+    image: "/blog-fort-collins-stays.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-friendly-stays-fort-collins",
+    content: {
+      introduction: "Fort Collins combines craft beer culture with cannabis tourism. Here's where to stay in Northern Colorado's coolest city.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Mix responsibly with alcohol.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "all-inclusive-weed-resorts-colorado",
     title: "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
     subtitle: "The honest truth about cannabis hospitality in the Mile High State.",
