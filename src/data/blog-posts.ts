@@ -1,0 +1,861 @@
+// src/data/blog-posts.ts
+// Blog posts data extracted from Blog.tsx for better maintainability
+
+export interface BlogSection {
+  title: string;
+  icon: string;
+  content: string;
+  variant: string;
+}
+
+export interface BlogContent {
+  introduction: string;
+  disclaimer: string;
+  sections: BlogSection[];
+  safetyTips: string[];
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  subtitle?: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  author: string;
+  avatar: string;
+  category: string;
+  tags: string[];
+  image: string;
+  isExternalPage?: boolean;
+  externalUrl?: string;
+  content: BlogContent;
+}
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: "best-420-friendly-stays-colorado-springs",
+    title: "Best 420-Friendly Stays in Colorado Springs & Manitou Springs (2025)",
+    subtitle: "Conservative town, hippie neighbor. Here is where to stay.",
+    excerpt: "Colorado Springs is conservative, but Manitou Springs (10 minutes away) is a 420-friendly oasis. Here are the best cannabis-welcoming stays in the Pikes Peak region.",
+    date: "Dec 20, 2025",
+    readTime: "7 min read",
+    author: "BudQuest Team",
+    avatar: "🏨",
+    category: "Stays Guide",
+    tags: ["Colorado Springs", "Manitou Springs", "Hotels", "420 Friendly"],
+    image: "/blog-colorado-springs-stays.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-friendly-stays-colorado-springs",
+    content: {
+      introduction: "Finding a place to smoke in the Springs can be tough. We found the hidden gems where you can relax.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "all-inclusive-weed-resorts-colorado",
+    title: "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
+    subtitle: "The honest truth about cannabis hospitality in the Mile High State.",
+    excerpt: "Looking for an all-inclusive weed resort in Colorado? Here is the honest truth about what exists, where to stay, and how to book the ultimate 420 vacation.",
+    date: "Dec 20, 2025",
+    readTime: "15 min read",
+    author: "BudQuest Team",
+    avatar: "🏨",
+    category: "Guides",
+    tags: ["Colorado", "Stays", "Luxury", "All-Inclusive"],
+    image: "/blog-all-inclusive-weed-resorts-colorado.png",
+    isExternalPage: true,
+    externalUrl: "/blog/all-inclusive-weed-resorts-colorado",
+    content: {
+      introduction: "Colorado pioneers legal cannabis, but 'all-inclusive' means something different here.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "ultimate-stoner-guide-colorado-2025",
+    title: "High Altitude, Higher Vibes: The Ultimate Stoner's Guide to Colorado 2025",
+    subtitle: "Everything you need to know for the perfect Colorado cannabis vacation.",
+    excerpt: "The complete 2025 roadmap for Colorado cannabis tourism. Laws, the best cities, altitude tips, consumption lounges, and itinerary ideas for your mile-high trip.",
+    date: "Dec 18, 2025",
+    readTime: "15 min read",
+    author: "BudQuest Team",
+    avatar: "🏔️",
+    category: "Pillar Guide",
+    tags: ["Colorado", "Travel", "Legal", "Denver"],
+    image: "/blog-colorado-ultimate-guide.png",
+    isExternalPage: true,
+    externalUrl: "/blog/ultimate-stoner-guide-colorado-2025",
+    content: {
+      introduction: "Welcome to the Mile High State. Let's get higher. Planning the perfect Colorado cannabis trip starts here.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Don't drive high.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "greeley-dispensaries-garden-city-loophole",
+    title: "Cannabis Dispensaries Near Greeley: The Garden City Loophole (2025)",
+    subtitle: "Why Greeley doesn't have weed, and where you can actually find it seconds away.",
+    excerpt: "Greeley banned dispensaries. But Garden City—a tiny town completely surrounded by Greeley—didn't. Here is your guide to the 'Green Mile'.",
+    date: "Dec 20, 2025",
+    readTime: "7 min read",
+    author: "BudQuest Team",
+    avatar: "🏙️",
+    category: "Guides",
+    tags: ["Greeley", "Garden City", "Colorado", "Dispensaries"],
+    image: "/greeley-dispensaries.png",
+    isExternalPage: true,
+    externalUrl: "/blog/greeley-dispensaries-garden-city-loophole",
+    content: {
+      introduction: "Greeley banned dispensaries, but Garden City didn't. Quality cannabis is just minutes away.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "clean-green-guide-colorado-2025",
+    title: "The Clean Green Guide: How to Find Colorado's Best (and Safest) Strains in 2025",
+    subtitle: "Legal doesn't always mean clean. Here is how to shop smarter.",
+    excerpt: "Pesticides, heavy metals, and mold can hide in legal cannabis. This guide breaks down how to find the safest, cleanest flower and concentrates in Colorado.",
+    date: "Dec 18, 2025",
+    readTime: "10 min read",
+    author: "BudQuest Team",
+    avatar: "🌿",
+    category: "Education",
+    tags: ["Clean Cannabis", "Organic", "Safety", "Colorado"],
+    image: "/clean-green-guide.png",
+    isExternalPage: true,
+    externalUrl: "/blog/clean-green-guide-colorado-2025",
+    content: {
+      introduction: "Not all legal weed is clean. Learn how to find pesticide-free, organic, and lab-tested cannabis in Colorado.",
+      disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-dispensaries-near-red-rocks-2025",
+    title: "Best Dispensaries Near Red Rocks (2025)",
+    subtitle: "Don't get caught dry at the concert. Here's where to stop nearby.",
+    excerpt: "Heading to a show? We mapped the closest dispensaries to Red Rocks in Morrison, Golden, and Lakewood, plus crucial tips for consuming before the music starts.",
+    date: "Dec 18, 2025",
+    readTime: "5 min read",
+    author: "BudQuest Team",
+    avatar: "🎸",
+    category: "Concert Guide",
+    tags: ["Red Rocks", "Dispensaries", "Music", "Morrison"],
+    image: "/blog-red-rocks-dispensaries.png",
+    isExternalPage: true,
+    externalUrl: "/blog/best-dispensaries-near-red-rocks-2025",
+    content: {
+      introduction: "Red Rocks is a bucket-list venue. Make sure your cannabis game is on point before you get there.",
+      disclaimer: "Cannabis is prohibited inside Red Rocks Amphitheatre. Consume responsibly before entry.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "cannabis-dispensaries-breckenridge-complete-guide-2025",
+    title: "Cannabis Dispensaries in Breckenridge: Complete Guide 2025",
+    subtitle: "Where to buy weed in Breckenridge, current prices, and altitude safety tips.",
+    excerpt: "Breckenridge offers world-class skiing and legal cannabis. Here is your guide to the best dispensaries, 420-friendly stays, and how to safely consume at 9,600 feet.",
+    date: "Dec 17, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "City Guide",
+    tags: ["Colorado", "Breckenridge", "Skiing", "Dispensary"],
+    image: "/blog-breckenridge-dispensaries.png",
+    content: {
+      introduction: "Premier ski destination meets legal cannabis. Just remember: elevation changes everything.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "denver-vs-boulder-cannabis-tourists-2025",
+    title: "Denver vs Boulder: Which is Better for Cannabis Tourists? (2025)",
+    subtitle: "Head-to-head comparison of dispensaries, vibes, and 420-friendly stays.",
+    excerpt: "Deciding between Denver and Boulder? We break down the dispensaries, culture, prices, and vibes to help you choose the perfect base for your trip.",
+    date: "Dec 17, 2025",
+    readTime: "10 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "Comparison Guide",
+    tags: ["Colorado", "Denver", "Boulder", "Trip Planning"],
+    image: "/blog-denver-vs-boulder.png",
+    content: {
+      introduction: "Two iconic Colorado cities, two very different cannabis scenes. Whether you want craft quality or big-city variety, here is how to choose.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "first-time-dispensary-guide-colorado-2025",
+    title: "First Time at a Colorado Dispensary: What to Expect (2025 Guide)",
+    subtitle: "Step-by-step walkthrough of your first legal cannabis purchase.",
+    excerpt: "Feeling nervous? Here is exactly what happens, step-by-step, from checking in to walking out with your first legal purchase.",
+    date: "Dec 17, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "👋",
+    category: "Beginner Guide",
+    tags: ["Colorado", "Beginner", "Guide", "Dispensary"],
+    image: "/blog-first-time-dispensary.png",
+    content: {
+      introduction: "Your first time visiting a recreational dispensary can be intimidating, but it doesn't have to be. We've helped thousands of visitors navigate their first purchase.",
+      disclaimer: "Cannabis is for adults 21+. Limits apply. Consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "amsterdam-vs-california-dispensaries",
+    title: "Amsterdam Coffee Shops vs California Dispensaries: A Complete Comparison",
+    subtitle: "Explore the key differences between Amsterdam's iconic coffee shops and California's modern dispensaries - from atmosphere and products to legal frameworks and culture.",
+    excerpt: "A detailed comparison of two of the world's most famous cannabis destinations, examining what makes each experience unique for travelers.",
+    date: "Nov 30, 2025",
+    readTime: "15 min read",
+    author: "David Chen",
+    avatar: "🌍",
+    category: "Comparison",
+    tags: ["Amsterdam", "California", "Dispensaries", "Coffee Shops"],
+    image: "/blog-amsterdam-vs-california.jpg",
+    content: {
+      introduction: "Amsterdam and California represent two distinct philosophies in legal cannabis retail. Amsterdam's coffee shops have operated under a tolerance policy since the 1970s, creating a laid-back, social café culture. California's dispensaries, legal since 2016 for recreation, showcase sleek, tech-forward retail experiences. This guide compares everything from atmosphere and product selection to pricing and cultural norms, helping you decide which cannabis destination suits your travel style.",
+      disclaimer: "Cannabis laws differ significantly between the Netherlands and California. In Amsterdam, possession over 5g remains illegal; in California, adults 21+ can possess up to 28.5g. Neither location permits public consumption. Always verify current laws before traveling.",
+      sections: [
+        { title: "Legal Framework", icon: "Shield", content: "**Amsterdam**: Cannabis is technically illegal but tolerated in licensed coffee shops under the gedoogbeleid (tolerance policy). Shops cannot advertise, sell alcohol, or allow hard drugs. Maximum purchase is 5g per person per day. **California**: Fully legal for adults 21+. Licensed dispensaries are heavily regulated, tested, and taxed. Purchases up to 28.5g flower or 8g concentrates per transaction.", variant: "default" },
+        { title: "Atmosphere & Experience", icon: "Building2", content: "**Amsterdam Coffee Shops**: Cozy, social spaces where you can sit, smoke, and linger. Many have bars serving coffee and snacks. Vintage décor, dim lighting, and relaxed vibes. You're buying an experience, not just a product. **California Dispensaries**: Modern retail stores resembling Apple Stores or pharmacies. Quick transactions, clinical efficiency. Some have lounges, but most are grab-and-go.", variant: "accent" },
+        { title: "Product Selection", icon: "TrendingUp", content: "**Amsterdam**: Primarily flower and hash. Pre-rolls common. Edibles face restrictions. Limited concentrate options. Products are not lab-tested to US standards. **California**: Massive variety - flower, concentrates, edibles, tinctures, topicals, beverages. All products lab-tested with detailed THC/CBD percentages. Cutting-edge extracts and innovative products.", variant: "warning" },
+        { title: "Pricing Comparison", icon: "Scale", content: "**Amsterdam**: Generally €8-15 per gram for quality flower. No additional taxes at point of sale. Hash often €5-12/g. **California**: $30-60+ per eighth (3.5g) before tax. Heavy taxation (25-40% total) significantly increases prices. Premium products can exceed $80/eighth. California is notably more expensive.", variant: "gold" },
+        { title: "Cultural Differences", icon: "Users", content: "**Amsterdam**: Cannabis is part of café culture. Acceptable to spend hours socializing. Sharing joints with strangers is common. Locals are welcoming but appreciate discretion. **California**: Transactional retail culture. Budtenders offer consultations but it's business-focused. Less social, more consumer-oriented. Medical origins still influence professional atmosphere.", variant: "default" },
+        { title: "Consumption Spaces", icon: "MapPin", content: "**Amsterdam**: Consume on-site at coffee shops. Most have comfortable seating areas. Can't take cannabis to other cafes or public spaces. **California**: Most dispensaries are retail-only - no on-site consumption. Some licensed lounges exist but are rare. Must consume in private residences. Hotels generally prohibit use.", variant: "accent" }
+      ],
+      safetyTips: [
+        "Amsterdam: Maximum 5g purchase per day; California: 28.5g flower or 8g concentrates",
+        "Neither location allows public consumption - stick to designated spaces",
+        "California products are lab-tested; Amsterdam products are not",
+        "Don't attempt to transport cannabis across borders from either location",
+        "Amsterdam is cash-only; California accepts cards at many dispensaries",
+        "California has higher prices due to heavy taxation"
+      ]
+    }
+  },
+  {
+    id: "colorado-ski-resorts-cannabis",
+    title: "Colorado Ski Resorts & Cannabis Guide 2025",
+    subtitle: "Explore the best 420-friendly ski resorts, dispensaries near slopes, and tips for combining mountain adventures with cannabis in Colorado.",
+    excerpt: "Explore the best 420-friendly ski resorts, dispensaries near slopes, and tips for combining mountain adventures with cannabis in Colorado.",
+    date: "Nov 30, 2025",
+    readTime: "10 min read",
+    author: "Mike Thompson",
+    avatar: "🎿",
+    category: "Travel Guide",
+    tags: ["Colorado", "Ski", "Dispensaries", "Winter"],
+    image: "/blog-colorado-ski.jpg",
+    content: {
+      introduction: "Colorado offers a unique combination of world-class skiing and legal recreational cannabis. From Aspen to Breckenridge, this guide covers the best 420-friendly accommodations, dispensaries near popular ski resorts, and essential tips for responsibly enjoying both the slopes and cannabis during your mountain getaway.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. However, consumption is prohibited on ski slopes, in public areas, and at most lodging. Always consume responsibly and never ski while impaired. Laws vary by municipality.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Colorado was the first state to legalize recreational cannabis in 2012. Adults 21+ can possess up to 1 ounce and purchase from licensed dispensaries. However, ski resorts operate on federal land where cannabis remains illegal. Most mountain towns have dispensaries, but consumption areas are limited to private residences.", variant: "default" },
+        { title: "Best Ski Towns with Dispensaries", icon: "MapPin", content: "**Breckenridge** - Multiple dispensaries on Main Street, 420-friendly lodges. **Aspen** - Upscale dispensaries, luxury cannabis experiences. **Telluride** - Boutique shops, craft cannabis focus. **Steamboat Springs** - Local favorites, competitive prices. **Durango** - Gateway to Purgatory, authentic mountain vibe.", variant: "accent" },
+        { title: "Where to Consume", icon: "Building2", content: "Consumption on ski slopes is strictly prohibited and can result in losing your lift pass. Most hotels prohibit smoking. Look for 420-friendly vacation rentals, private condos, or designated consumption spaces. Some dispensaries offer consumption lounges. Always verify policies before booking.", variant: "warning" },
+        { title: "Safety Tips for Skiing", icon: "Users", content: "Never ski while impaired - altitude intensifies effects. Consume only after your ski day ends. Stay hydrated at high altitude. Start with low doses as elevation affects tolerance. Keep cannabis secure and away from minors at family resorts.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Never ski or snowboard while impaired - it's dangerous and illegal",
+        "Altitude intensifies cannabis effects - use less than at sea level",
+        "Keep cannabis in original packaging with proof of purchase",
+        "Don't transport cannabis to neighboring states",
+        "Most lodging prohibits smoking - check policies and use edibles",
+        "Stay hydrated - both altitude and cannabis cause dehydration"
+      ]
+    }
+  },
+  {
+    id: "thailand-cannabis-tourism-2025",
+    title: "Thailand Cannabis Tourism: What Travelers Need to Know",
+    subtitle: "Complete guide to Thailand's evolving cannabis laws, best dispensaries in Bangkok and islands, and cultural tips for cannabis tourists.",
+    excerpt: "Complete guide to Thailand's evolving cannabis laws, best dispensaries in Bangkok and islands, and cultural tips for cannabis tourists.",
+    date: "Nov 30, 2025",
+    readTime: "14 min read",
+    author: "Lisa Chang",
+    avatar: "🇹🇭",
+    category: "International",
+    tags: ["Thailand", "Asia", "Legal", "Travel"],
+    image: "/blog-thailand.jpg",
+    content: {
+      introduction: "Thailand made history in 2022 by becoming the first Asian country to decriminalize cannabis. Since then, cannabis shops have flourished across Bangkok, Phuket, Chiang Mai, and the islands. This guide covers everything tourists need to know about legally enjoying cannabis in the Land of Smiles, from legal nuances to the best dispensaries and cultural etiquette.",
+      disclaimer: "Thailand's cannabis laws are evolving rapidly and may change. Public consumption and smoking near temples/schools is prohibited. Always verify current regulations before travel. Some restrictions on THC content and edibles may apply.",
+      sections: [
+        { title: "Legal Framework", icon: "Shield", content: "Cannabis was removed from Thailand's narcotics list in June 2022. Adults can purchase and possess cannabis legally. However, regulations continue to evolve - extracts over 0.2% THC face restrictions, and there are ongoing debates about recreational vs. medical use. Stay updated on current laws before your trip.", variant: "default" },
+        { title: "Best Areas for Cannabis", icon: "MapPin", content: "**Bangkok** - Khao San Road has dozens of shops, Sukhumvit for upscale options. **Phuket** - Beach clubs with cannabis menus, Patong dispensaries. **Chiang Mai** - Laid-back scene, wellness-focused shops. **Koh Phangan** - Full Moon Party island, beach dispensaries. **Koh Samui** - Resort-style shops, premium products.", variant: "accent" },
+        { title: "Where to Consume", icon: "Building2", content: "Public smoking is prohibited, especially near temples, schools, and government buildings. Many cannabis cafes offer consumption spaces. Some hotels are 420-friendly - verify before booking. Beach consumption varies by location. Respect Thai culture and consume discreetly.", variant: "warning" },
+        { title: "Cultural Etiquette", icon: "Users", content: "Thai culture values discretion and respect. Don't smoke near Buddhist temples or monks. Avoid ostentatious consumption in conservative areas. The Thai concept of 'sanuk' (fun) applies - enjoy responsibly without causing disturbance. Tipping shop staff is appreciated but not required.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Carry ID and proof of age (20+ for purchase in most shops)",
+        "Avoid transporting cannabis to neighboring countries - severe penalties",
+        "Start with low doses - Thai cannabis can be potent",
+        "Don't drive under the influence - strict DUI laws apply",
+        "Respect local customs - no consumption near temples or schools",
+        "Purchase from licensed shops only - avoid street vendors"
+      ]
+    }
+  },
+  {
+    id: "amsterdam-coffee-shops",
+    title: "Amsterdam Coffee Shops Guide 2025",
+    subtitle: "Discover the best cannabis coffee shops, local etiquette, and legal tips for enjoying Amsterdam's world-famous cannabis culture.",
+    excerpt: "Discover the best cannabis coffee shops, local etiquette, and legal tips for enjoying Amsterdam's world-famous cannabis culture.",
+    date: "Jan 15, 2025",
+    readTime: "12 min read",
+    author: "Sarah Mitchell",
+    avatar: "👩‍✈️",
+    category: "City Guide",
+    tags: ["Netherlands", "Legal", "Travel", "Coffeeshops"],
+    image: "/blog-amsterdam-new.jpg",
+    content: {
+      introduction: "Amsterdam has been synonymous with cannabis culture for decades. The city's unique 'tolerance policy' (gedoogbeleid) has made it a mecca for cannabis enthusiasts worldwide. This comprehensive guide covers everything from the best coffee shops to local etiquette, ensuring you have a safe and memorable experience in the Dutch capital.",
+      disclaimer: "While cannabis is tolerated in licensed coffee shops, it remains technically illegal in the Netherlands. Laws change frequently. Always verify current regulations before your visit and consume responsibly.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "The Netherlands operates under a 'tolerance policy' where cannabis possession up to 5 grams is decriminalized for personal use. Coffee shops are licensed to sell cannabis but cannot advertise, sell alcohol, or sell to minors. The 'wietpas' (weed pass) system was introduced but later abandoned in Amsterdam. Tourists can still purchase cannabis at most coffee shops, though some may request ID proving you're 18+.", variant: "default" },
+        { title: "Age & Purchase Requirements", icon: "Users", content: "You must be 21+ to enter coffee shops in Amsterdam (raised from 18 in 2023 for tourists). A valid passport or EU ID is required for age verification. The maximum purchase is 5 grams per person per day. Coffee shops accept cash only—ATMs are widely available. Pre-rolled joints, loose flower, hashish, and edibles are commonly available. Prices range from €8-15 per gram depending on quality.", variant: "default" },
+        { title: "Possession Limits", icon: "Scale", content: "Personal possession limit is 5 grams. Carrying more can result in confiscation and potential fines. Growing at home is tolerated up to 5 plants for personal use, but tourists should never attempt this. Transporting cannabis outside of Amsterdam or across borders is strictly illegal and carries severe penalties including imprisonment.", variant: "default" },
+        { title: "Where to Consume", icon: "MapPin", content: "Consumption is only permitted inside licensed coffee shops or private residences. Public consumption is technically illegal and can result in fines, especially in the city center where police actively enforce this. Many hotels are non-smoking, so check policies before booking. Some coffee shops have outdoor terraces where smoking is permitted. Never consume near schools, playgrounds, or in public transport.", variant: "accent" },
+        { title: "Top Coffee Shops", icon: "Building2", content: "**Barney's Coffeeshop** (Haarlemmerstraat) - Award-winning strains, great breakfast menu. **The Bulldog** (Leidseplein) - Iconic chain, tourist-friendly, multiple locations. **Grey Area** (Oude Leliestraat) - American-owned, premium quality, small but legendary. **Dampkring** (Handboogstraat) - Featured in Ocean's Twelve, excellent hash selection. **Boerejongens** (Multiple locations) - 'Farmers Boys' known for organic, high-quality cannabis. **Amnesia** (Herengracht) - Upscale atmosphere, canal views, premium products.", variant: "default" },
+        { title: "Airport & Transportation", icon: "Plane", content: "Schiphol Airport has strict no-cannabis policies. Never attempt to fly with cannabis—even domestically within the EU. Cannabis dogs patrol the airport regularly. Consuming before flights is strongly discouraged as you'll pass through security. Public transport (trams, metro, buses) prohibits cannabis use. Taxis are generally tolerant but ask first. Biking while intoxicated can result in fines.", variant: "warning" },
+        { title: "Best Neighborhoods", icon: "MapPin", content: "**Red Light District (De Wallen)** - Highest concentration of coffee shops, touristy but iconic. **Jordaan** - Trendy, artistic neighborhood with boutique shops. **Leidseplein** - Nightlife hub, many coffee shops open late. **De Pijp** - Local favorite, Albert Cuyp Market nearby. **Haarlemmerstraat** - Less crowded, quality establishments.", variant: "accent" },
+        { title: "Local Etiquette", icon: "Users", content: "Don't photograph inside coffee shops without permission. Tip bartenders if you buy drinks. Don't bring outside cannabis into coffee shops. Order a drink if you're staying to consume. Keep noise levels down—Amsterdam residents value peace. Don't block bike lanes while smoking. Respect the 'no hard drugs' policy strictly enforced in all establishments.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Start with low doses, especially with edibles—Amsterdam products are potent",
+        "Stay hydrated and eat before consuming",
+        "Don't mix cannabis with alcohol or other substances",
+        "Keep valuables secure—tourist areas attract pickpockets",
+        "Know your limits and have a sober friend if exploring",
+        "Avoid buying from street dealers—it's illegal and often dangerous",
+        "Emergency number: 112 for police, fire, or ambulance"
+      ]
+    }
+  },
+  {
+    id: "california-cannabis",
+    title: "California Cannabis Travel Handbook",
+    subtitle: "Complete guide to California dispensaries, regulations, and the best spots for cannabis tourism in the Golden State.",
+    excerpt: "Complete guide to California dispensaries, legal regulations, and the best spots for cannabis tourism in the Golden State.",
+    date: "Jan 10, 2025",
+    readTime: "15 min read",
+    author: "James Chen",
+    avatar: "🌴",
+    category: "City Guide",
+    tags: ["USA", "California", "Dispensaries", "Reviews"],
+    image: "/blog-california-new.jpg",
+    content: {
+      introduction: "California pioneered legal cannabis in the United States, first with medical marijuana in 1996 and then recreational use in 2016. Today, the Golden State boasts the world's largest legal cannabis market with thousands of licensed dispensaries, innovative products, and a thriving cannabis tourism industry. From San Francisco to San Diego, this guide covers everything you need to know.",
+      disclaimer: "Cannabis remains federally illegal in the United States. California state laws apply only within state borders. Never transport cannabis across state lines or onto federal property. Laws vary by city and county within California.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Recreational cannabis has been legal in California since January 2018 for adults 21+. Proposition 64 established the framework for legal sales, possession, and cultivation. However, individual cities and counties can ban or restrict cannabis businesses—over 60% of California municipalities have some form of ban. Los Angeles, San Francisco, San Diego, Oakland, and Palm Springs are cannabis-friendly. Always check local ordinances.", variant: "default" },
+        { title: "Age & Purchase Requirements", icon: "Users", content: "You must be 21+ with valid government ID (passport for international visitors). Daily purchase limits: 28.5 grams of flower, 8 grams of concentrates, or equivalent edibles. Medical patients (18+) with valid recommendation can purchase higher limits. Most dispensaries are cash-only, though some accept debit cards with fees. Expect 15-35% taxes on top of listed prices. First-time customer discounts are common—ask!", variant: "default" },
+        { title: "Possession Limits", icon: "Scale", content: "Adults 21+ may possess up to 28.5 grams of flower and 8 grams of concentrates. At home, you may store unlimited amounts of cannabis you legally purchased or grew. Home cultivation: up to 6 plants per residence (not per person). Possession over limits is an infraction for under 1 oz over, misdemeanor for more. Gifting up to 28.5g to another adult is legal; selling without a license is a felony.", variant: "default" },
+        { title: "Where to Consume", icon: "MapPin", content: "Public consumption is illegal statewide—this includes sidewalks, parks, beaches, and anywhere smoking tobacco is prohibited. Consumption is only legal in private residences where the owner permits it. Some cities have licensed cannabis lounges: West Hollywood's Original Cannabis Café, San Francisco's Barbary Coast. Many cannabis-friendly hotels and Airbnbs exist—search 'bud and breakfast' or '420-friendly lodging.'", variant: "accent" },
+        { title: "Top Dispensaries by Region", icon: "Building2", content: "**Los Angeles**: MedMen (WeHo), Cookies (Melrose), LA Kush. **San Francisco**: Barbary Coast, SPARC, Harvest. **San Diego**: March and Ash, Torrey Holistics, Urbn Leaf. **Oakland**: Harborside, Magnolia Wellness, Blüm. **Palm Springs**: Coachella Valley dispensaries, Desert Hot Springs cultivation tours. Many offer delivery services—Eaze and Weedmaps are popular apps.", variant: "default" },
+        { title: "Airport & Transportation", icon: "Plane", content: "TSA is a federal agency—cannabis is prohibited in airports and on flights, even within California. LAX technically allows up to legal limits through security, but other airports don't. Never fly with cannabis. Driving under the influence (DUI) laws apply—there's no legal THC limit, but impairment can be charged. Keep cannabis in sealed containers in the trunk when driving. Uber/Lyft policies prohibit cannabis but enforcement varies.", variant: "warning" },
+        { title: "Best Cannabis Regions", icon: "MapPin", content: "**Emerald Triangle** (Humboldt, Mendocino, Trinity) - Legendary outdoor cultivation, farm tours. **Los Angeles** - Largest market, celebrity brands, consumption lounges. **San Francisco** - Progressive scene, historic dispensaries. **Palm Springs** - Desert retreats, 420-friendly resorts. **San Diego** - Craft cannabis, border proximity (never cross!). **Santa Cruz** - Organic focus, chill beach vibes.", variant: "accent" },
+        { title: "Cannabis Tourism Experiences", icon: "Users", content: "Book cultivation tours in Humboldt County or Desert Hot Springs. Cannabis cooking classes in LA and SF teach infusion techniques. Yoga and cannabis retreats offer wellness experiences. Art and cannabis events happen weekly in major cities. Weedmaps and Leafly list local events. Cannabis-friendly comedy shows, concerts, and festivals are increasingly common—check 420-friendly event calendars.", variant: "gold" }
+      ],
+      safetyTips: [
+        "California edibles are potent—standard dose is 10mg THC, start with 5mg or less",
+        "Keep cannabis away from minors—heavy penalties apply",
+        "Don't consume in rental cars—companies can charge cleaning fees",
+        "Avoid 'trap' dispensaries without proper licensing",
+        "Check Weedmaps reviews and verify licenses on cannabis.ca.gov",
+        "Stay hydrated in California heat, especially if consuming",
+        "Never cross into Mexico or Nevada with California cannabis"
+      ]
+    }
+  },
+  {
+    id: "uruguay-legalization",
+    title: "Uruguay: The First Legal Cannabis Nation",
+    subtitle: "Deep dive into Uruguay's pioneering legalization model and what it means for cannabis travelers visiting South America.",
+    excerpt: "Deep dive into Uruguay's pioneering legalization model and what it means for cannabis travelers visiting South America.",
+    date: "Jan 5, 2025",
+    readTime: "10 min read",
+    author: "Emma Rodriguez",
+    avatar: "🇺🇾",
+    category: "Legal Updates",
+    tags: ["Uruguay", "Legal", "History", "International"],
+    image: "/blog-uruguay-new.jpg",
+    content: {
+      introduction: "In December 2013, Uruguay became the first country in modern history to fully legalize cannabis from seed to sale. Under President José Mujica, the small South American nation implemented a groundbreaking regulatory model that prioritizes public health over prohibition. While the system has unique restrictions for tourists, understanding Uruguay's approach offers valuable insights into cannabis policy worldwide.",
+      disclaimer: "Uruguay's cannabis system is primarily designed for residents. Tourists face significant restrictions on legal access. Laws and regulations continue to evolve. This guide reflects information as of January 2025.",
+      sections: [
+        { title: "Legal Framework", icon: "Shield", content: "Uruguay's Law 19.172 legalized cannabis cultivation, distribution, and possession for Uruguayan citizens and permanent residents. The Institute for Regulation and Control of Cannabis (IRCCA) oversees the market. Three legal access pathways exist: pharmacy purchases, cannabis club membership, and home cultivation. Unfortunately, all three require Uruguayan residency, creating a complex situation for tourists.", variant: "default" },
+        { title: "Tourist Access", icon: "Users", content: "Here's the reality: tourists cannot legally purchase cannabis in Uruguay. Pharmacy sales require Uruguayan ID and registration. Cannabis clubs only accept residents. Home cultivation requires residency permits. However, possession of up to 40 grams is decriminalized for everyone, and consumption is not penalized. This creates a gray area where tourists may possess cannabis without legal purchase options.", variant: "default" },
+        { title: "Possession & Consumption", icon: "Scale", content: "All adults (18+) can possess up to 40 grams of cannabis flower. Consumption in private spaces is fully legal. Public consumption is discouraged but not heavily enforced. Driving under the influence is illegal with strict penalties. Growing up to 6 flowering plants is permitted for residents only. The focus is harm reduction rather than punishment.", variant: "default" },
+        { title: "The Pharmacy System", icon: "Building2", content: "Registered users can purchase up to 40 grams monthly from licensed pharmacies at government-controlled prices (around $1.30 USD per gram—the world's cheapest legal cannabis). Only two strains are available: Alfa-1 (sativa-dominant) and Beta-1 (indica-dominant), both around 9% THC. The system prioritizes accessibility over variety. Pharmacies are located throughout Montevideo and major cities.", variant: "default" },
+        { title: "Cannabis Clubs", icon: "Users", content: "Cannabis clubs (clubes de membresía) are collectives where members grow cannabis together. Clubs can have 15-45 members and cultivate up to 99 plants. Members receive their share of the harvest. Annual fees range from $30-100 USD. This model inspired similar systems in Spain. However, club membership requires Uruguayan citizenship or residency—tourists cannot join.", variant: "accent" },
+        { title: "Cultural Context", icon: "MapPin", content: "Uruguay's approach emphasizes public health, not commerce. There's no advertising, no branding, plain packaging only. The goal was to undercut the black market while avoiding commercialization. Cannabis culture is understated—you won't find Amsterdam-style coffee shops. Consumption happens privately, discreetly. Uruguayans generally support legalization but prefer keeping it low-key.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Tourists cannot legally purchase cannabis in Uruguay",
+        "Possession up to 40g is decriminalized for all adults",
+        "Consume only in private spaces - public use is frowned upon",
+        "Don't attempt to transport cannabis across borders",
+        "Prices on the informal market are higher than pharmacy rates",
+        "Uruguay is very safe, but use normal travel precautions"
+      ]
+    }
+  },
+  {
+    id: "canada-cannabis-laws",
+    title: "Canada Cannabis Laws: Complete 2025 Guide",
+    subtitle: "From coast to coast, everything you need to know about legal cannabis in Canada - provincial differences, purchase limits, and the best dispensary experiences.",
+    excerpt: "From coast to coast, everything you need to know about legal cannabis in Canada - provincial differences, purchase limits, and best dispensary experiences.",
+    date: "Dec 28, 2024",
+    readTime: "13 min read",
+    author: "Ryan Mitchell",
+    avatar: "🍁",
+    category: "Legal Updates",
+    tags: ["Canada", "Legal", "International", "Travel"],
+    image: "/blog-canada.jpg",
+    content: {
+      introduction: "Canada made history on October 17, 2018, becoming the second country (after Uruguay) and first G7 nation to fully legalize recreational cannabis. The Cannabis Act created a national framework, but each province and territory has autonomy over retail, consumption rules, and age limits. This guide breaks down everything travelers need to know about enjoying legal cannabis across Canada.",
+      disclaimer: "While cannabis is federally legal in Canada, provincial laws vary significantly. Never transport cannabis across international borders—including back to the US, even from a legal state. Age limits, possession limits, and consumption rules differ by province. Always verify local regulations.",
+      sections: [
+        { title: "Federal Legal Framework", icon: "Shield", content: "The Cannabis Act legalized possession of up to 30 grams of dried cannabis (or equivalent) in public for adults. Home cultivation of up to 4 plants per residence is permitted federally (Quebec and Manitoba have banned this). Purchasing must be from provincially licensed retailers. Driving while impaired carries serious penalties. Cannabis cannot be taken across any international border.", variant: "default" },
+        { title: "Provincial Differences", icon: "MapPin", content: "**Age**: 19+ in most provinces; 18+ in Alberta and Quebec. **Retail**: Ontario/BC have private stores; Quebec/New Brunswick are government-only. **Home grow**: Banned in Quebec and Manitoba. **Public consumption**: Varies widely—Alberta is permissive, Ontario allows it where tobacco is allowed, Quebec bans it almost everywhere. Always check provincial rules.", variant: "accent" },
+        { title: "Purchasing Cannabis", icon: "Building2", content: "Licensed retail stores exist in all provinces. Government-run stores (similar to liquor stores) operate in Quebec, New Brunswick, Nova Scotia, and PEI. Private retailers dominate Ontario, Alberta, BC, and Saskatchewan. Online ordering is available in every province through government websites. Prices range from $6-15 CAD per gram depending on province and quality. Most stores accept credit cards.", variant: "default" },
+        { title: "Best Provinces for Cannabis Tourism", icon: "TrendingUp", content: "**British Columbia** - Craft cannabis culture, beautiful scenery, Vancouver's vibrant scene. **Alberta** - Most permissive consumption rules, competitive pricing. **Ontario** - Largest market, Toronto's diverse options. **Quebec** - Unique market, Montreal's European vibe (but strictest rules). **Nova Scotia** - East coast charm, government stores in Halifax.", variant: "default" },
+        { title: "Where to Consume", icon: "Users", content: "Rules vary dramatically. **Alberta**: Anywhere tobacco smoking is allowed. **Ontario**: Private residences and many public outdoor spaces. **BC**: Public outdoor spaces where tobacco is allowed. **Quebec**: Private residences only—no public consumption. **Most provinces**: Hotels can prohibit; 420-friendly rentals exist. No consumption in vehicles, near schools, playgrounds, or healthcare facilities.", variant: "warning" },
+        { title: "US-Canada Border Warning", icon: "Plane", content: "CRITICAL: Never cross the US-Canada border with cannabis—even tiny amounts. US Customs can ban you for life for cannabis possession or even admitting past use. Cannabis odor in your car can trigger searches. Disclose nothing about cannabis use to border agents. If you work in the cannabis industry, consult an immigration lawyer before crossing. This applies at airports, land crossings, and waterways.", variant: "warning" }
+      ],
+      safetyTips: [
+        "NEVER transport cannabis across any international border",
+        "Check provincial age limits - 18 in Alberta/Quebec, 19 elsewhere",
+        "Verify consumption rules - they vary dramatically by province",
+        "Keep cannabis in original sealed packaging when traveling within Canada",
+        "Don't consume before driving - impaired driving laws are strict",
+        "Use official government or licensed retail apps to find legal stores"
+      ]
+    }
+  },
+  {
+    id: "spain-laws",
+    title: "Spain Cannabis Scene: What You Need to Know",
+    subtitle: "Understanding Barcelona's unique cannabis club culture and Spain's complex legal landscape for tourists.",
+    excerpt: "Understanding Barcelona's unique cannabis club culture and Spain's complex legal landscape for tourists.",
+    date: "Dec 20, 2024",
+    readTime: "11 min read",
+    author: "Sophie Laurent",
+    avatar: "🇪🇸",
+    category: "City Guide",
+    tags: ["Spain", "Legal", "Barcelona", "Culture"],
+    image: "/blog-spain.jpg",
+    content: {
+      introduction: "Spain occupies a fascinating gray zone in global cannabis policy. While not technically legal, private consumption and cultivation are decriminalized, giving rise to the famous 'cannabis social clubs' of Barcelona and beyond. These private, members-only associations operate in a legal loophole that has created Europe's most unique cannabis scene. Understanding how to navigate this system is essential for any cannabis-curious visitor.",
+      disclaimer: "Cannabis remains illegal for commercial sale in Spain. Cannabis clubs operate in legal gray areas that vary by region. Catalonia (Barcelona) is most permissive; other regions have cracked down. Tourist access to clubs has become increasingly restricted. Laws can change rapidly.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Spain decriminalized private cannabis use in 1974 but never legalized it. The constitution protects privacy, allowing home consumption and cultivation. Public possession and consumption remain illegal with fines of €601-30,000. No commercial sales are permitted. The 'cannabis club' model emerged from this loophole—private associations where members collectively grow and share cannabis without commercial transactions.", variant: "default" },
+        { title: "Cannabis Club Model", icon: "Users", content: "Cannabis Social Clubs (CSCs) are non-profit associations where members pool resources to cultivate cannabis for collective personal use. Members pay fees (€20-50 annually) plus contributions for cannabis received. Clubs cannot profit, advertise, or sell to non-members. Spain has 800+ registered clubs, most in Catalonia. The model inspired similar systems in Uruguay, Belgium, and Malta.", variant: "default" },
+        { title: "Tourist Access", icon: "Scale", content: "Here's the honest truth: tourist access has become very difficult. Barcelona cracked down in 2017-2023, closing clubs that admitted tourists too freely. Many clubs now require Spanish residency, existing member referrals, or proof of local address. Some still accept tourists but with waiting periods of 24-72 hours. Never trust street promoters offering 'instant membership'—these are often scams or illegal operations. Research legitimate clubs before arrival.", variant: "default" },
+        { title: "Finding Legitimate Clubs", icon: "Building2", content: "Research clubs before your trip using forums like Reddit's r/Barcelona or cannabis travel sites. Legitimate clubs: require ID verification, have waiting periods, don't advertise publicly, and are located in discreet locations without prominent signage. Red flags: street promoters, instant membership, tourist-focused marketing, locations in tourist zones. Ask your accommodation host—locals often know reputable options.", variant: "accent" },
+        { title: "Regional Differences", icon: "MapPin", content: "**Catalonia (Barcelona)**: Most clubs, most permissive historically, but increasing restrictions. **Basque Country (Bilbao, San Sebastián)**: Active scene, less tourist-focused. **Madrid**: Far fewer clubs, stricter enforcement. **Andalucía**: Conservative, limited scene. **Valencia**: Moderate scene, some tourist-friendly clubs. **Canary Islands**: Growing scene, good for winter visitors.", variant: "default" },
+        { title: "Public Consumption & Fines", icon: "Plane", content: "Public consumption is illegal throughout Spain. Fines range from €601 minimum to €30,000 for aggravated cases. Police can issue fines on the spot. Smoking in parks, beaches, streets, or public squares all risk fines. Even rolling a joint in public can be penalized. Be extremely discreet. Consume only in private spaces—clubs, private residences, or secluded areas far from public view.", variant: "warning" },
+        { title: "Barcelona Cannabis Scene", icon: "MapPin", content: "Barcelona remains Spain's cannabis capital despite restrictions. The Gràcia and Raval neighborhoods have the highest club concentration. Look for clubs with established reputations and years of operation. Prices in clubs: €8-15 per gram, with hash varieties also available. Many clubs offer comfortable lounge spaces, some with music, food, and events. The scene is social—clubs are gathering places, not just dispensaries.", variant: "accent" },
+        { title: "Cultural Tips", icon: "Users", content: "Spanish cannabis culture values discretion and community. Clubs are social spaces—engage with other members. Don't take photos inside clubs without permission. Respect closing times and house rules. Tipping isn't expected but appreciated for good service. Learn basic Spanish—few club staff speak English. Don't discuss club locations publicly or on social media. The scene survives through discretion.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Never buy from street dealers—it's illegal and often poor quality",
+        "Avoid tourist-trap 'clubs' with aggressive promoters",
+        "Don't carry more cannabis than you need in public",
+        "Be prepared for language barriers—learn basic Spanish",
+        "Research specific clubs before arrival through trusted forums",
+        "Don't consume in public under any circumstances",
+        "Keep club memberships private—don't share locations publicly"
+      ]
+    }
+  },
+  {
+    id: "microdosing-guide",
+    title: "Beginner's Guide to Microdosing Cannabis",
+    subtitle: "Low-dose cannabis use for wellness and productivity—learn how to microdose safely and effectively.",
+    excerpt: "Low-dose cannabis use for wellness and productivity—learn how to microdose safely and effectively while traveling.",
+    date: "Dec 15, 2024",
+    readTime: "9 min read",
+    author: "Dr. Alex Chen",
+    avatar: "⚕️",
+    category: "Education",
+    tags: ["Wellness", "Microdosing", "Health", "Tips"],
+    image: "/dest-3.jpg",
+    content: {
+      introduction: "Microdosing cannabis involves consuming very small amounts—typically 1-5mg of THC—to achieve subtle therapeutic benefits without significant intoxication. This approach has gained popularity among professionals, creatives, and wellness enthusiasts seeking the benefits of cannabis without impairment. Whether you're new to cannabis or seeking a more functional relationship with the plant, microdosing offers a controlled, intentional approach.",
+      disclaimer: "This article is for educational purposes only and does not constitute medical advice. Cannabis affects everyone differently. Consult healthcare providers before using cannabis for medical purposes. Only use cannabis where legal.",
+      sections: [
+        { title: "What is Microdosing?", icon: "Info", content: "Microdosing means taking sub-perceptual or minimally perceptual doses of cannabis. Where a typical dose might be 10-25mg THC, a microdose is 1-5mg. The goal isn't to get 'high' but to achieve subtle effects: mild mood elevation, reduced anxiety, enhanced focus, or pain relief without cognitive impairment. Many users report being able to work, exercise, socialize, and function normally while microdosing.", variant: "default" },
+        { title: "Benefits of Microdosing", icon: "Shield", content: "Research and anecdotal reports suggest microdosing may help with: **Anxiety relief** without sedation. **Mood enhancement** and stress reduction. **Pain management** for chronic conditions. **Focus and creativity** for work or artistic pursuits. **Sleep improvement** when taken in the evening. **Social comfort** without obvious intoxication. The key benefit is maintaining functionality while receiving therapeutic effects.", variant: "default" },
+        { title: "Finding Your Dose", icon: "Scale", content: "Start with 1-2.5mg THC. Wait 2 hours before taking more (longer for edibles). Keep a journal tracking dose, time, effects, and duration. Increase by 0.5-1mg increments over days or weeks. Your optimal dose is where you notice subtle positive effects without impairment. Most microdosers settle between 2-5mg. CBD-inclusive products (1:1 or 2:1 CBD:THC) can provide benefits with less psychoactivity.", variant: "default" },
+        { title: "Best Products for Microdosing", icon: "Building2", content: "**Low-dose edibles**: Many brands offer 2.5mg or 5mg portions. Look for accurately dosed products from licensed dispensaries. **Tinctures**: Allow precise dosing by the drop. Start with 1mg and adjust. **Vaporizers**: Harder to dose precisely, but one small puff from a low-THC product works. **Capsules**: Pre-measured doses, ideal for consistency. Avoid smoking for microdosing—it's difficult to control dose and harsh on lungs.", variant: "accent" },
+        { title: "Microdosing Schedule", icon: "Users", content: "**Daily low-dose**: 1-2.5mg in the morning or as needed. Works for chronic conditions. **As-needed**: Microdose for specific situations—stressful events, creative work, social anxiety. **Evening only**: Some prefer microdosing only at night for sleep and recovery. **Cycling**: 5 days on, 2 days off to prevent tolerance. Avoid increasing dose to chase effects—that defeats the purpose. Take tolerance breaks if you notice diminishing effects.", variant: "default" },
+        { title: "Microdosing While Traveling", icon: "Plane", content: "Only microdose in legal jurisdictions. Research local laws before traveling. Discreet products (tinctures, capsules, mints) are easiest for travel. Never fly with cannabis, even to legal destinations. Purchase locally from licensed dispensaries. Be extra cautious with dosing in unfamiliar settings. Account for time zone changes and travel fatigue—these can amplify effects. Always have regular meals and water.", variant: "warning" },
+        { title: "Common Mistakes", icon: "AlertCircle", content: "**Taking too much**: Patience is key—wait before redosing. **Inconsistent products**: Use lab-tested products with accurate dosing. **Ignoring set and setting**: Even microdoses are affected by mood and environment. **Expecting immediate results**: Some benefits build over time. **Not tracking**: Without records, you can't optimize. **Mixing substances**: Avoid alcohol or other drugs while learning your dose.", variant: "default" },
+        { title: "Who Should Avoid Microdosing", icon: "Users", content: "**Pregnant or breastfeeding individuals**: No safe level established. **Those with psychotic disorders**: Cannabis can exacerbate symptoms. **People on certain medications**: Consult doctors about interactions. **Those with cannabis use disorder history**: Risk of escalation. **Anyone who needs to drive or operate machinery**: Even microdoses can impair. **Under 25**: Brain development concerns. When in doubt, consult a cannabis-knowledgeable physician.", variant: "gold" }
+      ],
+      safetyTips: [
+        "Start lower than you think necessary—1-2mg for complete beginners",
+        "Never drive or operate machinery, even with microdoses",
+        "Keep a detailed journal of doses and effects",
+        "Use only lab-tested products from licensed sources",
+        "Stay hydrated and don't skip meals",
+        "Avoid mixing with alcohol or other substances",
+        "If you feel too high, remember: it will pass, stay calm, hydrate"
+      ]
+    }
+  },
+  {
+    id: "jamaica-ganja-culture",
+    title: "Jamaica: Ganja Culture & Travel Guide 2025",
+    subtitle: "Explore Jamaica's rich cannabis heritage, Rastafarian traditions, and what tourists need to know about ganja on the island.",
+    excerpt: "Explore Jamaica's rich cannabis heritage, Rastafarian traditions, and what tourists need to know about ganja on the island.",
+    date: "Nov 30, 2025",
+    readTime: "11 min read",
+    author: "Marcus Brown",
+    avatar: "🇯🇲",
+    category: "International",
+    tags: ["Jamaica", "Caribbean", "Culture", "Travel"],
+    image: "/blog-jamaica.jpg",
+    content: {
+      introduction: "Jamaica and cannabis are inseparable in popular imagination. The island's Rastafarian movement elevated ganja to a sacrament, and reggae music spread cannabis culture worldwide. In 2015, Jamaica decriminalized small amounts and created a framework for medical use and religious exemptions. While not fully legal, Jamaica offers a unique cannabis experience rooted in deep cultural traditions. This guide covers what travelers need to know.",
+      disclaimer: "Cannabis remains technically illegal in Jamaica for recreational use. Decriminalization applies only to small amounts (2 ounces or less). Tourist access to legal dispensaries requires a medical recommendation. Laws and enforcement vary. Always respect local customs and legal boundaries.",
+      sections: [
+        { title: "Legal Status", icon: "Shield", content: "Jamaica's Dangerous Drugs Amendment Act (2015) decriminalized possession of up to 2 ounces (56.6 grams) of cannabis—reduced to a petty offense with a small fine. Rastafarians can use ganja for religious purposes. Medical cannabis is legal with a prescription. Cultivation of up to 5 plants for personal use is permitted. Commercial recreational sales remain illegal, though enforcement is relaxed in tourist areas.", variant: "default" },
+        { title: "Tourist Access", icon: "Users", content: "Tourists can obtain a medical cannabis permit through licensed physicians at herb houses or clinics for around $10-20 USD. This allows purchase from licensed dispensaries. Many resorts have on-site herb houses. Without a permit, you may encounter informal sellers, but this remains technically illegal. Decriminalization means small amounts result in fines, not arrest, but discretion is advised.", variant: "default" },
+        { title: "Where to Consume", icon: "MapPin", content: "Consumption is tolerated in private spaces, many resorts, and areas away from public view. Some licensed herb houses have consumption lounges. Public smoking is technically prohibited but enforcement varies—rural and beach areas are more relaxed than cities. Avoid smoking near schools, churches, or government buildings. Many all-inclusive resorts are cannabis-friendly—ask before booking.", variant: "accent" },
+        { title: "Best Regions", icon: "Building2", content: "**Negril** - Most cannabis-friendly town, Seven Mile Beach, laid-back vibes. **Montego Bay** - Tourist hub with herb houses and resort access. **Ocho Rios** - Cruise port with nearby Rastafarian communities. **Kingston** - Capital city, Bob Marley Museum, authentic culture. **Portland** - Off the beaten path, organic farms, roots culture. **Blue Mountains** - Coffee and ganja farms, eco-tourism.", variant: "default" },
+        { title: "Rastafarian Culture", icon: "Users", content: "For Rastafarians, ganja is the 'wisdom weed' used for meditation and spiritual connection. Visitors can experience authentic Rastafarian culture through community visits, reasoning sessions, and farm tours. Popular experiences include Rastafari Indigenous Village in Montego Bay and Ital (natural) cooking classes. Approach with respect—this is a living religion, not a tourist attraction.", variant: "gold" },
+        { title: "Quality & Varieties", icon: "Scale", content: "Jamaica is famous for landrace sativa strains known for uplifting, creative effects. 'Lamb's Bread' (Bob Marley's favorite) and 'Jamaican Lion' are legendary. Quality from licensed sources is generally good; street quality varies widely. Prices: $3-10 USD per gram depending on source and quality. Hash and concentrates are less common than flower.", variant: "default" },
+        { title: "Transportation & Safety", icon: "Plane", content: "Never attempt to leave Jamaica with cannabis—airport security is strict and penalties are severe. Don't transport cannabis between parishes in large amounts. Be cautious with informal sellers who may overcharge tourists or sell poor quality. Avoid isolated areas when purchasing. Jamaica is generally safe but use normal travel precautions. Driving under the influence is illegal.", variant: "warning" },
+        { title: "Cannabis Tourism Experiences", icon: "MapPin", content: "**Herb house tours** - Visit licensed dispensaries with educational components. **Ganja farm tours** - See cultivation in Blue Mountains or rural areas. **Bob Marley experiences** - Museum in Kingston, birthplace in Nine Mile. **Cooking classes** - Learn to make cannabis-infused Jamaican cuisine. **Wellness retreats** - Yoga and ganja programs in Negril and Ocho Rios.", variant: "accent" }
+      ],
+      safetyTips: [
+        "Obtain a medical permit for legal dispensary access",
+        "Never attempt to leave Jamaica with any cannabis",
+        "Be respectful when visiting Rastafarian communities",
+        "Negotiate prices before purchasing to avoid overcharging",
+        "Stay hydrated—tropical heat plus cannabis can dehydrate",
+        "Don't drive under the influence—roads can be challenging",
+        "Keep consumption discreet in public areas"
+      ]
+    }
+  },
+  {
+    id: "tsa-cannabis-rules-2025",
+    title: "TSA Cannabis Rules 2025: What You Can Bring Through Airport Security (By Airport)",
+    subtitle: "A comprehensive guide to TSA cannabis policies, federal vs state law conflicts, and what actually happens at major US airports when cannabis is found.",
+    excerpt: "The truth about flying with cannabis in 2025 - what the law says, what TSA does, and how enforcement differs dramatically between airports.",
+    date: "Dec 1, 2025",
+    readTime: "12 min read",
+    author: "BudQuest Team",
+    avatar: "✈️",
+    category: "Legal Updates",
+    tags: ["TSA", "Flying", "Legal", "Airports"],
+    image: "/blog-tsa-security.jpg",
+    content: {
+      introduction: "Flying with cannabis remains one of the most confusing aspects of legal marijuana. Even as more states legalize, federal law creates a complex patchwork where what's legal on the ground may not be legal in the air. This guide breaks down TSA's official policies, what actually happens at major airports, and how to minimize risk if you're traveling in legal states.",
+      disclaimer: "Cannabis remains federally illegal in the United States. TSA is a federal agency. This guide is for informational purposes only and does not constitute legal advice. Laws and enforcement can change. Never fly internationally with cannabis.",
+      sections: [
+        { title: "Official TSA Policy", icon: "Shield", content: "TSA's primary mission is security, not drug enforcement. However, TSA officers are required to report any suspected violations of law to local authorities. The official policy: TSA does not specifically search for marijuana, but if it's discovered during security screening, officers will refer the matter to law enforcement. What happens next depends entirely on local laws and airport policies.", variant: "default" },
+        { title: "Federal vs State Law Conflict", icon: "Scale", content: "Here's the core issue: airspace is federal jurisdiction. Even flying between two legal states (like California to Colorado), you're technically transporting a controlled substance across state lines using federal infrastructure. This is a federal crime. However, enforcement varies dramatically based on the departure airport and local police policies.", variant: "warning" },
+        { title: "What Airports Actually Do", icon: "Building2", content: "**LAX (Los Angeles)**: Officially allows up to legal limits (28.5g) to pass through security. Police won't confiscate or cite. **SFO, OAK, SJC**: Similar to LAX, generally permissive. **DEN (Denver)**: Cannabis amnesty boxes before security; don't bring it through. **SEA (Seattle)**: Technically must dispose before security, but enforcement is lax. **LAS (Las Vegas)**: Strictly prohibited; disposal boxes available. **O'Hare, JFK, MIA**: Will likely involve police and potential charges.", variant: "accent" },
+        { title: "Risk Assessment", icon: "AlertCircle", content: "**Lowest risk**: Edibles or vape cartridges in small quantities at permissive airports like LAX. **Moderate risk**: Small amounts of flower at legal-state airports. **High risk**: Any amount at airports in illegal states or federal facilities. **Extreme risk**: Any international flight or flight to federal property. The amount matters—personal use quantities are treated very differently than trafficking amounts.", variant: "warning" },
+        { title: "If Cannabis is Discovered", icon: "Users", content: "Stay calm. TSA will call local law enforcement. What happens next depends on: 1) The amount found, 2) Local laws, 3) Individual officer discretion. At LAX, you'll likely be sent on your way. At airports in illegal states, you may face citation, confiscation, or arrest. Never lie to TSA or police. Exercise your right to remain silent if you're unsure.", variant: "gold" },
+        { title: "Practical Recommendations", icon: "Plane", content: "**Best practice**: Don't fly with cannabis. Buy at your destination. **If you must**: Use edibles or vapes (less detectable). Keep amounts minimal. Research departure airport policies. Have legal documentation if medical. Never check cannabis in luggage—it's actually riskier than carry-on. Never fly internationally with any cannabis product.", variant: "default" }
+      ],
+      safetyTips: [
+        "TSA doesn't search for cannabis, but must report if found",
+        "LAX officially permits up to 28.5g through security",
+        "Denver has amnesty boxes - use them before security",
+        "Edibles and vapes are less likely to be detected than flower",
+        "Never fly internationally with cannabis - penalties are severe",
+        "Research your specific departure airport's policies",
+        "If caught, stay calm and know your rights"
+      ]
+    }
+  },
+  {
+    id: "colorado-420-rentals",
+    title: "Best 420-Friendly Vacation Rentals in Colorado",
+    subtitle: "Your complete guide to finding cannabis-welcoming accommodations across Colorado.",
+    excerpt: "Colorado's 420-friendly accommodation guide. Find verified bud-and-breakfast lodges, private vacation rentals, and hotels where cannabis is welcomed.",
+    date: "Dec 2, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏠",
+    category: "Accommodation",
+    tags: ["Colorado", "Stays", "420-Friendly", "Hotels"],
+    image: "/blog-colorado-rentals.jpg",
+    content: {
+      introduction: "Finding the right place to stay matters when you're combining Colorado's legal cannabis scene with a mountain vacation. Not all rentals are cannabis-friendly—hotels generally prohibit use, and even private rentals may have restrictions.",
+      disclaimer: "Always confirm consumption policies directly with the property. Smoking rules may differ from edible/vaping rules. Respect neighbors and property rules.",
+      sections: [
+        {
+          title: "Why 420-Friendly Stays Matter",
+          icon: "Info",
+          content: "In Colorado, public cannabis consumption is illegal. Hotels almost always prohibit it. If you consume on a hotel balcony or in a non-smoking room, you risk fines or eviction. 420-friendly rentals let you enjoy your purchases legally and responsibly—on a private patio, in a backyard, or in designated smoking areas.",
+          variant: "default"
+        },
+        {
+          title: "Top 420-Friendly Regions",
+          icon: "MapPin",
+          content: "**Denver Metro**: The most options for bud-and-breakfast inns and urban lofts. Close to dispensaries and nightlife.\n\n**Boulder**: Mountain town vibes with progressive policies. Great for nature lovers.\n\n**Mountain Towns (Breckenridge, Aspen, Telluride)**: Ski-in/ski-out cabins with 420 policies. Book early—these fill fast.\n\n**Colorado Springs / Manitou**: A mix of conservative areas and hippie-friendly pockets.",
+          variant: "accent"
+        },
+        {
+          title: "What to Look For",
+          icon: "Building2",
+          content: "**Explicit Policies**: Look for listings that clearly state '420-friendly' or 'cannabis-welcome'. Vague wording like 'smoke-friendly' might only mean tobacco.\n\n**Outdoor Space**: Patios, balconies, or yards make consumption easier and more discreet.\n\n**Ventilation**: Some indoor-friendly rentals have designated smoking rooms with proper ventilation.\n\n**Supplies**: Top-tier rentals may provide ashtrays, lighters, or even complimentary pre-rolls.",
+          variant: "gold"
+        },
+        {
+          title: "Where to Book",
+          icon: "TrendingUp",
+          content: "**Bud and Breakfast (budandbreakfast.com)**: The original 420-friendly accommodation site. Verified listings across Colorado.\n\n**420-Friendly Airbnb Filters**: Some hosts mention policies in descriptions—search carefully.\n\n**Colorado Cannabis Tours**: Offers packages with lodging + dispensary tours.\n\n**Local Inns**: Some boutique hotels in Denver, like The Patterson Inn, quietly welcome cannabis guests.",
+          variant: "accent"
+        },
+        {
+          title: "Sample Properties",
+          icon: "Building2",
+          content: "**Adagio B&B (Denver)**: Victorian mansion, outdoor smoking area, edibles welcome indoors.\n\n**The 420 Bungalow (Boulder)**: Private cottage, fully stocked kitchen, mountain views.\n\n**Cannabis Castle (Trinidad)**: Themed property near the New Mexico border, group-friendly.\n\n**Silverthorne Ski Loft**: Slope-side condo, balcony smoking, hot tub.",
+          variant: "default"
+        }
+      ],
+      safetyTips: [
+        "Verify 'Indoor' vs 'Outdoor' smoking rules explicitly",
+        "Don't smoke and drive (DUI laws are strict)",
+        "Avoid smoking on balconies visible to public streets (illegal)",
+        "Keep edibles away from kids/pets in rental properties",
+        "Be a good guest: Ventilate rooms to avoid lingering smells",
+        "Leave a review mentioning the 420-friendliness to help others"
+      ]
+    }
+  },
+  {
+    id: "cannabis-dispensaries-denver",
+    title: "Cannabis Dispensaries in Denver: Complete Guide 2025",
+    subtitle: "Your complete guide to Denver's best cannabis shops, products, and shopping tips",
+    excerpt: "Discover Denver's best cannabis dispensaries. Complete guide to top 10 shops, products, shopping tips, and laws. Plan your Denver cannabis trip.",
+    date: "Dec 4, 2025",
+    readTime: "15 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Denver", "Dispensaries", "Shopping", "Guide"],
+    image: "/blog-denver-dispensaries.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-denver",
+    content: {
+      introduction: "Denver is the cannabis capital of America with over 500 licensed dispensaries.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-rentals-denver",
+    title: "Best 420-Friendly Rentals in Denver: Complete Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly accommodation for your Denver trip",
+    excerpt: "Discover Denver's top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado adventure.",
+    date: "Dec 4, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏠",
+    category: "Accommodation",
+    tags: ["Denver", "Hotels", "420-Friendly", "Rentals"],
+    image: "/blog-denver-rentals.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-denver",
+    content: {
+      introduction: "Denver offers excellent 420-friendly accommodations for cannabis travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "420-rentals-boulder",
+    title: "Best 420-Friendly Rentals in Boulder: Complete Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly mountain retreat near the iconic Flatirons",
+    excerpt: "Discover Boulder's top 420-friendly hotels, vacation rentals, and mountain lodges. Book verified cannabis-welcoming accommodations near the Flatirons.",
+    date: "Dec 4, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Boulder", "Hotels", "420-Friendly", "Rentals", "Mountain"],
+    image: "/blog-boulder-rentals.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-boulder",
+    content: {
+      introduction: "Boulder offers stunning mountain lodges and vacation rentals for cannabis travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "cannabis-dispensaries-boulder",
+    title: "Cannabis Dispensaries in Boulder: Complete Guide 2025",
+    subtitle: "Your complete guide to Boulder's craft cannabis scene and best dispensaries",
+    excerpt: "Discover Boulder's best cannabis dispensaries. Complete guide to top shops, craft products, shopping tips, and local laws. Plan your Boulder cannabis experience.",
+    date: "Dec 4, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Boulder", "Dispensaries", "Shopping", "Guide"],
+    image: "/blog-boulder-dispensaries.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-boulder",
+    content: {
+      introduction: "Boulder offers a unique craft cannabis experience reflecting the city's health-conscious culture.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "cannabis-dispensaries-aspen",
+    title: "Best Cannabis Dispensaries in Aspen: Complete Guide 2025",
+    subtitle: "Your guide to the best high-end cannabis shops in the luxury mountain town of Aspen, Colorado.",
+    excerpt: "Discover Aspen's top cannabis dispensaries. Find premium flower, concentrates, and edibles for your luxury Colorado mountain getaway.",
+    date: "Dec 8, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Aspen", "Dispensaries", "Luxury", "Guide"],
+    image: "/blog-aspen-dispensaries.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-aspen",
+    content: {
+      introduction: "Aspen's cannabis scene offers a curated, boutique experience, focusing on premium products and personalized service.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "where-can-you-smoke-weed-in-colorado-2025",
+    title: "Where Can You Legally Smoke Weed in Colorado? (2025 Guide)",
+    subtitle: "Stop wondering if you can smoke in public (you can't). Here's the complete guide to legal consumption spots, from private balconies to licensed lounges.",
+    excerpt: "Confused about where you can legal consume cannabis in Colorado? This guide breaks down private property rules, consumption lounges, and why hotels are strictly off-limits.",
+    date: "Dec 16, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "🏔️",
+    category: "Legal Guide",
+    tags: ["Colorado", "Consumption Laws", "Lounges", "Hotels", "Legal"],
+    image: "/blog-colorado-consumption.png",
+    isExternalPage: true,
+    externalUrl: "/blog/where-can-you-smoke-weed-in-colorado-2025",
+    content: {
+      introduction: "",
+      disclaimer: "",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-rentals-aspen",
+    title: "Best 420-Friendly Rentals in Aspen: Luxury Guide 2025",
+    subtitle: "Find the perfect cannabis-friendly luxury accommodation for your Aspen mountain adventure.",
+    excerpt: "Discover Aspen's top 420-friendly luxury hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your Colorado mountain getaway.",
+    date: "Dec 8, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Aspen", "Rentals", "Hotels", "Luxury", "420-Friendly"],
+    image: "/blog-aspen-rentals.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-aspen",
+    content: {
+      introduction: "Aspen's 420-friendly accommodation scene is high-end, private, and offers an unparalleled experience for the discerning cannabis traveler.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "cannabis-dispensaries-colorado-springs",
+    title: "Cannabis Dispensaries in Colorado Springs: Medical Guide 2025",
+    subtitle: "A guide for medical cardholders to the best dispensaries and products in Colorado Springs.",
+    excerpt: "Your essential guide to medical cannabis dispensaries in Colorado Springs. Find top shops, products, and important legal information for cardholders.",
+    date: "Dec 8, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Cannabis Guides",
+    tags: ["Colorado Springs", "Dispensaries", "Medical", "Guide"],
+    image: "/blog-colorado-springs-dispensaries.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/cannabis-dispensaries-colorado-springs",
+    content: {
+      introduction: "Colorado Springs is unique among Colorado's major cities: recreational cannabis sales are prohibited. The city only allows medical marijuana dispensaries to operate.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. Always consume responsibly.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-rentals-colorado-springs",
+    title: "Best 420-Friendly Rentals in Colorado Springs: Guide 2025",
+    subtitle: "Find verified cannabis-friendly accommodation for your trip to the Pikes Peak region.",
+    excerpt: "Discover Colorado Springs' top 420-friendly hotels, vacation rentals, and stays. Book verified cannabis-welcoming accommodations for your trip.",
+    date: "Dec 8, 2025",
+    readTime: "12 min read",
+    author: "BudQuest",
+    avatar: "🏔️",
+    category: "Accommodation",
+    tags: ["Colorado Springs", "Rentals", "Hotels", "420-Friendly"],
+    image: "/blog-colorado-springs-rentals.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-rentals-colorado-springs",
+    content: {
+      introduction: "While the city has a unique stance on cannabis (medical-only sales), there are still verified 420-friendly accommodation options available for travelers.",
+      disclaimer: "Always verify property policies before booking.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "how-much-weed-can-you-buy-colorado-2025",
+    title: "How Much Weed Can You Buy in Colorado? (2025 Guide)",
+    subtitle: "Complete breakdown of Colorado's cannabis purchase limits for recreational and medical customers, including equivalency charts, possession rules, and first-time buyer tips.",
+    excerpt: "In Colorado, recreational customers 21+ can buy up to 1 oz flower, 8g concentrates, or 800mg THC edibles per day. This guide covers everything first-time tourists need to know.",
+    date: "Dec 16, 2025",
+    readTime: "10 min read",
+    author: "BudQuest",
+    avatar: "🌿",
+    category: "Legal Guide",
+    tags: ["Colorado", "Purchase Limits", "Dispensary", "Legal", "First-Time"],
+    image: "/blog-colorado-limits.png",
+    isExternalPage: true,
+    externalUrl: "/blog/how-much-weed-can-you-buy-colorado-2025",
+    content: {
+      introduction: "Colorado was the first state to legalize recreational cannabis, and it remains one of the most tourist-friendly destinations for cannabis enthusiasts. But one question comes up constantly: How much weed can you actually buy? Whether you're a first-time visitor or a returning traveler, understanding Colorado's purchase limits, possession rules, and equivalency system is essential for a stress-free experience. This comprehensive 2025 guide breaks down everything you need to know.",
+      disclaimer: "Cannabis is legal for adults 21+ in Colorado. These limits apply statewide, though some municipalities may have additional restrictions. Never transport cannabis across state lines—even to other legal states. Laws are current as of December 2025 but may change.",
+      sections: [],
+      safetyTips: []
+    }
+  }
+];
