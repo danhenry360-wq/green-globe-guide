@@ -45,8 +45,6 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Stays Guide",
     tags: ["Colorado Springs", "Manitou Springs", "Hotels", "420 Friendly"],
     image: "/blog-colorado-springs-stays.png",
-    isExternalPage: true,
-    externalUrl: "/blog/best-420-friendly-stays-colorado-springs",
     content: {
       introduction: "Finding a place to smoke in the Springs can be tough. We found the hidden gems where you can relax.",
       disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
@@ -66,8 +64,6 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Stays Guide",
     tags: ["Breckenridge", "Skiing", "Hotels", "420 Friendly"],
     image: "/blog-breckenridge-stays.png",
-    isExternalPage: true,
-    externalUrl: "/blog/best-420-friendly-stays-breckenridge",
     content: {
       introduction: "Planning a ski trip to Breckenridge? We found the best spots where you can actually consume your legal purchases.",
       disclaimer: "Cannabis is for adults 21+. Laws apply. Altitude affects tolerance.",
@@ -87,8 +83,6 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Guides",
     tags: ["Colorado", "Stays", "Luxury", "All-Inclusive"],
     image: "/blog-all-inclusive-weed-resorts-colorado.png",
-    isExternalPage: true,
-    externalUrl: "/blog/all-inclusive-weed-resorts-colorado",
     content: {
       introduction: "Colorado pioneers legal cannabis, but 'all-inclusive' means something different here.",
       disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
@@ -108,8 +102,6 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Pillar Guide",
     tags: ["Colorado", "Travel", "Legal", "Denver"],
     image: "/blog-colorado-ultimate-guide.png",
-    isExternalPage: true,
-    externalUrl: "/blog/ultimate-stoner-guide-colorado-2025",
     content: {
       introduction: "Welcome to the Mile High State. Let's get higher. Planning the perfect Colorado cannabis trip starts here.",
       disclaimer: "Cannabis is for adults 21+. Laws apply. Don't drive high.",
@@ -129,8 +121,6 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Guides",
     tags: ["Greeley", "Garden City", "Colorado", "Dispensaries"],
     image: "/greeley-dispensaries.png",
-    isExternalPage: true,
-    externalUrl: "/blog/greeley-dispensaries-garden-city-loophole",
     content: {
       introduction: "Greeley banned dispensaries, but Garden City didn't. Quality cannabis is just minutes away.",
       disclaimer: "Cannabis is for adults 21+. Laws apply. Consume responsibly.",
