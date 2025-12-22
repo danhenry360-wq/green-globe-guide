@@ -169,14 +169,14 @@ const BlogBreckenridgeStays = () => {
 
             <main className="min-h-screen bg-background pt-20">
                 {/* Hero Section */}
-                <section className="relative h-[65vh] flex items-center justify-center overflow-hidden">
+                <section className="relative h-[75vh] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 z-0">
                         <img
                             src="/blog-breckenridge-stays.png"
-                            alt="Snowy Breckenridge mountains"
-                            className="w-full h-full object-cover opacity-60"
+                            alt="Snowy Breckenridge mountains with 420-friendly lodging"
+                            className="w-full h-full object-cover opacity-80 scale-105 transition-transform duration-700 hover:scale-100"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/30 to-background" />
                     </div>
 
                     <div className="container mx-auto px-4 relative z-10 text-center">
