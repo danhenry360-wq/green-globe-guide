@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
-import { BLOG_POSTS } from "./Blog";
+import { BLOG_POSTS } from "@/data/blog-posts";
 
 const iconMap: Record<string, any> = {
   Shield,
