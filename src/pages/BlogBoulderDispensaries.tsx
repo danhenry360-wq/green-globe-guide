@@ -150,9 +150,51 @@ const BlogBoulderDispensaries = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Cannabis Dispensaries in Boulder: Complete Guide 2025",
+            "headline": "Top 10 Boulder Dispensaries (2025): Plus Where to Stay",
+            "description": "Everything you need to know about buying weed in Boulder. Best local shops plus our verified list of 420-friendly hotels for the ultimate Colorado trip.",
+            "image": "https://budquest.guide/blog-boulder-dispensaries.jpg",
             "author": { "@type": "Organization", "name": "BudQuest" },
-            "datePublished": "2025-12-04"
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest",
+              "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+            },
+            "datePublished": "2025-12-04",
+            "dateModified": "2025-12-04"
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+              { "@type": "ListItem", "position": 3, "name": "Boulder Dispensaries", "item": "https://budquest.guide/blog/cannabis-dispensaries-boulder" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Do I need a medical card in Boulder?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No, recreational cannabis is legal for adults 21+. Medical cards offer higher possession limits and tax savings." }
+              },
+              {
+                "@type": "Question",
+                "name": "What ID do I need?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Valid government-issued photo ID (driver's license, passport, or ID card) proving you're 21+." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I smoke on Pearl Street?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No, public consumption is illegal. Use private property or designated consumption areas." }
+              }
+            ]
           })}
         </script>
       </Helmet>
@@ -184,8 +226,9 @@ const BlogBoulderDispensaries = () => {
             </nav>
 
             <div className="max-w-4xl">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Cannabis Guide</span>
+                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Calendar className="h-4 w-4" /> December 4, 2025
                 </span>

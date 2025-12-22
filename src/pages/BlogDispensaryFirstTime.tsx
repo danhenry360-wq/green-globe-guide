@@ -113,6 +113,34 @@ const BlogDispensaryFirstTime = () => {
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
+                        "@type": "Article",
+                        "headline": "First Time at a Colorado Dispensary: What to Expect (2025 Guide)",
+                        "description": "Complete guide for your first Colorado dispensary visit. Learn what to bring, what to say, purchase limits, and how to buy weed legally in 2025.",
+                        "image": "https://budquest.guide/blog-first-time-dispensary.png",
+                        "author": { "@type": "Organization", "name": "BudQuest Team" },
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "BudQuest",
+                            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+                        },
+                        "datePublished": "2025-12-17",
+                        "dateModified": "2025-12-17"
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+                            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+                            { "@type": "ListItem", "position": 3, "name": "First Time Dispensary Guide", "item": "https://budquest.guide/blog/first-time-dispensary-guide-colorado-2025" }
+                        ]
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
                         "@type": "FAQPage",
                         "mainEntity": [
                             {
@@ -162,8 +190,9 @@ const BlogDispensaryFirstTime = () => {
                         </nav>
 
                         <div className="max-w-4xl">
-                            <div className="flex items-center gap-4 mb-6">
+                            <div className="flex flex-wrap items-center gap-4 mb-6">
                                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Beginner Guide</span>
+                                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                                     <Calendar className="h-4 w-4" /> December 17, 2025
                                 </span>
@@ -358,8 +387,8 @@ const BlogDispensaryFirstTime = () => {
                             <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-8 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
                                 <div>
                                     <h3 className="text-2xl font-bold text-foreground mb-2">Ready to Visit?</h3>
-                                    <p className="text-muted-foreground mb-0">
-                                        Explore our curated guide to the best dispensaries in Colorado.
+                                    <p className="text-muted-foreground mb-4">
+                                        Explore our curated guides for <Link to="/blog/cannabis-dispensaries-denver" className="text-accent hover:underline">Denver</Link> and <Link to="/blog/cannabis-dispensaries-boulder" className="text-accent hover:underline">Boulder</Link> dispensaries or see all Colorado guides.
                                     </p>
                                 </div>
                                 <div className="flex gap-4 flex-col sm:flex-row">

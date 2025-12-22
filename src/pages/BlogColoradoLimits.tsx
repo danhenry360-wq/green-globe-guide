@@ -97,6 +97,34 @@ const BlogColoradoLimits = () => {
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
+                        "@type": "Article",
+                        "headline": "How Much Weed Can You Buy in Colorado? (2025 Guide)",
+                        "description": "Everything tourists needs to know about purchasing limits, equivalency math, and possession rules for a stress-free trip.",
+                        "image": "https://budquest.guide/blog-colorado-limits.png",
+                        "author": { "@type": "Organization", "name": "BudQuest" },
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "BudQuest",
+                            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+                        },
+                        "datePublished": "2025-12-16",
+                        "dateModified": "2025-12-16"
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+                            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+                            { "@type": "ListItem", "position": 3, "name": "Colorado Cannabis Limits", "item": "https://budquest.guide/blog/how-much-weed-can-you-buy-colorado-2025" }
+                        ]
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
                         "@type": "FAQPage",
                         "mainEntity": [
                             {
@@ -141,8 +169,9 @@ const BlogColoradoLimits = () => {
                         </nav>
 
                         <div className="max-w-4xl">
-                            <div className="flex items-center gap-4 mb-6">
+                            <div className="flex flex-wrap items-center gap-4 mb-6">
                                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Legal Guide</span>
+                                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                                     <Calendar className="h-4 w-4" /> December 16, 2025
                                 </span>

@@ -744,8 +744,12 @@ const Hotels = () => {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
                 Verified 420 Rentals
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2">
-                Discover cannabis-friendly accommodations worldwide
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-4">
+                Discover cannabis-friendly accommodations worldwide.
+                Looking for specific guides? Check out our
+                <Link to="/blog/best-420-friendly-stays-colorado-springs" className="text-accent hover:underline mx-1">Colorado Springs Stays</Link>
+                or
+                <Link to="/blog/best-colorado-all-inclusive-cannabis-resorts" className="text-accent hover:underline mx-1">All-Inclusive Resorts</Link>.
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground/80">
                 {processedData.length} verified rentals • Policies checked • Premium experience

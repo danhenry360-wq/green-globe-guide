@@ -272,12 +272,51 @@ const BlogDenverDispensaries = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Cannabis Dispensaries in Denver: Complete Guide 2025",
-            "description": "Complete guide to Denver's best cannabis dispensaries, products, and shopping tips",
+            "headline": "Best Denver Dispensaries 2025: The Complete Tourist Guide",
+            "description": "Stop guessing! See top-rated Denver dispensaries plus 420-friendly hotels where you can actually smoke. Your 2025 guide to the Mile High City.",
+            "image": "https://budquest.guide/blog-denver-dispensaries.jpg",
             "author": { "@type": "Organization", "name": "BudQuest" },
-            "publisher": { "@type": "Organization", "name": "BudQuest" },
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest",
+              "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+            },
             "datePublished": "2025-12-04",
-            "dateModified": "2025-12-04"
+            "dateModified": "2025-12-08"
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+              { "@type": "ListItem", "position": 3, "name": "Best Denver Dispensaries", "item": "https://budquest.guide/blog/cannabis-dispensaries-denver" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Do I need a medical card to buy cannabis in Denver?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. Colorado has recreational cannabis for adults 21+. Anyone with valid ID can purchase at recreational dispensaries." }
+              },
+              {
+                "@type": "Question",
+                "name": "What ID do I need to buy cannabis?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Any government-issued photo ID showing you're 21 or older. Out-of-state driver's licenses and passports work fine." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I smoke cannabis in my hotel room?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Most hotels prohibit cannabis. Book a verified 420-friendly rental or consume in legal private spaces only." }
+              }
+            ]
           })}
         </script>
       </Helmet>
@@ -309,8 +348,9 @@ const BlogDenverDispensaries = () => {
             </nav>
 
             <div className="max-w-4xl">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Cannabis Guides</span>
+                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Calendar className="h-4 w-4" /> December 4, 2025
                 </span>

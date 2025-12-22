@@ -314,6 +314,17 @@ const ColoradoHub = () => {
         <title>Colorado Cannabis Travel Guide 2025 | BudQuest</title>
         <meta name="description" content="Explore Colorado cannabis destinations. Denver, Boulder, Mountain towns, and more. Find dispensaries, laws, and 420-friendly stays." />
         <link rel="canonical" href="https://budquest.guide/usa/colorado" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "USA Guide", "item": "https://budquest.guide/usa" },
+              { "@type": "ListItem", "position": 3, "name": "Colorado", "item": "https://budquest.guide/usa/colorado" }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <Navigation />
@@ -483,7 +494,7 @@ const ColoradoHub = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-muted-foreground mb-4">{law.desc}</p>
-                      <ul className="space-y-2">
+                      <ul className="space-y-2 mb-4">
                         {law.points.map((point, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
                             <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
@@ -491,6 +502,30 @@ const ColoradoHub = () => {
                           </li>
                         ))}
                       </ul>
+                      {law.title === "Purchase Limits" && (
+                        <Link
+                          to="/blog/how-much-weed-can-you-buy-colorado-2025"
+                          className="text-accent text-sm font-medium flex items-center hover:underline"
+                        >
+                          View Full 2025 Limits Guide <ArrowRight className="w-3 h-3 ml-1" />
+                        </Link>
+                      )}
+                      {law.title === "Public Consumption" && (
+                        <Link
+                          to="/blog/where-can-you-smoke-weed-in-colorado-2025"
+                          className="text-accent text-sm font-medium flex items-center hover:underline"
+                        >
+                          View Consumption Guide <ArrowRight className="w-3 h-3 ml-1" />
+                        </Link>
+                      )}
+                      {law.title === "Federal Land Warning" && (
+                        <Link
+                          to="/colorado/federal-land-warning"
+                          className="text-accent text-sm font-medium flex items-center hover:underline"
+                        >
+                          View Federal Warnings <ArrowRight className="w-3 h-3 ml-1" />
+                        </Link>
+                      )}
                     </CardContent>
                   </Card>
                 </motion.div>

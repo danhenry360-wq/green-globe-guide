@@ -14,6 +14,7 @@ import {
   Users,
   Info,
   ArrowLeft,
+  ArrowRight,
   Globe,
   Mountain,
   Palmtree,
@@ -27,7 +28,7 @@ import {
   X
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { getCountryImage } from "@/data/country_images";
 import { getStatusBadgeClasses } from "@/lib/legal-status-colors";
@@ -3008,7 +3009,7 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const { data: dbImages } = useCountryImages();
-  
+
   // Helper to get best image for country
   const getImageForCountry = (country: Country) => {
     // First check database images
@@ -3019,7 +3020,7 @@ const CountryIndex = ({ continent }: { continent: Continent }) => {
     // Fallback to country_images.ts
     return getCountryImage(country.slug);
   };
-  
+
   const filtered = useMemo(
     () =>
       q
@@ -3137,7 +3138,7 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
   const nav = useNavigate();
   const [q, setQ] = useState("");
   const { data: dbImages } = useCountryImages();
-  
+
   // Helper to get best image for country
   const getImageForCountry = () => {
     // First check database images
@@ -3148,7 +3149,7 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
     // Fallback to country_images.ts
     return getCountryImage(country.slug);
   };
-  
+
   const filtered = useMemo(
     () =>
       q
@@ -3223,7 +3224,12 @@ const RegionIndex = ({ continent, country }: { continent: Continent; country: Co
             <h3 className="font-semibold mb-2 flex items-center gap-2">
               <Info className="w-4 h-4 text-primary" /> Legal Context
             </h3>
-            <p className="text-muted-foreground">{country.description}</p>
+            <p className="text-muted-foreground mb-4">{country.description}</p>
+            {country.slug === 'united-states' && (
+              <Link to="/blog/ultimate-stoner-guide-colorado-2025" className="inline-flex items-center gap-2 text-accent text-sm font-semibold hover:underline">
+                View Ultimate Colorado Guide 2025 <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 max-w-3xl">
@@ -3437,6 +3443,18 @@ const WorldGuide = () => {
         <title>World Cannabis Guide 2025 | Global Cannabis Laws | BudQuest</title>
         <meta name="description" content="Complete guide to cannabis laws in 100+ countries. Find legal status, tourist tips, and 420-friendly travel guides for every continent." />
         <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "World Guide", "item": "https://budquest.guide/world" },
+              ...(cSlug ? [{ "@type": "ListItem", "position": 3, "name": continent?.name || "Continent", "item": `https://budquest.guide/world/${cSlug}` }] : []),
+              ...(coSlug ? [{ "@type": "ListItem", "position": 4, "name": country?.name || "Country", "item": `https://budquest.guide/world/${cSlug}/${coSlug}` }] : [])
+            ]
+          })}
+        </script>
       </Helmet>
       <Navigation />
 

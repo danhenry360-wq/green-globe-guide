@@ -21,6 +21,52 @@ const BlogDenverVsBoulder = () => {
                 <meta property="og:description" content="Detailed comparison of dispensaries, hotels, and vibes to help you choose." />
                 <meta property="og:image" content="/blog-denver-vs-boulder.png" />
                 <meta property="og:type" content="article" />
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Article",
+                        "headline": "Denver vs Boulder: Which is Better for Cannabis Tourists? (2025)",
+                        "description": "Detailed comparison of dispensaries, hotels, and vibes to help you choose between Denver and Boulder.",
+                        "image": "https://budquest.guide/blog-denver-vs-boulder.png",
+                        "author": { "@type": "Organization", "name": "BudQuest Team" },
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "BudQuest",
+                            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+                        },
+                        "datePublished": "2025-12-17",
+                        "dateModified": "2025-12-17"
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+                            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+                            { "@type": "ListItem", "position": 3, "name": "Denver vs Boulder", "item": "https://budquest.guide/blog/denver-vs-boulder-cannabis-tourists-2025" }
+                        ]
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                            {
+                                "@type": "Question",
+                                "name": "Is Denver or Boulder better for weed tourists?",
+                                "acceptedAnswer": { "@type": "Answer", "text": "Denver is better if you want maximum variety, 420-friendly hotels, and nightlife. Boulder is better for a relaxed, nature-focused experience with high-quality craft cannabis." }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "How many dispensaries are in Denver vs Boulder?",
+                                "acceptedAnswer": { "@type": "Answer", "text": "Denver has approximately 186 recreational dispensaries, while Boulder has about 44." }
+                            }
+                        ]
+                    })}
+                </script>
             </Helmet>
 
             <Navigation />
@@ -50,8 +96,9 @@ const BlogDenverVsBoulder = () => {
                         </nav>
 
                         <div className="max-w-4xl">
-                            <div className="flex items-center gap-4 mb-6">
+                            <div className="flex flex-wrap items-center gap-4 mb-6">
                                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Comparison Guide</span>
+                                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                                     <Calendar className="h-4 w-4" /> December 17, 2025
                                 </span>

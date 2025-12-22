@@ -161,8 +161,45 @@ const BlogDenverRentals = () => {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "Best 420-Friendly Rentals in Denver: Complete Guide 2025",
+            "description": "Find the best cannabis-friendly Airbnb and vacation rentals in Denver. Our curated list of 420-friendly stays for a perfect Mile High trip.",
+            "image": "https://budquest.guide/blog-denver-rentals.jpg",
             "author": { "@type": "Organization", "name": "BudQuest" },
-            "datePublished": "2025-12-04"
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest",
+              "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+            },
+            "datePublished": "2025-12-04",
+            "dateModified": "2025-12-04"
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+              { "@type": "ListItem", "position": 3, "name": "Denver 420 Rentals", "item": "https://budquest.guide/blog/best-420-rentals-denver" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Are there 420-friendly hotels in Denver?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes, while many hotels are non-smoking, Denver has several verified 420-friendly hotels and private rentals that allow consumption." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I smoke on the balcony of a Denver rental?",
+                "acceptedAnswer": { "@type": "Answer", "text": "This depends on the individual property rules. Always check with your host or the property description before consuming." }
+              }
+            ]
           })}
         </script>
       </Helmet>
@@ -194,8 +231,9 @@ const BlogDenverRentals = () => {
             </nav>
 
             <div className="max-w-4xl">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Accommodation</span>
+                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Calendar className="h-4 w-4" /> December 4, 2025
                 </span>
@@ -212,8 +250,10 @@ const BlogDenverRentals = () => {
                 <span className="text-foreground/90">Complete Guide 2025</span>
               </h1>
 
-              <p className="text-lg text-muted-foreground mb-6">
-                Find the perfect cannabis-friendly accommodation for your Denver adventure
+              <p className="text-lg text-muted-foreground mb-4">
+                Find the perfect cannabis-friendly accommodation for your Denver adventure.
+                Once you've booked your stay, see where to shop with our
+                <Link to="/blog/cannabis-dispensaries-denver" className="text-accent hover:underline mx-1">Complete Denver Dispensary Guide</Link>.
               </p>
 
               <div className="flex items-center gap-3">
