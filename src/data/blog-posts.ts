@@ -76,7 +76,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Best 420-Friendly Stays in Fort Collins (2025): Craft Beer & Cannabis Capital",
     subtitle: "College town vibes, 100+ breweries, and cannabis-friendly lodging.",
     excerpt: "Fort Collins is Colorado's craft beer capital with a laid-back college town vibe. Here's your complete guide to 420-friendly hostels, private rentals, and campgrounds in NoCo.",
-    date: "Jan 15, 2025",
+    date: "Dec 22, 2025",
     readTime: "8 min read",
     author: "BudQuest Team",
     avatar: "🍺",
