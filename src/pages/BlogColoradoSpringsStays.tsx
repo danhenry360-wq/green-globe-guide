@@ -11,6 +11,36 @@ import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
 const BlogColoradoSpringsStays = () => {
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Best 420-Friendly Hotels Colorado Springs & Manitou (2025)",
+        "description": "Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips.",
+        "image": "https://budquest.guide/blog-colorado-springs-stays.png",
+        "author": { "@type": "Organization", "name": "BudQuest" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+        },
+        "datePublished": "2025-12-20",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/best-420-friendly-stays-colorado-springs"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+            { "@type": "ListItem", "position": 3, "name": "420-Friendly Hotels Colorado Springs", "item": "https://budquest.guide/blog/best-420-friendly-stays-colorado-springs" }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -56,6 +86,8 @@ const BlogColoradoSpringsStays = () => {
                     }
                     `}
                 </script>
+                <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
 
             <Navigation />

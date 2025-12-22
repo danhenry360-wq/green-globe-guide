@@ -60,6 +60,36 @@ const BlogRedRocksDispensaries = () => {
         return stars;
     };
 
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Best Dispensaries Near Red Rocks (2025) | Morrison & Golden Weed Maps",
+        "description": "Heading to a concert? Here are the closest dispensaries to Red Rocks Amphitheatre, consumption rules, and what to buy before the show.",
+        "image": "https://budquest.guide/blog-red-rocks-dispensaries.png",
+        "author": { "@type": "Organization", "name": "BudQuest" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BudQuest",
+            "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+        },
+        "datePublished": "2025-12-15",
+        "dateModified": "2025-12-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://budquest.guide/blog/best-dispensaries-near-red-rocks-2025"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+            { "@type": "ListItem", "position": 3, "name": "Dispensaries Near Red Rocks", "item": "https://budquest.guide/blog/best-dispensaries-near-red-rocks-2025" }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -71,6 +101,8 @@ const BlogRedRocksDispensaries = () => {
                 <meta property="og:description" content="Don't get caught dry at the show. Find the best weed stops on your way to Red Rocks." />
                 <meta property="og:image" content="/blog-red-rocks-dispensaries.png" />
                 <meta property="og:type" content="article" />
+                <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
 
             <Navigation />
