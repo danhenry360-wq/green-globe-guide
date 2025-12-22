@@ -154,6 +154,7 @@ const AdminHotels = () => {
         latitude: hotelData.latitude,
         longitude: hotelData.longitude,
         images: hotelData.images,
+        amenities: hotelData.amenities,
       });
     },
     onSuccess: () => {
