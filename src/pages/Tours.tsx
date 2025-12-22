@@ -30,6 +30,8 @@ const STATIC_TOUR_IMAGES: Record<string, string> = {
 
 const ITEMS_PER_PAGE = 10;
 
+type SortType = 'recommended' | 'rating' | 'price-low' | 'price-high';
+
 /* ============================================
    HELPER COMPONENTS
  ============================================ */
