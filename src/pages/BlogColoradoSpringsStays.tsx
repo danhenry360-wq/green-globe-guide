@@ -212,13 +212,13 @@ const BlogColoradoSpringsStays = () => {
                                                     </Link>
                                                 </div>
                                                 <div className="flex-1">
-                                                    <div className="flex justify-between items-start mb-2">
+                                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
                                                         <Link to="/hotels/innhale-resort-and-spa" className="hover:text-accent transition-colors">
-                                                            <h4 className="text-xl font-bold flex items-center gap-2">
+                                                            <h4 className="text-lg sm:text-xl font-bold flex items-center gap-2">
                                                                 INNhale Resort and Spa <ChevronRight className="h-4 w-4" />
                                                             </h4>
                                                         </Link>
-                                                        <span className="flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
+                                                        <span className="w-fit flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
                                                             <Star className="h-3 w-3 fill-gold text-gold" /> 9.1
                                                         </span>
                                                     </div>
@@ -258,13 +258,13 @@ const BlogColoradoSpringsStays = () => {
                                                     </Link>
                                                 </div>
                                                 <div className="flex-1">
-                                                    <div className="flex justify-between items-start mb-2">
+                                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
                                                         <Link to="/hotels/the-ganja-getaway" className="hover:text-accent transition-colors">
-                                                            <h4 className="text-xl font-bold flex items-center gap-2">
+                                                            <h4 className="text-lg sm:text-xl font-bold flex items-center gap-2">
                                                                 The Ganja Getaway <ChevronRight className="h-4 w-4" />
                                                             </h4>
                                                         </Link>
-                                                        <span className="flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
+                                                        <span className="w-fit flex items-center gap-1 text-sm font-bold bg-muted px-2 py-1 rounded">
                                                             <Star className="h-3 w-3 fill-gold text-gold" /> 4.0
                                                         </span>
                                                     </div>
