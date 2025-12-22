@@ -136,28 +136,30 @@ const BlogUltimateColoradoGuide = () => {
 
             <main className="min-h-screen bg-background pt-20">
                 {/* Hero Section */}
-                <section className="relative h-[60vh] overflow-hidden">
-                    <img
-                        src="/blog-colorado-ultimate-guide.png"
-                        alt="Colorado Rocky Mountains - Ultimate Stoner Guide 2025"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8 container mx-auto">
+                <section className="relative min-h-[50vh] md:h-[60vh] flex items-center overflow-hidden pt-12 md:pt-0">
+                    <div className="absolute inset-0 z-0">
+                        <img
+                            src="/blog-colorado-ultimate-guide.png"
+                            alt="Colorado Rocky Mountains - Ultimate Stoner Guide 2025"
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 py-12">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                             className="max-w-4xl"
                         >
-                            <div className="flex items-center gap-4 mb-4">
+                            <div className="flex flex-wrap items-center gap-4 mb-4">
                                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md">Pillar Page</span>
                                 <span className="text-white/80 text-sm flex items-center gap-1 shadow-sm">
                                     <Calendar className="h-4 w-4" /> December 18, 2025
                                 </span>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight shadow-xl">
-                                High Altitude, Higher Vibes: <br />
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                                High Altitude, Higher Vibes: <br className="hidden sm:block" />
                                 <span className="text-accent">The Ultimate Stoner's Guide to Colorado 2025</span>
                             </h1>
                             <p className="text-xl text-white/90 max-w-2xl mb-6 drop-shadow-md">

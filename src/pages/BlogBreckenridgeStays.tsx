@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import {
     MapPin, Clock, AlertTriangle, Home, Mountain,
     CheckCircle2, ChevronRight, Info, Star, DollarSign,
-    Ban, Leaf, Award, Bed, Building, Wind, Zap, Gem, Coffee, Users
+    Ban, Leaf, Award, Bed, Building, Wind, Zap, Gem, Coffee, Users,
+    ArrowRight, Search
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -137,11 +138,11 @@ const BlogBreckenridgeStays = () => {
                             <Badge variant="outline" className="mb-4 bg-green-500/10 border-green-500/20 text-green-400 px-4 py-1">
                                 ✓ Current for 2025 Ski Season
                             </Badge>
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight">
-                                Best <span className="text-green-500">420-Friendly Stays</span> <br />
+                            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight px-4 sm:px-0">
+                                Best <span className="text-green-500">420-Friendly Stays</span> <br className="hidden sm:block" />
                                 in Breckenridge: Ski High, Sleep High
                             </h1>
-                            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+                            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 px-4 sm:px-0">
                                 Finding a place to consume in Breck can be tricky. Here is your roadmap to the best cannabis-welcoming rentals and lodges for 2025.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground font-medium">
@@ -156,22 +157,22 @@ const BlogBreckenridgeStays = () => {
                     </div>
                 </section>
 
-                <section className="container mx-auto px-4 py-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <section className="container mx-auto px-4 py-8 md:py-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
                         {/* Main Content Area */}
-                        <div className="lg:col-span-9 max-w-4xl mx-auto space-y-16">
+                        <div className="lg:col-span-9 max-w-4xl mx-auto space-y-12 md:space-y-16">
 
                             {/* 1. Quick Answer Box */}
                             <div id="quick-answer">
-                                <Card className="bg-green-500/5 border-green-500/20 p-8 relative overflow-hidden">
+                                <Card className="bg-green-500/5 border-green-500/20 p-5 sm:p-8 relative overflow-hidden">
                                     <Zap className="absolute top-4 right-4 h-12 w-12 text-green-500/10" />
-                                    <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                                    <h2 className="text-xl sm:text-2xl font-bold mb-4 flex items-center gap-2">
                                         <Info className="h-6 w-6 text-green-500" /> Reality Check
                                     </h2>
-                                    <p className="text-lg leading-relaxed text-foreground/90">
+                                    <p className="text-base sm:text-lg leading-relaxed text-foreground/90">
                                         <strong>The honest truth:</strong> Breckenridge has zero traditional hotels with smoking-allowed rooms. Due to strict fire codes and non-smoking policies, every 420-friendly option is a private rental, a vacation home, or one unique social lodge.
                                     </p>
-                                    <p className="text-lg leading-relaxed text-foreground/90 mt-4">
+                                    <p className="text-base sm:text-lg leading-relaxed text-foreground/90 mt-4">
                                         Your best strategy? Book a private rental with a balcony or patio, or stay at the dedicated <strong>Bunk House Lodge</strong>.
                                     </p>
                                 </Card>
@@ -259,11 +260,16 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-0">LGBTQ+ Welcome</Badge>
                                                     <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Social Vibe</Badge>
                                                 </div>
-                                                <div className="flex items-center justify-between pt-6 border-t border-border/50">
+                                                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
                                                     <div>
                                                         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
                                                         <span className="text-sm font-bold text-green-500">Solo travelers, couples, social atmosphere</span>
                                                     </div>
+                                                    <Link to="/hotels/bunk-house-lodge" className="w-full sm:w-auto">
+                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold">
+                                                            View Bunk House <ArrowRight className="h-4 w-4 ml-2" />
+                                                        </Button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -297,11 +303,16 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Private Hot Tub</Badge>
                                                     <Badge variant="secondary" className="bg-orange-500/10 text-orange-600 border-0">Sleeps 8</Badge>
                                                 </div>
-                                                <div className="flex items-center justify-between pt-6 border-t border-border/50">
+                                                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
                                                     <div>
                                                         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
                                                         <span className="text-sm font-bold text-green-500">Groups, families (21+), special occasions</span>
                                                     </div>
+                                                    <Link to="/hotels/breck-haus" className="w-full sm:w-auto">
+                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold">
+                                                            Check Availability <ArrowRight className="h-4 w-4 ml-2" />
+                                                        </Button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {
     MapPin, Clock, AlertTriangle, Home, Mountain,
     CheckCircle2, ChevronRight, Info, Star, DollarSign,
-    Ban, Leaf, Award, Bed, Building
+    Ban, Leaf, Award, Bed, Building, ArrowRight
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -94,31 +94,33 @@ const BlogColoradoSpringsStays = () => {
 
             <main className="min-h-screen bg-background pt-20">
                 {/* Hero Section */}
-                <section className="relative h-[60vh] overflow-hidden">
-                    <img
-                        src="/dest-colorado-springs.jpg"
-                        alt="Garden of the Gods and Colorado Springs"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8 container mx-auto">
+                <section className="relative min-h-[50vh] md:h-[60vh] flex items-center overflow-hidden pt-12 md:pt-0">
+                    <div className="absolute inset-0 z-0">
+                        <img
+                            src="/dest-colorado-springs.jpg"
+                            alt="Garden of the Gods and Colorado Springs"
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 py-12">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                             className="max-w-4xl"
                         >
-                            <div className="flex items-center gap-4 mb-4">
+                            <div className="flex flex-wrap items-center gap-4 mb-4">
                                 <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md">Stays Guide</span>
                                 <span className="text-white/80 text-sm flex items-center gap-1 shadow-sm">
                                     <Clock className="h-4 w-4" /> 7 min read
                                 </span>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight shadow-xl">
-                                Best 420-Friendly Stays in <br />
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                                Best 420-Friendly Stays in <br className="hidden sm:block" />
                                 <span className="text-green-500">Colorado Springs & Manitou (2025)</span>
                             </h1>
-                            <p className="text-xl text-white/90 max-w-2xl mb-6 drop-shadow-md">
+                            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mb-6">
                                 Finding a place to smoke in the Springs can be tough. We found the hidden gems where you can relax.
                             </p>
                         </motion.div>
@@ -131,7 +133,7 @@ const BlogColoradoSpringsStays = () => {
                         <div className="lg:col-span-3 space-y-12">
 
                             {/* 1. Quick Answer Box */}
-                            <section className="bg-muted p-6 rounded-2xl border border-accent/10">
+                            <section className="bg-muted p-5 sm:p-8 rounded-2xl border border-accent/10">
                                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                                     <Info className="h-6 w-6 text-accent" /> Quick Answer
                                 </h2>
@@ -231,12 +233,14 @@ const BlogColoradoSpringsStays = () => {
                                                         <span className="text-xs bg-green-500/10 text-green-600 px-2 py-1 rounded font-medium">Consumption Allowed</span>
                                                         <span className="text-xs bg-muted px-2 py-1 rounded">Spa Services</span>
                                                     </div>
-                                                    <Link
-                                                        to="/hotels/innhale-resort-and-spa"
-                                                        className="inline-flex items-center gap-2 text-sm font-bold text-white bg-accent px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
-                                                    >
-                                                        View Details & Book <ChevronRight className="h-4 w-4" />
-                                                    </Link>
+                                                    <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
+                                                        <Link
+                                                            to="/hotels/innhale-resort-and-spa"
+                                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-accent px-6 py-2 rounded-lg hover:bg-accent/90 transition-colors"
+                                                        >
+                                                            View Details & Book <ArrowRight className="h-4 w-4" />
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Card>
@@ -275,12 +279,14 @@ const BlogColoradoSpringsStays = () => {
                                                         <span className="text-xs bg-green-500/10 text-green-600 px-2 py-1 rounded font-medium">Private Home</span>
                                                         <span className="text-xs bg-muted px-2 py-1 rounded">Full Kitchen</span>
                                                     </div>
-                                                    <Link
-                                                        to="/hotels/the-ganja-getaway"
-                                                        className="inline-flex items-center gap-2 text-sm font-bold text-white bg-accent px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
-                                                    >
-                                                        View Details & Book <ChevronRight className="h-4 w-4" />
-                                                    </Link>
+                                                    <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
+                                                        <Link
+                                                            to="/hotels/the-ganja-getaway"
+                                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-accent px-6 py-2 rounded-lg hover:bg-accent/90 transition-colors"
+                                                        >
+                                                            View Details & Book <ArrowRight className="h-4 w-4" />
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Card>
