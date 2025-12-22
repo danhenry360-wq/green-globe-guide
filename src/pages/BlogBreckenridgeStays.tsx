@@ -25,7 +25,8 @@ const BlogBreckenridgeStays = () => {
             const { data: dbRentals, error } = await supabase
                 .from('hotels')
                 .select('*')
-                .eq('city', 'Breckenridge');
+                .eq('is_420_friendly', true)
+                .ilike('address', '%Breckenridge%');
 
             if (!error && dbRentals) {
                 setRentals(dbRentals);
