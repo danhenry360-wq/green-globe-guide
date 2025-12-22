@@ -345,38 +345,50 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 4. What to Look For When Booking */}
                             <div id="booking-tips">
-                                <h2 className="text-3xl font-bold mb-8">What to Look For When Booking</h2>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse border border-border">
-                                        <thead>
-                                            <tr className="bg-muted/50 border-b border-border">
-                                                <th className="p-4 font-bold text-sm">Feature</th>
-                                                <th className="p-4 font-bold text-sm">Why It Matters</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold flex items-center gap-2"><Wind className="h-4 w-4 text-green-500" /> Private balcony/patio</td>
-                                                <td className="p-4 text-sm text-muted-foreground">Essential outdoor consumption space.</td>
-                                            </tr>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold flex items-center gap-2"><Coffee className="h-4 w-4 text-green-500" /> Hot tub</td>
-                                                <td className="p-4 text-sm text-muted-foreground">Peak experience at 9,600 ft.</td>
-                                            </tr>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold flex items-center gap-2"><Bed className="h-4 w-4 text-green-500" /> Full kitchen</td>
-                                                <td className="p-4 text-sm text-muted-foreground">Make your own edibles or enjoy munchies.</td>
-                                            </tr>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold flex items-center gap-2"><MapPin className="h-4 w-4 text-green-500" /> Distance to Main</td>
-                                                <td className="p-4 text-sm text-muted-foreground">Walking distance means no driving high.</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 text-sm font-bold flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-green-500" /> "420 friendly" in listing</td>
-                                                <td className="p-4 text-sm text-muted-foreground">Explicit permission vs. having to be "discreet."</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">What to Look For When Booking</h2>
+                                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                                    <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+                                        <table className="min-w-full text-left border-collapse border border-border">
+                                            <thead>
+                                                <tr className="bg-muted/50 border-b border-border">
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm whitespace-nowrap">Feature</th>
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm">Why It Matters</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                                        <span className="flex items-center gap-2"><Wind className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" /> <span>Private balcony/patio</span></span>
+                                                    </td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground">Essential outdoor consumption space.</td>
+                                                </tr>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                                        <span className="flex items-center gap-2"><Coffee className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" /> <span>Hot tub</span></span>
+                                                    </td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground">Peak experience at 9,600 ft.</td>
+                                                </tr>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                                        <span className="flex items-center gap-2"><Bed className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" /> <span>Full kitchen</span></span>
+                                                    </td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground">Make your own edibles or enjoy munchies.</td>
+                                                </tr>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                                        <span className="flex items-center gap-2"><MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" /> <span>Distance to Main</span></span>
+                                                    </td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground">Walking distance means no driving high.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                                        <span className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" /> <span>"420 friendly" in listing</span></span>
+                                                    </td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground">Explicit permission vs. having to be "discreet."</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
@@ -412,56 +424,58 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 6. By Budget */}
                             <div id="budget">
-                                <h2 className="text-3xl font-bold mb-8">Best Options by Budget</h2>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse border border-border">
-                                        <thead>
-                                            <tr className="bg-muted/50 border-b border-border">
-                                                <th className="p-4 font-bold text-sm">Budget</th>
-                                                <th className="p-4 font-bold text-sm">Best Option</th>
-                                                <th className="p-4 font-bold text-sm">Price Range</th>
-                                                <th className="p-4 font-bold text-sm">Notes</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold">Budget</td>
-                                                <td className="p-4 text-sm">Bunk House Lodge</td>
-                                                <td className="p-4 text-sm font-medium text-green-600">$100-150/night</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Shared spaces, social vibe.</td>
-                                            </tr>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold">Mid-range</td>
-                                                <td className="p-4 text-sm">Ski condos with balconies</td>
-                                                <td className="p-4 text-sm font-medium text-green-600">$225-350/night</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Groups can split costs.</td>
-                                            </tr>
-                                            <tr className="border-b border-border">
-                                                <td className="p-4 text-sm font-bold">Premium</td>
-                                                <td className="p-4 text-sm">Private townhouse</td>
-                                                <td className="p-4 text-sm font-medium text-green-600">$400-665/night</td>
-                                                <td className="p-4 text-xs text-muted-foreground">Full privacy, private hot tubs.</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="p-4 text-sm font-bold">Splurge</td>
-                                                <td className="p-4 text-sm">Breck Haus or Luxury Cabin</td>
-                                                <td className="p-4 text-sm font-medium text-green-600">$420-800/night</td>
-                                                <td className="p-4 text-xs text-muted-foreground">The full 420 luxury experience.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Best Options by Budget</h2>
+                                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                                    <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+                                        <table className="min-w-full text-left border-collapse border border-border">
+                                            <thead>
+                                                <tr className="bg-muted/50 border-b border-border">
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm whitespace-nowrap">Budget</th>
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm whitespace-nowrap">Best Option</th>
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm whitespace-nowrap">Price Range</th>
+                                                    <th className="p-3 sm:p-4 font-bold text-xs sm:text-sm">Notes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">Budget</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm whitespace-nowrap">Bunk House Lodge</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium text-green-600 whitespace-nowrap">$100-150/night</td>
+                                                    <td className="p-3 sm:p-4 text-xs text-muted-foreground">Shared spaces, social vibe.</td>
+                                                </tr>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">Mid-range</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm whitespace-nowrap">Ski condos with balconies</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium text-green-600 whitespace-nowrap">$225-350/night</td>
+                                                    <td className="p-3 sm:p-4 text-xs text-muted-foreground">Groups can split costs.</td>
+                                                </tr>
+                                                <tr className="border-b border-border">
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">Premium</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm whitespace-nowrap">Private townhouse</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium text-green-600 whitespace-nowrap">$400-665/night</td>
+                                                    <td className="p-3 sm:p-4 text-xs text-muted-foreground">Full privacy, private hot tubs.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-bold whitespace-nowrap">Splurge</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm whitespace-nowrap">Breck Haus or Luxury Cabin</td>
+                                                    <td className="p-3 sm:p-4 text-xs sm:text-sm font-medium text-green-600 whitespace-nowrap">$420-800/night</td>
+                                                    <td className="p-3 sm:p-4 text-xs text-muted-foreground">The full 420 luxury experience.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* 7. The Vape Pen Strategy */}
                             <div id="vape-strategy">
-                                <Card className="p-8 border-accent/20 bg-accent/5">
-                                    <div className="flex flex-col md:flex-row gap-8">
+                                <Card className="p-4 sm:p-6 md:p-8 border-accent/20 bg-accent/5">
+                                    <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
                                         <div className="md:w-2/3">
-                                            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                                                <Wind className="h-6 w-6 text-accent" /> The "Vape Pen Strategy"
+                                            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 flex items-center gap-2">
+                                                <Wind className="h-5 w-5 sm:h-6 sm:w-6 text-accent" /> The "Vape Pen Strategy"
                                             </h2>
-                                            <p className="text-muted-foreground leading-relaxed mb-6">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 sm:mb-6">
                                                 If you can't find an explicitly 420-friendly rental, use this workaround to stay safe and respectful. Disposable vape pens leave zero smell and no evidence.
                                             </p>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -490,24 +504,24 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 8. Altitude Warning */}
                             <div id="altitude">
-                                <h2 className="text-3xl font-bold mb-8">Altitude Warning: 9,600 Feet</h2>
-                                <p className="mb-8 text-muted-foreground">
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Altitude Warning: 9,600 Feet</h2>
+                                <p className="mb-6 sm:mb-8 text-sm sm:text-base text-muted-foreground">
                                     Breckenridge is nearly twice the elevation of Denver. Altitude significantly changes how your body reacts to cannabis.
                                 </p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                                    <div className="space-y-4">
-                                        <Card className="p-6 border-red-500/20">
-                                            <h4 className="font-bold mb-2 flex items-center gap-2"><Zap className="h-4 w-4 text-orange-500" /> 20-40% Stronger High</h4>
-                                            <p className="text-sm text-muted-foreground italic">Less oxygen = intensified effects. Half your normal dose.</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-start">
+                                    <div className="space-y-3 sm:space-y-4">
+                                        <Card className="p-4 sm:p-6 border-red-500/20">
+                                            <h4 className="text-sm sm:text-base font-bold mb-2 flex items-center gap-2"><Zap className="h-4 w-4 text-orange-500" /> 20-40% Stronger High</h4>
+                                            <p className="text-xs sm:text-sm text-muted-foreground italic">Less oxygen = intensified effects. Half your normal dose.</p>
                                         </Card>
-                                        <Card className="p-6 border-blue-500/20">
-                                            <h4 className="font-bold mb-2 flex items-center gap-2"><Coffee className="h-4 w-4 text-blue-500" /> Extreme Dehydration</h4>
-                                            <p className="text-sm text-muted-foreground italic">Cannabis + high altitude = drink 2x more water than usual.</p>
+                                        <Card className="p-4 sm:p-6 border-blue-500/20">
+                                            <h4 className="text-sm sm:text-base font-bold mb-2 flex items-center gap-2"><Coffee className="h-4 w-4 text-blue-500" /> Extreme Dehydration</h4>
+                                            <p className="text-xs sm:text-sm text-muted-foreground italic">Cannabis + high altitude = drink 2x more water than usual.</p>
                                         </Card>
                                     </div>
-                                    <div className="bg-muted p-8 rounded-2xl border border-border self-stretch">
-                                        <h4 className="font-bold mb-4">Quick Safety Tips</h4>
-                                        <ul className="space-y-3 text-sm text-muted-foreground">
+                                    <div className="bg-muted p-4 sm:p-6 md:p-8 rounded-2xl border border-border self-stretch">
+                                        <h4 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Quick Safety Tips</h4>
+                                        <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground">
                                             <li className="flex gap-2"><span>✅</span> Wait 60 mins before redosing (onset is faster)</li>
                                             <li className="flex gap-2"><span>✅</span> Start with 2.5mg - 5mg edibles max</li>
                                             <li className="flex gap-2"><span>✅</span> Altitude sickness can feel like a green-out</li>
@@ -520,8 +534,8 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 9. Where You CAN'T Consume */}
                             <div id="no-consume">
-                                <h2 className="text-3xl font-bold mb-8 text-red-500">Legal Red Zones: Where NOT to Smoke</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-red-500">Legal Red Zones: Where NOT to Smoke</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-x-12 sm:gap-y-8">
                                     <div className="space-y-2">
                                         <h4 className="font-bold flex items-center gap-2"><Ban className="h-5 w-5" /> The Ski Resort</h4>
                                         <p className="text-sm text-muted-foreground leading-relaxed">
@@ -551,7 +565,7 @@ const BlogBreckenridgeStays = () => {
 
                             {/* 10. Best Things to Do High */}
                             <div id="to-do">
-                                <h2 className="text-3xl font-bold mb-8">Best Activities for the Elevation Elevation</h2>
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Best Activities for the Elevation Elevation</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {[
                                         { icon: Home, title: "Hot Tub Magic", desc: "The ultimate Breckenridge activity. Soak and smoke on your private patio under the stars." },
@@ -575,12 +589,12 @@ const BlogBreckenridgeStays = () => {
                             </div>
 
                             {/* 12. CTA */}
-                            <div className="text-center py-20 bg-gradient-to-br from-green-500/10 to-transparent rounded-3xl border border-green-500/20">
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6">Plan Your Elevated Breck Escape</h2>
-                                <p className="text-muted-foreground mb-10 max-w-xl mx-auto text-lg leading-relaxed">
+                            <div className="text-center py-12 sm:py-20 px-4 bg-gradient-to-br from-green-500/10 to-transparent rounded-3xl border border-green-500/20">
+                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Plan Your Elevated Breck Escape</h2>
+                                <p className="text-sm sm:text-base text-muted-foreground mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed">
                                     Breckenridge doesn't have 420-friendly hotels—but private rentals and the right strategy deliver the ultimate ski + smoke experience.
                                 </p>
-                                <div className="flex flex-wrap justify-center gap-4">
+                                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
                                     <Link to="/hotels">
                                         <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 h-12 text-base font-bold">
                                             Find 420 Stays
@@ -592,11 +606,11 @@ const BlogBreckenridgeStays = () => {
                                         </Button>
                                     </Link>
                                 </div>
-                                <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto pt-10 border-t border-border/30">
-                                    <Link to="/blog/altitude-cannabis-safety-guide-colorado" className="text-xs font-bold text-muted-foreground hover:text-green-500 transition">Altitude Guide</Link>
-                                    <Link to="/tours/breckenridge-cannabis-experience" className="text-xs font-bold text-muted-foreground hover:text-green-500 transition">Breck Tours</Link>
-                                    <Link to="/blog/how-much-weed-can-you-buy-colorado-2025" className="text-xs font-bold text-muted-foreground hover:text-green-500 transition">Purchase Limits</Link>
-                                    <Link to="/blog/cannabis-pairing-dinners-breckenridge" className="text-xs font-bold text-muted-foreground hover:text-green-500 transition">Pairing Dinners</Link>
+                                <div className="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto pt-8 sm:pt-10 border-t border-border/30">
+                                    <Link to="/blog/altitude-cannabis-safety-guide-colorado" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-green-500 transition">Altitude Guide</Link>
+                                    <Link to="/tours/breckenridge-cannabis-experience" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-green-500 transition">Breck Tours</Link>
+                                    <Link to="/blog/how-much-weed-can-you-buy-colorado-2025" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-green-500 transition">Purchase Limits</Link>
+                                    <Link to="/blog/cannabis-pairing-dinners-breckenridge" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-green-500 transition">Pairing Dinners</Link>
                                 </div>
                             </div>
 
@@ -657,10 +671,10 @@ const BlogBreckenridgeStays = () => {
                 </section>
 
                 {/* FAQ Section */}
-                <section id="faqs" className="bg-muted/50 py-24 border-t border-border/50">
+                <section id="faqs" className="bg-muted/50 py-12 sm:py-16 md:py-24 border-t border-border/50">
                     <div className="container mx-auto px-4 max-w-4xl">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
-                        <div className="space-y-6">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center">Frequently Asked Questions</h2>
+                        <div className="space-y-4 sm:space-y-6">
                             {[
                                 { q: "Are there 420-friendly hotels in Breckenridge?", a: "No traditional hotels allow smoking. Use Bunk House Lodge or search for private rentals that allow consumption on balconies/patios." },
                                 { q: "Can you smoke weed in Breckenridge rentals?", a: "Yes, if the host allows it on private property (usually outdoors). Look for '420 friendly' in listing descriptions." },
@@ -669,12 +683,12 @@ const BlogBreckenridgeStays = () => {
                                 { q: "What's the best 420-friendly place to stay in Breckenridge?", a: "Breck Haus (Airbnb) for groups and Bunk House Lodge for social solo travelers." },
                                 { q: "Does altitude affect your high in Breckenridge?", a: "Absolutely. At 9,600 ft, expect effects to be nearly twice as strong. Hydrate and start slow." }
                             ].map((faq, i) => (
-                                <Card key={i} className="p-8 hover:border-green-500/30 transition-all bg-background/50">
-                                    <h3 className="text-lg font-bold mb-3 flex items-start gap-3">
-                                        <span className="text-green-500 font-serif italic text-2xl leading-none">Q.</span>
-                                        {faq.q}
+                                <Card key={i} className="p-4 sm:p-6 md:p-8 hover:border-green-500/30 transition-all bg-background/50">
+                                    <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 flex items-start gap-2 sm:gap-3">
+                                        <span className="text-green-500 font-serif italic text-xl sm:text-2xl leading-none shrink-0">Q.</span>
+                                        <span>{faq.q}</span>
                                     </h3>
-                                    <p className="text-muted-foreground pl-8 leading-relaxed">{faq.a}</p>
+                                    <p className="text-sm sm:text-base text-muted-foreground pl-6 sm:pl-8 leading-relaxed">{faq.a}</p>
                                 </Card>
                             ))}
                         </div>
