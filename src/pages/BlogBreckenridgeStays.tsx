@@ -122,7 +122,7 @@ const BlogBreckenridgeStays = () => {
                 <section className="relative h-[65vh] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 z-0">
                         <img
-                            src="/dest-breckenridge.jpg"
+                            src="/blog-breckenridge-stays.png"
                             alt="Snowy Breckenridge mountains"
                             className="w-full h-full object-cover opacity-60"
                         />
