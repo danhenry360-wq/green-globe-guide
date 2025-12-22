@@ -20,7 +20,7 @@ import {
 // Re-export for backward compatibility with other components
 export { BLOG_POSTS } from "@/data/blog-posts";
 
-const CATEGORIES = ["All", "City Guide", "Legal Updates", "Education"];
+const CATEGORIES = ["All", "City Guide", "Stays Guide", "Legal Updates", "Education"];
 const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
