@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X, User, LogOut, Shield } from "lucide-react";
@@ -19,6 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, isAuthenticated, signOut, loading } = useAuth();
+  const location = useLocation();
 
   // Fetch user profile for avatar
   const { data: profile } = useQuery({
@@ -90,25 +91,60 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <ThemeToggle />
-            <Link to="/home" className="text-sm font-medium text-accent hover:text-accent/80 transition-colors">
+            <Link
+              to="/home"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/home' ? 'text-accent' : 'text-foreground hover:text-accent'
+              }`}
+            >
               Home
             </Link>
-            <Link to="/usa" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/usa"
+              className={`text-sm transition-colors ${
+                location.pathname === '/usa' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               USA Guide
             </Link>
-            <Link to="/world" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/world"
+              className={`text-sm transition-colors ${
+                location.pathname === '/world' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               World Guide
             </Link>
-            <Link to="/hotels" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/hotels"
+              className={`text-sm transition-colors ${
+                location.pathname === '/hotels' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               420 Rentals
             </Link>
-            <Link to="/tours" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/tours"
+              className={`text-sm transition-colors ${
+                location.pathname === '/tours' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               Tours
             </Link>
-            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/dispensary"
+              className={`text-sm transition-colors ${
+                location.pathname === '/dispensary' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               Dispensaries
             </Link>
-            <Link to="/blog" className="text-sm text-foreground hover:text-accent transition-colors">
+            <Link
+              to="/blog"
+              className={`text-sm transition-colors ${
+                location.pathname === '/blog' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+            >
               Blog
             </Link>
 
@@ -199,25 +235,67 @@ export const Navigation = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 flex flex-col gap-4">
             <ThemeToggle />
-            <Link to="/home" className="text-sm font-medium text-accent hover:text-accent/80" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/home"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/home' ? 'text-accent' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Home
             </Link>
-            <Link to="/usa" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/usa"
+              className={`text-sm transition-colors ${
+                location.pathname === '/usa' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               USA Guide
             </Link>
-            <Link to="/world" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/world"
+              className={`text-sm transition-colors ${
+                location.pathname === '/world' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               World Guide
             </Link>
-            <Link to="/hotels" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/hotels"
+              className={`text-sm transition-colors ${
+                location.pathname === '/hotels' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               420 Rentals
             </Link>
-            <Link to="/tours" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/tours"
+              className={`text-sm transition-colors ${
+                location.pathname === '/tours' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Tours
             </Link>
-            <Link to="/dispensary" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/dispensary"
+              className={`text-sm transition-colors ${
+                location.pathname === '/dispensary' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Dispensaries
             </Link>
-            <Link to="/blog" className="text-sm text-foreground hover:text-accent" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              to="/blog"
+              className={`text-sm transition-colors ${
+                location.pathname === '/blog' ? 'text-accent font-medium' : 'text-foreground hover:text-accent'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Blog
             </Link>
 
