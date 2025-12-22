@@ -244,10 +244,10 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge className="bg-green-500 text-white border-0 shadow-lg">Social Choice</Badge>
                                                 </div>
                                             </div>
-                                            <div className="p-8 md:w-2/3">
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <h4 className="text-2xl font-bold">Bunk House Lodge</h4>
-                                                    <span className="text-lg font-bold text-green-500">$$</span>
+                                            <div className="p-5 sm:p-8 md:w-2/3">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                                    <h4 className="text-xl sm:text-2xl font-bold">Bunk House Lodge</h4>
+                                                    <span className="text-base sm:text-lg font-bold text-green-500">$$</span>
                                                 </div>
                                                 <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4 font-medium">
                                                     <MapPin className="h-4 w-4 text-green-500" /> 2 miles north of Breckenridge
@@ -260,14 +260,14 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-0">LGBTQ+ Welcome</Badge>
                                                     <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Social Vibe</Badge>
                                                 </div>
-                                                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
-                                                    <div>
+                                                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pt-6 border-t border-border/50 gap-6">
+                                                    <div className="flex-1">
                                                         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
                                                         <span className="text-sm font-bold text-green-500">Solo travelers, couples, social atmosphere</span>
                                                     </div>
-                                                    <Link to="/hotels/bunk-house-lodge" className="w-full sm:w-auto">
-                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold">
-                                                            View Bunk House <ArrowRight className="h-4 w-4 ml-2" />
+                                                    <Link to="/hotels/bunk-house-lodge" className="w-full lg:w-auto">
+                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-11 px-8">
+                                                            View Details <ArrowRight className="h-4 w-4 ml-2" />
                                                         </Button>
                                                     </Link>
                                                 </div>
@@ -287,10 +287,10 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge className="bg-green-500 text-white border-0 shadow-lg">Premium Pick</Badge>
                                                 </div>
                                             </div>
-                                            <div className="p-8 md:w-2/3">
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <h4 className="text-2xl font-bold">Breck Haus (Airbnb)</h4>
-                                                    <span className="text-lg font-bold text-green-500">$420/night</span>
+                                            <div className="p-5 sm:p-8 md:w-2/3">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                                    <h4 className="text-xl sm:text-2xl font-bold">Breck Haus (Airbnb)</h4>
+                                                    <span className="text-base sm:text-lg font-bold text-green-500">$420/night</span>
                                                 </div>
                                                 <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4 font-medium">
                                                     <MapPin className="h-4 w-4 text-green-500" /> 1.5 miles from Main Street
@@ -303,13 +303,13 @@ const BlogBreckenridgeStays = () => {
                                                     <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">Private Hot Tub</Badge>
                                                     <Badge variant="secondary" className="bg-orange-500/10 text-orange-600 border-0">Sleeps 8</Badge>
                                                 </div>
-                                                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-border/50 gap-4">
-                                                    <div>
+                                                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pt-6 border-t border-border/50 gap-6">
+                                                    <div className="flex-1">
                                                         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-1">Best For</span>
                                                         <span className="text-sm font-bold text-green-500">Groups, families (21+), special occasions</span>
                                                     </div>
-                                                    <Link to="/hotels/breck-haus" className="w-full sm:w-auto">
-                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold">
+                                                    <Link to="/hotels/breck-haus" className="w-full lg:w-auto">
+                                                        <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold h-11 px-8">
                                                             Check Availability <ArrowRight className="h-4 w-4 ml-2" />
                                                         </Button>
                                                     </Link>
@@ -328,7 +328,7 @@ const BlogBreckenridgeStays = () => {
                                     <p className="text-muted-foreground italic text-sm">Rule of thumb: These allow outdoor smoking on balconies/patios. Be discreet.</p>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <Card className="p-8 hover:border-blue-500/40 transition-all">
+                                        <Card className="p-6 sm:p-8 hover:border-blue-500/40 transition-all">
                                             <Building className="h-10 w-10 text-blue-500 mb-6" />
                                             <h4 className="text-xl font-bold mb-2">Breckenridge Ski Condos</h4>
                                             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 font-medium">
@@ -346,7 +346,7 @@ const BlogBreckenridgeStays = () => {
                                             </div>
                                         </Card>
 
-                                        <Card className="p-8 hover:border-blue-500/40 transition-all">
+                                        <Card className="p-6 sm:p-8 hover:border-blue-500/40 transition-all">
                                             <Home className="h-10 w-10 text-blue-500 mb-6" />
                                             <h4 className="text-xl font-bold mb-2">Breckenridge Townhouses</h4>
                                             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 font-medium">
@@ -372,7 +372,7 @@ const BlogBreckenridgeStays = () => {
                                         <MapPin className="h-7 w-7 text-orange-500" />
                                         <h3 className="text-2xl font-bold">Tier 3: Nearby Alternatives</h3>
                                     </div>
-                                    <Card className="p-8 bg-orange-500/5 border-orange-500/20">
+                                    <Card className="p-6 sm:p-8 bg-orange-500/5 border-orange-500/20">
                                         <div className="flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
                                             <div className="flex-1">
                                                 <h4 className="text-xl font-bold mb-3">Frisco, Silverthorne & Dillon</h4>
