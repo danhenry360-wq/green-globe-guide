@@ -92,6 +92,7 @@ import BlogColoradoSpringsRentals from "./pages/BlogColoradoSpringsRentals";
 import BlogDispensaryFirstTime from "./pages/BlogDispensaryFirstTime";
 import BlogDenverVsBoulder from "./pages/BlogDenverVsBoulder";
 import BlogBreckenridgeDispensaries from "./pages/BlogBreckenridgeDispensaries";
+import BlogBreckenridgeRentals from "./pages/BlogBreckenridgeRentals";
 import BlogCleanGreenGuide from "./pages/BlogCleanGreenGuide";
 import BlogRedRocksDispensaries from "./pages/BlogRedRocksDispensaries";
 import BlogUltimateColoradoGuide from "./pages/BlogUltimateColoradoGuide";
@@ -171,6 +172,7 @@ function App() {
               <Route path="/blog/best-420-rentals-aspen" element={<BlogAspenRentals />} />
               <Route path="/blog/cannabis-dispensaries-colorado-springs" element={<BlogColoradoSpringsDispensaries />} />
               <Route path="/blog/best-420-rentals-colorado-springs" element={<BlogColoradoSpringsRentals />} />
+<<<<<<< Updated upstream
               <Route path="/blog/how-much-weed-can-you-buy-colorado-2025" element={<BlogColoradoLimits />} />
               <Route path="/blog/where-can-you-smoke-weed-in-colorado-2025" element={<BlogColoradoConsumption />} />
               <Route path="/blog/first-time-dispensary-guide-colorado-2025" element={<BlogDispensaryFirstTime />} />
@@ -183,6 +185,9 @@ function App() {
               <Route path="/blog/best-420-friendly-stays-colorado-springs" element={<BlogColoradoSpringsStays />} />
               <Route path="/blog/best-420-friendly-stays-breckenridge" element={<BlogBreckenridgeStays />} />
               <Route path="/blog/all-inclusive-weed-resorts-colorado" element={<BlogColoradoAllInclusive />} />
+=======
+              <Route path="/blog/best-420-rentals-breckenridge" element={<BlogBreckenridgeRentals />} />
+>>>>>>> Stashed changes
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
