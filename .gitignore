@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+rottie-guard-web/
+green-globe-guide/
