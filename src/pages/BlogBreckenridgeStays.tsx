@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { HOTEL_DATA } from "@/data/hotel_data";
 import { supabase } from "@/integrations/supabase/client";
 
 const BlogBreckenridgeStays = () => {
@@ -22,40 +21,18 @@ const BlogBreckenridgeStays = () => {
 
     useEffect(() => {
         const fetchRentals = async () => {
-            // 1. Get static rentals for Breckenridge
-            const staticRentals = HOTEL_DATA.flatMap(country =>
-                country.states.flatMap(state =>
-                    state.hotels
-                        .filter(hotel => hotel.city.toLowerCase() === "breckenridge")
-                        .map(hotel => ({
-                            ...hotel,
-                            source: 'static'
-                        }))
-                )
-            );
-
-            // 2. Get database rentals for Breckenridge
+            // Get database rentals for Breckenridge only
             const { data: dbRentals, error } = await supabase
                 .from('hotels')
                 .select('*')
                 .eq('city', 'Breckenridge');
 
-            let combined = [...staticRentals];
-
             if (!error && dbRentals) {
-                // Merge database rentals, prioritize DB over static if name matches
-                (dbRentals as any[]).forEach(dbHotel => {
-                    const index = combined.findIndex(h => h.name.toLowerCase() === dbHotel.name.toLowerCase());
-                    const hotelWithSource = { ...dbHotel, source: 'database' };
-                    if (index !== -1) {
-                        combined[index] = hotelWithSource;
-                    } else {
-                        combined.push(hotelWithSource);
-                    }
-                });
+                setRentals(dbRentals);
+            } else {
+                setRentals([]);
             }
 
-            setRentals(combined);
             setIsLoading(false);
         };
 
