@@ -82,9 +82,19 @@ const BlogFortCollinsStays = () => {
 
             <Navigation />
 
-            <main className="min-h-screen bg-background pt-16">
+            <main className="min-h-screen bg-background pt-16 md:pt-20">
+                {/* Hero Image */}
+                <section className="relative h-48 xs:h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
+                    <img
+                        src="/dest-colorado.jpg"
+                        alt="Fort Collins craft beer and cannabis culture"
+                        className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                </section>
+
                 {/* Hero Section */}
-                <section className="relative bg-gradient-to-br from-green-500/5 via-transparent to-accent/5 pt-12 sm:pt-20 pb-12 border-b border-border/50">
+                <section className="relative bg-gradient-to-br from-green-500/5 via-transparent to-accent/5 pt-12 sm:pt-20 pb-12 border-b border-border/50 -mt-16 md:-mt-20">
                     <div className="container mx-auto px-4 max-w-5xl">
                         {/* Breadcrumb */}
                         <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 flex-wrap">
