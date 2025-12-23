@@ -250,11 +250,11 @@ const BlogBreckenridgeRentals = () => {
 
       <main className="min-h-screen bg-background pt-16 md:pt-20">
         {/* Hero Image */}
-        <section className="relative h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden">
+        <section className="relative h-48 xs:h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
           <img
             src="/dest-colorado.jpg"
             alt="Breckenridge mountain landscape perfect for cannabis tourism"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         </section>
@@ -289,7 +289,7 @@ const BlogBreckenridgeRentals = () => {
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 xs:mb-4 sm:mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
                   Best 420-Friendly Rentals in Breckenridge:
                 </span>
@@ -299,7 +299,7 @@ const BlogBreckenridgeRentals = () => {
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-muted-foreground mb-6">
+              <p className="text-sm xs:text-base sm:text-lg text-muted-foreground mb-4 xs:mb-6 leading-relaxed">
                 Find the perfect cannabis-friendly accommodation for your
                 Breckenridge mountain adventure
               </p>
@@ -322,10 +322,10 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* Introduction */}
-        <section className="py-8 sm:py-12 border-t border-accent/10">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10">
           <div className="container mx-auto px-4 sm:px-6">
-            <div className="max-w-4xl space-y-4">
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <div className="max-w-4xl space-y-3 xs:space-y-4">
+              <p className="text-[13px] xs:text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Breckenridge isn't just one of Colorado's premier ski and outdoor
                 destinations—it's also a thriving cannabis tourism hub. Nestled at
                 9,600 feet in the Rocky Mountains, this historic mining town has
@@ -333,7 +333,7 @@ const BlogBreckenridgeRentals = () => {
                 seeking mountain views, adventure, and a welcoming 420-friendly
                 community.
               </p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              <p className="text-[13px] xs:text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Unlike generic travel guides, Breckenridge takes cannabis tourism
                 seriously. Main Street has multiple dispensaries, Main Street
                 restaurants welcome cannabis tourists, and a growing network of
@@ -342,7 +342,7 @@ const BlogBreckenridgeRentals = () => {
                 insider tips for the altitude experience, and everything you need
                 to plan your mountain cannabis adventure.
               </p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              <p className="text-[13px] xs:text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Whether you're planning a ski trip with cannabis, a summer mountain
                 retreat, or a mountain biking adventure with extra relaxation, this
                 guide will help you find a place where you can enjoy Colorado's
@@ -353,15 +353,15 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* Why Breckenridge? */}
-        <section className="py-8 sm:py-12 border-t border-accent/10 bg-card/30">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10 bg-card/30">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-8">
+              <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 xs:mb-6 sm:mb-8">
                 Why Choose Breckenridge for Cannabis Tourism?
               </h2>
 
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3 xs:gap-4 sm:gap-6"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -369,12 +369,12 @@ const BlogBreckenridgeRentals = () => {
               >
                 {whyBreckenridge.map((item, index) => (
                   <motion.div key={index} variants={itemVariants}>
-                    <Card className="bg-background/50 border-accent/20 p-4 sm:p-6">
-                      <div className="text-3xl sm:text-4xl mb-3">{item.icon}</div>
-                      <h3 className="font-bold text-foreground mb-2 text-sm sm:text-base">
+                    <Card className="bg-background/50 border-accent/20 p-3 xs:p-4 sm:p-6 h-full">
+                      <div className="text-2xl xs:text-3xl sm:text-4xl mb-2 xs:mb-3">{item.icon}</div>
+                      <h3 className="font-bold text-foreground mb-1.5 xs:mb-2 text-[13px] xs:text-sm sm:text-base">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-[11px] xs:text-xs sm:text-sm text-muted-foreground leading-relaxed">
                         {item.description}
                       </p>
                     </Card>
@@ -386,10 +386,10 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* Featured Rentals from Database */}
-        <section className="py-8 sm:py-12 border-t border-accent/10">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8">
+              <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 xs:mb-6 sm:mb-8">
                 Top 420-Friendly Stays in Breckenridge
               </h2>
 
@@ -410,7 +410,7 @@ const BlogBreckenridgeRentals = () => {
                       <Card className="bg-card/60 border-accent/20 overflow-hidden hover:border-accent/40 transition-all">
                         <div className="flex flex-col">
                           {/* Image - always stacked on mobile */}
-                          <div className="w-full aspect-video sm:aspect-[16/9] md:aspect-[21/9]">
+                          <div className="w-full aspect-[16/10] xs:aspect-video sm:aspect-[16/9] md:aspect-[21/9]">
                             <img
                               src={rental.images?.[0] || "/dest-colorado.jpg"}
                               alt={rental.name}
@@ -421,36 +421,36 @@ const BlogBreckenridgeRentals = () => {
                           </div>
 
                           {/* Content */}
-                          <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
+                          <div className="p-3 xs:p-4 sm:p-5 md:p-6 flex-1 flex flex-col justify-between">
                             <div>
-                              <div className="flex items-start justify-between gap-3 mb-3">
+                              <div className="flex items-start justify-between gap-2 xs:gap-3 mb-2 xs:mb-3">
                                 <div className="flex-1 min-w-0">
-                                  <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                    <Badge variant="secondary" className="text-xs">
+                                  <div className="flex items-start gap-2 mb-1.5 xs:mb-2 flex-wrap">
+                                    <Badge variant="secondary" className="text-[10px] xs:text-xs px-1.5 xs:px-2 py-0.5 flex-shrink-0">
                                       #{index + 1}
                                     </Badge>
                                     <Link
                                       to={`/hotels/${rental.slug}`}
-                                      className="hover:text-accent transition-colors min-w-0"
+                                      className="hover:text-accent transition-colors min-w-0 flex-1"
                                     >
-                                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground hover:text-accent truncate">
+                                      <h3 className="text-sm xs:text-base sm:text-lg md:text-xl font-bold text-foreground hover:text-accent leading-tight">
                                         {rental.name}
                                       </h3>
                                     </Link>
                                   </div>
                                   {rental.address && (
-                                    <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
-                                      <MapPin className="h-3 w-3 flex-shrink-0" />
-                                      <span className="truncate">
+                                    <p className="text-[11px] xs:text-xs sm:text-sm text-muted-foreground flex items-start gap-1">
+                                      <MapPin className="h-3 w-3 xs:h-3.5 xs:w-3.5 flex-shrink-0 mt-0.5" />
+                                      <span className="line-clamp-1">
                                         {rental.address.split(",")[0]}
                                       </span>
                                     </p>
                                   )}
                                 </div>
                                 {rental.rating && (
-                                  <div className="flex items-center gap-1 flex-shrink-0 bg-accent/10 px-2 py-1 rounded">
-                                    <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-gold text-gold" />
-                                    <span className="text-foreground font-semibold text-xs sm:text-sm">
+                                  <div className="flex items-center gap-1 flex-shrink-0 bg-accent/10 px-1.5 xs:px-2 py-1 rounded">
+                                    <Star className="h-3 w-3 xs:h-3.5 xs:w-3.5 fill-gold text-gold" />
+                                    <span className="text-foreground font-semibold text-[11px] xs:text-xs sm:text-sm">
                                       {rental.rating}
                                     </span>
                                   </div>
@@ -459,14 +459,14 @@ const BlogBreckenridgeRentals = () => {
 
                               {/* Policies */}
                               {rental.policies && (
-                                <p className="text-xs sm:text-sm text-muted-foreground mb-3 line-clamp-2">
+                                <p className="text-[11px] xs:text-xs sm:text-sm text-muted-foreground mb-2 xs:mb-3 line-clamp-2 leading-relaxed">
                                   {rental.policies}
                                 </p>
                               )}
 
                               {/* Amenities */}
                               {rental.amenities && (
-                                <div className="flex flex-wrap gap-1 sm:gap-2 mb-3">
+                                <div className="flex flex-wrap gap-1 xs:gap-1.5 sm:gap-2 mb-2 xs:mb-3">
                                   {typeof rental.amenities === "object" &&
                                     Object.entries(rental.amenities).map(
                                       ([key, value]) =>
@@ -474,7 +474,7 @@ const BlogBreckenridgeRentals = () => {
                                           <Badge
                                             key={key}
                                             variant="outline"
-                                            className="text-xs"
+                                            className="text-[10px] xs:text-xs px-1.5 xs:px-2 py-0.5"
                                           >
                                             {key}
                                           </Badge>
@@ -486,8 +486,8 @@ const BlogBreckenridgeRentals = () => {
 
                             {/* Footer */}
                             {typeof rental?.amenities === "object" && rental.amenities?.price_range && (
-                              <div className="flex items-center justify-between gap-2 pt-3 border-t border-accent/10">
-                                <span className="text-xs sm:text-sm font-semibold text-accent">
+                              <div className="flex items-center justify-between gap-2 pt-2 xs:pt-3 border-t border-accent/10 mt-2">
+                                <span className="text-xs xs:text-sm sm:text-base font-semibold text-accent">
                                   {rental.amenities.price_range}/night
                                 </span>
                                 {rental.website && (
@@ -495,15 +495,17 @@ const BlogBreckenridgeRentals = () => {
                                     size="sm"
                                     variant="outline"
                                     asChild
-                                    className="h-8 text-xs"
+                                    className="h-7 xs:h-8 text-[11px] xs:text-xs px-2 xs:px-3"
                                   >
                                     <a
                                       href={rental.website}
                                       target="_blank"
                                       rel="noopener noreferrer"
+                                      className="flex items-center gap-1"
                                     >
-                                      Book Now
-                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                      <span className="hidden xs:inline">Book Now</span>
+                                      <span className="xs:hidden">Book</span>
+                                      <ExternalLink className="h-3 w-3" />
                                     </a>
                                   </Button>
                                 )}
@@ -528,15 +530,15 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* Booking Tips */}
-        <section className="py-8 sm:py-12 border-t border-accent/10 bg-card/30">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10 bg-card/30">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-8">
+              <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 xs:mb-6 sm:mb-8">
                 Expert Tips for Booking Your Breckenridge 420 Rental
               </h2>
 
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3 xs:gap-4 sm:gap-6"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -544,16 +546,16 @@ const BlogBreckenridgeRentals = () => {
               >
                 {tips.map((tip, index) => (
                   <motion.div key={index} variants={itemVariants}>
-                    <Card className="bg-background/50 border-accent/20 p-4 sm:p-6">
-                      <div className="flex items-start gap-3 mb-3">
-                        <Badge variant="outline" className="text-xs whitespace-nowrap flex-shrink-0">
+                    <Card className="bg-background/50 border-accent/20 p-3 xs:p-4 sm:p-6 h-full">
+                      <div className="flex items-start gap-2 xs:gap-3 mb-2 xs:mb-3">
+                        <Badge variant="outline" className="text-[10px] xs:text-xs whitespace-nowrap flex-shrink-0 px-1.5 xs:px-2 py-0.5">
                           {tip.season}
                         </Badge>
                       </div>
-                      <h3 className="font-bold text-foreground mb-2 text-sm sm:text-base">
+                      <h3 className="font-bold text-foreground mb-1.5 xs:mb-2 text-[13px] xs:text-sm sm:text-base leading-tight">
                         {tip.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-[11px] xs:text-xs sm:text-sm text-muted-foreground leading-relaxed">
                         {tip.content}
                       </p>
                     </Card>
@@ -565,15 +567,15 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-8 sm:py-12 border-t border-accent/10">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-8">
+              <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 xs:mb-6 sm:mb-8">
                 Frequently Asked Questions
               </h2>
 
               <motion.div
-                className="space-y-3 sm:space-y-4"
+                className="space-y-2.5 xs:space-y-3 sm:space-y-4"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -581,11 +583,11 @@ const BlogBreckenridgeRentals = () => {
               >
                 {faqs.map((faq, index) => (
                   <motion.div key={index} variants={itemVariants}>
-                    <Card className="bg-card/60 border-accent/20 p-4 sm:p-6">
-                      <h3 className="font-bold text-foreground mb-2 text-sm sm:text-base">
+                    <Card className="bg-card/60 border-accent/20 p-3 xs:p-4 sm:p-6">
+                      <h3 className="font-bold text-foreground mb-1.5 xs:mb-2 text-[13px] xs:text-sm sm:text-base leading-tight">
                         {faq.q}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-[11px] xs:text-xs sm:text-sm text-muted-foreground leading-relaxed">
                         {faq.a}
                       </p>
                     </Card>
@@ -597,21 +599,21 @@ const BlogBreckenridgeRentals = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-8 sm:py-12 border-t border-accent/10 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10">
+        <section className="py-6 xs:py-8 sm:py-12 border-t border-accent/10 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl text-center">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4">
+              <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 xs:mb-4 leading-tight">
                 Ready for Your Breckenridge Cannabis Adventure?
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground mb-6">
+              <p className="text-[13px] xs:text-sm sm:text-base text-muted-foreground mb-4 xs:mb-6 leading-relaxed">
                 Explore more Colorado destinations, find dispensaries, and plan
                 your perfect cannabis mountain getaway.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex flex-col xs:flex-row gap-2 xs:gap-3 justify-center max-w-md mx-auto">
                 <Button
                   asChild
                   size="lg"
-                  className="text-xs sm:text-sm h-9 sm:h-10"
+                  className="text-xs xs:text-sm h-9 xs:h-10 w-full xs:w-auto"
                 >
                   <Link to="/blog">Back to Blog</Link>
                 </Button>
@@ -619,7 +621,7 @@ const BlogBreckenridgeRentals = () => {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="text-xs sm:text-sm h-9 sm:h-10"
+                  className="text-xs xs:text-sm h-9 xs:h-10 w-full xs:w-auto"
                 >
                   <Link to="/colorado">Explore Colorado Guide</Link>
                 </Button>
