@@ -212,6 +212,8 @@ const BlogFortCollinsStays = () => {
                                                                 <img
                                                                     src={hotel.images[0]}
                                                                     alt={hotel.name}
+                                                                    loading="lazy"
+                                                                    decoding="async"
                                                                     className="w-full h-48 object-cover rounded-lg"
                                                                 />
                                                             ) : (

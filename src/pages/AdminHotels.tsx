@@ -118,19 +118,31 @@ const AdminHotels = () => {
     enabled: !!isAdmin,
   });
 
-  // Helper function to call admin-hotels edge function
+  // Helper function to call admin-hotels backend function
   const callAdminHotelsApi = async (action: string, data: Record<string, unknown>) => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
     if (!session?.access_token) {
       throw new Error("Not authenticated");
     }
 
-    const response = await supabase.functions.invoke('admin-hotels', {
+    const response = await supabase.functions.invoke("admin-hotels", {
       body: { action, data },
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
     });
 
     if (response.error) {
-      throw new Error(response.error.message || 'Operation failed');
+      console.error("admin-hotels invoke error:", response.error);
+      throw new Error(response.error.message || "Operation failed");
+    }
+
+    // Some functions return { error: string } in the JSON body
+    if ((response.data as any)?.error) {
+      throw new Error((response.data as any).error);
     }
 
     return response.data;
