@@ -2,12 +2,20 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Cookie, X } from "lucide-react";
+import { getConsent, setConsent, loadGoogleAnalytics } from "@/lib/consent";
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("budquest-cookie-consent");
+    const consent = getConsent();
+
+    // If user already accepted, load analytics
+    if (consent === 'accepted') {
+      loadGoogleAnalytics();
+    }
+
+    // Show banner if no consent decision made yet
     if (!consent) {
       // Small delay for better UX
       const timer = setTimeout(() => setIsVisible(true), 1000);
@@ -16,13 +24,20 @@ const CookieConsent = () => {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("budquest-cookie-consent", "accepted");
+    setConsent("accepted");
     setIsVisible(false);
+
+    // Load Google Analytics after user accepts
+    loadGoogleAnalytics();
+
+    console.log("Cookie consent accepted - Analytics loaded");
   };
 
   const handleDecline = () => {
-    localStorage.setItem("budquest-cookie-consent", "declined");
+    setConsent("declined");
     setIsVisible(false);
+
+    console.log("Cookie consent declined - No analytics loaded");
   };
 
   if (!isVisible) return null;

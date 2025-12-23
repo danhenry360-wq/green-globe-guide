@@ -5,6 +5,7 @@ import { PanelLeft } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { hasConsent } from "@/lib/consent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -64,8 +65,17 @@ const SidebarProvider = React.forwardRef<
         _setOpen(openState);
       }
 
-      // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      // Only set cookie if user has consented to cookies
+      if (hasConsent()) {
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      } else {
+        // Use localStorage as fallback for essential functionality
+        try {
+          localStorage.setItem(SIDEBAR_COOKIE_NAME, String(openState));
+        } catch (e) {
+          // Silently fail if localStorage is unavailable
+        }
+      }
     },
     [setOpenProp, open],
   );
