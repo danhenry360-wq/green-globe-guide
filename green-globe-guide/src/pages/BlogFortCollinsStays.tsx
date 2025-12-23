@@ -86,7 +86,7 @@ const BlogFortCollinsStays = () => {
                 {/* Hero Image */}
                 <section className="relative h-48 xs:h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
                     <img
-                        src="/images/blog/fort-collins/hero.png"
+                        src="/fort-collins-hero.png"
                         alt="Fort Collins craft beer and cannabis culture"
                         className="w-full h-full object-cover object-center"
                     />
