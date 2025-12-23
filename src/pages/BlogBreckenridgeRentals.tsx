@@ -408,14 +408,14 @@ const BlogBreckenridgeRentals = () => {
                   {rentals.map((rental, index) => (
                     <motion.div key={rental.id} variants={itemVariants}>
                       <Card className="bg-card/60 border-accent/20 overflow-hidden hover:border-accent/40 transition-all">
-                        <div className="flex flex-col sm:flex-row">
-                          {/* Image */}
-                          <div className="w-full sm:w-1/3 aspect-video sm:aspect-auto h-40 sm:h-auto">
+                        <div className="flex flex-col">
+                          {/* Image - always stacked on mobile */}
+                          <div className="w-full aspect-video sm:aspect-[16/9] md:aspect-[21/9]">
                             <img
-                              src={
-                                rental.images?.[0] || "/dest-colorado.jpg"
-                              }
+                              src={rental.images?.[0] || "/dest-colorado.jpg"}
                               alt={rental.name}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-cover"
                             />
                           </div>

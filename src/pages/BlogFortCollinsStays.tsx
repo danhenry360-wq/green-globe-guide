@@ -205,55 +205,58 @@ const BlogFortCollinsStays = () => {
                                     ) : hotels.length > 0 ? (
                                         <div className="space-y-6">
                                             {hotels.map((hotel) => (
-                                                <Card key={hotel.id} className="p-6 sm:p-8 hover:border-accent/50 transition-all">
-                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                                        <div className="md:col-span-1">
+                                                <Card key={hotel.id} className="p-0 hover:border-accent/50 transition-all overflow-hidden">
+                                                    <div className="flex flex-col">
+                                                        {/* Image - full width stacked on mobile */}
+                                                        <div className="w-full">
                                                             {hotel.images?.[0] ? (
                                                                 <img
                                                                     src={hotel.images[0]}
                                                                     alt={hotel.name}
                                                                     loading="lazy"
                                                                     decoding="async"
-                                                                    className="w-full h-48 object-cover rounded-lg"
+                                                                    className="w-full h-48 sm:h-56 object-cover"
                                                                 />
                                                             ) : (
-                                                                <div className="w-full h-48 bg-muted rounded-lg flex items-center justify-center">
+                                                                <div className="w-full h-48 sm:h-56 bg-muted flex items-center justify-center">
                                                                     <Building2 className="w-12 h-12 text-muted-foreground" />
                                                                 </div>
                                                             )}
                                                         </div>
-                                                        <div className="md:col-span-2 space-y-3">
+                                                        {/* Content - below image */}
+                                                        <div className="p-4 sm:p-6 space-y-3">
                                                             <div>
-                                                                <h3 className="text-xl sm:text-2xl font-bold mb-2">{hotel.name}</h3>
+                                                                <h3 className="text-lg sm:text-xl font-bold mb-1">{hotel.name}</h3>
                                                                 {hotel.address && (
-                                                                    <p className="text-sm text-muted-foreground flex items-center gap-2">
-                                                                        <MapPin className="h-4 w-4" /> {hotel.address}
+                                                                    <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-2">
+                                                                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" /> 
+                                                                        <span className="truncate">{hotel.address}</span>
                                                                     </p>
                                                                 )}
                                                             </div>
                                                             {hotel.policies && (
-                                                                <p className="text-sm text-muted-foreground">{hotel.policies}</p>
+                                                                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{hotel.policies}</p>
                                                             )}
-                                                            <div className="flex flex-wrap gap-2">
+                                                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
                                                                 {hotel.is_verified && (
-                                                                    <Badge className="bg-accent/20 text-accent">BudQuest Verified</Badge>
+                                                                    <Badge className="bg-accent/20 text-accent text-xs">BudQuest Verified</Badge>
                                                                 )}
                                                                 {hotel.amenities?.smoking && (
-                                                                    <Badge variant="outline">Smoking Allowed</Badge>
+                                                                    <Badge variant="outline" className="text-xs">Smoking Allowed</Badge>
                                                                 )}
                                                                 {hotel.amenities?.vaping && (
-                                                                    <Badge variant="outline">Vaping Allowed</Badge>
+                                                                    <Badge variant="outline" className="text-xs">Vaping Allowed</Badge>
                                                                 )}
                                                                 {hotel.rating && (
-                                                                    <Badge variant="outline" className="flex items-center gap-1">
+                                                                    <Badge variant="outline" className="flex items-center gap-1 text-xs">
                                                                         <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                                                                         {hotel.rating}
                                                                     </Badge>
                                                                 )}
                                                             </div>
                                                             {hotel.website && (
-                                                                <a href={hotel.website} target="_blank" rel="noopener noreferrer">
-                                                                    <Button className="bg-green-600 hover:bg-green-700">
+                                                                <a href={hotel.website} target="_blank" rel="noopener noreferrer" className="inline-block">
+                                                                    <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
                                                                         View Property
                                                                     </Button>
                                                                 </a>
