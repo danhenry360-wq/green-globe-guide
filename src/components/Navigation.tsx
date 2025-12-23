@@ -76,11 +76,11 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/home" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
+            <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden flex-shrink-0">
               <img
                 src={logo}
                 alt="BudQuest Logo"
-                className="h-full w-full object-contain"
+                className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <span className="text-lg sm:text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">
