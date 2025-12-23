@@ -35,8 +35,6 @@ interface Rental {
   website: string | null;
   policies: string | null;
   amenities: any;
-  price_range: string | null;
-  description: string | null;
 }
 
 const BlogBreckenridgeRentals = () => {
@@ -47,14 +45,16 @@ const BlogBreckenridgeRentals = () => {
     const fetchRentals = async () => {
       const { data, error } = await supabase
         .from("hotels")
-        .select("*")
+        .select(
+          "id, name, slug, address, rating, images, website, policies, amenities, is_420_friendly, is_verified, latitude, longitude"
+        )
         .eq("is_420_friendly", true)
-        .eq("city", "Breckenridge")
+        .ilike("address", "%Breckenridge%")
         .order("rating", { ascending: false });
 
       if (import.meta.env.DEV) console.log("Breckenridge rentals fetch:", { data, error });
       if (error && import.meta.env.DEV) console.error("Breckenridge rentals error:", error);
-      if (data) setRentals(data);
+      if (data) setRentals(data as Rental[]);
       setLoading(false);
     };
     fetchRentals();
@@ -485,10 +485,10 @@ const BlogBreckenridgeRentals = () => {
                             </div>
 
                             {/* Footer */}
-                            {rental.price_range && (
+                            {typeof rental?.amenities === "object" && rental.amenities?.price_range && (
                               <div className="flex items-center justify-between gap-2 pt-3 border-t border-accent/10">
                                 <span className="text-xs sm:text-sm font-semibold text-accent">
-                                  {rental.price_range}/night
+                                  {rental.amenities.price_range}/night
                                 </span>
                                 {rental.website && (
                                   <Button
