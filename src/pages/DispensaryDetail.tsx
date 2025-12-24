@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2, FileText, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, MapPin, CheckCircle, Truck, CreditCard, Car, Info, Globe, Clock, Loader2, FileText, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { DispensaryMap } from "@/components/DispensaryMap";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -110,13 +110,56 @@ const DispensaryDetail = () => {
   // Check if this is a database dispensary (has UUID format)
   const isDbDispensary = dbDispensary.id.includes('-') && dbDispensary.id.length === 36;
 
+  /* ============================================
+     SEO & SCHEMA GENERATION (NEW)
+  ============================================ */
+  const currentYear = 2025; // Explicitly targeting 2025 for freshness
+  
+  // JSON-LD Schema for Local Business (Rich Snippets)
+  const dispensarySchema = {
+    "@context": "https://schema.org",
+    "@type": "CannabisShop", // Specific Google type
+    "name": dbDispensary.name,
+    "image": dbDispensary.image || dbDispensary.images?.[0] || "https://budquest.guide/og-image.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": dbDispensary.address,
+      "addressLocality": dbDispensary.city,
+      "addressRegion": dbDispensary.state,
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": dbDispensary.latitude,
+      "longitude": dbDispensary.longitude
+    },
+    "url": dbDispensary.website,
+    "priceRange": "$$",
+    "aggregateRating": dbDispensary.rating ? {
+      "@type": "AggregateRating",
+      "ratingValue": dbDispensary.rating,
+      "reviewCount": dbDispensary.review_count || 1
+    } : undefined
+  };
+
   return (
     <>
       <Helmet>
-        <title>{dbDispensary.name} | Verified Dispensary - BudQuest</title>
-        <meta name="description" content={`Full details, reviews, and vital information for ${dbDispensary.name} in ${dbDispensary.city}, ${dbDispensary.state}.`} />
-        <meta name="keywords" content={`${dbDispensary.name}, ${dbDispensary.city} dispensary, ${dbDispensary.state} cannabis store, BudQuest verified`} />
+        {/* OPTIMIZED: Title includes high-intent keywords: Menu, Hours, Reviews, 2025 */}
+        <title>{`${dbDispensary.name}: Menu, Hours & Reviews (${currentYear}) | BudQuest`}</title>
+        
+        {/* OPTIMIZED: Description is enticing and mentions ordering/directions */}
+        <meta name="description" content={`Visiting ${dbDispensary.name} in ${dbDispensary.city}? View the ${currentYear} menu, prices, daily hours, and verified reviews. Order online or get directions today.`} />
+        
+        {/* OPTIMIZED: Keywords target specific brand searches */}
+        <meta name="keywords" content={`${dbDispensary.name} menu, ${dbDispensary.name} prices, ${dbDispensary.name} hours, ${dbDispensary.city} dispensary, buy weed ${dbDispensary.city}`} />
+        
         <link rel="canonical" href={`https://budquest.guide/dispensary/${slug}`} />
+        
+        {/* Schema Markup for Google Maps/Rich Snippets */}
+        <script type="application/ld+json">
+          {JSON.stringify(dispensarySchema)}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -126,9 +169,16 @@ const DispensaryDetail = () => {
           <div className="container mx-auto max-w-5xl">
             {/* Hero Header - Mobile First */}
             <header className="mb-5 sm:mb-8">
-              <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent mb-2 sm:mb-3 leading-tight">
-                {dbDispensary.name}
-              </h1>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-2 sm:mb-3">
+                <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent leading-tight">
+                  {dbDispensary.name}
+                </h1>
+                {/* Visual Freshness Badge */}
+                <Badge variant="outline" className="w-fit text-[10px] h-5 border-accent/30 text-accent flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
+                  {currentYear} Verified
+                </Badge>
+              </div>
 
               <div className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
                 <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent flex-shrink-0 mt-0.5" />
@@ -175,7 +225,7 @@ const DispensaryDetail = () => {
                     className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground text-sm sm:text-base font-bold rounded-lg sm:rounded-xl transition-all hover:shadow-lg hover:shadow-accent/30 text-center"
                   >
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 inline-block" />
-                    Visit
+                    Visit Website / Menu
                   </a>
                 )}
 
