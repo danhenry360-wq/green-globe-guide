@@ -126,8 +126,8 @@ const BlogColoradoAllInclusive = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)",
-        "description": "Discover the reality of cannabis resorts in Colorado. From 420-friendly B&Bs to luxury vacation packages, find the best all-inclusive style weed vacations.",
+        "headline": "All Inclusive Weed-Friendly Resorts in Colorado: 2025 Guide",
+        "description": "Discover the reality of all inclusive weed-friendly resorts in Colorado. From 420-friendly B&Bs to luxury vacation packages, find the best all-inclusive style weed vacations.",
         "image": "https://budquest.guide/blog-all-inclusive-weed-resorts-colorado.png",
         "author": {
             "@type": "Organization",
@@ -142,7 +142,7 @@ const BlogColoradoAllInclusive = () => {
             }
         },
         "datePublished": "2025-12-20",
-        "dateModified": "2025-12-22",
+        "dateModified": "2025-12-24",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://budquest.guide/blog/all-inclusive-weed-resorts-colorado"
@@ -181,7 +181,7 @@ const BlogColoradoAllInclusive = () => {
             {
                 "@type": "ListItem",
                 "position": 3,
-                "name": "All-Inclusive Weed Resorts Colorado",
+                "name": "All Inclusive Weed-Friendly Resorts",
                 "item": "https://budquest.guide/blog/all-inclusive-weed-resorts-colorado"
             }
         ]
@@ -190,12 +190,12 @@ const BlogColoradoAllInclusive = () => {
     return (
         <>
             <Helmet>
-                <title>All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)</title>
-                <meta name="description" content="Looking for an all-inclusive weed resort in Colorado? Here is the honest truth about what exists, where to stay, and how to book the ultimate 420 vacation." />
-                <meta name="keywords" content="all inclusive weed resorts colorado, 420 resort colorado, cannabis resort colorado, weed vacation packages colorado, marijuana friendly resorts colorado" />
+                <title>All Inclusive Weed-Friendly Resorts in Colorado: 2025 Guide</title>
+                <meta name="description" content="Looking for all inclusive weed-friendly resorts in Colorado? Discover 2025's best 420 vacation packages, luxury cannabis cabins, and resort-style experiences." />
+                <meta name="keywords" content="all inclusive weed-friendly resorts colorado, all inclusive weed resorts colorado, 420 resort colorado, cannabis resort colorado, weed vacation packages colorado" />
                 <link rel="canonical" href="https://budquest.guide/blog/all-inclusive-weed-resorts-colorado" />
-                <meta property="og:title" content="All-Inclusive Weed Resorts in Colorado: What Actually Exists (2025)" />
-                <meta property="og:description" content="The honest truth about cannabis resorts in Colorado and how to book your ultimate 420 vacation." />
+                <meta property="og:title" content="All Inclusive Weed-Friendly Resorts in Colorado: 2025 Guide" />
+                <meta property="og:description" content="Looking for all inclusive weed-friendly resorts? Here are the best 420 packages and stays in Colorado for 2025." />
                 <meta property="og:image" content="https://budquest.guide/blog-all-inclusive-weed-resorts-colorado.png" />
                 <meta property="og:type" content="article" />
                 <script type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -227,19 +227,18 @@ const BlogColoradoAllInclusive = () => {
                                 2025 Luxury Travel Guide
                             </Badge>
                             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-                                All-Inclusive <span className="text-accent">Weed Resorts</span> <br className="hidden md:block" />
-                                in Colorado: What Actually Exists
+                                All Inclusive <span className="text-accent">Weed-Friendly Resorts</span> <br className="hidden md:block" />
+                                in Colorado
                             </h1>
                             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-                                The honest truth about cannabis hospitality in the Mile High State.
-                                What exists, what doesn't, and how to book your ultimate high.
+                                The complete guide to finding 420-friendly packages, resorts, and all-inclusive style cannabis vacations in the Mile High State.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
                                 <span className="flex items-center gap-2">
                                     <User className="h-4 w-4 text-accent" /> BudQuest Editorial
                                 </span>
                                 <span className="flex items-center gap-2">
-                                    <Calendar className="h-4 w-4 text-accent" /> Updated Dec 20, 2025
+                                    <Calendar className="h-4 w-4 text-accent" /> Updated Dec 24, 2025
                                 </span>
                                 <span className="flex items-center gap-2">
                                     <Clock className="h-4 w-4 text-accent" /> 15 min read
@@ -287,10 +286,10 @@ const BlogColoradoAllInclusive = () => {
                                         <Info className="h-6 w-6 text-accent" /> The Honest Truth (TL;DR)
                                     </h2>
                                     <p className="text-lg leading-relaxed text-foreground/90">
-                                        <strong>Honest truth:</strong> Colorado doesn't have traditional all-inclusive cannabis resorts like you'd find in Cancun or Negril. Due to federal banking regulations and local zoning laws, you won't find a single hotel where your room, food, and weed are bundled into one price at the check-in desk.
+                                        <strong>Honest truth:</strong> Colorado doesn't have traditional "all inclusive weed-friendly resorts" like you'd find in Cancun or Negril. Due to federal banking regulations and local zoning laws, you won't find a single hotel where your room, food, and weed are bundled into one price at the check-in desk.
                                     </p>
                                     <p className="text-lg leading-relaxed text-foreground/90 mt-4">
-                                        But it <strong>DOES</strong> have 420-friendly B&Bs, boutique stay packages that bundle lodging + tours + experiences, and luxury rentals where you can consume freely. Here's a breakdown of the closest experiences available in 2025.
+                                        But it <strong>DOES</strong> have 420-friendly B&Bs, boutique stay packages that bundle lodging + tours + experiences, and luxury rentals where you can consume freely. These <strong>"Cannabis Vacation Packages"</strong> are effectively the all-inclusive experience you are looking for.
                                     </p>
                                 </Card>
                             </div>
@@ -331,7 +330,7 @@ const BlogColoradoAllInclusive = () => {
                             <div id="packages" className="mb-16">
                                 <h2 className="text-3xl font-bold mb-8">The Closest Thing: Cannabis Vacation Packages</h2>
                                 <p className="text-muted-foreground mb-8">
-                                    These bundles are the spiritual successors to all-inclusive resorts. You book through a specialized tour operator who handles the hotel, the activities, and the transportation.
+                                    These bundles are the spiritual successors to all inclusive weed-friendly resorts. You book through a specialized tour operator who handles the hotel, the activities, and the transportation.
                                 </p>
 
                                 {packages.map((group, idx) => (
