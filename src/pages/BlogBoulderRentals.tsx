@@ -1,12 +1,12 @@
 import { Helmet } from "react-helmet";
-// Updated: December 8, 2025 - Force deployment refresh
+// Updated: December 24, 2025
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
 import {
   MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car, Mountain,
-  ArrowRight, ExternalLink, TreePine, Utensils, Coffee, AlertTriangle
+  ArrowRight, ExternalLink, TreePine, Utensils, Coffee, AlertTriangle, Zap, Trophy, Tent
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -140,7 +140,7 @@ const BlogBoulderRentals = () => {
     },
     {
       q: "Are there consumption lounges in Boulder?",
-      a: "Yes, Boulder has licensed social consumption establishments. Some 420-friendly properties also offer dedicated consumption spaces."
+      a: "Unlike Denver, Boulder has very strict social consumption laws. There are almost no public lounges. This makes booking a 420-friendly rental essential if you want a legal place to smoke."
     },
   ];
 
@@ -207,20 +207,40 @@ const BlogBoulderRentals = () => {
   return (
     <>
       <Helmet>
-        <title>Top 420-Friendly Boulder Rentals: High-Altitude Stays 2025</title>
-        <meta name="description" content="Escape to the Flatirons! Book verified cannabis-friendly mountain lodges and 420-friendly hotels in Boulder. 2025 guide to the best smoke-friendly stays." />
-        <meta name="keywords" content="420-friendly hotels Boulder, cannabis hotels Boulder, weed friendly rentals Boulder, Boulder 420 accommodations, Flatirons lodging" />
+        {/* OPTIMIZED: Title targets "High Altitude", "2025", and "Consumption Lounge" alternative intent */}
+        <title>Top 420-Friendly Boulder Rentals & Lodges (2025) | BudQuest</title>
+        <meta name="description" content="Since public lounges are rare, book verified 420-friendly mountain lodges and rentals in Boulder. The 2025 guide to high-altitude smoking spots." />
+        <meta name="keywords" content="420-friendly hotels Boulder, cannabis hotels Boulder, weed friendly rentals Boulder, Boulder consumption lounges, Flatirons lodging" />
         <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-boulder" />
-        <meta property="og:title" content="Top 420-Friendly Boulder Rentals: High-Altitude Stays 2025" />
+        <meta property="og:title" content="Top 420-Friendly Boulder Rentals & Lodges (2025) | BudQuest" />
         <meta property="og:description" content="Escape to the Flatirons! Book verified cannabis-friendly mountain lodges and 420-friendly hotels in Boulder." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Best 420-Friendly Rentals in Boulder: Complete Guide 2025",
+            "headline": "Top 420-Friendly Boulder Rentals & Lodges (2025)",
+            "description": "The ultimate guide to finding smoker-friendly accommodation in Boulder, Colorado. Updated for 2025.",
             "author": { "@type": "Organization", "name": "BudQuest" },
-            "datePublished": "2025-12-04"
+            "datePublished": "2024-12-04",
+            "dateModified": "2025-01-02"
+          })}
+        </script>
+        {/* FAQ Schema for "Are there lounges?" */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Are there cannabis consumption lounges in Boulder?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Unlike Denver, Boulder has strict regulations preventing most public consumption lounges. Your best legal option is booking a private 420-friendly rental or B&B."
+                }
+              }
+            ]
           })}
         </script>
       </Helmet>
@@ -255,7 +275,7 @@ const BlogBoulderRentals = () => {
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Accommodation</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
-                  <Calendar className="h-4 w-4" /> December 4, 2025
+                  <Calendar className="h-4 w-4" /> Updated Jan 2025
                 </span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Clock className="h-4 w-4" /> 12 min read
@@ -264,14 +284,15 @@ const BlogBoulderRentals = () => {
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Best 420-Friendly Rentals in Boulder:
+                  Top 420-Friendly Rentals in Boulder:
                 </span>
                 <br />
-                <span className="text-foreground/90">Complete Guide 2025</span>
+                <span className="text-foreground/90">The 2025 Guide</span>
               </h1>
 
               <p className="text-lg text-muted-foreground mb-6">
-                Find the perfect cannabis-friendly mountain retreat near the iconic Flatirons
+                Find the perfect cannabis-friendly mountain retreat near the iconic Flatirons.
+                (Looking for <Link to="/blog/cannabis-dispensaries-boulder" className="text-accent hover:underline">Boulder Dispensaries?</Link>)
               </p>
 
               <div className="flex items-center gap-3">
@@ -280,8 +301,52 @@ const BlogBoulderRentals = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">BudQuest</p>
-                  <p className="text-xs text-muted-foreground">Cannabis Travel Experts</p>
+                  <p className="text-xs text-muted-foreground">High Altitude Experts</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* NEW: Quick Top Picks (TL;DR) */}
+        <section className="py-8 border-t border-accent/10 bg-accent/5">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-2 mb-6">
+                <Zap className="h-6 w-6 text-gold" />
+                <h2 className="text-2xl font-bold">Quick Picks: Best Places to Stay</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Link to="/hotels/foot-of-the-mountain" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <Trophy className="h-5 w-5 text-gold" />
+                      <span className="text-xs bg-gold/10 text-gold px-2 py-1 rounded">Best Rustic</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">Foot of the Mountain</h3>
+                    <p className="text-sm text-muted-foreground mt-2">Historic cabins right at the trailhead. Very 420-tolerant outdoor areas.</p>
+                  </Card>
+                </Link>
+                <Link to="/hotels/st-julien" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <Mountain className="h-5 w-5 text-blue-400" />
+                      <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded">Best Views</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">St. Julien Hotel</h3>
+                    <p className="text-sm text-muted-foreground mt-2">High-end luxury with private balconies facing the Flatirons. (Be discreet!)</p>
+                  </Card>
+                </Link>
+                <Link to="#rentals" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <Tent className="h-5 w-5 text-green-400" />
+                      <span className="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded">Most Freedom</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">Private Mountain Cabins</h3>
+                    <p className="text-sm text-muted-foreground mt-2">Browse our verified private rentals for open consumption freedom.</p>
+                  </Card>
+                </Link>
               </div>
             </div>
           </div>
@@ -328,17 +393,14 @@ const BlogBoulderRentals = () => {
             <div className="max-w-4xl">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <CheckCircle2 className="h-6 w-6 text-accent" />
-                Introduction
+                Why You Need a 420-Friendly Rental
               </h2>
               <div className="prose prose-invert">
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Boulder, Colorado is the ultimate destination for cannabis enthusiasts who love the outdoors. Nestled at the base of the iconic Flatirons, this progressive mountain town offers a unique blend of world-class hiking, craft cannabis culture, and 420-friendly accommodations that welcome you to enjoy Colorado's legal cannabis in stunning natural surroundings.
+                  Boulder, Colorado is the ultimate destination for outdoor lovers. But unlike Denver, <strong>Boulder has almost no public cannabis consumption lounges.</strong>
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Unlike Denver's urban offerings, Boulder's 420-friendly rentals emphasize the outdoor experience. Picture yourself on a private patio watching the sunset paint the Flatirons pink and gold, enjoying premium Colorado cannabis after a day of hiking, biking, or exploring Pearl Street's charming shops and restaurants.
-                </p>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  This comprehensive guide covers everything you need to know about finding and booking the perfect cannabis-welcoming accommodation in Boulder. From verified mountain lodges with hot tubs to downtown boutique hotels walking distance from dispensaries, we've curated the best options for every budget and preference.
+                  This makes booking a 420-friendly rental critical. If you stay in a standard hotel, you have nowhere legal to smoke. Our verified Boulder rentals offer private patios, balconies, and yards where you can enjoy the sunset over the Flatirons with a joint in hand, worry-free.
                 </p>
                 <div className="bg-accent/10 border border-accent/30 rounded-lg p-4 mt-6">
                   <p className="text-accent font-semibold flex items-center gap-2">
@@ -355,12 +417,12 @@ const BlogBoulderRentals = () => {
         </section>
 
         {/* Featured Rentals from Database */}
-        <section className="py-12 border-t border-accent/10">
+        <section id="rentals" className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Top 420-Friendly Stays in Boulder</h2>
               <p className="text-muted-foreground mb-8">
-                Our handpicked selection of verified cannabis-welcoming accommodations in the Boulder area. Each property has been confirmed to welcome cannabis consumption.
+                Our handpicked selection of verified cannabis-welcoming accommodations in the Boulder area.
               </p>
 
               {loading ? (
