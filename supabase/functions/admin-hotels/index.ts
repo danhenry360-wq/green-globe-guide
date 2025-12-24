@@ -40,24 +40,31 @@ serve(async (req) => {
     }
 
     // Create client with user's auth token to verify they're an admin
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get("Authorization") || req.headers.get("authorization");
     if (!authHeader) {
       return json({ error: "Authorization required" }, 401);
     }
 
-    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
+    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    if (!token) {
+      return json({ error: "Authorization required" }, 401);
+    }
 
-    // Get current user
+    const userClient = createClient(supabaseUrl, supabaseAnonKey);
+
+    // Get current user (pass token explicitly to avoid header propagation issues)
     const {
       data: { user },
       error: userError,
-    } = await userClient.auth.getUser();
+    } = await userClient.auth.getUser(token);
 
     if (userError || !user) {
-      console.error("Auth error:", userError);
-      return json({ error: "Unauthorized" }, 401);
+      console.error("Auth error:", userError, {
+        hasAuthHeader: true,
+        tokenLength: token.length,
+        tokenPrefix: token.slice(0, 12),
+      });
+      return json({ error: "Unauthorized", message: userError?.message }, 401);
     }
 
     // Check if user is admin
