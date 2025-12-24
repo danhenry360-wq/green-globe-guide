@@ -31,7 +31,7 @@ const BlogAuroraDispensaries = () => {
     const quickFacts = [
         { label: "Age Requirement", value: "21+ with valid ID" },
         { label: "Purchase Limit", value: "1 oz flower / 8g conc / 800mg edible" },
-        { label: "Typical Hours", value: "8:00 AM - 9:45 PM" }, // Aurora often has slightly earlier opens/later closes than mountain towns
+        { label: "Typical Hours", value: "8:00 AM - 9:45 PM" },
         { label: "Proximity", value: "15 mins from Denver Airport (DIA)" },
         { label: "Tax Rate", value: "~20-25% (State + City combined)" },
         { label: "Elevation", value: "5,471 ft (Mile High)" }
@@ -79,7 +79,7 @@ const BlogAuroraDispensaries = () => {
                 {/* Hero Image */}
                 <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
                     <img
-                        src="/blog-aurora-dispensaries.png" // Ensure you have this asset
+                        src="/blog-aurora-dispensaries.png"
                         alt="Aurora and Denver skyline at sunset"
                         className="w-full h-full object-cover"
                     />
