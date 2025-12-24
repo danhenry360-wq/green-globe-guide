@@ -151,15 +151,25 @@ serve(async (req) => {
 
     const err = error as any;
     const errorMessage = err?.message || "Unknown error";
+    const code = err?.code as string | undefined;
+
+    // Prefer returning actionable client errors for common PostgREST/Postgres cases.
+    let status = 500;
+    if (code) status = code === "23505" ? 409 : 400;
+
+    const friendly =
+      code === "23505"
+        ? "A hotel with this slug already exists. Please choose a different name/slug."
+        : undefined;
 
     return json(
       {
-        error: errorMessage,
-        code: err?.code,
+        error: friendly ?? errorMessage,
+        code,
         details: err?.details,
         hint: err?.hint,
       },
-      500,
+      status,
     );
   }
 });

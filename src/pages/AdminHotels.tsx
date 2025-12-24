@@ -136,6 +136,36 @@ const AdminHotels = () => {
     });
 
     if (response.error) {
+      const res = (response as any).response as Response | undefined;
+
+      // FunctionsHttpError stores the raw Response in `response`
+      if (res) {
+        let bodyText = "";
+        let bodyJson: any = null;
+
+        try {
+          bodyJson = await res.clone().json();
+        } catch {
+          try {
+            bodyText = await res.clone().text();
+          } catch {
+            bodyText = "";
+          }
+        }
+
+        const serverMessage =
+          bodyJson?.error || bodyJson?.message || bodyText || response.error.message;
+
+        console.error("admin-hotels non-2xx", {
+          status: res.status,
+          statusText: res.statusText,
+          serverMessage,
+          bodyJson,
+        });
+
+        throw new Error(`${serverMessage} (status ${res.status})`);
+      }
+
       console.error("admin-hotels invoke error:", response.error);
       throw new Error(response.error.message || "Operation failed");
     }
