@@ -54,8 +54,8 @@ const BlogBreckenridgeStays = () => {
             "name": "BudQuest",
             "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
         },
-        "datePublished": "2025-12-22",
-        "dateModified": "2025-12-22",
+        "datePublished": "2024-12-22",
+        "dateModified": "2025-01-02",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://budquest.guide/blog/best-420-friendly-stays-breckenridge"
