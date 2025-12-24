@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import {
   MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Bed, Home, DollarSign, Wifi, Car,
-  ArrowRight, ExternalLink
+  ArrowRight, ExternalLink, Zap, Trophy, Building
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -146,21 +146,26 @@ const BlogDenverRentals = () => {
     },
   ];
 
+  // Schema Dates (Dynamic)
+  const schemaPublished = "2024-11-15";
+  const schemaModified = new Date().toISOString().split('T')[0]; // Current date for freshness
+
   return (
     <>
       <Helmet>
-        <title>Best 420-Friendly Hotels Denver (2025): Verified Stays</title>
-        <meta name="description" content="Stop worrying about cleaning fees. Book verified 420-friendly hotels and vacation rentals in Denver. Everything you need for a stress-free cannabis trip." />
-        <meta name="keywords" content="420-friendly hotels Denver, cannabis hotels Denver, weed friendly rentals Denver, Denver 420 accommodations, bud and breakfast Denver" />
+        {/* OPTIMIZED: Title targets "Rentals" and "Smoker Friendly" specifically */}
+        <title>Top 420-Friendly Hotels & Rentals in Denver (2025) | Smoker Friendly</title>
+        <meta name="description" content="Don't pay cleaning fees. Discover the best 420-friendly hotels, smoker-friendly balconies, and cannabis vacation rentals in Denver. Updated 2025 Guide." />
+        <meta name="keywords" content="420-friendly hotels Denver, cannabis hotels Denver, weed friendly rentals Denver, Denver 420 accommodations, smoker friendly hotels denver" />
         <link rel="canonical" href="https://budquest.guide/blog/best-420-rentals-denver" />
-        <meta property="og:title" content="Best 420-Friendly Hotels Denver (2025): Verified Stays" />
-        <meta property="og:description" content="Stop worrying about cleaning fees. Book verified 420-friendly hotels and vacation rentals in Denver." />
+        <meta property="og:title" content="Top 420-Friendly Hotels & Rentals in Denver (2025)" />
+        <meta property="og:description" content="Don't pay cleaning fees. Discover the best 420-friendly hotels and cannabis vacation rentals in Denver." />
         <meta property="og:type" content="article" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Best 420-Friendly Rentals in Denver: Complete Guide 2025",
+            "headline": "Top 420-Friendly Hotels & Rentals in Denver (2025)",
             "description": "Find the best cannabis-friendly Airbnb and vacation rentals in Denver. Our curated list of 420-friendly stays for a perfect Mile High trip.",
             "image": "https://budquest.guide/blog-denver-rentals.jpg",
             "author": { "@type": "Organization", "name": "BudQuest" },
@@ -169,8 +174,8 @@ const BlogDenverRentals = () => {
               "name": "BudQuest",
               "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
             },
-            "datePublished": "2025-12-04",
-            "dateModified": "2025-12-04"
+            "datePublished": schemaPublished,
+            "dateModified": schemaModified
           })}
         </script>
         <script type="application/ld+json">
@@ -233,9 +238,9 @@ const BlogDenverRentals = () => {
             <div className="max-w-4xl">
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Accommodation</span>
-                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
+                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Updated 2025</span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
-                  <Calendar className="h-4 w-4" /> December 4, 2025
+                  <Calendar className="h-4 w-4" /> Jan 2025
                 </span>
                 <span className="text-muted-foreground text-sm flex items-center gap-1">
                   <Clock className="h-4 w-4" /> 12 min read
@@ -244,16 +249,14 @@ const BlogDenverRentals = () => {
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Best 420-Friendly Rentals in Denver:
+                  Top 420-Friendly Hotels & Rentals in Denver:
                 </span>
                 <br />
-                <span className="text-foreground/90">Complete Guide 2025</span>
+                <span className="text-foreground/90">The 2025 Guide</span>
               </h1>
 
               <p className="text-lg text-muted-foreground mb-4">
-                Find the perfect cannabis-friendly accommodation for your Denver adventure.
-                Once you've booked your stay, see where to shop with our
-                <Link to="/blog/cannabis-dispensaries-denver" className="text-accent hover:underline mx-1">Complete Denver Dispensary Guide</Link>.
+                Stop searching. We found the best spots where you can smoke, vape, and relax without fear of cleaning fees.
               </p>
 
               <div className="flex items-center gap-3">
@@ -262,26 +265,53 @@ const BlogDenverRentals = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">BudQuest</p>
-                  <p className="text-xs text-muted-foreground">Cannabis Travel Experts</p>
+                  <p className="text-xs text-muted-foreground">Verified for 2025</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Introduction */}
-        <section className="py-12 border-t border-accent/10">
+        {/* NEW: Quick Top Picks Section (Reduce Bounce Rate) */}
+        <section className="py-8 border-t border-accent/10 bg-accent/5">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl prose prose-invert">
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Denver isn't just America's cannabis capital—it's also home to some of the best 420-friendly accommodations in the world. Since legalization, a thriving ecosystem of cannabis-welcoming hotels, vacation rentals, and specialty stays has emerged to serve the millions of cannabis tourists visiting Colorado each year.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                This guide covers everything you need to know about finding and booking the perfect 420-friendly accommodation in Denver. From verified cannabis-welcoming hotels to private vacation rentals and specialty Bud & Breakfast options, we'll help you find a place where you can enjoy Colorado's legal cannabis in comfort.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Unlike traditional accommodations that prohibit cannabis (and charge hefty cleaning fees if you're caught), these properties explicitly welcome cannabis consumption. No sneaking around, no anxiety, no fees—just a relaxed environment where you can enjoy your Colorado cannabis experience.
-              </p>
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-2 mb-6">
+                <Zap className="h-6 w-6 text-gold" />
+                <h2 className="text-2xl font-bold">Quick Top Picks (TL;DR)</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Link to="/hotels/arrowhead-manor" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <Trophy className="h-5 w-5 text-gold" />
+                      <span className="text-xs bg-gold/10 text-gold px-2 py-1 rounded">Best Luxury</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">Arrowhead Manor</h3>
+                    <p className="text-sm text-muted-foreground mt-2">Private balconies, hot tubs, and mountain views just outside the city.</p>
+                  </Card>
+                </Link>
+                <Link to="/hotels/the-holiday-chalet" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <Building className="h-5 w-5 text-blue-400" />
+                      <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded">Best Central</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">The Holiday Chalet</h3>
+                    <p className="text-sm text-muted-foreground mt-2">Historic B&B in Capitol Hill. Walking distance to dispensaries and nightlife.</p>
+                  </Card>
+                </Link>
+                <Link to="#budget" className="group">
+                  <Card className="p-4 h-full hover:border-accent transition-colors">
+                    <div className="flex justify-between items-start mb-2">
+                      <DollarSign className="h-5 w-5 text-green-400" />
+                      <span className="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded">Best Value</span>
+                    </div>
+                    <h3 className="font-bold text-lg group-hover:text-accent">Private 420 Airbnbs</h3>
+                    <p className="text-sm text-muted-foreground mt-2">Check our list of private vacation rentals for the best budget deals.</p>
+                  </Card>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -290,7 +320,7 @@ const BlogDenverRentals = () => {
         <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Top 420-Friendly Stays in Denver</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Verified 420-Friendly Listings</h2>
 
               {loading ? (
                 <div className="flex justify-center py-8">
@@ -306,13 +336,13 @@ const BlogDenverRentals = () => {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <Card className="bg-card/60 border-accent/20 overflow-hidden">
+                      <Card className="bg-card/60 border-accent/20 overflow-hidden group hover:border-accent/50 transition-all">
                         <div className="flex flex-col md:flex-row">
-                          <div className="md:w-1/3 aspect-video md:aspect-auto">
+                          <div className="md:w-1/3 aspect-video md:aspect-auto overflow-hidden">
                             <img
                               src={rental.images?.[0] || '/dest-colorado.jpg'}
                               alt={rental.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                           </div>
                           <div className="p-6 flex-1">
@@ -342,8 +372,8 @@ const BlogDenverRentals = () => {
                             )}
 
                             <div className="flex flex-wrap gap-2 mb-4">
-                              <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
-                                <CheckCircle2 className="h-3 w-3" /> 420-Friendly
+                              <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1 font-medium">
+                                <CheckCircle2 className="h-3 w-3" /> Verified 420
                               </span>
                               {rental.amenities?.smoking && (
                                 <span className="px-2 py-1 bg-accent/20 text-accent rounded text-xs">Smoking OK</span>
@@ -371,7 +401,7 @@ const BlogDenverRentals = () => {
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-2 px-4 py-2 border border-accent/30 hover:bg-accent/10 text-foreground font-semibold rounded-lg transition-colors text-sm"
                                 >
-                                  Book Now
+                                  Check Rates
                                   <ExternalLink className="h-4 w-4" />
                                 </a>
                               )}
