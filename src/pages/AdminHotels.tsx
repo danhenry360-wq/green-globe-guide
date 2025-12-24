@@ -208,7 +208,8 @@ const AdminHotels = () => {
       setImageUrls(["", ""]);
     },
     onError: (error) => {
-      toast.error("Failed to create hotel: " + error.message);
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error("Failed to create hotel: " + msg);
     },
   });
 
@@ -224,7 +225,8 @@ const AdminHotels = () => {
       setEditingHotel(null);
     },
     onError: (error) => {
-      toast.error("Failed to update hotel: " + error.message);
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error("Failed to update hotel: " + msg);
     },
   });
 
@@ -240,7 +242,8 @@ const AdminHotels = () => {
       setHotelToDelete(null);
     },
     onError: (error) => {
-      toast.error("Failed to delete hotel: " + error.message);
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error("Failed to delete hotel: " + msg);
     },
   });
 
@@ -254,7 +257,8 @@ const AdminHotels = () => {
       toast.success("Verification status updated");
     },
     onError: (error) => {
-      toast.error("Failed to update: " + error.message);
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error("Failed to update: " + msg);
     },
   });
 
