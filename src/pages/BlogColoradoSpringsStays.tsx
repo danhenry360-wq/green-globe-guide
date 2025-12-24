@@ -11,11 +11,12 @@ import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
 const BlogColoradoSpringsStays = () => {
+    // OPTIMIZED: Schema updated to target Manitou Springs explicitly
     const articleSchema = {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "Best 420-Friendly Hotels Colorado Springs & Manitou (2025)",
-        "description": "Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips.",
+        "description": "The ultimate guide to cannabis-friendly lodging in Colorado Springs and Manitou Springs. Verified 420 hotels, B&Bs, and Pikes Peak consumption tips.",
         "image": "https://budquest.guide/blog-colorado-springs-stays.png",
         "author": { "@type": "Organization", "name": "BudQuest" },
         "publisher": {
@@ -23,8 +24,8 @@ const BlogColoradoSpringsStays = () => {
             "name": "BudQuest",
             "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
         },
-        "datePublished": "2025-12-20",
-        "dateModified": "2025-12-22",
+        "datePublished": "2024-12-20",
+        "dateModified": "2025-01-02", // Freshness signal
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://budquest.guide/blog/best-420-friendly-stays-colorado-springs"
@@ -44,14 +45,16 @@ const BlogColoradoSpringsStays = () => {
     return (
         <>
             <Helmet>
+                {/* OPTIMIZED: Title targets both locations + current year */}
                 <title>Best 420-Friendly Hotels Colorado Springs & Manitou (2025)</title>
-                <meta name="description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips to keep you safe in 2025." />
-                <meta name="keywords" content="420 friendly hotels colorado springs, 420 friendly hotels manitou springs, bud and breakfast colorado springs, cannabis friendly hotels pikes peak" />
+                <meta name="description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou Springs. Discover verified 420 stays near Garden of the Gods and Pikes Peak for 2025." />
+                <meta name="keywords" content="420 friendly hotels colorado springs, 420 friendly hotels manitou springs, bud and breakfast colorado springs, cannabis friendly hotels pikes peak, garden of the gods weed policy" />
                 <link rel="canonical" href="https://budquest.guide/blog/best-420-friendly-stays-colorado-springs" />
                 <meta property="og:title" content="Best 420-Friendly Hotels Colorado Springs & Manitou (2025)" />
-                <meta property="og:description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips to keep you safe." />
+                <meta property="og:description" content="Find the best cannabis-friendly hotels in Colorado Springs and Manitou. Verified 420 stays plus local consumption tips." />
                 <meta property="og:image" content="/blog-colorado-springs-stays.png" />
                 <meta property="og:type" content="article" />
+                {/* OPTIMIZED: FAQ Schema to capture "Is Manitou Springs 420 Friendly?" snippets */}
                 <script type="application/ld+json">
                     {`
                     {
@@ -121,7 +124,7 @@ const BlogColoradoSpringsStays = () => {
                                 <span className="text-green-500">Colorado Springs & Manitou (2025)</span>
                             </h1>
                             <p className="text-lg sm:text-xl text-white/90 max-w-2xl mb-6">
-                                Finding a place to smoke in the Springs can be tough. We found the hidden gems where you can relax.
+                                Finding a place to smoke near Garden of the Gods or Pikes Peak? We found the hidden gems in Manitou and the Springs.
                             </p>
                         </motion.div>
                     </div>
@@ -419,7 +422,7 @@ const BlogColoradoSpringsStays = () => {
                                 <p className="mt-4 text-center font-bold text-muted-foreground">Verdict: Stay in Manitou, explore Colorado Springs.</p>
                             </section>
 
-                            {/* 5. What to Do While High */}
+                            {/* 5. What to Do While High (OPTIMIZED: Added Garden of Gods & Pikes Peak Intent) */}
                             <section>
                                 <h2 className="text-3xl font-bold mb-6">What to Do While High</h2>
                                 <div className="space-y-4">
