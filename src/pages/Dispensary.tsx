@@ -4,13 +4,10 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  ChevronDown,
   MapPin,
   ExternalLink,
   Search,
   Building,
-  Leaf,
-  Info,
   Filter,
   X,
   ChevronLeft,
@@ -301,7 +298,7 @@ const FilterPanel = ({
                 </select>
               </div>
 
-              {/* STATE FILTER - Always visible */}
+              {/* STATE FILTER */}
               <div>
                 <label className="block text-sm font-semibold text-muted-foreground mb-3">
                   State/Province
@@ -582,9 +579,15 @@ const Dispensary = () => {
   useEffect(() => {
     const fetchDbDispensaries = async () => {
       setIsLoading(true);
+      // OPTIMIZATION: Explicitly select only columns needed for the list view
       const { data, error } = await supabase
         .from('dispensaries')
-        .select('*')
+        .select(`
+          id, name, slug, city, state, country, address,
+          rating, review_count, status,
+          is_recreational, is_medical, has_delivery, has_atm, has_parking,
+          description, image, website, policy_highlights
+        `)
         .order('rating', { ascending: false });
 
       if (!error && data) {
