@@ -410,8 +410,25 @@ const AdminHotels = () => {
         <Navigation />
 
         <div className="container mx-auto max-w-7xl px-4 pt-24 pb-12">
+          {/* Back Navigation */}
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/admin")}
+            className="mb-4 gap-2 text-muted-foreground hover:text-accent"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </Button>
+
           {/* Header */}
           <div className="mb-8">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/admin")}
+              className="mb-4 gap-2 pl-0 hover:bg-transparent"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+            </Button>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="flex items-center justify-between">
