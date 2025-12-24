@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-// FIX: Added 'Car' to the imports below
 import {
     MapPin, Clock, AlertTriangle, Home, Mountain,
     CheckCircle2, ChevronRight, Info, Star, DollarSign,
@@ -198,7 +197,7 @@ const BlogBreckenridgeStays = () => {
                                 </Card>
                             </div>
 
-                            {/* 2. The Breckenridge Situation (Mobile Optimized List vs Desktop Table) */}
+                            {/* 2. The Breckenridge Situation */}
                             <div id="situation">
                                 <h2 className="text-2xl font-bold mb-6">The Breck Situation</h2>
                                 
@@ -304,29 +303,53 @@ const BlogBreckenridgeStays = () => {
                                     )}
                                 </div>
 
-                                {/* Nearby Alternatives */}
-                                <Card className="p-5 bg-orange-50 border-orange-200">
-                                    <h4 className="text-lg font-bold text-orange-800 mb-2 flex items-center gap-2">
+                                {/* Nearby Alternatives - Fixed Dark Mode */}
+                                <Card className="p-5 bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800">
+                                    <h4 className="text-lg font-bold text-orange-800 dark:text-orange-400 mb-2 flex items-center gap-2">
                                         <MapPin className="h-4 w-4" /> Save Money in Frisco
                                     </h4>
-                                    <p className="text-sm text-orange-900/80 mb-3">
+                                    <p className="text-sm text-orange-900/80 dark:text-orange-200/80 mb-3">
                                         Just 15 mins away, Frisco/Dillon offers cheaper rentals and more dispensaries.
                                     </p>
-                                    <Link to="/blog/best-420-friendly-stays-frisco-dillon" className="text-sm font-bold text-orange-600 hover:underline">
+                                    <Link to="/blog/best-420-friendly-stays-frisco-dillon" className="text-sm font-bold text-orange-600 dark:text-orange-400 hover:underline">
                                         View Frisco Guide →
                                     </Link>
                                 </Card>
                             </div>
 
-                            {/* 4. Best Options by Budget (Converted to Cards for Mobile) */}
+                            {/* 4. Best Options by Budget - Fixed Dark Mode */}
                             <div id="budget">
                                 <h2 className="text-2xl font-bold mb-6">Options by Budget</h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {[
-                                        { title: "Budget", name: "Bunk House Lodge", price: "$100-150", note: "Social hostel vibe", color: "bg-blue-50 border-blue-200" },
-                                        { title: "Mid-Range", name: "Ski Condos", price: "$225-350", note: "Look for balconies", color: "bg-green-50 border-green-200" },
-                                        { title: "Premium", name: "Townhouses", price: "$400+", note: "Private hot tubs", color: "bg-purple-50 border-purple-200" },
-                                        { title: "Luxury", name: "Breck Haus", price: "$800+", note: "Full experience", color: "bg-gold/10 border-gold/30" },
+                                        { 
+                                            title: "Budget", 
+                                            name: "Bunk House Lodge", 
+                                            price: "$100-150", 
+                                            note: "Social hostel vibe", 
+                                            color: "bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800" 
+                                        },
+                                        { 
+                                            title: "Mid-Range", 
+                                            name: "Ski Condos", 
+                                            price: "$225-350", 
+                                            note: "Look for balconies", 
+                                            color: "bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800" 
+                                        },
+                                        { 
+                                            title: "Premium", 
+                                            name: "Townhouses", 
+                                            price: "$400+", 
+                                            note: "Private hot tubs", 
+                                            color: "bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-800" 
+                                        },
+                                        { 
+                                            title: "Luxury", 
+                                            name: "Breck Haus", 
+                                            price: "$800+", 
+                                            note: "Full experience", 
+                                            color: "bg-yellow-50 dark:bg-yellow-950/40 border-yellow-200 dark:border-yellow-800" 
+                                        },
                                     ].map((item, i) => (
                                         <div key={i} className={`p-4 rounded-xl border ${item.color}`}>
                                             <div className="text-xs font-bold uppercase opacity-70 mb-1">{item.title}</div>
@@ -374,17 +397,17 @@ const BlogBreckenridgeStays = () => {
                             {/* 6. Altitude Warning */}
                             <div id="altitude">
                                 <h2 className="text-2xl font-bold mb-4">Altitude Warning</h2>
-                                <Card className="p-6 border-red-500/30 bg-red-500/5">
+                                <Card className="p-6 border-red-500/30 bg-red-500/5 dark:bg-red-950/20">
                                     <div className="flex items-start gap-4">
-                                        <div className="p-2 bg-red-100 rounded-full text-red-600 shrink-0">
+                                        <div className="p-2 bg-red-100 dark:bg-red-900/40 rounded-full text-red-600 dark:text-red-400 shrink-0">
                                             <Zap className="h-6 w-6" />
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-red-700">9,600 Feet = Stronger High</h3>
-                                            <p className="text-sm text-red-900/80 mt-1 mb-2">
+                                            <h3 className="font-bold text-red-700 dark:text-red-400">9,600 Feet = Stronger High</h3>
+                                            <p className="text-sm text-red-900/80 dark:text-red-200/80 mt-1 mb-2">
                                                 Less oxygen means cannabis can hit 20-40% harder.
                                             </p>
-                                            <ul className="text-xs font-medium space-y-1 text-red-800">
+                                            <ul className="text-xs font-medium space-y-1 text-red-800 dark:text-red-300">
                                                 <li>• Drink 2x more water</li>
                                                 <li>• Start with 5mg edibles max</li>
                                                 <li>• Wait 60 mins before redosing</li>
@@ -404,7 +427,7 @@ const BlogBreckenridgeStays = () => {
                                         { title: "Hotel Rooms", desc: "$250+ cleaning fees.", icon: Building },
                                         { title: "Cars", desc: "DUI laws apply heavily.", icon: Car },
                                     ].map((zone, i) => (
-                                        <Card key={i} className="p-4 flex items-center gap-3 border-red-100 hover:border-red-300 transition-colors">
+                                        <Card key={i} className="p-4 flex items-center gap-3 border-red-100 dark:border-red-900/50 hover:border-red-300 transition-colors">
                                             <zone.icon className="h-8 w-8 text-red-400 shrink-0" />
                                             <div>
                                                 <h4 className="font-bold text-sm">{zone.title}</h4>
