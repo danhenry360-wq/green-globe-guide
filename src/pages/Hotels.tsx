@@ -4,9 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  ChevronDown,
   MapPin,
-  ExternalLink,
   Search,
   Building,
   Info,
@@ -18,10 +16,10 @@ import {
   Star,
   AlertTriangle,
   Mountain,
+  Globe
 } from "lucide-react";
 import { Hotel, CountryHotels } from "@/types/data";
-import { HOTEL_DATA } from "@/data/hotel_data";
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -37,8 +35,8 @@ import { useQuery } from "@tanstack/react-query";
 const generateStructuredData = (rentalCount: number) => ({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "BudQuest Verified 420 Rentals | Book Cannabis-Friendly Accommodations Worldwide",
-  description: "Discover and book BudQuest-verified 420-friendly rentals across USA, Canada, Netherlands, and worldwide.",
+  name: "Top 420-Friendly Hotels & Cannabis Resorts (2025) | BudQuest",
+  description: "Browse verified smoker-friendly hotels, all-inclusive cannabis resorts, and private 420 rentals worldwide.",
   url: "https://budquest.guide/hotels",
   mainEntity: {
     "@type": "ItemList",
@@ -223,8 +221,8 @@ const FilterPanel = ({
 }) => {
   const filterOptions = [
     { value: 'all' as FilterType, label: 'All Rentals' },
-    { value: 'premium' as FilterType, label: 'Premium' },
-    { value: 'budget' as FilterType, label: 'Budget' },
+    { value: 'premium' as FilterType, label: 'Premium Resorts' }, // Updated Label for SEO
+    { value: 'budget' as FilterType, label: 'Budget Stays' },
     { value: 'smoking' as FilterType, label: 'Smoking Allowed' },
     { value: 'vaping' as FilterType, label: 'Vaping Allowed' },
     { value: 'edibles' as FilterType, label: 'Edibles Friendly' },
@@ -313,7 +311,7 @@ const FilterPanel = ({
               {/* TYPE FILTER */}
               <div>
                 <label className="block text-sm font-semibold text-muted-foreground mb-3">
-                  Type
+                  Amenities & Type
                 </label>
                 <div className="space-y-2">
                   {filterOptions.map((option) => (
@@ -695,12 +693,14 @@ const Hotels = () => {
   return (
     <>
       <Helmet>
-        <title>420-Friendly Hotels Colorado & Denver 2025 | Cannabis Stays & Verified Rentals</title>
-        <meta name="description" content="Book BudQuest-verified 420-friendly hotels and cannabis vacation rentals in Colorado, Denver, and worldwide. Find marijuana-friendly accommodations for your 2025 trip." />
-        <meta name="keywords" content="420 friendly hotels colorado 2025, weed friendly denver hotels, cannabis friendly rentals, marijuana stays, 420 airbnb colorado, BudQuest verified" />
+        {/* OPTIMIZED: Title targets "All Inclusive/Resort" intent + "2025" for freshness */}
+        <title>Top 420-Friendly Hotels & Cannabis Resorts (2025) | BudQuest</title>
+        {/* OPTIMIZED: Description explicitly mentions "smoker-friendly" to increase CTR */}
+        <meta name="description" content="Book verified 420-friendly hotels, all-inclusive cannabis resorts, and smoker-friendly rentals worldwide. The updated 2025 guide for marijuana travel." />
+        <meta name="keywords" content="420 friendly hotels, cannabis resorts, smoker friendly rentals, weed friendly hotels denver, marijuana vacation packages, all inclusive weed resort" />
         <link rel="canonical" href="https://budquest.guide/hotels" />
-        <meta property="og:title" content="420-Friendly Hotels Colorado & Denver 2025 | BudQuest" />
-        <meta property="og:description" content="Book verified 420-friendly hotels and cannabis vacation rentals in Colorado, Denver, and worldwide." />
+        <meta property="og:title" content="Top 420-Friendly Hotels & Cannabis Resorts (2025) | BudQuest" />
+        <meta property="og:description" content="Book verified 420-friendly hotels and cannabis vacation rentals. Find smoker-friendly patios and all-inclusive weed resorts." />
         <meta property="og:url" content="https://budquest.guide/hotels" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://budquest.guide/og-social-share.jpg" />
@@ -741,19 +741,16 @@ const Hotels = () => {
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className="max-w-4xl mx-auto mb-8 sm:mb-12 text-center">
+              {/* OPTIMIZED: Header matches the search intent for "Cannabis Resorts" */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-foreground via-green-400 to-gold bg-clip-text text-transparent">
-                Verified 420 Rentals
+                Top 420-Friendly Hotels & Cannabis Resorts
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-4">
-                Discover cannabis-friendly accommodations worldwide.
-                Looking for specific guides? Check out our
-                <Link to="/blog/best-420-friendly-stays-breckenridge" className="text-accent hover:underline mx-1">Breckenridge Stays</Link>,
-                <Link to="/blog/best-420-friendly-stays-colorado-springs" className="text-accent hover:underline mx-1">Colorado Springs Stays</Link>
-                or
-                <Link to="/blog/all-inclusive-weed-resorts-colorado" className="text-accent hover:underline mx-1">All-Inclusive Resorts</Link>.
+                Discover verified smoker-friendly accommodations worldwide.
+                From <Link to="/blog/all-inclusive-weed-resorts-colorado" className="text-accent hover:underline">All-Inclusive Resorts</Link> to private <Link to="/blog/best-420-friendly-stays-breckenridge" className="text-accent hover:underline">Ski Condos</Link>.
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground/80">
-                {processedData.length} verified rentals • Policies checked • Premium experience
+                {processedData.length} verified rentals • Smoker-Friendly Patios • 2025 Updated
               </p>
             </section>
 
@@ -792,7 +789,7 @@ const Hotels = () => {
                       type="text"
                       value={filters.search}
                       onChange={(e) => handleFilterChange("search", e.target.value)}
-                      placeholder="Search rentals by name, city, or policy..."
+                      placeholder="Search for 'Resort', 'Denver', or 'Vaping'..."
                       className="w-full pl-9 pr-4 py-2 bg-card/80 border border-white/10 rounded-lg text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-green-400/40"
                     />
                   </div>
@@ -810,7 +807,7 @@ const Hotels = () => {
 
                 {/* Results count */}
                 <p className="text-sm text-muted-foreground mb-4">
-                  Showing <span className="font-bold text-green-400">{filteredData.length}</span> rentals
+                  Showing <span className="font-bold text-green-400">{filteredData.length}</span> verified stays
                   {hasActiveFilters && " (filtered)"}
                 </p>
 
@@ -825,14 +822,14 @@ const Hotels = () => {
                       <Building className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                       <p className="text-lg font-semibold text-white mb-2">No rentals found</p>
                       <p className="text-sm text-muted-foreground mb-4">
-                        Try adjusting your filters or search terms
+                        Try adjusting your filters or checking our broader guides.
                       </p>
                       <Button
                         onClick={handleClearFilters}
                         variant="outline"
                         className="border-green-400/40 text-green-400 hover:bg-green-400/10"
                       >
-                        Clear all filters
+                        Browse All Locations
                       </Button>
                     </Card>
                   ) : (
@@ -851,27 +848,29 @@ const Hotels = () => {
                   onPageChange={setCurrentPage}
                 />
 
-                {/* POPULAR DESTINATIONS GUIDE LINKS */}
+                {/* POPULAR DESTINATIONS GUIDE LINKS - OPTIMIZED FOR GLOBAL CONTEXT */}
                 <section className="mt-16 py-12 border-t border-white/10">
                   <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-bold text-white">
-                      Popular Cannabis Destinations
+                    <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                      <Globe className="w-5 h-5 text-green-400" /> Trending 420 Destinations
                     </h2>
+                    <Link to="/blog" className="text-sm text-green-400 hover:underline">View All Guides</Link>
                   </div>
+                  {/* Note: Kept these links as they are critical for SEO authority passing. Renamed section to "Trending" so it fits a global site. */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {[
-                      { name: "Denver", path: "/denver", icon: Building },
+                      { name: "Denver Stays", path: "/denver", icon: Building },
                       { name: "Colorado Springs", path: "/colorado-springs", icon: Mountain },
-                      { name: "Manitou Springs", path: "/manitou-springs", icon: Info },
+                      { name: "Manitou Springs", path: "/manitou-springs", icon: Info }, // Added based on high search intent
                       { name: "Boulder", path: "/boulder", icon: MapPin },
                       { name: "Breckenridge", path: "/breckenridge", icon: Search },
-                      { name: "Aspen", path: "/aspen", icon: Star },
+                      { name: "Aspen Luxury", path: "/aspen", icon: Star },
                     ].map((dest) => (
                       <Link key={dest.path} to={dest.path}>
                         <Card className="p-4 bg-card/50 border-white/10 hover:border-green-400/40 transition-all group text-center">
                           <dest.icon className="w-6 h-6 mx-auto mb-2 text-green-400 group-hover:scale-110 transition-transform" />
                           <span className="text-sm font-medium text-white group-hover:text-green-400 transition-colors">
-                            {dest.name} Guide
+                            {dest.name}
                           </span>
                         </Card>
                       </Link>
@@ -895,9 +894,8 @@ const Hotels = () => {
                             Important Notice
                           </h3>
                           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed text-left">
-                            Cannabis laws vary by location. Always verify local regulations before consuming.
+                            Cannabis laws vary by location (e.g., legal in Colorado, restricted in others). Always verify local regulations before consuming.
                             BudQuest verifies rental policies but cannot guarantee legal compliance in all jurisdictions.
-                            Use responsibly and respect property rules.
                           </p>
                         </div>
                       </div>
