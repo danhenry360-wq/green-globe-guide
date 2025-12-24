@@ -2,11 +2,12 @@ import { Helmet } from "react-helmet";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
+// FIX: Added 'Car' to the imports below
 import {
     MapPin, Clock, AlertTriangle, Home, Mountain,
     CheckCircle2, ChevronRight, Info, Star, DollarSign,
     Ban, Leaf, Award, Bed, Building, Wind, Zap, Gem, Coffee, Users,
-    ArrowRight, Search, Menu
+    ArrowRight, Search, Menu, Car
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
