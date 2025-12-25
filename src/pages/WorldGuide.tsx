@@ -2974,6 +2974,16 @@ const ContinentIndex = ({
 }) => {
   const nav = useNavigate();
 
+  // Popular destinations for internal linking
+  const popularDestinations = [
+    { name: "Colorado", path: "/colorado", emoji: "🏔️" },
+    { name: "Amsterdam", path: "/world/europe/netherlands", emoji: "🇳🇱" },
+    { name: "Thailand", path: "/world/asia/thailand", emoji: "🇹🇭" },
+    { name: "Canada", path: "/world/north-america/canada", emoji: "🇨🇦" },
+    { name: "Jamaica", path: "/world/caribbean/jamaica", emoji: "🇯🇲" },
+    { name: "Barcelona", path: "/world/europe/spain", emoji: "🇪🇸" },
+  ];
+
   return (
     <section className="container mx-auto max-w-7xl px-4 pt-40 pb-12">
       <motion.div
@@ -2981,21 +2991,37 @@ const ContinentIndex = ({
         animate={{ opacity: 1, y: 0 }}
         className="mb-10 text-center"
       >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-3">
           <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-            Global Cannabis Guide
+            Where Is Weed Legal in 2025?
           </span>
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground font-light mb-4">
-          Travel safe. Know the laws worldwide.
+        <p className="text-base sm:text-lg text-muted-foreground font-light mb-4 max-w-2xl mx-auto">
+          Interactive world cannabis map with laws for 150+ countries. Find 420-friendly destinations, avoid death penalty zones, and travel smart.
         </p>
-        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6">
           <Calendar className="w-4 h-4" />
           <span>Last Updated: {TODAY_FORMATTED}</span>
         </div>
+
+        {/* Quick Links to Popular Destinations */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+          <span className="text-sm text-muted-foreground">Popular:</span>
+          {popularDestinations.map((dest) => (
+            <Link
+              key={dest.name}
+              to={dest.path}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-500/10 hover:bg-green-500/20 text-green-400 text-sm font-medium transition-colors border border-green-500/20"
+            >
+              <span>{dest.emoji}</span>
+              <span>{dest.name}</span>
+            </Link>
+          ))}
+        </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Continent Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {WORLD.map((c) => (
           <motion.div
             key={c.slug}
@@ -3005,7 +3031,7 @@ const ContinentIndex = ({
           >
             <div className="flex items-center gap-4 mb-4">
               <c.icon className="w-8 h-8 text-green-400" />
-              <h3 className="text-2xl font-bold">{c.name}</h3>
+              <h2 className="text-2xl font-bold">{c.name}</h2>
             </div>
             <p className="text-sm text-muted-foreground">
               {c.countries.length} countries
@@ -3013,6 +3039,38 @@ const ContinentIndex = ({
             <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 group-hover:text-white transition" />
           </motion.div>
         ))}
+      </div>
+
+      {/* SEO Content Block */}
+      <div className="bg-card/50 border border-white/10 rounded-2xl p-6 md:p-8">
+        <h2 className="text-xl md:text-2xl font-bold mb-4">Cannabis Travel Guide 2025: What You Need to Know</h2>
+        <div className="prose prose-invert prose-green max-w-none text-muted-foreground">
+          <p className="mb-4">
+            Whether you're looking for <Link to="/colorado" className="text-green-400 hover:underline">420-friendly stays in Colorado</Link>, planning a trip to <Link to="/world/europe/netherlands" className="text-green-400 hover:underline">Amsterdam's famous coffeeshops</Link>, or curious about <Link to="/world/asia/thailand" className="text-green-400 hover:underline">Thailand's new cannabis scene</Link>, our comprehensive world cannabis guide has you covered.
+          </p>
+          <h3 className="text-lg font-semibold text-foreground mt-6 mb-2">Legal Cannabis Countries for Tourists</h3>
+          <p className="mb-4">
+            Only a handful of countries allow tourists to legally purchase cannabis: <strong>Canada</strong> (nationwide), <strong>Thailand</strong> (with restrictions), <strong>Uruguay</strong> (residents only, but enforcement is lax), and parts of the <strong>United States</strong> including Colorado, California, and Nevada.
+          </p>
+          <h3 className="text-lg font-semibold text-foreground mt-6 mb-2">Countries to Avoid</h3>
+          <p className="mb-4">
+            <strong className="text-red-400">Warning:</strong> Several countries impose the <strong>death penalty</strong> for drug trafficking, including Singapore, Malaysia, Indonesia, Saudi Arabia, and the UAE. Even small amounts may trigger trafficking charges. Our guide highlights these high-risk destinations.
+          </p>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link to="/colorado" className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg text-green-400 font-medium transition-colors">
+              <MapPin className="w-4 h-4" />
+              Colorado Guide
+            </Link>
+            <Link to="/usa" className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg text-green-400 font-medium transition-colors">
+              <MapPin className="w-4 h-4" />
+              USA State Laws
+            </Link>
+            <Link to="/blog" className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg text-green-400 font-medium transition-colors">
+              <Info className="w-4 h-4" />
+              Travel Tips Blog
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -3441,29 +3499,36 @@ const WorldGuide = () => {
 
   const canonicalUrl = `https://budquest.guide/world${cSlug ? `/${cSlug}` : ''}${coSlug ? `/${coSlug}` : ''}${rSlug ? `/${rSlug}` : ''}${ciSlug ? `/${ciSlug}` : ''}`;
 
-  // Dynamic SEO Title and Description based on view level
+  // Dynamic SEO Title and Description based on view level - OPTIMIZED FOR CTR
   const getMetaData = () => {
     if (ciSlug && city && country) {
       return {
-        title: `Is Weed Legal in ${city.name}? 2025 Laws & Penalties | BudQuest`,
-        description: `Complete cannabis guide for ${city.name}, ${country.name}. Legal status: ${country.legalStatus}. possession limits: ${country.possession}. Updated for 2025.`
+        title: `${city.name} Weed Laws 2025: Can Tourists Smoke? [Updated Guide]`,
+        description: `Visiting ${city.name}? Here's exactly what travelers need to know about marijuana laws in ${country.name}. Status: ${country.legalStatus}. Limits: ${country.possession}. Avoid fines & jail time.`,
+        keywords: `weed ${city.name}, cannabis ${city.name}, marijuana laws ${country.name}, is weed legal ${city.name}, can tourists smoke in ${city.name}`
       };
     }
     if (coSlug && country) {
+      const statusText = country.legalStatus === "Recreational" ? "YES! Legal" : 
+                        country.legalStatus === "Decriminalized" ? "Tolerated" :
+                        country.legalStatus === "Medical" ? "Medical Only" : "ILLEGAL";
       return {
-        title: `Is Weed Legal in ${country.name}? 2025 Laws & Travel Guide`,
-        description: `Can tourists buy weed in ${country.name}? Legal Status: ${country.legalStatus}. ${country.tourist}. Updated 2025 guide.`
+        title: `Is Weed Legal in ${country.name}? (2025) ${statusText} | Tourist Guide`,
+        description: `Can tourists buy weed in ${country.name}? ${country.tourist}. Possession: ${country.possession}. Don't get arrested abroad - read this first.`,
+        keywords: `weed ${country.name}, cannabis laws ${country.name}, marijuana ${country.name} 2025, can tourists buy weed ${country.name}, is marijuana legal ${country.name}`
       };
     }
     if (cSlug && continent) {
       return {
-        title: `Cannabis Laws in ${continent.name} (2025) | BudQuest`,
-        description: `Comprehensive guide to marijuana laws across ${continent.name}. Find legal countries, medical programs, and tourist warnings.`
+        title: `Cannabis Laws in ${continent.name} 2025: Where Is Weed Legal?`,
+        description: `Complete 2025 guide to marijuana laws across ${continent.name}. Find which countries have legal weed, medical programs, and where to avoid. ${continent.countries.length} countries covered.`,
+        keywords: `cannabis ${continent.name}, weed legal ${continent.name}, marijuana laws ${continent.name} 2025, where is weed legal ${continent.name}`
       };
     }
     return {
-      title: "World Cannabis Guide 2025 | Global Cannabis Laws | BudQuest",
-      description: "Complete guide to cannabis laws in 100+ countries. Find legal status, tourist tips, and 420-friendly travel guides for every continent."
+      title: "Where Is Weed Legal? 2025 World Cannabis Map & Laws [150+ Countries]",
+      description: "Planning a 420-friendly trip? Interactive map of global marijuana laws. Find legal countries, tourist tips, and avoid countries with death penalties. Updated weekly.",
+      keywords: "where is weed legal, world cannabis map, marijuana laws by country, legal weed countries 2025, 420 friendly travel, cannabis tourism guide"
     };
   };
 
@@ -3474,17 +3539,73 @@ const WorldGuide = () => {
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta property="og:title" content={meta.title} />
+        <meta property="og:description" content={meta.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://budquest.guide/world-map-preview.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.title} />
+        <meta name="twitter:description" content={meta.description} />
         <link rel="canonical" href={canonicalUrl} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "dateModified": new Date().toISOString(),
             "itemListElement": [
               { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
-              { "@type": "ListItem", "position": 2, "name": "World Guide", "item": "https://budquest.guide/world" },
+              { "@type": "ListItem", "position": 2, "name": "World Cannabis Guide", "item": "https://budquest.guide/world" },
               ...(cSlug ? [{ "@type": "ListItem", "position": 3, "name": continent?.name || "Continent", "item": `https://budquest.guide/world/${cSlug}` }] : []),
               ...(coSlug ? [{ "@type": "ListItem", "position": 4, "name": country?.name || "Country", "item": `https://budquest.guide/world/${cSlug}/${coSlug}` }] : [])
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TravelGuide",
+            "name": meta.title,
+            "description": meta.description,
+            "url": canonicalUrl,
+            "dateModified": new Date().toISOString(),
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest",
+              "url": "https://budquest.guide"
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Where is weed legal for tourists in 2025?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cannabis is fully legal for tourists in Canada, Uruguay, Thailand, and parts of the USA (Colorado, California, etc.). The Netherlands tolerates coffeeshops, and Germany legalized possession in 2024 (but no tourist sales)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I fly with weed internationally?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. International transport of cannabis is illegal virtually everywhere, even between two legal countries. TSA and customs will confiscate and may arrest."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which countries have death penalty for weed?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Singapore, Malaysia, Indonesia, Saudi Arabia, UAE, China, and several others have death penalty for drug trafficking. Even small amounts may trigger trafficking charges."
+                }
+              }
             ]
           })}
         </script>
