@@ -139,6 +139,7 @@ import AdminRevenue from "./pages/AdminRevenue";
 import AdminBulkBlog from "./pages/AdminBulkBlog";
 import AdminImageGallery from "./pages/AdminImageGallery";
 import AdminNewsletter from "./pages/AdminNewsletter";
+import AdminCannabisLaws from "./pages/AdminCannabisLaws";
 import BlogDetail from "./pages/BlogDetail";
 import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 
@@ -433,6 +434,7 @@ function App() {
               <Route path="/admin/bulk-blog" element={<ProtectedAdminRoute><AdminBulkBlog /></ProtectedAdminRoute>} />
               <Route path="/admin/images" element={<ProtectedAdminRoute><AdminImageGallery /></ProtectedAdminRoute>} />
               <Route path="/admin/newsletter" element={<ProtectedAdminRoute><AdminNewsletter /></ProtectedAdminRoute>} />
+              <Route path="/admin/cannabis-laws" element={<ProtectedAdminRoute><AdminCannabisLaws /></ProtectedAdminRoute>} />
 
               {/* 404 catch-all */}
               <Route path="*" element={<NotFound />} />
