@@ -34,6 +34,27 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    id: "420-friendly-weekend-colorado-springs",
+    title: "How to Spend a 420-Friendly Weekend in Colorado Springs (2025)",
+    subtitle: "Pikes Peak, Garden of the Gods, and local bud. A curated 3-day guide.",
+    excerpt: "Plan the perfect cannabis weekend in Colorado Springs. 3-day itinerary covering Manitou Springs, Garden of the Gods, and Pikes Peak. BudQuest Verified stays and dispensaries included.",
+    date: "Dec 26, 2025",
+    readTime: "12 min read",
+    author: "BudQuest Team",
+    avatar: "🗓️",
+    category: "Travel Guide",
+    tags: ["Colorado Springs", "Itinerary", "Manitou Springs", "Travel", "Weekend Trip"],
+    image: "/blog-colorado-springs-itinerary.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/420-friendly-weekend-colorado-springs",
+    content: {
+      introduction: "Colorado Springs has Pikes Peak and dispensaries—but it's a conservative military town. The trick? Base yourself in Manitou Springs, the artsy 420-friendly enclave next door.",
+      disclaimer: "Cannabis is for adults 21+. Public consumption is prohibited. Consume only on private property.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
     id: "best-420-friendly-stays-colorado-springs",
     title: "Best 420-Friendly Stays in Colorado Springs & Manitou Springs (2025)",
     subtitle: "Conservative town, hippie neighbor. Here is where to stay.",
