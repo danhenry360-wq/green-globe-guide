@@ -36,14 +36,29 @@ const BlogColoradoSpringsItinerary = () => {
     const { data: dbHotels, isLoading: hotelsLoading } = useQuery({
         queryKey: ['colorado-springs-hotels'],
         queryFn: async () => {
+            // Try to fetch hotels from both cities
             const { data, error } = await supabase
                 .from('hotels')
                 .select('*')
-                .or('city.ilike.%Colorado Springs%,city.ilike.%Manitou Springs%')
+                .or('city.ilike.%Colorado Springs%,city.ilike.%Manitou%,state.ilike.%Colorado%')
                 .order('rating', { ascending: false })
-                .limit(3);
-            if (error) throw error;
-            return data;
+                .limit(10);
+
+            if (error) {
+                console.error('Error fetching hotels:', error);
+                throw error;
+            }
+
+            // Filter to prioritize Colorado Springs and Manitou Springs
+            const filteredData = data?.filter(hotel => {
+                const city = hotel.city?.toLowerCase() || '';
+                return city.includes('colorado springs') ||
+                       city.includes('manitou') ||
+                       city.includes('springs');
+            }) || [];
+
+            // Return top 3
+            return filteredData.slice(0, 3);
         },
     });
 
@@ -253,10 +268,11 @@ const BlogColoradoSpringsItinerary = () => {
                                         ))
                                     ) : (
                                         <Card className="p-8 bg-card/50 border-white/5 text-center">
-                                            <p className="text-muted-foreground">No verified stays found for Colorado Springs. Check back soon!</p>
-                                            <Link to="/hotels">
+                                            <p className="text-muted-foreground mb-2">No verified stays found for Colorado Springs or Manitou Springs area.</p>
+                                            <p className="text-sm text-muted-foreground/60 mb-6">We're constantly adding new properties. Check our full catalog for nearby options.</p>
+                                            <Link to="/hotels?country=United States&state=Colorado">
                                                 <Button className="mt-4 bg-primary text-black hover:bg-primary/90">
-                                                    Browse All Hotels
+                                                    Browse Colorado Hotels
                                                 </Button>
                                             </Link>
                                         </Card>
