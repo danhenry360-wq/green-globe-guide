@@ -27,38 +27,38 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const BlogColoradoSpringsItinerary = () => {
-    // --- DATABASE DATA LAYER (Mirrors llinclusive logic) ---
-    const localStays = [
-        {
-            name: "Manitou Cliffside Retreat",
-            rating: 4.9,
-            city: "Manitou Springs",
-            description: "A BudQuest Verified luxury stay with a private consumption balcony overlooking the mountain creek. Walking distance to Penny Arcade.",
-            bestFor: "Walking to Manitou Main Drag",
-            image: "/rentals/manitou-cliffside.jpg", // Replace with real DB path
-            verified: true
+    // Fetch Colorado Springs & Manitou Springs hotels from database
+    const { data: dbHotels, isLoading: hotelsLoading } = useQuery({
+        queryKey: ['colorado-springs-hotels'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('hotels')
+                .select('*')
+                .or('city.ilike.%Colorado Springs%,city.ilike.%Manitou Springs%')
+                .order('rating', { ascending: false })
+                .limit(3);
+            if (error) throw error;
+            return data;
         },
-        {
-            name: "The Pikes Peak Garden Villa",
-            rating: 4.8,
-            city: "Colorado Springs",
-            description: "Elegant villa with a dedicated outdoor smoking lounge and hot tub. Secluded and perfect for couples looking for privacy.",
-            bestFor: "Seclusion & Hot Tub Sessions",
-            image: "/rentals/pikes-peak-villa.jpg",
-            verified: true
-        },
-        {
-            name: "Red Rock Boutique Stay",
-            rating: 4.7,
-            city: "Manitou Springs",
-            description: "Historic Victorian converted into 420-friendly suites. Features a large wrap-around porch for morning sessions.",
-            bestFor: "Historic Charm & Large Porches",
-            image: "/rentals/red-rock-boutique.jpg",
-            verified: true
-        }
-    ];
+    });
+
+    // Transform database hotels to local format
+    const localStays = dbHotels?.map(hotel => ({
+        name: hotel.name,
+        rating: hotel.rating || 4.5,
+        city: hotel.city || "Colorado Springs",
+        description: hotel.description || "Cannabis-friendly accommodation in the Pikes Peak region.",
+        bestFor: hotel.tags?.[0] || "Cannabis travelers",
+        image: hotel.image_url || "/rentals/default.jpg",
+        verified: true,
+        slug: hotel.slug,
+        link: hotel.booking_link
+    })) || [];
 
     const localDispensaries = [
         { name: "Maggie's Farm", address: "141 Manitou Ave, Manitou Springs", rating: 4.8, notes: "Sun-grown organic flower. Best for terpene lovers." },
@@ -181,38 +181,86 @@ const BlogColoradoSpringsItinerary = () => {
                                     </Link>
                                 </div>
                                 <div className="space-y-6">
-                                    {localStays.map((stay, idx) => (
-                                        <Card key={idx} className="bg-card border-white/5 overflow-hidden group hover:border-primary/40 transition-all duration-300">
-                                            <div className="flex flex-col md:flex-row">
-                                                <div className="md:w-1/3 aspect-video md:aspect-auto bg-muted relative">
-                                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
-                                                    <div className="absolute top-4 left-4">
-                                                        <Badge className="bg-primary text-black border-0 font-bold px-3 py-1 flex items-center gap-1">
-                                                            <ShieldCheck className="h-3 w-3" /> BudQuest Verified
-                                                        </Badge>
+                                    {hotelsLoading ? (
+                                        // Loading skeletons
+                                        Array.from({ length: 3 }).map((_, idx) => (
+                                            <Card key={idx} className="bg-card border-white/5 overflow-hidden">
+                                                <div className="flex flex-col md:flex-row">
+                                                    <div className="md:w-1/3 aspect-video md:aspect-auto bg-muted" />
+                                                    <div className="p-8 md:w-2/3 space-y-4">
+                                                        <Skeleton className="h-6 w-3/4" />
+                                                        <Skeleton className="h-4 w-1/4" />
+                                                        <Skeleton className="h-4 w-full" />
+                                                        <Skeleton className="h-4 w-full" />
+                                                        <Skeleton className="h-10 w-24" />
                                                     </div>
                                                 </div>
-                                                <div className="p-8 md:w-2/3">
-                                                    <div className="flex justify-between items-start mb-2">
-                                                        <div>
-                                                            <h3 className="text-2xl font-bold text-white">{stay.name}</h3>
-                                                            <p className="text-primary text-xs font-bold uppercase tracking-tighter">{stay.city}</p>
-                                                        </div>
-                                                        <div className="flex items-center text-yellow-500 font-bold">
-                                                            <Star className="h-4 w-4 fill-current mr-1" /> {stay.rating}
+                                            </Card>
+                                        ))
+                                    ) : localStays.length > 0 ? (
+                                        localStays.map((stay, idx) => (
+                                            <Card key={idx} className="bg-card border-white/5 overflow-hidden group hover:border-primary/40 transition-all duration-300">
+                                                <div className="flex flex-col md:flex-row">
+                                                    <div className="md:w-1/3 aspect-video md:aspect-auto bg-muted relative">
+                                                        {stay.image && (
+                                                            <img
+                                                                src={stay.image}
+                                                                alt={stay.name}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        )}
+                                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                                                        <div className="absolute top-4 left-4">
+                                                            <Badge className="bg-primary text-black border-0 font-bold px-3 py-1 flex items-center gap-1">
+                                                                <ShieldCheck className="h-3 w-3" /> BudQuest Verified
+                                                            </Badge>
                                                         </div>
                                                     </div>
-                                                    <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{stay.description}</p>
-                                                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Best For: {stay.bestFor}</span>
-                                                        <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
-                                                            Book Now <ExternalLink className="h-3 w-3 ml-2" />
-                                                        </Button>
+                                                    <div className="p-8 md:w-2/3">
+                                                        <div className="flex justify-between items-start mb-2">
+                                                            <div>
+                                                                <h3 className="text-2xl font-bold text-white">{stay.name}</h3>
+                                                                <p className="text-primary text-xs font-bold uppercase tracking-tighter">{stay.city}</p>
+                                                            </div>
+                                                            <div className="flex items-center text-yellow-500 font-bold">
+                                                                <Star className="h-4 w-4 fill-current mr-1" /> {stay.rating.toFixed(1)}
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{stay.description}</p>
+                                                        <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                                                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Best For: {stay.bestFor}</span>
+                                                            {stay.link ? (
+                                                                <a href={stay.link} target="_blank" rel="noopener noreferrer">
+                                                                    <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
+                                                                        Book Now <ExternalLink className="h-3 w-3 ml-2" />
+                                                                    </Button>
+                                                                </a>
+                                                            ) : stay.slug ? (
+                                                                <Link to={`/hotels/${stay.slug}`}>
+                                                                    <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
+                                                                        View Details <ArrowRight className="h-3 w-3 ml-2" />
+                                                                    </Button>
+                                                                </Link>
+                                                            ) : (
+                                                                <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
+                                                                    View Details <ArrowRight className="h-3 w-3 ml-2" />
+                                                                </Button>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </Card>
+                                        ))
+                                    ) : (
+                                        <Card className="p-8 bg-card/50 border-white/5 text-center">
+                                            <p className="text-muted-foreground">No verified stays found for Colorado Springs. Check back soon!</p>
+                                            <Link to="/hotels">
+                                                <Button className="mt-4 bg-primary text-black hover:bg-primary/90">
+                                                    Browse All Hotels
+                                                </Button>
+                                            </Link>
                                         </Card>
-                                    ))}
+                                    )}
                                 </div>
                             </div>
 
