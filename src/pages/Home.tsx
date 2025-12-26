@@ -1,183 +1,257 @@
-import { Suspense, lazy } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { SEOHead } from "@/components/SEOHead";
-import { Button } from "@/components/ui/button"; // Assuming you use shadcn
-import { Input } from "@/components/ui/input";   // Assuming you use shadcn
-import { Search, MapPin, ShieldCheck, Leaf } from "lucide-react";
+import SEO from "@/components/SEO"; 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"; 
+import { Search, MapPin, ShieldCheck, Leaf, Home as HomeIcon } from "lucide-react";
+
+// Standard imports from your home directory
 import {
   HeroSection,
   StatsSection,
   DestinationsSection,
+  MapSection,
+  BlogSection,
   CTASection,
 } from "@/components/home";
 
-const MapSection = lazy(() => import("@/components/home").then((module) => ({ default: module.MapSection })));
-const BlogSection = lazy(() => import("@/components/home").then((module) => ({ default: module.BlogSection })));
-
-const Home = () => {
-  const schemaMarkup = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "BudQuest",
-      "url": "https://budquest.guide",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://budquest.guide/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Where is cannabis travel legal in 2025?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Cannabis travel is legal and thriving in countries like Thailand, Canada, Germany, and Malta, as well as 24+ US states including California, Illinois, and Pennsylvania."
+const Home: React.FC = () => {
+  // SEO Structured Data - Merged WebSite and FAQ for Google Search Results
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://budquest.guide/#website",
+        "name": "BudQuest",
+        "url": "https://budquest.guide",
+        "publisher": {
+          "@type": "Organization",
+          "name": "BudQuest",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://budquest.guide/logo.png"
           }
         },
-        {
-          "@type": "Question",
-          "name": "How do I find 420-friendly hotels?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "BudQuest provides a verified directory of 420-friendly accommodations where consumption is permitted on-site or in designated areas."
-          }
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://budquest.guide/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
         }
-      ]
-    }
-  ];
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is cannabis travel legal in 2025?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, cannabis travel is legal in an increasing number of regions including Thailand, Germany, Canada, and 24 US states. BudQuest provides updated legal maps for over 150 global destinations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I find 420-friendly hotels?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BudQuest features a verified directory of 420-friendly accommodations where consumption is permitted in designated areas or private balconies."
+            }
+          }
+        ]
+      }
+    ]
+  };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col selection:bg-green-500/30">
-      <SEOHead
-        // OPTIMIZED TITLE: High-action words + Current Year
-        title="BudQuest | Plan Your 420 Trip: 420-Friendly Hotels & Legal Maps (2025)"
-        description="Plan your next cannabis-friendly vacation. Verified 420-friendly stays, legal travel maps, and dispensary guides for the US, Europe, and Thailand. Updated for 2025."
-        keywords="cannabis travel guide, 420 friendly hotels, weed legal map 2025, marijuana tourism, best dispensaries chicago, budquest"
+    <div className="min-h-screen bg-background flex flex-col selection:bg-green-500/30 overflow-x-hidden">
+      {/* 1. SEO & META TAGS */}
+      <SEO
+        title="BudQuest | Global Cannabis Travel Guide & 420 Friendly Stays (2025)"
+        description="The #1 guide for cannabis tourism. Find verified legal weed destinations, 420-friendly hotels, dispensary maps, and travel laws for 150+ countries."
+        keywords="cannabis travel 2025, weed tourism, 420 friendly hotels, legal cannabis countries, marijuana travel guide, budquest"
+        schemaData={schemaMarkup}
       />
 
-      {/* Structured Data */}
-      <script type="application/ld+json">{JSON.stringify(schemaMarkup)}</script>
-
+      {/* 2. NAVIGATION */}
       <Navigation />
 
+      {/* 3. ACCESSIBILITY SKIP LINK */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-20 focus:left-4 focus:z-50 focus:bg-primary focus:text-white p-3 rounded-md shadow-2xl transition-all"
+      >
+        Skip to main content
+      </a>
+
+      {/* 4. MAIN CONTENT */}
       <main id="main-content" className="flex-grow">
         
-        {/* HERO OVERHAUL: Added Search Intent */}
-        <div className="relative">
+        {/* HERO AREA WITH SEARCH UTILITY */}
+        <section className="relative">
           <HeroSection />
-          {/* Floating Search Bar (Strategic placement to lower bounce rate) */}
-          <div className="container mx-auto px-4 -mt-12 relative z-30">
-            <div className="max-w-3xl mx-auto bg-card p-2 rounded-2xl shadow-2xl border border-border flex flex-col md:flex-row gap-2">
-              <div className="flex-grow flex items-center px-4 py-2 border-b md:border-b-0 md:border-r border-border">
-                <MapPin className="text-primary mr-2 h-5 w-5" />
+          
+          {/* SEARCH BAR: Strategic placement to capture destination intent */}
+          <div className="container mx-auto px-4 -mt-10 md:-mt-14 relative z-30">
+            <div className="max-w-4xl mx-auto bg-card p-2 md:p-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-border flex flex-col md:flex-row gap-2">
+              <div className="flex-grow flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-border">
+                <MapPin className="text-primary mr-3 h-5 w-5 shrink-0" />
                 <input 
                   type="text" 
-                  placeholder="Where are you going? (e.g. Chicago, Thailand...)" 
-                  className="bg-transparent border-none focus:ring-0 w-full text-sm"
+                  placeholder="Where are you traveling? (e.g. Pennsylvania, Chicago...)" 
+                  className="bg-transparent border-none focus:ring-0 w-full text-base outline-none placeholder:text-muted-foreground"
                 />
               </div>
-              <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white font-bold">
-                <Search className="mr-2 h-4 w-4" /> Explore Stays
+              <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white font-bold h-14 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <Search className="mr-2 h-5 w-5" /> Search Stays
               </Button>
             </div>
           </div>
-        </div>
+        </section>
 
+        {/* STATISTICS SECTION */}
         <StatsSection />
 
-        {/* TRUST SIGNALS (Crucial for Cannabis SEO) */}
-        <section className="py-12 bg-muted/20">
+        {/* TRUST & E-E-A-T SIGNALS */}
+        <section className="py-16 bg-muted/20 border-y border-border/50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="flex items-center gap-4">
-                <ShieldCheck className="text-green-600 h-10 w-10" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-5">
+                <div className="h-14 w-14 rounded-2xl bg-green-500/10 flex items-center justify-center shrink-0">
+                   <ShieldCheck className="text-green-600 h-8 w-8" />
+                </div>
                 <div>
-                  <h3 className="font-bold">Verified Legality</h3>
-                  <p className="text-sm text-muted-foreground">Laws updated weekly for 150+ regions.</p>
+                  <h3 className="font-bold text-xl mb-2">Verified Legality</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Local laws updated for 2025 across 150+ global cannabis regions. Travel with confidence.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <Home className="text-green-600 h-10 w-10" />
+
+              <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-5">
+                <div className="h-14 w-14 rounded-2xl bg-green-500/10 flex items-center justify-center shrink-0">
+                   <HomeIcon className="text-green-600 h-8 w-8" />
+                </div>
                 <div>
-                  <h3 className="font-bold">420-Friendly Stays</h3>
-                  <p className="text-sm text-muted-foreground">Stays where you can consume safely.</p>
+                  <h3 className="font-bold text-xl mb-2">420-Friendly Stays</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Book accommodations with confirmed consumption policies, balconies, and private smoke areas.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <Leaf className="text-green-600 h-10 w-10" />
+
+              <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-5">
+                <div className="h-14 w-14 rounded-2xl bg-green-500/10 flex items-center justify-center shrink-0">
+                   <Leaf className="text-green-600 h-8 w-8" />
+                </div>
                 <div>
-                  <h3 className="font-bold">Community Rated</h3>
-                  <p className="text-sm text-muted-foreground">Real reviews from cannabis travelers.</p>
+                  <h3 className="font-bold text-xl mb-2">Local Bud Guides</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Real community reviews on local dispensaries, social clubs, and regional strain favorites.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* TRENDING DESTINATIONS: Links to your high-impression pages */}
-        <section className="py-20">
+        {/* TRENDING DESTINATIONS: High-Value Internal Links */}
+        <section className="py-24">
           <div className="container mx-auto px-4">
-            <div className="flex justify-between items-end mb-10">
-              <div>
-                <h2 className="text-3xl font-bold">Trending Destinations</h2>
-                <p className="text-muted-foreground">Hotspots with high impressions right now.</p>
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-4">
+              <div className="text-center md:text-left">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Trending Hotspots</h2>
+                <p className="text-muted-foreground text-lg">Our most requested cannabis travel guides this month.</p>
               </div>
-              <Button variant="outline">View All</Button>
+              <Link to="/destinations">
+                <Button variant="ghost" className="text-primary font-bold text-lg hover:bg-primary/5">
+                  Explore All Destinations →
+                </Button>
+              </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Strategic internal links to pages Google already likes */}
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { name: "Illinois", path: "/rottweiler-puppies-in-illinois", img: "chicago.jpg" },
-                { name: "Pennsylvania", path: "/rottweiler-puppies-in-pennsylvania", img: "philly.jpg" },
-                { name: "Thailand", path: "/cannabis-travel-thailand", img: "thailand.jpg" },
-                { name: "New York", path: "/rottweiler-puppies-in-new-york", img: "nyc.jpg" }
-              ].map(city => (
-                <a href={city.path} key={city.name} className="group relative h-64 rounded-xl overflow-hidden shadow-lg">
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <p className="text-xs uppercase font-bold tracking-widest opacity-80">Explore</p>
-                    <h4 className="text-xl font-bold">{city.name}</h4>
+                { 
+                  name: "Illinois", 
+                  path: "/rottweiler-puppies-in-illinois", 
+                  img: "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&q=80&w=600",
+                  tag: "Suburban Bliss"
+                },
+                { 
+                  name: "Pennsylvania", 
+                  path: "/rottweiler-puppies-in-pennsylvania", 
+                  img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&q=80&w=600",
+                  tag: "Keystone Quality"
+                },
+                { 
+                  name: "Thailand", 
+                  path: "/destinations/thailand", 
+                  img: "https://images.unsplash.com/photo-1528181304800-2f140819898f?auto=format&fit=crop&q=80&w=600",
+                  tag: "Tropical Vibes"
+                },
+                { 
+                  name: "California", 
+                  path: "/rottweiler-puppies-in-california", 
+                  img: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&q=80&w=600",
+                  tag: "The Original"
+                }
+              ].map((dest) => (
+                <Link 
+                  to={dest.path} 
+                  key={dest.name} 
+                  className="group relative h-80 rounded-3xl overflow-hidden shadow-xl transition-all hover:-translate-y-2 hover:shadow-2xl"
+                >
+                  <img 
+                    src={dest.img} 
+                    alt={dest.name} 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-90" />
+                  <div className="absolute bottom-8 left-8 text-white">
+                    <p className="text-[10px] uppercase font-black tracking-[0.3em] mb-2 text-green-400">{dest.tag}</p>
+                    <h4 className="text-3xl font-bold">{dest.name}</h4>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <Suspense fallback={<div className="h-[500px] animate-pulse bg-muted/10" />}>
-          <MapSection />
-        </Suspense>
+        {/* SUPPORTING SECTIONS */}
+        <DestinationsSection />
+        <MapSection />
+        <BlogSection />
+        <CTASection />
 
-        <Suspense fallback={<div className="h-[400px] animate-pulse bg-muted/10" />}>
-          <BlogSection />
-        </Suspense>
-
-        {/* FAQ SECTION (Visible for Schema and User) */}
-        <section className="py-20 border-t">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-3xl font-bold text-center mb-12">Cannabis Travel FAQ</h2>
-            <div className="space-y-8">
-              <div>
-                <h3 className="font-bold text-lg mb-2">Is it safe to travel with cannabis?</h3>
-                <p className="text-muted-foreground">Laws vary wildly. Generally, crossing international borders with cannabis is illegal even if legal in both countries. Always check our specific region guides.</p>
+        {/* ACCESSIBLE FAQ SECTION (Good for CTR and User Value) */}
+        <section className="py-24 bg-muted/10 border-t border-border">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 underline decoration-green-500 underline-offset-8">
+              Cannabis Travel Essentials
+            </h2>
+            <div className="grid gap-12">
+              <div className="bg-card p-8 rounded-3xl border border-border shadow-sm">
+                <h3 className="font-bold text-xl mb-3 flex items-center gap-3">
+                  <span className="h-2 w-2 rounded-full bg-green-500" />
+                  Is it legal to cross borders with cannabis?
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  No. Even if you are traveling between two legal states or countries (e.g., from Canada to Thailand), it is strictly illegal to carry cannabis across international borders. Always purchase your bud locally at your destination.
+                </p>
               </div>
-              <div>
-                <h3 className="font-bold text-lg mb-2">How does BudQuest verify 420-friendly hotels?</h3>
-                <p className="text-muted-foreground">We look for specific policies regarding balcony smoking, designated areas, or "vaporizer-friendly" rooms to ensure you don't face fines.</p>
+              <div className="bg-card p-8 rounded-3xl border border-border shadow-sm">
+                <h3 className="font-bold text-xl mb-3 flex items-center gap-3">
+                  <span className="h-2 w-2 rounded-full bg-green-500" />
+                  What is a 420-friendly hotel?
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  A 420-friendly stay is an accommodation that officially permits the use of cannabis on the premises. This can range from private smoking balconies and outdoor gardens to vaporizer-friendly rooms.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        <CTASection />
       </main>
 
+      {/* 5. FOOTER */}
       <Footer />
     </div>
   );
