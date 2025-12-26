@@ -36,26 +36,34 @@ const BlogColoradoSpringsItinerary = () => {
     const { data: dbHotels, isLoading: hotelsLoading } = useQuery({
         queryKey: ['colorado-springs-hotels'],
         queryFn: async () => {
-            // Try to fetch hotels from both cities
+            // Fetch all Colorado hotels first
             const { data, error } = await supabase
                 .from('hotels')
                 .select('*')
-                .or('city.ilike.%Colorado Springs%,city.ilike.%Manitou%,state.ilike.%Colorado%')
-                .order('rating', { ascending: false })
-                .limit(10);
+                .eq('state', 'Colorado')
+                .order('rating', { ascending: false });
 
             if (error) {
                 console.error('Error fetching hotels:', error);
                 throw error;
             }
 
+            console.log('All Colorado hotels:', data?.length);
+
             // Filter to prioritize Colorado Springs and Manitou Springs
             const filteredData = data?.filter(hotel => {
                 const city = hotel.city?.toLowerCase() || '';
-                return city.includes('colorado springs') ||
-                       city.includes('manitou') ||
-                       city.includes('springs');
+                const isMatch = city.includes('colorado springs') ||
+                               city.includes('manitou');
+
+                if (isMatch) {
+                    console.log('Matched hotel:', hotel.name, 'in', hotel.city);
+                }
+
+                return isMatch;
             }) || [];
+
+            console.log('Filtered Colorado Springs/Manitou hotels:', filteredData.length);
 
             // Return top 3
             return filteredData.slice(0, 3);
