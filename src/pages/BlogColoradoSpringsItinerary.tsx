@@ -36,34 +36,55 @@ const BlogColoradoSpringsItinerary = () => {
     const { data: dbHotels, isLoading: hotelsLoading } = useQuery({
         queryKey: ['colorado-springs-hotels'],
         queryFn: async () => {
-            // Fetch all Colorado hotels first
-            const { data, error } = await supabase
+            // Try hotels table first, then rentals table as fallback
+            let data, error;
+
+            // Try hotels table
+            const hotelsResponse = await supabase
                 .from('hotels')
                 .select('*')
                 .eq('state', 'Colorado')
                 .order('rating', { ascending: false });
 
-            if (error) {
-                console.error('Error fetching hotels:', error);
-                throw error;
+            if (hotelsResponse.error) {
+                console.log('Hotels table error:', hotelsResponse.error);
+
+                // Try rentals table as fallback
+                const rentalsResponse = await supabase
+                    .from('rentals')
+                    .select('*')
+                    .eq('state', 'Colorado')
+                    .order('rating', { ascending: false });
+
+                data = rentalsResponse.data;
+                error = rentalsResponse.error;
+
+                if (error) {
+                    console.error('Rentals table error:', error);
+                    throw error;
+                }
+                console.log('Using rentals table');
+            } else {
+                data = hotelsResponse.data;
+                console.log('Using hotels table');
             }
 
-            console.log('All Colorado hotels:', data?.length);
+            console.log('All Colorado properties:', data?.length);
 
             // Filter to prioritize Colorado Springs and Manitou Springs
-            const filteredData = data?.filter(hotel => {
-                const city = hotel.city?.toLowerCase() || '';
+            const filteredData = data?.filter(property => {
+                const city = property.city?.toLowerCase() || '';
                 const isMatch = city.includes('colorado springs') ||
                                city.includes('manitou');
 
                 if (isMatch) {
-                    console.log('Matched hotel:', hotel.name, 'in', hotel.city);
+                    console.log('Matched property:', property.name, 'in', property.city);
                 }
 
                 return isMatch;
             }) || [];
 
-            console.log('Filtered Colorado Springs/Manitou hotels:', filteredData.length);
+            console.log('Filtered Colorado Springs/Manitou properties:', filteredData.length);
 
             // Return top 3
             return filteredData.slice(0, 3);
