@@ -4,7 +4,7 @@
 User-agent: *
 Allow: /
 
-# Sitemap - on your domain for Google Search Console
+# Sitemap
 Sitemap: https://budquest.guide/sitemap.xml
 
 # Specific bot permissions
@@ -28,7 +28,12 @@ Allow: /
 User-agent: Pinterest
 Allow: /
 
-# Block admin pages from indexing
+# Block search and query parameters (Fixes the Soft 404 errors)
+Disallow: /search
+Disallow: /search/
+Disallow: /*?*
+
+# Block admin and private pages
 User-agent: *
 Disallow: /admin
 Disallow: /admin/
