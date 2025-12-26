@@ -79,6 +79,7 @@ import GunnisonGuide from "./pages/GunnisonGuide";
 import FriscoGuide from "./pages/FriscoGuide";
 import MonarchGuide from "./pages/MonarchGuide";
 
+/* ---------- BLOG PAGES ---------- */
 import BlogDenverDispensaries from "./pages/BlogDenverDispensaries";
 import BlogDenverRentals from "./pages/BlogDenverRentals";
 import BlogBoulderDispensaries from "./pages/BlogBoulderDispensaries";
@@ -101,6 +102,10 @@ import BlogColoradoSpringsStays from "./pages/BlogColoradoSpringsStays";
 import BlogBreckenridgeStays from "./pages/BlogBreckenridgeStays";
 import BlogFortCollinsStays from "./pages/BlogFortCollinsStays";
 import BlogColoradoAllInclusive from "./pages/BlogColoradoAllInclusive";
+
+// ADDED: Colorado Springs Itinerary Import
+import BlogColoradoSpringsItinerary from "./pages/BlogColoradoSpringsItinerary";
+
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
 import WorldGuide from "./pages/WorldGuide";
@@ -188,6 +193,10 @@ function App() {
               <Route path="/blog/best-420-friendly-stays-fort-collins" element={<BlogFortCollinsStays />} />
               <Route path="/blog/all-inclusive-weed-resorts-colorado" element={<BlogColoradoAllInclusive />} />
               <Route path="/blog/best-420-rentals-breckenridge" element={<BlogBreckenridgeRentals />} />
+              
+              {/* ADDED: New Colorado Springs Weekend Itinerary Route */}
+              <Route path="/blog/420-friendly-weekend-colorado-springs" element={<BlogColoradoSpringsItinerary />} />
+
               <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/dispensary" element={<Dispensary />} />
               <Route path="/dispensary/:slug" element={<DispensaryDetail />} />
@@ -215,7 +224,7 @@ function App() {
               <Route path="/colorado/federal-land-warning" element={<FederalLandWarning />} />
               <Route path="/colorado/altitude-guide" element={<AltitudeGuide />} />
 
-              {/* City Guides - SHORT PATHS ONLY (No duplicates) */}
+              {/* City Guides - SHORT PATHS ONLY */}
               <Route path="/denver" element={<DenverGuide />} />
               <Route path="/boulder" element={<BoulderGuide />} />
               <Route path="/aspen" element={<AspenGuide />} />
@@ -279,7 +288,7 @@ function App() {
               <Route path="/frisco" element={<FriscoGuide />} />
               <Route path="/monarch" element={<MonarchGuide />} />
 
-              {/* REDIRECT nested Colorado city paths to short paths (SEO: avoid duplicate content) */}
+              {/* REDIRECT nested Colorado city paths */}
               <Route path="/usa/colorado/denver" element={<Navigate to="/denver" replace />} />
               <Route path="/usa/colorado/boulder" element={<Navigate to="/boulder" replace />} />
               <Route path="/usa/colorado/aspen" element={<Navigate to="/aspen" replace />} />
@@ -334,7 +343,7 @@ function App() {
               <Route path="/usa/colorado/trinidad" element={<Navigate to="/trinidad" replace />} />
               <Route path="/usa/colorado/salida" element={<Navigate to="/salida" replace />} />
 
-              {/* NEW CITY REDIRECTS */}
+              {/* USA/Colorado City Redirects */}
               <Route path="/usa/colorado/golden" element={<Navigate to="/golden" replace />} />
               <Route path="/usa/colorado/crested-butte" element={<Navigate to="/crested-butte" replace />} />
               <Route path="/usa/colorado/buena-vista" element={<Navigate to="/buena-vista" replace />} />
@@ -344,7 +353,7 @@ function App() {
               <Route path="/usa/colorado/frisco" element={<Navigate to="/frisco" replace />} />
               <Route path="/usa/colorado/monarch" element={<Navigate to="/monarch" replace />} />
 
-              {/* LEGACY COLORADO CITY REDIRECTS (Resolving Soft 404s) */}
+              {/* Legacy Redirects */}
               <Route path="/colorado/denver" element={<Navigate to="/denver" replace />} />
               <Route path="/colorado/boulder" element={<Navigate to="/boulder" replace />} />
               <Route path="/colorado/aspen" element={<Navigate to="/aspen" replace />} />
@@ -418,7 +427,7 @@ function App() {
               <Route path="/world/:continent/:country/:region" element={<WorldGuide />} />
               <Route path="/world/:continent/:country/:region/:city" element={<WorldGuide />} />
 
-              {/* Admin routes - protected at router level */}
+              {/* Admin routes */}
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/state-laws" element={<ProtectedAdminRoute><AdminStateLaws /></ProtectedAdminRoute>} />
               <Route path="/admin/country-laws" element={<ProtectedAdminRoute><AdminCountryLaws /></ProtectedAdminRoute>} />
