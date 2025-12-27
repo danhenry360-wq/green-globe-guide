@@ -34,7 +34,6 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-  {
     id: "best-dispensaries-aurora-colorado",
     title: "Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub",
     subtitle: "200+ dispensaries, closest to DIA, better prices than Denver.",
@@ -76,6 +75,7 @@ export const BLOG_POSTS: BlogPost[] = [
       safetyTips: []
     }
   },
+  {
     id: "420-friendly-weekend-colorado-springs",
     title: "How to Spend a 420-Friendly Weekend in Colorado Springs (2025)",
     subtitle: "Pikes Peak, Garden of the Gods, and local bud. A curated 3-day guide.",
