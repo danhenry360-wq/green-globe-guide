@@ -24,12 +24,18 @@ const buildStateSearchItems = (): SearchItem[] =>
         region: 'USA'
     }));
 
-// Quick navigation links
+// Quick navigation links with enhanced CTAs
 const QUICK_LINKS = [
-    { label: "🔥 California", path: "/usa/california" },
+    { label: "🔥 California", path: "/usa/california", hot: true },
+    { label: "🏔️ Colorado", path: "/usa/colorado", hot: true },
     { label: "🌎 World Guide", path: "/world" },
-    { label: "🇪🇺 Europe", path: "/world/europe" },
     { label: "🏨 420 Hotels", path: "/hotels" },
+];
+
+// Primary CTA buttons
+const PRIMARY_CTAS = [
+    { label: "Explore Dispensaries", path: "/dispensary", icon: "🏪" },
+    { label: "Find 420 Hotels", path: "/hotels", icon: "🏨" },
 ];
 
 export const HeroSection = () => {
@@ -83,11 +89,19 @@ export const HeroSection = () => {
                 transition={{ duration: 0.8 }}
                 className="container mx-auto text-center relative z-10 px-2"
             >
-                {/* Badge */}
-                <Badge className="mb-6 px-5 py-2 text-sm font-medium bg-accent/10 text-accent border-accent/30 shadow-[0_0_30px_-10px_rgba(34,197,94,0.6)] animate-pulse">
-                    <Sparkles className="w-4 h-4 mr-2 inline" aria-hidden="true" />
-                    Global Cannabis Travel Intelligence
-                </Badge>
+                {/* Trust badges row */}
+                <div className="flex flex-wrap justify-center gap-3 mb-6">
+                    <Badge className="px-4 py-1.5 text-xs font-medium bg-accent/10 text-accent border-accent/30">
+                        <Sparkles className="w-3 h-3 mr-1.5 inline" aria-hidden="true" />
+                        150+ Countries
+                    </Badge>
+                    <Badge className="px-4 py-1.5 text-xs font-medium bg-gold/10 text-gold border-gold/30">
+                        ✓ Verified Data
+                    </Badge>
+                    <Badge className="px-4 py-1.5 text-xs font-medium bg-accent/10 text-accent border-accent/30">
+                        Updated 2025
+                    </Badge>
+                </div>
 
                 {/* Main heading */}
                 <h1 className="text-[clamp(3rem,10vw,6.5rem)] font-bold leading-[1.1] tracking-tighter drop-shadow-2xl mb-2">
@@ -98,10 +112,10 @@ export const HeroSection = () => {
 
                 {/* Subheadings */}
                 <p className="text-[clamp(1.1rem,2.8vw,1.85rem)] text-accent font-medium mt-2 max-w-4xl mx-auto tracking-wide uppercase">
-                    Global Cannabis Travel Guide
+                    Your Global Cannabis Travel Guide
                 </p>
                 <p className="text-[clamp(1rem,2.2vw,1.4rem)] text-muted-foreground/90 font-light mt-4 max-w-4xl mx-auto leading-relaxed">
-                    Premium intelligence for legal cannabis tourism. Navigate 420-friendly regulations, discover verified dispensaries, and explore travel destinations in 150+ countries.
+                    Find legal dispensaries, 420-friendly hotels, and cannabis laws for <span className="text-accent font-medium">150+ countries</span>. Plan your next adventure with confidence.
                 </p>
 
 
@@ -169,17 +183,38 @@ export const HeroSection = () => {
                     </div>
                 </div>
 
+                {/* Primary CTA Buttons */}
+                <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                    {PRIMARY_CTAS.map((cta) => (
+                        <motion.button
+                            key={cta.label}
+                            onClick={() => navigate(cta.path)}
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent text-accent-foreground font-semibold text-base shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/40 transition-all duration-300"
+                        >
+                            <span>{cta.icon}</span>
+                            <span>{cta.label}</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                    ))}
+                </div>
+
                 {/* Quick Link & Trending Navigation */}
                 <div className="mt-8">
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground/50 mb-3 font-semibold">Trending Destinations</p>
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground/50 mb-3 font-semibold">🔥 Trending Destinations</p>
                     <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                         {QUICK_LINKS.map((item) => (
                             <motion.button
                                 key={item.label}
                                 onClick={() => navigate(item.path)}
-                                whileHover={{ scale: 1.05, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
+                                whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md transition text-xs sm:text-sm text-muted-foreground hover:text-white cursor-pointer shadow-lg hover:shadow-accent/5"
+                                className={`flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md transition text-xs sm:text-sm cursor-pointer shadow-lg ${
+                                    item.hot 
+                                        ? 'bg-accent/15 border border-accent/30 text-accent hover:bg-accent/25' 
+                                        : 'bg-white/5 hover:bg-white/10 border border-white/10 text-muted-foreground hover:text-white'
+                                }`}
                             >
                                 {item.label}
                             </motion.button>
