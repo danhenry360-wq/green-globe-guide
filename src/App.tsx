@@ -218,6 +218,7 @@ function App() {
               {/* USA routes */}
               <Route path="/usa" element={<USAGuide />} />
               <Route path="/usa/colorado" element={<ColoradoHub />} />
+              <Route path="/colorado" element={<ColoradoHub />} />
 
               {/* Colorado guides - Special pages */}
               <Route path="/colorado/consumption-guide" element={<ColoradoConsumptionGuide />} />
