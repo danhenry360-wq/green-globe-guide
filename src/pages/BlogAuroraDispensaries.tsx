@@ -5,16 +5,12 @@ import { Link } from "react-router-dom";
 import {
   MapPin, Star, Clock, Calendar, User, ChevronRight,
   CheckCircle2, Cannabis, Leaf, DollarSign, Car, CreditCard,
-  ArrowRight, ExternalLink, AlertTriangle, Plane, Store,
-  Info, Ban, ShoppingBag, CheckCircle
+  ArrowRight, ExternalLink, AlertTriangle, Plane
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface Dispensary {
   id: string;
@@ -26,7 +22,6 @@ interface Dispensary {
   image: string | null;
   description: string | null;
   status: string | null;
-  hours: string | null;
 }
 
 const BlogAuroraDispensaries = () => {
@@ -40,7 +35,7 @@ const BlogAuroraDispensaries = () => {
         .select('*')
         .ilike('city', '%Aurora%')
         .eq('state', 'Colorado')
-        .order('rating', { ascending: false });
+        .order('rating', { ascending: false});
 
       if (import.meta.env.DEV) console.log('Aurora dispensaries fetch:', { data, error });
       if (error && import.meta.env.DEV) console.error('Aurora dispensaries error:', error);
@@ -50,124 +45,136 @@ const BlogAuroraDispensaries = () => {
     fetchDispensaries();
   }, []);
 
-  const auroraFacts = [
-    { factor: "Number of dispensaries", details: "200+ recreational" },
-    { factor: "Medical dispensaries", details: "None — Aurora banned medical-only shops (Section 22.572 Municipal Code)" },
-    { factor: "Distance to DIA", details: "15-25 min depending on location" },
-    { factor: "Distance to downtown Denver", details: "15-20 min" },
-    { factor: "Vibe", details: "Suburban, diverse, less touristy than Denver" },
-    { factor: "Prices", details: "Often 10-20% cheaper than downtown Denver" },
-    { factor: "Best for", details: "Airport travelers, locals, value seekers" }
-  ];
-
-  const airportTips = {
-    arriving: [
-      "Stock up on your way from DIA to your rental",
-      "Order online for pickup to save time",
-      "Keep receipt in case of questions"
-    ],
-    departing: [
-      "Use up everything before heading to airport",
-      "Don't bring ANY cannabis to airport—TSA is federal",
-      "Allow extra time if you need to finish products"
-    ]
-  };
-
-  const comparison = [
-    { factor: "Number", aurora: "200+", denver: "186" },
-    { factor: "Prices", aurora: "Often 10-20% cheaper", denver: "Tourist premiums downtown" },
-    { factor: "Crowds", aurora: "Less crowded", denver: "Busier, especially weekends" },
-    { factor: "Parking", aurora: "Easy (suburban lots)", denver: "Harder (street, paid lots)" },
-    { factor: "Vibe", aurora: "Suburban, local", denver: "Urban, diverse" },
-    { factor: "Distance to DIA", aurora: "Closer", denver: "Farther" },
-    { factor: "Medical shops", aurora: "None", denver: "Available" },
-    { factor: "Tourist experience", aurora: "Practical", denver: "More 'scene'" },
-    { factor: "Best for", aurora: "Value, convenience", denver: "Variety, experiences" }
-  ];
-
   const productTypes = [
-    { product: "Flower (⅛ oz)", bestFor: "Classic experience", priceRange: "$20-50" },
-    { product: "Pre-rolls", bestFor: "Convenience, no gear needed", priceRange: "$5-15 each" },
-    { product: "Vape cartridge", bestFor: "Discreet, less smell", priceRange: "$25-60" },
-    { product: "Edibles", bestFor: "Long-lasting, no smoke", priceRange: "$15-30" },
-    { product: "Concentrates", bestFor: "Experienced users", priceRange: "$25-70/g" },
-    { product: "Topicals", bestFor: "Pain relief, no high", priceRange: "$20-50" },
-    { product: "Tinctures", bestFor: "Precise dosing", priceRange: "$30-60" }
+    {
+      type: "Flower",
+      description: "Aurora has competitive flower prices with many shops offering daily deals and bulk discounts.",
+      priceRange: "$20-50/eighth",
+      best: "Daily deals, bulk discounts"
+    },
+    {
+      type: "Concentrates",
+      description: "Live resin, shatter, and wax at better prices than downtown Denver. Many shops carry local brands.",
+      priceRange: "$25-70/gram",
+      best: "Local brands, competitive pricing"
+    },
+    {
+      type: "Edibles",
+      description: "Gummies, chocolates, and beverages. Aurora shops often run BOGO deals on edibles.",
+      priceRange: "$15-30",
+      best: "BOGO deals, variety"
+    },
+    {
+      type: "Pre-Rolls",
+      description: "Convenient single joints and packs. Great for travelers who don't want to bring gear.",
+      priceRange: "$5-15",
+      best: "Convenience, no equipment needed"
+    },
   ];
 
   const shoppingTips = [
-    "Check Weedmaps/Leafly for daily deals — Aurora dispensaries run competitive specials",
-    "Bring cash — Most accept debit with PIN, but cash avoids fees",
-    "Walk the Green Mile — Compare prices at multiple shops",
-    "Ask about first-time discounts — Most offer 10-20% off first purchase",
-    "Med card = discounts — Even at rec shops, usually 10% off",
-    "Order online for pickup — Skip the line, guaranteed availability",
-    "Check hours — Some close earlier than you'd expect",
-    "Bring valid ID — Out-of-state IDs work fine, must be 21+",
-    "Don't be afraid to ask questions — Budtenders are there to help",
-    "Keep your receipt — Proof of legal purchase"
+    {
+      title: "Check Daily Deals",
+      content: "Aurora dispensaries compete heavily on price. Check Weedmaps/Leafly for today's specials before you go."
+    },
+    {
+      title: "Walk the Green Mile",
+      content: "South Chambers Road has multiple dispensaries within walking distance. Park once, compare prices at several shops."
+    },
+    {
+      title: "First-Time Discounts",
+      content: "Most Aurora dispensaries offer 10-20% off your first purchase. Don't be shy—ask at checkout."
+    },
+    {
+      title: "Bring Cash",
+      content: "Most shops accept debit with PIN, but cash avoids ATM fees. Many have on-site ATMs if needed."
+    },
+    {
+      title: "Order Ahead",
+      content: "Online ordering for pickup saves time and guarantees your products are in stock."
+    },
+    {
+      title: "Medical Card = Savings",
+      content: "Even at rec shops, showing a medical card usually gets you 10% off and higher purchase limits."
+    },
   ];
 
-  const cannabisLaws = [
-    { rule: "Legal status", details: "Recreational legal, 21+" },
-    { rule: "Purchase limit", details: "1 oz flower / 8g concentrate / 800mg edibles per transaction" },
-    { rule: "Out-of-state visitors", details: "Same limits, valid ID required" },
-    { rule: "Medical cards", details: "Accepted for discounts at rec shops, no med-only stores" },
-    { rule: "Consumption", details: "Private property only" },
-    { rule: "Public consumption", details: "Illegal—fines enforced" },
-    { rule: "Delivery", details: "Legal in Aurora" },
-    { rule: "Hours", details: "Most open 8-9 AM, close 9-10 PM" }
+  const faqs = [
+    { q: "How many dispensaries are in Aurora?", a: "Aurora has 200+ recreational dispensaries—the largest concentration in the Denver metro area." },
+    { q: "Are there medical dispensaries in Aurora?", a: "No, Aurora banned medical-only dispensaries. However, rec shops accept medical cards for discounts." },
+    { q: "What dispensary is closest to Denver Airport?", a: "Aurora has the closest dispensaries to DIA, typically 15-25 minutes away. However, never bring cannabis to the airport—it's federal property." },
+    { q: "Can tourists buy weed in Aurora?", a: "Yes, tourists 21+ with valid ID can purchase. Same limits as Colorado residents: 1 oz flower or equivalent per transaction." },
+    { q: "What is the Green Mile?", a: "South Chambers Road in Aurora is nicknamed the 'Green Mile' for its high concentration of dispensaries within walking distance." },
+    { q: "Are Aurora dispensaries cheaper than Denver?", a: "Yes, typically 10-20% cheaper due to less tourist markup and competitive pricing among 200+ shops." },
+    { q: "What are purchase limits in Aurora?", a: "1 ounce of flower, 8 grams of concentrate, or 800mg of edibles per transaction. Same as state limits." },
+    { q: "Is delivery available in Aurora?", a: "Yes, many Aurora dispensaries offer delivery within city limits for those 21+ with valid ID." },
   ];
 
-  const legalConsumption = [
-    { location: "Private residence (with owner permission)", status: "legal" },
-    { location: "420-friendly rental", status: "legal" },
-    { location: "Private backyard/patio", status: "legal" }
+  const neighborhoods = [
+    {
+      name: "The Green Mile (South Chambers Road)",
+      description: "Aurora's famous dispensary corridor with the highest concentration of shops. Easy parking, multiple options.",
+      dispensaries: "30+ shops within 2 miles",
+      vibe: "Competitive pricing, local-focused"
+    },
+    {
+      name: "Near DIA / Airport Area",
+      description: "Closest dispensaries to Denver International Airport. Perfect for arriving or departing travelers.",
+      dispensaries: "15+ shops",
+      vibe: "Convenient, traveler-friendly"
+    },
+    {
+      name: "Aurora Town Center",
+      description: "Central Aurora with dispensaries near shopping and dining. Good for combining errands.",
+      dispensaries: "20+ shops",
+      vibe: "Suburban, family-friendly area"
+    },
+    {
+      name: "East Aurora",
+      description: "Newer developments with modern dispensaries and plenty of parking.",
+      dispensaries: "10+ shops",
+      vibe: "Modern, spacious, easy access"
+    },
   ];
-
-  const illegalConsumption = [
-    { location: "Public streets, sidewalks", reason: "Public consumption law" },
-    { location: "City parks", reason: "Public space" },
-    { location: "Cherry Creek State Park", reason: "State park rules" },
-    { location: "Hotel rooms (most)", reason: "Policy violation" },
-    { location: "Rental cars", reason: "DUI risk, policy violation" },
-    { location: "DIA / airport property", reason: "Federal jurisdiction" },
-    { location: "Your car (even parked)", reason: "Open container / DUI laws" }
-  ];
-
-  const nearbyAttractions = [
-    { attraction: "Cherry Creek State Park", distance: "10 min", notes: "Trails, reservoir—no consumption on site" },
-    { attraction: "Stanley Marketplace", distance: "15 min", notes: "Food hall, local vendors" },
-    { attraction: "Wings Over the Rockies Museum", distance: "10 min", notes: "Aviation history" },
-    { attraction: "Denver Tech Center", distance: "10 min", notes: "Restaurants, entertainment" },
-    { attraction: "Aurora Reservoir", distance: "15 min", notes: "Outdoor recreation" },
-    { attraction: "Downtown Denver", distance: "20 min", notes: "Full urban experience" }
-  ];
-
-  // Filter for Green Mile dispensaries (Chambers Road)
-  const greenMileDispensaries = dispensaries.filter(d =>
-    d.address && d.address.toLowerCase().includes('chambers')
-  );
-
-  // Top dispensaries (first 12)
-  const topDispensaries = dispensaries.slice(0, 12);
 
   return (
     <>
       <Helmet>
-        <title>Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub | BudQuest</title>
-        <meta name="description" content="Find the best dispensaries in Aurora, CO. 200+ recreational shops, closest to Denver Airport (DIA), with better prices than downtown. Complete 2025 guide." />
-        <meta name="keywords" content="dispensaries aurora colorado, aurora dispensaries, dispensary near denver airport, recreational dispensaries aurora, weed shops aurora co, cannabis aurora colorado, dispensary near DIA" />
+        <title>Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub</title>
+        <meta name="description" content="Find the best dispensaries in Aurora, CO. 200+ recreational shops, closest to Denver Airport, with competitive prices and easy parking." />
+        <meta name="keywords" content="dispensaries aurora colorado, aurora dispensaries, weed shops aurora, marijuana aurora colorado, dispensary near denver airport" />
         <link rel="canonical" href="https://budquest.guide/blog/best-dispensaries-aurora-colorado" />
-
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub" />
+        <meta property="og:title" content="Best Dispensaries in Aurora, Colorado (2025)" />
         <meta property="og:description" content="200+ recreational dispensaries in Aurora, CO. Closest to Denver Airport with better prices than downtown Denver." />
-        <meta property="og:url" content="https://budquest.guide/blog/best-dispensaries-aurora-colorado" />
-        <meta property="og:image" content="https://budquest.guide/blog-aurora-dispensaries.jpg" />
-
-        {/* FAQ Schema */}
+        <meta property="og:type" content="article" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub",
+            "description": "Find the best dispensaries in Aurora, CO. 200+ recreational shops, closest to Denver Airport, with competitive prices and easy parking.",
+            "image": "https://budquest.guide/blog-aurora-dispensaries.jpg",
+            "author": { "@type": "Organization", "name": "BudQuest" },
+            "publisher": {
+              "@type": "Organization",
+              "name": "BudQuest",
+              "logo": { "@type": "ImageObject", "url": "https://budquest.guide/logo.png" }
+            },
+            "datePublished": "2025-12-27",
+            "dateModified": "2025-12-27"
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://budquest.guide/" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://budquest.guide/blog" },
+              { "@type": "ListItem", "position": 3, "name": "Aurora Dispensaries", "item": "https://budquest.guide/blog/best-dispensaries-aurora-colorado" }
+            ]
+          })}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -175,67 +182,18 @@ const BlogAuroraDispensaries = () => {
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "How many dispensaries are in Aurora, Colorado?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Aurora has over 200 recreational dispensaries, making it the largest concentration in the Denver metro area. All are recreational-only as Aurora banned medical-only dispensaries."
-                }
+                "name": "How many dispensaries are in Aurora?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Aurora has 200+ recreational dispensaries—the largest concentration in the Denver metro area." }
               },
               {
                 "@type": "Question",
                 "name": "Are there medical dispensaries in Aurora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No, Aurora banned medical-only dispensaries under Section 22.572 of the Municipal Code. However, recreational dispensaries accept medical cards for discounts (typically 10% off)."
-                }
+                "acceptedAnswer": { "@type": "Answer", "text": "No, Aurora banned medical-only dispensaries. However, rec shops accept medical cards for discounts." }
               },
               {
                 "@type": "Question",
-                "name": "What dispensary is closest to Denver airport?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Aurora has the closest dispensaries to Denver International Airport (DIA), located 15-25 minutes away. Popular options include dispensaries along Chambers Road and near the airport area. However, never bring cannabis to the airport—it's federal property."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Can tourists buy weed in Aurora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes, tourists 21+ with valid ID can purchase cannabis in Aurora. Same limits apply: 1 oz flower, 8g concentrate, or 800mg edibles per transaction. Out-of-state IDs are accepted."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What is the Green Mile in Aurora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The Green Mile refers to South Chambers Road in Aurora, which has a high concentration of dispensaries within walking distance. You can park once and visit multiple shops to compare prices."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Is cannabis delivery legal in Aurora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes, cannabis delivery is legal in Aurora for those 21+ with valid ID."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What are the purchase limits in Aurora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Aurora follows Colorado state limits: 1 ounce of flower, 8 grams of concentrate, or 800mg of edibles per transaction. You can make multiple transactions but must leave the store between purchases."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Are Aurora dispensaries cheaper than Denver?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes, Aurora dispensaries are typically 10-20% cheaper than downtown Denver due to less tourist markup, lower rent, and competitive pricing among the 200+ shops."
-                }
+                "name": "What dispensary is closest to Denver Airport?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Aurora has the closest dispensaries to DIA, typically 15-25 minutes away. However, never bring cannabis to the airport—it's federal property." }
               }
             ]
           })}
@@ -244,149 +202,132 @@ const BlogAuroraDispensaries = () => {
 
       <Navigation />
 
-      <main className="min-h-screen bg-background">
-        {/* Breadcrumb */}
-        <nav className="container mx-auto px-4 pt-20 pb-4">
-          <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
-            <li><Link to="/" className="hover:text-accent">Home</Link></li>
-            <ChevronRight className="w-4 h-4" />
-            <li><Link to="/blog" className="hover:text-accent">Blog</Link></li>
-            <ChevronRight className="w-4 h-4" />
-            <li className="text-foreground">Best Dispensaries in Aurora (2025)</li>
-          </ol>
-        </nav>
+      <main className="min-h-screen bg-background pt-20">
+        {/* Hero Image */}
+        <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
+          <img
+            src="/blog-aurora-dispensaries.jpg"
+            alt="Cannabis dispensaries in Aurora, Colorado near Denver Airport"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </section>
 
-        {/* Hero Section */}
-        <section className="relative py-16 bg-gradient-to-b from-accent/5 to-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-4 bg-accent/10 text-accent border-accent/30">
-                <Store className="w-3 h-3 mr-1" /> 200+ Dispensaries
-              </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Best Dispensaries in Aurora, Colorado (2025)
+        {/* Hero Content */}
+        <section className="relative py-8 overflow-hidden -mt-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-accent/10 to-transparent" />
+          <div className="container mx-auto px-4 relative z-10">
+            {/* Breadcrumbs */}
+            <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+              <Link to="/" className="hover:text-accent">Home</Link>
+              <ChevronRight className="h-4 w-4" />
+              <Link to="/blog" className="hover:text-accent">Blog</Link>
+              <ChevronRight className="h-4 w-4" />
+              <span className="text-accent">Aurora Dispensaries</span>
+            </nav>
+
+            <div className="max-w-4xl">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Cannabis Guide</span>
+                <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-sm font-semibold border border-green-500/20">Current for 2025</span>
+                <span className="text-muted-foreground text-sm flex items-center gap-1">
+                  <Calendar className="h-4 w-4" /> December 27, 2025
+                </span>
+                <span className="text-muted-foreground text-sm flex items-center gap-1">
+                  <Clock className="h-4 w-4" /> 8 min read
+                </span>
+              </div>
+
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Best Dispensaries in Aurora, Colorado (2025):
+                </span>
+                <br />
+                <span className="text-foreground/90">Denver's Eastern Cannabis Hub</span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-8">
-                Denver's Eastern Cannabis Hub • Closest to DIA
+
+              <p className="text-lg text-muted-foreground mb-6">
+                200+ dispensaries, closest to Denver Airport (DIA), better prices than downtown
               </p>
-              <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground flex-wrap">
-                <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Updated Dec 2025</span>
-                <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> 8 min read</span>
-                <span className="flex items-center gap-1"><User className="w-4 h-4" /> BudQuest Team</span>
+
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+                  <User className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">BudQuest Team</p>
+                  <p className="text-xs text-muted-foreground">Cannabis Travel Experts</p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quick Answer Box */}
-        <section className="py-12 bg-accent/5 border-y border-accent/20">
+        {/* Quick Facts */}
+        <section className="py-8 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Card className="border-accent/30 bg-card/50">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-accent/10 shrink-0">
-                      <Info className="w-6 h-6 text-accent" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-bold mb-4">Quick Answer</h2>
-                      <p className="text-muted-foreground leading-relaxed">
-                        Aurora has <strong>200+ recreational dispensaries</strong>—the largest concentration in the Denver metro area.
-                        It's the closest major dispensary hub to <strong>Denver International Airport (DIA)</strong>, making it perfect for travelers.
-                        One quirk: Aurora banned medical-only dispensaries, so everything here is recreational. If you have a med card,
-                        you can still use it for discounts at rec shops.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Why Aurora for Dispensaries */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">Why Aurora for Dispensaries?</h2>
-
-              <div className="grid gap-4 mb-8">
-                {auroraFacts.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Card className="border-border/40">
-                      <CardContent className="p-4 flex justify-between items-center gap-4">
-                        <span className="font-semibold text-foreground">{item.factor}</span>
-                        <span className="text-muted-foreground text-right">{item.details}</span>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+            <div className="max-w-4xl">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div className="bg-card/60 border border-accent/20 rounded-lg p-4 text-center">
+                  <Leaf className="h-5 w-5 text-accent mx-auto mb-2" />
+                  <p className="text-xs text-muted-foreground">Status</p>
+                  <p className="text-sm font-semibold text-green-400">Recreational Only</p>
+                </div>
+                <div className="bg-card/60 border border-accent/20 rounded-lg p-4 text-center">
+                  <User className="h-5 w-5 text-accent mx-auto mb-2" />
+                  <p className="text-xs text-muted-foreground">Age</p>
+                  <p className="text-sm font-semibold text-foreground">21+</p>
+                </div>
+                <div className="bg-card/60 border border-accent/20 rounded-lg p-4 text-center">
+                  <DollarSign className="h-5 w-5 text-accent mx-auto mb-2" />
+                  <p className="text-xs text-muted-foreground">Limit</p>
+                  <p className="text-sm font-semibold text-foreground">1 oz/visit</p>
+                </div>
+                <div className="bg-card/60 border border-accent/20 rounded-lg p-4 text-center">
+                  <Plane className="h-5 w-5 text-accent mx-auto mb-2" />
+                  <p className="text-xs text-muted-foreground">To DIA</p>
+                  <p className="text-sm font-semibold text-foreground">15-25 min</p>
+                </div>
+                <div className="bg-card/60 border border-accent/20 rounded-lg p-4 text-center">
+                  <CreditCard className="h-5 w-5 text-accent mx-auto mb-2" />
+                  <p className="text-xs text-muted-foreground">Payment</p>
+                  <p className="text-sm font-semibold text-foreground">Cash & Debit</p>
+                </div>
               </div>
-
-              <Card className="border-accent/30 bg-accent/5">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-lg mb-4">Why shop in Aurora:</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <span>Less crowded than downtown Denver dispensaries</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <span>Better parking (suburban lots vs. street parking)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <span>Competitive prices (less tourist markup)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <span>The "Green Mile" corridor for one-stop shopping</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <span>Closest options to DIA</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </section>
 
-        {/* Best Dispensaries */}
-        <section className="py-20 bg-card/30">
+        {/* Introduction */}
+        <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Badge className="mb-4 bg-green-500/10 text-green-600 border-green-500/30">
-                <Cannabis className="w-3 h-3 mr-1" /> Top-Rated Shops
-              </Badge>
-              <h2 className="text-3xl font-bold mb-4">Best Dispensaries in Aurora</h2>
-              <p className="text-muted-foreground mb-8 text-lg">
-                {dispensaries.length} dispensaries found in Aurora, sorted by rating.
+            <div className="max-w-4xl prose prose-invert">
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Aurora, Colorado—Denver's eastern neighbor and the undisputed king of dispensary density in the metro area. With 200+ recreational shops, Aurora has more dispensaries than Denver itself. This isn't a tourist destination; it's where locals shop for value.
               </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                What makes Aurora special? Location and price. It's the closest major dispensary hub to Denver International Airport (DIA), making it perfect for travelers arriving or departing. Prices run 10-20% cheaper than downtown Denver thanks to suburban rents and fierce competition. And with South Chambers Road's famous "Green Mile," you can park once and visit multiple shops.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                One quirk: Aurora banned medical-only dispensaries under Municipal Code Section 22.572, so everything here is recreational. If you have a medical card, you'll still get discounts at rec shops—typically 10% off plus higher purchase limits.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Dispensaries from Database */}
+        <section className="py-12 border-t border-accent/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Aurora Cannabis Dispensaries</h2>
 
               {loading ? (
-                <div className="space-y-4">
-                  {[1, 2, 3, 4].map(i => (
-                    <Card key={i} className="border-border/40">
-                      <CardContent className="p-6">
-                        <Skeleton className="h-6 w-3/4 mb-4" />
-                        <Skeleton className="h-4 w-full mb-2" />
-                        <Skeleton className="h-4 w-2/3" />
-                      </CardContent>
-                    </Card>
-                  ))}
+                <div className="flex justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
                 </div>
-              ) : topDispensaries.length > 0 ? (
-                <div className="space-y-4">
-                  {topDispensaries.map((disp, index) => (
+              ) : dispensaries.length > 0 ? (
+                <div className="space-y-6">
+                  {dispensaries.map((disp, index) => (
                     <motion.div
                       key={disp.id}
                       initial={{ opacity: 0, y: 20 }}
@@ -394,340 +335,137 @@ const BlogAuroraDispensaries = () => {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <Link to={`/dispensary/${disp.slug}`}>
-                        <Card className="border-border/40 hover:border-accent/50 transition-all">
-                          <CardContent className="p-6">
-                            <div className="flex flex-col md:flex-row gap-6">
-                              {disp.image && (
-                                <div className="md:w-48 h-32 rounded-lg overflow-hidden shrink-0">
-                                  <img
-                                    src={disp.image}
-                                    alt={disp.name}
-                                    className="w-full h-full object-cover"
-                                  />
+                      <Card className="bg-card/60 border-accent/20 overflow-hidden">
+                        <div className="flex flex-col md:flex-row">
+                          <div className="md:w-1/3 aspect-video md:aspect-auto">
+                            <img
+                              src={disp.image || '/dest-colorado.jpg'}
+                              alt={disp.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="p-6 flex-1">
+                            <div className="flex items-start justify-between gap-4 mb-4">
+                              <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="text-lg font-bold text-accent">#{index + 1}</span>
+                                  <Link to={`/dispensary/${disp.slug}`} className="hover:text-accent transition-colors">
+                                    <h3 className="text-xl font-bold text-foreground hover:text-accent">{disp.name}</h3>
+                                  </Link>
+                                </div>
+                                <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                  <MapPin className="h-3 w-3" />
+                                  {disp.city}
+                                </p>
+                              </div>
+                              {disp.rating && (
+                                <div className="flex items-center gap-1">
+                                  <Star className="h-4 w-4 fill-gold text-gold" />
+                                  <span className="text-foreground font-semibold">{disp.rating}</span>
                                 </div>
                               )}
-                              <div className="flex-1">
-                                <h3 className="text-xl font-bold mb-2 group-hover:text-accent transition-colors">
-                                  {disp.name}
-                                </h3>
-
-                                <div className="flex items-center gap-4 mb-3 flex-wrap">
-                                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                    <MapPin className="w-4 h-4" />
-                                    <span>{disp.address}</span>
-                                  </div>
-                                  {disp.rating && (
-                                    <div className="flex items-center gap-1">
-                                      <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                                      <span className="font-semibold">{disp.rating}</span>
-                                    </div>
-                                  )}
-                                </div>
-
-                                <Badge className="bg-green-500/10 text-green-600 border-green-500/30 mb-3">
-                                  Recreational
-                                </Badge>
-
-                                {disp.description && (
-                                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                                    {disp.description}
-                                  </p>
-                                )}
-
-                                <Button variant="ghost" size="sm" className="group p-0 h-auto">
-                                  View Details <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                              </div>
                             </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
+
+                            {disp.description && (
+                              <p className="text-muted-foreground mb-4 line-clamp-2">{disp.description}</p>
+                            )}
+
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {disp.status?.toLowerCase() === 'licensed' && (
+                                <>
+                                  <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs flex items-center gap-1">
+                                    <CheckCircle2 className="h-3 w-3" /> Licensed
+                                  </span>
+                                  <span className="px-2 py-1 bg-accent/20 text-accent rounded text-xs">BudQuest Verified</span>
+                                </>
+                              )}
+                              <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Recreational</span>
+                            </div>
+
+                            <Link
+                              to={`/dispensary/${disp.slug}`}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors text-sm"
+                            >
+                              View Details
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </div>
+                        </div>
+                      </Card>
                     </motion.div>
                   ))}
                 </div>
               ) : (
-                <Card className="border-border/40 bg-card/50">
-                  <CardContent className="p-8 text-center">
-                    <Store className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground mb-4">
-                      No Aurora dispensaries found in database. Check back soon or browse all Colorado dispensaries.
-                    </p>
-                    <Button asChild>
-                      <Link to="/dispensary">Browse All Dispensaries</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-
-              {topDispensaries.length > 0 && dispensaries.length > 12 && (
-                <div className="mt-8 text-center">
-                  <Button asChild size="lg">
-                    <Link to="/aurora">View All {dispensaries.length} Aurora Dispensaries →</Link>
-                  </Button>
+                <div className="text-center py-8 bg-card/40 rounded-lg border border-accent/20">
+                  <p className="text-muted-foreground mb-2">No Aurora dispensaries found in the database.</p>
+                  <p className="text-sm text-muted-foreground">Check back soon as we add more verified dispensaries!</p>
                 </div>
               )}
             </div>
           </div>
         </section>
 
-        {/* Dispensaries Near DIA */}
-        <section className="py-20">
+        {/* CTA */}
+        <section className="py-8 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
-                <Plane className="w-3 h-3 mr-1" /> Airport Proximity
-              </Badge>
-              <h2 className="text-3xl font-bold mb-4">Dispensaries Near Denver Airport (DIA)</h2>
-              <p className="text-muted-foreground mb-8">
-                If you're flying in and want to stock up immediately, or using up before your flight home:
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <Card className="border-accent/30 bg-accent/5">
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                      <Plane className="w-5 h-5 text-accent" /> Arriving
-                    </h3>
-                    <ul className="space-y-2">
-                      {airportTips.arriving.map((tip, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                          <span>{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-red-500/30 bg-red-500/5">
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                      <Plane className="w-5 h-5 text-red-500" /> Departing
-                    </h3>
-                    <ul className="space-y-2">
-                      {airportTips.departing.map((tip, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <AlertTriangle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                          <span>{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card className="border-red-500/30 bg-red-500/5">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <Ban className="w-6 h-6 text-red-500 shrink-0" />
-                    <div>
-                      <h3 className="font-bold text-lg mb-2">Critical Warning</h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        <strong>Denver International Airport is federal property.</strong> Cannabis is 100% illegal there.
-                        Don't bring anything through security—even empty containers.
-                      </p>
-                      <Button asChild variant="outline" size="sm">
-                        <Link to="/colorado/federal-land-warning">Learn More →</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
+            <div className="max-w-4xl">
+              <Card className="bg-gradient-to-r from-accent/20 to-gold/10 border-accent/30 p-6">
+                <h3 className="text-lg font-bold text-foreground mb-2">Planning Your Aurora Trip?</h3>
+                <p className="text-muted-foreground mb-4">
+                  Check out our complete Aurora cannabis travel guide with 420-friendly hotels, nearby attractions, and DIA airport tips.
+                </p>
+                <Link to="/aurora" className="inline-flex items-center gap-2 text-accent hover:underline font-semibold">
+                  Explore Aurora Guide <ArrowRight className="h-4 w-4" />
+                </Link>
               </Card>
             </div>
           </div>
         </section>
 
-        {/* The Green Mile */}
-        {greenMileDispensaries.length > 0 && (
-          <section className="py-20 bg-card/30">
-            <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto">
-                <Badge className="mb-4 bg-green-500/10 text-green-600 border-green-500/30">
-                  <MapPin className="w-3 h-3 mr-1" /> Chambers Road
-                </Badge>
-                <h2 className="text-3xl font-bold mb-4">The "Green Mile" — Chambers Road Corridor</h2>
-                <p className="text-muted-foreground mb-8">
-                  Aurora's South Chambers Road is nicknamed the "Green Mile" for its concentration of dispensaries.
-                  Park once, walk between multiple shops, compare prices.
-                </p>
-
-                <div className="space-y-4 mb-6">
-                  {greenMileDispensaries.map((disp, index) => (
-                    <Link key={disp.id} to={`/dispensary/${disp.slug}`}>
-                      <Card className="border-border/40 hover:border-accent/50 transition-all">
-                        <CardContent className="p-4">
-                          <div className="flex items-center justify-between gap-4">
-                            <div className="flex-1">
-                              <h3 className="font-bold mb-1">{disp.name}</h3>
-                              <p className="text-sm text-muted-foreground">{disp.address}</p>
-                            </div>
-                            {disp.rating && (
-                              <div className="flex items-center gap-1 shrink-0">
-                                <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                                <span className="font-semibold">{disp.rating}</span>
-                              </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-
-                <Card className="border-accent/30 bg-accent/5">
-                  <CardContent className="p-6">
-                    <h3 className="font-bold mb-3">Why the Green Mile works:</h3>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                        <span>Multiple dispensaries within walking distance</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                        <span>Compare prices before buying</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                        <span>Different shops have different daily deals</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                        <span>One parking spot, multiple options</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Aurora Cannabis Laws */}
-        <section className="py-20">
+        {/* Product Types */}
+        <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">Aurora Cannabis Laws</h2>
-
-              <div className="grid gap-4 mb-8">
-                {cannabisLaws.map((law, index) => (
-                  <Card key={index} className="border-border/40">
-                    <CardContent className="p-4 flex justify-between items-center gap-4">
-                      <span className="font-semibold">{law.rule}</span>
-                      <span className="text-muted-foreground text-right">{law.details}</span>
-                    </CardContent>
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Cannabis Products in Aurora</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {productTypes.map((product) => (
+                  <Card key={product.type} className="bg-card/60 border-accent/20 p-6">
+                    <h3 className="text-lg font-bold text-foreground mb-2">{product.type}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{product.description}</p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Price Range</span>
+                        <span className="text-gold font-semibold">{product.priceRange}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Best For</span>
+                        <span className="text-accent">{product.best}</span>
+                      </div>
+                    </div>
                   </Card>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Consumption Rules */}
-        <section className="py-20 bg-card/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">Where to Consume in Aurora</h2>
-
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div>
-                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-500" /> Legal
-                  </h3>
-                  <div className="space-y-3">
-                    {legalConsumption.map((item, index) => (
-                      <Card key={index} className="border-border/40 bg-green-500/5">
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-2">
-                            <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                            <span className="text-sm">{item.location}</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <Ban className="w-5 h-5 text-red-500" /> Illegal
-                  </h3>
-                  <div className="space-y-3">
-                    {illegalConsumption.map((item, index) => (
-                      <Card key={index} className="border-border/40 bg-red-500/5">
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-2">
-                            <Ban className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <div>
-                              <p className="text-sm font-medium">{item.location}</p>
-                              <p className="text-xs text-muted-foreground mt-1">{item.reason}</p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <Button asChild variant="outline">
-                <Link to="/blog/where-can-you-smoke-weed-in-colorado-2025">Full Consumption Guide →</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Aurora vs Denver Comparison */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">Aurora vs. Denver Dispensaries</h2>
-
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="p-4 text-left font-bold">Factor</th>
-                      <th className="p-4 text-left font-bold">Aurora</th>
-                      <th className="p-4 text-left font-bold">Denver</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {comparison.map((row, index) => (
-                      <tr key={index} className="border-b border-border/40">
-                        <td className="p-4 font-semibold">{row.factor}</td>
-                        <td className="p-4 text-muted-foreground">{row.aurora}</td>
-                        <td className="p-4 text-muted-foreground">{row.denver}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="mt-6">
-                <Button asChild variant="outline">
-                  <Link to="/blog/cannabis-dispensaries-denver">Denver Dispensaries →</Link>
-                </Button>
               </div>
             </div>
           </div>
         </section>
 
         {/* Shopping Tips */}
-        <section className="py-20 bg-card/30">
+        <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">Tips for Shopping in Aurora</h2>
-
-              <div className="grid md:grid-cols-2 gap-4">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Aurora Cannabis Shopping Tips</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {shoppingTips.map((tip, index) => (
-                  <Card key={index} className="border-border/40">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                        <p className="text-sm">{tip}</p>
+                  <Card key={index} className="bg-card/60 border-accent/20 p-5">
+                    <div className="flex items-start gap-3">
+                      <div className="p-1 rounded-full bg-accent/20 mt-1">
+                        <CheckCircle2 className="h-4 w-4 text-accent" />
                       </div>
-                    </CardContent>
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-1">{tip.title}</h3>
+                        <p className="text-sm text-muted-foreground">{tip.content}</p>
+                      </div>
+                    </div>
                   </Card>
                 ))}
               </div>
@@ -735,66 +473,26 @@ const BlogAuroraDispensaries = () => {
           </div>
         </section>
 
-        {/* What to Buy */}
-        <section className="py-20">
+        {/* Neighborhoods */}
+        <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">What to Buy</h2>
-
-              <div className="grid gap-4">
-                {productTypes.map((product, index) => (
-                  <Card key={index} className="border-border/40">
-                    <CardContent className="p-6">
-                      <div className="grid md:grid-cols-3 gap-4 items-center">
-                        <div>
-                          <h3 className="font-bold text-lg">{product.product}</h3>
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">{product.bestFor}</p>
-                        </div>
-                        <div className="text-right">
-                          <Badge className="bg-accent/10 text-accent border-accent/30">
-                            {product.priceRange}
-                          </Badge>
-                        </div>
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Best Neighborhoods for Cannabis</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {neighborhoods.map((hood) => (
+                  <Card key={hood.name} className="bg-card/60 border-accent/20 p-6">
+                    <h3 className="text-lg font-bold text-foreground mb-2">{hood.name}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{hood.description}</p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Dispensaries</span>
+                        <span className="text-accent">{hood.dispensaries}</span>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <Card className="border-accent/30 bg-accent/5 mt-6">
-                <CardContent className="p-6">
-                  <p className="text-sm">
-                    <strong>For airport travelers:</strong> Stick to products you can finish during your trip. Don't buy more than you can consume.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Nearby Attractions */}
-        <section className="py-20 bg-card/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-4">Nearby Attractions</h2>
-              <p className="text-muted-foreground mb-8">
-                What to do after you stock up (consume at your rental first):
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                {nearbyAttractions.map((item, index) => (
-                  <Card key={index} className="border-border/40">
-                    <CardContent className="p-4">
-                      <h3 className="font-bold mb-2">{item.attraction}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Car className="w-4 h-4" /> {item.distance}
-                        </span>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Vibe</span>
+                        <span className="text-foreground">{hood.vibe}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-2">{item.notes}</p>
-                    </CardContent>
+                    </div>
                   </Card>
                 ))}
               </div>
@@ -802,55 +500,154 @@ const BlogAuroraDispensaries = () => {
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-20">
+        {/* Legal Disclaimer */}
+        <section className="py-12 border-t border-accent/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Card className="border-accent/30 bg-gradient-to-br from-accent/10 via-card to-accent/5">
-                <CardContent className="p-12 text-center">
-                  <h2 className="text-3xl font-bold mb-4">Ready to Shop in Aurora?</h2>
-                  <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                    Aurora is Denver's eastern cannabis hub—200+ dispensaries, competitive prices, and the closest major options
-                    to the airport. Skip the downtown crowds, find better parking, and shop where the locals do.
-                  </p>
-                  <div className="flex gap-4 justify-center flex-wrap">
-                    <Button asChild size="lg">
-                      <Link to="/aurora">Aurora Cannabis Guide →</Link>
-                    </Button>
-                    <Button asChild size="lg" variant="outline">
-                      <Link to="/dispensary">Browse All Dispensaries</Link>
-                    </Button>
+            <div className="max-w-4xl">
+              <h2 className="text-2xl font-bold text-foreground mb-6">Colorado Cannabis Laws & Regulations</h2>
+
+              <div className="space-y-4">
+                <Card className="bg-card/60 border-accent/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Age & Purchase Requirements</h3>
+                      <p className="text-muted-foreground">Adults 21+ with valid government-issued ID may purchase recreational cannabis. Non-residents may purchase up to 1 ounce (28g) of flower, 8 grams of concentrate, or 800mg of edibles per transaction.</p>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </Card>
 
-              {/* Related Links */}
-              <div className="mt-12 grid md:grid-cols-3 gap-4">
-                <Link to="/aurora">
-                  <Card className="border-border/40 hover:border-accent/50 transition-all h-full">
-                    <CardContent className="p-6">
-                      <h3 className="font-bold mb-2">Aurora Cannabis Guide</h3>
-                      <p className="text-sm text-muted-foreground">Complete city guide</p>
-                    </CardContent>
-                  </Card>
-                </Link>
-                <Link to="/hotels">
-                  <Card className="border-border/40 hover:border-accent/50 transition-all h-full">
-                    <CardContent className="p-6">
-                      <h3 className="font-bold mb-2">420-Friendly Stays</h3>
-                      <p className="text-sm text-muted-foreground">Find lodging</p>
-                    </CardContent>
-                  </Card>
-                </Link>
-                <Link to="/blog/cannabis-dispensaries-denver">
-                  <Card className="border-border/40 hover:border-accent/50 transition-all h-full">
-                    <CardContent className="p-6">
-                      <h3 className="font-bold mb-2">Denver Dispensaries</h3>
-                      <p className="text-sm text-muted-foreground">Compare options</p>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <Card className="bg-card/60 border-amber-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-amber-500/20">
+                      <AlertTriangle className="h-5 w-5 text-amber-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Where Consumption Is Prohibited</h3>
+                      <p className="text-muted-foreground mb-3">Public consumption is illegal throughout Colorado, including:</p>
+                      <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm">
+                        <li>Cherry Creek State Park and Aurora trails</li>
+                        <li>Public streets, sidewalks, and parks</li>
+                        <li>Denver International Airport (federal property)</li>
+                        <li>Vehicles (driver or passenger)</li>
+                        <li>Most hotel rooms without explicit permission</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-card/60 border-red-500/20 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-red-500/20">
+                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Penalties & Enforcement</h3>
+                      <p className="text-muted-foreground">Public consumption fines range $100–$999. DUI laws apply—impaired driving is strictly enforced. Never bring cannabis to Denver Airport—it's federal property where possession is a federal crime.</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-accent/10 to-gold/5 border-accent/30 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-full bg-accent/20">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Legal Consumption Options</h3>
+                      <p className="text-muted-foreground">Consume legally at private residences (with owner permission), verified 420-friendly rentals, or licensed consumption lounges. Aurora allows cannabis delivery within city limits.</p>
+                    </div>
+                  </div>
+                </Card>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="py-12 border-t border-accent/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Frequently Asked Questions</h2>
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <Card key={index} className="bg-card/60 border-accent/20 p-5">
+                    <h3 className="font-semibold text-foreground mb-2">{faq.q}</h3>
+                    <p className="text-sm text-muted-foreground">{faq.a}</p>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Related Resources */}
+        <section className="py-12 border-t border-accent/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">Related Resources</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="bg-card/60 border-accent/20 p-5">
+                  <h3 className="font-semibold text-foreground mb-3">Aurora Guides</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <Link to="/aurora" className="text-accent hover:underline">Complete Aurora Cannabis Guide</Link>
+                    </li>
+                    <li>
+                      <Link to="/hotels" className="text-accent hover:underline">420-Friendly Hotels Near DIA</Link>
+                    </li>
+                  </ul>
+                </Card>
+                <Card className="bg-card/60 border-accent/20 p-5">
+                  <h3 className="font-semibold text-foreground mb-3">Other Colorado Cities</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <Link to="/blog/cannabis-dispensaries-denver" className="text-accent hover:underline">Denver Dispensaries Guide</Link>
+                    </li>
+                    <li>
+                      <Link to="/blog/cannabis-dispensaries-boulder" className="text-accent hover:underline">Boulder Dispensaries Guide</Link>
+                    </li>
+                    <li>
+                      <Link to="/colorado-springs" className="text-accent hover:underline">Colorado Springs Guide</Link>
+                    </li>
+                  </ul>
+                </Card>
+                <Card className="bg-card/60 border-accent/20 p-5">
+                  <h3 className="font-semibold text-foreground mb-3">State Resources</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <Link to="/usa/colorado" className="text-accent hover:underline">Colorado Cannabis Laws</Link>
+                    </li>
+                    <li>
+                      <Link to="/" className="text-accent hover:underline">Cannabis Travel Guide</Link>
+                    </li>
+                  </ul>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Conclusion */}
+        <section className="py-12 border-t border-accent/10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl prose prose-invert">
+              <h2 className="text-2xl font-bold text-foreground mb-4">Ready to Explore Aurora's Cannabis Scene?</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Aurora offers the Denver metro's best combination of selection, price, and convenience. With 200+ dispensaries competing for your business, you'll find better deals than downtown Denver, easier parking, and the closest options to Denver International Airport.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Remember to consume responsibly, respect local laws, and never bring cannabis to the airport. Use it up before your flight or give leftovers to your Airbnb host—TSA is federal, and DIA is federal property where cannabis is 100% illegal.
+              </p>
+              <Link
+                to="/aurora"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
+              >
+                Explore Complete Aurora Guide
+                <ArrowRight className="h-5 w-5" />
+              </Link>
             </div>
           </div>
         </section>
