@@ -311,9 +311,23 @@ const ColoradoHub = () => {
   return (
     <>
       <Helmet>
-        <title>Colorado Cannabis Travel Guide 2025 | BudQuest</title>
-        <meta name="description" content="Explore Colorado cannabis destinations. Denver, Boulder, Mountain towns, and more. Find dispensaries, laws, and 420-friendly stays." />
-        <link rel="canonical" href="https://budquest.guide/usa/colorado" />
+        <title>Colorado Cannabis Guide 2025: 60+ Cities, 500+ Dispensaries | BudQuest</title>
+        <meta name="description" content="Complete Colorado weed travel guide ✓ Denver, Boulder & 60+ destinations ✓ 500+ verified dispensaries ✓ 420-friendly hotels ✓ Legal tips. Plan your perfect trip!" />
+        <link rel="canonical" href="https://budquest.guide/colorado" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://budquest.guide/colorado" />
+        <meta property="og:title" content="Colorado Cannabis Guide 2025: 60+ Cities & 500+ Dispensaries" />
+        <meta property="og:description" content="Plan the perfect Colorado cannabis trip. 60+ destinations, 500+ dispensaries, legal guides & 420-friendly stays." />
+        <meta property="og:image" content="https://budquest.guide/colorado-hub-social.jpg" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://budquest.guide/colorado" />
+        <meta property="twitter:title" content="Colorado Cannabis Guide 2025: 60+ Cities & 500+ Dispensaries" />
+        <meta property="twitter:description" content="Plan the perfect Colorado cannabis trip. 60+ destinations, 500+ dispensaries, legal guides & 420-friendly stays." />
+        <meta property="twitter:image" content="https://budquest.guide/colorado-hub-social.jpg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -350,15 +364,25 @@ const ColoradoHub = () => {
           <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <Badge className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/30 backdrop-blur-sm">
-                <Cannabis className="w-4 h-4 mr-2" /> Colorado Cannabis Guide 2025
+                <Cannabis className="w-4 h-4 mr-2" /> #1 Colorado Cannabis Travel Guide
               </Badge>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
-                Explore <span className="bg-gradient-to-r from-white via-accent to-gold bg-clip-text text-transparent">Colorful Colorado</span>
+                Plan Your Perfect <span className="bg-gradient-to-r from-white via-accent to-gold bg-clip-text text-transparent">Colorado Weed Trip</span>
               </h1>
+              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+                60+ verified destinations • 500+ dispensaries • Legal guides • 420-friendly stays
+              </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90"><a href="#cities">Explore Cities</a></Button>
-                <Button asChild size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10"><a href="#laws">View Laws</a></Button>
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 shadow-lg shadow-accent/20">
+                  <a href="#cities">Find Your Destination →</a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 backdrop-blur-sm">
+                  <a href="#laws">Know the Laws</a>
+                </Button>
               </div>
+              <p className="text-sm text-white/70 flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-400" /> Updated Daily • Trusted by 50,000+ Cannabis Travelers
+              </p>
             </motion.div>
           </div>
         </section>
@@ -382,12 +406,15 @@ const ColoradoHub = () => {
         <section id="cities" className="py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10">
+              <Badge className="mb-4 bg-accent/10 text-accent border-accent/30">60+ Destinations</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                  Cannabis Destinations
+                  Choose Your Colorado Cannabis Adventure
                 </span>
               </h2>
-              <p className="text-muted-foreground">Find your perfect 420-friendly city in the Centennial State.</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                From Denver's urban dispensaries to mountain town ski resorts. Every city verified with legal info, top dispensaries & 420-friendly stays.
+              </p>
             </div>
 
             {/* Search and Filters */}
@@ -537,11 +564,17 @@ const ColoradoHub = () => {
         {/* DISPENSARIES */}
         <section id="dispensaries" className="py-20">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                Featured Dispensaries
-              </span>
-            </h2>
+            <div className="text-center mb-8">
+              <Badge className="mb-4 bg-green-500/10 text-green-600 border-green-500/30">
+                <Store className="w-3 h-3 mr-1" /> 500+ Verified Dispensaries
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Top-Rated Colorado Dispensaries
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Hand-picked dispensaries with verified reviews and deals</p>
+            </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {dispensaries.map((d) => (
                 <Link key={d.id} to={`/dispensary/${d.slug}`}>
@@ -567,8 +600,8 @@ const ColoradoHub = () => {
               ))}
             </div>
             <div className="text-center mt-8">
-              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
-                <Link to="/dispensary">View All Dispensaries</Link>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Link to="/dispensary">Browse 500+ Dispensaries →</Link>
               </Button>
             </div>
           </div>
@@ -577,11 +610,17 @@ const ColoradoHub = () => {
         {/* RENTALS */}
         <section id="rentals" className="py-20 bg-card/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-              <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
-                420-Friendly Stays
-              </span>
-            </h2>
+            <div className="text-center mb-8">
+              <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
+                <Bed className="w-3 h-3 mr-1" /> Smoking Allowed Inside
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                <span className="bg-gradient-to-r from-foreground via-accent to-gold bg-clip-text text-transparent">
+                  Verified 420-Friendly Accommodations
+                </span>
+              </h2>
+              <p className="text-muted-foreground">Hotels, cabins & rentals where you can legally consume cannabis</p>
+            </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               {rentals.map((r) => (
                 <Link key={r.id} to={`/hotels/${r.slug}`}>
@@ -609,8 +648,8 @@ const ColoradoHub = () => {
               ))}
             </div>
             <div className="text-center mt-8">
-              <Button asChild variant="outline" className="border-accent/30 hover:bg-accent/10">
-                <Link to="/hotels">View All Rentals</Link>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Link to="/hotels">Find 420-Friendly Stays →</Link>
               </Button>
             </div>
           </div>
