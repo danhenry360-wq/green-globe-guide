@@ -66,26 +66,61 @@ const ColoradoHub = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch top 4 Colorado dispensaries
-      const { data: dispData } = await supabase
+      // Fetch diverse Colorado dispensaries from different cities
+      const { data: allDispensaries } = await supabase
         .from('dispensaries')
         .select('*')
         .eq('state', 'Colorado')
         .order('rating', { ascending: false })
-        .limit(4);
+        .limit(50); // Fetch more to ensure diversity
 
-      if (dispData) setDispensaries(dispData);
+      // Group by city and select top-rated from different cities
+      const diverseDispensaries: Dispensary[] = [];
+      const citiesUsed = new Set<string>();
 
-      // Fetch top 4 Colorado rentals
-      const { data: rentalData } = await supabase
+      if (allDispensaries) {
+        for (const disp of allDispensaries) {
+          if (diverseDispensaries.length >= 4) break;
+
+          // Add if we haven't featured this city yet, or if we need more
+          if (!citiesUsed.has(disp.city) || diverseDispensaries.length < 4) {
+            diverseDispensaries.push(disp);
+            citiesUsed.add(disp.city);
+          }
+        }
+      }
+
+      setDispensaries(diverseDispensaries);
+
+      // Fetch diverse Colorado rentals from different cities
+      const { data: allRentals } = await supabase
         .from('hotels')
         .select('*')
         .eq('is_420_friendly', true)
         .ilike('address', '%Colorado%')
         .order('rating', { ascending: false })
-        .limit(4);
+        .limit(30); // Fetch more to ensure diversity
 
-      if (rentalData) setRentals(rentalData);
+      // Try to get rentals from different locations
+      const diverseRentals: Rental[] = [];
+      const locationsUsed = new Set<string>();
+
+      if (allRentals) {
+        for (const rental of allRentals) {
+          if (diverseRentals.length >= 4) break;
+
+          // Extract city from address if available
+          const locationKey = rental.address?.toLowerCase() || rental.slug;
+
+          // Add if we haven't featured this location yet, or if we need more
+          if (!locationsUsed.has(locationKey) || diverseRentals.length < 4) {
+            diverseRentals.push(rental);
+            locationsUsed.add(locationKey);
+          }
+        }
+      }
+
+      setRentals(diverseRentals);
 
       // Fetch Colorado-related blog posts
       const { data: blogData } = await supabase
