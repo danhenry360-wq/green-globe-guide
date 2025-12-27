@@ -34,6 +34,48 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+  {
+    id: "best-dispensaries-aurora-colorado",
+    title: "Best Dispensaries in Aurora, Colorado (2025): Denver's Eastern Cannabis Hub",
+    subtitle: "200+ dispensaries, closest to DIA, better prices than Denver.",
+    excerpt: "Aurora has 200+ recreational dispensaries—the largest concentration in the Denver metro. Find the best dispensaries near Denver Airport with competitive prices and easy parking.",
+    date: "Dec 27, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "🏪",
+    category: "Dispensary Guide",
+    tags: ["Aurora", "Dispensaries", "Denver Airport", "Green Mile"],
+    image: "/blog-aurora-dispensaries.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-dispensaries-aurora-colorado",
+    content: {
+      introduction: "Aurora is Denver's eastern cannabis hub with 200+ dispensaries, competitive prices, and the closest options to Denver International Airport.",
+      disclaimer: "Cannabis is for adults 21+. Public consumption prohibited. Federal property includes DIA.",
+      sections: [],
+      safetyTips: []
+    }
+  },
+  {
+    id: "best-420-friendly-stays-aspen",
+    title: "Best 420-Friendly Stays in Aspen (2025): Luxury Ski Town Cannabis Lodging",
+    subtitle: "Premium ski destination, limited 420 lodging, expensive—but worth it.",
+    excerpt: "Aspen is Colorado's premier luxury ski destination. Find 420-friendly hotels, private rentals, and cannabis-tolerant lodging in America's most glamorous mountain town.",
+    date: "Dec 27, 2025",
+    readTime: "8 min read",
+    author: "BudQuest Team",
+    avatar: "⛷️",
+    category: "Stays Guide",
+    tags: ["Aspen", "Luxury", "Skiing", "Hotels", "420 Friendly"],
+    image: "/blog-aspen-stays.jpg",
+    isExternalPage: true,
+    externalUrl: "/blog/best-420-friendly-stays-aspen",
+    content: {
+      introduction: "Aspen is expensive and exclusive. Most high-end hotels are smoke-free. Here's how to find cannabis-welcoming stays in the mountains.",
+      disclaimer: "Cannabis is for adults 21+. Ski slopes are federal land. Altitude intensifies effects.",
+      sections: [],
+      safetyTips: []
+    }
+  },
     id: "420-friendly-weekend-colorado-springs",
     title: "How to Spend a 420-Friendly Weekend in Colorado Springs (2025)",
     subtitle: "Pikes Peak, Garden of the Gods, and local bud. A curated 3-day guide.",
