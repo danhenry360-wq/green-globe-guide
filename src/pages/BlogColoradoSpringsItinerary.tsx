@@ -30,6 +30,7 @@ import { Helmet } from "react-helmet";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import heroImage from "@/assets/blog-colorado-springs-hero.jpg";
 
 const BlogColoradoSpringsItinerary = () => {
     // Fetch Colorado Springs & Manitou Springs hotels from database
@@ -139,8 +140,8 @@ const BlogColoradoSpringsItinerary = () => {
                 <section className="relative h-[65vh] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 z-0">
                         <img
-                            src="https://images.unsplash.com/photo-1542223189-67a03fa0f0bd?q=80&w=1600&auto=format&fit=crop"
-                            alt="Pikes Peak landscape"
+                            src={heroImage}
+                            alt="Colorado Springs landscape with Garden of the Gods and Pikes Peak at sunset"
                             className="w-full h-full object-cover opacity-50"
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/60 to-background" />
