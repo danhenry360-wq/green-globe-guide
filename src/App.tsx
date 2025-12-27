@@ -104,7 +104,6 @@ import BlogBreckenridgeStays from "./pages/BlogBreckenridgeStays";
 import BlogFortCollinsStays from "./pages/BlogFortCollinsStays";
 import BlogColoradoAllInclusive from "./pages/BlogColoradoAllInclusive";
 import BlogAuroraDispensaries from "./pages/BlogAuroraDispensaries";
-import BlogAspenStays from "./pages/BlogAspenStays";
 
 
 import StateDetail from "./pages/StateDetail";
@@ -196,8 +195,7 @@ function App() {
               <Route path="/blog/all-inclusive-weed-resorts-colorado" element={<BlogColoradoAllInclusive />} />
               <Route path="/blog/best-420-rentals-breckenridge" element={<BlogBreckenridgeRentals />} />
               <Route path="/blog/best-dispensaries-aurora-colorado" element={<BlogAuroraDispensaries />} />
-              <Route path="/blog/best-420-friendly-stays-aspen" element={<BlogAspenStays />} />
-              
+
               {/* ADDED: New Colorado Springs Weekend Itinerary Route */}
               <Route path="/blog/420-friendly-weekend-colorado-springs" element={<BlogColoradoSpringsItinerary />} />
 

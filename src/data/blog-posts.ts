@@ -55,27 +55,6 @@ export const BLOG_POSTS: BlogPost[] = [
     }
   },
   {
-    id: "best-420-friendly-stays-aspen",
-    title: "Best 420-Friendly Stays in Aspen (2025): Luxury Ski Town Cannabis Lodging",
-    subtitle: "Premium ski destination, limited 420 lodging, expensive—but worth it.",
-    excerpt: "Aspen is Colorado's premier luxury ski destination. Find 420-friendly hotels, private rentals, and cannabis-tolerant lodging in America's most glamorous mountain town.",
-    date: "Dec 27, 2025",
-    readTime: "8 min read",
-    author: "BudQuest Team",
-    avatar: "⛷️",
-    category: "Stays Guide",
-    tags: ["Aspen", "Luxury", "Skiing", "Hotels", "420 Friendly"],
-    image: "/blog-aspen-stays.jpg",
-    isExternalPage: true,
-    externalUrl: "/blog/best-420-friendly-stays-aspen",
-    content: {
-      introduction: "Aspen is expensive and exclusive. Most high-end hotels are smoke-free. Here's how to find cannabis-welcoming stays in the mountains.",
-      disclaimer: "Cannabis is for adults 21+. Ski slopes are federal land. Altitude intensifies effects.",
-      sections: [],
-      safetyTips: []
-    }
-  },
-  {
     id: "420-friendly-weekend-colorado-springs",
     title: "How to Spend a 420-Friendly Weekend in Colorado Springs (2025)",
     subtitle: "Pikes Peak, Garden of the Gods, and local bud. A curated 3-day guide.",
