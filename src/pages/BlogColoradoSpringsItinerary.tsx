@@ -36,58 +36,51 @@ const BlogColoradoSpringsItinerary = () => {
     const { data: dbHotels, isLoading: hotelsLoading } = useQuery({
         queryKey: ['colorado-springs-hotels'],
         queryFn: async () => {
-            // Try hotels table first, then rentals table as fallback
-            let data, error;
+            // First get Colorado Springs and Manitou Springs city IDs
+            const { data: cities, error: citiesError } = await supabase
+                .from('cities')
+                .select('id, name')
+                .or('name.ilike.%colorado springs%,name.ilike.%manitou%');
 
-            // Try hotels table
-            const hotelsResponse = await supabase
-                .from('hotels')
-                .select('*')
-                .eq('state', 'Colorado')
-                .order('rating', { ascending: false });
-
-            if (hotelsResponse.error) {
-                console.log('Hotels table error:', hotelsResponse.error);
-
-                // Try rentals table as fallback
-                const rentalsResponse = await supabase
-                    .from('rentals')
-                    .select('*')
-                    .eq('state', 'Colorado')
-                    .order('rating', { ascending: false });
-
-                data = rentalsResponse.data;
-                error = rentalsResponse.error;
-
-                if (error) {
-                    console.error('Rentals table error:', error);
-                    throw error;
-                }
-                console.log('Using rentals table');
-            } else {
-                data = hotelsResponse.data;
-                console.log('Using hotels table');
+            if (citiesError) {
+                console.error('Error fetching cities:', citiesError);
+                throw citiesError;
             }
 
-            console.log('All Colorado properties:', data?.length);
+            console.log('Found cities:', cities);
 
-            // Filter to prioritize Colorado Springs and Manitou Springs
-            const filteredData = data?.filter(property => {
-                const city = property.city?.toLowerCase() || '';
-                const isMatch = city.includes('colorado springs') ||
-                               city.includes('manitou');
+            if (!cities || cities.length === 0) {
+                console.log('No matching cities found, fetching all 420-friendly hotels');
+                // Fallback: get all 420-friendly hotels
+                const { data: allHotels, error: allError } = await supabase
+                    .from('hotels')
+                    .select('*')
+                    .eq('is_420_friendly', true)
+                    .order('rating', { ascending: false })
+                    .limit(3);
+                
+                if (allError) throw allError;
+                return allHotels || [];
+            }
 
-                if (isMatch) {
-                    console.log('Matched property:', property.name, 'in', property.city);
-                }
+            const cityIds = cities.map(c => c.id);
+            console.log('City IDs:', cityIds);
 
-                return isMatch;
-            }) || [];
+            // Fetch hotels for these cities
+            const { data: hotels, error: hotelsError } = await supabase
+                .from('hotels')
+                .select('*')
+                .in('city_id', cityIds)
+                .order('rating', { ascending: false })
+                .limit(3);
 
-            console.log('Filtered Colorado Springs/Manitou properties:', filteredData.length);
+            if (hotelsError) {
+                console.error('Error fetching hotels:', hotelsError);
+                throw hotelsError;
+            }
 
-            // Return top 3
-            return filteredData.slice(0, 3);
+            console.log('Fetched hotels:', hotels?.length);
+            return hotels || [];
         },
     });
 
@@ -95,13 +88,13 @@ const BlogColoradoSpringsItinerary = () => {
     const localStays = dbHotels?.map(hotel => ({
         name: hotel.name,
         rating: hotel.rating || 4.5,
-        city: hotel.city || "Colorado Springs",
-        description: hotel.description || "Cannabis-friendly accommodation in the Pikes Peak region.",
-        bestFor: hotel.tags?.[0] || "Cannabis travelers",
-        image: hotel.image_url || "/rentals/default.jpg",
-        verified: true,
+        city: "Colorado Springs",
+        description: hotel.policies || "Cannabis-friendly accommodation in the Pikes Peak region.",
+        bestFor: hotel.is_420_friendly ? "Cannabis travelers" : "All travelers",
+        image: hotel.images?.[0] || "/rentals/default.jpg",
+        verified: hotel.is_verified || false,
         slug: hotel.slug,
-        link: hotel.booking_link
+        link: hotel.website
     })) || [];
 
     const localDispensaries = [

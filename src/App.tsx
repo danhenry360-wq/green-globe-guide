@@ -104,8 +104,6 @@ import BlogBreckenridgeStays from "./pages/BlogBreckenridgeStays";
 import BlogFortCollinsStays from "./pages/BlogFortCollinsStays";
 import BlogColoradoAllInclusive from "./pages/BlogColoradoAllInclusive";
 
-// ADDED: Colorado Springs Itinerary Import
-import BlogColoradoSpringsItinerary from "./pages/BlogColoradoSpringsItinerary";
 
 import StateDetail from "./pages/StateDetail";
 import CityDetail from "./pages/CityDetail";
