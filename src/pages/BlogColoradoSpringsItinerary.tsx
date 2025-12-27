@@ -85,6 +85,27 @@ const BlogColoradoSpringsItinerary = () => {
         },
     });
 
+    // Fetch Colorado Springs & Manitou Springs dispensaries from database
+    const { data: dbDispensaries, isLoading: dispensariesLoading } = useQuery({
+        queryKey: ['colorado-springs-dispensaries'],
+        queryFn: async () => {
+            const { data: dispensaries, error } = await supabase
+                .from('dispensaries')
+                .select('*')
+                .or('city.ilike.%colorado springs%,city.ilike.%manitou%')
+                .order('rating', { ascending: false })
+                .limit(5);
+
+            if (error) {
+                console.error('Error fetching dispensaries:', error);
+                throw error;
+            }
+
+            console.log('Fetched dispensaries:', dispensaries?.length);
+            return dispensaries || [];
+        },
+    });
+
     // Transform database hotels to local format
     const localStays = dbHotels?.map(hotel => ({
         name: hotel.name,
@@ -94,15 +115,17 @@ const BlogColoradoSpringsItinerary = () => {
         bestFor: hotel.is_420_friendly ? "Cannabis travelers" : "All travelers",
         image: hotel.images?.[0] || "/rentals/default.jpg",
         verified: hotel.is_verified || false,
-        slug: hotel.slug,
-        link: hotel.website
+        slug: hotel.slug
     })) || [];
 
-    const localDispensaries = [
-        { name: "Maggie's Farm", address: "141 Manitou Ave, Manitou Springs", rating: 4.8, notes: "Sun-grown organic flower. Best for terpene lovers." },
-        { name: "Emerald Fields", address: "27 Manitou Ave, Manitou Springs", rating: 4.7, notes: "Boutique experience. Great selection of concentrates." },
-        { name: "The Apothecary Farms", address: "Various Locations", rating: 4.9, notes: "The masters of 'Ambrosia' live resin. A stoner must-visit." }
-    ];
+    // Transform database dispensaries to local format
+    const localDispensaries = dbDispensaries?.map(disp => ({
+        name: disp.name,
+        address: disp.address,
+        rating: disp.rating || 4.5,
+        notes: disp.description || "Quality cannabis dispensary.",
+        slug: disp.slug
+    })) || [];
 
     const rules = [
         { rule: "Legal Status", details: "Recreational legal (21+ with ID)" },
@@ -267,20 +290,14 @@ const BlogColoradoSpringsItinerary = () => {
                                                         <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{stay.description}</p>
                                                         <div className="flex items-center justify-between pt-6 border-t border-white/5">
                                                             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Best For: {stay.bestFor}</span>
-                                                            {stay.link ? (
-                                                                <a href={stay.link} target="_blank" rel="noopener noreferrer">
-                                                                    <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
-                                                                        Book Now <ExternalLink className="h-3 w-3 ml-2" />
-                                                                    </Button>
-                                                                </a>
-                                                            ) : stay.slug ? (
+                                                            {stay.slug ? (
                                                                 <Link to={`/hotels/${stay.slug}`}>
                                                                     <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
                                                                         View Details <ArrowRight className="h-3 w-3 ml-2" />
                                                                     </Button>
                                                                 </Link>
                                                             ) : (
-                                                                <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold">
+                                                                <Button variant="outline" size="sm" className="bg-primary text-black border-0 hover:bg-white transition-colors font-bold" disabled>
                                                                     View Details <ArrowRight className="h-3 w-3 ml-2" />
                                                                 </Button>
                                                             )}
@@ -305,9 +322,14 @@ const BlogColoradoSpringsItinerary = () => {
 
                             {/* DATABASE SECTION: DISPENSARIES */}
                             <div id="dispensaries" className="mb-20">
-                                <h2 className="text-3xl font-bold mb-8 text-primary flex items-center gap-3">
-                                    <ShoppingBag /> Where to Stock Up
-                                </h2>
+                                <div className="flex items-center justify-between mb-8">
+                                    <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
+                                        <ShoppingBag /> Where to Stock Up
+                                    </h2>
+                                    <Link to="/dispensary" className="text-white flex items-center gap-1 text-xs font-bold hover:text-primary uppercase tracking-widest transition-colors">
+                                        View All Dispensaries <ArrowRight className="h-4 w-4" />
+                                    </Link>
+                                </div>
                                 <div className="overflow-x-auto rounded-3xl border border-white/5 bg-card">
                                     <table className="w-full text-left">
                                         <thead>
@@ -318,25 +340,55 @@ const BlogColoradoSpringsItinerary = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {localDispensaries.map((shop, i) => (
-                                                <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                                                    <td className="p-6">
-                                                        <div className="font-bold text-white text-lg">{shop.name}</div>
-                                                        <div className="text-xs text-muted-foreground mt-1">{shop.address}</div>
-                                                        <div className="text-xs text-primary italic mt-2">{shop.notes}</div>
-                                                    </td>
-                                                    <td className="p-6">
-                                                        <div className="flex items-center gap-1 text-yellow-500 font-bold">
-                                                            <Star className="h-4 w-4 fill-current" /> {shop.rating}
-                                                        </div>
-                                                    </td>
-                                                    <td className="p-6 text-right">
-                                                        <Button variant="ghost" className="text-white group-hover:text-primary transition-colors">
-                                                            Directions <ExternalLink className="h-4 w-4 ml-2" />
-                                                        </Button>
+                                            {dispensariesLoading ? (
+                                                Array.from({ length: 3 }).map((_, idx) => (
+                                                    <tr key={idx} className="border-b border-white/5">
+                                                        <td className="p-6">
+                                                            <Skeleton className="h-5 w-48 mb-2" />
+                                                            <Skeleton className="h-3 w-32" />
+                                                        </td>
+                                                        <td className="p-6"><Skeleton className="h-5 w-12" /></td>
+                                                        <td className="p-6 text-right"><Skeleton className="h-8 w-24 ml-auto" /></td>
+                                                    </tr>
+                                                ))
+                                            ) : localDispensaries.length > 0 ? (
+                                                localDispensaries.map((shop, i) => (
+                                                    <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                                                        <td className="p-6">
+                                                            <div className="font-bold text-white text-lg">{shop.name}</div>
+                                                            <div className="text-xs text-muted-foreground mt-1">{shop.address}</div>
+                                                            <div className="text-xs text-primary italic mt-2 line-clamp-1">{shop.notes}</div>
+                                                        </td>
+                                                        <td className="p-6">
+                                                            <div className="flex items-center gap-1 text-yellow-500 font-bold">
+                                                                <Star className="h-4 w-4 fill-current" /> {shop.rating?.toFixed(1) || '4.5'}
+                                                            </div>
+                                                        </td>
+                                                        <td className="p-6 text-right">
+                                                            {shop.slug ? (
+                                                                <Link to={`/dispensary/${shop.slug}`}>
+                                                                    <Button variant="ghost" className="text-white group-hover:text-primary transition-colors">
+                                                                        View Details <ArrowRight className="h-4 w-4 ml-2" />
+                                                                    </Button>
+                                                                </Link>
+                                                            ) : (
+                                                                <Button variant="ghost" className="text-muted-foreground" disabled>
+                                                                    View Details <ArrowRight className="h-4 w-4 ml-2" />
+                                                                </Button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={3} className="p-8 text-center text-muted-foreground">
+                                                        No dispensaries found for Colorado Springs area.
+                                                        <Link to="/dispensary?state=Colorado" className="text-primary ml-2 hover:underline">
+                                                            Browse all Colorado dispensaries
+                                                        </Link>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
